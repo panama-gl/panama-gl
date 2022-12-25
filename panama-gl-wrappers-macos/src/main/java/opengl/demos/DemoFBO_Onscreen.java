@@ -20,6 +20,7 @@ import opengl.macos.GL_macOS_10_15_7;
  * https://github.com/jzy3d/panama-gl/issues/5
  */
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+// VM is FREEZING WITH -XstartOnFirstThread, crashing without
 public class DemoFBO_Onscreen {
 
   public static void main(String[] args) throws Exception{
@@ -33,10 +34,13 @@ public class DemoFBO_Onscreen {
     //Thread.join();
     //Thread.sleep(1000);
 
-    GLContext context = new GLUTContext_macOS_10_15_7();
-    context.init();
+    GLUTContext_macOS_10_15_7 context = new GLUTContext_macOS_10_15_7();
+    //context.init(true);
+    context.init(false);
 
     GL gl = new GL_macOS_10_15_7();
+
+
 
     //-------------------------
     // Prepare VBO
@@ -47,19 +51,22 @@ public class DemoFBO_Onscreen {
 
     //-------------------------
     // Render something
+
+
     SampleTriangle.rgbaTriangle2D(width, height);
 
     //-------------------------
     // Get image
-    BufferedImage out = fbo.getImage(gl);
+    final BufferedImage out = fbo.getImage(gl);
 
+    System.out.println("image: " + out);
     //pixelsRead.
-    try {
+    /*try {
       ImageIO.write(out, "png", new File("target/DemoFBO-Onscreen.png"));
 
     } catch (Exception e) {
       e.printStackTrace();
-    }
+    }*/
 
     //-------------------------
     // Show in a JPanel
