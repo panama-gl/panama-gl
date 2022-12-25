@@ -18,6 +18,7 @@ import static opengl.macos.v10_15_3.glut_h.*;
 public class GLUTContext_macOS_10_15_7 implements GLContext {
     ResourceScope scope;
     SegmentAllocator allocator;
+    String windowName= "InvisiblePanamaGLWindowForGLContext";
 
     public GLUTContext_macOS_10_15_7(){
         try {
@@ -39,28 +40,12 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
         if(forceLoadGlut) {
             var argc = allocator.allocate(C_INT, 0);
 
-            glutInit(argc, argc);
-            glutInitDisplayMode(GLUT_DOUBLE() | GLUT_RGBA() | GLUT_DEPTH());
+            glut_h.glutInit(argc, argc);
+            glut_h.glutInitDisplayMode(0);//GLUT_DOUBLE() | GLUT_RGBA() | GLUT_DEPTH());
         }
-        glutInitWindowSize(1, 1);
-        glutInitWindowPosition(-100, -100);
-        glutCreateWindow("InvisiblePanamaGLWindowForGLContext");
+        glut_h.glutInitWindowSize(1, 1);
+        glut_h.glutInitWindowPosition(-100, -100);
+        glut_h.glutCreateWindow(CLinker.toCString(windowName, scope));
+        
     }
-
-    public void glutInit(Addressable argcp, Addressable argv) {
-        glut_h.glutInit(argcp, argv);
-    }
-    public void glutInitDisplayMode(int mode) {
-        glut_h.glutInitDisplayMode(mode);
-    }
-    public void glutInitWindowSize(int width, int height) {
-        glut_h.glutInitWindowSize(width, height);
-    }
-    public void glutInitWindowPosition(int x, int y) {
-        glut_h.glutInitWindowPosition(x, y);
-    }
-    public void glutCreateWindow(String title) {
-        glut_h.glutCreateWindow(CLinker.toCString(title, scope));
-    }
-
 }

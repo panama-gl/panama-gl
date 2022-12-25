@@ -1,6 +1,6 @@
 package opengl.fbo.macos;
 
-import static org.mockito.Mockito.spy;
+//import static org.mockito.Mockito.spy;
 import org.junit.Test;
 
 public class TestGL_macOS_10_15_3 {

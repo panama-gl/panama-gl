@@ -25,6 +25,8 @@ import opengl.macos.v10_15_3.glut_h;
  * @author Martin Pernollet
  *
  */
+//VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+
 public class SurfaceDemoPanamaGL_macOs {
 
   static final float ALPHA_FACTOR = 0.55f;// .61f;
@@ -57,8 +59,8 @@ public class SurfaceDemoPanamaGL_macOs {
     chart.add(surface());
 
     // Manual HiDPI setting
-    //float[] pixelScale = {2f,2f};
-    //chart.getCanvas().setPixelScale(pixelScale);
+    float[] pixelScale = {2f,2f};
+    chart.getCanvas().setPixelScale(pixelScale);
 
     chart.open(800,600);
     // with GLUT, can't do anything after open until main loop ends

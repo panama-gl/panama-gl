@@ -33,9 +33,15 @@
 			<artifactId>jzy3d-core</artifactId>
 			<version>${jzy3d.version}</version>
 		</dependency>
+	
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>jzy3d-emul-gl-awt</artifactId>
+			<version>${jzy3d.version}</version>
+		</dependency>
 		<!--<dependency> <groupId>org.jzy3d</groupId> <artifactId>jzy3d-native-jogl-awt</artifactId>
 			<version>${project.version}</version> </dependency> -->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>jzy3d-tester-native</artifactId>
 			<version>${jzy3d.version}</version>
@@ -44,7 +50,7 @@
 			<groupId>org.jzy3d</groupId>
 			<artifactId>jzy3d-tests-java9</artifactId>
 			<version>${jzy3d.version}</version>
-		</dependency>
+		</dependency>-->
 
 
 	</dependencies>
