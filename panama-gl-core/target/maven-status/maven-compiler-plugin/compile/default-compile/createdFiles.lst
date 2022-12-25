@@ -1,9 +1,0 @@
-foreign/demos/DemoFloatBuffer.class
-opengl/AbstractGL.class
-org/jzy3d/os/WindowingToolkit.class
-opengl/GLContext.class
-opengl/fbo/FBO.class
-org/jzy3d/os/OperatingSystem.class
-foreign/demos/DemoIntBuffer.class
-opengl/GL.class
-opengl/ByteUtils.class
