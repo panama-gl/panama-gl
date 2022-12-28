@@ -36,25 +36,5 @@
 			<version>${jzy3d.version}</version>
 		</dependency>
 
-		<!-- Import JOGL in order to have OSXUtil -->
-		<dependency>
-			<groupId>org.jzy3d</groupId>
-			<artifactId>jzy3d-native-jogl-awt</artifactId>
-			<version>${jzy3d.version}</version>
-		</dependency>
-
-		<!-- <dependency>
-			<groupId>org.jzy3d</groupId>
-			<artifactId>jzy3d-tester-native</artifactId>
-			<version>${jzy3d.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jzy3d</groupId>
-			<artifactId>jzy3d-tests-java9</artifactId>
-			<version>${jzy3d.version}</version>
-			<scope>test</scope>
-		</dependency>-->
-
 	</dependencies>
 </project>
