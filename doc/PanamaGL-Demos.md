@@ -122,3 +122,5 @@ Solution : mvn clean install
 
 
 https://stackoverflow.com/questions/43359687/java-swing-and-fxissue-with-xstartonfirstthread 
+https://jvm-gaming.org/t/starting-jvm-on-mac-with-xstartonfirstthread-programmatically/57547
+

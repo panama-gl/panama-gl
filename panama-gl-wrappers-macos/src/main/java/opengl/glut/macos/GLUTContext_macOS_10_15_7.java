@@ -3,10 +3,13 @@ package opengl.glut.macos;
 import jdk.incubator.foreign.*;
 import opengl.GL;
 import opengl.GLContext;
+import opengl.macos.v10_15_3.glutDisplayFunc$func;
+import opengl.macos.v10_15_3.glutIdleFunc$func;
 import opengl.macos.v10_15_3.glut_h;
 
 import static jdk.incubator.foreign.CLinker.*;
 import static opengl.macos.v10_15_3.glut_h.*;
+import static opengl.macos.v10_15_3.glut_h.glutDisplayFunc;
 
 /**
  * This GLUT {@link GLContext} initialize a GLUT offscreen context allowing to then
@@ -50,7 +53,17 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
         glut_h.glutInitWindowPosition(-100, -100);
         glut_h.glutCreateWindow(CLinker.toCString(windowName, scope));
         
+        // This dummy stub registration is required to get macOS onscreen rendering working
+        addDummyCallback();
     }
+    
+    protected void addDummyCallback() {
+      MemoryAddress displayStub = glutDisplayFunc$func.allocate(GLUTContext_macOS_10_15_7::dummy, scope);
+      //var idleStub = glutIdleFunc$func.allocate(teapot::onIdle, scope);
+      glut_h.glutDisplayFunc(displayStub);
+    }
+
+    private static void dummy() {}
 
     @Override
     public void destroy() {

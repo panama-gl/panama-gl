@@ -9,6 +9,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import com.jogamp.opengl.GLProfile;
+import jogamp.nativewindow.macosx.OSXUtil;
 import opengl.GL;
 import opengl.GLContext;
 import opengl.cgl.macos.CGLContext;
@@ -17,23 +19,17 @@ import opengl.glut.macos.GLUTContext_macOS_10_15_7;
 import opengl.macos.GL_macOS_10_15_7;
 
 public class GLPanel extends JPanel {
-
   private static final long serialVersionUID = -4601832524814661585L;
+
+  protected GL gl;
+  protected GLEventListener glListener;
+  protected CGLContext cglContext;
+  protected GLUTContext_macOS_10_15_7 glutContext;
+  protected FBO fbo;
 
   protected BufferedImage out = null;
 
-  protected GL gl;
-  protected GLContext context;
-
-  CGLContext cglContext;
-  GLUTContext_macOS_10_15_7 glutContext;
-
-
-  protected GLEventListener glListener;
-
-  protected FBO fbo;
-
-
+  
   public GLPanel() {
     setPreferredSize(new Dimension(600, 400));
 
@@ -59,36 +55,64 @@ public class GLPanel extends JPanel {
   public void addNotify() {
     super.addNotify();
 
+    
     // Force context init in main thread.
     
-    final AtomicBoolean initialized = new AtomicBoolean(false);
-
-    /**
-     * Causes doRun.run() to be executed synchronously on the AWT event dispatching thread. This
-     * call blocks until all pending AWT events have been processed and (then) doRun.run() returns.
-     * This method should be used when an application thread needs to update the GUI. It shouldn't
-     * be called from the event dispatching thread. Here's an example that creates a new application
-     * thread that uses invokeAndWait to print a string from the event dispatching thread and then,
-     * when that's finished, print a string from the application thread.
-     */
-    /*try {
-      SwingUtilities.invokeAndWait(new Runnable() {
+    // ---------------------------------------------
+    // THIS USAGE OF JOGL CLASS SEAMS TO WORK
+    // TODO : port/include in panama
+    
+    boolean useJOGL = true;
+    if(useJOGL) {
+      GLProfile.initSingleton();
+      OSXUtil.RunOnMainThread(true, false, new Runnable() {
+        @Override
         public void run() {
           initContext();
-          initialized.set(true);
-       }
+        }
       });
-    } catch (InvocationTargetException e) {
-      //e.printStackTrace();
-    } catch (InterruptedException e) {
-      //e.printStackTrace();
-    }*/
-    
-    if(!initialized.get()) {
-      System.out.println("Initialize from current thread then! ");
-      initContext();
     }
-
+    
+    // ---------------------------------------------
+    // Classical way we should follow
+    else {
+      boolean direct = SwingUtilities.isEventDispatchThread();
+      
+      if(direct) {
+        System.out.println("GLPanel : direct init");
+        initContext();
+        
+  
+        
+      }
+      
+      // ---------------------------------------------
+      else {
+        final AtomicBoolean initialized = new AtomicBoolean(false);
+  
+        /**
+         * Causes doRun.run() to be executed synchronously on the AWT event dispatching thread. This
+         * call blocks until all pending AWT events have been processed and (then) doRun.run() returns.
+         * This method should be used when an application thread needs to update the GUI. It shouldn't
+         * be called from the event dispatching thread. Here's an example that creates a new application
+         * thread that uses invokeAndWait to print a string from the event dispatching thread and then,
+         * when that's finished, print a string from the application thread.
+         */
+        try {
+          SwingUtilities.invokeAndWait(new Runnable() {
+            public void run() {
+              initContext();
+              initialized.set(true);
+           }
+          });
+        } catch (InvocationTargetException e) {
+          //e.printStackTrace();
+        } catch (InterruptedException e) {
+          //e.printStackTrace();
+        }
+      }
+    
+    }
   }
 
   /**
@@ -105,8 +129,8 @@ public class GLPanel extends JPanel {
 
   @Override
   public void repaint() {
-    if (cglContext != null)
-      cglContext.lockContext();
+    //if (cglContext != null)
+    //  cglContext.lockContext();
 
     System.out.println("GLPanel : repaint");
     super.repaint();
@@ -123,7 +147,19 @@ public class GLPanel extends JPanel {
       g.drawImage(out, 0, 0, null);
     }
   }
+  
+  /* ===================================================== */
 
+  public GLEventListener getGLEventListener() {
+    return glListener;
+  }
+
+  public void setGLEventListener(GLEventListener glEvents) {
+    this.glListener = glEvents;
+  }
+
+
+  /* ===================================================== */
 
 
   /**
@@ -131,13 +167,19 @@ public class GLPanel extends JPanel {
    * functionality in the JPanel after the JPanel has been added to the Swing hierarchy, but before
    * it is made visible. This ensures that the JPanel has a valid parent container and can be
    * properly displayed on the screen.
+   * 
+   * On macOS, this should be performed in the main thread
+   * <ul>
+   * <li>By using -XstartOnMainThread (but warning with Swing and JavaFX that may be hanging)
+   * <li>By having the context initialization performed by the AWT thread (through the GLPanel+GLEventListener)
+   * </ul>
    */
-  private void initContext() {
+  protected void initContext() {
     System.out.println("GLPanel : initContext");
 
     // A GL Context with CGL
-    // cglContext = new CGLContext();
-    // cglContext.init();
+    cglContext = new CGLContext();
+    cglContext.init();
 
     // System.out.println("GLPanel : initContext : CGL done");
 
@@ -146,10 +188,9 @@ public class GLPanel extends JPanel {
     // - not generating FBO properly if omitted
     glutContext = new GLUTContext_macOS_10_15_7();
     glutContext.init(false); // do not init GLUT a second time
-
+    
     System.out.println("GLPanel : initContext : GLUT done");
 
-    this.context = cglContext;
 
     // OpenGL
     this.gl = new GL_macOS_10_15_7();
@@ -167,21 +208,21 @@ public class GLPanel extends JPanel {
     // this.fbo.prepare(gl); // NOT NEEDED HERE
 
     // this.cglContext.release();
-
-    System.out.println("GLPanel : initContext : prepared");
-
   }
 
   protected void renderGLToImage() {
     // Acquire context
-    if (cglContext != null)
-      cglContext.makeCurrent();
+    //if (cglContext != null)
+    //  cglContext.lockContext();//makeCurrent();
 
-    // Render
+    // Prepare FBO
+    fbo.prepare(gl);
+    
+    // Render GL
     glListener.display(gl);
 
 
-    // To image
+    // FBO To image
     out = fbo.getImage(gl);
 
     // Release context
@@ -191,13 +232,6 @@ public class GLPanel extends JPanel {
 
 
 
-  public GLEventListener getGLEventListener() {
-    return glListener;
-  }
-
-  public void setGLEventListener(GLEventListener glEvents) {
-    this.glListener = glEvents;
-  }
 
 
 }

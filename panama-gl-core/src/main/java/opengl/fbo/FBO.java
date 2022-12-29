@@ -68,6 +68,7 @@ public class FBO {
     public void prepare(GL gl){
         if(prepared)
             release(gl);
+        
         // ---------------------------
         // Transfert pixel Format
         // ---------------------------
