@@ -26,14 +26,47 @@ jextract -d {OUTPUT_DIR} --source -t {PACKAGE_NAME} \
 ```
 
 ### MacOS 10.15
+
+#### OpenGL
 ```
-/Library/Java/JavaVirtualMachines/jdk-17.jdk-panama/Contents/Home/bin/jextract -d ./src/main/java/ --source -t opengl.macos.v10_15_3 \
+/Library/Java/JavaVirtualMachines/jdk-17.jdk-panama/Contents/Home/bin/jextract \
+  -d ./panama-gl-bindings-macos/src/generated/java/ \
+  --source \
+  -t opengl.macos.v10_15_3 \
   -lGL \
   -l/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT \
   -I  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/ \
   -C-F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks \
-      /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GLUT.framework/Headers/glut.h
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/GLUT.framework/Headers/glut.h
 ```
+
+#### CGL
+
+CGL is most largely defined in `OpenGL.h`
+
+```
+/Library/Java/JavaVirtualMachines/jdk-17.jdk-panama/Contents/Home/bin/jextract \
+  -d ./panama-gl-bindings-macos/src/generated/java/ \
+  --source -t opengl.cgl.macos.v10_15_7 \
+  -lGL \
+  -I  /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers \
+  -I /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/ \
+  -C-F/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers \
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/OpenGL.h
+
+
+```
+
+Keep this line out
+  -l/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Libraries \
+
+When complaint about 
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers/OpenGL.h:8:10: fatal error: 'OpenGL/OpenGLAvailability.h' file not found
+Copy paste all sources in Headers/ into Headers/OpenGL/
+
+
+
+/Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers
 
 ### MacOS 11.4
 

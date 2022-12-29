@@ -17,6 +17,6 @@ public class DemoFBO_Offscreen_macOS {
 
     GL gl = new GL_macOS_10_15_7();
 
-    opengl.demos.DemoFBO_Offscreen_macOS.fbo_offscreen(gl);
+    opengl.demos.DemoFBO_Offscreen.fbo_offscreen(gl);
   }
 }

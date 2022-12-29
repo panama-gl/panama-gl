@@ -6,6 +6,8 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.MemoryHandles;
 import jdk.incubator.foreign.MemorySegment;
+import jdk.incubator.foreign.CLinker;
+
 import opengl.ByteUtils;
 import opengl.GL;
 
@@ -84,9 +86,9 @@ public class FBO {
         textureType = gl.GL_UNSIGNED_BYTE();
 
         if(debug){
-            System.out.println("FBO: " + internalFormat);
-            System.out.println("FBO: " + format);
-            System.out.println("FBO: " + gl.GL_RGBA8());
+            System.out.println("FBO.internalFormat : " + internalFormat + " (default gl.GL_RGBA8)");
+            System.out.println("FBO.format         : " + format + " (default gl.GL_BGRA)");
+            //System.out.println("FBO: " + gl.GL_RGBA8());
         }
 
         // ------------------------
@@ -99,6 +101,17 @@ public class FBO {
         if(debug)
             System.out.println("FBO: Got texture ID : " + idTexture);
 
+        
+        // Check errors
+        if(idTexture==0) {
+          int error = gl.glGetError();
+          String sterr = gl.gluErrorString(error);
+          System.err.println("FBO: texture error " + error + " : " + sterr);
+          
+          // https://stackoverflow.com/questions/2985034/glgentextures-keeps-returing-0s
+        }
+        
+        
         // Bind texture and set parameters
         gl.glBindTexture(gl.GL_TEXTURE_2D(), idTexture);
         gl.glTexParameteri(gl.GL_TEXTURE_2D(), gl.GL_TEXTURE_WRAP_S(), gl.GL_REPEAT());
@@ -120,6 +133,16 @@ public class FBO {
 
         if(debug)
             System.out.println("FBO: Got FB ID : " + idFrameBuffer);
+        
+     // Check errors
+        if(idFrameBuffer==0) {
+          int error = gl.glGetError();
+          String sterr = gl.gluErrorString(error);
+          System.err.println("FBO: framebuffer error " + error + " : " + sterr);
+          
+          // https://stackoverflow.com/questions/2985034/glgentextures-keeps-returing-0s
+        }
+        
 
         // Bind frame buffer
         gl.glBindFramebuffer(gl.GL_FRAMEBUFFER(), idFrameBuffer);

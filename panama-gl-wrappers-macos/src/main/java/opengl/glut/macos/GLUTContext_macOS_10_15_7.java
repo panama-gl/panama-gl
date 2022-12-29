@@ -14,6 +14,8 @@ import static opengl.macos.v10_15_3.glut_h.*;
  *
  * NB : glutInit() should only be called once. In case part of the program invokes it,
  * it is possible to initialize the window without calling glutInit by instead calling GLUTContext.init(false)
+ * 
+ * @author Martin Pernollet
  */
 public class GLUTContext_macOS_10_15_7 implements GLContext {
     ResourceScope scope;
@@ -30,6 +32,7 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
     }
 
     /** Initialize GLUT and create a window */
+    @Override
     public void init(){
         init(true);
     }
@@ -47,5 +50,10 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
         glut_h.glutInitWindowPosition(-100, -100);
         glut_h.glutCreateWindow(CLinker.toCString(windowName, scope));
         
+    }
+
+    @Override
+    public void destroy() {
+      
     }
 }

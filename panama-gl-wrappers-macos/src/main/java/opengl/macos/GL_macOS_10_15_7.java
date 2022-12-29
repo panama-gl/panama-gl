@@ -18,6 +18,16 @@ public class GL_macOS_10_15_7 extends AbstractGL implements GL  {
     public GL_macOS_10_15_7() {
         super();
     }
+    
+    @Override
+    public String gluErrorString(int err_string) {
+      return CLinker.toJavaString(glut_h.gluErrorString(err_string));
+    }
+    
+    @Override
+    public int glGetError() {
+      return glut_h.glGetError();
+    }
 
     @Override
     public String glGetString(int stringID){

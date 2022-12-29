@@ -22,6 +22,16 @@ public class GL_Ubuntu_20 extends AbstractGL implements GL  {
     public GL_Ubuntu_20(boolean forceLoadGlut){
         super();
     }
+    
+    @Override
+    public String gluErrorString(int err_string) {
+      return glut_h.gluErrorString(err_string).toString();
+    }
+    
+    @Override
+    public int glGetError() {
+      return glut_h.glGetError();
+    }
 
     @Override
     public String glGetString(int stringID){
