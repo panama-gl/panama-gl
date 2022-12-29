@@ -115,4 +115,10 @@ Solution : ensure these 3 settings
 
 `java.lang.IllegalAccessError: failed to access class *1 from class *2 (*1 and *2 are in unnamed module of loader 'app')`
 
-Solution : mvn clean install 
+Solution : mvn clean install
+
+`Swing and JavaFX window do not open due to "-XstartOnFirstThread"`
+
+
+
+https://stackoverflow.com/questions/43359687/java-swing-and-fxissue-with-xstartonfirstthread 

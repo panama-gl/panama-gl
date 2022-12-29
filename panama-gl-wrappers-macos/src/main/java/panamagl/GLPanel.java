@@ -6,7 +6,9 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import opengl.GL;
 import opengl.GLContext;
 import opengl.cgl.macos.CGLContext;
@@ -22,24 +24,18 @@ public class GLPanel extends JPanel {
 
   protected GL gl;
   protected GLContext context;
-  
+
   CGLContext cglContext;
   GLUTContext_macOS_10_15_7 glutContext;
-  
-  
+
+
   protected GLEventListener glListener;
 
   protected FBO fbo;
 
 
-  public GLPanel() throws InvocationTargetException, InterruptedException {
+  public GLPanel() {
     setPreferredSize(new Dimension(600, 400));
-
-    /*
-     * javax.swing.SwingUtilities.invokeAndWait(new Runnable() {
-     * 
-     * @Override public void run() { init(); } });
-     */
 
     // Resize FBO on panel resize
     addComponentListener(new ComponentAdapter() {
@@ -51,33 +47,83 @@ public class GLPanel extends JPanel {
 
         if (fbo != null)
           fbo.resize((int) Math.round(size.getWidth()), (int) Math.round(size.getHeight()));
+        System.out.println("Resized to " + size.getWidth() + " " + size.getHeight());
       }
     });
-
-
   }
 
   /**
-   * called after the JPanel has been added to the Swing hierarchy but before it is made visible.
+   * Called after the JPanel has been added to the Swing hierarchy but before it is made visible.
    */
   @Override
   public void addNotify() {
     super.addNotify();
 
-    initContext();
+    // Force context init in main thread.
+    
+    final AtomicBoolean initialized = new AtomicBoolean(false);
+
+    /**
+     * Causes doRun.run() to be executed synchronously on the AWT event dispatching thread. This
+     * call blocks until all pending AWT events have been processed and (then) doRun.run() returns.
+     * This method should be used when an application thread needs to update the GUI. It shouldn't
+     * be called from the event dispatching thread. Here's an example that creates a new application
+     * thread that uses invokeAndWait to print a string from the event dispatching thread and then,
+     * when that's finished, print a string from the application thread.
+     */
+    /*try {
+      SwingUtilities.invokeAndWait(new Runnable() {
+        public void run() {
+          initContext();
+          initialized.set(true);
+       }
+      });
+    } catch (InvocationTargetException e) {
+      //e.printStackTrace();
+    } catch (InterruptedException e) {
+      //e.printStackTrace();
+    }*/
+    
+    if(!initialized.get()) {
+      System.out.println("Initialize from current thread then! ");
+      initContext();
+    }
+
   }
 
   /**
-   * called before the JPanel is removed from the Swing hierarchy.
+   * Called before the JPanel is removed from the Swing hierarchy.
    */
   @Override
   public void removeNotify() {
     // Clean up CGL context
-    if(cglContext!=null)
+    if (cglContext != null)
       cglContext.destroy();
 
     super.removeNotify();
   }
+
+  @Override
+  public void repaint() {
+    if (cglContext != null)
+      cglContext.lockContext();
+
+    System.out.println("GLPanel : repaint");
+    super.repaint();
+
+    if (glListener == null)
+      return;
+
+    renderGLToImage();
+  }
+
+  @Override
+  public void paintComponent(Graphics g) {
+    if (out != null) {
+      g.drawImage(out, 0, 0, null);
+    }
+  }
+
 
 
   /**
@@ -90,48 +136,57 @@ public class GLPanel extends JPanel {
     System.out.println("GLPanel : initContext");
 
     // A GL Context with CGL
-    cglContext = new CGLContext();
-    cglContext.init();
-    
+    // cglContext = new CGLContext();
+    // cglContext.init();
+
+    // System.out.println("GLPanel : initContext : CGL done");
+
     // A GL Context with GLUT
     // - hanging while ONSCREEN
     // - not generating FBO properly if omitted
     glutContext = new GLUTContext_macOS_10_15_7();
-    // context.init(true);
-    glutContext.init(false);
-    
+    glutContext.init(false); // do not init GLUT a second time
+
+    System.out.println("GLPanel : initContext : GLUT done");
+
     this.context = cglContext;
 
     // OpenGL
     this.gl = new GL_macOS_10_15_7();
 
     // FBO
-    this.fbo = new FBO(10, 10);// this.getWidth(), this.getHeight());
-    this.fbo.prepare(gl);
-    System.out.println("GLPanel : prepared");
+    this.fbo = new FBO((int) Math.max(10, this.getWidth()), (int) Math.max(10, this.getHeight()));
+
+    System.out.println("GLPanel : initContext : FBO done");
+
+    // this.getWidth(), this.getHeight());
+
+    // this.cglContext.makeCurrent();
+    // this.cglContext.lockContext();
+
+    // this.fbo.prepare(gl); // NOT NEEDED HERE
+
+    // this.cglContext.release();
+
+    System.out.println("GLPanel : initContext : prepared");
 
   }
 
-  @Override
-  public void repaint() {
-    System.out.println("REPAINTING");
-    super.repaint();
-
-    if (glListener == null)
-      return;
-
+  protected void renderGLToImage() {
     // Acquire context
-    cglContext.makeCurrent();
-    
+    if (cglContext != null)
+      cglContext.makeCurrent();
+
     // Render
     glListener.display(gl);
-   
+
 
     // To image
     out = fbo.getImage(gl);
-    
+
     // Release context
-    cglContext.release();
+    if (cglContext != null)
+      cglContext.release();
   }
 
 
@@ -144,13 +199,5 @@ public class GLPanel extends JPanel {
     this.glListener = glEvents;
   }
 
-  @Override
-  public void paintComponent(Graphics g) {
-    //synchronized (out) {
-      if (out != null) {
-        g.drawImage(out, 0, 0, null);
-      }
-    //}
-  }
 
 }

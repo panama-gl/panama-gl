@@ -188,6 +188,11 @@ public class FBO {
 
         // Mark as prepared
         prepared = true;
+        
+        if(debug) {
+          System.out.println("FBO: Prepared! ");
+ 
+        }
     }
 
     /**

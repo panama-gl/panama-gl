@@ -18,10 +18,15 @@ public class TestFBO_macOS {
         if(!os.isMac())
           return;
         
-        // Given a GL context
-        GLContext context = new GLUTContext_macOS_10_15_7();
-        context.init();
+        
+        //GLContext cglContext = new CGLContext();
+        //cglContext.init();
 
+        // Given a GLUT context
+        GLContext glutContext = new GLUTContext_macOS_10_15_7();
+        glutContext.init();
+
+        // Given a GL caller
         GL gl = new GL_macOS_10_15_7();
         
         TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
