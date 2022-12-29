@@ -24,14 +24,17 @@
 		</dependency>
 
 
-				<!-- PUBLIC JZY3D MODULES -->
+		<!-- PUBLIC JZY3D MODULES -->
 		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>jzy3d-core</artifactId>
 			<version>${jzy3d.version}</version>
 		</dependency>
-		<!--<dependency> <groupId>org.jzy3d</groupId> <artifactId>jzy3d-native-jogl-awt</artifactId>
-			<version>${project.version}</version> </dependency> -->
+
+		<dependency> <groupId>org.jzy3d</groupId> <artifactId>jzy3d-native-jogl-awt</artifactId>
+			<version>${jzy3d.version}</version>
+		</dependency>
+
 		<!-- <dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>jzy3d-tester-native</artifactId>

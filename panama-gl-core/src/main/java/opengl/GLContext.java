@@ -15,4 +15,5 @@ package opengl;
  */
 public interface GLContext {
     void init();
+    void destroy();
 }

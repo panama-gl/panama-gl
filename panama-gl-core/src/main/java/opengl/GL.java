@@ -25,6 +25,10 @@ public interface GL {
     void glClearDepth(float depth);
     void glClear(int mask);
     String glGetString(int stringID);
+    
+    String gluErrorString(int err_string);
+    int glGetError();
+
 
     // FBO ------------------------------
 
@@ -80,5 +84,7 @@ public interface GL {
     int GL_DEPTH_BUFFER_BIT();
     int GL_BYTE();
     int GL_FRAMEBUFFER_COMPLETE();
+    
+    
 
 }

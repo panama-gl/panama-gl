@@ -111,3 +111,16 @@ Solution : ensure these 3 settings
 - in addition to setting VM parameters in the Run Configuration
 - add --add-modules jdk.incubator.foreign under Preferences -> Build, Execution, Development -> Compiler -> Java Compiler -> Additional command line parameters
 - in the same window, set the target bycode version to the VM version we run on (here 17).
+
+
+`java.lang.IllegalAccessError: failed to access class *1 from class *2 (*1 and *2 are in unnamed module of loader 'app')`
+
+Solution : mvn clean install
+
+`Swing and JavaFX window do not open due to "-XstartOnFirstThread"`
+
+
+
+https://stackoverflow.com/questions/43359687/java-swing-and-fxissue-with-xstartonfirstthread 
+https://jvm-gaming.org/t/starting-jvm-on-mac-with-xstartonfirstthread-programmatically/57547
+

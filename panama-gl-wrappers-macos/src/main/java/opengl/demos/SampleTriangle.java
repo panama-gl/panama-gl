@@ -43,5 +43,7 @@ public class SampleTriangle {
         glut_h.glColor4d(0,0,1,1);
         glut_h.glVertex3d(width, height,0);
         glut_h.glEnd();
+        
+        glut_h.glFlush();
     }
 }
