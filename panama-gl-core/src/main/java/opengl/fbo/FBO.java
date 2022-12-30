@@ -106,15 +106,7 @@ public class FBO {
         
         // Check errors
         if(idTexture==0) {
-          GLError e = GLError.get(gl);
-          
-          if(e!=null) {
-            e.systemErrPrint();
-          }
-          else {
-            System.err.println("FBO: texture is 0 but get no error ");
-          }
-          // https://stackoverflow.com/questions/2985034/glgentextures-keeps-returing-0s
+          diagnoseError(gl, "texture");
         }
         
         
@@ -142,15 +134,7 @@ public class FBO {
         
      // Check errors
         if(idFrameBuffer==0) {
-          GLError e = GLError.get(gl);
-          
-          if(e!=null) {
-            e.systemErrPrint();
-          }
-          else {
-            System.err.println("FBO: framebuffer is 0 but get no error ");
-          }
-          // https://stackoverflow.com/questions/2985034/glgentextures-keeps-returing-0s
+          diagnoseError(gl, "framebuffer");
         }
         
 
@@ -203,6 +187,18 @@ public class FBO {
           System.out.println("FBO: Prepared! ");
  
         }
+    }
+
+    protected void diagnoseError(GL gl, String item) {
+      GLError e = GLError.get(gl);
+      
+      if(e!=null) {
+        e.throwRuntimeException();
+      }
+      else {
+        System.err.println("FBO: "+item+" handle=0 but get no OpenGL error. This may happen if the call was not issued from main thread on macOS");
+      }
+      // https://stackoverflow.com/questions/2985034/glgentextures-keeps-returing-0s
     }
 
     /**

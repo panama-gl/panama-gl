@@ -49,12 +49,10 @@ public class GLPanel extends JPanel {
         int w = (int) Math.round(size.getWidth());
         int h = (int) Math.round(size.getHeight());
         
+        System.out.println("GLPanel resize to " + w + "x" + h);
+        
         if (fbo != null) {
-          
-          
-          //resizeFBOOnMainThread(w, h);
-
-          renderGLToImageOnMainThread();
+          renderGLToImageOnMainThread(w, h);
           
           
         }
@@ -247,6 +245,19 @@ public class GLPanel extends JPanel {
     OSXUtil.RunOnMainThread(true, false, new Runnable() {
       @Override
       public void run() {
+        renderGLToImage();
+      }
+    });
+  }
+
+  protected void renderGLToImageOnMainThread(int width, int height) {
+    OSXUtil.RunOnMainThread(true, false, new Runnable() {
+      @Override
+      public void run() {
+        fbo.release(gl);
+        fbo.resize(width, height);
+        fbo.prepare(gl);
+        System.out.println("Resized FBO to " + width + " x " + height);
         renderGLToImage();
       }
     });

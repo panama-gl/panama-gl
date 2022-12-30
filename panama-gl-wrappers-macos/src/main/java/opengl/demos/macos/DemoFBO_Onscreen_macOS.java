@@ -29,8 +29,6 @@ public class DemoFBO_Onscreen_macOS {
       }
     });
     
-    // See in JOGL : OSXUtil.RunOnMainThread
-    
     //doDemo();
 
   }
@@ -76,29 +74,6 @@ public class DemoFBO_Onscreen_macOS {
     System.out.println("-----------------------------");
     System.out.println("AFTER Frame.setVisible(true)");
     System.out.println("-----------------------------");
-    //frame.pack();
     
-    /*System.out.println("----------------");
-    System.out.println("AFTER Frame.pack");
-    System.out.println("----------------");*/
-
-    
-   /* SwingUtilities.invokeLater(new Runnable() {
-
-      @Override
-      public void run() {
-        //doDemo();    
-        
-        // Open frame
-        System.out.println("WILL SET VISIBLE");
-        frame.setVisible(true);
-        System.out.println("EXEC ALL");
-        frame.pack();
-
-      }
-
-
-      
-    });*/
   }
 }
