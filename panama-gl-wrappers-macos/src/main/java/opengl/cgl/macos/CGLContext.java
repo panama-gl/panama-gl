@@ -126,7 +126,11 @@ public class CGLContext implements GLContext {
     if (OpenGL_h.kCGLNoError() == err) {
       System.out.println("CGLContext : lock : " + err + " = no error");
 
-    } else {
+    } 
+    else if(OpenGL_h.kCGLBadContext() == err) {
+      System.err.println("Got CGL bad context error while locking context : " + err);
+    }
+    else {
       System.err.println("Got CGL error while locking context : " + err);
       // throw new RuntimeException("Got CGL error while locking context : " + err);
     }

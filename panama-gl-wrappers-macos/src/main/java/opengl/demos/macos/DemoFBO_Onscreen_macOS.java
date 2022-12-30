@@ -41,8 +41,17 @@ public class DemoFBO_Onscreen_macOS {
     
     GLEventAdapter listener = new GLEventAdapter() {
       public void display(GL gl) {
-        SampleTriangle.rgbaTriangle2D(800, 600);
+        SampleTriangle.rgbaTriangle2D(w, h);
+        System.out.println("GLEventAdapter : Triangle rendered!");
       }
+      @Override
+      public void reshape(GL gl, int x, int y, int width, int height) {
+        w = width;
+        h = height;
+        super.reshape(gl, x, y, width, height);
+      }
+      int w=800;
+      int h=600;
     };
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
@@ -60,12 +69,18 @@ public class DemoFBO_Onscreen_macOS {
     frame.add(panel, BorderLayout.CENTER);
     
     // Open frame
-    System.out.println("WILL SET VISIBLE");
+    System.out.println("-----------------------------");
+    System.out.println("BEFORE Frame.setVisible(true)");
+    System.out.println("-----------------------------");
     frame.setVisible(true);
-    System.out.println("EXEC ALL");
-    frame.pack();
+    System.out.println("-----------------------------");
+    System.out.println("AFTER Frame.setVisible(true)");
+    System.out.println("-----------------------------");
+    //frame.pack();
     
-    System.out.println("pack done");
+    /*System.out.println("----------------");
+    System.out.println("AFTER Frame.pack");
+    System.out.println("----------------");*/
 
     
    /* SwingUtilities.invokeLater(new Runnable() {

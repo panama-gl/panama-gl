@@ -10,6 +10,7 @@ import jdk.incubator.foreign.CLinker;
 
 import opengl.ByteUtils;
 import opengl.GL;
+import opengl.GLError;
 
 /**
  * A frame buffer object, or {@link FBO}, can render OpenGL into an offscreen buffer
@@ -105,10 +106,14 @@ public class FBO {
         
         // Check errors
         if(idTexture==0) {
-          int error = gl.glGetError();
-          String sterr = gl.gluErrorString(error);
-          System.err.println("FBO: texture error " + error + " : " + sterr);
+          GLError e = GLError.get(gl);
           
+          if(e!=null) {
+            e.systemErrPrint();
+          }
+          else {
+            System.err.println("FBO: texture is 0 but get no error ");
+          }
           // https://stackoverflow.com/questions/2985034/glgentextures-keeps-returing-0s
         }
         
@@ -137,10 +142,14 @@ public class FBO {
         
      // Check errors
         if(idFrameBuffer==0) {
-          int error = gl.glGetError();
-          String sterr = gl.gluErrorString(error);
-          System.err.println("FBO: framebuffer error " + error + " : " + sterr);
+          GLError e = GLError.get(gl);
           
+          if(e!=null) {
+            e.systemErrPrint();
+          }
+          else {
+            System.err.println("FBO: framebuffer is 0 but get no error ");
+          }
           // https://stackoverflow.com/questions/2985034/glgentextures-keeps-returing-0s
         }
         
