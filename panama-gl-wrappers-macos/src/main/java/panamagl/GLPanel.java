@@ -5,13 +5,9 @@ import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.concurrent.atomic.AtomicBoolean;
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import org.jzy3d.maths.TicToc;
 import com.jogamp.opengl.GLProfile;
 import jogamp.nativewindow.macosx.OSXUtil;
 import opengl.GL;
@@ -53,10 +49,13 @@ public class GLPanel extends JPanel {
 
   protected BufferedImage out = null;
 
-  protected boolean useCGL = true;
+  protected boolean useCGL = false;
   protected boolean useGLUT = true;
   
   protected boolean debug = Debug.check(GLPanel.class);
+  
+  protected TicToc renderTimer = new TicToc();
+
 
   public GLPanel() {
     // setPreferredSize(new Dimension(600, 400));
@@ -94,6 +93,10 @@ public class GLPanel extends JPanel {
   public void paintComponent(Graphics g) {
     if (out != null) {
       g.drawImage(out, 0, 0, null);
+      
+      renderTimer.toc();
+      
+      g.drawString(renderTimer.elapsedMilisecond() + "ms", 20, getHeight()-20);
     }
   }
   
@@ -118,6 +121,7 @@ public class GLPanel extends JPanel {
 
       if (fbo != null) {
 
+        renderTimer.tic();
         
         // wait=true causes deadlocks! So we do not wait
         // and then ask the rendering to asynchronously notify
@@ -144,6 +148,13 @@ public class GLPanel extends JPanel {
 
   public void setGLEventListener(GLEventListener glEvents) {
     this.glListener = glEvents;
+  }
+  
+  public BufferedImage getScreenshot() {
+    if(out==null) {
+      return null;
+    }
+    return ImageUtils.copy(out);
   }
 
 
@@ -246,14 +257,10 @@ public class GLPanel extends JPanel {
    */
   protected void renderGLToImage() {
 
-    boolean hasNewImage = false;
-
     // Acquire context
     // if (cglContext != null)
     // cglContext.lockContext();//makeCurrent();
 
-    // Prepare FBO
-    // fbo.prepare(gl);
 
     // Render GL
     if (glListener != null)
@@ -263,10 +270,9 @@ public class GLPanel extends JPanel {
     // FBO To image
     if (fbo != null) {
       out = fbo.getImage(gl);
-      hasNewImage = true;
 
       // The image has been rendered in macOS main thread, now we want
-      // to notify the component that it is ready for rendering
+      // to notify the component that it is ready for rendering in the AWT Thread
       SwingUtilities.invokeLater(new Runnable() {
 
         @Override
@@ -275,16 +281,6 @@ public class GLPanel extends JPanel {
         }
 
       });
-
-      /*
-       * if (hasNewImage) { try { File debugPath = new File("target/GLPanel.png");
-       * 
-       * ImageIO.write(out, "png", debugPath);
-       * System.out.println("GLPanel : saved GLPanel image as " + debugPath.getPath()); } catch
-       * (IOException e) { e.printStackTrace(); }
-       * 
-       * }
-       */
 
       // Release context
       // if (cglContext != null)

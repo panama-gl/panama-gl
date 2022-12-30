@@ -83,9 +83,18 @@ public class TestFBO {
     Array.print("TestFBO:blue:expect:", BLUE);
 
     Assert.assertArrayEquals(BLUE, rgBa);
+    
+    // ----------------------------------
+    // When resize FBO at the same size, nothing change
+
+
+    // mark FBO for resize
+    fbo.resize(width, height);
+    Assert.assertTrue(fbo.prepared); // still prepared
+
 
     // ----------------------------------
-    // When resize FBO
+    // When resize FBO at double size
 
     width *=2;
     height *=2;
