@@ -21,6 +21,27 @@ import opengl.fbo.FBO;
 import opengl.glut.macos.GLUTContext_macOS_10_15_7;
 import opengl.macos.GL_macOS_10_15_7;
 
+/**
+ * This panel push to the screen an OpenGL image rendered offscreen by an {@link FBO}.
+ * 
+ * The panel mainly deals with
+ * <ul>
+ * <li>OpenGL context initialization, after the panel is added to a parent, and before it is made
+ * visible.</li>
+ * <li>repaint and resize events that are propagated to the OpenGL application through a
+ * {@link GLEventListener}, which must be provided by the user of this panel through
+ * {@link #setGLEventListener(GLEventListener)}.</li>
+ * </ul>
+ * 
+ * The panel is also reponsible for triggering OpenGL initialization and rendering in the
+ * appropriate threads, which may depend on the running operating system.
+ * 
+ * 
+ * Hint : to debug this class, invoke a program using it with flag -Dpanamagl.GLPanel
+ * 
+ * @author Martin Pernollet
+ *
+ */
 public class GLPanel extends JPanel {
   private static final long serialVersionUID = -4601832524814661585L;
 
@@ -31,33 +52,18 @@ public class GLPanel extends JPanel {
   protected FBO fbo;
 
   protected BufferedImage out = null;
-  
+
   protected boolean useCGL = true;
   protected boolean useGLUT = true;
   
+  protected boolean debug = Debug.check(GLPanel.class);
+
   public GLPanel() {
-    //setPreferredSize(new Dimension(600, 400));
+    // setPreferredSize(new Dimension(600, 400));
 
-    // Resize FBO on panel resize
-    addComponentListener(new ComponentAdapter() {
-      @Override
-      public void componentResized(ComponentEvent e) {
-        super.componentResized(e);
-
-        Dimension size = e.getComponent().getSize();
-
-        int w = (int) Math.round(size.getWidth());
-        int h = (int) Math.round(size.getHeight());
-        
-        System.out.println("GLPanel resize to " + w + "x" + h);
-        
-        if (fbo != null) {
-          renderGLToImageOnMainThread(w, h);
-          
-          
-        }
-      }
-    });
+    // This listener hold the most important part of the rendering
+    // logic.
+    addComponentListener(new ResizeHandler());
   }
 
   /**
@@ -67,9 +73,9 @@ public class GLPanel extends JPanel {
   public void addNotify() {
     super.addNotify();
 
-    
+
     // Force context init in main thread.
-    initContextOnMainThread();
+    initContext_OnMainThread();
   }
 
   /**
@@ -85,31 +91,51 @@ public class GLPanel extends JPanel {
   }
 
   @Override
-  public void repaint() {
-    //if (cglContext != null)
-    //  cglContext.lockContext();
-
-
-    if (glListener != null) {
-      renderGLToImageOnMainThread();
-      
-      
-      //paintComponent(getGraphics());
-    }
-    
-    System.out.println("GLPanel : repaint");
-    super.repaint();
-
-
-  }
-
-  @Override
   public void paintComponent(Graphics g) {
     if (out != null) {
       g.drawImage(out, 0, 0, null);
     }
   }
   
+  /**
+   * The {@link ResizeHandler} will trigger rendering on the main macOS thread
+   * and then trigger repaint through SwingUtilities.invokeLater.
+   * 
+   * @author Martin Pernollet
+   *
+   */
+  protected class ResizeHandler extends ComponentAdapter{
+    @Override
+    public void componentResized(ComponentEvent e) {
+      super.componentResized(e);
+
+      Dimension size = e.getComponent().getSize();
+
+      int w = (int) Math.round(size.getWidth());
+      int h = (int) Math.round(size.getHeight());
+
+      Debug.debug(debug, "GLPanel resize to " + w + "x" + h);
+
+      if (fbo != null) {
+
+        
+        // wait=true causes deadlocks! So we do not wait
+        // and then ask the rendering to asynchronously notify
+        // this panel that a repaint should occur.
+        boolean wait = false; 
+
+        renderGLToImage_OnMainThread(w, h, wait, true);
+
+        // here we need a callback to invoke repaint, otherwise we are always one frame late!
+        // if resize too fast, we see that we display the previous image.
+        //
+        // Hence, following method is useless
+        // paintComponent(getGraphics());
+
+      }
+    }
+  }
+
   /* ===================================================== */
 
   public GLEventListener getGLEventListener() {
@@ -133,39 +159,41 @@ public class GLPanel extends JPanel {
    * On macOS, this should be performed in the main thread
    * <ul>
    * <li>By using -XstartOnMainThread (but warning with Swing and JavaFX that may be hanging)
-   * <li>By having the context initialization performed by the AWT thread (through the GLPanel+GLEventListener)
+   * <li>By having the context initialization performed by the AWT thread (through the
+   * GLPanel+GLEventListener)
    * </ul>
    */
   protected void initContext() {
     System.out.println("GLPanel : initContext");
 
     // A GL Context with CGL
-    if(useCGL) {
+    if (useCGL) {
       cglContext = new CGLContext();
       cglContext.init();
-      System.out.println("GLPanel : initContext : CGL done");
+      Debug.debug(debug, "GLPanel : initContext : CGL done");
     }
-    
+
     // A GL Context with GLUT
     // - hanging while ONSCREEN
     // - not generating FBO properly if omitted
-    if(useGLUT) {
+    if (useGLUT) {
       glutContext = new GLUTContext_macOS_10_15_7();
       glutContext.init(false); // do not init GLUT a second time
-      System.out.println("GLPanel : initContext : GLUT done");
+      Debug.debug(debug, "GLPanel : initContext : GLUT done");
     }
-    
+
     // OpenGL
     this.gl = new GL_macOS_10_15_7();
 
     GLError.checkAndThrow(gl);
-    
+
     // FBO
     this.fbo = new FBO(getFBOWidth(), getFBOHeight());
+    //this.fbo.debug = false;
 
     this.fbo.prepare(gl); // WEIRD BUT ONLY SUCCEED TO PREPARE AT INIT
-    // NOT DURING 
-    System.out.println("GLPanel : initContext : FBO done");
+    // NOT DURING
+    Debug.debug(debug, "GLPanel : initContext : FBO done");
 
     // this.getWidth(), this.getHeight());
 
@@ -185,142 +213,150 @@ public class GLPanel extends JPanel {
     return (int) Math.max(600, this.getWidth());
   }
 
+
+
+  /**
+   * 
+   * This method will resize the FBO and then update the component 
+   * 
+   * @see {@link #renderGLToImage()}
+   */
+  protected void renderGLToImage(int width, int height) {
+    Debug.debug(debug, "------------------------------------------------------");
+    Debug.debug(debug, "renderGLToImage " + width + " x " + height);
+
+    fbo.release(gl);
+    fbo.resize(width, height);
+    fbo.prepare(gl);
+
+    Debug.debug(debug, "Resized FBO to " + width + " x " + height);
+
+    if (glListener != null)
+      glListener.reshape(gl, height, height, width, height);
+
+    renderGLToImage();
+  }
+
+  /**
+   * This method will render in FBO and then query a component repaint to ensure it is repainted
+   * ONCE the image is available.
+   * 
+   * This method can potentially execute in a separate thread (namely the main macOS thread) and hence
+   * triggers repaint through SwingUtilities.invokeLater()
+   */
   protected void renderGLToImage() {
-    
+
     boolean hasNewImage = false;
-    
+
     // Acquire context
-    //if (cglContext != null)
-    //  cglContext.lockContext();//makeCurrent();
+    // if (cglContext != null)
+    // cglContext.lockContext();//makeCurrent();
 
     // Prepare FBO
-    //fbo.prepare(gl);
-    
+    // fbo.prepare(gl);
+
     // Render GL
-    if(glListener!=null)
+    if (glListener != null)
       glListener.display(gl);
 
 
     // FBO To image
-    if(fbo!=null) {
+    if (fbo != null) {
       out = fbo.getImage(gl);
       hasNewImage = true;
 
-      // Release context
-      //if (cglContext != null)
-      //  cglContext.release();
-    }
-    
-    
-    if(hasNewImage) {
-      try {
-        File debugPath = new File("target/GLPanel.png");
-        
-        ImageIO.write(out, "png", debugPath);
-        System.out.println("GLPanel : saved GLPanel image as " + debugPath.getPath());
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
+      // The image has been rendered in macOS main thread, now we want
+      // to notify the component that it is ready for rendering
+      SwingUtilities.invokeLater(new Runnable() {
 
+        @Override
+        public void run() {
+          repaint();
+        }
+
+      });
+
+      /*
+       * if (hasNewImage) { try { File debugPath = new File("target/GLPanel.png");
+       * 
+       * ImageIO.write(out, "png", debugPath);
+       * System.out.println("GLPanel : saved GLPanel image as " + debugPath.getPath()); } catch
+       * (IOException e) { e.printStackTrace(); }
+       * 
+       * }
+       */
+
+      // Release context
+      // if (cglContext != null)
+      // cglContext.release();
     }
-    
-    
   }
+
+  /* ===================================================== */
+  
   
   /* ===================================================== */
-
-  protected void resizeFBOOnMainThread(int width, int height) {
-    OSXUtil.RunOnMainThread(true, false, new Runnable() {
-      @Override
-      public void run() {
-        fbo.resize(width, height); 
-        System.out.println("Resized FBO to " + width + " x " + height);
-
-      }
-    });
-  }
-
   
-  protected void renderGLToImageOnMainThread() {
-    OSXUtil.RunOnMainThread(true, false, new Runnable() {
+  protected Runnable getTask_renderGLToImage(int width, int height) {
+    return new Runnable() {
       @Override
       public void run() {
-        renderGLToImage();
+        renderGLToImage(width, height);
       }
-    });
+    };
   }
-
-  protected void renderGLToImageOnMainThread(int width, int height) {
-    OSXUtil.RunOnMainThread(true, false, new Runnable() {
+  
+  protected Runnable getTask_initContext() {
+    return new Runnable() {
       @Override
       public void run() {
-        fbo.release(gl);
-        fbo.resize(width, height);
-        fbo.prepare(gl);
-        System.out.println("Resized FBO to " + width + " x " + height);
-        renderGLToImage();
+        initContext();
       }
-    });
+    };
   }
 
-  protected void initContextOnMainThread() {
+
+  protected void renderGLToImage_OnMainThread(int width, int height, boolean waitUntilDone,
+      boolean kickNSApp) {
+    OSXUtil.RunOnMainThread(waitUntilDone, kickNSApp, getTask_renderGLToImage(width, height));
+  }
+
+  protected void initContext_OnMainThread() {
     // ---------------------------------------------
     // THIS USAGE OF JOGL CLASS SEAMS TO WORK
     // TODO : port/include in panama
-    
-    boolean useJOGL = true;
-    if(useJOGL) {
-      GLProfile.initSingleton();
-      OSXUtil.RunOnMainThread(true, false, new Runnable() {
-        @Override
-        public void run() {
-          initContext();
-        }
-      });
-    }
-    
+
+    GLProfile.initSingleton();
+    OSXUtil.RunOnMainThread(true, false, getTask_initContext());
+
     // ---------------------------------------------
     // Classical way we should follow
-    else {
+    /*else {
       boolean direct = SwingUtilities.isEventDispatchThread();
-      
-      if(direct) {
+
+      if (direct) {
         System.out.println("GLPanel : direct init");
         initContext();
-        
-  
-        
       }
-      
+
       // ---------------------------------------------
       else {
         final AtomicBoolean initialized = new AtomicBoolean(false);
-  
-        /**
-         * Causes doRun.run() to be executed synchronously on the AWT event dispatching thread. This
-         * call blocks until all pending AWT events have been processed and (then) doRun.run() returns.
-         * This method should be used when an application thread needs to update the GUI. It shouldn't
-         * be called from the event dispatching thread. Here's an example that creates a new application
-         * thread that uses invokeAndWait to print a string from the event dispatching thread and then,
-         * when that's finished, print a string from the application thread.
-         */
+
         try {
           SwingUtilities.invokeAndWait(new Runnable() {
             public void run() {
               initContext();
               initialized.set(true);
-           }
+            }
           });
         } catch (InvocationTargetException e) {
-          //e.printStackTrace();
+          // e.printStackTrace();
         } catch (InterruptedException e) {
-          //e.printStackTrace();
+          // e.printStackTrace();
         }
       }
-    
-    }
+
+    }*/
   }
-
-
-
 }

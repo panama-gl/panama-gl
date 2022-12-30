@@ -11,6 +11,7 @@ import jdk.incubator.foreign.CLinker;
 import opengl.ByteUtils;
 import opengl.GL;
 import opengl.GLError;
+import panamagl.Debug;
 
 /**
  * A frame buffer object, or {@link FBO}, can render OpenGL into an offscreen buffer
@@ -20,6 +21,9 @@ import opengl.GLError;
  * https://www.khronos.org/opengl/wiki/Framebuffer_Object
  * https://www.khronos.org/opengl/wiki/Common_Mistakes
  * https://www.khronos.org/opengl/wiki/Framebuffer_Object_Extension_Examples#Quick_example,_render_to_texture_(2D)
+ *
+ *
+ * Hint : to debug this class, invoke a program using it with flag -Dopengl.fbo.FBO
  *
  * @author Martin Pernollet
  */
@@ -40,7 +44,7 @@ public class FBO {
     int internalFormat = -1;
     int textureType = -1;
 
-    boolean debug = true;
+    boolean debug = Debug.check(FBO.class);
 
     // supposed to copy to BufferedImage faster when true
     // using false allows to make copy by tweaking bytes
@@ -87,12 +91,9 @@ public class FBO {
         internalFormat = gl.GL_RGBA8();//gl.GL_BGRA();
         textureType = gl.GL_UNSIGNED_BYTE();
 
-        if(debug){
-            System.out.println("FBO.internalFormat : " + internalFormat + " (default gl.GL_RGBA8)");
-            System.out.println("FBO.format         : " + format + " (default gl.GL_BGRA)");
-            //System.out.println("FBO: " + gl.GL_RGBA8());
-        }
-
+        Debug.debug(debug, "FBO.internalFormat : " + internalFormat + " (default gl.GL_RGBA8)");
+        Debug.debug(debug, "FBO.format         : " + format + " (default gl.GL_BGRA)");
+        
         // ------------------------
         // Generate TEXTURE buffer
 
@@ -100,8 +101,7 @@ public class FBO {
         gl.glGenTextures(1, textureBufferIds);
         idTexture = (int) intHandle.get(textureBufferIds, 0);
 
-        if(debug)
-            System.out.println("FBO: Got texture ID : " + idTexture);
+        Debug.debug(debug, "FBO: Got texture ID : " + idTexture);
 
         
         // Check errors
@@ -129,8 +129,7 @@ public class FBO {
         gl.glGenFramebuffers(1, frameBufferIds);
         idFrameBuffer = (int) intHandle.get(frameBufferIds, 0);
 
-        if(debug)
-            System.out.println("FBO: Got FB ID : " + idFrameBuffer);
+        Debug.debug(debug, "FBO: Got FB ID : " + idFrameBuffer);
         
      // Check errors
         if(idFrameBuffer==0) {
@@ -151,8 +150,7 @@ public class FBO {
         gl.glGenRenderbuffers(1, renderBufferIds);
         idRenderBuffer = (int) intHandle.get(renderBufferIds, 0);
 
-        if(debug)
-            System.out.println("FBO: Got RenderBuffer ID : " + idRenderBuffer);
+        Debug.debug(debug, "FBO: Got RenderBuffer ID : " + idRenderBuffer);
 
         // Bind render buffer
         gl.glBindRenderbuffer(gl.GL_RENDERBUFFER(), idRenderBuffer);
@@ -183,10 +181,7 @@ public class FBO {
         // Mark as prepared
         prepared = true;
         
-        if(debug) {
-          System.out.println("FBO: Prepared! ");
- 
-        }
+        Debug.debug(debug, "FBO: Prepared! ");
     }
 
     protected void diagnoseError(GL gl, String item) {
@@ -223,8 +218,7 @@ public class FBO {
 
         prepared = false;
 
-        if(debug)
-            System.out.println("FBO: Resources released !");
+        Debug.debug(debug, "FBO: Resources released !");
 
     }
 
@@ -248,8 +242,7 @@ public class FBO {
         else
             fromBGRABufferToImage(pixelsRead, out);
 
-        if(debug)
-            System.out.println("FBO: Image created !");
+        Debug.debug(debug, "FBO: Image created !");
 
 
         // FIXME : Not mapped exception is not relevant

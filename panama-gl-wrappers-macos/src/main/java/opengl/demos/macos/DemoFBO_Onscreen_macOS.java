@@ -40,13 +40,13 @@ public class DemoFBO_Onscreen_macOS {
     GLEventAdapter listener = new GLEventAdapter() {
       public void display(GL gl) {
         SampleTriangle.rgbaTriangle2D(w, h);
-        System.out.println("GLEventAdapter : Triangle rendered!");
+        //System.out.println("GLEventAdapter : Triangle rendered!");
       }
       @Override
       public void reshape(GL gl, int x, int y, int width, int height) {
         w = width;
         h = height;
-        super.reshape(gl, x, y, width, height);
+        //super.reshape(gl, x, y, width, height);
       }
       int w=800;
       int h=600;

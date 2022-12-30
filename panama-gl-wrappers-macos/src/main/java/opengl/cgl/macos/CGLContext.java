@@ -10,6 +10,7 @@ import jdk.incubator.foreign.SegmentAllocator;
 import opengl.GLContext;
 import opengl.cgl.macos.v10_15_7.OpenGL_h;
 import opengl.macos.v11_4.glut_h;
+import panamagl.Debug;
 
 /**
  * The CGL API is a low-level, platform-independent API for creating, managing, and rendering 2D and
@@ -43,10 +44,13 @@ import opengl.macos.v11_4.glut_h;
  * opening a JPanel in a CGL context, you should try to identify the root cause by looking at the
  * code and debugging the issue.
  * 
- * @author Martin Pernollet
+ * 
+ * Hint : to debug this class, invoke a program using it with flag -Dopengl.cgl.macos.CGLContext
+ *
  * 
  * @see CGLImpl.makeCurrent in JOGL
  *
+ * @author Martin Pernollet
  */
 public class CGLContext implements GLContext {
   ResourceScope scope;
@@ -57,7 +61,7 @@ public class CGLContext implements GLContext {
   MemorySegment context;
 
 
-  boolean debug = true;
+  boolean debug = Debug.check(CGLContext.class);
 
   public CGLContext() {
     // Manually load CGL
@@ -124,7 +128,7 @@ public class CGLContext implements GLContext {
     int err = OpenGL_h.CGLLockContext(context);
 
     if (OpenGL_h.kCGLNoError() == err) {
-      System.out.println("CGLContext : lock : " + err + " = no error");
+      Debug.debug(debug, "CGLContext : lock : " + err + " = no error");
 
     } 
     else if(OpenGL_h.kCGLBadContext() == err) {
@@ -164,7 +168,7 @@ public class CGLContext implements GLContext {
     int err = OpenGL_h.CGLSetCurrentContext(context);
 
     if (OpenGL_h.kCGLNoError() == err) {
-      System.out.println("CGLContext : set current : " + err + " = no error");
+      Debug.debug(debug, "CGLContext : set current : " + err + " = no error");
 
     } else if (OpenGL_h.kCGLBadContext() == err) {
       System.err.println("CGLContext : set current : " + err
@@ -192,8 +196,7 @@ public class CGLContext implements GLContext {
   protected MemoryAddress getCurrentContext() {
     MemoryAddress currentContext = OpenGL_h.CGLGetCurrentContext();
 
-    if (debug)
-      System.out.println("CGLContext : Current context = " + currentContext.toRawLongValue());
+    Debug.debug(debug, "CGLContext : Current context = " + currentContext.toRawLongValue());
 
     return currentContext;
   }
@@ -204,11 +207,10 @@ public class CGLContext implements GLContext {
     context = CLinker.toCString("", scope);
     OpenGL_h.CGLCreateContext(pixelFormat, c_share, context);
 
-    if (debug) {
-      System.out.println("CGLContext : " + Arrays.toString(pixelFormat.toIntArray()));
-      System.out.println("CGLContext : " + Arrays.toString(npix.toIntArray()));
-      System.out.println("CGLContext : CREATED!!");
-    }
+    Debug.debug(debug, "CGLContext : " + Arrays.toString(pixelFormat.toIntArray()));
+    Debug.debug(debug, "CGLContext : " + Arrays.toString(npix.toIntArray()));
+    Debug.debug(debug, "CGLContext : CREATED!!");
+    
 
   }
 
@@ -234,14 +236,12 @@ public class CGLContext implements GLContext {
 
     OpenGL_h.CGLChoosePixelFormat(attribs, pixelFormat, npix);
 
-    if (debug) {
-      System.out.println(
-          "CGLContext : CGLChoosePixelFormat attributes " + Arrays.toString(attribs.toIntArray()));
-      System.out.println(
-          "CGLContext : CGLChoosePixelFormat format " + Arrays.toString(pixelFormat.toIntArray()));
-      System.out.println("CGLContext : CGLChoosePixelFormat max number of sample per pixel "
-          + Arrays.toString(npix.toIntArray()));
-    }
+
+    Debug.debug(debug, "CGLContext : CGLChoosePixelFormat attributes " + Arrays.toString(attribs.toIntArray()));
+    Debug.debug(debug, "CGLContext : CGLChoosePixelFormat format " + Arrays.toString(pixelFormat.toIntArray()));
+    Debug.debug(debug, "CGLContext : CGLChoosePixelFormat max number of sample per pixel "
+        + Arrays.toString(npix.toIntArray()));
+    
     return npix;
   }
 
@@ -250,8 +250,7 @@ public class CGLContext implements GLContext {
     OpenGL_h.CGLDestroyPixelFormat(pixelFormat);
     OpenGL_h.CGLDestroyContext(context);
 
-    if (debug)
-      System.out.println("CGLContext destroyed");
+    Debug.debug(debug, "CGLContext destroyed");
 
   }
 }
