@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import org.jzy3d.maths.TicToc;
@@ -38,7 +40,7 @@ import opengl.macos.GL_macOS_10_15_7;
  * @author Martin Pernollet
  *
  */
-public class GLPanel extends JPanel {
+public class GLPanel extends JPanel implements GLAutoDrawable {
   private static final long serialVersionUID = -4601832524814661585L;
 
   protected GL gl;
@@ -55,15 +57,15 @@ public class GLPanel extends JPanel {
   protected boolean debug = Debug.check(GLPanel.class);
   
   protected TicToc renderTimer = new TicToc();
+  
+  protected ExecutorService exec = Executors.newSingleThreadExecutor();
 
 
   public GLPanel() {
-    // setPreferredSize(new Dimension(600, 400));
-
-    // This listener hold the most important part of the rendering
-    // logic.
+    // This listener hold the most important part of the rendering flow
     addComponentListener(new ResizeHandler());
   }
+  
 
   /**
    * Called after the JPanel has been added to the Swing hierarchy but before it is made visible.
@@ -72,8 +74,7 @@ public class GLPanel extends JPanel {
   public void addNotify() {
     super.addNotify();
 
-
-    // Force context init in main thread.
+    // Initialize GL context from main macOS thread
     initContext_OnMainThread();
   }
 
@@ -82,10 +83,8 @@ public class GLPanel extends JPanel {
    */
   @Override
   public void removeNotify() {
-    // Clean up CGL context
-    if (cglContext != null)
-      cglContext.destroy();
-
+    destroyContext();
+    
     super.removeNotify();
   }
 
@@ -141,11 +140,26 @@ public class GLPanel extends JPanel {
   }
 
   /* ===================================================== */
+  // FROM GL AUTO DRAWABLE INTERFACE
+  
+  @Override
+  public void display() {
+    renderTimer.tic();
 
+    // FIXME : why does it work with this
+    renderGLToImage_OnMainThread(getWidth(), getHeight(), false, true);
+    // FIXME : and not with this?
+    
+    //renderGLToImage_OnMainThread(false, true);
+  }
+
+
+  @Override
   public GLEventListener getGLEventListener() {
     return glListener;
   }
 
+  @Override
   public void setGLEventListener(GLEventListener glEvents) {
     this.glListener = glEvents;
   }
@@ -177,6 +191,7 @@ public class GLPanel extends JPanel {
   protected void initContext() {
     System.out.println("GLPanel : initContext");
 
+    // --------------------------------------
     // A GL Context with CGL
     if (useCGL) {
       cglContext = new CGLContext();
@@ -184,6 +199,7 @@ public class GLPanel extends JPanel {
       Debug.debug(debug, "GLPanel : initContext : CGL done");
     }
 
+    // --------------------------------------
     // A GL Context with GLUT
     // - hanging while ONSCREEN
     // - not generating FBO properly if omitted
@@ -193,6 +209,7 @@ public class GLPanel extends JPanel {
       Debug.debug(debug, "GLPanel : initContext : GLUT done");
     }
 
+    // --------------------------------------
     // OpenGL
     this.gl = new GL_macOS_10_15_7();
 
@@ -200,20 +217,24 @@ public class GLPanel extends JPanel {
 
     // FBO
     this.fbo = new FBO(getFBOWidth(), getFBOHeight());
-    //this.fbo.debug = false;
-
-    this.fbo.prepare(gl); // WEIRD BUT ONLY SUCCEED TO PREPARE AT INIT
-    // NOT DURING
+    this.fbo.prepare(gl); 
     Debug.debug(debug, "GLPanel : initContext : FBO done");
 
-    // this.getWidth(), this.getHeight());
-
-    // this.cglContext.makeCurrent();
-    // this.cglContext.lockContext();
-
-    // this.fbo.prepare(gl); // NOT NEEDED HERE
-
-    // this.cglContext.release();
+    // --------------------------------------
+    // Invoke GLEventListener.init(..)
+    if(glListener!=null) {
+      glListener.init(gl);
+      
+      // Not needed, only needed if we use GLUT MAIN LOOP 
+      //glutContext.glutDisplayFunc(this::invokeDisplay);
+    }
+  }
+  
+  
+  protected void invokeDisplay() {
+    if(glListener!=null) {
+      glListener.display(gl);
+    }
   }
 
   protected int getFBOHeight() {
@@ -223,11 +244,16 @@ public class GLPanel extends JPanel {
   protected int getFBOWidth() {
     return (int) Math.max(600, this.getWidth());
   }
+  
+  protected void destroyContext() {
+    // Clean up CGL context
+    if (cglContext != null)
+      cglContext.destroy();
+  }
 
 
 
   /**
-   * 
    * This method will resize the FBO and then update the component 
    * 
    * @see {@link #renderGLToImage()}
@@ -243,7 +269,7 @@ public class GLPanel extends JPanel {
     Debug.debug(debug, "Resized FBO to " + width + " x " + height);
 
     if (glListener != null)
-      glListener.reshape(gl, height, height, width, height);
+      glListener.reshape(gl, 0, 0, width, height);
 
     renderGLToImage();
   }
@@ -257,11 +283,6 @@ public class GLPanel extends JPanel {
    */
   protected void renderGLToImage() {
 
-    // Acquire context
-    // if (cglContext != null)
-    // cglContext.lockContext();//makeCurrent();
-
-
     // Render GL
     if (glListener != null)
       glListener.display(gl);
@@ -274,30 +295,35 @@ public class GLPanel extends JPanel {
       // The image has been rendered in macOS main thread, now we want
       // to notify the component that it is ready for rendering in the AWT Thread
       SwingUtilities.invokeLater(new Runnable() {
-
         @Override
         public void run() {
           repaint();
         }
-
       });
+      
+      //exec.execute(getTask_saveImage(out));
 
-      // Release context
-      // if (cglContext != null)
-      // cglContext.release();
     }
   }
 
   /* ===================================================== */
+  // BELOW FUNC ALLOW EXECUTING IN APPKIT MAIN THREAD
   
-  
-  /* ===================================================== */
   
   protected Runnable getTask_renderGLToImage(int width, int height) {
     return new Runnable() {
       @Override
       public void run() {
         renderGLToImage(width, height);
+      }
+    };
+  }
+  
+  protected Runnable getTask_renderGLToImage() {
+    return new Runnable() {
+      @Override
+      public void run() {
+        renderGLToImage();
       }
     };
   }
@@ -309,6 +335,20 @@ public class GLPanel extends JPanel {
         initContext();
       }
     };
+  }
+  
+  protected Runnable getTask_saveImage(BufferedImage image) {
+    return new Runnable() {
+      @Override
+      public void run() {
+        ImageUtils.save(image, "target/glpanel.png");
+      }
+    };
+  }
+
+  protected void renderGLToImage_OnMainThread(boolean waitUntilDone,
+      boolean kickNSApp) {
+    OSXUtil.RunOnMainThread(waitUntilDone, kickNSApp, getTask_renderGLToImage());
   }
 
 

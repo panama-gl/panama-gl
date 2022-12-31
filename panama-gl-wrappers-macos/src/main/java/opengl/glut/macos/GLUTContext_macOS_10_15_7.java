@@ -54,16 +54,25 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
         glut_h.glutCreateWindow(CLinker.toCString(windowName, scope));
         
         // This dummy stub registration is required to get macOS onscreen rendering working
-        addDummyCallback();
+        glutDisplayFunc(GLUTContext_macOS_10_15_7::dummy);
+
     }
     
-    protected void addDummyCallback() {
-      MemoryAddress displayStub = glutDisplayFunc$func.allocate(GLUTContext_macOS_10_15_7::dummy, scope);
-      //var idleStub = glutIdleFunc$func.allocate(teapot::onIdle, scope);
+    private static void dummy() {}
+
+    
+    public void glutDisplayFunc(glutDisplayFunc$func fi) {
+      MemoryAddress displayStub = glutDisplayFunc$func.allocate(fi, scope);
       glut_h.glutDisplayFunc(displayStub);
     }
 
-    private static void dummy() {}
+    public void glutIdleFunc(glutIdleFunc$func fi) {
+      MemoryAddress idleStub = glutIdleFunc$func.allocate(fi, scope);
+      glut_h.glutIdleFunc(idleStub);
+
+    }
+
+
 
     @Override
     public void destroy() {
