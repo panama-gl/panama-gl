@@ -242,6 +242,9 @@ public class FBO {
     int nBytes = width * height * channels;
     pixelsRead = MemorySegment.allocateNative(nBytes, newImplicitScope());
     gl.glReadPixels(0, 0, width, height, format, textureType, pixelsRead);
+    
+    Debug.debug(debug, "FBO: Will read " + nBytes + " bytes due to " + width + "x" + height + " pixels");
+
 
     // Copy pixels to buffered image
     if (arrayExport)
@@ -307,9 +310,9 @@ public class FBO {
       out.setRGB(w, h, rgba);
 
       // Console out
-      boolean console = false;
+      //boolean console = false;
 
-      if (console) {
+      if (debug) {
         int intB = ByteUtils.BtoI(byB);
         int intG = ByteUtils.BtoI(byG);
         int intR = ByteUtils.BtoI(byR);

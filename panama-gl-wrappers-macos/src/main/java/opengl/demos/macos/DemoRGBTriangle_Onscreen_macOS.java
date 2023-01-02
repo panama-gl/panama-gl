@@ -10,6 +10,7 @@ import javax.swing.SwingUtilities;
 import org.apache.logging.log4j.core.util.ExecutorServices;
 import opengl.GL;
 import opengl.demos.SampleTriangle;
+import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.GLPanel;
 
@@ -68,23 +69,11 @@ public class DemoRGBTriangle_Onscreen_macOS {
     Thread.sleep(5000);
     System.out.println("Start loop");
     
-    ExecutorService exec = Executors.newSingleThreadExecutor();
+    Animator a = new Animator(panel);
+    a.start();
     
-    exec.execute(new Runnable() {
-      public void run() {
-        while(true) {
-          //System.out.print("LOOP ");
-          panel.display();
-          try {
-            Thread.sleep(100);
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
-        }
-      }
-    });
-    
-    
+    //Thread.sleep(5000);
+    //a.stop();
 
   }
 
@@ -111,17 +100,13 @@ public class DemoRGBTriangle_Onscreen_macOS {
     return new GLEventAdapter() {
       public void display(GL gl) {
         
-        if(h-inc > 10) {
-          inc+=dir;
-        }
-        else if(h-inc == 10) {
+        if(h-inc == 10) {
           dir*=-1;
-          inc+=dir;
         }
-        else if(h-inc == h) {
+        else if(h-inc == 600) {
           dir*=1;
-          inc+=dir;
         }
+        inc+=dir;
         
         //System.out.println("w:" + (w-inc) + " h:" + (h-inc));
 

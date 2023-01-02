@@ -36,15 +36,19 @@ import static opengl.macos.v10_15_3.glut_h.glutMainLoop;
 import static opengl.macos.v10_15_3.glut_h.glutPostRedisplay;
 import static opengl.macos.v10_15_3.glut_h.glutSolidTeapot;
 import static opengl.macos.v10_15_3.glut_h.glutSwapBuffers;
+
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
+
 import opengl.GL;
 import opengl.GLError;
+
 import panamagl.GLEventAdapter;
 import panamagl.GLPanel;
+import panamagl.Animator;
 
 /**
  * VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
@@ -99,7 +103,11 @@ public class DemoTeapot_Onscreen_macOS {
       }
     });
     
-    while(true) {
+    
+    Animator a = new Animator(panel);
+    a.start();
+    
+    /*while(true) {
       panel.display();
       try {
         Thread.sleep(100);
@@ -107,7 +115,7 @@ public class DemoTeapot_Onscreen_macOS {
         // TODO Auto-generated catch block
         e.printStackTrace();
       }
-    }
+    }*/
 
   }
 
@@ -121,6 +129,7 @@ public class DemoTeapot_Onscreen_macOS {
     
         // Reset Background
         glClearColor(0f, 0f, 0f, 0f);
+        
         // Setup Lighting
         glShadeModel(GL_SMOOTH());
         var pos = allocator.allocateArray(C_FLOAT, new float[] { 0.0f, 15.0f, -15.0f, 0 });
@@ -135,7 +144,8 @@ public class DemoTeapot_Onscreen_macOS {
         glEnable(GL_LIGHT0());
         glEnable(GL_DEPTH_TEST());
         
-        GLError.checkAndThrow(gl);
+        if(gl!=null)
+          GLError.checkAndThrow(gl);
       }
       
       public void display(GL gl) {
@@ -152,7 +162,8 @@ public class DemoTeapot_Onscreen_macOS {
         
         System.out.println("GLEventAdapter : display");
         
-        GLError.checkAndThrow(gl);
+        if(gl!=null)
+          GLError.checkAndThrow(gl);
 
       }
       

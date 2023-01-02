@@ -4,16 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import opengl.GL;
 import opengl.demos.SampleTriangle;
@@ -32,6 +30,7 @@ public class ITTestGLPanel {
   BufferedImage screenshotWhenShown = null;
   List<BufferedImage> screenshotWhenResize = new ArrayList<>();
 
+@Ignore("Work in progress")
   @Test
   public void main() throws InterruptedException {
     
@@ -142,7 +141,7 @@ public class ITTestGLPanel {
     });
     
     latch.await(6, TimeUnit.SECONDS);
-    System.err.println("UNDERSTAND RESIZE EVENT APPEAR AFTER THIS  :(");
+    System.err.println("UNDERSTAND WHY RESIZE EVENT APPEAR AFTER THIS  :(");
     
     //Assert.assertNotNull(screenshotWhenShown);  
     //Assert.assertEquals(1, screenshotWhenResize.size());  

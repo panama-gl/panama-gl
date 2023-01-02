@@ -56,6 +56,8 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   
   protected boolean debug = Debug.check(GLPanel.class);
   
+  protected String debugFile = "target/glpanel.png";
+  
   protected TicToc renderTimer = new TicToc();
   
   protected ExecutorService exec = Executors.newSingleThreadExecutor();
@@ -149,7 +151,6 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
     // FIXME : why does it work with this
     renderGLToImage_OnMainThread(getWidth(), getHeight(), false, true);
     // FIXME : and not with this?
-    
     //renderGLToImage_OnMainThread(false, true);
   }
 
@@ -218,6 +219,7 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
     // FBO
     this.fbo = new FBO(getFBOWidth(), getFBOHeight());
     this.fbo.prepare(gl); 
+    
     Debug.debug(debug, "GLPanel : initContext : FBO done");
 
     // --------------------------------------
@@ -291,6 +293,9 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
     // FBO To image
     if (fbo != null) {
       out = fbo.getImage(gl);
+      
+      if(out==null)
+        System.err.println("OUT image is null!");
 
       // The image has been rendered in macOS main thread, now we want
       // to notify the component that it is ready for rendering in the AWT Thread
@@ -301,8 +306,12 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
         }
       });
       
-      //exec.execute(getTask_saveImage(out));
-
+      if(debugFile!=null) {
+        exec.execute(getTask_saveImage(out, debugFile));
+      }
+    }
+    else {
+      System.err.println("FBO is null!");
     }
   }
 
@@ -337,11 +346,11 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
     };
   }
   
-  protected Runnable getTask_saveImage(BufferedImage image) {
+  protected Runnable getTask_saveImage(BufferedImage image, String file) {
     return new Runnable() {
       @Override
       public void run() {
-        ImageUtils.save(image, "target/glpanel.png");
+        ImageUtils.save(image, file);
       }
     };
   }
