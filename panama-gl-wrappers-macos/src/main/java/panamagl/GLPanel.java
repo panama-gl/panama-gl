@@ -76,10 +76,17 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   protected TicToc paintInterval = new TicToc();
   
   protected ExecutorService exec = Executors.newSingleThreadExecutor();
+  
+  protected boolean initialized = false;
 
 
   public GLPanel() {
-    GraphicsUtils.printGraphicsEnvironment("GLPanel");
+    // Load OSXUtil native as soon as possible for macOS!
+    //GLProfile.initSingleton();
+
+    // Show debug info
+    if(debug)
+      GraphicsUtils.printGraphicsEnvironment("GLPanel");
     
     // This listener hold the most important part of the rendering flow
     addComponentListener(new ResizeHandler());
@@ -94,6 +101,10 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
 
   /**
    * Called after the JPanel has been added to the Swing hierarchy but before it is made visible.
+   * 
+   * Initialization may occur in other threads and not be completed when this method returns.
+   * 
+   * To ensure the component is initialized, call {@link #ini
    */
   @Override
   public void addNotify() {
@@ -246,8 +257,20 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   /* ===================================================== */
   // FROM GL AUTO DRAWABLE INTERFACE
   
+  /**
+   * If the panel initialization has achieved, this triggers an offscreen rendering, 
+   * maybe on a separated thread (macOS case), from which an asynchronous repaint will 
+   * be triggered.
+   */
   @Override
   public void display() {
+    // Skip potential too early calls to display to avoid
+    // exceptions
+    if(!initialized) {
+      return;
+    }
+    
+    // Count calls to display
     countDisplay++;
     
     renderTimer.tic();
@@ -357,6 +380,14 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
       // Not needed, only needed if we use GLUT MAIN LOOP 
       //glutContext.glutDisplayFunc(this::invokeDisplay);
     }
+    
+    // Mark as ready for display
+    initialized = true;
+  }
+  
+  @Override
+  public boolean isInitialized() {
+    return initialized;
   }
   
   
@@ -544,4 +575,11 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
     this.fbo.setFlipY(flipY);
   }
 
+  public FBO getFBO() {
+    return fbo;
+  }
+
+  public void setFBO(FBO fbo) {
+    this.fbo = fbo;
+  }
 }

@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 /** A naive animator to ease testing. */
 public class Animator {
   protected ExecutorService exec = Executors.newSingleThreadExecutor();
-  protected int sleepTimeMs = 100;
+  protected int sleepTimeMs = 41; // a bit more than 40ms, retinian persistance
   protected boolean loop = true;
   protected GLAutoDrawable drawable;
   

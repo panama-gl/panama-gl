@@ -62,16 +62,12 @@ public class DemoRotatingStuff_Onscreen_macOS {
     // ---------------------------------------
     // Animate
     
-    Thread.sleep(5000);
-    System.out.println("Start loop");
+    //Thread.sleep(5000);
+    //System.out.println("Start loop");
     
     Animator a = new Animator(panel);
-    a.setSleepTime(30);
+    //a.setSleepTime(30);
     a.start();
-    
-    //Thread.sleep(5000);
-    //a.stop();
-
   }
 
   /** Draw a fullcanvas triangle. */

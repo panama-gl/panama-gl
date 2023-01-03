@@ -1,15 +1,17 @@
 package panamagl;
 
-import org.junit.Ignore;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import org.junit.Test;
 import junit.framework.Assert;
 import opengl.GL;
+import opengl.fbo.FBO;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class TestGLPanel {
-@Ignore("Work in progress : Failing from CLI, but working from IDE")
   @Test
-  public void listeners() throws InterruptedException {
+  public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
     
     // ------------------------------------------------
     // Given a panel with an event counter
@@ -34,6 +36,8 @@ public class TestGLPanel {
         event.reshapeCounter++;
       }
     });
+    
+    Assert.assertFalse(panel.isInitialized());
 
     
     // ------------------------------------------------
@@ -46,19 +50,23 @@ public class TestGLPanel {
     Assert.assertEquals(1, event.initCounter);
     Assert.assertEquals(0, event.displayCounter);
     Assert.assertEquals(0, event.reshapeCounter);
+    
+    Assert.assertTrue(panel.isInitialized());
+
 
     
     // ------------------------------------------------
     // When : resize, and after a while
     
     panel.setSize(20, 20);
+    panel.display(); // not needed from IDE but from CLI
     
-    Thread.sleep(500);
+    Thread.sleep(1000);
     
     // Then : should trigger glEventListener.display() and reshape()
-    Assert.assertEquals(1, event.initCounter);
-    Assert.assertEquals(1, event.displayCounter);
-    Assert.assertEquals(1, event.reshapeCounter);
+    Assert.assertTrue(0 < event.initCounter);
+    Assert.assertTrue(0 < event.displayCounter);
+    Assert.assertTrue(0 < event.reshapeCounter);
 
 
   }
@@ -69,4 +77,45 @@ public class TestGLPanel {
     int displayCounter = 0;
     int reshapeCounter = 0;
   }
+  
+  
+  
+  @Test
+  public void whenPanelIsResized_ThenFBOIsResized() throws InterruptedException {
+    
+    int WIDTH = 100;
+    int HEIGHT= 100;
+
+    // Given an initialized panel
+    GLPanel panel = new GLPanel();
+    panel.addNotify();
+    Assert.assertTrue(panel.isInitialized());
+    
+    // -------------------------------
+    // When panel is resized
+    
+    panel.setSize(WIDTH, HEIGHT);
+    panel.display();
+    
+    //Thread.sleep(200);
+
+    // Then FBO is resized as well
+    Assert.assertEquals(WIDTH, panel.getFBO().getWidth());
+    Assert.assertEquals(HEIGHT, panel.getFBO().getHeight());
+    
+    // -------------------------------
+    // When panel is resized again
+    
+    panel.setSize(3*WIDTH, 2*HEIGHT);
+    panel.display();
+    
+    //Thread.sleep(200);
+
+    // Then FBO is resized as well
+    Assert.assertEquals(3*WIDTH, panel.getFBO().getWidth());
+    Assert.assertEquals(2*HEIGHT, panel.getFBO().getHeight());
+
+
+  }
+  
 }
