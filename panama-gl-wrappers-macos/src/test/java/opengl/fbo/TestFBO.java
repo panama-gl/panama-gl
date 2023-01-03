@@ -10,15 +10,15 @@ import opengl.GL;
 import opengl.demos.SampleTriangle;
 
 public class TestFBO {
-  public static int[] RED = {255,0,0,255};
-  public static int[] GREEN = {0,255,0,255};
-  public static int[] BLUE = {0,0,255,255};
+  public static int[] RED = {255, 0, 0, 255};
+  public static int[] GREEN = {0, 255, 0, 255};
+  public static int[] BLUE = {0, 0, 255, 255};
 
   public static void givenFBO_whenRenderSomething_ThenGetBufferedImage(GL gl) {
-    String file1 = "target/" +TestFBO_macOS.class.getSimpleName() + "-1.png";
-    String file2 = "target/" +TestFBO_macOS.class.getSimpleName() + "-2.png";
+    String file1 = "target/" + TestFBO_macOS.class.getSimpleName() + "-1.png";
+    String file2 = "target/" + TestFBO_macOS.class.getSimpleName() + "-2.png";
 
-    
+
     // ----------------------------------
     // Given a FBO prepared with this context
 
@@ -26,6 +26,17 @@ public class TestFBO {
     int height = 256;
     FBO fbo = new FBO(width, height);
 
+    // Ensure conforms to configuration
+    Assert.assertEquals(width, fbo.getWidth());
+    Assert.assertEquals(width, fbo.getWidth());
+
+    // Keep unflipped to avoid changing tests
+    fbo.setFlipY(false);
+
+    // ensure does not leave this debug flag to false
+    Assert.assertTrue(fbo.arrayExport);
+
+    // ensure is not considered prepared too early
     Assert.assertFalse(fbo.prepared);
 
     // ----------------------------------
@@ -35,8 +46,8 @@ public class TestFBO {
     Assert.assertTrue(fbo.prepared);
 
     // FIXME : this should return true, not an exception
-    //Assert.assertTrue(fbo.frameBufferIds.isLoaded());
-    //Assert.assertTrue(fbo.frameBufferIds.isMapped());
+    // Assert.assertTrue(fbo.frameBufferIds.isLoaded());
+    // Assert.assertTrue(fbo.frameBufferIds.isMapped());
 
     // ----------------------------------
     // When Render something and get image
@@ -51,11 +62,11 @@ public class TestFBO {
     // Then red vertex is at the expected
     // position with expected color
 
-    int[] pxR = {0,0}; // top left
-    int[] pxG = {width-1,0}; // top right
-    int[] pxB = {width-1,height-1}; // bottom right
+    int[] pxR = {0, 0}; // top left
+    int[] pxG = {width - 1, 0}; // top right
+    int[] pxB = {width - 1, height - 1}; // bottom right
 
-    int[] Rgba = ByteUtils.IntARGBtoRGBAi(image.getRGB(pxR[0],pxR[1]));
+    int[] Rgba = ByteUtils.IntARGBtoRGBAi(image.getRGB(pxR[0], pxR[1]));
 
     Array.print("TestFBO:red:actual:", Rgba);
     Array.print("TestFBO:red:expect:", RED);
@@ -66,9 +77,9 @@ public class TestFBO {
     // Then green vertex is at the expected
     // position with expected color
 
-    int[] rGba = ByteUtils.IntARGBtoRGBAi(image.getRGB(pxG[0],pxG[1]));
+    int[] rGba = ByteUtils.IntARGBtoRGBAi(image.getRGB(pxG[0], pxG[1]));
     // FIXME! Green is 254 instead of 255, why?
-    GREEN[1] = GREEN[1]-1; // a bit is missing!
+    GREEN[1] = GREEN[1] - 1; // a bit is missing!
     Array.print("TestFBO:green:actual:", rGba);
     Array.print("TestFBO:green:expect:", GREEN);
 
@@ -78,22 +89,31 @@ public class TestFBO {
     // Then blue vertex is at the expected
     // position with expected color
 
-    int[] rgBa = ByteUtils.IntARGBtoRGBAi(image.getRGB(pxB[0],pxB[1]));
+    int[] rgBa = ByteUtils.IntARGBtoRGBAi(image.getRGB(pxB[0], pxB[1]));
     Array.print("TestFBO:blue:actual:", rgBa);
     Array.print("TestFBO:blue:expect:", BLUE);
 
     Assert.assertArrayEquals(BLUE, rgBa);
 
     // ----------------------------------
-    // When resize FBO
+    // When resize FBO at the same size, nothing change
 
-    width *=2;
-    height *=2;
+
+    // mark FBO for resize ON THE EXISTING CONFIG
+    fbo.resize(width, height);
+    Assert.assertTrue(fbo.prepared); // still prepared
+
+
+    // ----------------------------------
+    // When resize FBO at double size
+
+    width *= 2;
+    height *= 2;
 
     // mark FBO for resize
     fbo.resize(width, height);
     Assert.assertFalse(fbo.prepared); // not prepared anymore
-    Assert.assertEquals(width, fbo.getWidth());
+    Assert.assertEquals(width, fbo.getWidth()); // but resized
     Assert.assertEquals(height, fbo.getHeight());
 
     // need to explicitely regenerate before re-rendering
@@ -115,9 +135,9 @@ public class TestFBO {
     // Then red vertex is at the expected
     // position with expected color
 
-    int[] pxR2 = {0,0}; // top left
-    int[] pxG2 = {width-1,0}; // top right
-    int[] pxB2 = {width-1,height-1}; // bottom right
+    int[] pxR2 = {0, 0}; // top left
+    int[] pxG2 = {width - 1, 0}; // top right
+    int[] pxB2 = {width - 1, height - 1}; // bottom right
 
     Rgba = ByteUtils.IntARGBtoRGBAi(image.getRGB(pxR2[0], pxR2[1]));
 
@@ -131,7 +151,7 @@ public class TestFBO {
     // position with expected color
 
     rGba = ByteUtils.IntARGBtoRGBAi(image.getRGB(pxG2[0], pxG2[1]));
-    GREEN[1] = GREEN[1]+1; // a bit is NOT missing!
+    GREEN[1] = GREEN[1] + 1; // a bit is NOT missing!
 
     Array.print("TestFBO:green:actual:", rGba);
     Array.print("TestFBO:green:expect:", GREEN);
@@ -159,10 +179,10 @@ public class TestFBO {
   }
 
   public static void saveImage(String file, BufferedImage out) {
-      try {
-          ImageIO.write(out, "png", new File(file));
-      } catch (Exception e) {
-          e.printStackTrace();
-      }
+    try {
+      ImageIO.write(out, "png", new File(file));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 }

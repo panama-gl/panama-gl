@@ -8,16 +8,11 @@ public class TestDebug {
   public void testFlag() {
     
     // Given TRUE flag
-    System.setProperty("-Dorg.pack.Myclass", "true");
+    //System.setProperty("-Dorg.pack.Myclass", "true");
     
-    Assert.assertTrue(Debug.check("-Dorg.pack.Myclass"));
-
     
-    // Given FALSE flag
-    System.setProperty("-Dorg.pack.Myclass", "false");
-    
-    Assert.assertFalse(Debug.check("-Dorg.pack.Myclass"));
-
+    System.setProperty("sun.java.command", "MyProgram -Dorg.pack.Myclass");
+    Assert.assertTrue(Debug.check("org.pack.Myclass"));
     
     // Given NO flag
   

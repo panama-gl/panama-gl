@@ -24,6 +24,12 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
     ResourceScope scope;
     SegmentAllocator allocator;
     String windowName= "InvisiblePanamaGLWindowForGLContext";
+    
+    protected int initWidth = 100;
+    protected int initHeight = 100;
+    
+    protected boolean initialized = true;
+    
 
     public GLUTContext_macOS_10_15_7(){
         try {
@@ -47,26 +53,48 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
             var argc = allocator.allocate(C_INT, 0);
 
             glut_h.glutInit(argc, argc);
-            glut_h.glutInitDisplayMode(0);//GLUT_DOUBLE() | GLUT_RGBA() | GLUT_DEPTH());
         }
-        glut_h.glutInitWindowSize(1, 1);
-        glut_h.glutInitWindowPosition(-100, -100);
+        glut_h.glutInitDisplayMode(glut_h.GLUT_DOUBLE() | glut_h.GLUT_RGBA() | glut_h.GLUT_DEPTH());
+
+        glutInitWindowSize(initWidth, initHeight);
+        
+        glut_h.glutInitWindowPosition(-initWidth, -initHeight);
         glut_h.glutCreateWindow(CLinker.toCString(windowName, scope));
         
         // This dummy stub registration is required to get macOS onscreen rendering working
-        addDummyCallback();
+        // It will avoid error message
+        // "GLUT Fatal Error: redisplay needed for window 1, but no display callback."
+        glutDisplayFunc(GLUTContext_macOS_10_15_7::dummy);
+        
+        initialized = true;
     }
     
-    protected void addDummyCallback() {
-      MemoryAddress displayStub = glutDisplayFunc$func.allocate(GLUTContext_macOS_10_15_7::dummy, scope);
-      //var idleStub = glutIdleFunc$func.allocate(teapot::onIdle, scope);
+    @Override
+    public boolean isInitialized() {
+      return initialized;
+    }
+    
+    private static void dummy() {}
+    
+    protected void glutDisplayFunc(glutDisplayFunc$func fi) {
+      MemoryAddress displayStub = glutDisplayFunc$func.allocate(fi, scope);
       glut_h.glutDisplayFunc(displayStub);
     }
 
-    private static void dummy() {}
+    protected void glutIdleFunc(glutIdleFunc$func fi) {
+      MemoryAddress idleStub = glutIdleFunc$func.allocate(fi, scope);
+      glut_h.glutIdleFunc(idleStub);
+
+    }
+    
+    protected void glutInitWindowSize(int width, int height) {
+      glut_h.glutInitWindowSize(width, height);
+    }
+
+
 
     @Override
     public void destroy() {
-      
+      initialized = false;
     }
 }

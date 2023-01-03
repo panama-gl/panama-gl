@@ -12,8 +12,12 @@ package opengl;
  *     <li>macOS : GLUT, CGL, ?</li>
  *     <li>Windows : GLUT, WGL, ?</li>
  * </ul>
+ * 
+ * @author Martin Pernollet
  */
 public interface GLContext {
     void init();
     void destroy();
+    
+    boolean isInitialized();
 }
