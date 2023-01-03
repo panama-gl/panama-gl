@@ -24,7 +24,7 @@ public interface GLAutoDrawable {
   /** Return true if the panel has initialized GL ressource and is ready for display. */
   boolean isInitialized();
 
-  /** Return true if the component is visible on screen. */
+  /** Return true if the component is visible on screen (depend on windowing toolkit implementation, e.g. {@link JPanel#isVisible()}). */
   boolean isVisible();
 
   /** Return the GL context. */
@@ -32,4 +32,7 @@ public interface GLAutoDrawable {
 
   /** Return the GL instance allowing to invoke OpenGL. */
   GL getGL();
+  
+  /** Return the performance information about this panel. */
+  RenderCounter getMonitoring();
 }

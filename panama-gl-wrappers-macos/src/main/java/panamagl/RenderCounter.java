@@ -61,12 +61,12 @@ public class RenderCounter {
     return "Render time : " + renderTimeMs() + "ms";
   }
 
-  public String getEventCountInfo() {
-    /*
-     * return "Paint events : " + paint + " / Display events : " + display + " / Diff : " + diff +
-     * " / Update events : " + update;
-     */
-    return " Paint/Display Diff : " + diff + " / Update events : " + update;
+  public String eventCountInfo() {
+    return "Display - Paint Events Diff : " + diff;
+  }
+
+  public String paintIntervalVsRenderTimeDiffInfo() {
+    return "Paint interval - render time diff : " + (paintIntervalMs() - renderTimeMs() + "ms");
   }
 
   public String paintIntervalMsInfo() {
