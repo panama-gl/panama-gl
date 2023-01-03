@@ -10,7 +10,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import org.jzy3d.maths.TicToc;
 import com.jogamp.opengl.GLProfile;
 import jogamp.nativewindow.macosx.OSXUtil;
 import opengl.GL;
@@ -60,10 +59,10 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   protected boolean useCGL = false;
   protected boolean useGLUT = true;
 
-  protected boolean debug = Debug.check(GLPanel.class);
-
   protected String debugFile = null;// "target/glpanel";
-
+  protected boolean debugPerf = false;
+  protected boolean debug = Debug.check(GLPanel.class);
+  
 
   protected ExecutorService exec = Executors.newSingleThreadExecutor();
 
@@ -156,7 +155,8 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
 
       counter.onPaintComponent();
 
-      overlayPerformance(g);
+      if(debugPerf)
+        overlayPerformance(g);
     }
   }
 
@@ -229,6 +229,11 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
     g.drawString(counter.paintIntervalMsInfo(), perfOverlay.x,
         getHeight() - perfOverlay.yPaintInterval);
 
+    g.drawString(counter.paintIntervalVsRenderTimeDiffInfo(), perfOverlay.x,
+        getHeight() - perfOverlay.yIntervalDiff );
+
+    
+
     counter.paintInterval.tic();
 
     // -------------------------------------------------
@@ -243,16 +248,18 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
       g.setColor(Color.GRAY);
     }
 
-    g.drawString(counter.getEventCountInfo(), perfOverlay.x,
+    g.drawString(counter.eventCountInfo(), perfOverlay.x,
         getHeight() - perfOverlay.yCountCoalesced);
 
   }
 
   protected class PerfOverlay {
+    protected int interline = 20;
     protected int x = 10;
-    protected int yPaintInterval = 5;
-    protected int yCountCoalesced = 25;
-    protected int yRenderTimeInterval = 45;
+    protected int yPaintInterval = x;
+    protected int yRenderTimeInterval = yPaintInterval + interline;
+    protected int yIntervalDiff = yRenderTimeInterval + interline;
+    protected int yCountCoalesced = yIntervalDiff + interline;
   }
 
 
@@ -529,7 +536,7 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   protected void initContext_OnMainThread() {
     // ---------------------------------------------
     // THIS USAGE OF JOGL CLASS SEAMS TO WORK
-    // TODO : port/include in panama
+    // TODO : port/include OSXUTil in panama
 
     GLProfile.initSingleton();
     OSXUtil.RunOnMainThread(true, false, getTask_initContext());
@@ -552,12 +559,17 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
      */
   }
 
-
-
+  /**
+   * Indicates if image will be flipped vertically while being painted.
+   * @return
+   */
   public boolean isFlipY() {
     return fbo.isFlipY();
   }
 
+  /**
+   * Sets if image will be flipped vertically while being painted.
+   */
   public void setFlipY(boolean flipY) {
     this.fbo.setFlipY(flipY);
   }
@@ -568,5 +580,14 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
 
   public void setFBO(FBO fbo) {
     this.fbo = fbo;
+  }
+
+  @Override
+  public RenderCounter getMonitoring() {
+    return counter;
+  }
+
+  public void setMonitoring(RenderCounter counter) {
+    this.counter = counter;
   }
 }
