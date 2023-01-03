@@ -33,12 +33,10 @@ import opengl.macos.GL_macOS_10_15_7;
  * {@link #setGLEventListener(GLEventListener)}.</li>
  * </ul>
  * 
- * <h2>Threading</h2>
- * The panel is also reponsible for triggering OpenGL initialization and rendering in the
- * appropriate threads, which may depend on the running operating system.
+ * <h2>Threading</h2> The panel is also reponsible for triggering OpenGL initialization and
+ * rendering in the appropriate threads, which may depend on the running operating system.
  * 
- * <h3>Threading on macOS</h3>
- * <img src="./doc-files/GLPanel-threads.png"/>
+ * <h3>Threading on macOS</h3> <img src="./doc-files/GLPanel-threads.png"/>
  * 
  * 
  * <h2>Debugging</h2>
@@ -61,35 +59,39 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
 
   protected boolean useCGL = false;
   protected boolean useGLUT = true;
-  
+
   protected boolean debug = Debug.check(GLPanel.class);
-  
-  protected String debugFile = null;//"target/glpanel";
-  
-  protected TicToc renderTimer = new TicToc();
-  protected TicToc paintInterval = new TicToc();
-  
+
+  protected String debugFile = null;// "target/glpanel";
+
+
   protected ExecutorService exec = Executors.newSingleThreadExecutor();
-  
+
   protected boolean initialized = false;
 
+  protected RenderCounter counter = new RenderCounter();
+  protected PerfOverlay perfOverlay = new PerfOverlay();
 
+  /**
+   * Initialize a panel able to render OpenGL through a {@link GLEventListener} and related
+   * {@link GL} interface.
+   */
   public GLPanel() {
     // Load OSXUtil native as soon as possible for macOS!
-    //GLProfile.initSingleton();
+    // GLProfile.initSingleton();
 
     // Show debug info
-    if(debug)
+    if (debug)
       GraphicsUtils.printGraphicsEnvironment("GLPanel");
-    
+
     // This listener hold the most important part of the rendering flow
     addComponentListener(new ResizeHandler());
   }
-  
-  
 
-  
+
+
   /* ===================================================== */
+  //
   // AWT OVERRIDES
 
 
@@ -114,56 +116,56 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   @Override
   public void removeNotify() {
     destroyContext();
-    
+
     super.removeNotify();
-    
+
     initialized = false;
   }
-  
-  /** 
-   * Invoked each time redraw should be performed, even if the redraw query is coalesced with other redraw 
-   * queries by the AWT Event Queue. 
+
+  /**
+   * Invoked each time redraw should be performed, even if the redraw query is coalesced with other
+   * redraw queries by the AWT Event Queue.
    * 
    * @see {@link #update()}
    */
   @Override
   public void update(Graphics g) {
-    countUpdate++;
+    counter.onUpdate();
     super.update(g);
   }
-  
 
-
-  /** 
-   * Invoked only for redraw query that are not coalesced with other redraw queries by the AWT Event Queue. 
+  /**
+   * Invoked only for redraw query that are not coalesced with other redraw queries by the AWT Event
+   * Queue.
    * 
    * @see {@link #paint()}
    */
   @Override
   public void paint(Graphics g) {
-    countPaint++;
+    counter.onPaint();
     super.paint(g);
   }
 
-  
+  /**
+   * Render GL image and stop counting elapsed time for rendering (started at {@link #display()})
+   */
   @Override
   public void paintComponent(Graphics g) {
     if (out != null) {
       g.drawImage(out, 0, 0, null);
-      
+
+      counter.onPaintComponent();
+
       overlayPerformance(g);
     }
   }
 
-  
+
   /**
-   * The {@link ResizeHandler} will trigger rendering on the main macOS thread
-   * and then trigger repaint through SwingUtilities.invokeLater.
-   * 
-   * @author Martin Pernollet
-   *
+   * The {@link ResizeHandler} will trigger rendering on the main macOS thread and then trigger
+   * repaint through {@link SwingUtilities.invokeLater()}.
    */
-  protected class ResizeHandler extends ComponentAdapter{
+  protected class ResizeHandler extends ComponentAdapter {
     @Override
     public void componentResized(ComponentEvent e) {
       super.componentResized(e);
@@ -177,12 +179,12 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
 
       if (fbo != null) {
 
-        renderTimer.tic();
-        
+        counter.renderTimer.tic();
+
         // wait=true causes deadlocks! So we do not wait
         // and then ask the rendering to asynchronously notify
         // this panel that a repaint should occur.
-        boolean wait = false; 
+        boolean wait = false;
 
         renderGLToImage_OnMainThread(w, h, wait, true);
 
@@ -195,91 +197,89 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
       }
     }
   }
-  
-  /** Show performance in a 2D text overlay. */
+
+  /* ===================================================== */
+  //
+  // BASIC PERFORMANCE MONITORING AND REPORTING
+
+  /**
+   * Show performance in a 2D text overlay.
+   */
   protected void overlayPerformance(Graphics g) {
     // Overlay performance info
     g.setColor(Color.GRAY);
 
     // -------------------------------------------------
-    // Interval between rendering query and repaint achieved. The real rendering time during which OpenGL worked.
-    renderTimer.toc();
-    int renderTimeMs = (int)Math.round(renderTimer.elapsedMilisecond());
-    
-    g.drawString("Render time : " + renderTimeMs + "ms", x, getHeight()-yRenderTimeInterval);
-    
+    // Interval between rendering query and repaint achieved. The real rendering time during which
+    // OpenGL worked.
+
+    // int renderTimeMs = counter.renderTimeMs();
+
+    g.drawString(counter.renderTimeMsInfo(), perfOverlay.x,
+        getHeight() - perfOverlay.yRenderTimeInterval);
+
     // -------------------------------------------------
     // Interval between two repaint, which show how we stress the AWT Event Queue
     // https://github.com/jzy3d/jzy3d-api/tree/master/jzy3d-emul-gl-awt#integrating-in-awt
-    paintInterval.toc();
-    int paintIntervalMs = (int)Math.round(paintInterval.elapsedMilisecond());
 
     // Highlight render time longer than paint interval
-    if(paintIntervalMs < renderTimeMs)
+    if (counter.renderLongerThanRepaintInterval())
       g.setColor(Color.ORANGE);
-    
-    g.drawString("Paint interval : " + paintIntervalMs + "ms", x, getHeight()-yPaintInterval);
 
-    paintInterval.tic();
-    
+    g.drawString(counter.paintIntervalMsInfo(), perfOverlay.x,
+        getHeight() - perfOverlay.yPaintInterval);
+
+    counter.paintInterval.tic();
+
     // -------------------------------------------------
     // Count coalesced events.
-    
-    int prev = countDiff;
-    countDiff =  countDisplay-countPaint;
+
+    counter.update();
 
     // Highlight when count display vs paint differ
-    if(prev!=countDiff){
-      g.setColor(Color.ORANGE);      
-    }
-    else {
+    if (counter.diffChanged()) {
+      g.setColor(Color.ORANGE);
+    } else {
       g.setColor(Color.GRAY);
     }
-    
-    g.drawString("Paint events : " + countPaint + " / Display events : " + countDisplay + " / Diff : " + countDiff + " / Update events : " + countUpdate, x, getHeight()-yCountCoalesced);
 
-  }  
-  
-  int countUpdate = 0;
-  int countPaint = 0;
-  int countDisplay = 0;
-  int countDiff = 0;
-  
-  int x = 10;
-  int yPaintInterval = 5;
-  int yCountCoalesced = 25;
-  int yRenderTimeInterval = 45;
+    g.drawString(counter.getEventCountInfo(), perfOverlay.x,
+        getHeight() - perfOverlay.yCountCoalesced);
+
+  }
+
+  protected class PerfOverlay {
+    protected int x = 10;
+    protected int yPaintInterval = 5;
+    protected int yCountCoalesced = 25;
+    protected int yRenderTimeInterval = 45;
+  }
+
 
   /* ===================================================== */
+  //
   // FROM GL AUTO DRAWABLE INTERFACE
-  
+
   /**
-   * If the panel initialization has achieved, this triggers an offscreen rendering, 
-   * maybe on a separated thread (macOS case), from which an asynchronous repaint will 
-   * be triggered.
+   * If the panel initialization has achieved, this triggers an offscreen rendering, maybe on a
+   * separated thread (macOS case), from which an asynchronous repaint will be triggered.
    */
   @Override
   public void display() {
     // Skip potential too early calls to display to avoid
     // exceptions
-    if(!initialized) {
+    if (!initialized) {
       return;
     }
-    
-    // Count calls to display
-    countDisplay++;
-    
-    renderTimer.tic();
 
+    // Start monitoring
+    counter.onDisplay();
+    
     // FIXME : why does it work with this
     renderGLToImage_OnMainThread(getWidth(), getHeight(), false, true);
     // FIXME : and not with this?
-    //renderGLToImage_OnMainThread(false, true);
+    // renderGLToImage_OnMainThread(false, true);
   }
-  
-
-
-
 
   @Override
   public GLEventListener getGLEventListener() {
@@ -290,27 +290,27 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   public void setGLEventListener(GLEventListener glEvents) {
     this.glListener = glEvents;
   }
-  
+
   @Override
   public GL getGL() {
     return gl;
   }
-  
+
   @Override
   public GLContext getContext() {
     return glutContext;
   }
-  
+
   /* ===================================================== */
 
-  
+
   public BufferedImage getScreenshot() {
-    if(out==null) {
+    if (out == null) {
       return null;
     }
     return ImageUtils.copy(out);
   }
-  
+
   public String getDebugFile() {
     return debugFile;
   }
@@ -338,6 +338,8 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   protected void initContext() {
     System.out.println("GLPanel : initContext");
 
+    counter = new RenderCounter();
+
     // --------------------------------------
     // A GL Context with CGL
     if (useCGL) {
@@ -364,31 +366,31 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
 
     // FBO
     this.fbo = new FBO(getFBOWidth(), getFBOHeight());
-    this.fbo.prepare(gl); 
-    
+    this.fbo.prepare(gl);
+
     Debug.debug(debug, "GLPanel : initContext : FBO done");
 
     // --------------------------------------
     // Invoke GLEventListener.init(..)
-    if(glListener!=null) {
+    if (glListener != null) {
       glListener.init(gl);
-      
-      // Not needed, only needed if we use GLUT MAIN LOOP 
-      //glutContext.glutDisplayFunc(this::invokeDisplay);
+
+      // Not needed, only needed if we use GLUT MAIN LOOP
+      // glutContext.glutDisplayFunc(this::invokeDisplay);
     }
-    
+
     // Mark as ready for display
     initialized = true;
   }
-  
+
   @Override
   public boolean isInitialized() {
     return initialized;
   }
-  
-  
+
+
   protected void invokeDisplay() {
-    if(glListener!=null) {
+    if (glListener != null) {
       glListener.display(gl);
     }
   }
@@ -400,21 +402,21 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   protected int getFBOWidth() {
     return (int) Math.max(600, this.getWidth());
   }
-  
+
   protected void destroyContext() {
     // Clean up CGL context
     if (cglContext != null)
       cglContext.destroy();
-    
+
     // Clean up GLUT context
-    if(glutContext != null)
+    if (glutContext != null)
       glutContext.destroy();
   }
 
 
 
   /**
-   * This method will resize the FBO and then update the component 
+   * This method will resize the FBO and then update the component
    * 
    * @see {@link #renderGLToImage()}
    */
@@ -438,8 +440,8 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
    * This method will render in FBO and then query a component repaint to ensure it is repainted
    * ONCE the image is available.
    * 
-   * This method can potentially execute in a separate thread (namely the main macOS thread) and hence
-   * triggers repaint through SwingUtilities.invokeLater()
+   * This method can potentially execute in a separate thread (namely the main macOS thread) and
+   * hence triggers repaint through SwingUtilities.invokeLater()
    */
   protected void renderGLToImage() {
 
@@ -451,8 +453,8 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
     // FBO To image
     if (fbo != null) {
       out = fbo.getImage(gl);
-      
-      if(out==null)
+
+      if (out == null)
         System.err.println("OUT image is null!");
 
       // The image has been rendered in macOS main thread, now we want
@@ -463,22 +465,21 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
           repaint();
         }
       });
-      
-      if(debugFile!=null) {
+
+      if (debugFile != null) {
         exec.execute(getTask_saveImage(out, debugFile + "-" + (k++) + ".png"));
       }
-    }
-    else {
+    } else {
       System.err.println("FBO is null!");
     }
   }
-  
+
   int k = 0;
 
   /* ===================================================== */
   // BELOW FUNC ALLOW EXECUTING IN APPKIT MAIN THREAD
-  
-  
+
+
   protected Runnable getTask_renderGLToImage(int width, int height) {
     return new Runnable() {
       @Override
@@ -487,7 +488,7 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
       }
     };
   }
-  
+
   protected Runnable getTask_renderGLToImage() {
     return new Runnable() {
       @Override
@@ -496,7 +497,7 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
       }
     };
   }
-  
+
   protected Runnable getTask_initContext() {
     return new Runnable() {
       @Override
@@ -505,7 +506,7 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
       }
     };
   }
-  
+
   protected Runnable getTask_saveImage(BufferedImage image, String file) {
     return new Runnable() {
       @Override
@@ -515,8 +516,7 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
     };
   }
 
-  protected void renderGLToImage_OnMainThread(boolean waitUntilDone,
-      boolean kickNSApp) {
+  protected void renderGLToImage_OnMainThread(boolean waitUntilDone, boolean kickNSApp) {
     OSXUtil.RunOnMainThread(waitUntilDone, kickNSApp, getTask_renderGLToImage());
   }
 
@@ -536,37 +536,24 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
 
     // ---------------------------------------------
     // Classical way we should follow
-    /*else {
-      boolean direct = SwingUtilities.isEventDispatchThread();
-
-      if (direct) {
-        System.out.println("GLPanel : direct init");
-        initContext();
-      }
-
-      // ---------------------------------------------
-      else {
-        final AtomicBoolean initialized = new AtomicBoolean(false);
-
-        try {
-          SwingUtilities.invokeAndWait(new Runnable() {
-            public void run() {
-              initContext();
-              initialized.set(true);
-            }
-          });
-        } catch (InvocationTargetException e) {
-          // e.printStackTrace();
-        } catch (InterruptedException e) {
-          // e.printStackTrace();
-        }
-      }
-
-    }*/
+    /*
+     * else { boolean direct = SwingUtilities.isEventDispatchThread();
+     * 
+     * if (direct) { System.out.println("GLPanel : direct init"); initContext(); }
+     * 
+     * // --------------------------------------------- else { final AtomicBoolean initialized = new
+     * AtomicBoolean(false);
+     * 
+     * try { SwingUtilities.invokeAndWait(new Runnable() { public void run() { initContext();
+     * initialized.set(true); } }); } catch (InvocationTargetException e) { // e.printStackTrace();
+     * } catch (InterruptedException e) { // e.printStackTrace(); } }
+     * 
+     * }
+     */
   }
-  
-  
-  
+
+
+
   public boolean isFlipY() {
     return fbo.isFlipY();
   }
