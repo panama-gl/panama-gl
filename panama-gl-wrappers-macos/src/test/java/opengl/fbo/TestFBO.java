@@ -25,7 +25,8 @@ public class TestFBO {
     int width = 256;
     int height = 256;
     FBO fbo = new FBO(width, height);
-
+    fbo.setFlipY(false);
+    
     Assert.assertFalse(fbo.prepared);
 
     // ----------------------------------

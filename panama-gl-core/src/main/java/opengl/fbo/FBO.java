@@ -12,6 +12,7 @@ import opengl.ByteUtils;
 import opengl.GL;
 import opengl.GLError;
 import panamagl.Debug;
+import panamagl.ImageUtils;
 
 /**
  * A frame buffer object, or {@link FBO}, can render OpenGL into an offscreen buffer that can later
@@ -34,9 +35,7 @@ public class FBO {
   int border = 0;
   int channels = 4; // RGBA
 
-  // indicates dimensions have changed
-  // and FBO must reprepared
-  boolean prepared = false;
+  boolean flipY = true;
 
   // undefined yes
   int format = -1;
@@ -61,6 +60,11 @@ public class FBO {
   MemorySegment pixelsRead;
 
   VarHandle intHandle = MemoryHandles.varHandle(int.class, ByteOrder.nativeOrder());
+  
+  // indicates dimensions have changed
+  // and FBO must reprepared
+  boolean prepared = false;
+
 
   public FBO() {}
 
@@ -258,6 +262,10 @@ public class FBO {
       fromBGRABufferToImageArray(pixelsRead, out);
     else
       fromBGRABufferToImage(pixelsRead, out);
+    
+    if(flipY)
+      out = ImageUtils.flipVertically(out);
+    
 
     Debug.debug(debug, "FBO: Image created !");
 
@@ -317,9 +325,9 @@ public class FBO {
       out.setRGB(w, h, rgba);
 
       // Console out
-      //boolean console = false;
+      boolean console = false;
 
-      if (debug) {
+      if (console) {
         int intB = ByteUtils.BtoI(byB);
         int intG = ByteUtils.BtoI(byG);
         int intR = ByteUtils.BtoI(byR);
@@ -353,5 +361,13 @@ public class FBO {
 
   public int getHeight() {
     return height;
+  }
+
+  public boolean isFlipY() {
+    return flipY;
+  }
+
+  public void setFlipY(boolean flipY) {
+    this.flipY = flipY;
   }
 }

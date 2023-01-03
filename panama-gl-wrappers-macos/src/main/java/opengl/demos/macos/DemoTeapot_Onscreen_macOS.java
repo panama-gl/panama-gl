@@ -108,7 +108,7 @@ public class DemoTeapot_Onscreen_macOS {
     System.out.println("Start loop");
     
     Animator a = new Animator(panel);
-    a.setSleepTime(30);
+    a.setSleepTime(50);
     a.start();
   }
 
@@ -142,7 +142,8 @@ public class DemoTeapot_Onscreen_macOS {
       }
       
       public void display(GL gl) {
-        
+        glClearColor(0f, 0f, 0f, 1f);
+
         glClear(GL_COLOR_BUFFER_BIT() | GL_DEPTH_BUFFER_BIT());
         glPushMatrix();
         glRotatef(-20f, 1f, 1f, 0f);

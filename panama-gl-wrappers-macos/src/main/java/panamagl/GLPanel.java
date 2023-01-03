@@ -435,4 +435,15 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
 
     }*/
   }
+  
+  
+  
+  public boolean isFlipY() {
+    return fbo.isFlipY();
+  }
+
+  public void setFlipY(boolean flipY) {
+    this.fbo.setFlipY(flipY);
+  }
+
 }

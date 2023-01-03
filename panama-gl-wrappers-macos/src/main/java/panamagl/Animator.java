@@ -30,6 +30,7 @@ public class Animator {
           if(drawable.isVisible())
             drawable.display();
           
+          
           try {
             Thread.sleep(sleepTimeMs);
           } catch (InterruptedException e) {
