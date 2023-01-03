@@ -559,12 +559,17 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
      */
   }
 
-
-
+  /**
+   * Indicates if image will be flipped vertically while being painted.
+   * @return
+   */
   public boolean isFlipY() {
     return fbo.isFlipY();
   }
 
+  /**
+   * Sets if image will be flipped vertically while being painted.
+   */
   public void setFlipY(boolean flipY) {
     this.fbo.setFlipY(flipY);
   }
