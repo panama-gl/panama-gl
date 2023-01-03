@@ -7,7 +7,6 @@ import opengl.GLContext;
  * A toy JOGL-like auto drawable interface that all canvas should implement
  * 
  * @author Martin Pernollet
- *
  */
 public interface GLAutoDrawable {
   /**

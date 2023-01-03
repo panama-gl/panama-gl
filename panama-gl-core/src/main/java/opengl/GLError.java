@@ -1,5 +1,13 @@
 package opengl;
 
+/**
+ * A toy helper to track GL errors.
+ * 
+ * Should later be improved as made in JOGL with a pipeline approach.
+ * 
+ * @author Martin Pernollet
+ *
+ */
 public class GLError {
   int code;
   String message;

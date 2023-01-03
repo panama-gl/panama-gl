@@ -3,7 +3,11 @@ package panamagl;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/** A naive animator to ease testing. */
+/** A naive animator to ease testing.
+ * 
+ * 
+ * @author Martin Pernollet
+ */
 public class Animator {
   protected ExecutorService exec = Executors.newSingleThreadExecutor();
   protected int sleepTimeMs = 41; // a bit more than 40ms, retinian persistance
