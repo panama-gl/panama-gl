@@ -104,10 +104,10 @@ import opengl.macos.v10_15_3.glutIdleFunc$func;
  * </code>
  *
  */
-public class TeapotMacOS {
+public class Teapot_Panama_macOS {
   private float rot = 0;
 
-  TeapotMacOS(SegmentAllocator allocator) {
+  Teapot_Panama_macOS(SegmentAllocator allocator) {
     // Reset Background
     glClearColor(0f, 0f, 0f, 0f);
     // Setup Lighting
@@ -150,7 +150,7 @@ public class TeapotMacOS {
       glutInitDisplayMode(GLUT_DOUBLE() | GLUT_RGB() | GLUT_DEPTH());
       glutInitWindowSize(500, 500);
       glutCreateWindow(CLinker.toCString("Hello Panama!", scope));
-      var teapot = new TeapotMacOS(allocator);
+      var teapot = new Teapot_Panama_macOS(allocator);
       var displayStub = glutDisplayFunc$func.allocate(teapot::display, scope);
       var idleStub = glutIdleFunc$func.allocate(teapot::onIdle, scope);
       glutDisplayFunc(displayStub);

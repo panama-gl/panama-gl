@@ -50,7 +50,8 @@ import panamagl.GLPanel;
 import panamagl.Animator;
 
 /**
- * VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+ * VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
+ * -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
  * 
  * @author Martin
  *
@@ -58,32 +59,33 @@ import panamagl.Animator;
 public class DemoTeapot_Onscreen_macOS {
 
   public static void main(String[] args) throws Exception {
-    System.out.println("SwingUtilities.isEventDispatchThread: " + SwingUtilities.isEventDispatchThread());
-    
+    System.out
+        .println("SwingUtilities.isEventDispatchThread: " + SwingUtilities.isEventDispatchThread());
+
     // This is the GL Scene to render
     GLEventAdapter listener = TeapotGLEventListener();
-    //GLEventAdapter listener = DemoFBO_Onscreen_macOS.RGBTriangleEventListener();
+    // GLEventAdapter listener = DemoFBO_Onscreen_macOS.RGBTriangleEventListener();
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
     GLPanel panel = new GLPanel();
     panel.setGLEventListener(listener);
-    
+
     // Create frame
     final JFrame frame = new JFrame(DemoTeapot_Onscreen_macOS.class.getSimpleName());
     frame.getContentPane().setLayout(new BorderLayout());
-    //frame.pack();
+    // frame.pack();
     frame.setBounds(0, 0, 800, 600);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    
+
     // Use this to avoid Swing hangs
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
-       // doDemo(); 
-        
-     // Add panel to frame
+        // doDemo();
+
+        // Add panel to frame
         frame.add(panel, BorderLayout.CENTER);
-        
+
         // Open frame
         System.out.println("-----------------------------");
         System.out.println("BEFORE Frame.setVisible(true)");
@@ -92,17 +94,17 @@ public class DemoTeapot_Onscreen_macOS {
         System.out.println("-----------------------------");
         System.out.println("AFTER Frame.setVisible(true)");
         System.out.println("-----------------------------");
-        
+
         frame.setBounds(0, 0, 800, 700);
 
       }
     });
-    
+
     // TODO : Check why repainting with animator won't
     // work if we don't wait a bit (time for window being available?
     Thread.sleep(5000);
     System.out.println("Start loop");
-    
+
     Animator a = new Animator(panel);
     a.setSleepTime(50);
     a.start();
@@ -111,19 +113,18 @@ public class DemoTeapot_Onscreen_macOS {
   public static GLEventAdapter TeapotGLEventListener() {
     return new GLEventAdapter() {
       public void init(GL gl) {
-        
-        //System.out.println("GLEventAdapter : init");
+
         var scope = ResourceScope.newConfinedScope();
         var allocator = SegmentAllocator.ofScope(scope);
-    
+
         // Reset Background
         glClearColor(0f, 0f, 0f, 1f);
-        
+
         // Setup Lighting
         glShadeModel(GL_SMOOTH());
-        var pos = allocator.allocateArray(C_FLOAT, new float[] { 0.0f, 15.0f, -15.0f, 0 });
+        var pos = allocator.allocateArray(C_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
         glLightfv(GL_LIGHT0(), GL_POSITION(), pos);
-        var spec = allocator.allocateArray(C_FLOAT, new float[] { 1, 1, 1, 0 });
+        var spec = allocator.allocateArray(C_FLOAT, new float[] {1, 1, 1, 0});
         glLightfv(GL_LIGHT0(), GL_AMBIENT(), spec);
         glLightfv(GL_LIGHT0(), GL_DIFFUSE(), spec);
         glLightfv(GL_LIGHT0(), GL_SPECULAR(), spec);
@@ -132,11 +133,11 @@ public class DemoTeapot_Onscreen_macOS {
         glEnable(GL_LIGHTING());
         glEnable(GL_LIGHT0());
         glEnable(GL_DEPTH_TEST());
-        
-        if(gl!=null)
+
+        if (gl != null)
           GLError.checkAndThrow(gl);
       }
-      
+
       public void display(GL gl) {
         glClearColor(0f, 0f, 0f, 1f);
 
@@ -146,29 +147,22 @@ public class DemoTeapot_Onscreen_macOS {
         glRotatef(rot, 0f, 1f, 0f);
         glutSolidTeapot(0.5d);
         glPopMatrix();
-        //glutSwapBuffers();
-        
+        // glutSwapBuffers();
+
         rot += 0.25;
-        
-        //System.out.println("GLEventAdapter : display");
-        
-        
-        if(gl!=null)
+
+        if (gl != null)
           GLError.checkAndThrow(gl);
 
       }
-      
+
       protected float rot = 0;
-      
+
       @Override
       public void reshape(GL gl, int x, int y, int width, int height) {
-        //glut_h.glutInitWindowSize(width, height);
-        
         glut_h.glViewport(x, y, width, height);
-
-        //System.out.println("GLEventAdapter : reshape");
       }
     };
   }
-  
+
 }

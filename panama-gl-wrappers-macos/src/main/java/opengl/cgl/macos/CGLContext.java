@@ -74,30 +74,9 @@ public class CGLContext implements GLContext {
 
   }
 
-  /*
-   * int[] numPixelFormats = new int[1]; CGLChoosePixelFormat(attributes, 0, 0, numPixelFormats);
-   * 
-   * int[] pixelFormat = new int[1]; CGLChoosePixelFormat(attributes, 1, pixelFormat,
-   * numPixelFormats);
-   * 
-   * // Describe the pixel format to get the maximum number of samples per pixel int[] maxSamples =
-   * new int[1]; CGLDescribePixelFormat(pixelFormat[0], 0, CGL.kCGLPFAMaximumSampleBuffers,
-   * maxSamples);
-   * 
-   * // Create an OpenGL context PointerByReference context = new PointerByReference();
-   * CGLCreateContext(pixelFormat[0], 0, context);
-   * 
-   * // ...
-   * 
-   * // Destroy the pixel format and the OpenGL context when you are done with them
-   * CGLDestroyPixelFormat(pixelFormat[0]); CGLDestroyContext(context.getValue());
-   */
-
   // https://stackoverflow.com/questions/11383510/setting-up-an-opengl-context-with-cgl-on-mac-os-x
   // https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/OpenGL-MacProgGuide/opengl_offscreen/opengl_offscreen.html
   // http://renderingpipeline.com/2012/05/windowless-opengl-on-macos-x/
-
-
   @Override
   public synchronized void init() {
     MemorySegment npix = choosePixelFormat();
