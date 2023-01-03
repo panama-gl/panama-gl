@@ -9,7 +9,6 @@ import jdk.incubator.foreign.ResourceScope;
 import jdk.incubator.foreign.SegmentAllocator;
 import opengl.GLContext;
 import opengl.cgl.macos.v10_15_7.OpenGL_h;
-import opengl.macos.v11_4.glut_h;
 import panamagl.Debug;
 
 /**

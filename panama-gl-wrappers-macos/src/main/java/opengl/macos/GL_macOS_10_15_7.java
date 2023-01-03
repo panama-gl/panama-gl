@@ -1,9 +1,5 @@
 package opengl.macos;
 
-import static jdk.incubator.foreign.CLinker.C_INT;
-import static opengl.macos.v10_15_3.glut_h.GLUT_DEPTH;
-import static opengl.macos.v10_15_3.glut_h.GLUT_DOUBLE;
-import static opengl.macos.v10_15_3.glut_h.GLUT_RGB;
 import jdk.incubator.foreign.Addressable;
 import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.MemorySegment;

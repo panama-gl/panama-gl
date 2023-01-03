@@ -1,13 +1,8 @@
 package opengl.demos.macos;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import org.apache.logging.log4j.core.util.ExecutorServices;
 import opengl.GL;
 import opengl.demos.SampleTriangle;
 import panamagl.Animator;

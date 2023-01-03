@@ -8,8 +8,6 @@ import opengl.macos.v10_15_3.glutIdleFunc$func;
 import opengl.macos.v10_15_3.glut_h;
 
 import static jdk.incubator.foreign.CLinker.*;
-import static opengl.macos.v10_15_3.glut_h.*;
-import static opengl.macos.v10_15_3.glut_h.glutDisplayFunc;
 
 /**
  * This GLUT {@link GLContext} initialize a GLUT offscreen context allowing to then invoke
@@ -22,9 +20,9 @@ import static opengl.macos.v10_15_3.glut_h.glutDisplayFunc;
  * @author Martin Pernollet
  */
 public class GLUTContext_macOS_10_15_7 implements GLContext {
-  ResourceScope scope;
-  SegmentAllocator allocator;
-  String windowName = "InvisiblePanamaGLWindowForGLContext";
+  protected ResourceScope scope;
+  protected SegmentAllocator allocator;
+  protected String windowName = "InvisiblePanamaGLWindowForGLContext";
 
   protected int initWidth = 100;
   protected int initHeight = 100;

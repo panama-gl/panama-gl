@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import opengl.GL;
-import opengl.GLError;
 import opengl.macos.v10_15_3.glut_h;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
