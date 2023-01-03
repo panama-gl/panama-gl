@@ -13,10 +13,6 @@ import panamagl.GLPanel;
 /**
  * VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
  * 
- * OpenGL on macOS requires to run on main thread, hence the need for -XstartOnFirstThread
- * 
- * BUT Swing and JFX seamingly freeze when started on main thread.
- * 
  * @author Martin
  *
  */
