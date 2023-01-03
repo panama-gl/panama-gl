@@ -155,12 +155,16 @@ public class FBO {
     gl.glGenRenderbuffers(1, renderBufferIds);
     idRenderBuffer = (int) intHandle.get(renderBufferIds, 0);
 
+    // Check for error after reading
+    GLError.checkAndThrow(gl);
+    
     Debug.debug(debug, "FBO: Got RenderBuffer ID : " + idRenderBuffer);
 
     // Bind render buffer
     gl.glBindRenderbuffer(gl.GL_RENDERBUFFER(), idRenderBuffer);
     gl.glRenderbufferStorage(gl.GL_RENDERBUFFER(), gl.GL_DEPTH_COMPONENT24(), width, height);
 
+    
     // -------------------------
     // Attach depth buffer to FBO
 
@@ -242,6 +246,9 @@ public class FBO {
     int nBytes = width * height * channels;
     pixelsRead = MemorySegment.allocateNative(nBytes, newImplicitScope());
     gl.glReadPixels(0, 0, width, height, format, textureType, pixelsRead);
+    
+    // Check for error after reading
+    GLError.checkAndThrow(gl);
     
     Debug.debug(debug, "FBO: Will read " + nBytes + " bytes due to " + width + "x" + height + " pixels");
 

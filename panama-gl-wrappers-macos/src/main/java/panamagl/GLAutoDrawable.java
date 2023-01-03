@@ -10,7 +10,9 @@ public interface GLAutoDrawable {
   /** Trigger display */
   void display();
   
-  public GLEventListener getGLEventListener();
+  GLEventListener getGLEventListener();
 
-  public void setGLEventListener(GLEventListener glEvents);
+  void setGLEventListener(GLEventListener glEvents);
+  
+  boolean isVisible();
 }

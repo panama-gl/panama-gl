@@ -23,7 +23,7 @@ public class SampleTriangle {
         glLoadIdentity();
 
         //-------------------------
-        glDisable(GL_TEXTURE_2D());
+        //glDisable(GL_TEXTURE_2D());
         glDisable(GL_BLEND());
         glEnable(GL_DEPTH_TEST());
 

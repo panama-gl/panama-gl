@@ -1,5 +1,6 @@
 package panamagl;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
@@ -56,9 +57,10 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   
   protected boolean debug = Debug.check(GLPanel.class);
   
-  protected String debugFile = "target/glpanel.png";
+  protected String debugFile = null;//"target/glpanel";
   
   protected TicToc renderTimer = new TicToc();
+  protected TicToc paintInterval = new TicToc();
   
   protected ExecutorService exec = Executors.newSingleThreadExecutor();
 
@@ -95,11 +97,31 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
     if (out != null) {
       g.drawImage(out, 0, 0, null);
       
+      // Overlay performance info
+      g.setColor(Color.GRAY);
+
+      // Interval between rendering query and repaint achieved. The real rendering time during which OpenGL worked.
       renderTimer.toc();
       
-      g.drawString(renderTimer.elapsedMilisecond() + "ms", 20, getHeight()-20);
+      g.drawString("Render time : " + Math.round(renderTimer.elapsedMilisecond()) + "ms", 20, getHeight()-20);
+      
+      // Interval between two repaint, which show how we stress the AWT Event Queue
+      // https://github.com/jzy3d/jzy3d-api/tree/master/jzy3d-emul-gl-awt#integrating-in-awt
+      paintInterval.toc();
+
+      g.setColor(Color.GRAY);
+      g.drawString("Paint interval : " + Math.round(paintInterval.elapsedMilisecond()) + "ms", 20, getHeight()-5);
+
+      paintInterval.tic();
     }
+    
+    
   }
+  
+  /*@Override
+  public boolean isVisible() {
+    return super.isVisible();
+  }*/
   
   /**
    * The {@link ResizeHandler} will trigger rendering on the main macOS thread
@@ -171,10 +193,17 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
     }
     return ImageUtils.copy(out);
   }
+  
+  public String getDebugFile() {
+    return debugFile;
+  }
 
+
+  public void setDebugFile(String debugFile) {
+    this.debugFile = debugFile;
+  }
 
   /* ===================================================== */
-
 
   /**
    * In general, you should initialize any resources that are needed for rendering or other
@@ -307,13 +336,15 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
       });
       
       if(debugFile!=null) {
-        exec.execute(getTask_saveImage(out, debugFile));
+        exec.execute(getTask_saveImage(out, debugFile + "-" + (k++) + ".png"));
       }
     }
     else {
       System.err.println("FBO is null!");
     }
   }
+  
+  int k = 0;
 
   /* ===================================================== */
   // BELOW FUNC ALLOW EXECUTING IN APPKIT MAIN THREAD

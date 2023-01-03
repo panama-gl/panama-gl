@@ -9,6 +9,7 @@ import opengl.demos.SampleTriangle;
 import opengl.fbo.FBO;
 import opengl.glut.macos.GLUTContext_macOS_10_15_7;
 import opengl.macos.GL_macOS_10_15_7;
+import panamagl.GLEventListener;
 
 /**
  * https://github.com/jzy3d/panama-gl/issues/5
@@ -32,7 +33,9 @@ public class DemoTeapot_Offscreen_macOS {
     //-------------------------
     // Render something
 
-    DemoTeapot_Onscreen_macOS.TeapotGLEventListener().display(null);
+    GLEventListener glL = DemoTeapot_Onscreen_macOS.TeapotGLEventListener();
+    glL.init(null);
+    glL.display(null);
     
     //-------------------------
     // Get image

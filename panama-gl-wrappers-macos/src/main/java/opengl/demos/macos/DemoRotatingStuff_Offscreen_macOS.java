@@ -5,10 +5,10 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import opengl.GL;
 import opengl.GLContext;
-import opengl.demos.SampleTriangle;
 import opengl.fbo.FBO;
 import opengl.glut.macos.GLUTContext_macOS_10_15_7;
 import opengl.macos.GL_macOS_10_15_7;
+import panamagl.GLEventListener;
 
 /**
  * https://github.com/jzy3d/panama-gl/issues/5
@@ -32,7 +32,11 @@ public class DemoRotatingStuff_Offscreen_macOS {
     //-------------------------
     // Render something
 
-    DemoRotatingStuff_Onscreen_macOS.RotatingStuff().display(null);
+    GLEventListener glL = DemoRotatingStuff_Onscreen_macOS.RotatingStuff();
+    
+    glL.init(null);
+    glL.reshape(null, 0, 0, width, height);    
+    glL.display(null);
     
     //-------------------------
     // Get image

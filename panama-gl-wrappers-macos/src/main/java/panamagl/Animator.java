@@ -25,7 +25,11 @@ public class Animator {
       
       public void run() {
         while(loop) {
-          drawable.display();
+          
+          // Don't try repainting if we did not initialized fully
+          if(drawable.isVisible())
+            drawable.display();
+          
           try {
             Thread.sleep(sleepTimeMs);
           } catch (InterruptedException e) {
@@ -40,6 +44,14 @@ public class Animator {
   public void stop() {
     loop = false;
     //exec.shutdownNow();
+  }
+
+  public int getSleepTime() {
+    return sleepTimeMs;
+  }
+
+  public void setSleepTime(int sleepTimeMs) {
+    this.sleepTimeMs = sleepTimeMs;
   }
   
   

@@ -36,7 +36,6 @@ import static opengl.macos.v10_15_3.glut_h.glutMainLoop;
 import static opengl.macos.v10_15_3.glut_h.glutPostRedisplay;
 import static opengl.macos.v10_15_3.glut_h.glutSolidTeapot;
 import static opengl.macos.v10_15_3.glut_h.glutSwapBuffers;
-
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -45,7 +44,7 @@ import jdk.incubator.foreign.SegmentAllocator;
 
 import opengl.GL;
 import opengl.GLError;
-
+import opengl.macos.v10_15_3.glut_h;
 import panamagl.GLEventAdapter;
 import panamagl.GLPanel;
 import panamagl.Animator;
@@ -103,32 +102,26 @@ public class DemoTeapot_Onscreen_macOS {
       }
     });
     
+    // TODO : Check why repainting with animator won't
+    // work if we don't wait a bit (time for window being available?
+    Thread.sleep(5000);
+    System.out.println("Start loop");
     
     Animator a = new Animator(panel);
+    a.setSleepTime(30);
     a.start();
-    
-    /*while(true) {
-      panel.display();
-      try {
-        Thread.sleep(100);
-      } catch (InterruptedException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
-    }*/
-
   }
 
   public static GLEventAdapter TeapotGLEventListener() {
     return new GLEventAdapter() {
       public void init(GL gl) {
         
-        System.out.println("GLEventAdapter : init");
+        //System.out.println("GLEventAdapter : init");
         var scope = ResourceScope.newConfinedScope();
         var allocator = SegmentAllocator.ofScope(scope);
     
         // Reset Background
-        glClearColor(0f, 0f, 0f, 0f);
+        glClearColor(0f, 0f, 0f, 1f);
         
         // Setup Lighting
         glShadeModel(GL_SMOOTH());
@@ -158,9 +151,10 @@ public class DemoTeapot_Onscreen_macOS {
         glPopMatrix();
         //glutSwapBuffers();
         
-        rot += 0.1;
+        rot += 0.25;
         
-        System.out.println("GLEventAdapter : display");
+        //System.out.println("GLEventAdapter : display");
+        
         
         if(gl!=null)
           GLError.checkAndThrow(gl);
@@ -171,7 +165,11 @@ public class DemoTeapot_Onscreen_macOS {
       
       @Override
       public void reshape(GL gl, int x, int y, int width, int height) {
-        System.out.println("GLEventAdapter : reshape");
+        //glut_h.glutInitWindowSize(width, height);
+        
+        glut_h.glViewport(x, y, width, height);
+
+        //System.out.println("GLEventAdapter : reshape");
       }
     };
   }
