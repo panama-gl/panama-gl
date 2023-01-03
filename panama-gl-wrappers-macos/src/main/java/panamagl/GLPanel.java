@@ -14,6 +14,7 @@ import org.jzy3d.maths.TicToc;
 import com.jogamp.opengl.GLProfile;
 import jogamp.nativewindow.macosx.OSXUtil;
 import opengl.GL;
+import opengl.GLContext;
 import opengl.GLError;
 import opengl.cgl.macos.CGLContext;
 import opengl.fbo.FBO;
@@ -32,9 +33,15 @@ import opengl.macos.GL_macOS_10_15_7;
  * {@link #setGLEventListener(GLEventListener)}.</li>
  * </ul>
  * 
+ * <h2>Threading</h2>
  * The panel is also reponsible for triggering OpenGL initialization and rendering in the
  * appropriate threads, which may depend on the running operating system.
  * 
+ * <h3>Threading on macOS</h3>
+ * <img src="./doc-files/GLPanel-threads.png"/>
+ * 
+ * 
+ * <h2>Debugging</h2>
  * 
  * Hint : to debug this class, invoke a program using it with flag -Dpanamagl.GLPanel
  * 
@@ -66,10 +73,17 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
 
 
   public GLPanel() {
+    String p = System.getProperty("sun.java2d.opengl");
+    
+    System.out.println("GLPanel : sun.java2d.opengl=" + p);
+    
     // This listener hold the most important part of the rendering flow
     addComponentListener(new ResizeHandler());
   }
   
+  /* ===================================================== */
+  // AWT OVERRIDES
+
 
   /**
    * Called after the JPanel has been added to the Swing hierarchy but before it is made visible.
@@ -91,37 +105,42 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
     
     super.removeNotify();
   }
+  
+  /** 
+   * Invoked each time redraw should be performed, even if the redraw query is coalesced with other redraw 
+   * queries by the AWT Event Queue. 
+   * 
+   * @see {@link #update()}
+   */
+  @Override
+  public void update(Graphics g) {
+    countUpdate++;
+    super.update(g);
+  }
+  
 
+
+  /** 
+   * Invoked only for redraw query that are not coalesced with other redraw queries by the AWT Event Queue. 
+   * 
+   * @see {@link #paint()}
+   */
+  @Override
+  public void paint(Graphics g) {
+    countPaint++;
+    super.paint(g);
+  }
+
+  
   @Override
   public void paintComponent(Graphics g) {
     if (out != null) {
       g.drawImage(out, 0, 0, null);
       
-      // Overlay performance info
-      g.setColor(Color.GRAY);
-
-      // Interval between rendering query and repaint achieved. The real rendering time during which OpenGL worked.
-      renderTimer.toc();
-      
-      g.drawString("Render time : " + Math.round(renderTimer.elapsedMilisecond()) + "ms", 20, getHeight()-20);
-      
-      // Interval between two repaint, which show how we stress the AWT Event Queue
-      // https://github.com/jzy3d/jzy3d-api/tree/master/jzy3d-emul-gl-awt#integrating-in-awt
-      paintInterval.toc();
-
-      g.setColor(Color.GRAY);
-      g.drawString("Paint interval : " + Math.round(paintInterval.elapsedMilisecond()) + "ms", 20, getHeight()-5);
-
-      paintInterval.tic();
+      overlayPerformance(g);
     }
-    
-    
   }
-  
-  /*@Override
-  public boolean isVisible() {
-    return super.isVisible();
-  }*/
+
   
   /**
    * The {@link ResizeHandler} will trigger rendering on the main macOS thread
@@ -162,12 +181,68 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
       }
     }
   }
+  
+  /** Show performance in a 2D text overlay. */
+  protected void overlayPerformance(Graphics g) {
+    // Overlay performance info
+    g.setColor(Color.GRAY);
+
+    // -------------------------------------------------
+    // Interval between rendering query and repaint achieved. The real rendering time during which OpenGL worked.
+    renderTimer.toc();
+    int renderTimeMs = (int)Math.round(renderTimer.elapsedMilisecond());
+    
+    g.drawString("Render time : " + renderTimeMs + "ms", x, getHeight()-yRenderTimeInterval);
+    
+    // -------------------------------------------------
+    // Interval between two repaint, which show how we stress the AWT Event Queue
+    // https://github.com/jzy3d/jzy3d-api/tree/master/jzy3d-emul-gl-awt#integrating-in-awt
+    paintInterval.toc();
+    int paintIntervalMs = (int)Math.round(paintInterval.elapsedMilisecond());
+
+    // Highlight render time longer than paint interval
+    if(paintIntervalMs < renderTimeMs)
+      g.setColor(Color.ORANGE);
+    
+    g.drawString("Paint interval : " + paintIntervalMs + "ms", x, getHeight()-yPaintInterval);
+
+    paintInterval.tic();
+    
+    // -------------------------------------------------
+    // Count coalesced events.
+    
+    int prev = countDiff;
+    countDiff =  countDisplay-countPaint;
+
+    // Highlight when count display vs paint differ
+    if(prev!=countDiff){
+      g.setColor(Color.ORANGE);      
+    }
+    else {
+      g.setColor(Color.GRAY);
+    }
+    
+    g.drawString("Paint events : " + countPaint + " / Display events : " + countDisplay + " / Diff : " + countDiff + " / Update events : " + countUpdate, x, getHeight()-yCountCoalesced);
+
+  }  
+  
+  int countUpdate = 0;
+  int countPaint = 0;
+  int countDisplay = 0;
+  int countDiff = 0;
+  
+  int x = 10;
+  int yPaintInterval = 5;
+  int yCountCoalesced = 25;
+  int yRenderTimeInterval = 45;
 
   /* ===================================================== */
   // FROM GL AUTO DRAWABLE INTERFACE
   
   @Override
   public void display() {
+    countDisplay++;
+    
     renderTimer.tic();
 
     // FIXME : why does it work with this
@@ -175,6 +250,9 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
     // FIXME : and not with this?
     //renderGLToImage_OnMainThread(false, true);
   }
+  
+
+
 
 
   @Override
@@ -186,6 +264,19 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   public void setGLEventListener(GLEventListener glEvents) {
     this.glListener = glEvents;
   }
+  
+  @Override
+  public GL getGL() {
+    return gl;
+  }
+  
+  @Override
+  public GLContext getContext() {
+    return glutContext;
+  }
+  
+  /* ===================================================== */
+
   
   public BufferedImage getScreenshot() {
     if(out==null) {

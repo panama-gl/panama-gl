@@ -1,5 +1,8 @@
 package panamagl;
 
+import opengl.GL;
+import opengl.GLContext;
+
 /**
  * A toy JOGL-like auto drawable interface that all canvas should implement
  * 
@@ -15,4 +18,8 @@ public interface GLAutoDrawable {
   void setGLEventListener(GLEventListener glEvents);
   
   boolean isVisible();
+  
+  GLContext getContext();
+  
+  GL getGL();
 }
