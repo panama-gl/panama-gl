@@ -44,7 +44,7 @@ import panamagl.Debug;
  * opening a JPanel in a CGL context, you should try to identify the root cause by looking at the
  * code and debugging the issue.
  * 
- * 
+ * <h2>Help on debugging</h2>
  * Hint : to debug this class, invoke a program using it with flag -Dopengl.cgl.macos.CGLContext
  *
  * 
@@ -53,15 +53,16 @@ import panamagl.Debug;
  * @author Martin Pernollet
  */
 public class CGLContext implements GLContext {
-  ResourceScope scope;
-  SegmentAllocator allocator;
+  protected ResourceScope scope;
+  protected SegmentAllocator allocator;
 
-  MemorySegment attribs;
-  MemorySegment pixelFormat;
-  MemorySegment context;
+  protected MemorySegment attribs;
+  protected MemorySegment pixelFormat;
+  protected MemorySegment context;
 
+  protected boolean initialized = true;
 
-  boolean debug = Debug.check(CGLContext.class);
+  protected boolean debug = Debug.check(CGLContext.class);
 
   public CGLContext() {
     // Manually load CGL
@@ -105,7 +106,14 @@ public class CGLContext implements GLContext {
 
     // makeCurrent();
 
+    initialized = true;
   }
+  
+  @Override
+  public boolean isInitialized() {
+    return initialized;
+  }
+
 
   public synchronized void makeCurrent() {
     lockContext();
@@ -249,6 +257,8 @@ public class CGLContext implements GLContext {
   public synchronized void destroy() {
     OpenGL_h.CGLDestroyPixelFormat(pixelFormat);
     OpenGL_h.CGLDestroyContext(context);
+    
+    initialized = false;
 
     Debug.debug(debug, "CGLContext destroyed");
 

@@ -25,8 +25,10 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
     SegmentAllocator allocator;
     String windowName= "InvisiblePanamaGLWindowForGLContext";
     
-    int initWidth = 100;
-    int initHeight = 100;
+    protected int initWidth = 100;
+    protected int initHeight = 100;
+    
+    protected boolean initialized = true;
     
 
     public GLUTContext_macOS_10_15_7(){
@@ -63,6 +65,13 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
         // It will avoid error message
         // "GLUT Fatal Error: redisplay needed for window 1, but no display callback."
         glutDisplayFunc(GLUTContext_macOS_10_15_7::dummy);
+        
+        initialized = true;
+    }
+    
+    @Override
+    public boolean isInitialized() {
+      return initialized;
     }
     
     private static void dummy() {}
@@ -86,6 +95,6 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
 
     @Override
     public void destroy() {
-      
+      initialized = false;
     }
 }

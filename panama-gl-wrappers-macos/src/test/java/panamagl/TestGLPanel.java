@@ -10,6 +10,8 @@ import opengl.fbo.FBO;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class TestGLPanel {
+  public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
+  
   @Test
   public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
     
@@ -51,6 +53,10 @@ public class TestGLPanel {
     Assert.assertEquals(0, event.displayCounter);
     Assert.assertEquals(0, event.reshapeCounter);
     
+    // Then context is initialized
+    Assert.assertTrue(panel.getContext().isInitialized());
+
+    // Then panel is initialized
     Assert.assertTrue(panel.isInitialized());
 
 
@@ -59,15 +65,31 @@ public class TestGLPanel {
     // When : resize, and after a while
     
     panel.setSize(20, 20);
-    panel.display(); // not needed from IDE but from CLI
     
-    Thread.sleep(1000);
+    // FIXME : not needed from IDE but from CLI (?!)
+    panel.display(); 
+    
+    // Wait for the event to dispatch
+    Thread.sleep(WAIT_FOR_RENDER_DISPATCHED_MS);
     
     // Then : should trigger glEventListener.display() and reshape()
     Assert.assertTrue(0 < event.initCounter);
     Assert.assertTrue(0 < event.displayCounter);
     Assert.assertTrue(0 < event.reshapeCounter);
+    
+    // Then : the displayed image should be available as screenshot
+    Assert.assertNotNull(panel.getScreenshot());
+    
 
+    
+    // ------------------------------------------------
+    // When : remove from component hierarchy
+
+    panel.removeNotify();
+    
+    // Then : all components are not initialized anymore
+    Assert.assertFalse(panel.getContext().isInitialized());
+    Assert.assertFalse(panel.isInitialized());
 
   }
   
@@ -97,7 +119,8 @@ public class TestGLPanel {
     panel.setSize(WIDTH, HEIGHT);
     panel.display();
     
-    //Thread.sleep(200);
+    // Wait for the event to dispatch
+    Thread.sleep(WAIT_FOR_RENDER_DISPATCHED_MS);
 
     // Then FBO is resized as well
     Assert.assertEquals(WIDTH, panel.getFBO().getWidth());
@@ -109,7 +132,8 @@ public class TestGLPanel {
     panel.setSize(3*WIDTH, 2*HEIGHT);
     panel.display();
     
-    //Thread.sleep(200);
+    // Wait for the event to dispatch
+    Thread.sleep(WAIT_FOR_RENDER_DISPATCHED_MS);
 
     // Then FBO is resized as well
     Assert.assertEquals(3*WIDTH, panel.getFBO().getWidth());

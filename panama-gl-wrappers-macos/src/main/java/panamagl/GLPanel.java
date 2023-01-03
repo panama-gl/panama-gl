@@ -122,6 +122,8 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
     destroyContext();
     
     super.removeNotify();
+    
+    initialized = false;
   }
   
   /** 
@@ -177,7 +179,7 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
       int w = (int) Math.round(size.getWidth());
       int h = (int) Math.round(size.getHeight());
 
-      Debug.debug(debug, "GLPanel resize to " + w + "x" + h);
+      Debug.debug(debug, "GLPanel resizing to " + w + "x" + h);
 
       if (fbo != null) {
 
@@ -409,6 +411,10 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
     // Clean up CGL context
     if (cglContext != null)
       cglContext.destroy();
+    
+    // Clean up GLUT context
+    if(glutContext != null)
+      glutContext.destroy();
   }
 
 
