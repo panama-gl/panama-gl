@@ -12,6 +12,7 @@ import opengl.ByteUtils;
 import opengl.GL;
 import opengl.GLError;
 import panamagl.Debug;
+import panamagl.GraphicsUtils;
 import panamagl.ImageUtils;
 
 /**
@@ -244,8 +245,11 @@ public class FBO {
       prepare(gl);
 
     // Init output image with the buffer size and color encoding
-    BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-
+    //BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    
+    // Try an image format derived from default screen/gpu to avoid conversion
+    BufferedImage out = GraphicsUtils.createCompatibleImage(width, height);
+    
     // Reading pixels
     int nBytes = width * height * channels;
     pixelsRead = MemorySegment.allocateNative(nBytes, newImplicitScope());

@@ -1,8 +1,14 @@
 package panamagl;
 
+import java.awt.BufferCapabilities;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.ImageCapabilities;
+import java.awt.Transparency;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
@@ -73,13 +79,14 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
 
 
   public GLPanel() {
-    String p = System.getProperty("sun.java2d.opengl");
-    
-    System.out.println("GLPanel : sun.java2d.opengl=" + p);
+    GraphicsUtils.printGraphicsEnvironment("GLPanel");
     
     // This listener hold the most important part of the rendering flow
     addComponentListener(new ResizeHandler());
   }
+  
+  
+
   
   /* ===================================================== */
   // AWT OVERRIDES
