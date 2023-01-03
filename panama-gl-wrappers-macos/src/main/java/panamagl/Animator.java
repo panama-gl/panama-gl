@@ -81,4 +81,12 @@ public class Animator {
   public void setSleepTime(int sleepTimeMs) {
     this.sleepTimeMs = sleepTimeMs;
   }
+
+  public boolean isAdaptive() {
+    return adaptive;
+  }
+
+  public void setAdaptive(boolean adaptive) {
+    this.adaptive = adaptive;
+  }
 }
