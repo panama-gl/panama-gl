@@ -6,6 +6,8 @@ public class RenderCounter {
   protected int display = 0;
   protected int diff = 0;
   protected int prevDiff = 0;
+  protected int renderDrift = 0;
+  protected int prevRenderDrift = 0;
 
   /**
    * Should starts upon invocation of display() or receival of resize events, stop once
@@ -43,8 +45,15 @@ public class RenderCounter {
    * Update difference between the number of paint and update events.
    */
   public void update() {
-    prevDiff = diff;
+    updatePrevDiff();
     diff = display - paint;
+    renderDrift = renderTimeMs() - paintIntervalMs();
+  }
+
+  public void updatePrevDiff() {
+    prevDiff = diff;
+    prevRenderDrift = renderDrift;
+    
   }
 
   // ** STATS & INFOS ********************** //
@@ -83,6 +92,17 @@ public class RenderCounter {
 
   public int renderTimeMs() {
     return (int) Math.round(renderTimer.elapsedMilisecond());
+  }
+  
+  /**
+   * @return variation between now and previous measure of the difference between display and paint events count. 
+   */
+  public int eventDiffDerivative() {
+    return diff - prevDiff;
+  }
+  
+  public int renderDriftDerivative() {
+    return renderDrift - prevRenderDrift;
   }
 
 

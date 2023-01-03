@@ -59,10 +59,10 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   protected boolean useCGL = false;
   protected boolean useGLUT = true;
 
-  protected boolean debug = Debug.check(GLPanel.class);
-
   protected String debugFile = null;// "target/glpanel";
-
+  protected boolean debugPerf = false;
+  protected boolean debug = Debug.check(GLPanel.class);
+  
 
   protected ExecutorService exec = Executors.newSingleThreadExecutor();
 
@@ -155,7 +155,8 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
 
       counter.onPaintComponent();
 
-      overlayPerformance(g);
+      if(debugPerf)
+        overlayPerformance(g);
     }
   }
 

@@ -138,7 +138,7 @@ public class DemoTeapot_Onscreen_macOS {
         glPopMatrix();
         // glutSwapBuffers();
 
-        rot += 0.25;
+        rot += 0.45;
 
         if (gl != null)
           GLError.checkAndThrow(gl);
