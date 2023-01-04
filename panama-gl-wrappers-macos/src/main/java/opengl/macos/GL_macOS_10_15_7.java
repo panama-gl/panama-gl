@@ -232,4 +232,118 @@ public class GL_macOS_10_15_7 extends AbstractGL implements GL {
     return glut_h.GL_FRAMEBUFFER_COMPLETE();
   }
 
+  @Override
+  public int GL_PROJECTION() {
+    return glut_h.GL_PROJECTION();
+  }
+
+
+  @Override
+  public int GL_MODELVIEW() {
+    return glut_h.GL_MODELVIEW();
+  }
+
+  @Override
+  public int GL_QUADS() {
+    return glut_h.GL_QUADS();
+  }
+  
+  @Override
+  public void glShadeModel(int model) {
+    glut_h.glShadeModel(model);    
+  }
+
+  @Override
+  public void glEnable(int id) {
+    glut_h.glEnable(id);
+  }
+
+  @Override
+  public int GL_SMOOTH() {
+    return glut_h.GL_SMOOTH();
+  }
+
+  @Override
+  public void glLoadIdentity() {
+    glut_h.glLoadIdentity();
+  }
+
+  @Override
+  public void glTranslatef(float x, float y, float z) {
+    glut_h.glTranslatef(x, y, z);
+  }
+
+  @Override
+  public void glRotatef(float rotate, float x, float y, float z) {
+    glut_h.glRotatef(rotate, x, y, z);
+  }
+
+  @Override
+  public void glBegin(int id) {
+    glut_h.glBegin(id);
+  }
+
+  @Override
+  public void glColor3f(float r, float g, float b) {
+    glut_h.glColor3f(r, g, b);
+  }
+
+  @Override
+  public void glVertex3f(float x, float y, float z) {
+    glut_h.glVertex3f(x, y, z);
+  }
+
+  @Override
+  public void glEnd() {
+    glut_h.glEnd();
+  }
+
+  @Override
+  public void glDepthFunc(int f) {
+    glut_h.glDepthFunc(f);
+  }
+
+  @Override
+  public void glHint(int h, int val) {
+    glut_h.glHint(h, val);
+  }
+
+  @Override
+  public void glMatrixMode(int p) {
+    glut_h.glMatrixMode(p);
+  }
+
+  @Override
+  public void glFrustum(float f, float fw, float g, float fh, float h, float i) {
+    glut_h.glFrustum(f, fw, g, fh, h, i);
+  }
+
+  @Override
+  public void glViewport(int x, int y, int width, int height) {
+    glut_h.glViewport(x, y, width, height);
+  }
+
+  @Override
+  public int GL_DEPTH_TEST() {
+    return glut_h.GL_DEPTH_TEST();
+  }
+
+  @Override
+  public int GL_LEQUAL() {
+    return glut_h.GL_LEQUAL();
+  }
+
+  @Override
+  public int GL_PERSPECTIVE_CORRECTION_HINT() {
+    return glut_h.GL_PERSPECTIVE_CORRECTION_HINT();
+  }
+
+  @Override
+  public int GL_NICEST() {
+    return glut_h.GL_NICEST();
+  }
+
+  
+
+
 }

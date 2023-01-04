@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import opengl.GL;
-import opengl.macos.v10_15_3.glut_h;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.GLPanel;
@@ -73,12 +72,12 @@ public class DemoRotatingStuff_Onscreen_macOS {
       private float rotateT = 0.0f;
 
       public void init(GL gl) {
-        glut_h.glShadeModel(glut_h.GL_SMOOTH());
-        glut_h.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glut_h.glClearDepth(1.0f);
-        glut_h.glEnable(glut_h.GL_DEPTH_TEST());
-        glut_h.glDepthFunc(glut_h.GL_LEQUAL());
-        glut_h.glHint(glut_h.GL_PERSPECTIVE_CORRECTION_HINT(), glut_h.GL_NICEST());
+        gl.glShadeModel(gl.GL_SMOOTH());
+        gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        gl.glClearDepth(1.0f);
+        gl.glEnable(gl.GL_DEPTH_TEST());
+        gl.glDepthFunc(gl.GL_LEQUAL());
+        gl.glHint(gl.GL_PERSPECTIVE_CORRECTION_HINT(), gl.GL_NICEST());
 
         // GLError.checkAndThrow(gl);
       }
@@ -86,48 +85,48 @@ public class DemoRotatingStuff_Onscreen_macOS {
       public void reshape(GL gl, int x, int y, int width, int height) {
 
         final float aspect = (float) width / (float) height;
-        glut_h.glMatrixMode(glut_h.GL_PROJECTION());
-        glut_h.glLoadIdentity();
+        gl.glMatrixMode(gl.GL_PROJECTION());
+        gl.glLoadIdentity();
         final float fh = 0.5f;
         final float fw = fh * aspect;
-        glut_h.glFrustum(-fw, fw, -fh, fh, 1.0f, 1000.0f);
+        gl.glFrustum(-fw, fw, -fh, fh, 1.0f, 1000.0f);
 
-        glut_h.glViewport(x, y, width, height);
+        gl.glViewport(x, y, width, height);
 
-        glut_h.glMatrixMode(glut_h.GL_MODELVIEW());
-        glut_h.glLoadIdentity();
+        gl.glMatrixMode(gl.GL_MODELVIEW());
+        gl.glLoadIdentity();
 
       }
 
       public void display(final GL gl) {
-        glut_h.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-        glut_h.glClearDepth(1.0f);
+        gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        gl.glClearDepth(1.0f);
 
 
-        glut_h.glClear(glut_h.GL_COLOR_BUFFER_BIT());
-        glut_h.glClear(glut_h.GL_DEPTH_BUFFER_BIT());
-        glut_h.glLoadIdentity();
-        glut_h.glTranslatef(0.0f, 0.0f, -5.0f);
+        gl.glClear(gl.GL_COLOR_BUFFER_BIT());
+        gl.glClear(gl.GL_DEPTH_BUFFER_BIT());
+        gl.glLoadIdentity();
+        gl.glTranslatef(0.0f, 0.0f, -5.0f);
 
         // rotate about the three axes
-        glut_h.glRotatef(rotateT, 1.0f, 0.0f, 0.0f);
-        glut_h.glRotatef(rotateT, 0.0f, 1.0f, 0.0f);
-        glut_h.glRotatef(rotateT, 0.0f, 0.0f, 1.0f);
+        gl.glRotatef(rotateT, 1.0f, 0.0f, 0.0f);
+        gl.glRotatef(rotateT, 0.0f, 1.0f, 0.0f);
+        gl.glRotatef(rotateT, 0.0f, 0.0f, 1.0f);
 
         // Draw A Quad
-        glut_h.glBegin(glut_h.GL_QUADS());
-        glut_h.glColor3f(0.0f, 1.0f, 1.0f); // set the color of the quad
-        glut_h.glVertex3f(-1.0f, 1.0f, 0.0f); // Top Left
-        glut_h.glVertex3f(1.0f, 1.0f, 0.0f); // Top Right
-        glut_h.glVertex3f(1.0f, -1.0f, 0.0f); // Bottom Right
-        glut_h.glVertex3f(-1.0f, -1.0f, 0.0f); // Bottom Left
+        gl.glBegin(gl.GL_QUADS());
+        gl.glColor3f(0.0f, 1.0f, 1.0f); // set the color of the quad
+        gl.glVertex3f(-1.0f, 1.0f, 0.0f); // Top Left
+        gl.glVertex3f(1.0f, 1.0f, 0.0f); // Top Right
+        gl.glVertex3f(1.0f, -1.0f, 0.0f); // Bottom Right
+        gl.glVertex3f(-1.0f, -1.0f, 0.0f); // Bottom Left
         // Done Drawing The Quad
-        glut_h.glEnd();
+        gl.glEnd();
 
         // increasing rotation for the next iteration
         rotateT += 0.2f;
 
-        // glut_h.glFlush();
+        // gl.glFlush();
       }
     };
   }

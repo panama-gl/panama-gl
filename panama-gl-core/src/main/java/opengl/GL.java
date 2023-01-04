@@ -62,9 +62,25 @@ public interface GL {
     void glDeleteTextures(int size, Addressable textureBuffers);
     void glDeleteRenderbuffers(int size, Addressable renderBuffers);
     void glDeleteFramebuffers(int size, Addressable frameBuffers);
+    
+    void glShadeModel(int model);
+    void glEnable(int id);
+    void glLoadIdentity();
+    void glTranslatef(float x, float y, float z);
+    void glRotatef(float rotate, float x, float y, float z);
+    void glBegin(int id);
+    void glColor3f(float r, float g, float b);
+    void glVertex3f(float x, float y, float z);
+    void glEnd();
+    void glDepthFunc(int f);
+    void glHint(int h, int val);
+    void glMatrixMode(int p);
+    void glFrustum(float f, float fw, float g, float fh, float h, float i);
+    void glViewport(int x, int y, int width, int height);
+
 
     // TODO : how to generate this convenient wrapper in interface AND implementations?
-    // TODO : how to load them as constants instead of methods?
+    // TODO : how to load them as constants instead of methods, to remain consistent with JOGL?
     int GL_TEXTURE_2D();
     int GL_TEXTURE_WRAP_S();
     int GL_REPEAT();
@@ -84,7 +100,13 @@ public interface GL {
     int GL_DEPTH_BUFFER_BIT();
     int GL_BYTE();
     int GL_FRAMEBUFFER_COMPLETE();
-    
-    
-
+    int GL_PROJECTION();
+    int GL_MODELVIEW();
+    int GL_QUADS();
+    int GL_SMOOTH();
+    int GL_DEPTH_TEST();
+    int GL_LEQUAL();
+    int GL_PERSPECTIVE_CORRECTION_HINT();
+    int GL_NICEST();
 }
+

@@ -188,4 +188,136 @@ public class GLX_Ubuntu_20 extends AbstractGL implements GL  {
     @Override
     public int GL_FRAMEBUFFER_COMPLETE(){return glx_h.GL_FRAMEBUFFER_COMPLETE();}
 
+    @Override
+    public void glShadeModel(int model) {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glEnable(int id) {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glLoadIdentity() {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glTranslatef(float x, float y, float z) {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glRotatef(float rotate, float x, float y, float z) {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glBegin(int id) {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glColor3f(float r, float g, float b) {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glVertex3f(float x, float y, float z) {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glEnd() {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glDepthFunc(int f) {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glHint(int h, int val) {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glMatrixMode(int p) {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glFrustum(float f, float fw, float g, float fh, float h, float i) {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glViewport(int x, int y, int width, int height) {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public int GL_PROJECTION() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public int GL_MODELVIEW() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public int GL_QUADS() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public int GL_SMOOTH() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public int GL_DEPTH_TEST() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public int GL_LEQUAL() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public int GL_PERSPECTIVE_CORRECTION_HINT() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public int GL_NICEST() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
 }
