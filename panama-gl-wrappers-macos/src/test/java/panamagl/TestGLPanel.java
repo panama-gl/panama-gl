@@ -140,14 +140,17 @@ public class TestGLPanel {
 
   }
   
- @Ignore("Not working in CLI yet")
+@Ignore("Not working in CLI yet - despite using surefire unlimited threads")
   @Test
   public void whenPanelIsRendering_DisplayWillDoNothing() throws InterruptedException {
+    //ThreadUtils.print();
     
     AtomicInteger countRenderQueries = new AtomicInteger();
     
     // Duration of freezing task
     int FREEZE_TASK_MS = 5000;
+    
+    int WAIT_FOR_DISPLAY_DISPATCH_MS = 500;
     
     TicToc t = new TicToc();
     
@@ -182,7 +185,11 @@ public class TestGLPanel {
     
     panel.addNotify();
 
+    //ThreadUtils.print();
+    
     Assert.assertTrue(panel.isInitialized());
+    
+    //ThreadUtils.print();
     
     //RenderCounter counter = panel.getMonitoring();
 
@@ -199,8 +206,9 @@ public class TestGLPanel {
     Assert.assertTrue(panel.isRendering());
     
     // wait few ms that the task is triggered to macos main thread
-    Thread.sleep(500);
-    
+    Thread.sleep(WAIT_FOR_DISPLAY_DISPATCH_MS);
+    System.out.println("Waited " + WAIT_FOR_DISPLAY_DISPATCH_MS + " ms");
+
     // the freezing task has started and increments its counter
     Assert.assertTrue (countRenderQueries.get()==1);
 
@@ -208,12 +216,19 @@ public class TestGLPanel {
     // -------------------------------
     // When display() is invoked again
     
-    panel.display();
+    int N_DISPLAY_ATTEMPTS = 100;
+    for (int i = 0; i < N_DISPLAY_ATTEMPTS; i++) {
+      panel.display();      
+    }
+    
+    System.out.println("Tried to display " + N_DISPLAY_ATTEMPTS + " times");
     
     // wait few ms that the task is triggered to macos main thread
-    Thread.sleep(500);
+    Thread.sleep(WAIT_FOR_DISPLAY_DISPATCH_MS);
+    System.out.println("Waited " + WAIT_FOR_DISPLAY_DISPATCH_MS + " ms");
 
-    // do not trigger a new display
+    
+    // Then : did not trigger any new display
     Assert.assertTrue (countRenderQueries.get()==1);
     
     System.out.println("Finished test");

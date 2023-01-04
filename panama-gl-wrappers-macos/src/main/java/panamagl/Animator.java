@@ -9,8 +9,9 @@ import java.util.concurrent.Executors;
  * @author Martin Pernollet
  */
 public class Animator {
+  protected static int RETINAL_PERSISTENCE = 40;
   protected ExecutorService exec = Executors.newSingleThreadExecutor();
-  protected int sleepTimeMs = 41; // a bit more than 40ms, retinian persistance
+  protected int sleepTimeMs = RETINAL_PERSISTENCE; 
   protected boolean loop = true;
   protected GLAutoDrawable drawable;
   protected boolean adaptive = true;
@@ -40,13 +41,13 @@ public class Animator {
               drawable.display();
             }
             
-            // Try to wait a bit before retrying to update display
-            try {
-              Thread.sleep(sleepTimeMs);
-            } catch (InterruptedException e) {
-              e.printStackTrace();
-              loop = false;
-            }
+            
+            pause(sleepTimeMs);
+            
+            // Avoid flooding the CPU, let other thread work
+            Thread.yield();
+            
+            
 
           }
           
@@ -56,6 +57,31 @@ public class Animator {
     };
   }
   
+  protected void pause(int mili) {
+    // Try to wait a bit before retrying to update display
+    try {
+      Thread.sleep(mili);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+      loop = false;
+    }
+  }
+
+  
+  protected void pause2(int mili) {
+    Thread.currentThread().notifyAll();
+    
+    // Try to wait a bit before retrying to update display
+    try {
+
+      Thread.currentThread().wait(mili);
+    }
+    catch (InterruptedException e) {
+      e.printStackTrace();
+      loop = false;
+    }
+  }
+
   /** Query a drawable display if it is not currently rendering. */
   protected void adaptiveDisplayWithLock() {
     if(!((GLPanel) drawable).isRendering()) {

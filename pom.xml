@@ -1,6 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jzy3d</groupId>
@@ -63,7 +61,6 @@
 		</dependency>
 
 
-
 	</dependencies>
 
 	<build>
@@ -71,24 +68,24 @@
 
 			<!-- Add generated folder to build path -->
 			<plugin>
-		        <groupId>org.codehaus.mojo</groupId>
-		        <artifactId>build-helper-maven-plugin</artifactId>
-		        <version>3.2.0</version>
-		        <executions>
-		          <execution>
-		            <id>add-source</id>
-		            <phase>generate-sources</phase>
-		            <goals>
-		              <goal>add-source</goal>
-		            </goals>
-		            <configuration>
-		              <sources>
-		                <source>src/generated/java</source>
-		              </sources>
-		            </configuration>
-		          </execution>
-		        </executions>
-		      </plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/generated/java</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
 			<!-- Defines tests to include -->
 			<plugin>
@@ -117,7 +114,6 @@
 					</compilerArgs>
 				</configuration>
 			</plugin>
-
 
 
 			<!-- RELEASE PLUGIN TO HELP CREATE RELEASE BRANCHES -->
@@ -193,11 +189,13 @@
 							<!-- Ensure stack trace get displayed -->
 							<trimStackTrace>false</trimStackTrace>
 
+							
 							<!-- Parallel tests DISABLE PARALLEL TEST OTHERWISE CANVAS DO NOT UPDATE
 								PROPERLY (?!)
-								<parallel>classes</parallel> <useUnlimitedThreads>true</useUnlimitedThreads>
+							<parallel>methods</parallel> 
 								<forkCount>1</forkCount>-->
-
+							<useUnlimitedThreads>true</useUnlimitedThreads>
+							
 							<!-- Configure Panama -->
 							<argLine>
 								--enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
