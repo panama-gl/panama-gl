@@ -8,6 +8,9 @@ import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import com.jogamp.opengl.GLProfile;
@@ -55,18 +58,18 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   protected FBO fbo;
 
   protected BufferedImage out = null;
-
+  
   protected boolean useCGL = false;
   protected boolean useGLUT = true;
 
-  protected String debugFile = null;// "target/glpanel";
-  protected boolean debugPerf = false;
-  protected boolean debug = Debug.check(GLPanel.class);
-  
-
+  protected boolean initialized = false;
+  protected AtomicBoolean rendering = new AtomicBoolean();
   protected ExecutorService exec = Executors.newSingleThreadExecutor();
 
-  protected boolean initialized = false;
+
+  protected String debugFile = null;// "target/glpanel";
+  protected boolean debugPerf = true;
+  protected boolean debug = Debug.check(GLPanel.class);
 
   protected RenderCounter counter = new RenderCounter();
   protected PerfOverlay perfOverlay = new PerfOverlay();
@@ -157,9 +160,43 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
 
       if(debugPerf)
         overlayPerformance(g);
+      
+      rendering.set(false);
     }
   }
+  
+  /**
+   * If the panel initialization has achieved, this triggers an offscreen rendering, maybe on a
+   * separated thread (macOS case), from which an asynchronous repaint will be triggered.
+   */
+  @Override
+  public void display() {
+    // Skip potential too early calls to display to avoid
+    // exceptions
+    if (!initialized) {
+      return;
+    }
+    
+    setRendering();
 
+    // Start monitoring
+    counter.onDisplay();
+    
+    // FIXME : why does it work with this
+    renderGLToImage_OnMainThread(getWidth(), getHeight(), false, true);
+    // FIXME : and not with this?
+    // renderGLToImage_OnMainThread(false, true);
+  }
+  
+  /** Return true if display has started but has not yet finished */
+  public boolean isRendering(){
+    return rendering.get();
+  }
+  
+  protected void setRendering() {
+    rendering.set(true);
+
+  }
 
   /**
    * The {@link ResizeHandler} will trigger rendering on the main macOS thread and then trigger
@@ -179,21 +216,28 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
 
       if (fbo != null) {
 
-        counter.renderTimer.tic();
+        // Skip rendering we are already in the middle of rendering
+        // the previous frame
+        if(isRendering()) {
+          return;
+        }
+        else {
+          setRendering();
+          counter.renderTimer.tic();
 
-        // wait=true causes deadlocks! So we do not wait
-        // and then ask the rendering to asynchronously notify
-        // this panel that a repaint should occur.
-        boolean wait = false;
+          // wait=true causes deadlocks! So we do not wait
+          // and then ask the rendering to asynchronously notify
+          // this panel that a repaint should occur.
+          boolean wait = false;
 
-        renderGLToImage_OnMainThread(w, h, wait, true);
+          renderGLToImage_OnMainThread(w, h, wait, true);
 
-        // here we need a callback to invoke repaint, otherwise we are always one frame late!
-        // if resize too fast, we see that we display the previous image.
-        //
-        // Hence, following method is useless
-        // paintComponent(getGraphics());
-
+          // here we need a callback to invoke repaint, otherwise we are always one frame late!
+          // if resize too fast, we see that we display the previous image.
+          //
+          // Hence, following method is useless
+          // paintComponent(getGraphics());
+        }
       }
     }
   }
@@ -267,26 +311,6 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   //
   // FROM GL AUTO DRAWABLE INTERFACE
 
-  /**
-   * If the panel initialization has achieved, this triggers an offscreen rendering, maybe on a
-   * separated thread (macOS case), from which an asynchronous repaint will be triggered.
-   */
-  @Override
-  public void display() {
-    // Skip potential too early calls to display to avoid
-    // exceptions
-    if (!initialized) {
-      return;
-    }
-
-    // Start monitoring
-    counter.onDisplay();
-    
-    // FIXME : why does it work with this
-    renderGLToImage_OnMainThread(getWidth(), getHeight(), false, true);
-    // FIXME : and not with this?
-    // renderGLToImage_OnMainThread(false, true);
-  }
 
   @Override
   public GLEventListener getGLEventListener() {

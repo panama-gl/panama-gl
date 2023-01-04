@@ -63,7 +63,7 @@ public class DemoRotatingStuff_Onscreen_macOS {
     // System.out.println("Start loop");
 
     Animator a = new Animator(panel);
-    a.setSleepTime(100);
+    //a.setSleepTime(100);
     a.start();
   }
 

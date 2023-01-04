@@ -127,6 +127,7 @@ public class FBO {
 
     // Create a texture to write to
     int byteSize = width * height * channels;
+    
     pixelBuffer = MemorySegment.allocateNative(byteSize, newImplicitScope());
     gl.glTexImage2D(gl.GL_TEXTURE_2D(), level, internalFormat, width, height, border, format,
         textureType, pixelBuffer);

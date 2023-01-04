@@ -34,29 +34,12 @@ public class Animator {
           if (drawable.isVisible()) {
 
             if (adaptive) {
-              // Is it worth trying to display?
-              RenderCounter counter = drawable.getMonitoring();
-
-              // If render time exceed sleep time
-              if (counter.renderDriftDerivative() > 0) {
-                // Skip rendering and simply reset derivative
-                counter.updatePrevDiff();
-              }
-
-              // If render / update event diff is decreasing
-              else if (counter.eventDiffDerivative() < 0) {
-                // Skip rendering and simply reset derivative
-                counter.updatePrevDiff();
-              }
-              // Otherwise, let's render
-              else {
-                drawable.display();
-              }
-            } else {
+              adaptiveDisplayWithLock();
+            } 
+            else {
               drawable.display();
-
             }
-
+            
             // Try to wait a bit before retrying to update display
             try {
               Thread.sleep(sleepTimeMs);
@@ -64,10 +47,42 @@ public class Animator {
               e.printStackTrace();
               loop = false;
             }
+
           }
+          
+
         }
       }
     };
+  }
+  
+  /** Query a drawable display if it is not currently rendering. */
+  protected void adaptiveDisplayWithLock() {
+    if(!((GLPanel) drawable).isRendering()) {
+      drawable.display();
+    }
+  }
+
+  /** Query a drawable display if previous time or number of event is not diverging. */
+  protected void adaptiveDisplayWithDerivative() {
+    // Is it worth trying to display?
+    RenderCounter counter = drawable.getMonitoring();
+
+    // If render time exceed sleep time
+    if (counter.renderDriftDerivative() > 0) {
+      // Skip rendering and simply reset derivative
+      counter.updatePrevDiff();
+    }
+
+    // If render / update event diff is decreasing
+    else if (counter.eventDiffDerivative() < 0) {
+      // Skip rendering and simply reset derivative
+      counter.updatePrevDiff();
+    }
+    // Otherwise, let's render
+    else {
+      drawable.display();
+    }
   }
 
   public void stop() {
