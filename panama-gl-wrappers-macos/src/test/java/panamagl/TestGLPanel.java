@@ -1,12 +1,10 @@
 package panamagl;
 
-import static org.mockito.Mockito.spy;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import java.util.concurrent.atomic.AtomicInteger;
+import org.junit.Ignore;
 import org.junit.Test;
 import junit.framework.Assert;
 import opengl.GL;
-import opengl.fbo.FBO;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class TestGLPanel {
@@ -139,6 +137,86 @@ public class TestGLPanel {
     Assert.assertEquals(3*WIDTH, panel.getFBO().getWidth());
     Assert.assertEquals(2*HEIGHT, panel.getFBO().getHeight());
 
+
+  }
+  
+ @Ignore("Not working in CLI yet")
+  @Test
+  public void whenPanelIsRendering_DisplayWillDoNothing() throws InterruptedException {
+    
+    AtomicInteger countRenderQueries = new AtomicInteger();
+    
+    // Duration of freezing task
+    int FREEZE_TASK_MS = 5000;
+    
+    TicToc t = new TicToc();
+    
+    // Given an initialized panel
+    GLPanel panel = new GLPanel() {
+      
+      // Customize rendering task so that it is very very long
+      protected Runnable getTask_renderGLToImage(int width, int height) {
+        return new Runnable() {
+          @Override
+          public void run() {
+            //renderGLToImage(width, height);
+            
+            countRenderQueries.incrementAndGet();
+            
+            System.out.println("Start freezing render for test - count = " + countRenderQueries.get());
+            try {
+              Thread.sleep(FREEZE_TASK_MS);
+            } catch (InterruptedException e) {
+              e.printStackTrace();
+            }
+            
+            System.out.println("Done freezing render for test");
+            
+            t.tocShow("Elasped for counter " + countRenderQueries.get());
+
+          }
+        };
+      }
+
+    };
+    
+    panel.addNotify();
+
+    Assert.assertTrue(panel.isInitialized());
+    
+    //RenderCounter counter = panel.getMonitoring();
+
+    Assert.assertFalse(panel.isRendering());
+    Assert.assertTrue (countRenderQueries.get()==0);
+    
+    t.tic();
+
+    // -------------------------------
+    // When display() is invoked a first time
+    
+    panel.display();
+    
+    Assert.assertTrue(panel.isRendering());
+    
+    // wait few ms that the task is triggered to macos main thread
+    Thread.sleep(500);
+    
+    // the freezing task has started and increments its counter
+    Assert.assertTrue (countRenderQueries.get()==1);
+
+    
+    // -------------------------------
+    // When display() is invoked again
+    
+    panel.display();
+    
+    // wait few ms that the task is triggered to macos main thread
+    Thread.sleep(500);
+
+    // do not trigger a new display
+    Assert.assertTrue (countRenderQueries.get()==1);
+    
+    System.out.println("Finished test");
 
   }
   
