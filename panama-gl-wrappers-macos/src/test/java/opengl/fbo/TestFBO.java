@@ -7,7 +7,7 @@ import org.junit.Assert;
 import org.jzy3d.maths.Array;
 import opengl.ByteUtils;
 import opengl.GL;
-import opengl.demos.SampleTriangle;
+import opengl.demos.macos.SampleTriangle;
 
 public class TestFBO {
   public static int[] RED = {255, 0, 0, 255};

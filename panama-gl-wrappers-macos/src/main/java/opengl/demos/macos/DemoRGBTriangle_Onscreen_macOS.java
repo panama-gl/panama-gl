@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import opengl.GL;
-import opengl.demos.SampleTriangle;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.GLPanel;

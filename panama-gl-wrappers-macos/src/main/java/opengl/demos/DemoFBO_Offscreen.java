@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import opengl.GL;
+import opengl.demos.macos.SampleTriangle;
 import opengl.fbo.FBO;
 
 /**

@@ -14,7 +14,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import opengl.GL;
-import opengl.demos.SampleTriangle;
+import opengl.demos.macos.SampleTriangle;
 
 /**
  * Not working yet, threading issue. See demofbo_onscreen_macos

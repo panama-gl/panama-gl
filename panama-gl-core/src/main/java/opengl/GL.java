@@ -77,6 +77,12 @@ public interface GL {
     void glMatrixMode(int p);
     void glFrustum(float f, float fw, float g, float fh, float h, float i);
     void glViewport(int x, int y, int width, int height);
+    void glLightfv(int id, int p, MemorySegment pos);
+    void glMaterialfv(int id, int shine, MemorySegment shini);
+    void glPushMatrix();
+    void glutSolidTeapot(double d);
+    void glPopMatrix();
+
 
 
     // TODO : how to generate this convenient wrapper in interface AND implementations?
@@ -108,5 +114,13 @@ public interface GL {
     int GL_LEQUAL();
     int GL_PERSPECTIVE_CORRECTION_HINT();
     int GL_NICEST();
+    int GL_POSITION();
+    int GL_LIGHT0();
+    int GL_AMBIENT();
+    int GL_DIFFUSE();
+    int GL_SPECULAR();
+    int GL_FRONT();
+    int GL_SHININESS();
+    int GL_LIGHTING();
 }
 

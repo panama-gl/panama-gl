@@ -1,6 +1,5 @@
 package opengl.ubuntu;
 
-import static jdk.incubator.foreign.CLinker.C_INT;
 import jdk.incubator.foreign.Addressable;
 import jdk.incubator.foreign.CLinker;
 import jdk.incubator.foreign.MemorySegment;
@@ -316,6 +315,84 @@ public class GLX_Ubuntu_20 extends AbstractGL implements GL  {
 
     @Override
     public int GL_NICEST() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public void glLightfv(int id, int p, MemorySegment pos) {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glMaterialfv(int id, int shine, MemorySegment shini) {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glPushMatrix() {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glutSolidTeapot(double d) {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public void glPopMatrix() {
+      // TODO Auto-generated method stub
+      
+    }
+
+    @Override
+    public int GL_POSITION() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public int GL_LIGHT0() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public int GL_AMBIENT() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public int GL_DIFFUSE() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public int GL_SPECULAR() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public int GL_FRONT() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public int GL_SHININESS() {
+      // TODO Auto-generated method stub
+      return 0;
+    }
+
+    @Override
+    public int GL_LIGHTING() {
       // TODO Auto-generated method stub
       return 0;
     }

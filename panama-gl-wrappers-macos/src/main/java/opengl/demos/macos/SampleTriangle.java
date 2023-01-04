@@ -1,10 +1,9 @@
-package opengl.demos;
+package opengl.demos.macos;
 
 import static opengl.macos.v10_15_3.glut_h.GL_BLEND;
 import static opengl.macos.v10_15_3.glut_h.GL_DEPTH_TEST;
 import static opengl.macos.v10_15_3.glut_h.GL_MODELVIEW;
 import static opengl.macos.v10_15_3.glut_h.GL_PROJECTION;
-import static opengl.macos.v10_15_3.glut_h.GL_TEXTURE_2D;
 import static opengl.macos.v10_15_3.glut_h.glDisable;
 import static opengl.macos.v10_15_3.glut_h.glEnable;
 import static opengl.macos.v10_15_3.glut_h.glLoadIdentity;

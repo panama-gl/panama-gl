@@ -343,6 +343,71 @@ public class GL_macOS_10_15_7 extends AbstractGL implements GL {
     return glut_h.GL_NICEST();
   }
 
+  @Override
+  public void glLightfv(int id, int p, MemorySegment pos) {
+    glut_h.glLightfv(id, p, pos);
+  }
+
+  @Override
+  public void glMaterialfv(int id, int shine, MemorySegment shini) {
+    glut_h.glMaterialfv(id, shine, shini);
+  }
+
+  @Override
+  public void glPushMatrix() {
+    glut_h.glPushMatrix();
+  }
+
+  @Override
+  public void glutSolidTeapot(double d) {
+    glut_h.glutSolidTeapot(d);
+  }
+
+  @Override
+  public void glPopMatrix() {
+    glut_h.glPopMatrix();    
+  }
+
+  @Override
+  public int GL_POSITION() {
+    return glut_h.GL_POSITION();
+  }
+
+  @Override
+  public int GL_LIGHT0() {
+    return glut_h.GL_LIGHT0();
+  }
+
+  @Override
+  public int GL_AMBIENT() {
+    return glut_h.GL_AMBIENT();
+  }
+
+  @Override
+  public int GL_DIFFUSE() {
+    return glut_h.GL_DIFFUSE();
+  }
+
+  @Override
+  public int GL_SPECULAR() {
+    return glut_h.GL_SPECULAR();
+  }
+
+  @Override
+  public int GL_FRONT() {
+    return glut_h.GL_FRONT();
+  }
+
+  @Override
+  public int GL_SHININESS() {
+    return glut_h.GL_SHININESS();
+  }
+
+  @Override
+  public int GL_LIGHTING() {
+    return glut_h.GL_LIGHTING();
+  }
+
   
 
 
