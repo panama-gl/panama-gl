@@ -212,6 +212,7 @@ public class TestGLPanel {
     // the freezing task has started and increments its counter
     Assert.assertTrue (countRenderQueries.get()==1);
 
+    ThreadUtils.print();
     
     // -------------------------------
     // When display() is invoked again

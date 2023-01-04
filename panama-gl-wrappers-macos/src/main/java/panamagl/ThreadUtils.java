@@ -1,11 +1,12 @@
 package panamagl;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 public class ThreadUtils {
   /**
+   * Print all threads, their status and priority in console.
+   * 
+   * Statuses :
    * <ul>
    * <li>NEW: The thread has been created, but has not yet started.
    * <li>RUNNABLE: The thread is currently executing.
@@ -21,9 +22,7 @@ public class ThreadUtils {
     Map<Thread, StackTraceElement[]> allStackTraces = Thread.getAllStackTraces();
     
     Map<Long,Thread> ranked = new HashMap<>();
-    Set<Long> ids = new TreeSet<>();
     for (Thread thread : allStackTraces.keySet()) {
-      //ids.put(thread.ge)
       ranked.put(thread.getId(), thread);
     }
 

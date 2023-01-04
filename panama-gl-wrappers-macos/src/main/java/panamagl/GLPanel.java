@@ -9,8 +9,6 @@ import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import com.jogamp.opengl.GLProfile;
@@ -65,7 +63,6 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   protected boolean initialized = false;
   protected AtomicBoolean rendering = new AtomicBoolean();
   protected ExecutorService exec = Executors.newSingleThreadExecutor();
-
 
   protected String debugFile = null;// "target/glpanel";
   protected boolean debugPerf = true;
@@ -614,4 +611,6 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   public void setMonitoring(RenderCounter counter) {
     this.counter = counter;
   }
+  
+  
 }
