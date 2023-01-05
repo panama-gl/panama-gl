@@ -1,6 +1,5 @@
 package panamagl.toolkits.swing;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
@@ -14,6 +13,7 @@ import panamagl.Debug;
 import panamagl.GLAutoDrawable;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
+import panamagl.PerformanceOverlay;
 import panamagl.RenderCounter;
 import panamagl.fbo.FBO;
 import panamagl.os.macos.MacOSOffscreenRenderer;
@@ -60,7 +60,7 @@ public class GLCanvasSwing extends JPanel implements GLAutoDrawable {
 
   protected AtomicBoolean rendering = new AtomicBoolean();
   protected RenderCounter counter = new RenderCounter();
-  protected PerfOverlay perfOverlay = new PerfOverlay();
+  protected PerformanceOverlay overlay;
 
   protected boolean debug = Debug.check(GLCanvasSwing.class);
   protected boolean debugPerf = true;
@@ -71,6 +71,8 @@ public class GLCanvasSwing extends JPanel implements GLAutoDrawable {
    * {@link GL} interface.
    */
   public GLCanvasSwing() {
+    this.overlay = new PerformanceOverlay(this);
+    
     // Load OSXUtil native as soon as possible for macOS!
     // GLProfile.initSingleton();
 
@@ -153,9 +155,6 @@ public class GLCanvasSwing extends JPanel implements GLAutoDrawable {
         overlayPerformance(g);
 
       rendering.set(false);
-      
-      
-
     }
   }
 
@@ -172,7 +171,7 @@ public class GLCanvasSwing extends JPanel implements GLAutoDrawable {
     }
 
     // Indicates we started to render
-    setRendering();
+    setRendering(true);
 
     // Start monitoring
     counter.onDisplay();
@@ -197,8 +196,8 @@ public class GLCanvasSwing extends JPanel implements GLAutoDrawable {
     return rendering.get();
   }
 
-  protected void setRendering() {
-    rendering.set(true);
+  protected void setRendering(boolean status) {
+    rendering.set(status);
   }
 
   /**
@@ -226,9 +225,9 @@ public class GLCanvasSwing extends JPanel implements GLAutoDrawable {
       // Otherwise indicates that we start to render and do the 
       // job required for resizing.
       else {
-        setRendering();
+        setRendering(true);
 
-        counter.onStartRendering();
+        getMonitoring().onStartRendering();
 
         offscreen.onResize(GLCanvasSwing.this, listener, 0, 0, w, h);
       }
@@ -243,65 +242,8 @@ public class GLCanvasSwing extends JPanel implements GLAutoDrawable {
    * Show performance in a 2D text overlay.
    */
   protected void overlayPerformance(Graphics g) {
-    
-
-    
-    // Overlay performance info
-    g.setColor(Color.GRAY);
-
-    // -------------------------------------------------
-    // Interval between rendering query and repaint achieved. The real rendering time during which
-    // OpenGL worked.
-
-    // int renderTimeMs = counter.renderTimeMs();
-
-    g.drawString(counter.renderTimeMsInfo(), perfOverlay.x,
-        getHeight() - perfOverlay.yRenderTimeInterval);
-
-    // -------------------------------------------------
-    // Interval between two repaint, which show how we stress the AWT Event Queue
-    // https://github.com/jzy3d/jzy3d-api/tree/master/jzy3d-emul-gl-awt#integrating-in-awt
-
-    // Highlight render time longer than paint interval
-    if (counter.renderLongerThanRepaintInterval())
-      g.setColor(Color.ORANGE);
-
-    g.drawString(counter.paintIntervalMsInfo(), perfOverlay.x,
-        getHeight() - perfOverlay.yPaintInterval);
-
-    g.drawString(counter.paintIntervalVsRenderTimeDiffInfo(), perfOverlay.x,
-        getHeight() - perfOverlay.yIntervalDiff);
-
-    // -------------------------------------------------
-    // Count coalesced events.
-
-    // FIXME : should not appear in the info display method
-    counter.onStartPainting();
-
-    // Update diff computations
-    counter.update();
-
-    // Highlight when count display vs paint differ
-    if (counter.diffChanged()) {
-      g.setColor(Color.ORANGE);
-    } else {
-      g.setColor(Color.GRAY);
-    }
-
-    g.drawString(counter.eventCountInfo(), perfOverlay.x,
-        getHeight() - perfOverlay.yCountCoalesced);
-
+    overlay.paint(g);
   }
-
-  protected class PerfOverlay {
-    protected int interline = 20;
-    protected int x = 10;
-    protected int yPaintInterval = x;
-    protected int yRenderTimeInterval = yPaintInterval + interline;
-    protected int yIntervalDiff = yRenderTimeInterval + interline;
-    protected int yCountCoalesced = yIntervalDiff + interline;
-  }
-
 
   /* ===================================================== */
   //
