@@ -381,4 +381,17 @@ public class GLCanvasSwing extends JPanel implements GLAutoDrawable {
   }
 
 
+  @Override
+  public OffscreenRenderer getOffscreenRenderer() {
+    return offscreen;
+  }
+
+  @Override
+  public void setOffscreenRenderer(OffscreenRenderer offscreen) {
+    this.offscreen = offscreen;
+  }
+  
+  
+
+
 }

@@ -46,4 +46,7 @@ public interface GLAutoDrawable {
   void setScreenshot(BufferedImage image);
   BufferedImage getScreenshot();
   
+  OffscreenRenderer getOffscreenRenderer();
+  void setOffscreenRenderer(OffscreenRenderer offscreen);
+  
 }

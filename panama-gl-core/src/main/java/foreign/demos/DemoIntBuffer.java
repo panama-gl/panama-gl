@@ -16,7 +16,7 @@ public class DemoIntBuffer {
         }
 
         for (int i = 0; i < 25; i++) {
-            byte[] integer = new byte[4];
+            //byte[] integer = new byte[4];
             //integer[0] = (byte)intHandle.get(colorTex, /* offset */ i * 4);
             //integer[1] = (byte)intHandle.get(colorTex, /* offset */ i * 4 + 1);
             //integer[2] = (byte)intHandle.get(colorTex, /* offset */ i * 4 + 2);

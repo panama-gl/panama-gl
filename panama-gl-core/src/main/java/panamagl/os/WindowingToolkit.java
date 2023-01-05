@@ -1,4 +1,4 @@
-package org.jzy3d.os;
+package panamagl.os;
 
 public enum WindowingToolkit {
   AWT, Swing, SWT, Offscreen, UNKOWN;

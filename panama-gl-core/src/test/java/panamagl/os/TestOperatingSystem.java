@@ -1,4 +1,4 @@
-package org.jzy3d.os;
+package panamagl.os;
 
 import org.junit.Assert;
 import org.junit.Test;

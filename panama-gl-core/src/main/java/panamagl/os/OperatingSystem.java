@@ -1,4 +1,4 @@
-package org.jzy3d.os;
+package panamagl.os;
 
 public class OperatingSystem {
   public static OperatingSystem MACOS = new OperatingSystem("macos"); 

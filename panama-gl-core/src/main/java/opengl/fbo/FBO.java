@@ -6,7 +6,6 @@ import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import jdk.incubator.foreign.MemoryHandles;
 import jdk.incubator.foreign.MemorySegment;
-import jdk.incubator.foreign.CLinker;
 
 import opengl.ByteUtils;
 import opengl.GL;
@@ -316,8 +315,8 @@ public class FBO {
       byte byG = (byte) byteHandle.get(pixelsBuffer, i + 1);
       byte byR = (byte) byteHandle.get(pixelsBuffer, i + 2);
       byte byA = (byte) byteHandle.get(pixelsBuffer, i + 3);
-      byte non = 0;
-      byte one = (byte) 0xff;
+      //byte non = 0;
+      //byte one = (byte) 0xff;
       int rgba = ByteUtils.RGBAtoIntARGB(byR, byG, byB, byA); // ARGB
       // rgba = ByteUtils.RGBAtoIntARGB(byR, non, non, one);
       // rgba = ByteUtils.RGBAtoIntARGB(non, byG, non, one);

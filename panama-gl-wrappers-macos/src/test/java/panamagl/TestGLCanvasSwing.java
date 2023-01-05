@@ -5,6 +5,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import junit.framework.Assert;
 import opengl.GL;
+import panamagl.macos.MacOSOffscreenRenderer;
 import panamagl.toolkits.swing.GLCanvasSwing;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
@@ -141,7 +142,7 @@ public class TestGLCanvasSwing {
 
   }
   
-@Ignore("Not working in CLI yet - despite using surefire unlimited threads")
+//@Ignore("Not working in CLI yet - despite using surefire unlimited threads")
   @Test
   public void whenPanelIsRendering_DisplayWillDoNothing() throws InterruptedException {
     //ThreadUtils.print();
@@ -155,15 +156,18 @@ public class TestGLCanvasSwing {
     
     TicToc t = new TicToc();
     
-    // Given an initialized panel
-    GLCanvasSwing panel = new GLCanvasSwing() {
-      
+    // ----------------------------------------------------------
+    // Given an initialized panel with a test offscreen renderer
+    // performing a long task
+    
+    OffscreenRenderer renderer = new MacOSOffscreenRenderer() {
+    
       // Customize rendering task so that it is very very long
-      protected Runnable getTask_renderGLToImage(int width, int height) {
+      @Override
+      protected Runnable getTask_renderGLToImage(GLAutoDrawable drawable, GLEventListener listener, int width, int height) {
         return new Runnable() {
           @Override
           public void run() {
-            //renderGLToImage(width, height);
             
             countRenderQueries.incrementAndGet();
             
@@ -181,19 +185,17 @@ public class TestGLCanvasSwing {
           }
         };
       }
-
     };
-    
+    GLCanvasSwing panel = new GLCanvasSwing();
+    panel.setOffscreenRenderer(renderer);
+
+    // -------------------------------
+    // When it is added 
     panel.addNotify();
 
-    //ThreadUtils.print();
-    
+    // Then it is considered initialized but never
+    // rendered yet
     Assert.assertTrue(panel.isInitialized());
-    
-    //ThreadUtils.print();
-    
-    //RenderCounter counter = panel.getMonitoring();
-
     Assert.assertFalse(panel.isRendering());
     Assert.assertTrue (countRenderQueries.get()==0);
     

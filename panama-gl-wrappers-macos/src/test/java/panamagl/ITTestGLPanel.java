@@ -128,9 +128,9 @@ public class ITTestGLPanel {
         
         //frame.repaint();
         //sleep(1000);
-        frame.resize(400, 400);
+        frame.setSize(400, 400);
         sleep(1000);
-        frame.resize(600, 600);
+        frame.setSize(600, 600);
         sleep(1000);
         
 
