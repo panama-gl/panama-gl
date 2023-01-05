@@ -41,13 +41,11 @@ public class Animator {
               drawable.display();
             }
             
-            
+            // Try to wait a bit before retrying to update display
             pause(sleepTimeMs);
             
             // Avoid flooding the CPU, let other thread work
             Thread.yield();
-            
-            
 
           }
           
@@ -58,7 +56,6 @@ public class Animator {
   }
   
   protected void pause(int mili) {
-    // Try to wait a bit before retrying to update display
     try {
       Thread.sleep(mili);
     } catch (InterruptedException e) {
@@ -68,7 +65,7 @@ public class Animator {
   }
 
   
-  protected void pause2(int mili) {
+  protected void pauseNotifyWait(int mili) {
     Thread.currentThread().notifyAll();
     
     // Try to wait a bit before retrying to update display

@@ -29,7 +29,6 @@ public class DemoTeapot_Onscreen_macOS {
 
     // This is the GL Scene to render
     GLEventAdapter listener = TeapotGLEventListener();
-    // GLEventAdapter listener = DemoFBO_Onscreen_macOS.RGBTriangleEventListener();
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
     GLPanel panel = new GLPanel();
@@ -38,7 +37,6 @@ public class DemoTeapot_Onscreen_macOS {
     // Create frame
     final JFrame frame = new JFrame(DemoTeapot_Onscreen_macOS.class.getSimpleName());
     frame.getContentPane().setLayout(new BorderLayout());
-    // frame.pack();
     frame.setBounds(0, 0, 800, 600);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -46,7 +44,6 @@ public class DemoTeapot_Onscreen_macOS {
     SwingUtilities.invokeLater(new Runnable() {
       @Override
       public void run() {
-        // doDemo();
 
         // Add panel to frame
         frame.add(panel, BorderLayout.CENTER);
@@ -65,13 +62,8 @@ public class DemoTeapot_Onscreen_macOS {
       }
     });
 
-    // TODO : Check why repainting with animator won't
-    // work if we don't wait a bit (time for window being available?
-    Thread.sleep(5000);
-    System.out.println("Start loop");
-
+    // Start animating
     Animator a = new Animator(panel);
-    a.setSleepTime(50);
     a.start();
   }
 
@@ -102,8 +94,7 @@ public class DemoTeapot_Onscreen_macOS {
         gl.glEnable(gl.GL_LIGHT0());
         gl.glEnable(gl.GL_DEPTH_TEST());
 
-        if (gl != null)
-          GLError.checkAndThrow(gl);
+        GLError.checkAndThrow(gl);
       }
 
       public void display(GL gl) {
@@ -115,13 +106,10 @@ public class DemoTeapot_Onscreen_macOS {
         gl.glRotatef(rot, 0f, 1f, 0f);
         gl.glutSolidTeapot(0.5d);
         gl.glPopMatrix();
-        // glutSwapBuffers();
 
         rot += 0.45;
 
-        if (gl != null)
-          GLError.checkAndThrow(gl);
-
+        GLError.checkAndThrow(gl);
       }
 
       protected float rot = 0;

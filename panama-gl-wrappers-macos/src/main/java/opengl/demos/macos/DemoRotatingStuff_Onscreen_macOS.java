@@ -31,7 +31,6 @@ public class DemoRotatingStuff_Onscreen_macOS {
     // Create frame
     final JFrame frame = new JFrame(DemoRotatingStuff_Onscreen_macOS.class.getSimpleName());
     frame.getContentPane().setLayout(new BorderLayout());
-    // frame.pack();
     frame.setBounds(0, 0, 800, 600);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -58,11 +57,7 @@ public class DemoRotatingStuff_Onscreen_macOS {
     // ---------------------------------------
     // Animate
 
-    // Thread.sleep(5000);
-    // System.out.println("Start loop");
-
     Animator a = new Animator(panel);
-    //a.setSleepTime(100);
     a.start();
   }
 

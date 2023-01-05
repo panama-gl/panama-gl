@@ -1,5 +1,7 @@
 package panamagl;
 
+import java.awt.image.BufferedImage;
+import javax.swing.JPanel;
 import opengl.GL;
 import opengl.GLContext;
 
@@ -35,4 +37,13 @@ public interface GLAutoDrawable {
   
   /** Return the performance information about this panel. */
   RenderCounter getMonitoring();
+  
+  int getWidth();
+  int getHeight();
+  
+  void repaint();
+  
+  void setScreenshot(BufferedImage image);
+  BufferedImage getScreenshot();
+  
 }
