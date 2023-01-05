@@ -1,4 +1,4 @@
-package opengl.demos;
+package demos.opengl;
 import java.io.File;
 import java.io.IOException;
 import java.lang.invoke.MethodHandle;

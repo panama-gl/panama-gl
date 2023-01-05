@@ -1,4 +1,4 @@
-package opengl.demos.macos;
+package demos.panamagl.macos;
 
 import opengl.GL;
 import opengl.GLContext;
@@ -17,6 +17,6 @@ public class DemoRGBTriangle_Offscreen_macOS {
 
     GL gl = new GL_macOS_10_15_7();
 
-    opengl.demos.DemoFBO_Offscreen.fbo_offscreen(gl);
+    demos.opengl.DemoFBO_Offscreen.fbo_offscreen(gl);
   }
 }

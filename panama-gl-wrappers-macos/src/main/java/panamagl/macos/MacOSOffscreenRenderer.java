@@ -16,13 +16,15 @@ import opengl.macos.GL_macOS_10_15_7;
 import panamagl.Debug;
 import panamagl.GLAutoDrawable;
 import panamagl.GLEventListener;
-import panamagl.GLPanel;
 import panamagl.ImageUtils;
 import panamagl.OffscreenRenderer;
-import panamagl.RenderCounter;
+import panamagl.toolkits.swing.GLCanvasSwing;
 
 public class MacOSOffscreenRenderer implements OffscreenRenderer{
-  protected boolean debug = Debug.check(MacOSOffscreenRenderer.class);
+  protected boolean debug = Debug.check(MacOSOffscreenRenderer.class, GLCanvasSwing.class);
+  protected String debugFile = null;// "target/glpanel";
+  /** Only used to export debug images if a debug file is given */
+  protected ExecutorService exec = Executors.newSingleThreadExecutor();
 
   protected GL gl;
   protected CGLContext cglContext;
@@ -33,20 +35,30 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
   protected boolean useGLUT = true;
   
   protected boolean initialized = false;
-
-  protected String debugFile = null;// "target/glpanel";
-
   
-  protected ExecutorService exec = Executors.newSingleThreadExecutor();
+  protected static final int INIT_FBO_WIDTH = 10;
+  protected static final int INIT_FBO_HEIGHT = 10;
 
   public String getDebugFile() {
     return debugFile;
   }
 
+  /**
+   * If not null, the input pattern will be used to save offscreen generated image to disk.
+   * 
+   * Example setDebugFile("target/glpanel");
+   * 
+   * Creates images in target/ folder under anme glpanel-1.png, glpanel-2.png, etc.
+   * 
+   */
   public void setDebugFile(String debugFile) {
+    if(exec==null) {
+      exec = Executors.newSingleThreadExecutor();
+    }
     this.debugFile = debugFile;
   }
   
+  /** Indicates if the renderer has already been initialized. */
   @Override
   public boolean isInitialized() {
     return initialized;
@@ -116,7 +128,7 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
    * </ul>
    */
   protected void initContext(GLEventListener listener) {
-    System.out.println("GLPanel : initContext");
+    System.out.println("MacOSOffscreenRenderer : initContext");
 
     //counter = new RenderCounter();
 
@@ -125,7 +137,7 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
     if (useCGL) {
       cglContext = new CGLContext();
       cglContext.init();
-      Debug.debug(debug, "GLPanel : initContext : CGL done");
+      Debug.debug(debug, "MacOSOffscreenRenderer : initContext : CGL done");
     }
 
     // --------------------------------------
@@ -135,7 +147,7 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
     if (useGLUT) {
       glutContext = new GLUTContext_macOS_10_15_7();
       glutContext.init(false); // do not init GLUT a second time
-      Debug.debug(debug, "GLPanel : initContext : GLUT done");
+      Debug.debug(debug, "MacOSOffscreenRenderer : initContext : GLUT done");
     }
 
     // --------------------------------------
@@ -145,10 +157,10 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
     GLError.checkAndThrow(gl);
 
     // FBO
-    this.fbo = new FBO(10, 10);//getFBOWidth(), getFBOHeight());
+    this.fbo = new FBO(INIT_FBO_WIDTH, INIT_FBO_HEIGHT);
     this.fbo.prepare(gl);
 
-    Debug.debug(debug, "GLPanel : initContext : FBO done");
+    Debug.debug(debug, "MacOSOffscreenRenderer : initContext : FBO done");
 
     // --------------------------------------
     // Invoke GLEventListener.init(..)
@@ -214,17 +226,19 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
     if (fbo != null) {
       BufferedImage out = fbo.getImage(gl);
 
+      if (out == null)
+        throw new RuntimeException("FBO returned a null image!");
+
+      // Give back the image to the onscreen panel
       drawable.setScreenshot(out);
       
-      if (out == null)
-        System.err.println("OUT image is null!");
 
-      // The image has been rendered in macOS main thread, now we want
-      // to notify the component that it is ready for rendering in the AWT Thread
+      // The image has been rendered in macOS main thread, 
+      // now we want to notify the component that it is ready
+      // for rendering in the AWT Thread
       SwingUtilities.invokeLater(new Runnable() {
         @Override
         public void run() {
-          System.out.println("Wish to repaint");
           drawable.repaint();
         }
       });

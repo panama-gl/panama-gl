@@ -23,8 +23,11 @@ public interface OffscreenRenderer {
   
   boolean isFlipY();
   void setFlipY(boolean flipY);
-  FBO getFBO();
   void setFBO(FBO fbo);
+  FBO getFBO();
   
   boolean isInitialized();
+  
+  public void setDebugFile(String debugFile);
+  public String getDebugFile();
 }

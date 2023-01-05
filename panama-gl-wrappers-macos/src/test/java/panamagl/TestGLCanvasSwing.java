@@ -5,9 +5,10 @@ import org.junit.Ignore;
 import org.junit.Test;
 import junit.framework.Assert;
 import opengl.GL;
+import panamagl.toolkits.swing.GLCanvasSwing;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class TestGLPanel {
+public class TestGLCanvasSwing {
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
   
   @Test
@@ -18,7 +19,7 @@ public class TestGLPanel {
     
     EventCounter event = new EventCounter();
     
-    GLPanel panel = new GLPanel();
+    GLCanvasSwing panel = new GLCanvasSwing();
     
     panel.setGLEventListener(new GLEventAdapter() {
       @Override
@@ -107,7 +108,7 @@ public class TestGLPanel {
     int HEIGHT= 100;
 
     // Given an initialized panel
-    GLPanel panel = new GLPanel();
+    GLCanvasSwing panel = new GLCanvasSwing();
     panel.addNotify();
     Assert.assertTrue(panel.isInitialized());
     
@@ -155,7 +156,7 @@ public class TestGLPanel {
     TicToc t = new TicToc();
     
     // Given an initialized panel
-    GLPanel panel = new GLPanel() {
+    GLCanvasSwing panel = new GLCanvasSwing() {
       
       // Customize rendering task so that it is very very long
       protected Runnable getTask_renderGLToImage(int width, int height) {

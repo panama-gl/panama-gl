@@ -1,4 +1,4 @@
-package opengl.demos.macos;
+package demos.panamagl.macos;
 
 public class IdentifyMainThreadFromJava {
   public static void main(String[] args) {

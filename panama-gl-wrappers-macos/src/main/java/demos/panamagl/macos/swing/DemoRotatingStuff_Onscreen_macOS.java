@@ -1,4 +1,4 @@
-package opengl.demos.macos;
+package demos.panamagl.macos.swing;
 
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
@@ -6,7 +6,7 @@ import javax.swing.SwingUtilities;
 import opengl.GL;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
-import panamagl.GLPanel;
+import panamagl.toolkits.swing.GLCanvasSwing;
 
 /**
  * VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
@@ -25,7 +25,7 @@ public class DemoRotatingStuff_Onscreen_macOS {
     GLEventAdapter listener = RotatingStuff();
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
-    GLPanel panel = new GLPanel();
+    GLCanvasSwing panel = new GLCanvasSwing();
     panel.setGLEventListener(listener);
 
     // Create frame

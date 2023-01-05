@@ -7,16 +7,22 @@ public class TestDebug {
   @Test
   public void testFlag() {
     
-    // Given TRUE flag
-    //System.setProperty("-Dorg.pack.Myclass", "true");
+    // Given DEBUG FLAG on a class given by command line
+    System.setProperty("sun.java.command", "MyProgram -Dpanamagl.TestDebug$TestClass1");
     
+    // When checking it same class, returns true
+    //System.out.println(TestClass1.class.getName());
+    Assert.assertTrue(Debug.check(TestClass1.class));
     
-    System.setProperty("sun.java.command", "MyProgram -Dorg.pack.Myclass");
-    Assert.assertTrue(Debug.check("org.pack.Myclass"));
+    // When checking another class, return false
+    Assert.assertFalse(Debug.check(TestClass2.class));
     
-    // Given NO flag
-  
-    Assert.assertFalse(Debug.check("-D.NOT.DEBUGGED"));
+    // When checking the two classes, return true
+    Assert.assertFalse(Debug.check(TestClass1.class, TestClass2.class));
+
 
   }
+  
+  class TestClass1{}
+  class TestClass2{}
 }

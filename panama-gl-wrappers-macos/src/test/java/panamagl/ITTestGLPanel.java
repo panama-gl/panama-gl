@@ -13,8 +13,9 @@ import javax.swing.SwingUtilities;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import demos.panamagl.macos.SampleTriangle;
 import opengl.GL;
-import opengl.demos.macos.SampleTriangle;
+import panamagl.toolkits.swing.GLCanvasSwing;
 
 /**
  * Not working yet, threading issue. See demofbo_onscreen_macos
@@ -60,7 +61,7 @@ public class ITTestGLPanel {
     // --------------------------------------------
     // Using a panel to ensure that GL get initialized in the main AWT thread.
     
-    GLPanel panel = new GLPanel();
+    GLCanvasSwing panel = new GLCanvasSwing();
     panel.setGLEventListener(listener);
     
     // --------------------------------------------
@@ -178,7 +179,7 @@ public class ITTestGLPanel {
     };
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
-    GLPanel panel = new GLPanel();
+    GLCanvasSwing panel = new GLCanvasSwing();
     panel.setGLEventListener(listener);
     
     // Create frame

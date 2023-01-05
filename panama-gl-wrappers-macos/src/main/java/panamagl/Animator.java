@@ -2,6 +2,7 @@ package panamagl;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import panamagl.toolkits.swing.GLCanvasSwing;
 
 /**
  * A naive animator to ease testing.
@@ -15,6 +16,8 @@ public class Animator {
   protected boolean loop = true;
   protected GLAutoDrawable drawable;
   protected boolean adaptive = true;
+  
+  protected boolean yieldWhenDone = true;
 
   public Animator(GLAutoDrawable drawable) {
     super();
@@ -45,7 +48,11 @@ public class Animator {
             pause(sleepTimeMs);
             
             // Avoid flooding the CPU, let other thread work
-            Thread.yield();
+            // ... but creates a very short blank panel when
+            // the window is moved to a secondary screen so
+            // keep this as an option
+            if(yieldWhenDone)
+              Thread.yield();
 
           }
           
@@ -81,7 +88,7 @@ public class Animator {
 
   /** Query a drawable display if it is not currently rendering. */
   protected void adaptiveDisplayWithLock() {
-    if(!((GLPanel) drawable).isRendering()) {
+    if(!((GLCanvasSwing) drawable).isRendering()) {
       drawable.display();
     }
   }
@@ -127,4 +134,15 @@ public class Animator {
   public void setAdaptive(boolean adaptive) {
     this.adaptive = adaptive;
   }
+
+  public boolean isYieldWhenDone() {
+    return yieldWhenDone;
+  }
+
+  /** */
+  public void setYieldWhenDone(boolean yieldWhenDone) {
+    this.yieldWhenDone = yieldWhenDone;
+  }
+  
+  
 }

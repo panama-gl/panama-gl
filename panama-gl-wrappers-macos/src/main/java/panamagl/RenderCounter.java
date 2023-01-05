@@ -20,9 +20,17 @@ public class RenderCounter {
 
   // ** MONITORING ********************** //
 
-  public void onPaintComponent() {
+  public void onPaintComponentBefore() {
     renderTimer.toc();
     paintInterval.toc();
+  }
+
+  public void onStartRendering() {
+    renderTimer.tic();
+  }
+
+  public void onStartPainting() {
+    paintInterval.tic();
   }
 
   public void onUpdate() {

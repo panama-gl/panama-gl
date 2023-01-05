@@ -1,4 +1,4 @@
-package panamagl;
+package panamagl.toolkits.swing;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,10 +11,17 @@ import javax.swing.JPanel;
 import opengl.GL;
 import opengl.GLContext;
 import opengl.fbo.FBO;
+import panamagl.Debug;
+import panamagl.GLAutoDrawable;
+import panamagl.GLEventListener;
+import panamagl.GraphicsUtils;
+import panamagl.ImageUtils;
+import panamagl.OffscreenRenderer;
+import panamagl.RenderCounter;
 import panamagl.macos.MacOSOffscreenRenderer;
 
 /**
- * This panel push to the screen an OpenGL image rendered offscreen by an {@link FBO}.
+ * This panel push to the screen an OpenGL image rendered offscreen by an {@link OffscreenRenderer}.
  * 
  * The panel mainly deals with
  * <ul>
@@ -23,12 +30,18 @@ import panamagl.macos.MacOSOffscreenRenderer;
  * <li>repaint and resize events that are propagated to the OpenGL application through a
  * {@link GLEventListener}, which must be provided by the user of this panel through
  * {@link #setGLEventListener(GLEventListener)}.</li>
+ * <li>measuring performance, that is evaluating the time required to trigger offscreen image
+ * rendering and image painting onscreen.</li>
  * </ul>
  * 
- * <h2>Threading</h2> The panel is also reponsible for triggering OpenGL initialization and
- * rendering in the appropriate threads, which may depend on the running operating system.
+ * <h2>Threading</h2>
  * 
- * <h3>Threading on macOS</h3> <img src="./doc-files/GLPanel-threads.png"/>
+ * The panel is also responsible for triggering OpenGL initialization and rendering in the
+ * appropriate threads, which may depend on the running operating system.
+ * 
+ * <h3>Threading on macOS</h3>
+ * 
+ * <img src="./doc-files/GLPanel-threads.png"/>
  * 
  * 
  * <h2>Debugging</h2>
@@ -38,18 +51,18 @@ import panamagl.macos.MacOSOffscreenRenderer;
  * @author Martin Pernollet
  *
  */
-public class GLPanel extends JPanel implements GLAutoDrawable {
+public class GLCanvasSwing extends JPanel implements GLAutoDrawable {
   private static final long serialVersionUID = -4601832524814661585L;
 
-  protected GLEventListener glListener;
+  protected GLEventListener listener;
   protected OffscreenRenderer offscreen = new MacOSOffscreenRenderer();
   protected BufferedImage out = null;
-  
+
   protected AtomicBoolean rendering = new AtomicBoolean();
   protected RenderCounter counter = new RenderCounter();
   protected PerfOverlay perfOverlay = new PerfOverlay();
 
-  protected boolean debug = Debug.check(GLPanel.class);
+  protected boolean debug = Debug.check(GLCanvasSwing.class);
   protected boolean debugPerf = true;
 
 
@@ -57,13 +70,13 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
    * Initialize a panel able to render OpenGL through a {@link GLEventListener} and related
    * {@link GL} interface.
    */
-  public GLPanel() {
+  public GLCanvasSwing() {
     // Load OSXUtil native as soon as possible for macOS!
     // GLProfile.initSingleton();
 
     // Show debug info
     if (debug)
-      GraphicsUtils.printGraphicsEnvironment("GLPanel");
+      GraphicsUtils.printGraphicsEnvironment("GLCanvasSwing");
 
     // This listener hold the most important part of the rendering flow
     addComponentListener(new ResizeHandler());
@@ -88,7 +101,7 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
     super.addNotify();
 
     // Initialize GL context from main macOS thread
-    offscreen.onInit(this, glListener);
+    offscreen.onInit(this, listener);
   }
 
   /**
@@ -96,7 +109,7 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
    */
   @Override
   public void removeNotify() {
-    offscreen.onDestroy(null, glListener);
+    offscreen.onDestroy(null, listener);
 
     super.removeNotify();
 
@@ -131,48 +144,61 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
    */
   @Override
   public void paintComponent(Graphics g) {
-    System.out.println("paint ");
     if (out != null) {
       g.drawImage(out, 0, 0, null);
 
-      counter.onPaintComponent();
+      counter.onPaintComponentBefore();
 
-      if(debugPerf)
+      if (debugPerf)
         overlayPerformance(g);
-      
+
       rendering.set(false);
+      
+      
+
     }
   }
-  
+
   /**
    * If the panel initialization has achieved, this triggers an offscreen rendering, maybe on a
    * separated thread (macOS case), from which an asynchronous repaint will be triggered.
    */
   @Override
   public void display() {
-    // Skip potential too early calls to display to avoid
-    // exceptions
+    
+    // Skip potential too early calls to display to avoid exceptions
     if (!offscreen.isInitialized()) {
       return;
     }
-    
+
+    // Indicates we started to render
     setRendering();
 
     // Start monitoring
     counter.onDisplay();
 
-    offscreen.onDisplay(this, glListener);
+    // Does the actual work of rendering
+    offscreen.onDisplay(this, listener);
   }
-  
+
+  /**
+   * Return true if the offscreen renderer has been initialized, which means that this panel has
+   * been added to a parent component.
+   */
+  @Override
+  public boolean isInitialized() {
+    return offscreen.isInitialized();
+  }
+
+
   /** Return true if display has started but has not yet finished */
   @Override
-  public boolean isRendering(){
+  public boolean isRendering() {
     return rendering.get();
   }
-  
+
   protected void setRendering() {
     rendering.set(true);
-
   }
 
   /**
@@ -182,26 +208,29 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   protected class ResizeHandler extends ComponentAdapter {
     @Override
     public void componentResized(ComponentEvent e) {
-      super.componentResized(e);
 
+      // Get the new dimensions
       Dimension size = e.getComponent().getSize();
-
       int w = (int) Math.round(size.getWidth());
       int h = (int) Math.round(size.getHeight());
 
-      Debug.debug(debug, "GLPanel resizing to " + w + "x" + h);
+      Debug.debug(debug, "GLCanvasSwing resizing to " + w + "x" + h);
 
 
       // Skip rendering we are already in the middle of rendering
       // the previous frame
-      if(isRendering()) {
+      if (isRendering()) {
         return;
-      }
+      } 
+      
+      // Otherwise indicates that we start to render and do the 
+      // job required for resizing.
       else {
         setRendering();
-        counter.renderTimer.tic();
 
-        offscreen.onResize(GLPanel.this, glListener, 0, 0, w, h);
+        counter.onStartRendering();
+
+        offscreen.onResize(GLCanvasSwing.this, listener, 0, 0, w, h);
       }
     }
   }
@@ -214,6 +243,9 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
    * Show performance in a 2D text overlay.
    */
   protected void overlayPerformance(Graphics g) {
+    
+
+    
     // Overlay performance info
     g.setColor(Color.GRAY);
 
@@ -238,15 +270,15 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
         getHeight() - perfOverlay.yPaintInterval);
 
     g.drawString(counter.paintIntervalVsRenderTimeDiffInfo(), perfOverlay.x,
-        getHeight() - perfOverlay.yIntervalDiff );
-
-    
-
-    counter.paintInterval.tic();
+        getHeight() - perfOverlay.yIntervalDiff);
 
     // -------------------------------------------------
     // Count coalesced events.
 
+    // FIXME : should not appear in the info display method
+    counter.onStartPainting();
+
+    // Update diff computations
     counter.update();
 
     // Highlight when count display vs paint differ
@@ -278,12 +310,12 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
 
   @Override
   public GLEventListener getGLEventListener() {
-    return glListener;
+    return listener;
   }
 
   @Override
   public void setGLEventListener(GLEventListener glEvents) {
-    this.glListener = glEvents;
+    this.listener = glEvents;
   }
 
   @Override
@@ -305,7 +337,7 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
     }
     return ImageUtils.copy(out);
   }
-  
+
   // should not be used by anything else than backend
   @Override
   public void setScreenshot(BufferedImage image) {
@@ -313,24 +345,11 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   }
 
   /* ===================================================== */
-  
-  protected int getFBOHeight() {
-    return (int) Math.max(800, this.getHeight());
-  }
 
-  protected int getFBOWidth() {
-    return (int) Math.max(600, this.getWidth());
-  }
-
-
-
-  @Override
-  public boolean isInitialized() {
-    return offscreen.isInitialized();
-  }
 
   /**
    * Indicates if image will be flipped vertically while being painted.
+   * 
    * @return
    */
   public boolean isFlipY() {
@@ -360,6 +379,6 @@ public class GLPanel extends JPanel implements GLAutoDrawable {
   public void setMonitoring(RenderCounter counter) {
     this.counter = counter;
   }
-  
-  
+
+
 }

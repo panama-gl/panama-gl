@@ -1,8 +1,9 @@
-package opengl.demos.macos;
+package demos.panamagl.macos;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
+import demos.panamagl.macos.swing.DemoTeapot_Onscreen_macOS;
 import opengl.GL;
 import opengl.GLContext;
 import opengl.fbo.FBO;

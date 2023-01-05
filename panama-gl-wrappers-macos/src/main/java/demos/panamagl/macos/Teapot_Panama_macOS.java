@@ -1,4 +1,4 @@
-package opengl.demos.macos;
+package demos.panamagl.macos;
 
 import static jdk.incubator.foreign.CLinker.C_FLOAT;
 import static jdk.incubator.foreign.CLinker.C_INT;

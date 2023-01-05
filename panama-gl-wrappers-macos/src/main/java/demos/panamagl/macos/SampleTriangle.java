@@ -1,4 +1,4 @@
-package opengl.demos.macos;
+package demos.panamagl.macos;
 
 import static opengl.macos.v10_15_3.glut_h.GL_BLEND;
 import static opengl.macos.v10_15_3.glut_h.GL_DEPTH_TEST;

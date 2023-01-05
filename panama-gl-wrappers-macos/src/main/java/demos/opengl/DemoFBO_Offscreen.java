@@ -1,10 +1,10 @@
-package opengl.demos;
+package demos.opengl;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
+import demos.panamagl.macos.SampleTriangle;
 import opengl.GL;
-import opengl.demos.macos.SampleTriangle;
 import opengl.fbo.FBO;
 
 /**

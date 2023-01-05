@@ -5,9 +5,9 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import org.junit.Assert;
 import org.jzy3d.maths.Array;
+import demos.panamagl.macos.SampleTriangle;
 import opengl.ByteUtils;
 import opengl.GL;
-import opengl.demos.macos.SampleTriangle;
 
 public class TestFBO {
   public static int[] RED = {255, 0, 0, 255};
