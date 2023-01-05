@@ -15,10 +15,10 @@ import opengl.macos.GL_macOS_10_15_7;
 import panamagl.Debug;
 import panamagl.GLAutoDrawable;
 import panamagl.GLEventListener;
-import panamagl.ImageUtils;
 import panamagl.OffscreenRenderer;
 import panamagl.fbo.FBO;
 import panamagl.toolkits.swing.GLCanvasSwing;
+import panamagl.utils.ImageUtils;
 
 public class MacOSOffscreenRenderer implements OffscreenRenderer{
   protected boolean debug = Debug.check(MacOSOffscreenRenderer.class, GLCanvasSwing.class);

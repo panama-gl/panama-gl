@@ -11,8 +11,8 @@ import opengl.ByteUtils;
 import opengl.GL;
 import opengl.GLError;
 import panamagl.Debug;
-import panamagl.GraphicsUtils;
-import panamagl.ImageUtils;
+import panamagl.utils.GraphicsUtils;
+import panamagl.utils.ImageUtils;
 
 /**
  * A frame buffer object, or {@link FBO}, can render OpenGL into an offscreen buffer that can later

@@ -13,12 +13,12 @@ import opengl.GLContext;
 import panamagl.Debug;
 import panamagl.GLAutoDrawable;
 import panamagl.GLEventListener;
-import panamagl.GraphicsUtils;
-import panamagl.ImageUtils;
 import panamagl.OffscreenRenderer;
 import panamagl.RenderCounter;
 import panamagl.fbo.FBO;
 import panamagl.os.macos.MacOSOffscreenRenderer;
+import panamagl.utils.GraphicsUtils;
+import panamagl.utils.ImageUtils;
 
 /**
  * This panel push to the screen an OpenGL image rendered offscreen by an {@link OffscreenRenderer}.

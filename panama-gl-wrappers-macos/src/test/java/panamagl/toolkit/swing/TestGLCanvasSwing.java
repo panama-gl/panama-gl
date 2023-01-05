@@ -1,12 +1,18 @@
-package panamagl;
+package panamagl.toolkit.swing;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Ignore;
 import org.junit.Test;
 import junit.framework.Assert;
 import opengl.GL;
+import panamagl.GLAutoDrawable;
+import panamagl.GLEventAdapter;
+import panamagl.GLEventListener;
+import panamagl.OffscreenRenderer;
 import panamagl.os.macos.MacOSOffscreenRenderer;
 import panamagl.toolkits.swing.GLCanvasSwing;
+import panamagl.utils.ThreadUtils;
+import panamagl.utils.TicToc;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class TestGLCanvasSwing {

@@ -1,4 +1,4 @@
-package panamagl;
+package panamagl.utils;
 
 /**
  * {@link TicToc} allows measuring elapsed time between a call to {@link tic()} and a call to

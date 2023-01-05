@@ -1,4 +1,4 @@
-package panamagl;
+package panamagl.utils;
 
 import java.awt.BufferCapabilities;
 import java.awt.GraphicsConfiguration;

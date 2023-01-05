@@ -2,7 +2,6 @@ package panamagl;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import panamagl.toolkits.swing.GLCanvasSwing;
 
 /**
  * A naive animator to ease testing.

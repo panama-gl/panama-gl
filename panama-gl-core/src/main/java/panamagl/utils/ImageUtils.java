@@ -1,4 +1,4 @@
-package panamagl;
+package panamagl.utils;
 
 import java.awt.Graphics;
 import java.awt.geom.AffineTransform;

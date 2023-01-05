@@ -1,4 +1,4 @@
-package panamagl;
+package panamagl.utils;
 import java.util.HashMap;
 import java.util.Map;
 

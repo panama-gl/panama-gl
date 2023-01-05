@@ -1,4 +1,4 @@
-package panamagl;
+package panamagl.toolkit.swing;
 
 import java.awt.BorderLayout;
 import java.awt.event.ComponentAdapter;
@@ -15,7 +15,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import demos.panamagl.macos.SampleTriangle;
 import opengl.GL;
+import panamagl.GLEventAdapter;
 import panamagl.toolkits.swing.GLCanvasSwing;
+import panamagl.utils.ImageUtils;
 
 /**
  * Not working yet, threading issue. See demofbo_onscreen_macos
@@ -26,7 +28,7 @@ import panamagl.toolkits.swing.GLCanvasSwing;
  */
 // VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 
-public class ITTestGLPanel {
+public class ITTestGLCanvasSwing {
   
   BufferedImage screenshotWhenShown = null;
   List<BufferedImage> screenshotWhenResize = new ArrayList<>();

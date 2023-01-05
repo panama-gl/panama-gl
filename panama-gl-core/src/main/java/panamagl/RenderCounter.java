@@ -1,5 +1,7 @@
 package panamagl;
 
+import panamagl.utils.TicToc;
+
 public class RenderCounter {
   protected int update = 0;
   protected int paint = 0;
