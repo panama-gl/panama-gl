@@ -142,7 +142,7 @@ public class TestGLCanvasSwing {
 
   }
   
-//@Ignore("Not working in CLI yet - despite using surefire unlimited threads")
+@Ignore("Not working in CLI yet (hanging, despite using surefire unlimited threads)")
   @Test
   public void whenPanelIsRendering_DisplayWillDoNothing() throws InterruptedException {
     //ThreadUtils.print();
