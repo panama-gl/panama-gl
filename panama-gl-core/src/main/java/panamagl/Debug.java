@@ -66,6 +66,11 @@ public class Debug {
       System.out.println(message);
   }
 
+  public static void debug(boolean debug, Class<?> clazz, String message) {
+    if (debug)
+      System.out.println(clazz.getSimpleName() + " : " + message);
+  }
+
 
   public static void print(double input[]) {
     for (int i = 0; i < input.length; i++) {

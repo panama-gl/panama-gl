@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import opengl.GL;
-import opengl.fbo.FBO;
+import panamagl.fbo.FBO;
 
 /**
  * https://github.com/jzy3d/panama-gl/issues/5

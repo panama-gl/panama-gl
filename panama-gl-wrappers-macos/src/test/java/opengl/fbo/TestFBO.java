@@ -8,6 +8,7 @@ import org.jzy3d.maths.Array;
 import demos.panamagl.macos.SampleTriangle;
 import opengl.ByteUtils;
 import opengl.GL;
+import panamagl.fbo.FBO;
 
 public class TestFBO {
   public static int[] RED = {255, 0, 0, 255};

@@ -5,7 +5,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import junit.framework.Assert;
 import opengl.GL;
-import panamagl.macos.MacOSOffscreenRenderer;
+import panamagl.os.macos.MacOSOffscreenRenderer;
 import panamagl.toolkits.swing.GLCanvasSwing;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/

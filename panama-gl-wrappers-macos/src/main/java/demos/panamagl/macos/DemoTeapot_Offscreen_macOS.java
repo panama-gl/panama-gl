@@ -6,10 +6,10 @@ import javax.imageio.ImageIO;
 import demos.panamagl.macos.swing.DemoTeapot_Onscreen_macOS;
 import opengl.GL;
 import opengl.GLContext;
-import opengl.fbo.FBO;
 import opengl.glut.macos.GLUTContext_macOS_10_15_7;
 import opengl.macos.GL_macOS_10_15_7;
 import panamagl.GLEventListener;
+import panamagl.fbo.FBO;
 
 /**
  * https://github.com/jzy3d/panama-gl/issues/5
