@@ -17,6 +17,6 @@ public class DemoRGBTriangle_Offscreen_macOS {
 
     GL gl = new GL_macOS_10_15_7();
 
-    demos.opengl.DemoFBO_Offscreen.fbo_offscreen(gl);
+    demos.panamagl.macos.Demo_Offscreen.fbo_offscreen(gl);
   }
 }

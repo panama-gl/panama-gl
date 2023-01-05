@@ -18,7 +18,7 @@ public class TestDebug {
     Assert.assertFalse(Debug.check(TestClass2.class));
     
     // When checking the two classes, return true
-    Assert.assertFalse(Debug.check(TestClass1.class, TestClass2.class));
+    Assert.assertTrue(Debug.check(TestClass1.class, TestClass2.class));
 
 
   }

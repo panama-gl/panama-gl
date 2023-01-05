@@ -1,9 +1,8 @@
-package demos.opengl;
+package demos.panamagl.macos;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
-import demos.panamagl.macos.SampleTriangle;
 import opengl.GL;
 import opengl.fbo.FBO;
 
@@ -11,7 +10,7 @@ import opengl.fbo.FBO;
  * https://github.com/jzy3d/panama-gl/issues/5
  */
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class DemoFBO_Offscreen {
+public class Demo_Offscreen {
   public static void fbo_offscreen(GL gl) {
     //-------------------------
     // Prepare VBO

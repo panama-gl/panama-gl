@@ -40,8 +40,8 @@ public class DemoTeapot_Onscreen_macOS {
     frame.setBounds(0, 0, 800, 600);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    // Use this to avoid Swing hangs
-    SwingUtilities.invokeLater(new Runnable() {
+    // Init action
+    Runnable show = new Runnable() {
       @Override
       public void run() {
 
@@ -53,15 +53,20 @@ public class DemoTeapot_Onscreen_macOS {
         System.out.println("BEFORE Frame.setVisible(true)");
         System.out.println("-----------------------------");
         frame.setVisible(true);
+        
         System.out.println("-----------------------------");
         System.out.println("AFTER Frame.setVisible(true)");
         System.out.println("-----------------------------");
-
         frame.setBounds(0, 0, 800, 700);
 
       }
-    });
-
+    };
+    
+    
+    // Use this to avoid Swing hangs
+    SwingUtilities.invokeLater(show);
+    //show.run();
+    
     // Start animating
     Animator a = new Animator(panel);
     a.start();
