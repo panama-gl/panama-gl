@@ -37,6 +37,7 @@ import jdk.incubator.foreign.SymbolLookup;
  *
  * And then manually load the libraries in the below check program
  */
+@SuppressWarnings("rawtypes")
 public class CheckLinkConsistency {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalAccessException {
