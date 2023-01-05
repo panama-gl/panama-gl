@@ -2,7 +2,7 @@ package panamagl;
 
 import opengl.GL;
 import opengl.GLContext;
-import opengl.fbo.FBO;
+import panamagl.fbo.FBO;
 
 /**
  * The interface through which various {@link GLAutoDrawable} implementation can query

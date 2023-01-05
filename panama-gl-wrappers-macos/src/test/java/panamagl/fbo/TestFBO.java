@@ -1,4 +1,4 @@
-package opengl.fbo;
+package panamagl.fbo;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

@@ -1,4 +1,4 @@
-package opengl.fbo;
+package panamagl.fbo;
 
 import static jdk.incubator.foreign.ResourceScope.newImplicitScope;
 import java.awt.image.BufferedImage;

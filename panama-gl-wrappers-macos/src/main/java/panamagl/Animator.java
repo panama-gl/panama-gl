@@ -20,7 +20,6 @@ public class Animator {
   protected boolean yieldWhenDone = true;
 
   public Animator(GLAutoDrawable drawable) {
-    super();
     this.drawable = drawable;
   }
 
@@ -53,10 +52,7 @@ public class Animator {
             // keep this as an option
             if(yieldWhenDone)
               Thread.yield();
-
           }
-          
-
         }
       }
     };
@@ -88,7 +84,7 @@ public class Animator {
 
   /** Query a drawable display if it is not currently rendering. */
   protected void adaptiveDisplayWithLock() {
-    if(!((GLCanvasSwing) drawable).isRendering()) {
+    if(!drawable.isRendering()) {
       drawable.display();
     }
   }

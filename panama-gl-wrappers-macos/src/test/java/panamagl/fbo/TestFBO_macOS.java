@@ -1,4 +1,4 @@
-package opengl.fbo;
+package panamagl.fbo;
 
 import org.junit.Test;
 import org.jzy3d.os.OperatingSystem;
