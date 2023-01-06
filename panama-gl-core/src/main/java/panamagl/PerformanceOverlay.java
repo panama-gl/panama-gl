@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class PerformanceOverlay implements Overlay{
   protected GLAutoDrawable drawable;
   protected RenderCounter counter;
-  protected PerfOverlay perfOverlay;
+  protected PerfOverlay perfOverlay = new PerfOverlay();
   
   protected class PerfOverlay {
     protected int interline = 20;
