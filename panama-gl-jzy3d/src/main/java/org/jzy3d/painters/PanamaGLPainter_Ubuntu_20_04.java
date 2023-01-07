@@ -100,7 +100,9 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
     var argc = allocator.allocate(C_INT, 0);
 
     // GLUT Init window
-    glut_h.glutInit(argc, argc);
+    // https://github.com/jzy3d/panama-gl/issues/16
+    // glut_h.glutInit(argc, argc);
+
     glut_h.glutInitDisplayMode(glut_h.GLUT_DOUBLE() | glut_h.GLUT_RGB() | glut_h.GLUT_DEPTH());
     glut_h.glutInitWindowSize(bounds.width, bounds.height);
     glut_h.glutCreateWindow(CLinker.toCString(title + "/" + message, scope));

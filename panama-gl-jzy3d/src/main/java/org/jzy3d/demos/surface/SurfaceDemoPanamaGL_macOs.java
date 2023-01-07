@@ -32,6 +32,10 @@ public class SurfaceDemoPanamaGL_macOs {
   static final float ALPHA_FACTOR = 0.55f;// .61f;
 
   public static void main(String[] args) {
+    // loading GL manually
+    System.loadLibrary("GL");
+    System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
+
     // https://github.com/jzy3d/panama-gl/issues/16
     var scope = ResourceScope.newConfinedScope();
     var allocator = SegmentAllocator.ofScope(scope);

@@ -1,5 +1,6 @@
 package org.jzy3d.demos.surface;
 
+import static jdk.incubator.foreign.CLinker.C_INT;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.ChartFactory;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
@@ -13,6 +14,9 @@ import org.jzy3d.plot3d.builder.SurfaceBuilder;
 import org.jzy3d.plot3d.builder.concrete.OrthonormalGrid;
 import org.jzy3d.plot3d.primitives.Shape;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
+import jdk.incubator.foreign.ResourceScope;
+import jdk.incubator.foreign.SegmentAllocator;
+import opengl.macos.v10_15_3.glut_h;
 
 
 /**
@@ -28,6 +32,16 @@ public class SurfaceDemoPanamaGL_Ubuntu {
   static final float ALPHA_FACTOR = 0.55f;// .61f;
 
   public static void main(String[] args) {
+    
+      System.loadLibrary("GL");
+      System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
+
+      // https://github.com/jzy3d/panama-gl/issues/16
+      var scope = ResourceScope.newConfinedScope();
+      var allocator = SegmentAllocator.ofScope(scope);
+      var argc = allocator.allocate(C_INT, 0);
+      glut_h.glutInit(argc, argc);
+
     
     // ------------------------
 
