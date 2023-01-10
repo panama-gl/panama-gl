@@ -32,7 +32,7 @@ public class SurfaceDemoPanamaGL_Ubuntu {
   static final float ALPHA_FACTOR = 0.55f;// .61f;
 
   public static void main(String[] args) {
-    
+      // loading GL manually
       System.loadLibrary("GL");
       System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
 

@@ -80,7 +80,7 @@ public class DemoTeapot_Onscreen_macOS {
         SegmentAllocator allocator = SegmentAllocator.ofScope(scope);
 
         // Reset Background
-        gl.glClearColor(0f, 0f, 0f, 1f);
+        gl.glClearColor(1f, 1f, 1f, 1f);
 
         // Setup Lighting
         gl.glShadeModel(gl.GL_SMOOTH());
@@ -103,12 +103,14 @@ public class DemoTeapot_Onscreen_macOS {
       }
 
       public void display(GL gl) {
-        gl.glClearColor(0f, 0f, 0f, 1f);
-
+        // Reset Background
+        gl.glClearColor(1f, 1f, 1f, 1f);
         gl.glClear(gl.GL_COLOR_BUFFER_BIT() | gl.GL_DEPTH_BUFFER_BIT());
+
         gl.glPushMatrix();
         gl.glRotatef(-20f, 1f, 1f, 0f);
         gl.glRotatef(rot, 0f, 1f, 0f);
+        gl.glColor3f(0.2f, 0.2f, 1f);
         gl.glutSolidTeapot(0.5d);
         gl.glPopMatrix();
 

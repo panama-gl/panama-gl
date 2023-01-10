@@ -41,8 +41,8 @@ import jdk.incubator.foreign.SymbolLookup;
 public class CheckLinkConsistency {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, IllegalAccessException {
-        System.loadLibrary("GL");
-        System.load("/usr/lib/x86_64-linux-gnu/libglut.so.3.9.0");
+        //System.loadLibrary("GL");
+        //System.load("/usr/lib/x86_64-linux-gnu/libglut.so.3.9.0");
         //System.load("/usr/lib/x86_64-linux-gnu/libGLU.so.1.3.1"); // Let's forget this on purpose to print missing links
 
         // If you can not modify RuntimeHelper.lookup() visibility, toggle to null
