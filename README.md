@@ -73,3 +73,12 @@ To generate new bindings for your platform, see [the setup documentation of the 
 
 * You _should_ only have to do this if you use a computer OS and version for which binding exist already.
 * You _may not_ have to regenerate bindings for your OS if its version is supported by existing OS bindings at other versions
+
+
+# License
+
+All PanamaGL modules as well as JExtractGL are licensed under the [GPLv3 license](https://choosealicense.com/licenses/gpl-3.0/)
+
+# Authors
+
+* Martin Pernollet
