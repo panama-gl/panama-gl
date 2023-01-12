@@ -8,9 +8,9 @@ public class Read_Registry_OpenGL {
 
     OpenGLRegistry registry = new OpenGLRegistry("src/main/resources/gl-original.xml");
     
-    /*registry.printTypes();
+    registry.printTypes();
     registry.printEnums();
-    registry.printFeatures();*/
+    registry.printFeatures();
     registry.printCommands();
   }
 
