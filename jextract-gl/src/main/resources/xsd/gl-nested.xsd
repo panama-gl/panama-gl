@@ -1,0 +1,368 @@
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="registry">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="comment"/>
+        <xs:element name="types">
+          <xs:annotation>
+            <xs:documentation> SECTION: GL type definitions. </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="type" maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation> These are dependencies GL types require to be declared legally  These are actual GL types  Vendor extension types </xs:documentation>
+                </xs:annotation>
+                <xs:complexType mixed="true">
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="apientry" minOccurs="0"/>
+                    <xs:element type="xs:string" name="name" minOccurs="0"/>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="name" use="optional"/>
+                  <xs:attribute type="xs:string" name="comment" use="optional"/>
+                  <xs:attribute type="xs:string" name="requires" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="enums" maxOccurs="unbounded" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation><![CDATA[ SECTION: GL enumerant (token) definitions.  Bitmasks each have their own namespace, although bits are
+         sometimes reused for other purposes  Also used: 0x000000ff for bits reused from MapBufferAccessMask below  Also used: 0x00004700 for bits reused from AttribMask above  Bitmasks defined by vendor extensions  Non-bitmask enums with their own namespace. Generally small numbers
+         used for indexed access.  The default ("API") enum namespace starts here. While some
+         assigned values may overlap, and different parts of the
+         namespace are reserved for different purposes, it is a single
+         namespace. The "class" attribute indicates some of the reserved
+         purposes but is by no means complete (and cannot be, since many
+         tokens are reused for different purposes in different
+         extensions and API versions).  <enum value="0x81CB" name="GL_MAP1_VERTEX_3_NURBS_SGIX"/>  <enum value="0x81CC" name="GL_MAP1_VERTEX_4_NURBS_SGIX"/>  <enum value="0x81CD" name="GL_MAP1_INDEX_NURBS_SGIX"/>  <enum value="0x81CE" name="GL_MAP1_COLOR_4_NURBS_SGIX"/>  <enum value="0x81CF" name="GL_MAP1_NORMAL_NURBS_SGIX"/>  <enum value="0x81FE" name="GL_FOG_BLEND_ALPHA_SGIX"/>  <enum value="0x81FF" name="GL_FOG_BLEND_COLOR_SGIX"/>  <enum value="0x832E" name="GL_TEXTURE_MIPMAP_ANISOTROPY_SGIX"/>  <enum value="0x832F" name="GL_MAX_MIPMAP_ANISOTROPY_SGIX"/>  <enum value="0x836F" name="GL_FOG_FACTOR_TO_ALPHA_SGIX"/>  Enums reservable for future use. To reserve a new range, allocate one
+     or more multiples of 16 starting at the lowest available point in this
+     block and note it in a new <enums> block immediately above.
+
+     Please remember that new enumerant allocations must be obtained by
+     request to the Khronos API registrar (see comments at the top of this
+     file) File requests in the Khronos Bugzilla, OpenGL project, Registry
+     component.  Historical large block allocations, all unused except (in older days) by IBM ]]></xs:documentation>
+          </xs:annotation>
+          <xs:complexType mixed="true">
+            <xs:choice maxOccurs="unbounded" minOccurs="0">
+              <xs:element name="enum">
+                <xs:annotation>
+                  <xs:documentation><![CDATA[ Also used: 0x00000001 for GL_2X_BIT_ATI reused from FragmentShaderDestModMaskAT above  <enum value="0x81D2" name="GL_SURFACE_SIZE_HINT_SUNX"/>  <enum value="0x81D3" name="GL_LARGE_SUNX"/>  <enum value="0x81E0" name="GL_MAP1_TEXTURE_COORD_1_NURBS_SGIX"/>  <enum value="0x81E1" name="GL_MAP1_TEXTURE_COORD_2_NURBS_SGIX"/>  <enum value="0x81E2" name="GL_MAP1_TEXTURE_COORD_3_NURBS_SGIX"/>  <enum value="0x81E3" name="GL_MAP1_TEXTURE_COORD_4_NURBS_SGIX"/>  <enum value="0x81E4" name="GL_MAP2_VERTEX_3_NURBS_SGIX"/>  <enum value="0x81E5" name="GL_MAP2_VERTEX_4_NURBS_SGIX"/>  <enum value="0x81E6" name="GL_MAP2_INDEX_NURBS_SGIX"/>  <enum value="0x81E7" name="GL_MAP2_COLOR_4_NURBS_SGIX"/>  <enum value="0x81E8" name="GL_MAP2_NORMAL_NURBS_SGIX"/>  <enum value="0x81E9" name="GL_MAP2_TEXTURE_COORD_1_NURBS_SGIX"/>  <enum value="0x81EA" name="GL_MAP2_TEXTURE_COORD_2_NURBS_SGIX"/>  <enum value="0x81EB" name="GL_MAP2_TEXTURE_COORD_3_NURBS_SGIX"/>  <enum value="0x81EC" name="GL_MAP2_TEXTURE_COORD_4_NURBS_SGIX"/>  <enum value="0x81ED" name="GL_NURBS_KNOT_COUNT_SGIX"/>  <enum value="0x81EE" name="GL_NURBS_KNOT_VECTOR_SGIX"/>  0x82EB = GL_TEXTURE_BINDING was removed in GL 4.5 and
+             ARB_direct_state_access in February 2015 after determining it
+             was not well defined or implementable.  <enum value="0x8340" name="GL_ENV_MAP_SGIX"/>  <enum value="0x8341" name="GL_CUBE_MAP_SGIX"/>  <enum value="0x8342" name="GL_CUBE_MAP_ZP_SGIX"/>  <enum value="0x8343" name="GL_CUBE_MAP_ZN_SGIX"/>  <enum value="0x8344" name="GL_CUBE_MAP_XN_SGIX"/>  <enum value="0x8345" name="GL_CUBE_MAP_XP_SGIX"/>  <enum value="0x8346" name="GL_CUBE_MAP_YN_SGIX"/>  <enum value="0x8347" name="GL_CUBE_MAP_YP_SGIX"/>  <enum value="0x8348" name="GL_CUBE_MAP_BINDING_SGIX"/>  Unfortunately, there was a collision promoting to EXT
+                 from SGIX. Use fog_coord's value of 0x8452 instead of
+                 the old assigned FRAGMENT_DEPTH_EXT (0x834B).  NOTE: IBM is using values in this range, because of a
+                 bobble when an employee left DEC for IBM at the same
+                 time as they were assigned the range. their registry
+                 became inconsistent. It's unknown whether HP has any
+                 conflicts. They have never reported using any values in
+                 this range. Lesson: assigned ranges belong to vendors,
+                 not engineers!  <enum value="0x83ED" name="GL_OCCLUSION_INSTRUMENT_SGIX"/>  This block was reclaimed from NTP, who never shipped
+                 it, and reassigned to Intel.  Also see the odd namespace "NVTransformFeedbackToken" above  lots of <unused> areas here which won't be computed yet ]]></xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:string" name="value1" use="optional"/>
+                      <xs:attribute type="xs:string" name="name" use="optional"/>
+                      <xs:attribute type="xs:string" name="group" use="optional"/>
+                      <xs:attribute type="xs:string" name="comment" use="optional"/>
+                      <xs:attribute type="xs:string" name="alias" use="optional"/>
+                      <xs:attribute type="xs:string" name="type" use="optional"/>
+                      <xs:attribute type="xs:string" name="start" use="optional"/>
+                      <xs:attribute type="xs:string" name="end" use="optional"/>
+                      <xs:attribute type="xs:string" name="vendor" use="optional"/>
+                      <xs:attribute type="xs:string" name="api" use="optional"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="unused">
+                <xs:annotation>
+                  <xs:documentation><![CDATA[ <enum value="0x819E" name="GL_IGLOO_FULLSCREEN_SGIX"/>  <enum value="0x819F" name="GL_IGLOO_VIEWPORT_OFFSET_SGIX"/>  <enum value="0x81A0" name="GL_IGLOO_SWAPTMESH_SGIX"/>  <enum value="0x81A1" name="GL_IGLOO_COLORNORMAL_SGIX"/>  <enum value="0x81A2" name="GL_IGLOO_IRISGL_MODE_SGIX"/>  <enum value="0x81A3" name="GL_IGLOO_LMC_COLOR_SGIX"/>  <enum value="0x81A4" name="GL_IGLOO_TMESHMODE_SGIX"/>  <enum value="0x8317" name="GL_COLOR_MATRIX_HINT"/>  <enum value="0x83C0" name="GL_SELECTED_TEXTURE_SGIS"/>  <enum value="0x83C1" name="GL_SELECTED_TEXTURE_COORD_SET_SGIS"/>  <enum value="0x83C2" name="GL_SELECTED_TEXTURE_TRANSFORM_SGIS"/>  <enum value="0x83C3" name="GL_MAX_TEXTURES_SGIS"/>  <enum value="0x83C4" name="GL_MAX_TEXTURE_COORD_SETS_SGIS"/>  <enum value="0x83C5" name="GL_TEXTURE_COORD_SET_INTERLEAVE_FACTOR_SGIS"/>  <enum value="0x83C6" name="GL_TEXTURE_ENV_COORD_SET_SGIS"/>  <enum value="0x83C7" name="GL_TEXTURE0_SGIS"/>  <enum value="0x83C8" name="GL_TEXTURE1_SGIS"/>  <enum value="0x83C9" name="GL_TEXTURE2_SGIS"/>  <enum value="0x83CA" name="GL_TEXTURE3_SGIS"/>  <enum value="0x83E6" name="GL_BALI_NUM_TRIS_CULLED_INSTRUMENT_SGIX"/>  <enum value="0x83E7" name="GL_BALI_NUM_PRIMS_CLIPPED_INSTRUMENT_SGIX"/>  <enum value="0x83E8" name="GL_BALI_NUM_PRIMS_REJECT_INSTRUMENT_SGIX"/>  <enum value="0x83E9" name="GL_BALI_NUM_PRIMS_CLIP_RESULT_INSTRUMENT_SGIX"/>  <enum value="0x83EA" name="GL_BALI_FRAGMENTS_GENERATED_INSTRUMENT_SGIX"/>  <enum value="0x83EB" name="GL_BALI_DEPTH_PASS_INSTRUMENT_SGIX"/>  <enum value="0x83EC" name="GL_BALI_R_CHIP_COUNT_SGIX"/>  <enum value="0x85A5" name="GL_EXTENDED_RANGE_SGIS"/>  <enum value="0x85A6" name="GL_MIN_RED_SGIS"/>  <enum value="0x85A7" name="GL_MAX_RED_SGIS"/>  <enum value="0x85A8" name="GL_MIN_GREEN_SGIS"/>  <enum value="0x85A9" name="GL_MAX_GREEN_SGIS"/>  <enum value="0x85AA" name="GL_MIN_BLUE_SGIS"/>  <enum value="0x85AB" name="GL_MAX_BLUE_SGIS"/>  <enum value="0x85AC" name="GL_MIN_ALPHA_SGIS"/>  <enum value="0x85AD" name="GL_MAX_ALPHA_SGIS"/>  <enum value="0x85B6" name="GL_TEXTURE_MINIMIZE_STORAGE_APPLE"/>  <enum value="0x85D0" name="GL_FACET_NORMAL_AUTODESK"/>  <enum value="0x85D1" name="GL_FACET_NORMAL_ARRAY_AUTODESK"/>  <enum value="0x85E0" name="GL_RGB_SIGNED_SGIX"/>  <enum value="0x85E1" name="GL_RGBA_SIGNED_SGIX"/>  <enum value="0x85E2" name="GL_ALPHA_SIGNED_SGIX"/>  <enum value="0x85E3" name="GL_LUMINANCE_SIGNED_SGIX"/>  <enum value="0x85E4" name="GL_INTENSITY_SIGNED_SGIX"/>  <enum value="0x85E5" name="GL_LUMINANCE_ALPHA_SIGNED_SGIX"/>  <enum value="0x85E6" name="GL_RGB16_SIGNED_SGIX"/>  <enum value="0x85E7" name="GL_RGBA16_SIGNED_SGIX"/>  <enum value="0x85E8" name="GL_ALPHA16_SIGNED_SGIX"/>  <enum value="0x85E9" name="GL_LUMINANCE16_SIGNED_SGIX"/>  <enum value="0x85EA" name="GL_INTENSITY16_SIGNED_SGIX"/>  <enum value="0x85EB" name="GL_LUMINANCE16_ALPHA16_SIGNED_SGIX"/>  <enum value="0x85EC" name="GL_RGB_EXTENDED_RANGE_SGIX"/>  <enum value="0x85ED" name="GL_RGBA_EXTENDED_RANGE_SGIX"/>  <enum value="0x85EE" name="GL_ALPHA_EXTENDED_RANGE_SGIX"/>  <enum value="0x85EF" name="GL_LUMINANCE_EXTENDED_RANGE_SGIX"/>  <enum value="0x85F0" name="GL_INTENSITY_EXTENDED_RANGE_SGIX"/>  <enum value="0x85F1" name="GL_LUMINANCE_ALPHA_EXTENDED_RANGE_SGIX"/>  <enum value="0x85F2" name="GL_RGB16_EXTENDED_RANGE_SGIX"/>  <enum value="0x85F3" name="GL_RGBA16_EXTENDED_RANGE_SGIX"/>  <enum value="0x85F4" name="GL_ALPHA16_EXTENDED_RANGE_SGIX"/>  <enum value="0x85F5" name="GL_LUMINANCE16_EXTENDED_RANGE_SGIX"/>  <enum value="0x85F6" name="GL_INTENSITY16_EXTENDED_RANGE_SGIX"/>  <enum value="0x85F7" name="GL_LUMINANCE16_ALPHA16_EXTENDED_RANGE_SGIX"/>  <enum value="0x85F8" name="GL_MIN_LUMINANCE_SGIS"/>  <enum value="0x85F9" name="GL_MAX_LUMINANCE_SGIS"/>  <enum value="0x85FA" name="GL_MIN_INTENSITY_SGIS"/>  <enum value="0x85FB" name="GL_MAX_INTENSITY_SGIS"/>  <enum value="0x8638" name="GL_MATRIX8_NV"/>  <enum value="0x8639" name="GL_MATRIX9_NV"/>  <enum value="0x863A" name="GL_MATRIX10_NV"/>  <enum value="0x863B" name="GL_MATRIX11_NV"/>  <enum value="0x863C" name="GL_MATRIX12_NV"/>  <enum value="0x863D" name="GL_MATRIX13_NV"/>  <enum value="0x863E" name="GL_MATRIX14_NV"/>  <enum value="0x863F" name="GL_MATRIX15_NV"/>  <enum value="0x8A10" name="GL_MIN_PBUFFER_VIEWPORT_DIMS_APPLE"/>  <enum value="0x8CD8" name="GL_FRAMEBUFFER_INCOMPLETE_DUPLICATE_ATTACHMENT_EXT"/> ]]></xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute type="xs:string" name="start" use="optional"/>
+                      <xs:attribute type="xs:string" name="end" use="optional"/>
+                      <xs:attribute type="xs:string" name="comment" use="optional"/>
+                      <xs:attribute type="xs:string" name="value1" use="optional"/>
+                      <xs:attribute type="xs:string" name="name" use="optional"/>
+                      <xs:attribute type="xs:string" name="group" use="optional"/>
+                      <xs:attribute type="xs:string" name="vendor" use="optional"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:choice>
+            <xs:attribute type="xs:string" name="namespace" use="optional"/>
+            <xs:attribute type="xs:string" name="group" use="optional"/>
+            <xs:attribute type="xs:string" name="type" use="optional"/>
+            <xs:attribute type="xs:string" name="comment" use="optional"/>
+            <xs:attribute type="xs:string" name="vendor" use="optional"/>
+            <xs:attribute type="xs:string" name="start" use="optional"/>
+            <xs:attribute type="xs:string" name="end" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="commands">
+          <xs:annotation>
+            <xs:documentation> SECTION: GL command definitions. </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="command" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="proto">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="ptype" minOccurs="0"/>
+                          <xs:element type="xs:string" name="name"/>
+                        </xs:sequence>
+                        <xs:attribute type="xs:string" name="group" use="optional"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="param" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType mixed="true">
+                        <xs:sequence>
+                          <xs:element type="xs:string" name="ptype" minOccurs="0"/>
+                          <xs:element type="xs:string" name="name"/>
+                        </xs:sequence>
+                        <xs:attribute type="xs:string" name="group" use="optional"/>
+                        <xs:attribute type="xs:string" name="class" use="optional"/>
+                        <xs:attribute type="xs:string" name="len" use="optional"/>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="alias" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="name" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="glx" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="type" use="optional"/>
+                            <xs:attribute type="xs:short" name="opcode" use="optional"/>
+                            <xs:attribute type="xs:string" name="name" use="optional"/>
+                            <xs:attribute type="xs:string" name="comment" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="vecequiv" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="name" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="namespace"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="feature" maxOccurs="unbounded" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation><![CDATA[ SECTION: GL API interface definitions.  Deprecated (not removed) in OpenGL 3.2 core;
+             deprecate tag not defined/supported yet
+          <deprecate profile="core">
+            <enum name="GL_MAX_VARYING_FLOATS"/>
+            <enum name="GL_MAX_VARYING_COMPONENTS"/>
+          </deprecate>
+         Deprecated in OpenGL 4.2 core;
+             deprecate tag not defined/supported yet
+          <deprecate profile="core">
+            <enum name="GL_NUM_COMPRESSED_TEXTURE_FORMATS"/>
+            <enum name="GL_COMPRESSED_TEXTURE_FORMATS"/>
+          </deprecate>
+         Deprecated in OpenGL 4.3 core;
+             deprecate tag not defined/supported yet
+          <deprecate profile="core">
+            <enum name="GL_UNPACK_LSB_FIRST"/>
+            <enum name="GL_PACK_LSB_FIRST"/>
+          </deprecate>
+         SECTION: OpenGL ES 1.0/1.1 API interface definitions. ]]></xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="require" maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation> arrays_of_arrays features  compute_shader features  draw_indirect features  explicit_uniform_location features  framebuffer_no_attachments features  program_interface_query features  separate_shader_objects features  shader_atomic_counters features  shader_bitfield_operations features  shader_image_load_store features  shader_layout_binding features  shader_storage_buffer_object features  stencil_texturing features  texture_gather features  texture_storage_multisample features  vertex_attrib_binding features  3.2-specific point features  Android extension pack features  blend_equation_advanced features  color_buffer_float features  copy_image features  debug features  draw_buffers_indexed features  draw_elements_base_vertex features  geometry_shader features  gpu_shader5 features  primitive_bounding_box features  robustness features  sample_shading features  sample_variables features  shader_image_atomic features  shader_io_blocks features  shader_multisample_interpolation features  tessellation_shader features  texture_border_clamp features  texture_buffer features  texture_compression_astc_ldr features  texture_cube_map_array features  texture_stencil8 features  texture_storage_multisample_2d_array features </xs:documentation>
+                </xs:annotation>
+                <xs:complexType mixed="true">
+                  <xs:choice maxOccurs="unbounded" minOccurs="0">
+                    <xs:element name="type">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="name" use="optional"/>
+                            <xs:attribute type="xs:string" name="comment" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="enum">
+                      <xs:annotation>
+                        <xs:documentation> Additional API definition macros - ES 1.0/1.1, common/common-lite all in one header </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="name" use="optional"/>
+                            <xs:attribute type="xs:string" name="comment" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="command">
+                      <xs:annotation>
+                        <xs:documentation> /* Don't need to reuse tokens from ARB_vertex_array_bgra since they're already in 1.2 core */  All tokens are already part of ES 3.0 </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="name" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:choice>
+                  <xs:attribute type="xs:string" name="comment" use="optional"/>
+                  <xs:attribute type="xs:string" name="profile" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="remove" maxOccurs="unbounded" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation> OpenGL 3.2 is where core and compatibility profiles were first
+             introduced, so many, many things were removed from the core
+             profile in this version. A few were reintroduced later (e.g.
+             GetPointerv / STACK_{UNDER,OVER}FLOW by OpenGL 4.3 for debug
+             functionality). </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="enum" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="name" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="command" maxOccurs="unbounded" minOccurs="0">
+                      <xs:complexType>
+                        <xs:simpleContent>
+                          <xs:extension base="xs:string">
+                            <xs:attribute type="xs:string" name="name" use="optional"/>
+                          </xs:extension>
+                        </xs:simpleContent>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="profile" use="optional"/>
+                  <xs:attribute type="xs:string" name="comment" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="api" use="optional"/>
+            <xs:attribute type="xs:string" name="name" use="optional"/>
+            <xs:attribute type="xs:float" name="number" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="extensions">
+          <xs:annotation>
+            <xs:documentation> SECTION: OpenGL / OpenGL ES extension interface definitions </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="extension" maxOccurs="unbounded" minOccurs="0">
+                <xs:complexType mixed="true">
+                  <xs:sequence>
+                    <xs:element name="require" maxOccurs="unbounded" minOccurs="0">
+                      <xs:annotation>
+                        <xs:documentation>
+                    KHR_debug
+                    KHR_texture_compression_astc_ldr
+                    KHR_blend_equation_advanced
+                    OES_sample_shading
+                    OES_sample_variables
+                    OES_shader_image_atomic
+                    OES_shader_multisample_interpolation
+                    OES_texture_stencil8
+                    OES_texture_storage_multisample_2d_array
+                    EXT_copy_image
+                    EXT_draw_buffers_indexed
+                    EXT_geometry_shader
+                    EXT_gpu_shader5
+                    EXT_primitive_bounding_box
+                    EXT_shader_io_blocks
+                    EXT_tessellation_shader
+                    EXT_texture_border_clamp
+                    EXT_texture_buffer
+                    EXT_texture_cube_map_array
+                    EXT_texture_srgb_decode
+                 &lt;command name="glNamedBufferStorageEXT"/>  &lt;command name="glTexturePageCommitmentEXT"/> </xs:documentation>
+                      </xs:annotation>
+                      <xs:complexType mixed="true">
+                        <xs:choice maxOccurs="unbounded" minOccurs="0">
+                          <xs:element name="enum">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:string" name="name" use="optional"/>
+                                  <xs:attribute type="xs:string" name="comment" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="command">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:string" name="name" use="optional"/>
+                                  <xs:attribute type="xs:string" name="comment" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                          <xs:element name="type">
+                            <xs:complexType>
+                              <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                  <xs:attribute type="xs:string" name="name" use="optional"/>
+                                </xs:extension>
+                              </xs:simpleContent>
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:choice>
+                        <xs:attribute type="xs:string" name="comment" use="optional"/>
+                        <xs:attribute type="xs:string" name="api" use="optional"/>
+                        <xs:attribute type="xs:string" name="profile" use="optional"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute type="xs:string" name="name" use="optional"/>
+                  <xs:attribute type="xs:string" name="supported" use="optional"/>
+                  <xs:attribute type="xs:string" name="comment" use="optional"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

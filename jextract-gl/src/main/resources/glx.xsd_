@@ -1,0 +1,133 @@
+ <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:element name="registry">
+        <xs:complexType>
+            <xs:sequence>
+                <!--<xs:element type="xs:string" name="comment">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension></xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>-->
+                <xs:element name="types">
+                    <xs:complexType>
+                        <xs:sequence></xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" name="enums">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="enum">
+                                <xs:complexType>
+                                    <xs:sequence></xs:sequence>
+                                    <xs:attribute name="value" type="xs:string"/>
+                                    <xs:attribute name="name" type="xs:string"/>
+                                    <xs:attribute name="comment" type="xs:string"/>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="unused">
+                                <xs:complexType>
+                                    <xs:sequence></xs:sequence>
+                                    <xs:attribute name="start" type="xs:string"/>
+                                    <xs:attribute name="end" type="xs:string"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="namespace" type="xs:string"/>
+                        <xs:attribute name="vendor" type="xs:string"/>
+                        <xs:attribute name="comment" type="xs:string"/>
+                        <xs:attribute name="type" type="xs:string"/>
+                        <xs:attribute name="start" type="xs:string"/>
+                        <xs:attribute name="end" type="xs:string"/>
+                        <xs:attribute name="group" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="commands">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="command">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="proto">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element type="xs:string" name="ptype"/>
+                                                    <xs:element type="xs:string" name="name"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <!--<xs:element name="param">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:extension base="xs:string"/>
+                                                    <xs:element type="xs:string" name="ptype"/>
+                                                    <xs:element type="xs:string" name="name"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>-->
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="namespace" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" name="feature">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="require">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="enum">
+                                            <xs:complexType>
+                                                <xs:sequence></xs:sequence>
+                                                <xs:attribute name="name" type="xs:string"/>
+                                                <xs:attribute name="comment" type="xs:string"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element maxOccurs="unbounded" name="command">
+                                            <xs:complexType>
+                                                <xs:sequence></xs:sequence>
+                                                <xs:attribute name="name" type="xs:string"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="api" type="xs:string"/>
+                        <xs:attribute name="name" type="xs:string"/>
+                        <xs:attribute name="number" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="extensions">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="extension">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="require">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element maxOccurs="unbounded" name="enum">
+                                                        <xs:complexType>
+                                                            <xs:sequence></xs:sequence>
+                                                            <xs:attribute name="name" type="xs:string"/>
+                                                        </xs:complexType>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                    <xs:attribute name="name" type="xs:string"/>
+                                    <xs:attribute name="supported" type="xs:string"/>
+                                    <xs:attribute name="protect" type="xs:string"/>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
