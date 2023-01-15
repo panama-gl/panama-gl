@@ -3,7 +3,7 @@ package demos.panamagl.macos;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
-import demos.panamagl.macos.swing.DemoRotatingStuff_Onscreen_macOS;
+import demos.panamagl.macos.swing.DemoRotatingStuff_Onscreen_macOS_Swing;
 import opengl.GL;
 import opengl.GLContext;
 import opengl.glut.macos.GLUTContext_macOS_10_15_7;
@@ -33,7 +33,7 @@ public class DemoRotatingStuff_Offscreen_macOS {
     //-------------------------
     // Render something
 
-    GLEventListener glL = DemoRotatingStuff_Onscreen_macOS.RotatingStuff();
+    GLEventListener glL = DemoRotatingStuff_Onscreen_macOS_Swing.RotatingStuff();
     
     glL.init(null);
     glL.reshape(null, 0, 0, width, height);    

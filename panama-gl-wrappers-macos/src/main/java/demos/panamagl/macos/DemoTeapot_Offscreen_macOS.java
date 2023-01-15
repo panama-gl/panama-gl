@@ -3,7 +3,7 @@ package demos.panamagl.macos;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
-import demos.panamagl.macos.swing.DemoTeapot_Onscreen_macOS;
+import demos.panamagl.macos.swing.DemoTeapot_Onscreen_macOS_Swing;
 import opengl.GL;
 import opengl.GLContext;
 import opengl.glut.macos.GLUTContext_macOS_10_15_7;
@@ -33,7 +33,7 @@ public class DemoTeapot_Offscreen_macOS {
     //-------------------------
     // Render something
 
-    GLEventListener glL = DemoTeapot_Onscreen_macOS.TeapotGLEventListener();
+    GLEventListener glL = DemoTeapot_Onscreen_macOS_Swing.TeapotGLEventListener();
     glL.init(null);
     glL.display(null);
     

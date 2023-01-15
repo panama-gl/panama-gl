@@ -45,6 +45,12 @@
 		  <version>9.4</version>
 		</dependency>
 
+		<dependency>
+		  <groupId>org.ow2.asm</groupId>
+		  <artifactId>asm-util</artifactId>
+		  <version>9.4</version>
+		</dependency>
+
 		<!-- To read bindings bytecode -->
 
 		<dependency>

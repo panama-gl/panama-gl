@@ -21,7 +21,7 @@ import panamagl.Animator;
  * @author Martin
  *
  */
-public class DemoTeapot_Onscreen_macOS {
+public class DemoTeapot_Onscreen_macOS_Swing {
 
   public static void main(String[] args) throws Exception {
     System.out
@@ -35,7 +35,7 @@ public class DemoTeapot_Onscreen_macOS {
     panel.setGLEventListener(listener);
 
     // Create frame
-    final JFrame frame = new JFrame(DemoTeapot_Onscreen_macOS.class.getSimpleName());
+    final JFrame frame = new JFrame(DemoTeapot_Onscreen_macOS_Swing.class.getSimpleName());
     frame.getContentPane().setLayout(new BorderLayout());
     frame.setBounds(0, 0, 800, 600);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
