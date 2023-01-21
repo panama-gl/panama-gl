@@ -1,8 +1,8 @@
 package opengl.ubuntu;
 
-import jdk.incubator.foreign.Addressable;
-import jdk.incubator.foreign.CLinker;
-import jdk.incubator.foreign.MemorySegment;
+
+import java.lang.foreign.Addressable;
+import java.lang.foreign.MemorySegment;
 import opengl.AbstractGL;
 import opengl.GL;
 import opengl.ubuntu.v20.glut_h;
@@ -31,7 +31,7 @@ public class GL_Ubuntu_20 extends AbstractGL implements GL  {
 
     @Override
     public String glGetString(int stringID){
-        return CLinker.toJavaString(glut_h.glGetString(stringID));
+        return glut_h.glGetString(stringID).getUtf8String(0);
     }
 
     @Override

@@ -32,12 +32,12 @@ import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
 import org.jzy3d.plot3d.rendering.view.View;
-import opengl.macos.v10_15_7.glutDisplayFunc$func;
-import opengl.macos.v10_15_7.glutIdleFunc$func;
-import opengl.macos.v10_15_7.glutMotionFunc$func;
-import opengl.macos.v10_15_7.glutMouseFunc$func;
-import opengl.macos.v10_15_7.glutReshapeFunc$func;
-import opengl.macos.v10_15_7.glut_h;
+import opengl.ubuntu.v20.glutDisplayFunc$callback;
+import opengl.ubuntu.v20.glutIdleFunc$callback;
+import opengl.ubuntu.v20.glutMotionFunc$callback;
+import opengl.ubuntu.v20.glutMouseFunc$callback;
+import opengl.ubuntu.v20.glutReshapeFunc$callback;
+import opengl.ubuntu.v20.glut_h;
 
 
 
@@ -114,15 +114,15 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
     glut_h.glutCreateWindow(alloc(title + "/" + message));
 
     // GLUT Display/Idle callback
-    glut_h.glutDisplayFunc(glutDisplayFunc$func.allocate(renderer::display, scope));
-    glut_h.glutReshapeFunc(glutReshapeFunc$func.allocate(renderer::reshape, scope));
-    glut_h.glutIdleFunc(glutIdleFunc$func.allocate(renderer::onIdle, scope));
+    glut_h.glutDisplayFunc(glutDisplayFunc$callback.allocate(renderer::display, scope));
+    glut_h.glutReshapeFunc(glutReshapeFunc$callback.allocate(renderer::reshape, scope));
+    glut_h.glutIdleFunc(glutIdleFunc$callback.allocate(renderer::onIdle, scope));
 
     // GLUT Mouse callbacks
     AWTCameraMouseController mouse = (AWTCameraMouseController) chart.getMouse();
 
     // GLUT Mouse click listener
-    glutMouseFunc$func mouseClickCallback = new glutMouseFunc$func(){
+    glutMouseFunc$callback mouseClickCallback = new glutMouseFunc$callback(){
       long time;
       long timePrev;
       @Override
@@ -144,18 +144,18 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
         //System.out.println("mouse x:"+x+" y:"+y + " button:" + button + " state:" + state);
       }
     };
-    glut_h.glutMouseFunc(glutMouseFunc$func.allocate(mouseClickCallback, scope));
+    glut_h.glutMouseFunc(glutMouseFunc$callback.allocate(mouseClickCallback, scope));
 
     // Motion is invoked if a mouse button is pressed, otherwise not
     // https://www.opengl.org/resources/libraries/glut/spec3/node51.html
-    glutMotionFunc$func mouseMotionCallback = new glutMotionFunc$func(){
+    glutMotionFunc$callback mouseMotionCallback = new glutMotionFunc$callback(){
       @Override
       public void apply(int x, int y) {
         mouse.mouseDragged(mouseEvent(x, y, InputEvent.BUTTON1_DOWN_MASK));
         //System.out.println("mouse motion.x:"+x+" y:"+y);
       }
     };
-    glut_h.glutMotionFunc(glutMotionFunc$func.allocate(mouseMotionCallback, scope));
+    glut_h.glutMotionFunc(glutMotionFunc$callback.allocate(mouseMotionCallback, scope));
 
 
     // -----------------------------------------------------

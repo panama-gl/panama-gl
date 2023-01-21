@@ -3,6 +3,7 @@ package panamagl.toolkit.swing;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.jzy3d.os.OperatingSystem;
 import junit.framework.Assert;
 import opengl.GL;
 import panamagl.GLAutoDrawable;
@@ -20,6 +21,8 @@ public class TestGLCanvasSwing {
   
   @Test
   public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
+    if (!new OperatingSystem().isMac())
+      return;
     
     // ------------------------------------------------
     // Given a panel with an event counter
@@ -110,6 +113,8 @@ public class TestGLCanvasSwing {
   
   @Test
   public void whenPanelIsResized_ThenFBOIsResized() throws InterruptedException {
+    if (!new OperatingSystem().isMac())
+      return;
     
     int WIDTH = 100;
     int HEIGHT= 100;

@@ -16,7 +16,7 @@ import org.jzy3d.plot3d.builder.SurfaceBuilder;
 import org.jzy3d.plot3d.builder.concrete.OrthonormalGrid;
 import org.jzy3d.plot3d.primitives.Shape;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
-import opengl.macos.v10_15_7.glut_h;
+import opengl.ubuntu.v20.glut_h;
 
 
 /**
@@ -24,7 +24,7 @@ import opengl.macos.v10_15_7.glut_h;
  *
  * @author Martin Pernollet
  * 
- * --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
+ * --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
  *
  */
 public class SurfaceDemoPanamaGL_Ubuntu {
@@ -34,7 +34,8 @@ public class SurfaceDemoPanamaGL_Ubuntu {
   public static void main(String[] args) {
       // loading GL manually
       System.loadLibrary("GL");
-      System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
+      //System.loadLibrary("GL");
+      //System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
 
       // https://github.com/jzy3d/panama-gl/issues/16
       var scope = MemorySession.openConfined();

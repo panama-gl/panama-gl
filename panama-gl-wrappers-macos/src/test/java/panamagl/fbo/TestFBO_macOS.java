@@ -15,8 +15,7 @@ public class TestFBO_macOS {
 
   @Test
   public void given_CGLAndGLUTContext_whenRenderSomething_ThenGetBufferedImage() {
-    OperatingSystem os = new OperatingSystem();
-    if (!os.isMac())
+    if (!new OperatingSystem().isMac())
       return;
 
     // Given a CGL Context

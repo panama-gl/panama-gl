@@ -19,7 +19,7 @@
 
 	<modules>
 		<module>panama-gl-api</module>
-		<!--<module>panama-gl-wrappers-linux</module>-->
+		<module>panama-gl-wrappers-linux</module>
 		<module>panama-gl-wrappers-macos</module>
 		<!--<module>panama-gl-wrappers-windows</module>-->
 

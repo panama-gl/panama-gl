@@ -2,6 +2,7 @@ package opengl.cgl.macos;
 
 import java.lang.foreign.ValueLayout;
 import org.junit.Test;
+import org.jzy3d.os.OperatingSystem;
 import junit.framework.Assert;
 
 //VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
@@ -9,6 +10,9 @@ import junit.framework.Assert;
 public class TestCGLContext {
   @Test
   public void createCGLContext() {
+    if (!new OperatingSystem().isMac())
+      return;
+    
     // Given
     CGLContext cgl = new CGLContext();
     

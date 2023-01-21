@@ -45,7 +45,7 @@ import opengl.ubuntu.v20.glutIdleFunc$callback;
  *
  * Requires VM args for Ubuntu
  * <code>
- * --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x864-linux-gnu/
+ * --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
  * </code>
  */
 public class TeapotUbuntu {
@@ -88,7 +88,7 @@ public class TeapotUbuntu {
 
   public static void main(String[] args) {
     try (var scope = MemorySession.openConfined()) {
-      var allocator = SegmentAllocator.newNativeArena(null);
+      var allocator = SegmentAllocator.newNativeArena(scope);
       var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
       glutInit(argc, argc);
       glutInitDisplayMode(GLUT_DOUBLE() | GLUT_RGB() | GLUT_DEPTH());
