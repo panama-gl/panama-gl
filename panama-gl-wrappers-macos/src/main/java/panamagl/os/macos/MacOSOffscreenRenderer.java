@@ -9,14 +9,14 @@ import jogamp.nativewindow.macosx.OSXUtil;
 import opengl.GL;
 import opengl.GLContext;
 import opengl.GLError;
-import opengl.cgl.macos.CGLContext;
-import opengl.glut.macos.GLUTContext_macOS_10_15_7;
-import opengl.macos.GL_macOS_10_15_7;
 import panamagl.Debug;
 import panamagl.GLAutoDrawable;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
 import panamagl.fbo.FBO;
+import panamagl.macos.cgl.CGLContext;
+import panamagl.macos.gl.GL_macOS_10_15_7;
+import panamagl.macos.glut.GLUTContext_macOS_10_15_7;
 import panamagl.toolkits.swing.GLCanvasSwing;
 import panamagl.utils.ImageUtils;
 

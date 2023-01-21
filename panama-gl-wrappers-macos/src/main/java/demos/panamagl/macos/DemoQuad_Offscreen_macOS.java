@@ -3,19 +3,19 @@ package demos.panamagl.macos;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
-import demos.panamagl.macos.swing.DemoRotatingStuff_Onscreen_macOS_Swing;
+import demos.panamagl.macos.swing.DemoRotatingQuad_Onscreen_macOS_Swing;
 import opengl.GL;
 import opengl.GLContext;
-import opengl.glut.macos.GLUTContext_macOS_10_15_7;
-import opengl.macos.GL_macOS_10_15_7;
 import panamagl.GLEventListener;
 import panamagl.fbo.FBO;
+import panamagl.macos.gl.GL_macOS_10_15_7;
+import panamagl.macos.glut.GLUTContext_macOS_10_15_7;
 
 /**
  * https://github.com/jzy3d/panama-gl/issues/5
  */
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class DemoRotatingStuff_Offscreen_macOS {
+public class DemoQuad_Offscreen_macOS {
 
   public static void main(String[] args) {
     GLContext context = new GLUTContext_macOS_10_15_7();
@@ -33,7 +33,7 @@ public class DemoRotatingStuff_Offscreen_macOS {
     //-------------------------
     // Render something
 
-    GLEventListener glL = DemoRotatingStuff_Onscreen_macOS_Swing.RotatingStuff();
+    GLEventListener glL = DemoRotatingQuad_Onscreen_macOS_Swing.RotatingStuff();
     
     glL.init(null);
     glL.reshape(null, 0, 0, width, height);    

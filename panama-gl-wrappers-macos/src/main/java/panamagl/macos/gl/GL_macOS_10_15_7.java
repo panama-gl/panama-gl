@@ -1,4 +1,4 @@
-package opengl.macos;
+package panamagl.macos.gl;
 
 
 import java.lang.foreign.Addressable;
@@ -16,8 +16,6 @@ public class GL_macOS_10_15_7 extends AbstractGL implements GL {
   public GL_macOS_10_15_7() {
     super();
   }
-  
-
 
   @Override
   public String gluErrorString(int err_string) {

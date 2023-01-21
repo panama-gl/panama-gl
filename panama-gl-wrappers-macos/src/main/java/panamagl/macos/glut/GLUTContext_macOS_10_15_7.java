@@ -1,4 +1,4 @@
-package opengl.glut.macos;
+package panamagl.macos.glut;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;
@@ -33,7 +33,7 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
 
   public GLUTContext_macOS_10_15_7() {
     try {
-      scope = MemorySession.openConfined();
+      scope = MemorySession.openImplicit();//openConfined();
       allocator = SegmentAllocator.newNativeArena(scope);
     } catch (Exception e) {
       e.printStackTrace();

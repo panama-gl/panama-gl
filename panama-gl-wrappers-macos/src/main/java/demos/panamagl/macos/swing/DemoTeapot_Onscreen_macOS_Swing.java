@@ -74,7 +74,7 @@ public class DemoTeapot_Onscreen_macOS_Swing {
     return new GLEventAdapter() {
 
       public void init(GL gl) {
-        MemorySession scope = MemorySession.openConfined();
+        MemorySession scope = MemorySession.openImplicit();
         SegmentAllocator allocator = SegmentAllocator.newNativeArena(scope);
 
         // Reset Background

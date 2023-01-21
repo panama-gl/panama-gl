@@ -16,7 +16,7 @@ import panamagl.toolkits.swing.GLCanvasSwing;
  * @author Martin
  *
  */
-public class DemoRGBTriangle_Onscreen_macOS_Swing {
+public class DemoTriangle_Onscreen_macOS_Swing {
 
   public static void main(String[] args) throws Exception {
     System.out
@@ -30,7 +30,7 @@ public class DemoRGBTriangle_Onscreen_macOS_Swing {
     panel.setGLEventListener(listener);
 
     // Create frame
-    final JFrame frame = new JFrame(DemoRGBTriangle_Onscreen_macOS_Swing.class.getSimpleName());
+    final JFrame frame = new JFrame(DemoTriangle_Onscreen_macOS_Swing.class.getSimpleName());
     frame.getContentPane().setLayout(new BorderLayout());
     // frame.pack();
     frame.setBounds(0, 0, 800, 600);

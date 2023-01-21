@@ -1,4 +1,4 @@
-package opengl.cgl.macos;
+package panamagl.macos.cgl;
 
 import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;
