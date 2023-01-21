@@ -10,6 +10,7 @@ import opengl.GL;
 import opengl.GLError;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
+import panamagl.PanamaMemorySession;
 import panamagl.toolkits.swing.GLCanvasSwing;
 
 /**
@@ -74,7 +75,7 @@ public class DemoTeapot_Onscreen_macOS_Swing {
     return new GLEventAdapter() {
 
       public void init(GL gl) {
-        MemorySession scope = MemorySession.openImplicit();
+        MemorySession scope = PanamaMemorySession.get();
         SegmentAllocator allocator = SegmentAllocator.newNativeArena(scope);
 
         // Reset Background

@@ -11,6 +11,7 @@ import opengl.ByteUtils;
 import opengl.GL;
 import opengl.GLError;
 import panamagl.Debug;
+import panamagl.PanamaMemorySession;
 import panamagl.utils.GraphicsUtils;
 import panamagl.utils.ImageUtils;
 
@@ -71,8 +72,7 @@ public class FBO {
     this.width = width;
     this.height = height;
     
-    this.scope = MemorySession.openConfined();
-
+    this.scope = PanamaMemorySession.get();
   }
 
   public void prepare(GL gl) {
@@ -279,8 +279,9 @@ public class FBO {
 
     // FIXME : Not mapped exception is not relevant
     // FIXME : See if later versions of Panama do not throw exception
-    // pixelsRead.unload();
-
+    //pixelsRead.unload();
+    //pixelsRead.
+    
     // Bind 0, which means render to back buffer
     gl.glBindFramebuffer(gl.GL_FRAMEBUFFER(), 0);
 

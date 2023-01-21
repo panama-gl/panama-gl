@@ -5,6 +5,8 @@ import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
 
+import panamagl.PanamaMemorySession;
+
 
 /**
  * A base class for Panama based OpenGL binding, implementing part of {@lin GL}
@@ -17,7 +19,7 @@ public abstract class AbstractGL implements GL {
 
     public AbstractGL(){
         try {
-            scope = MemorySession.openImplicit();//openConfined();
+            scope = PanamaMemorySession.get();
             allocator = SegmentAllocator.newNativeArena(scope);
         } catch (Exception e) {
             e.printStackTrace();

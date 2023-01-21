@@ -9,6 +9,7 @@ import java.util.Arrays;
 import cgl.macos.v10_15_7.cgl_h;
 import opengl.GLContext;
 import panamagl.Debug;
+import panamagl.PanamaMemorySession;
 
 /**
  * The CGL API is a low-level, platform-independent API for creating, managing, and rendering 2D and
@@ -67,7 +68,7 @@ public class CGLContext implements GLContext {
     // System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
     System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
 
-    scope = MemorySession.openConfined();
+    scope = PanamaMemorySession.get();
     allocator = SegmentAllocator.newNativeArena(scope);
 
   }
