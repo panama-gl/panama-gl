@@ -41,10 +41,6 @@ public class TestFBO_macOS {
     if (!os.isMac())
       return;
 
-    // Given a CGL Context
-    GLContext cglContext = new CGLContext();
-    cglContext.init();
-
     // Given a GLUT context
     GLContext glutContext = new GLUTContext_macOS_10_15_7();
     glutContext.init();

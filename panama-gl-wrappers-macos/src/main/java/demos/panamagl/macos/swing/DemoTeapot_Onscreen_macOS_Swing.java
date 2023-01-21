@@ -13,7 +13,7 @@ import panamagl.GLEventAdapter;
 import panamagl.toolkits.swing.GLCanvasSwing;
 
 /**
- * VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
+ * VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview
  * -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
  * 
  * @author Martin

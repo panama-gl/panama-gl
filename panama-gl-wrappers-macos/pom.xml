@@ -23,18 +23,7 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<!-- JOGL AND GLUEGEN  -->
-		<dependency>
-			<groupId>org.jogamp.jogl</groupId>
-			<artifactId>jogl-all</artifactId>
-			<version>v2.4.0-rc4</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.jogamp.gluegen</groupId>
-			<artifactId>gluegen-rt</artifactId>
-			<version>v2.4.0-rc4</version>
-		</dependency>
+		
 
 		<!-- PUBLIC JZY3D MODULES -->
 		<dependency>
@@ -42,6 +31,13 @@
 			<artifactId>jzy3d-core</artifactId>
 			<version>${jzy3d.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>jzy3d-native-jogl-core</artifactId>
+			<version>${jzy3d.version}</version>
+		</dependency>
+
 
 	</dependencies>
 </project>
