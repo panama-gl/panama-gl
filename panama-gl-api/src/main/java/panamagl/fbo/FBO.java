@@ -60,8 +60,6 @@ public class FBO {
   MemorySegment pixelBuffer;
   MemorySegment pixelsRead;
 
-  //VarHandle intHandle = MemoryHandles.varHandle(int.class, ByteOrder.nativeOrder());
-  
   // indicates dimensions have changed
   // and FBO must reprepared
   boolean prepared = false;

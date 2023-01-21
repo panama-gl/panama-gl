@@ -1,10 +1,8 @@
 # panama-gl
 
-This project explore Native OpenGL capabilities of Panama Early-Access Release as candidate to complement JOGL and ensure JOGL's future on JDK>17.
+PanamaGL aims at providing multiplatorm binding to OpenGL using the Foreign Function & Memory API for JDK19.
 
-JDK 17 incubation comes with [JEP-412 : Foreign Function & Memory API](https://openjdk.java.net/jeps/412) which offers a brand new way of accessing native libraries.
-
-We here show how to use Panama to generate an OpenGL bindings for standalone application as well as for [Jzy3D](https://github.com/jzy3d/jzy3d-api), which already uses JOGL for GPU rendering and EmulGL for CPU rendering.
+We here show how to use PanamaGL to run OpenGL based rendering application both as a standalone library AND embedded in the Java 3D Charts framework [Jzy3D](https://github.com/jzy3d/jzy3d-api), which already uses JOGL for GPU rendering and EmulGL for CPU rendering.
 
 ## Documentation
 
@@ -33,6 +31,7 @@ We here show how to use Panama to generate an OpenGL bindings for standalone app
 More details in [demo index](doc/PanamaGL-Demos.md)
 
 ### 3D onscreen GL demos
+
 These two demo open a *native* window with Jzy3D (hence not a Java window yet). One can use the mouse to rotate the object, and double click to start an automatic rotation.
 
 | `SurfaceDemoPanamaGL`| `TeapotDemoPanamaGL`|
