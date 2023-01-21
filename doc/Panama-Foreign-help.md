@@ -11,7 +11,7 @@
 
 ### Samples
 * [Original Teapot with Panama](https://github.com/openjdk/jextract/blob/master/samples/opengl/Teapot.java)
-*
+* [Configuration of JExtract on JDK19](https://github.com/manuelbl/JavaDoesUSB/issues/5)
 
 
 # Example usage of JExtract
