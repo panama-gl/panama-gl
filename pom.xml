@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jzy3d</groupId>
 	<artifactId>panama-gl</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>Panama GL</name>
 	<packaging>pom</packaging>
 
@@ -19,9 +19,9 @@
 
 	<modules>
 		<module>panama-gl-api</module>
-		<module>panama-gl-wrappers-linux</module>
+		<!--<module>panama-gl-wrappers-linux</module>-->
 		<module>panama-gl-wrappers-macos</module>
-		<module>panama-gl-wrappers-windows</module>
+		<!--<module>panama-gl-wrappers-windows</module>-->
 
 		<module>panama-gl-jzy3d</module>
 	</modules>
@@ -100,7 +100,7 @@
 
 					<!-- Configure Panama -->
 					<argLine>
-						--enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
+						--enable-native-access=ALL-UNNAMED --enable-preview
 					</argLine>
 
 				</configuration>
@@ -111,11 +111,11 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<source>17</source>
-					<target>17</target>
+					<source>19</source>
+					<target>19</target>
 					<encoding>UTF-8</encoding>
 					<compilerArgs>
-						<arg>--add-modules=jdk.incubator.foreign</arg>
+						<arg>--enable-preview</arg>
 					</compilerArgs>
 				</configuration>
 			</plugin>
@@ -179,7 +179,7 @@
 
 							<!-- Configure Panama -->
 							<argLine>
-								--enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
+								--enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
 							</argLine>
 						</configuration>
 					</plugin>
@@ -218,7 +218,7 @@
 
 							<!-- Configure Panama -->
 							<argLine>
-								-XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+								-XstartOnFirstThread --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 							</argLine>
 						</configuration>
 					</plugin>
@@ -257,7 +257,7 @@
 
 							<!-- Configure Panama -->
 							<argLine>
-								-XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+								-XstartOnFirstThread --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 							</argLine>
 						</configuration>
 					</plugin>
@@ -295,7 +295,7 @@
 
 							<!-- Configure Panama -->
 							<argLine>
-								--enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+								--enable-native-access=ALL-UNNAMED --enable-preview  -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 							</argLine>
 						</configuration>
 					</plugin>

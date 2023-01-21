@@ -1,9 +1,11 @@
 package opengl;
 
-import jdk.incubator.foreign.Addressable;
-import jdk.incubator.foreign.MemorySegment;
-import jdk.incubator.foreign.ResourceScope;
-import jdk.incubator.foreign.SegmentAllocator;
+
+import java.lang.foreign.Addressable;
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.SegmentAllocator;
+
 
 /**
  * A base GL interface for Panama based OpenGL binding.
@@ -11,7 +13,7 @@ import jdk.incubator.foreign.SegmentAllocator;
  * @author Martin Pernollet
  */
 public interface GL {
-    ResourceScope getScope();
+    MemorySession getScope();
     SegmentAllocator getAllocator();
     MemorySegment alloc(double[] value);
     MemorySegment alloc(float[] value);

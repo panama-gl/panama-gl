@@ -1,41 +1,13 @@
 package demos.opengl;
 
-import static jdk.incubator.foreign.CLinker.C_FLOAT;
-import static jdk.incubator.foreign.CLinker.C_INT;
-import static opengl.macos.v10_15_3.glut_h.GL_AMBIENT;
-import static opengl.macos.v10_15_3.glut_h.GL_COLOR_BUFFER_BIT;
-import static opengl.macos.v10_15_3.glut_h.GL_DEPTH_BUFFER_BIT;
-import static opengl.macos.v10_15_3.glut_h.GL_DEPTH_TEST;
-import static opengl.macos.v10_15_3.glut_h.GL_DIFFUSE;
-import static opengl.macos.v10_15_3.glut_h.GL_FRONT;
-import static opengl.macos.v10_15_3.glut_h.GL_LIGHT0;
-import static opengl.macos.v10_15_3.glut_h.GL_LIGHTING;
-import static opengl.macos.v10_15_3.glut_h.GL_POSITION;
-import static opengl.macos.v10_15_3.glut_h.GL_SHININESS;
-import static opengl.macos.v10_15_3.glut_h.GL_SMOOTH;
-import static opengl.macos.v10_15_3.glut_h.GL_SPECULAR;
-import static opengl.macos.v10_15_3.glut_h.GLUT_DEPTH;
-import static opengl.macos.v10_15_3.glut_h.GLUT_DOUBLE;
-import static opengl.macos.v10_15_3.glut_h.GLUT_RGB;
-import static opengl.macos.v10_15_3.glut_h.glClear;
-import static opengl.macos.v10_15_3.glut_h.glClearColor;
-import static opengl.macos.v10_15_3.glut_h.glEnable;
-import static opengl.macos.v10_15_3.glut_h.glLightfv;
-import static opengl.macos.v10_15_3.glut_h.glMaterialfv;
-import static opengl.macos.v10_15_3.glut_h.glPopMatrix;
-import static opengl.macos.v10_15_3.glut_h.glPushMatrix;
-import static opengl.macos.v10_15_3.glut_h.glRotatef;
-import static opengl.macos.v10_15_3.glut_h.glShadeModel;
-import static opengl.macos.v10_15_3.glut_h.glutCreateWindow;
-import static opengl.macos.v10_15_3.glut_h.glutDisplayFunc;
-import static opengl.macos.v10_15_3.glut_h.glutIdleFunc;
-import static opengl.macos.v10_15_3.glut_h.glutInit;
-import static opengl.macos.v10_15_3.glut_h.glutInitDisplayMode;
-import static opengl.macos.v10_15_3.glut_h.glutInitWindowSize;
-import static opengl.macos.v10_15_3.glut_h.glutMainLoop;
-import static opengl.macos.v10_15_3.glut_h.glutPostRedisplay;
-import static opengl.macos.v10_15_3.glut_h.glutSolidTeapot;
-import static opengl.macos.v10_15_3.glut_h.glutSwapBuffers;
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.SegmentAllocator;
+
+//import opengl.macos.v10_15_7.*;
+import static opengl.macos.v10_15_7.glut_h.*;
+import opengl.macos.v10_15_7.glutDisplayFunc$func;
+import opengl.macos.v10_15_7.glutIdleFunc$func;
+
 
 /*
  * Copyright (c) 2020, Oracle and/or its affiliates. All rights reserved.
@@ -68,11 +40,6 @@ import static opengl.macos.v10_15_3.glut_h.glutSwapBuffers;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import jdk.incubator.foreign.CLinker;
-import jdk.incubator.foreign.ResourceScope;
-import jdk.incubator.foreign.SegmentAllocator;
-import opengl.macos.v10_15_3.glutDisplayFunc$func;
-import opengl.macos.v10_15_3.glutIdleFunc$func;
 
 /**
  * This is the original demonstration program provided at https://github.com/sundararajana/panama-jextract-samples/tree/master/opengl.
@@ -93,11 +60,15 @@ import opengl.macos.v10_15_3.glutIdleFunc$func;
  *
  * Requires VM args
  *
- * MacOS
+ * MacOS / Java17
  * <code>
  * -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
  * </code>
- *
+ * 
+ * MacOS  /Java19
+ * <code>
+ * -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/ 
+ * </code>
  * Ubuntu
  * <code>
  * --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
@@ -139,20 +110,22 @@ public class Teapot_Panama_macOS {
   void onIdle() {
     rot += 0.1;
     glutPostRedisplay();
-    //throw new IllegalArgumentException("Teapot does not support coffee");
   }
 
   public static void main(String[] args) {
-    try (var scope = ResourceScope.newConfinedScope()) {
-      var allocator = SegmentAllocator.ofScope(scope);
+    
+    try (var scope = MemorySession.openConfined()) {
+      var allocator = SegmentAllocator.newNativeArena(scope);
       var argc = allocator.allocate(C_INT, 0);
       glutInit(argc, argc);
       glutInitDisplayMode(GLUT_DOUBLE() | GLUT_RGB() | GLUT_DEPTH());
       glutInitWindowSize(500, 500);
-      glutCreateWindow(CLinker.toCString("Hello Panama!", scope));
+      glutCreateWindow(allocator.allocateUtf8String("Hello Panama!"));
       var teapot = new Teapot_Panama_macOS(allocator);
       var displayStub = glutDisplayFunc$func.allocate(teapot::display, scope);
       var idleStub = glutIdleFunc$func.allocate(teapot::onIdle, scope);
+      
+      
       glutDisplayFunc(displayStub);
       glutIdleFunc(idleStub);
       glutMainLoop();

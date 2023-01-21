@@ -1,13 +1,14 @@
 package org.jzy3d.painters;
 
-import static jdk.incubator.foreign.CLinker.C_DOUBLE;
-import static jdk.incubator.foreign.CLinker.C_FLOAT;
-import static jdk.incubator.foreign.CLinker.C_INT;
 import java.awt.Component;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.SegmentAllocator;
+import java.lang.foreign.ValueLayout;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
@@ -31,27 +32,25 @@ import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
 import org.jzy3d.plot3d.rendering.view.View;
-import jdk.incubator.foreign.CLinker;
-import jdk.incubator.foreign.MemorySegment;
-import jdk.incubator.foreign.ResourceScope;
-import jdk.incubator.foreign.SegmentAllocator;
-import opengl.ubuntu.v20.glutDisplayFunc$callback;
-import opengl.ubuntu.v20.glutIdleFunc$callback;
-import opengl.ubuntu.v20.glutMotionFunc$callback;
-import opengl.ubuntu.v20.glutMouseFunc$callback;
-import opengl.ubuntu.v20.glutReshapeFunc$callback;
-import opengl.ubuntu.v20.glut_h;
+import opengl.macos.v10_15_7.glutDisplayFunc$func;
+import opengl.macos.v10_15_7.glutIdleFunc$func;
+import opengl.macos.v10_15_7.glutMotionFunc$func;
+import opengl.macos.v10_15_7.glutMouseFunc$func;
+import opengl.macos.v10_15_7.glutReshapeFunc$func;
+import opengl.macos.v10_15_7.glut_h;
+
+
 
 public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements PanamaGLPainter{
   static Logger logger = Logger.getLogger(PanamaGLPainter_Ubuntu_20_04.class);
 
-  ResourceScope scope;
+  MemorySession scope;
   SegmentAllocator allocator;
 
   public PanamaGLPainter_Ubuntu_20_04() {
     try {
-      scope = ResourceScope.newConfinedScope();
-      allocator = SegmentAllocator.ofScope(scope);
+      scope = MemorySession.openConfined();
+      allocator = SegmentAllocator.newNativeArena(scope);
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e);
@@ -60,32 +59,39 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
   
   /////////////////////////////////////////////
   
-  public ResourceScope getScope() {
+  @Override
+  public MemorySession getScope() {
     return scope;
   }
 
+  @Override
   public SegmentAllocator getAllocator() {
     return allocator;
   }
 
+  @Override
   public MemorySegment alloc(double[] value) {
-    return allocator.allocateArray(C_DOUBLE, value);
+    return allocator.allocateArray(ValueLayout.JAVA_DOUBLE, value);
   }
 
+  @Override
   public MemorySegment alloc(float[] value) {
-    return allocator.allocateArray(C_FLOAT, value);
+    return allocator.allocateArray(ValueLayout.JAVA_FLOAT, value);
   }
 
+  @Override
   public MemorySegment alloc(int[] value) {
-    return allocator.allocateArray(C_INT, value);
+    return allocator.allocateArray(ValueLayout.JAVA_INT, value);
   }
 
+  @Override
   public MemorySegment alloc(String value) {
-    return CLinker.toCString(value, scope);
+    return allocator.allocateUtf8String(value);
   }
 
+  @Override
   public String glGetString(int stringID){
-    return CLinker.toJavaString(glut_h.glGetString(stringID));
+    return glut_h.glGetString(stringID).getUtf8String(0);
   }
 
   /////////////////////////////////////////////
@@ -97,7 +103,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
     var renderer = canvas.getRenderer();
     var scope = painter.getScope();
     var allocator = painter.getAllocator();
-    var argc = allocator.allocate(C_INT, 0);
+    var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
 
     // GLUT Init window
     // https://github.com/jzy3d/panama-gl/issues/16
@@ -105,18 +111,18 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
 
     glut_h.glutInitDisplayMode(glut_h.GLUT_DOUBLE() | glut_h.GLUT_RGB() | glut_h.GLUT_DEPTH());
     glut_h.glutInitWindowSize(bounds.width, bounds.height);
-    glut_h.glutCreateWindow(CLinker.toCString(title + "/" + message, scope));
+    glut_h.glutCreateWindow(alloc(title + "/" + message));
 
     // GLUT Display/Idle callback
-    glut_h.glutDisplayFunc(glutDisplayFunc$callback.allocate(renderer::display, scope));
-    glut_h.glutReshapeFunc(glutReshapeFunc$callback.allocate(renderer::reshape, scope));
-    glut_h.glutIdleFunc(glutIdleFunc$callback.allocate(renderer::onIdle, scope));
+    glut_h.glutDisplayFunc(glutDisplayFunc$func.allocate(renderer::display, scope));
+    glut_h.glutReshapeFunc(glutReshapeFunc$func.allocate(renderer::reshape, scope));
+    glut_h.glutIdleFunc(glutIdleFunc$func.allocate(renderer::onIdle, scope));
 
     // GLUT Mouse callbacks
     AWTCameraMouseController mouse = (AWTCameraMouseController) chart.getMouse();
 
     // GLUT Mouse click listener
-    glutMouseFunc$callback mouseClickCallback = new glutMouseFunc$callback(){
+    glutMouseFunc$func mouseClickCallback = new glutMouseFunc$func(){
       long time;
       long timePrev;
       @Override
@@ -138,18 +144,18 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
         //System.out.println("mouse x:"+x+" y:"+y + " button:" + button + " state:" + state);
       }
     };
-    glut_h.glutMouseFunc(glutMouseFunc$callback.allocate(mouseClickCallback, scope));
+    glut_h.glutMouseFunc(glutMouseFunc$func.allocate(mouseClickCallback, scope));
 
     // Motion is invoked if a mouse button is pressed, otherwise not
     // https://www.opengl.org/resources/libraries/glut/spec3/node51.html
-    glutMotionFunc$callback mouseMotionCallback = new glutMotionFunc$callback(){
+    glutMotionFunc$func mouseMotionCallback = new glutMotionFunc$func(){
       @Override
       public void apply(int x, int y) {
         mouse.mouseDragged(mouseEvent(x, y, InputEvent.BUTTON1_DOWN_MASK));
         //System.out.println("mouse motion.x:"+x+" y:"+y);
       }
     };
-    glut_h.glutMotionFunc(glutMotionFunc$callback.allocate(mouseMotionCallback, scope));
+    glut_h.glutMotionFunc(glutMotionFunc$func.allocate(mouseMotionCallback, scope));
 
 
     // -----------------------------------------------------
@@ -1244,12 +1250,12 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
 
   @Override
   public void glSelectBuffer(int size, IntBuffer buffer) {
-    glut_h.glSelectBuffer(size, allocator.allocateArray(C_INT, buffer.array()));
+    glut_h.glSelectBuffer(size, allocator.allocateArray(ValueLayout.JAVA_INT, buffer.array()));
   }
 
   @Override
   public void gluPickMatrix(double x, double y, double delX, double delY, int[] viewport, int viewport_offset) {
-    glut_h.gluPickMatrix(x, y, delX, delY, allocator.allocateArray(C_INT, viewport));
+    glut_h.gluPickMatrix(x, y, delX, delY, allocator.allocateArray(ValueLayout.JAVA_INT, viewport));
   }
 
   @Override

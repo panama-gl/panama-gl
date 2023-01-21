@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.jzy3d</groupId>
 		<artifactId>panama-gl</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>panama-gl-jzy3d</artifactId>
@@ -21,11 +21,11 @@
 			<artifactId>panama-gl-wrappers-macos</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-wrappers-windows</artifactId>
 			<version>${project.version}</version>
-		</dependency>
+		</dependency>-->
 
 				<!-- PUBLIC JZY3D MODULES -->
 		<dependency>

@@ -1,13 +1,14 @@
 package org.jzy3d.painters;
 
-import static jdk.incubator.foreign.CLinker.C_DOUBLE;
-import static jdk.incubator.foreign.CLinker.C_FLOAT;
-import static jdk.incubator.foreign.CLinker.C_INT;
 import java.awt.Component;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.SegmentAllocator;
+import java.lang.foreign.ValueLayout;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
@@ -30,26 +31,22 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
-import jdk.incubator.foreign.CLinker;
-import jdk.incubator.foreign.MemorySegment;
-import jdk.incubator.foreign.ResourceScope;
-import jdk.incubator.foreign.SegmentAllocator;
-import opengl.macos.v10_15_3.glutDisplayFunc$func;
-import opengl.macos.v10_15_3.glutIdleFunc$func;
-import opengl.macos.v10_15_3.glutMotionFunc$func;
-import opengl.macos.v10_15_3.glutMouseFunc$func;
-import opengl.macos.v10_15_3.glutReshapeFunc$func;
-import opengl.macos.v10_15_3.glut_h;
+import opengl.macos.v10_15_7.glutDisplayFunc$func;
+import opengl.macos.v10_15_7.glutIdleFunc$func;
+import opengl.macos.v10_15_7.glutMotionFunc$func;
+import opengl.macos.v10_15_7.glutMouseFunc$func;
+import opengl.macos.v10_15_7.glutReshapeFunc$func;
+import opengl.macos.v10_15_7.glut_h;
 
 public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements PanamaGLPainter {
   static Logger logger = Logger.getLogger(PanamaGLPainter_MacOS_10_15_3.class);
-  ResourceScope scope;
+  MemorySession scope;
   SegmentAllocator allocator;
 
   public PanamaGLPainter_MacOS_10_15_3() {
     try {
-      scope = ResourceScope.newConfinedScope();
-      allocator = SegmentAllocator.ofScope(scope);
+      scope = MemorySession.openConfined();
+      allocator = SegmentAllocator.newNativeArena(scope);
     } catch (Exception e) {
       e.printStackTrace();
       System.err.println(e);
@@ -58,7 +55,7 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
 
   /////////////////////////////////////////////
 
-  public ResourceScope getScope() {
+  public MemorySession getScope() {
     return scope;
   }
 
@@ -67,23 +64,23 @@ public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements Pa
   }
 
   public MemorySegment alloc(double[] value) {
-    return allocator.allocateArray(C_DOUBLE, value);
+    return allocator.allocateArray(ValueLayout.JAVA_DOUBLE, value);
   }
 
   public MemorySegment alloc(float[] value) {
-    return allocator.allocateArray(C_FLOAT, value);
+    return allocator.allocateArray(ValueLayout.JAVA_FLOAT, value);
   }
 
   public MemorySegment alloc(int[] value) {
-    return allocator.allocateArray(C_INT, value);
+    return allocator.allocateArray(ValueLayout.JAVA_INT, value);
   }
 
   public MemorySegment alloc(String value) {
-    return CLinker.toCString(value, scope);
+    return allocator.allocateUtf8String(value);
   }
 
   public String glGetString(int stringID){
-    return CLinker.toJavaString(glut_h.glGetString(stringID));
+    return glut_h.glGetString(stringID).getUtf8String(0);
   }
 
   /////////////////////////////////////////////
@@ -96,7 +93,7 @@ static int k = 0;
     var renderer = canvas.getRenderer();
     var scope = painter.getScope();
     var allocator = painter.getAllocator();
-    var argc = allocator.allocate(C_INT, 0);
+    var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
 
 
     // GLUT Init window
@@ -107,7 +104,7 @@ System.out.println("post init");
     glut_h.glutInitDisplayMode(glut_h.GLUT_DOUBLE() | glut_h.GLUT_RGB() | glut_h.GLUT_DEPTH());
     glut_h.glutInitWindowSize(bounds.width, bounds.height);
     //glut_h.glutInitWindowPosition(bounds.x, bounds.y);
-    glut_h.glutCreateWindow(CLinker.toCString(title + "/" + message, scope));
+    glut_h.glutCreateWindow(alloc(title + "/" + message));
 
     // GLUT Display/Idle callback
     glut_h.glutDisplayFunc(glutDisplayFunc$func.allocate(renderer::display, scope));
@@ -1248,12 +1245,12 @@ System.out.println("post init");
 
   @Override
   public void glSelectBuffer(int size, IntBuffer buffer) {
-    glut_h.glSelectBuffer(size, allocator.allocateArray(C_INT, buffer.array()));
+    glut_h.glSelectBuffer(size, allocator.allocateArray(ValueLayout.JAVA_INT, buffer.array()));
   }
 
   @Override
   public void gluPickMatrix(double x, double y, double delX, double delY, int[] viewport, int viewport_offset) {
-    glut_h.gluPickMatrix(x, y, delX, delY, allocator.allocateArray(C_INT, viewport));
+    glut_h.gluPickMatrix(x, y, delX, delY, allocator.allocateArray(ValueLayout.JAVA_INT, viewport));
   }
 
   @Override

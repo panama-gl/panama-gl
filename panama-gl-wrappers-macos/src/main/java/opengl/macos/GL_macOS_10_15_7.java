@@ -1,11 +1,13 @@
 package opengl.macos;
 
-import jdk.incubator.foreign.Addressable;
-import jdk.incubator.foreign.CLinker;
-import jdk.incubator.foreign.MemorySegment;
+
+import java.lang.foreign.Addressable;
+import java.lang.foreign.MemoryAddress;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.ValueLayout;
 import opengl.AbstractGL;
 import opengl.GL;
-import opengl.macos.v10_15_3.glut_h;
+import opengl.macos.v10_15_7.glut_h;
 
 /**
  * Look above ^^ this is how you link to platform binding.
@@ -14,10 +16,13 @@ public class GL_macOS_10_15_7 extends AbstractGL implements GL {
   public GL_macOS_10_15_7() {
     super();
   }
+  
+
 
   @Override
   public String gluErrorString(int err_string) {
-    return CLinker.toJavaString(glut_h.gluErrorString(err_string));
+    MemoryAddress a = glut_h.gluErrorString(err_string);
+    return a.getUtf8String(0);
   }
 
   @Override
@@ -27,7 +32,8 @@ public class GL_macOS_10_15_7 extends AbstractGL implements GL {
 
   @Override
   public String glGetString(int stringID) {
-    return CLinker.toJavaString(glut_h.glGetString(stringID));
+    MemoryAddress a = glut_h.glGetString(stringID);
+    return a.getUtf8String(0);
   }
 
   @Override

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.jzy3d</groupId>
 		<artifactId>panama-gl</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>panama-gl-wrappers-macos</artifactId>
@@ -23,9 +23,16 @@
 			<version>${project.version}</version>
 		</dependency>
 
+		<!-- JOGL AND GLUEGEN  -->
 		<dependency>
 			<groupId>org.jogamp.jogl</groupId>
 			<artifactId>jogl-all</artifactId>
+			<version>v2.4.0-rc4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jogamp.gluegen</groupId>
+			<artifactId>gluegen-rt</artifactId>
 			<version>v2.4.0-rc4</version>
 		</dependency>
 

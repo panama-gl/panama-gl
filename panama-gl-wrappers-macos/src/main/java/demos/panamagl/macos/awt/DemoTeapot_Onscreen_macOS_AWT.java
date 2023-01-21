@@ -1,15 +1,16 @@
 package demos.panamagl.macos.awt;
 
-import static jdk.incubator.foreign.CLinker.C_FLOAT;
+//import static jdk.incubator.foreign.CLinker.C_FLOAT;
 import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.SegmentAllocator;
 import javax.swing.SwingUtilities;
-import jdk.incubator.foreign.ResourceScope;
-import jdk.incubator.foreign.SegmentAllocator;
 import opengl.GL;
 import opengl.GLError;
+import opengl.macos.v10_15_7.glut_h;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.toolkits.awt.GLCanvasAWT;
@@ -82,24 +83,24 @@ public class DemoTeapot_Onscreen_macOS_AWT {
     return new GLEventAdapter() {
 
       public void init(GL gl) {
-        ResourceScope scope = ResourceScope.newConfinedScope();
-        SegmentAllocator allocator = SegmentAllocator.ofScope(scope);
-
+        MemorySession scope = MemorySession.openConfined();
+        SegmentAllocator allocator = SegmentAllocator.newNativeArena(scope);
+        
         // Reset Background
         gl.glClearColor(0f, 0f, 0f, 1f);
 
         // Setup Lighting
         gl.glShadeModel(gl.GL_SMOOTH());
         
-        var pos = allocator.allocateArray(C_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
+        var pos = allocator.allocateArray(glut_h.C_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
         gl.glLightfv(gl.GL_LIGHT0(), gl.GL_POSITION(), pos);
         
-        var spec = allocator.allocateArray(C_FLOAT, new float[] {1, 1, 1, 0});
+        var spec = allocator.allocateArray(glut_h.C_FLOAT, new float[] {1, 1, 1, 0});
         gl.glLightfv(gl.GL_LIGHT0(), gl.GL_AMBIENT(), spec);
         gl.glLightfv(gl.GL_LIGHT0(), gl.GL_DIFFUSE(), spec);
         gl.glLightfv(gl.GL_LIGHT0(), gl.GL_SPECULAR(), spec);
         
-        var shini = allocator.allocate(C_FLOAT, 113);
+        var shini = allocator.allocate(glut_h.C_FLOAT, 113);
         gl.glMaterialfv(gl.GL_FRONT(), gl.GL_SHININESS(), shini);
         gl.glEnable(gl.GL_LIGHTING());
         gl.glEnable(gl.GL_LIGHT0());

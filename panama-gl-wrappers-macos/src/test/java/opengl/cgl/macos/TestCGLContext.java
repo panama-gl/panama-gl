@@ -1,5 +1,6 @@
 package opengl.cgl.macos;
 
+import java.lang.foreign.ValueLayout;
 import org.junit.Test;
 import junit.framework.Assert;
 
@@ -16,7 +17,7 @@ public class TestCGLContext {
     
     
     // Then
-    int[] attribs = cgl.attribs.toIntArray();
+    int[] attribs = cgl.attribs.toArray(ValueLayout.JAVA_INT);
     Assert.assertEquals(73, attribs[0]); // 
     Assert.assertEquals(99, attribs[1]);
     Assert.assertEquals(12800, attribs[2]); // OpenGL version

@@ -1,13 +1,13 @@
 package org.jzy3d.painters;
 
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.SegmentAllocator;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.maths.Rectangle;
-import jdk.incubator.foreign.MemorySegment;
-import jdk.incubator.foreign.ResourceScope;
-import jdk.incubator.foreign.SegmentAllocator;
 
 public interface PanamaGLPainter {
-    public ResourceScope getScope();
+    public MemorySession getScope();
 
     public SegmentAllocator getAllocator();
 

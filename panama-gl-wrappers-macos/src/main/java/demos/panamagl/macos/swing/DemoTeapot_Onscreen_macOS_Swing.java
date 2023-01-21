@@ -1,18 +1,16 @@
 package demos.panamagl.macos.swing;
 
-import static jdk.incubator.foreign.CLinker.C_FLOAT;
-
 import java.awt.BorderLayout;
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.SegmentAllocator;
+import java.lang.foreign.ValueLayout;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import jdk.incubator.foreign.ResourceScope;
-import jdk.incubator.foreign.SegmentAllocator;
-
 import opengl.GL;
 import opengl.GLError;
+import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.toolkits.swing.GLCanvasSwing;
-import panamagl.Animator;
 
 /**
  * VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
@@ -76,8 +74,8 @@ public class DemoTeapot_Onscreen_macOS_Swing {
     return new GLEventAdapter() {
 
       public void init(GL gl) {
-        ResourceScope scope = ResourceScope.newConfinedScope();
-        SegmentAllocator allocator = SegmentAllocator.ofScope(scope);
+        MemorySession scope = MemorySession.openConfined();
+        SegmentAllocator allocator = SegmentAllocator.newNativeArena(scope);
 
         // Reset Background
         gl.glClearColor(1f, 1f, 1f, 1f);
@@ -85,15 +83,15 @@ public class DemoTeapot_Onscreen_macOS_Swing {
         // Setup Lighting
         gl.glShadeModel(gl.GL_SMOOTH());
         
-        var pos = allocator.allocateArray(C_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
+        var pos = allocator.allocateArray(ValueLayout.JAVA_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
         gl.glLightfv(gl.GL_LIGHT0(), gl.GL_POSITION(), pos);
         
-        var spec = allocator.allocateArray(C_FLOAT, new float[] {1, 1, 1, 0});
+        var spec = allocator.allocateArray(ValueLayout.JAVA_FLOAT, new float[] {1, 1, 1, 0});
         gl.glLightfv(gl.GL_LIGHT0(), gl.GL_AMBIENT(), spec);
         gl.glLightfv(gl.GL_LIGHT0(), gl.GL_DIFFUSE(), spec);
         gl.glLightfv(gl.GL_LIGHT0(), gl.GL_SPECULAR(), spec);
         
-        var shini = allocator.allocate(C_FLOAT, 113);
+        var shini = allocator.allocate(ValueLayout.JAVA_FLOAT, 113);
         gl.glMaterialfv(gl.GL_FRONT(), gl.GL_SHININESS(), shini);
         gl.glEnable(gl.GL_LIGHTING());
         gl.glEnable(gl.GL_LIGHT0());
