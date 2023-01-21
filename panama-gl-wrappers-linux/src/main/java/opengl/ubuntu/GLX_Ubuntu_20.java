@@ -1,11 +1,12 @@
 package opengl.ubuntu;
 
-import jdk.incubator.foreign.Addressable;
-import jdk.incubator.foreign.CLinker;
-import jdk.incubator.foreign.MemorySegment;
+
+import java.lang.foreign.Addressable;
+import java.lang.foreign.MemoryAddress;
+import java.lang.foreign.MemorySegment;
+import glx.ubuntu.v20.glx_h;
 import opengl.AbstractGL;
 import opengl.GL;
-import opengl.glx.ubuntu.v20.glx_h;
 import opengl.ubuntu.v20.glut_h;
 
 /**
@@ -32,7 +33,7 @@ public class GLX_Ubuntu_20 extends AbstractGL implements GL  {
 
     @Override
     public String glGetString(int stringID){
-        return CLinker.toJavaString(glut_h.glGetString(stringID));
+        return glut_h.glGetString(stringID).getUtf8String(0);
     }
 
 
@@ -62,7 +63,7 @@ public class GLX_Ubuntu_20 extends AbstractGL implements GL  {
 
       if(glGenFramebuffersName==null) {
         glGenFramebuffersName = alloc("glGenFramebuffers");        
-        glGenFramebuffers = (MemorySegment) glx_h.glXGetProcAddress(glGenFramebuffersName);
+        glGenFramebuffers = (MemoryAddress) glx_h.glXGetProcAddress(glGenFramebuffersName);
       }
       
       //glx_h.glGenFramebuffers(1, frameBuffer);
@@ -70,7 +71,7 @@ public class GLX_Ubuntu_20 extends AbstractGL implements GL  {
     }
     
     MemorySegment glGenFramebuffersName = null;
-    MemorySegment glGenFramebuffers = null;
+    MemoryAddress glGenFramebuffers = null;
     
     @Override
     public void glBindFramebuffer(int frameExt, int frameBufferId){

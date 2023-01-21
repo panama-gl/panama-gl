@@ -1,6 +1,8 @@
 package demos.opengl;
 import java.io.File;
 import java.io.IOException;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.SymbolLookup;
 import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Field;
 import java.net.URL;
@@ -9,8 +11,6 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
-import jdk.incubator.foreign.MemoryAddress;
-import jdk.incubator.foreign.SymbolLookup;
 
 /**
  * Allow verifying if all generated MethodHandle of the JExtract'ed libraries can be linked properly to native libraries.
@@ -100,7 +100,7 @@ public class CheckLinkConsistency {
 
     public static void printLinkStatus(SymbolLookup lookup, Class clazz, Field field, String generatedMethod, Link linkStatus) throws IllegalAccessException {
         if(lookup!=null) {
-            Optional<MemoryAddress> memAddress = lookup.lookup(generatedMethod);
+            Optional<MemorySegment> memAddress = lookup.lookup(generatedMethod);
 
             if (memAddress.isEmpty() && Link.MISSING.equals(linkStatus)) {
                 System.out.println(generatedMethod + ":\t (" + clazz.getSimpleName() + "." + field.getName()  + ") link is MISSING");

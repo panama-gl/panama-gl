@@ -1,15 +1,9 @@
 package opengl.ubuntu;
 
-import static jdk.incubator.foreign.CLinker.C_INT;
-import jdk.incubator.foreign.Addressable;
-import jdk.incubator.foreign.CLinker;
-import jdk.incubator.foreign.MemoryAddress;
-import jdk.incubator.foreign.MemorySegment;
-import opengl.AbstractGL;
-import opengl.GL;
-import opengl.glx.ubuntu.v20.glx_h;
-import static opengl.glx.ubuntu.v20.glx_h.*;
-import opengl.ubuntu.v20.glut_h;
+
+import java.lang.foreign.Addressable;
+import java.lang.foreign.MemoryAddress;
+import glx.ubuntu.v20.glx_h;
 
 // https://stackoverflow.com/questions/28378891/glxcreatecontext-magically-maps-window
 // https://community.khronos.org/t/minimal-glx-opengl3-0-example/55859

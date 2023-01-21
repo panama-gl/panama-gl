@@ -1,12 +1,12 @@
 package panamagl.fbo;
 
-import static jdk.incubator.foreign.ResourceScope.newImplicitScope;
 import java.awt.image.BufferedImage;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.ValueLayout;
+import java.lang.foreign.ValueLayout.OfByte;
 import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
-import jdk.incubator.foreign.MemoryHandles;
-import jdk.incubator.foreign.MemorySegment;
-
 import opengl.ByteUtils;
 import opengl.GL;
 import opengl.GLError;
@@ -52,15 +52,14 @@ public class FBO {
   int idTexture = -1;
   int idFrameBuffer = -1;
   int idRenderBuffer = -1;
-
+  
+  MemorySession scope;
   MemorySegment frameBufferIds;
   MemorySegment renderBufferIds;
   MemorySegment textureBufferIds;
   MemorySegment pixelBuffer;
   MemorySegment pixelsRead;
 
-  VarHandle intHandle = MemoryHandles.varHandle(int.class, ByteOrder.nativeOrder());
-  
   // indicates dimensions have changed
   // and FBO must reprepared
   boolean prepared = false;
@@ -71,9 +70,13 @@ public class FBO {
   public FBO(int width, int height) {
     this.width = width;
     this.height = height;
+    
+    this.scope = MemorySession.openConfined();
+
   }
 
   public void prepare(GL gl) {
+    
     if (prepared)
       release(gl);
 
@@ -104,9 +107,9 @@ public class FBO {
     // ------------------------
     // Generate TEXTURE buffer
 
-    textureBufferIds = MemorySegment.allocateNative(1 * 4 * 3, newImplicitScope());
+    textureBufferIds = MemorySegment.allocateNative(1 * 4 * 3, scope);
     gl.glGenTextures(1, textureBufferIds);
-    idTexture = (int) intHandle.get(textureBufferIds, 0);
+    idTexture = (int) textureBufferIds.get(ValueLayout.JAVA_INT, 0);
 
     Debug.debug(debug, "FBO: Got texture ID : " + idTexture);
 
@@ -127,16 +130,16 @@ public class FBO {
     // Create a texture to write to
     int byteSize = width * height * channels;
     
-    pixelBuffer = MemorySegment.allocateNative(byteSize, newImplicitScope());
+    pixelBuffer = MemorySegment.allocateNative(byteSize, scope);
     gl.glTexImage2D(gl.GL_TEXTURE_2D(), level, internalFormat, width, height, border, format,
         textureType, pixelBuffer);
 
     // -------------------------
     // Generate FRAME buffer
 
-    frameBufferIds = MemorySegment.allocateNative(4, newImplicitScope());
+    frameBufferIds = MemorySegment.allocateNative(4, scope);
     gl.glGenFramebuffers(1, frameBufferIds);
-    idFrameBuffer = (int) intHandle.get(frameBufferIds, 0);
+    idFrameBuffer = (int) frameBufferIds.get(ValueLayout.JAVA_INT, 0);
 
     Debug.debug(debug, "FBO: Got FB ID : " + idFrameBuffer);
 
@@ -156,9 +159,9 @@ public class FBO {
     // -------------------------
     // Generate RENDER buffer
 
-    renderBufferIds = MemorySegment.allocateNative(4, newImplicitScope());
+    renderBufferIds = MemorySegment.allocateNative(4, scope);
     gl.glGenRenderbuffers(1, renderBufferIds);
-    idRenderBuffer = (int) intHandle.get(renderBufferIds, 0);
+    idRenderBuffer = (int) renderBufferIds.get(ValueLayout.JAVA_INT, 0);
 
     // Check for error after reading
     GLError.checkAndThrow(gl);
@@ -252,7 +255,7 @@ public class FBO {
     
     // Reading pixels
     int nBytes = width * height * channels;
-    pixelsRead = MemorySegment.allocateNative(nBytes, newImplicitScope());
+    pixelsRead = MemorySegment.allocateNative(nBytes, scope);
     gl.glReadPixels(0, 0, width, height, format, textureType, pixelsRead);
     
     // Check for error after reading
@@ -291,7 +294,7 @@ public class FBO {
    * Warning : flipped
    */
   protected void fromBGRABufferToImageArray(MemorySegment pixelsBuffer, BufferedImage out) {
-    int[] px = pixelsBuffer.toIntArray();
+    int[] px = pixelsBuffer.toArray(ValueLayout.JAVA_INT);
     out.setRGB(0, 0, width, height, px, 0, width);
   }
 
@@ -305,16 +308,14 @@ public class FBO {
     int nPixels = width * height;
     int k = 0;
 
-    // TODO : Use pixelsRead.toByteArray / toIntArray instead
-    // TODO : evaluate advantage of image.setRGB(pixel:int[])
-    VarHandle byteHandle = MemoryHandles.varHandle(byte.class, ByteOrder.nativeOrder());
+    OfByte byteHandle = ValueLayout.JAVA_BYTE.withOrder(ByteOrder.nativeOrder());
 
     for (int i = 0; i < nPixels * channels; i += channels) {
       // BGRA as specified by "format" field
-      byte byB = (byte) byteHandle.get(pixelsBuffer, i);
-      byte byG = (byte) byteHandle.get(pixelsBuffer, i + 1);
-      byte byR = (byte) byteHandle.get(pixelsBuffer, i + 2);
-      byte byA = (byte) byteHandle.get(pixelsBuffer, i + 3);
+      byte byB = pixelsBuffer.get(byteHandle, i);
+      byte byG = pixelsBuffer.get(byteHandle, i + 1);
+      byte byR = pixelsBuffer.get(byteHandle, i + 2);
+      byte byA = pixelsBuffer.get(byteHandle, i + 3);
       //byte non = 0;
       //byte one = (byte) 0xff;
       int rgba = ByteUtils.RGBAtoIntARGB(byR, byG, byB, byA); // ARGB

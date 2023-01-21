@@ -1,14 +1,13 @@
 package opengl.cgl.macos;
 
-import static jdk.incubator.foreign.CLinker.C_INT;
+import java.lang.foreign.MemoryAddress;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.SegmentAllocator;
+import java.lang.foreign.ValueLayout;
 import java.util.Arrays;
-import jdk.incubator.foreign.CLinker;
-import jdk.incubator.foreign.MemorySegment;
-import jdk.incubator.foreign.MemoryAddress;
-import jdk.incubator.foreign.ResourceScope;
-import jdk.incubator.foreign.SegmentAllocator;
+import cgl.macos.v10_15_7.cgl_h;
 import opengl.GLContext;
-import opengl.cgl.macos.v10_15_7.OpenGL_h;
 import panamagl.Debug;
 
 /**
@@ -52,7 +51,7 @@ import panamagl.Debug;
  * @author Martin Pernollet
  */
 public class CGLContext implements GLContext {
-  protected ResourceScope scope;
+  protected MemorySession scope;
   protected SegmentAllocator allocator;
 
   protected MemorySegment attribs;
@@ -68,8 +67,8 @@ public class CGLContext implements GLContext {
     // System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
     System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
 
-    scope = ResourceScope.newConfinedScope();
-    allocator = SegmentAllocator.ofScope(scope);
+    scope = MemorySession.openConfined();
+    allocator = SegmentAllocator.newNativeArena(scope);
 
   }
 
@@ -111,13 +110,13 @@ public class CGLContext implements GLContext {
    * that the context is already locked and cannot be used.
    */
   public void lockContext() {
-    int err = OpenGL_h.CGLLockContext(context);
+    int err = cgl_h.CGLLockContext(context);
 
-    if (OpenGL_h.kCGLNoError() == err) {
+    if (cgl_h.kCGLNoError() == err) {
       Debug.debug(debug, "CGLContext : lock : " + err + " = no error");
 
     } 
-    else if(OpenGL_h.kCGLBadContext() == err) {
+    else if(cgl_h.kCGLBadContext() == err) {
       System.err.println("Got CGL bad context error while locking context : " + err);
     }
     else {
@@ -128,17 +127,17 @@ public class CGLContext implements GLContext {
 
 
   public void unlockContext() {
-    final int err2 = OpenGL_h.CGLUnlockContext(context);
+    final int err2 = cgl_h.CGLUnlockContext(context);
 
     /*
      * Error 0x2714 is a common error that can occur while trying to unlock a CGL (Core Graphics
      * Library) context. It indicates that the CGL context is not locked, and cannot be unlocked.
      */
-    if (OpenGL_h.kCGLBadContext() == err2) {
+    if (cgl_h.kCGLBadContext() == err2) {
       System.err.println("CGL: Could not unlock context that is not locked : err 0x"
           + Integer.toHexString(err2) + " (" + err2 + ") : " + this);
 
-    } else if (OpenGL_h.kCGLNoError() != err2) {
+    } else if (cgl_h.kCGLNoError() != err2) {
       System.err.println("CGL: Could not unlock context: err 0x" + Integer.toHexString(err2) + " ("
           + err2 + ") : " + this);
       // System.err.println("CGL : " + glut_h.gluGetString(err2));
@@ -151,16 +150,16 @@ public class CGLContext implements GLContext {
    * be used for rendering or other graphics operations in the current thread.
    */
   protected void setCurrentContext() {
-    int err = OpenGL_h.CGLSetCurrentContext(context);
+    int err = cgl_h.CGLSetCurrentContext(context);
 
-    if (OpenGL_h.kCGLNoError() == err) {
+    if (cgl_h.kCGLNoError() == err) {
       Debug.debug(debug, "CGLContext : set current : " + err + " = no error");
 
-    } else if (OpenGL_h.kCGLBadContext() == err) {
+    } else if (cgl_h.kCGLBadContext() == err) {
       System.err.println("CGLContext : set current : " + err
           + " = kCGLBadContext(). The specified context is invalid.");
 
-    } else if (OpenGL_h.kCGLBadConnection() == err) {
+    } else if (cgl_h.kCGLBadConnection() == err) {
       System.err.println("CGLContext : set current : " + err
           + " = kCGLBadConnection(). The specified context is not connected to a window or drawable.");
 
@@ -171,16 +170,16 @@ public class CGLContext implements GLContext {
   }
 
   protected void setCurrentContextZero() {
-    MemorySegment zero = allocator.allocateArray(C_INT, new int[1]);
-    final int err = OpenGL_h.CGLSetCurrentContext(zero);
-    if (OpenGL_h.kCGLNoError() != err) {
+    MemorySegment zero = allocator.allocateArray(ValueLayout.JAVA_INT, new int[1]);
+    final int err = cgl_h.CGLSetCurrentContext(zero);
+    if (cgl_h.kCGLNoError() != err) {
       System.err.println("CGL: Could not release current context: err 0x" + Integer.toHexString(err)
           + ": " + this);
     }
   }
 
   protected MemoryAddress getCurrentContext() {
-    MemoryAddress currentContext = OpenGL_h.CGLGetCurrentContext();
+    MemoryAddress currentContext = cgl_h.CGLGetCurrentContext();
 
     Debug.debug(debug, "CGLContext : Current context = " + currentContext.toRawLongValue());
 
@@ -188,13 +187,13 @@ public class CGLContext implements GLContext {
   }
 
   public void createContext(MemorySegment npix) {
-    MemorySegment c_share = CLinker.toCString("", scope);
+    MemorySegment c_share = allocator.allocateUtf8String("");
 
-    context = CLinker.toCString("", scope);
-    OpenGL_h.CGLCreateContext(pixelFormat, c_share, context);
+    context = allocator.allocateUtf8String("");
+    cgl_h.CGLCreateContext(pixelFormat, c_share, context);
 
-    Debug.debug(debug, "CGLContext : " + Arrays.toString(pixelFormat.toIntArray()));
-    Debug.debug(debug, "CGLContext : " + Arrays.toString(npix.toIntArray()));
+    Debug.debug(debug, "CGLContext : " + Arrays.toString(pixelFormat.toArray(ValueLayout.JAVA_INT)));
+    Debug.debug(debug, "CGLContext : " + Arrays.toString(npix.toArray(ValueLayout.JAVA_INT)));
     Debug.debug(debug, "CGLContext : CREATED!!");
     
 
@@ -207,34 +206,34 @@ public class CGLContext implements GLContext {
 
     // The kCGLPFAAccelerated parameter is used to specify whether the pixel format object should be
     // created using hardware acceleration, which can improve the performance of graphics rendering.
-    at[0] = OpenGL_h.kCGLPFAAccelerated();
+    at[0] = cgl_h.kCGLPFAAccelerated();
     // The kCGLPFAOpenGLProfile parameter is used to specify the OpenGL profile that the pixel
     // format object should support.
-    at[1] = OpenGL_h.kCGLPFAOpenGLProfile();
-    at[2] = OpenGL_h.kCGLOGLPVersion_3_2_Core();
+    at[1] = cgl_h.kCGLPFAOpenGLProfile();
+    at[2] = cgl_h.kCGLOGLPVersion_3_2_Core();
     at[3] = 0;
 
-    attribs = allocator.allocateArray(C_INT, at);
-    pixelFormat = allocator.allocateArray(C_INT, new int[1]);
+    attribs = allocator.allocateArray(ValueLayout.JAVA_INT, at);
+    pixelFormat = allocator.allocateArray(ValueLayout.JAVA_INT, new int[1]);
 
     // int[] pixFormats = new int[1];
-    MemorySegment npix = allocator.allocateArray(C_INT, new int[1]);
+    MemorySegment npix = allocator.allocateArray(ValueLayout.JAVA_INT, new int[1]);
 
-    OpenGL_h.CGLChoosePixelFormat(attribs, pixelFormat, npix);
+    cgl_h.CGLChoosePixelFormat(attribs, pixelFormat, npix);
 
 
-    Debug.debug(debug, "CGLContext : CGLChoosePixelFormat attributes " + Arrays.toString(attribs.toIntArray()));
-    Debug.debug(debug, "CGLContext : CGLChoosePixelFormat format " + Arrays.toString(pixelFormat.toIntArray()));
+    Debug.debug(debug, "CGLContext : CGLChoosePixelFormat attributes " + Arrays.toString(attribs.toArray(ValueLayout.JAVA_INT)));
+    Debug.debug(debug, "CGLContext : CGLChoosePixelFormat format " + Arrays.toString(pixelFormat.toArray(ValueLayout.JAVA_INT)));
     Debug.debug(debug, "CGLContext : CGLChoosePixelFormat max number of sample per pixel "
-        + Arrays.toString(npix.toIntArray()));
+        + Arrays.toString(npix.toArray(ValueLayout.JAVA_INT)));
     
     return npix;
   }
 
   @Override
   public synchronized void destroy() {
-    OpenGL_h.CGLDestroyPixelFormat(pixelFormat);
-    OpenGL_h.CGLDestroyContext(context);
+    cgl_h.CGLDestroyPixelFormat(pixelFormat);
+    cgl_h.CGLDestroyContext(context);
     
     initialized = false;
 

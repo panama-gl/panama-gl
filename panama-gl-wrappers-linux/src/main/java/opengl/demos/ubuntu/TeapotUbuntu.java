@@ -1,41 +1,7 @@
 package opengl.demos.ubuntu;
 
-import static jdk.incubator.foreign.CLinker.C_FLOAT;
-import static jdk.incubator.foreign.CLinker.C_INT;
-import static opengl.ubuntu.v20.glut_h.GL_AMBIENT;
-import static opengl.ubuntu.v20.glut_h.GL_COLOR_BUFFER_BIT;
-import static opengl.ubuntu.v20.glut_h.GL_DEPTH_BUFFER_BIT;
-import static opengl.ubuntu.v20.glut_h.GL_DEPTH_TEST;
-import static opengl.ubuntu.v20.glut_h.GL_DIFFUSE;
-import static opengl.ubuntu.v20.glut_h.GL_FRONT;
-import static opengl.ubuntu.v20.glut_h.GL_LIGHT0;
-import static opengl.ubuntu.v20.glut_h.GL_LIGHTING;
-import static opengl.ubuntu.v20.glut_h.GL_POSITION;
-import static opengl.ubuntu.v20.glut_h.GL_SHININESS;
-import static opengl.ubuntu.v20.glut_h.GL_SMOOTH;
-import static opengl.ubuntu.v20.glut_h.GL_SPECULAR;
-import static opengl.ubuntu.v20.glut_h.GLUT_DEPTH;
-import static opengl.ubuntu.v20.glut_h.GLUT_DOUBLE;
-import static opengl.ubuntu.v20.glut_h.GLUT_RGB;
-import static opengl.ubuntu.v20.glut_h.glClear;
-import static opengl.ubuntu.v20.glut_h.glClearColor;
-import static opengl.ubuntu.v20.glut_h.glEnable;
-import static opengl.ubuntu.v20.glut_h.glLightfv;
-import static opengl.ubuntu.v20.glut_h.glMaterialfv;
-import static opengl.ubuntu.v20.glut_h.glPopMatrix;
-import static opengl.ubuntu.v20.glut_h.glPushMatrix;
-import static opengl.ubuntu.v20.glut_h.glRotatef;
-import static opengl.ubuntu.v20.glut_h.glShadeModel;
-import static opengl.ubuntu.v20.glut_h.glutCreateWindow;
-import static opengl.ubuntu.v20.glut_h.glutDisplayFunc;
-import static opengl.ubuntu.v20.glut_h.glutIdleFunc;
-import static opengl.ubuntu.v20.glut_h.glutInit;
-import static opengl.ubuntu.v20.glut_h.glutInitDisplayMode;
-import static opengl.ubuntu.v20.glut_h.glutInitWindowSize;
-import static opengl.ubuntu.v20.glut_h.glutMainLoop;
-import static opengl.ubuntu.v20.glut_h.glutPostRedisplay;
-import static opengl.ubuntu.v20.glut_h.glutSolidTeapot;
-import static opengl.ubuntu.v20.glut_h.glutSwapBuffers;
+import  opengl.ubuntu.v20.*;
+import static opengl.ubuntu.v20.glut_h.*;
 
 /*
  * Copyright (c) 2020, Oracle and/or its affiliates. All rights reserved.
@@ -68,9 +34,9 @@ import static opengl.ubuntu.v20.glut_h.glutSwapBuffers;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import jdk.incubator.foreign.CLinker;
-import jdk.incubator.foreign.ResourceScope;
-import jdk.incubator.foreign.SegmentAllocator;
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.SegmentAllocator;
+import java.lang.foreign.ValueLayout;
 import opengl.ubuntu.v20.glutDisplayFunc$callback;
 import opengl.ubuntu.v20.glutIdleFunc$callback;
 
@@ -79,7 +45,7 @@ import opengl.ubuntu.v20.glutIdleFunc$callback;
  *
  * Requires VM args for Ubuntu
  * <code>
- * --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x864-linux-gnu/
+ * --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
  * </code>
  */
 public class TeapotUbuntu {
@@ -121,13 +87,13 @@ public class TeapotUbuntu {
   }
 
   public static void main(String[] args) {
-    try (var scope = ResourceScope.newConfinedScope()) {
-      var allocator = SegmentAllocator.ofScope(scope);
-      var argc = allocator.allocate(C_INT, 0);
+    try (var scope = MemorySession.openConfined()) {
+      var allocator = SegmentAllocator.newNativeArena(scope);
+      var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
       glutInit(argc, argc);
       glutInitDisplayMode(GLUT_DOUBLE() | GLUT_RGB() | GLUT_DEPTH());
       glutInitWindowSize(500, 500);
-      glutCreateWindow(CLinker.toCString("Hello Panama!", scope));
+      glutCreateWindow(allocator.allocateUtf8String("Hello Panama!"));
       var teapot = new TeapotUbuntu(allocator);
       var displayStub = glutDisplayFunc$callback.allocate(teapot::display, scope);
       var idleStub = glutIdleFunc$callback.allocate(teapot::onIdle, scope);

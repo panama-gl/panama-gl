@@ -1,16 +1,16 @@
 package opengl.demos.ubuntu;
 
-import jdk.incubator.foreign.MemorySegment;
-import jdk.incubator.foreign.ResourceScope;
-import jdk.incubator.foreign.SegmentAllocator;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.SegmentAllocator;
 
 public class DemoGLX_getProcAddress {
   public static void main(String[] args) {
-    ResourceScope scope;
+    MemorySession scope;
     SegmentAllocator allocator;
     
-    scope = ResourceScope.newConfinedScope();
-    allocator = SegmentAllocator.ofScope(scope);
+    scope = MemorySession.openConfined();
+    allocator = SegmentAllocator.newNativeArena(scope);
     
     MemorySegment glGenFramebuffersName = null;
     MemorySegment glGenFramebuffers = null;

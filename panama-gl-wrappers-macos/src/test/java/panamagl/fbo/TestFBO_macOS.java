@@ -15,8 +15,7 @@ public class TestFBO_macOS {
 
   @Test
   public void given_CGLAndGLUTContext_whenRenderSomething_ThenGetBufferedImage() {
-    OperatingSystem os = new OperatingSystem();
-    if (!os.isMac())
+    if (!new OperatingSystem().isMac())
       return;
 
     // Given a CGL Context
@@ -40,10 +39,6 @@ public class TestFBO_macOS {
     OperatingSystem os = new OperatingSystem();
     if (!os.isMac())
       return;
-
-    // Given a CGL Context
-    GLContext cglContext = new CGLContext();
-    cglContext.init();
 
     // Given a GLUT context
     GLContext glutContext = new GLUTContext_macOS_10_15_7();

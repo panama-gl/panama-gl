@@ -1,13 +1,14 @@
 package opengl.glut.macos;
 
-import jdk.incubator.foreign.*;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.SegmentAllocator;
+import java.lang.foreign.ValueLayout;
 import opengl.GL;
 import opengl.GLContext;
-import opengl.macos.v10_15_3.glutDisplayFunc$func;
-import opengl.macos.v10_15_3.glutIdleFunc$func;
-import opengl.macos.v10_15_3.glut_h;
-
-import static jdk.incubator.foreign.CLinker.*;
+import opengl.macos.v10_15_7.glutDisplayFunc$func;
+import opengl.macos.v10_15_7.glutIdleFunc$func;
+import opengl.macos.v10_15_7.glut_h;
 
 /**
  * This GLUT {@link GLContext} initialize a GLUT offscreen context allowing to then invoke
@@ -20,7 +21,7 @@ import static jdk.incubator.foreign.CLinker.*;
  * @author Martin Pernollet
  */
 public class GLUTContext_macOS_10_15_7 implements GLContext {
-  protected ResourceScope scope;
+  protected MemorySession scope;
   protected SegmentAllocator allocator;
   protected String windowName = "InvisiblePanamaGLWindowForGLContext";
 
@@ -32,8 +33,8 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
 
   public GLUTContext_macOS_10_15_7() {
     try {
-      scope = ResourceScope.newConfinedScope();
-      allocator = SegmentAllocator.ofScope(scope);
+      scope = MemorySession.openConfined();
+      allocator = SegmentAllocator.newNativeArena(scope);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -49,7 +50,7 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
   public void init(boolean forceLoadGlut) {
 
     if (forceLoadGlut) {
-      var argc = allocator.allocate(C_INT, 0);
+      var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
 
       glut_h.glutInit(argc, argc);
     }
@@ -58,7 +59,7 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
     glutInitWindowSize(initWidth, initHeight);
 
     glut_h.glutInitWindowPosition(-initWidth, -initHeight);
-    glut_h.glutCreateWindow(CLinker.toCString(windowName, scope));
+    glut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
 
     // This dummy stub registration is required to get macOS onscreen rendering working
     // It will avoid error message
@@ -81,12 +82,12 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
   }
 
   protected void glutDisplayFunc(glutDisplayFunc$func fi) {
-    MemoryAddress displayStub = glutDisplayFunc$func.allocate(fi, scope);
+    MemorySegment displayStub = glutDisplayFunc$func.allocate(fi, scope);
     glut_h.glutDisplayFunc(displayStub);
   }
 
   protected void glutIdleFunc(glutIdleFunc$func fi) {
-    MemoryAddress idleStub = glutIdleFunc$func.allocate(fi, scope);
+    MemorySegment idleStub = glutIdleFunc$func.allocate(fi, scope);
     glut_h.glutIdleFunc(idleStub);
 
   }

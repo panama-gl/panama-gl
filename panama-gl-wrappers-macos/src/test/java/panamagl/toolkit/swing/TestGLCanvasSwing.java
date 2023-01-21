@@ -3,6 +3,7 @@ package panamagl.toolkit.swing;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.jzy3d.os.OperatingSystem;
 import junit.framework.Assert;
 import opengl.GL;
 import panamagl.GLAutoDrawable;
@@ -14,12 +15,14 @@ import panamagl.toolkits.swing.GLCanvasSwing;
 import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
 
-//VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+//VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class TestGLCanvasSwing {
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
   
   @Test
   public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
+    if (!new OperatingSystem().isMac())
+      return;
     
     // ------------------------------------------------
     // Given a panel with an event counter
@@ -110,6 +113,8 @@ public class TestGLCanvasSwing {
   
   @Test
   public void whenPanelIsResized_ThenFBOIsResized() throws InterruptedException {
+    if (!new OperatingSystem().isMac())
+      return;
     
     int WIDTH = 100;
     int HEIGHT= 100;

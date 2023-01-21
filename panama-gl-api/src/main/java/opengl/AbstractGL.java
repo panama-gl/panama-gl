@@ -1,12 +1,10 @@
 package opengl;
 
-import static jdk.incubator.foreign.CLinker.C_DOUBLE;
-import static jdk.incubator.foreign.CLinker.C_FLOAT;
-import static jdk.incubator.foreign.CLinker.C_INT;
-import jdk.incubator.foreign.CLinker;
-import jdk.incubator.foreign.MemorySegment;
-import jdk.incubator.foreign.ResourceScope;
-import jdk.incubator.foreign.SegmentAllocator;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.SegmentAllocator;
+import java.lang.foreign.ValueLayout;
+
 
 /**
  * A base class for Panama based OpenGL binding, implementing part of {@lin GL}
@@ -14,13 +12,13 @@ import jdk.incubator.foreign.SegmentAllocator;
  * @author Martin Pernollet
  */
 public abstract class AbstractGL implements GL {
-    ResourceScope scope;
-    SegmentAllocator allocator;
+    protected MemorySession scope;
+    protected SegmentAllocator allocator;
 
     public AbstractGL(){
         try {
-            scope = ResourceScope.newConfinedScope();
-            allocator = SegmentAllocator.ofScope(scope);
+            scope = MemorySession.openConfined();
+            allocator = SegmentAllocator.newNativeArena(scope);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -29,7 +27,7 @@ public abstract class AbstractGL implements GL {
     /////////////////////////////////////////////
 
     @Override
-    public ResourceScope getScope() {
+    public MemorySession getScope() {
         return scope;
     }
 
@@ -39,24 +37,23 @@ public abstract class AbstractGL implements GL {
     }
 
     @Override
+    public MemorySegment alloc(String value) {
+        return allocator.allocateUtf8String(value);
+    }
+    
+    @Override
     public MemorySegment alloc(double[] value) {
-        return allocator.allocateArray(C_DOUBLE, value);
+        return allocator.allocateArray(ValueLayout.JAVA_DOUBLE, value);
     }
 
     @Override
     public MemorySegment alloc(float[] value) {
-        return allocator.allocateArray(C_FLOAT, value);
+        return allocator.allocateArray(ValueLayout.JAVA_FLOAT, value);
     }
 
     @Override
     public MemorySegment alloc(int[] value) {
-        return allocator.allocateArray(C_INT, value);
+        return allocator.allocateArray(ValueLayout.JAVA_INT, value);
     }
-
-    @Override
-    public MemorySegment alloc(String value) {
-        return CLinker.toCString(value, scope);
-    }
-
 
 }
