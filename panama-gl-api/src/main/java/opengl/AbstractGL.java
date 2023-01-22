@@ -18,7 +18,7 @@ public abstract class AbstractGL implements GL {
 
     public AbstractGL(){
         try {
-            scope = PanamaMemorySession.get();
+            scope = MemorySession.openConfined();//PanamaMemorySession.get();
             allocator = SegmentAllocator.newNativeArena(scope);
         } catch (Exception e) {
             e.printStackTrace();

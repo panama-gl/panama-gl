@@ -10,7 +10,9 @@ import jextract.gl.xml.OpenGLRegistry;
 import jextract.gl.xml.model.CommandWrap;
 import opengl.ubuntu.v20.glut_h;
 
-// --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
+/**
+ * Run me with VM args : --enable-preview
+ */
 public class GenerateBottomUp {
 
   public static void main(String[] args) throws Exception {

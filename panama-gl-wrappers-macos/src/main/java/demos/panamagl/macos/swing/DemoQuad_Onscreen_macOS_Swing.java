@@ -7,7 +7,7 @@ import opengl.GL;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasSwing;
-import panamagl.factory.AbstractPanamaGLFactory;
+import panamagl.factory.PanamaGLFactory;
 import panamagl.macos.PanamaGLMacOSFactory;
 
 /**
@@ -27,7 +27,7 @@ public class DemoQuad_Onscreen_macOS_Swing {
     GLEventAdapter listener = RotatingStuff();
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
-    AbstractPanamaGLFactory factory = new PanamaGLMacOSFactory();
+    PanamaGLFactory factory = new PanamaGLMacOSFactory();
     GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(GLCanvasSwing.class);
     panel.setGLEventListener(listener);
 

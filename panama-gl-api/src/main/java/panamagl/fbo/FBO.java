@@ -59,7 +59,6 @@ public class FBO {
   MemorySegment renderBufferIds;
   MemorySegment textureBufferIds;
   MemorySegment pixelBuffer;
-  MemorySegment pixelsRead;
 
   // indicates dimensions have changed
   // and FBO must reprepared
@@ -72,7 +71,7 @@ public class FBO {
     this.width = width;
     this.height = height;
     
-    this.scope = PanamaMemorySession.get();
+    this.scope = MemorySession.openImplicit();//PanamaMemorySession.get();
   }
 
   public void prepare(GL gl) {
@@ -133,6 +132,7 @@ public class FBO {
     pixelBuffer = MemorySegment.allocateNative(byteSize, scope);
     gl.glTexImage2D(gl.GL_TEXTURE_2D(), level, internalFormat, width, height, border, format,
         textureType, pixelBuffer);
+    
 
     // -------------------------
     // Generate FRAME buffer
@@ -230,10 +230,16 @@ public class FBO {
 
     // FIXME : Not mapped exception is not relevant
     // FIXME : See if later versions of Panama do not throw exception
-    /*
-     * textureBufferIds.unload(); renderBufferIds.unload(); frameBufferIds.unload();
-     * pixelBuffer.unload();
-     */
+    boolean unload = false;
+    if(unload) {
+      textureBufferIds.unload(); 
+      renderBufferIds.unload(); 
+      frameBufferIds.unload();
+      pixelBuffer.unload();
+    }
+    else {
+      Debug.debug(debug, "FBO : Skip unload as it fails with 'not mapped segment' error");
+    }
 
     prepared = false;
 
@@ -255,7 +261,8 @@ public class FBO {
     
     // Reading pixels
     int nBytes = width * height * channels;
-    pixelsRead = MemorySegment.allocateNative(nBytes, scope);
+    
+    MemorySegment pixelsRead = MemorySegment.allocateNative(nBytes, scope);
     gl.glReadPixels(0, 0, width, height, format, textureType, pixelsRead);
     
     // Check for error after reading
@@ -279,12 +286,18 @@ public class FBO {
 
     // FIXME : Not mapped exception is not relevant
     // FIXME : See if later versions of Panama do not throw exception
-    //pixelsRead.unload();
-    //pixelsRead.
+    //Debug.debug(debug, "FBO.pixelsRead state - loaded:" + pixelsRead.isLoaded() + " mapped:" + pixelsRead.isMapped() + " native:" + pixelsRead.isNative());
+    Debug.debug(debug, "FBO.pixelsRead state - mapped:" + pixelsRead.isMapped() + " native:" + pixelsRead.isNative());
+    
     
     // Bind 0, which means render to back buffer
     gl.glBindFramebuffer(gl.GL_FRAMEBUFFER(), 0);
 
+    
+    //pixelsRead.unload();
+    //pixelsRead.
+
+    
     return out;
   }
 

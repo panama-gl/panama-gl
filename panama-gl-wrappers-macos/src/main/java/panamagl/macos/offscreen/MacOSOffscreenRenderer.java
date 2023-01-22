@@ -192,7 +192,8 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
     // FBO To image
     if (fbo != null) {
       BufferedImage out = fbo.getImage(gl);
-
+      //System.gc();
+      
       if (out == null)
         throw new RuntimeException("FBO returned a null image!");
 

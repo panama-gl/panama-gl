@@ -12,7 +12,7 @@ import opengl.ubuntu.v20.glut_h;
  * Enumerate all OpenGL methods available for generated binding.
  *
  * Run me with VM args : <code>
- *     --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
+ * --enable-preview
  * </code>
  *
  */
