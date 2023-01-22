@@ -6,12 +6,12 @@ import panamagl.Debug;
 import panamagl.GLAutoDrawable;
 import panamagl.OffscreenRenderer;
 import panamagl.PanamaGLFactory;
+import panamagl.canvas.awt.GLCanvasAWT;
+import panamagl.canvas.swing.GLCanvasSwing;
 import panamagl.fbo.FBO;
 import panamagl.macos.gl.GL_macOS_10_15_7;
 import panamagl.macos.glut.GLUTContext_macOS_10_15_7;
 import panamagl.os.macos.MacOSOffscreenRenderer;
-import panamagl.toolkits.awt.GLCanvasAWT;
-import panamagl.toolkits.swing.GLCanvasSwing;
 
 public class PanamaGLMacOSFactory implements PanamaGLFactory {
   protected boolean debug = Debug.check(PanamaGLMacOSFactory.class);

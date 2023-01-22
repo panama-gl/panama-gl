@@ -10,9 +10,9 @@ import panamagl.GLAutoDrawable;
 import panamagl.GLEventAdapter;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
+import panamagl.canvas.awt.GLCanvasAWT;
 import panamagl.macos.cgl.PanamaGLMacOSFactory;
 import panamagl.os.macos.MacOSOffscreenRenderer;
-import panamagl.toolkits.awt.GLCanvasAWT;
 import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
 

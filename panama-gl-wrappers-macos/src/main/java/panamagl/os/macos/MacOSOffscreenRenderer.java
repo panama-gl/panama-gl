@@ -17,11 +17,11 @@ import panamagl.GLAutoDrawable;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
 import panamagl.PanamaGLFactory;
+import panamagl.canvas.swing.GLCanvasSwing;
 import panamagl.fbo.FBO;
 import panamagl.macos.cgl.CGLContext;
 import panamagl.macos.gl.GL_macOS_10_15_7;
 import panamagl.macos.glut.GLUTContext_macOS_10_15_7;
-import panamagl.toolkits.swing.GLCanvasSwing;
 import panamagl.utils.ImageUtils;
 
 public class MacOSOffscreenRenderer implements OffscreenRenderer{

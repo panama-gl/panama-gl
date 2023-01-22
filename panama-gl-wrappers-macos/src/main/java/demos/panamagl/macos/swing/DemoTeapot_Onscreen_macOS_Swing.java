@@ -13,8 +13,8 @@ import opengl.GLError;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.PanamaMemorySession;
+import panamagl.canvas.swing.GLCanvasSwing;
 import panamagl.macos.cgl.PanamaGLMacOSFactory;
-import panamagl.toolkits.swing.GLCanvasSwing;
 
 /**
  * VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview

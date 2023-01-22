@@ -7,8 +7,8 @@ import demos.panamagl.macos.SampleTriangle;
 import opengl.GL;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
+import panamagl.canvas.swing.GLCanvasSwing;
 import panamagl.macos.cgl.PanamaGLMacOSFactory;
-import panamagl.toolkits.swing.GLCanvasSwing;
 
 /**
  * VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
