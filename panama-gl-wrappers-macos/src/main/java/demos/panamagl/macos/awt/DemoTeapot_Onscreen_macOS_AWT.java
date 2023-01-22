@@ -13,7 +13,9 @@ import opengl.GLError;
 import opengl.macos.v10_15_7.glut_h;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
+import panamagl.macos.cgl.PanamaGLMacOSFactory;
 import panamagl.toolkits.awt.GLCanvasAWT;
+import panamagl.toolkits.swing.GLCanvasSwing;
 
 /**
  * VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
@@ -32,7 +34,8 @@ public class DemoTeapot_Onscreen_macOS_AWT {
     GLEventAdapter listener = TeapotGLEventListener();
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
-    GLCanvasAWT panel = new GLCanvasAWT();
+    PanamaGLMacOSFactory factory = new PanamaGLMacOSFactory();
+    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(GLCanvasSwing.class);
     panel.setGLEventListener(listener);
 
     // Create frame

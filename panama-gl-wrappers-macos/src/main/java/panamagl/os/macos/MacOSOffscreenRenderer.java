@@ -3,8 +3,11 @@ package panamagl.os.macos;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 import javax.swing.SwingUtilities;
+
 import com.jogamp.opengl.GLProfile;
+
 import jogamp.nativewindow.macosx.OSXUtil;
 import opengl.GL;
 import opengl.GLContext;
@@ -13,6 +16,7 @@ import panamagl.Debug;
 import panamagl.GLAutoDrawable;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
+import panamagl.PanamaGLFactory;
 import panamagl.fbo.FBO;
 import panamagl.macos.cgl.CGLContext;
 import panamagl.macos.gl.GL_macOS_10_15_7;
@@ -25,10 +29,14 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
   protected String debugFile = null;// "target/glpanel";
   /** Only used to export debug images if a debug file is given */
   protected ExecutorService exec = Executors.newSingleThreadExecutor();
+  
+  protected PanamaGLFactory factory;
 
   protected GL gl;
+  protected GLContext context;
   protected CGLContext cglContext;
   protected GLUTContext_macOS_10_15_7 glutContext;
+  
   protected FBO fbo;
   
   protected boolean useCGL = false;
@@ -39,6 +47,11 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
   protected static final int INIT_FBO_WIDTH = 10;
   protected static final int INIT_FBO_HEIGHT = 10;
 
+  public MacOSOffscreenRenderer(PanamaGLFactory factory) {
+    this.factory = factory;
+	  
+  }
+  
   public String getDebugFile() {
     return debugFile;
   }
@@ -70,7 +83,7 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
   }
 
   public GLContext getContext() {
-    return glutContext;
+    return context;
   }
 
 
@@ -132,32 +145,15 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
 
     //counter = new RenderCounter();
 
-    // --------------------------------------
-    // A GL Context with CGL
-    if (useCGL) {
-      cglContext = new CGLContext();
-      cglContext.init();
-      Debug.debug(debug, "MacOSOffscreenRenderer : initContext : CGL done");
-    }
-
-    // --------------------------------------
-    // A GL Context with GLUT
-    // - hanging while ONSCREEN
-    // - not generating FBO properly if omitted
-    if (useGLUT) {
-      glutContext = new GLUTContext_macOS_10_15_7();
-      glutContext.init(false); // do not init GLUT a second time
-      Debug.debug(debug, "MacOSOffscreenRenderer : initContext : GLUT done");
-    }
-
-    // --------------------------------------
-    // OpenGL
-    this.gl = new GL_macOS_10_15_7();
-
+    // GL Context  init
+    context = factory.newGLContext();
+    
+    // OpenGL init
+    this.gl = factory.newGL();
     GLError.checkAndThrow(gl);
 
-    // FBO
-    this.fbo = new FBO(INIT_FBO_WIDTH, INIT_FBO_HEIGHT);
+    // FBO init
+    this.fbo = factory.newFBO(INIT_FBO_WIDTH, INIT_FBO_HEIGHT);
     this.fbo.prepare(gl);
 
     Debug.debug(debug, "MacOSOffscreenRenderer : initContext : FBO done");
@@ -176,13 +172,14 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
   }
   
   protected void destroyContext() {
-    // Clean up CGL context
+    /*// Clean up CGL context
     if (cglContext != null)
       cglContext.destroy();
 
     // Clean up GLUT context
     if (glutContext != null)
-      glutContext.destroy();
+      glutContext.destroy();*/
+    factory.destroyContext();
     
     initialized = false;
   }

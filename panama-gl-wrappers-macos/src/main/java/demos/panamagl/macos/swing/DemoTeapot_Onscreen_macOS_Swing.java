@@ -4,13 +4,16 @@ import java.awt.BorderLayout;
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
+
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+
 import opengl.GL;
 import opengl.GLError;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.PanamaMemorySession;
+import panamagl.macos.cgl.PanamaGLMacOSFactory;
 import panamagl.toolkits.swing.GLCanvasSwing;
 
 /**
@@ -30,7 +33,8 @@ public class DemoTeapot_Onscreen_macOS_Swing {
     GLEventAdapter listener = TeapotGLEventListener();
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
-    GLCanvasSwing panel = new GLCanvasSwing();
+    PanamaGLMacOSFactory factory = new PanamaGLMacOSFactory();
+    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(GLCanvasSwing.class);
     panel.setGLEventListener(listener);
 
     // Create frame

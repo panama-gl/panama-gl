@@ -14,9 +14,11 @@ import panamagl.Debug;
 import panamagl.GLAutoDrawable;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
+import panamagl.PanamaGLFactory;
 import panamagl.PerformanceOverlay;
 import panamagl.RenderCounter;
 import panamagl.fbo.FBO;
+import panamagl.macos.cgl.PanamaGLMacOSFactory;
 import panamagl.os.macos.MacOSOffscreenRenderer;
 import panamagl.utils.GraphicsUtils;
 import panamagl.utils.ImageUtils;
@@ -56,7 +58,7 @@ public class GLCanvasAWT extends Panel implements GLAutoDrawable {
   private static final long serialVersionUID = -4601832524814661585L;
 
   protected GLEventListener listener;
-  protected OffscreenRenderer offscreen = new MacOSOffscreenRenderer();
+  protected OffscreenRenderer offscreen;
   protected BufferedImage out = null;
 
   protected AtomicBoolean rendering = new AtomicBoolean();
@@ -71,7 +73,8 @@ public class GLCanvasAWT extends Panel implements GLAutoDrawable {
    * Initialize a panel able to render OpenGL through a {@link GLEventListener} and related
    * {@link GL} interface.
    */
-  public GLCanvasAWT() {
+  public GLCanvasAWT(PanamaGLFactory factory) {
+	this.offscreen = factory.newOffscreenRenderer();
     this.overlay = new PerformanceOverlay(this);
 
     // Load OSXUtil native as soon as possible for macOS!
@@ -92,7 +95,10 @@ public class GLCanvasAWT extends Panel implements GLAutoDrawable {
   // AWT OVERRIDES
 
 
-  /**
+
+
+
+/**
    * Called after the JPanel has been added to the Swing hierarchy but before it is made visible.
    * 
    * Initialization may occur in other threads and not be completed when this method returns.

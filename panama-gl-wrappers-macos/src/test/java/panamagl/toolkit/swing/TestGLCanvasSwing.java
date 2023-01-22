@@ -10,7 +10,9 @@ import panamagl.GLAutoDrawable;
 import panamagl.GLEventAdapter;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
+import panamagl.macos.cgl.PanamaGLMacOSFactory;
 import panamagl.os.macos.MacOSOffscreenRenderer;
+import panamagl.toolkits.awt.GLCanvasAWT;
 import panamagl.toolkits.swing.GLCanvasSwing;
 import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
@@ -29,7 +31,8 @@ public class TestGLCanvasSwing {
     
     EventCounter event = new EventCounter();
     
-    GLCanvasSwing panel = new GLCanvasSwing();
+    PanamaGLMacOSFactory factory = new PanamaGLMacOSFactory();
+    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(GLCanvasSwing.class);
     
     panel.setGLEventListener(new GLEventAdapter() {
       @Override
@@ -120,7 +123,8 @@ public class TestGLCanvasSwing {
     int HEIGHT= 100;
 
     // Given an initialized panel
-    GLCanvasSwing panel = new GLCanvasSwing();
+    PanamaGLMacOSFactory factory = new PanamaGLMacOSFactory();
+    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(GLCanvasSwing.class);
     panel.addNotify();
     Assert.assertTrue(panel.isInitialized());
     
@@ -167,11 +171,14 @@ public class TestGLCanvasSwing {
     
     TicToc t = new TicToc();
     
+    PanamaGLMacOSFactory factory = new PanamaGLMacOSFactory();
+    
+    
     // ----------------------------------------------------------
     // Given an initialized panel with a test offscreen renderer
     // performing a long task
     
-    OffscreenRenderer renderer = new MacOSOffscreenRenderer() {
+    OffscreenRenderer renderer = new MacOSOffscreenRenderer(factory) {
     
       // Customize rendering task so that it is very very long
       @Override
@@ -197,7 +204,9 @@ public class TestGLCanvasSwing {
         };
       }
     };
-    GLCanvasSwing panel = new GLCanvasSwing();
+
+
+    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(GLCanvasSwing.class);
     panel.setOffscreenRenderer(renderer);
 
     // -------------------------------
