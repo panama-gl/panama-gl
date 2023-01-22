@@ -4,7 +4,6 @@ import java.lang.foreign.ValueLayout;
 import org.junit.Test;
 import org.jzy3d.os.OperatingSystem;
 import junit.framework.Assert;
-import panamagl.macos.cgl.CGLContext;
 
 //VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 
@@ -15,7 +14,7 @@ public class TestCGLContext {
       return;
     
     // Given
-    CGLContext cgl = new CGLContext();
+    CGLContext_macOS cgl = new CGLContext_macOS();
     
     // When
     cgl.init();

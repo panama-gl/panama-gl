@@ -13,10 +13,10 @@ import panamagl.Debug;
 import panamagl.GLAutoDrawable;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
-import panamagl.PanamaGLFactory;
-import panamagl.PerformanceOverlay;
-import panamagl.RenderCounter;
+import panamagl.factory.PanamaGLFactory;
 import panamagl.fbo.FBO;
+import panamagl.performance.PerformanceOverlay;
+import panamagl.performance.RenderCounter;
 import panamagl.utils.GraphicsUtils;
 import panamagl.utils.ImageUtils;
 

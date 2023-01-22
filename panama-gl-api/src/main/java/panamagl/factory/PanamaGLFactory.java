@@ -1,7 +1,9 @@
-package panamagl;
+package panamagl.factory;
 
 import opengl.GL;
 import opengl.GLContext;
+import panamagl.GLAutoDrawable;
+import panamagl.OffscreenRenderer;
 import panamagl.fbo.FBO;
 import panamagl.os.WindowingToolkit;
 

@@ -1,4 +1,4 @@
-package panamagl;
+package panamagl.performance;
 
 import panamagl.utils.TicToc;
 

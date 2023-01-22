@@ -4,7 +4,6 @@ package panamagl.macos.gl;
 import java.lang.foreign.Addressable;
 import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.ValueLayout;
 import opengl.AbstractGL;
 import opengl.GL;
 import opengl.macos.v10_15_7.glut_h;
@@ -12,8 +11,8 @@ import opengl.macos.v10_15_7.glut_h;
 /**
  * Look above ^^ this is how you link to platform binding.
  */
-public class GL_macOS_10_15_7 extends AbstractGL implements GL {
-  public GL_macOS_10_15_7() {
+public class GL_macOS extends AbstractGL implements GL {
+  public GL_macOS() {
     super();
   }
 

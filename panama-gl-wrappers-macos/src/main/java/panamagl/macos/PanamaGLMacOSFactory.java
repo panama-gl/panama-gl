@@ -1,37 +1,24 @@
-package panamagl.macos.cgl;
+package panamagl.macos;
 
 import opengl.GL;
 import opengl.GLContext;
 import panamagl.Debug;
-import panamagl.GLAutoDrawable;
 import panamagl.OffscreenRenderer;
-import panamagl.PanamaGLFactory;
-import panamagl.canvas.awt.GLCanvasAWT;
-import panamagl.canvas.swing.GLCanvasSwing;
-import panamagl.fbo.FBO;
-import panamagl.macos.gl.GL_macOS_10_15_7;
-import panamagl.macos.glut.GLUTContext_macOS_10_15_7;
-import panamagl.os.macos.MacOSOffscreenRenderer;
+import panamagl.factory.AbstractPanamaGLFactory;
+import panamagl.factory.PanamaGLFactory;
+import panamagl.macos.cgl.CGLContext_macOS;
+import panamagl.macos.gl.GL_macOS;
+import panamagl.macos.glut.GLUTContext_macOS;
+import panamagl.macos.offscreen.MacOSOffscreenRenderer;
 
-public class PanamaGLMacOSFactory implements PanamaGLFactory {
+public class PanamaGLMacOSFactory extends AbstractPanamaGLFactory implements PanamaGLFactory {
   protected boolean debug = Debug.check(PanamaGLMacOSFactory.class);
-
-  protected CGLContext cglContext;
-  protected GLUTContext_macOS_10_15_7 glutContext;
-
+  
+  protected CGLContext_macOS cglContext;
+  protected GLUTContext_macOS glutContext;
   protected boolean useGLUT = true;
   protected boolean useCGL = false;
 
-  
-  @Override
-  public GLAutoDrawable newCanvas(Class<? extends GLAutoDrawable> type) {
-    if (type.equals(GLCanvasAWT.class)) {
-      return new GLCanvasAWT(this);
-    } else if (type.equals(GLCanvasSwing.class)) {
-      return new GLCanvasSwing(this);
-    }
-    return null;
-  }
 
   /**
    * Initialize GL, GLContext and FBO
@@ -43,7 +30,7 @@ public class PanamaGLMacOSFactory implements PanamaGLFactory {
 
   @Override
   public GL newGL() {
-    return new GL_macOS_10_15_7();
+    return new GL_macOS();
   }
 
   @Override
@@ -52,7 +39,7 @@ public class PanamaGLMacOSFactory implements PanamaGLFactory {
  // --------------------------------------
     // A GL Context with CGL
     if (useCGL) {
-      cglContext = new CGLContext();
+      cglContext = new CGLContext_macOS();
       cglContext.init();
       Debug.debug(debug, "MacOSOffscreenRenderer : initContext : CGL done");
     }
@@ -62,7 +49,7 @@ public class PanamaGLMacOSFactory implements PanamaGLFactory {
     // - hanging while ONSCREEN
     // - not generating FBO properly if omitted
     if (useGLUT) {
-      glutContext = new GLUTContext_macOS_10_15_7();
+      glutContext = new GLUTContext_macOS();
       glutContext.init(false); // do not init GLUT a second time
       Debug.debug(debug, "MacOSOffscreenRenderer : initContext : GLUT done");
     }
@@ -81,10 +68,5 @@ public class PanamaGLMacOSFactory implements PanamaGLFactory {
     if (glutContext != null)
       glutContext.destroy();
 
-  }
-
-  @Override
-  public FBO newFBO(int width, int height) {
-    return new FBO(width, height);
   }
 }

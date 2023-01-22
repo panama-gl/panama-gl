@@ -11,7 +11,7 @@ import opengl.ByteUtils;
 import opengl.GL;
 import opengl.GLError;
 import panamagl.Debug;
-import panamagl.PanamaMemorySession;
+import panamagl.performance.PanamaMemorySession;
 import panamagl.utils.GraphicsUtils;
 import panamagl.utils.ImageUtils;
 

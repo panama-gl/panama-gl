@@ -9,7 +9,7 @@ import java.util.Arrays;
 import cgl.macos.v10_15_7.cgl_h;
 import opengl.GLContext;
 import panamagl.Debug;
-import panamagl.PanamaMemorySession;
+import panamagl.performance.PanamaMemorySession;
 
 /**
  * The CGL API is a low-level, platform-independent API for creating, managing, and rendering 2D and
@@ -51,7 +51,7 @@ import panamagl.PanamaMemorySession;
  *
  * @author Martin Pernollet
  */
-public class CGLContext implements GLContext {
+public class CGLContext_macOS implements GLContext {
   protected MemorySession scope;
   protected SegmentAllocator allocator;
 
@@ -61,9 +61,9 @@ public class CGLContext implements GLContext {
 
   protected boolean initialized = true;
 
-  protected boolean debug = Debug.check(CGLContext.class);
+  protected boolean debug = Debug.check(CGLContext_macOS.class);
 
-  public CGLContext() {
+  public CGLContext_macOS() {
     // Manually load CGL
     // System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
     System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");

@@ -1,7 +1,9 @@
-package panamagl;
+package panamagl.performance;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import panamagl.GLAutoDrawable;
+import panamagl.Overlay;
 
 public class PerformanceOverlay implements Overlay{
   protected GLAutoDrawable drawable;

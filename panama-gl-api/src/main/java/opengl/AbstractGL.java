@@ -4,8 +4,7 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
-
-import panamagl.PanamaMemorySession;
+import panamagl.performance.PanamaMemorySession;
 
 
 /**

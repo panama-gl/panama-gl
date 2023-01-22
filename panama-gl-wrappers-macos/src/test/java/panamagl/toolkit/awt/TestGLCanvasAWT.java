@@ -11,8 +11,9 @@ import panamagl.GLEventAdapter;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
 import panamagl.canvas.awt.GLCanvasAWT;
-import panamagl.macos.cgl.PanamaGLMacOSFactory;
-import panamagl.os.macos.MacOSOffscreenRenderer;
+import panamagl.factory.AbstractPanamaGLFactory;
+import panamagl.macos.PanamaGLMacOSFactory;
+import panamagl.macos.offscreen.MacOSOffscreenRenderer;
 import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
 
@@ -31,7 +32,7 @@ public class TestGLCanvasAWT {
     
     EventCounter event = new EventCounter();
     
-    PanamaGLMacOSFactory factory = new PanamaGLMacOSFactory();
+    AbstractPanamaGLFactory factory = new PanamaGLMacOSFactory();
     GLCanvasAWT panel = (GLCanvasAWT)factory.newCanvas(GLCanvasAWT.class);
     
     panel.setGLEventListener(new GLEventAdapter() {
@@ -123,7 +124,7 @@ public class TestGLCanvasAWT {
     int HEIGHT= 100;
 
     // Given an initialized panel
-    PanamaGLMacOSFactory factory = new PanamaGLMacOSFactory();
+    AbstractPanamaGLFactory factory = new PanamaGLMacOSFactory();
     GLCanvasAWT panel = (GLCanvasAWT)factory.newCanvas(GLCanvasAWT.class);
     panel.addNotify();
     Assert.assertTrue(panel.isInitialized());

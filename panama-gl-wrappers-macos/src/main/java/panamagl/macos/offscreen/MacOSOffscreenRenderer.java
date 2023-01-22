@@ -1,13 +1,10 @@
-package panamagl.os.macos;
+package panamagl.macos.offscreen;
 
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import javax.swing.SwingUtilities;
-
 import com.jogamp.opengl.GLProfile;
-
 import jogamp.nativewindow.macosx.OSXUtil;
 import opengl.GL;
 import opengl.GLContext;
@@ -16,12 +13,11 @@ import panamagl.Debug;
 import panamagl.GLAutoDrawable;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
-import panamagl.PanamaGLFactory;
 import panamagl.canvas.swing.GLCanvasSwing;
+import panamagl.factory.PanamaGLFactory;
 import panamagl.fbo.FBO;
-import panamagl.macos.cgl.CGLContext;
-import panamagl.macos.gl.GL_macOS_10_15_7;
-import panamagl.macos.glut.GLUTContext_macOS_10_15_7;
+import panamagl.macos.cgl.CGLContext_macOS;
+import panamagl.macos.glut.GLUTContext_macOS;
 import panamagl.utils.ImageUtils;
 
 public class MacOSOffscreenRenderer implements OffscreenRenderer{
@@ -34,8 +30,8 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
 
   protected GL gl;
   protected GLContext context;
-  protected CGLContext cglContext;
-  protected GLUTContext_macOS_10_15_7 glutContext;
+  protected CGLContext_macOS cglContext;
+  protected GLUTContext_macOS glutContext;
   
   protected FBO fbo;
   

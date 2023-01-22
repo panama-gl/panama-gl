@@ -4,9 +4,9 @@ import org.junit.Test;
 import org.jzy3d.os.OperatingSystem;
 import opengl.GL;
 import opengl.GLContext;
-import panamagl.macos.cgl.CGLContext;
-import panamagl.macos.gl.GL_macOS_10_15_7;
-import panamagl.macos.glut.GLUTContext_macOS_10_15_7;
+import panamagl.macos.cgl.CGLContext_macOS;
+import panamagl.macos.gl.GL_macOS;
+import panamagl.macos.glut.GLUTContext_macOS;
 
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules
 // jdk.incubator.foreign
@@ -19,15 +19,15 @@ public class TestFBO_macOS {
       return;
 
     // Given a CGL Context
-    GLContext cglContext = new CGLContext();
+    GLContext cglContext = new CGLContext_macOS();
     cglContext.init();
 
     // Given a GLUT context
-    GLContext glutContext = new GLUTContext_macOS_10_15_7();
+    GLContext glutContext = new GLUTContext_macOS();
     glutContext.init();
 
     // Given a GL caller
-    GL gl = new GL_macOS_10_15_7();
+    GL gl = new GL_macOS();
 
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
 
@@ -41,11 +41,11 @@ public class TestFBO_macOS {
       return;
 
     // Given a GLUT context
-    GLContext glutContext = new GLUTContext_macOS_10_15_7();
+    GLContext glutContext = new GLUTContext_macOS();
     glutContext.init();
 
     // Given a GL caller
-    GL gl = new GL_macOS_10_15_7();
+    GL gl = new GL_macOS();
 
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
 
@@ -58,10 +58,10 @@ public class TestFBO_macOS {
       return;
 
     // Given a CGL context ONLY
-    GLContext context = new CGLContext();
+    GLContext context = new CGLContext_macOS();
     context.init();
 
-    GL gl = new GL_macOS_10_15_7();
+    GL gl = new GL_macOS();
 
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
 

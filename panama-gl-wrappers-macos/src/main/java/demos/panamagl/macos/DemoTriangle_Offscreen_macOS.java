@@ -2,8 +2,8 @@ package demos.panamagl.macos;
 
 import opengl.GL;
 import opengl.GLContext;
-import panamagl.macos.gl.GL_macOS_10_15_7;
-import panamagl.macos.glut.GLUTContext_macOS_10_15_7;
+import panamagl.macos.gl.GL_macOS;
+import panamagl.macos.glut.GLUTContext_macOS;
 
 /**
  * https://github.com/jzy3d/panama-gl/issues/5
@@ -12,10 +12,10 @@ import panamagl.macos.glut.GLUTContext_macOS_10_15_7;
 public class DemoTriangle_Offscreen_macOS {
 
   public static void main(String[] args) {
-    GLContext context = new GLUTContext_macOS_10_15_7();
+    GLContext context = new GLUTContext_macOS();
     context.init();
 
-    GL gl = new GL_macOS_10_15_7();
+    GL gl = new GL_macOS();
 
     demos.panamagl.macos.Demo_Offscreen.fbo_offscreen(gl);
   }

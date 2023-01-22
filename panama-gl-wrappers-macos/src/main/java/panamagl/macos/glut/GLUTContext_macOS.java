@@ -9,7 +9,7 @@ import opengl.GLContext;
 import opengl.macos.v10_15_7.glutDisplayFunc$func;
 import opengl.macos.v10_15_7.glutIdleFunc$func;
 import opengl.macos.v10_15_7.glut_h;
-import panamagl.PanamaMemorySession;
+import panamagl.performance.PanamaMemorySession;
 
 /**
  * This GLUT {@link GLContext} initialize a GLUT offscreen context allowing to then invoke
@@ -21,7 +21,7 @@ import panamagl.PanamaMemorySession;
  * 
  * @author Martin Pernollet
  */
-public class GLUTContext_macOS_10_15_7 implements GLContext {
+public class GLUTContext_macOS implements GLContext {
   protected MemorySession scope;
   protected SegmentAllocator allocator;
   protected String windowName = "InvisiblePanamaGLWindowForGLContext";
@@ -32,7 +32,7 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
   protected boolean initialized = true;
 
 
-  public GLUTContext_macOS_10_15_7() {
+  public GLUTContext_macOS() {
     try {
       scope = PanamaMemorySession.get();
       allocator = SegmentAllocator.newNativeArena(scope);
@@ -65,7 +65,7 @@ public class GLUTContext_macOS_10_15_7 implements GLContext {
     // This dummy stub registration is required to get macOS onscreen rendering working
     // It will avoid error message
     // "GLUT Fatal Error: redisplay needed for window 1, but no display callback."
-    glutDisplayFunc(GLUTContext_macOS_10_15_7::dummy);
+    glutDisplayFunc(GLUTContext_macOS::dummy);
 
     initialized = true;
   }
