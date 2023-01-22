@@ -6,7 +6,7 @@ import javax.swing.SwingUtilities;
 import opengl.GL;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
-import panamagl.canvas.swing.GLCanvasSwing;
+import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.AbstractPanamaGLFactory;
 import panamagl.macos.PanamaGLMacOSFactory;
 
@@ -17,7 +17,7 @@ import panamagl.macos.PanamaGLMacOSFactory;
  * @author Martin
  *
  */
-public class DemoRotatingQuad_Onscreen_macOS_Swing {
+public class DemoQuad_Onscreen_macOS_Swing {
 
   public static void main(String[] args) throws Exception {
     System.out
@@ -32,7 +32,7 @@ public class DemoRotatingQuad_Onscreen_macOS_Swing {
     panel.setGLEventListener(listener);
 
     // Create frame
-    final JFrame frame = new JFrame(DemoRotatingQuad_Onscreen_macOS_Swing.class.getSimpleName());
+    final JFrame frame = new JFrame(DemoQuad_Onscreen_macOS_Swing.class.getSimpleName());
     frame.getContentPane().setLayout(new BorderLayout());
     frame.setBounds(0, 0, 800, 600);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

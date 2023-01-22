@@ -7,7 +7,7 @@ import demos.panamagl.macos.SampleTriangle;
 import opengl.GL;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
-import panamagl.canvas.swing.GLCanvasSwing;
+import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.AbstractPanamaGLFactory;
 import panamagl.macos.PanamaGLMacOSFactory;
 

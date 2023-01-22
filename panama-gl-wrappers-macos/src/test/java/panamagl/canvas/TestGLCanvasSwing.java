@@ -1,4 +1,4 @@
-package panamagl.toolkit.awt;
+package panamagl.canvas;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Ignore;
@@ -10,18 +10,17 @@ import panamagl.GLAutoDrawable;
 import panamagl.GLEventAdapter;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
-import panamagl.canvas.awt.GLCanvasAWT;
+import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.AbstractPanamaGLFactory;
 import panamagl.macos.PanamaGLMacOSFactory;
 import panamagl.macos.offscreen.MacOSOffscreenRenderer;
 import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
 
-//VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class TestGLCanvasAWT {
+//VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+public class TestGLCanvasSwing {
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
   
-@Ignore("Failing both from IDE and CLI.")
   @Test
   public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
     if (!new OperatingSystem().isMac())
@@ -33,7 +32,7 @@ public class TestGLCanvasAWT {
     EventCounter event = new EventCounter();
     
     AbstractPanamaGLFactory factory = new PanamaGLMacOSFactory();
-    GLCanvasAWT panel = (GLCanvasAWT)factory.newCanvas(GLCanvasAWT.class);
+    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(GLCanvasSwing.class);
     
     panel.setGLEventListener(new GLEventAdapter() {
       @Override
@@ -125,7 +124,7 @@ public class TestGLCanvasAWT {
 
     // Given an initialized panel
     AbstractPanamaGLFactory factory = new PanamaGLMacOSFactory();
-    GLCanvasAWT panel = (GLCanvasAWT)factory.newCanvas(GLCanvasAWT.class);
+    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(GLCanvasSwing.class);
     panel.addNotify();
     Assert.assertTrue(panel.isInitialized());
     
@@ -173,7 +172,8 @@ public class TestGLCanvasAWT {
     TicToc t = new TicToc();
     
     PanamaGLMacOSFactory factory = new PanamaGLMacOSFactory();
-
+    
+    
     // ----------------------------------------------------------
     // Given an initialized panel with a test offscreen renderer
     // performing a long task
@@ -204,7 +204,9 @@ public class TestGLCanvasAWT {
         };
       }
     };
-    GLCanvasAWT panel = (GLCanvasAWT)factory.newCanvas(GLCanvasAWT.class);
+
+
+    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(GLCanvasSwing.class);
     panel.setOffscreenRenderer(renderer);
 
     // -------------------------------

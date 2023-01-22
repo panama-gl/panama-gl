@@ -10,7 +10,7 @@ import opengl.GL;
 import opengl.GLError;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
-import panamagl.canvas.swing.GLCanvasSwing;
+import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.AbstractPanamaGLFactory;
 import panamagl.macos.PanamaGLMacOSFactory;
 import panamagl.performance.PanamaMemorySession;

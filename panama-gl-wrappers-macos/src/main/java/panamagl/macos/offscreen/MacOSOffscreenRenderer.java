@@ -13,7 +13,7 @@ import panamagl.Debug;
 import panamagl.GLAutoDrawable;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
-import panamagl.canvas.swing.GLCanvasSwing;
+import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.fbo.FBO;
 import panamagl.macos.cgl.CGLContext_macOS;
@@ -46,25 +46,6 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
   public MacOSOffscreenRenderer(PanamaGLFactory factory) {
     this.factory = factory;
 	  
-  }
-  
-  public String getDebugFile() {
-    return debugFile;
-  }
-
-  /**
-   * If not null, the input pattern will be used to save offscreen generated image to disk.
-   * 
-   * Example setDebugFile("target/glpanel");
-   * 
-   * Creates images in target/ folder under anme glpanel-1.png, glpanel-2.png, etc.
-   * 
-   */
-  public void setDebugFile(String debugFile) {
-    if(exec==null) {
-      exec = Executors.newSingleThreadExecutor();
-    }
-    this.debugFile = debugFile;
   }
   
   /** Indicates if the renderer has already been initialized. */
@@ -137,7 +118,7 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
    * </ul>
    */
   protected void initContext(GLEventListener listener) {
-    System.out.println("MacOSOffscreenRenderer : initContext");
+    Debug.debug("MacOSOffscreenRenderer : initContext");
 
     //counter = new RenderCounter();
 
@@ -168,13 +149,6 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
   }
   
   protected void destroyContext() {
-    /*// Clean up CGL context
-    if (cglContext != null)
-      cglContext.destroy();
-
-    // Clean up GLUT context
-    if (glutContext != null)
-      glutContext.destroy();*/
     factory.destroyContext();
     
     initialized = false;
@@ -264,6 +238,26 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
   public void setFBO(FBO fbo) {
     this.fbo = fbo;
   }
+  
+  public String getDebugFile() {
+    return debugFile;
+  }
+
+  /**
+   * If not null, the input pattern will be used to save offscreen generated image to disk.
+   * 
+   * Example setDebugFile("target/glpanel");
+   * 
+   * Creates images in target/ folder under anme glpanel-1.png, glpanel-2.png, etc.
+   * 
+   */
+  public void setDebugFile(String debugFile) {
+    if(exec==null) {
+      exec = Executors.newSingleThreadExecutor();
+    }
+    this.debugFile = debugFile;
+  }
+  
   
   
   /* ===================================================== */

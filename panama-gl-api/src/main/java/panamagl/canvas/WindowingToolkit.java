@@ -1,4 +1,4 @@
-package panamagl.os;
+package panamagl.canvas;
 
 public enum WindowingToolkit {
   AWT, Swing, SWT, Offscreen, UNKOWN;

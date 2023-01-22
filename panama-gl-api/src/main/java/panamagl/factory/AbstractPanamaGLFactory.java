@@ -1,8 +1,8 @@
 package panamagl.factory;
 
 import panamagl.GLAutoDrawable;
-import panamagl.canvas.awt.GLCanvasAWT;
-import panamagl.canvas.swing.GLCanvasSwing;
+import panamagl.canvas.GLCanvasAWT;
+import panamagl.canvas.GLCanvasSwing;
 import panamagl.fbo.FBO;
 
 public abstract class AbstractPanamaGLFactory implements PanamaGLFactory {

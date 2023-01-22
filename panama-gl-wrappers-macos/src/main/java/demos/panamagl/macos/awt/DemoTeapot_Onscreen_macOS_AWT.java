@@ -13,7 +13,7 @@ import opengl.GLError;
 import opengl.macos.v10_15_7.glut_h;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
-import panamagl.canvas.swing.GLCanvasSwing;
+import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.AbstractPanamaGLFactory;
 import panamagl.macos.PanamaGLMacOSFactory;
 

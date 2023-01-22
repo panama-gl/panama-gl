@@ -1,12 +1,12 @@
-package panamagl.canvas.awt;
+package panamagl.canvas;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Panel;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.atomic.AtomicBoolean;
+import javax.swing.JPanel;
 import opengl.GL;
 import opengl.GLContext;
 import panamagl.Debug;
@@ -51,7 +51,7 @@ import panamagl.utils.ImageUtils;
  * @author Martin Pernollet
  *
  */
-public class GLCanvasAWT extends Panel implements GLAutoDrawable {
+public class GLCanvasSwing extends JPanel implements GLAutoDrawable {
   private static final long serialVersionUID = -4601832524814661585L;
 
   protected GLEventListener listener;
@@ -62,7 +62,7 @@ public class GLCanvasAWT extends Panel implements GLAutoDrawable {
   protected RenderCounter counter = new RenderCounter();
   protected PerformanceOverlay overlay;
 
-  protected boolean debug = Debug.check(GLCanvasAWT.class);
+  protected boolean debug = Debug.check(GLCanvasSwing.class);
   protected boolean debugPerf = true;
 
 
@@ -70,16 +70,16 @@ public class GLCanvasAWT extends Panel implements GLAutoDrawable {
    * Initialize a panel able to render OpenGL through a {@link GLEventListener} and related
    * {@link GL} interface.
    */
-  public GLCanvasAWT(PanamaGLFactory factory) {
+  public GLCanvasSwing(PanamaGLFactory factory) {
 	this.offscreen = factory.newOffscreenRenderer();
     this.overlay = new PerformanceOverlay(this);
-
+    
     // Load OSXUtil native as soon as possible for macOS!
     // GLProfile.initSingleton();
 
     // Show debug info
     if (debug)
-      GraphicsUtils.printGraphicsEnvironment(this.getClass().getSimpleName());
+      GraphicsUtils.printGraphicsEnvironment("GLCanvasSwing");
 
     // This listener hold the most important part of the rendering flow
     addComponentListener(new ResizeHandler());
@@ -92,10 +92,7 @@ public class GLCanvasAWT extends Panel implements GLAutoDrawable {
   // AWT OVERRIDES
 
 
-
-
-
-/**
+  /**
    * Called after the JPanel has been added to the Swing hierarchy but before it is made visible.
    * 
    * Initialization may occur in other threads and not be completed when this method returns.
@@ -137,16 +134,19 @@ public class GLCanvasAWT extends Panel implements GLAutoDrawable {
    * Invoked only for redraw query that are not coalesced with other redraw queries by the AWT Event
    * Queue.
    * 
-   * Render GL image and stop counting elapsed time for rendering (started at {@link #display()})
-   * 
    * @see {@link #paint()}
    */
   @Override
   public void paint(Graphics g) {
-//  super.paint(g);
-    
     counter.onPaint();
-  
+    super.paint(g);
+  }
+
+  /**
+   * Render GL image and stop counting elapsed time for rendering (started at {@link #display()})
+   */
+  @Override
+  public void paintComponent(Graphics g) {
     if (out != null) {
       g.drawImage(out, 0, 0, null);
 
@@ -230,7 +230,7 @@ public class GLCanvasAWT extends Panel implements GLAutoDrawable {
 
         getMonitoring().onStartRendering();
 
-        offscreen.onResize(GLCanvasAWT.this, listener, 0, 0, w, h);
+        offscreen.onResize(GLCanvasSwing.this, listener, 0, 0, w, h);
       }
     }
   }
