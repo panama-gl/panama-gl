@@ -9,7 +9,11 @@ import panamagl.GLEventAdapter;
 import panamagl.factory.AbstractPanamaGLFactory;
 import panamagl.macos.PanamaGLMacOSFactory;
 
-@Ignore("Will add to specific build profile later.")
+/**
+ * This test is intentionnaly named DurabilityTest* to be ignored by maven
+ * while running tests (surefire config keeps Test* or *Test or ITTest*)
+ */
+//@Ignore("Will add to specific build profile later.")
 public class DurabilityTestGLCanvasSwing {
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
 
