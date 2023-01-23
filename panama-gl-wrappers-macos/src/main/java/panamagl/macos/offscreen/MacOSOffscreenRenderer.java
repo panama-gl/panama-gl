@@ -16,8 +16,6 @@ import panamagl.OffscreenRenderer;
 import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.fbo.FBO;
-import panamagl.macos.cgl.CGLContext_macOS;
-import panamagl.macos.glut.GLUTContext_macOS;
 import panamagl.utils.ImageUtils;
 
 public class MacOSOffscreenRenderer implements OffscreenRenderer{

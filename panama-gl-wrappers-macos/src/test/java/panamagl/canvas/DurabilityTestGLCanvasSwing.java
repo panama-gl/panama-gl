@@ -10,7 +10,7 @@ import panamagl.factory.AbstractPanamaGLFactory;
 import panamagl.macos.PanamaGLMacOSFactory;
 
 @Ignore("Will add to specific build profile later.")
-public class TestGLCanvasSwing_Durability {
+public class DurabilityTestGLCanvasSwing {
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
 
   @Test

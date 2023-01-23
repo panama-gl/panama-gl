@@ -16,7 +16,6 @@ import org.junit.Test;
 import demos.panamagl.macos.SampleTriangle;
 import opengl.GL;
 import panamagl.GLEventAdapter;
-import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.AbstractPanamaGLFactory;
 import panamagl.macos.PanamaGLMacOSFactory;
 import panamagl.utils.ImageUtils;

@@ -4,7 +4,6 @@ import opengl.GL;
 import opengl.GLContext;
 import panamagl.GLAutoDrawable;
 import panamagl.OffscreenRenderer;
-import panamagl.canvas.WindowingToolkit;
 import panamagl.fbo.FBO;
 
 public interface PanamaGLFactory {
