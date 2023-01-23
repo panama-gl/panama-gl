@@ -30,8 +30,6 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
 
   protected GL gl;
   protected GLContext context;
-  protected CGLContext_macOS cglContext;
-  protected GLUTContext_macOS glutContext;
   
   protected FBO fbo;
   
@@ -124,7 +122,9 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
 
     // GL Context  init
     context = factory.newGLContext();
-    
+
+    Debug.debug("MacOSOffscreenRenderer : initContext : Get " + context);
+
     // OpenGL init
     this.gl = factory.newGL();
     GLError.checkAndThrow(gl);
@@ -133,7 +133,7 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
     this.fbo = factory.newFBO(INIT_FBO_WIDTH, INIT_FBO_HEIGHT);
     this.fbo.prepare(gl);
 
-    Debug.debug(debug, "MacOSOffscreenRenderer : initContext : FBO done");
+    Debug.debug("MacOSOffscreenRenderer : initContext : FBO done.");
 
     // --------------------------------------
     // Invoke GLEventListener.init(..)

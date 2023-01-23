@@ -21,7 +21,7 @@ import panamagl.utils.TicToc;
 public class TestGLCanvasAWT {
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
   
-@Ignore("Failing both from IDE and CLI.")
+@Ignore("Failing both from IDE and CLI : Cannot invoke \"sun.lwawt.LWWindowPeer.getPlatformWindow()\" because \"windowPeer\" is null")
   @Test
   public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
     if (!new OperatingSystem().isMac())
@@ -114,7 +114,7 @@ public class TestGLCanvasAWT {
   }
   
   
-  
+@Ignore("Failing both from IDE and CLI : Cannot invoke \"sun.lwawt.LWWindowPeer.getPlatformWindow()\" because \"windowPeer\" is null")
   @Test
   public void whenPanelIsResized_ThenFBOIsResized() throws InterruptedException {
     if (!new OperatingSystem().isMac())
@@ -126,6 +126,8 @@ public class TestGLCanvasAWT {
     // Given an initialized panel
     AbstractPanamaGLFactory factory = new PanamaGLMacOSFactory();
     GLCanvasAWT panel = (GLCanvasAWT)factory.newCanvas(GLCanvasAWT.class);
+    
+    Thread.sleep(1000);
     panel.addNotify();
     Assert.assertTrue(panel.isInitialized());
     

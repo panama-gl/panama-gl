@@ -60,12 +60,15 @@ public class TestGLCanvasSwing {
     
     panel.addNotify();
     
+    Thread.yield();
+    
     // Then : should trigger glEventListener.init()
     Assert.assertEquals(1, event.initCounter);
     Assert.assertEquals(0, event.displayCounter);
     Assert.assertEquals(0, event.reshapeCounter);
     
     // Then context is initialized
+    System.out.println("Check initialized");
     Assert.assertTrue(panel.getContext().isInitialized());
 
     // Then panel is initialized

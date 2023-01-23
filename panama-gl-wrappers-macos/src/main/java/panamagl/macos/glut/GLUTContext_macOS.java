@@ -27,19 +27,8 @@ public class GLUTContext_macOS implements GLContext {
 
   protected int initWidth = 100;
   protected int initHeight = 100;
-
   protected boolean initialized = true;
 
-
-  public GLUTContext_macOS() {
-    try {
-      scope = MemorySession.openConfined();
-      allocator = SegmentAllocator.newNativeArena(scope);
-      
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
 
   /** Initialize GLUT and create a window */
   @Override
@@ -49,7 +38,8 @@ public class GLUTContext_macOS implements GLContext {
 
   /** Initialize GLUT if input arg is true, and create a window */
   public void init(boolean forceLoadGlut) {
-
+    initScope();
+    
     if (forceLoadGlut) {
       var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
 
@@ -77,8 +67,20 @@ public class GLUTContext_macOS implements GLContext {
     return initialized;
   }
   
+  protected void initScope() {
+    try {
+      scope = MemorySession.openImplicit();
+      allocator = SegmentAllocator.newNativeArena(scope);
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  
   @Override
   public void destroy() {
+    // do not scope.close() as it is implicit
     initialized = false;
   }
 

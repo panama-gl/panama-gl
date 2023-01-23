@@ -21,7 +21,11 @@ public class PanamaGLMacOSFactory extends AbstractPanamaGLFactory implements Pan
 
 
   /**
-   * Initialize GL, GLContext and FBO
+   * Invoked by the {@link GLAutoDrawable}, i.e. canvas that wishes to draw
+   * offscreen rendered image.
+   * 
+   * The offscreen renderer will initialize {@link GL}, {@link GLContext} and {@link FBO} 
+   * instances through this factory.
    */
   @Override
   public OffscreenRenderer newOffscreenRenderer() {
@@ -41,7 +45,9 @@ public class PanamaGLMacOSFactory extends AbstractPanamaGLFactory implements Pan
     if (useCGL) {
       cglContext = new CGLContext_macOS();
       cglContext.init();
-      Debug.debug(debug, "MacOSOffscreenRenderer : initContext : CGL done");
+      Debug.debug(debug, "PanamaGLMacOSFactory : initContext : CGL done");
+      
+      return cglContext;
     }
 
     // --------------------------------------
@@ -51,7 +57,9 @@ public class PanamaGLMacOSFactory extends AbstractPanamaGLFactory implements Pan
     if (useGLUT) {
       glutContext = new GLUTContext_macOS();
       glutContext.init(false); // do not init GLUT a second time
-      Debug.debug(debug, "MacOSOffscreenRenderer : initContext : GLUT done");
+      Debug.debug(debug, "PanamaGLMacOSFactory : initContext : GLUT done");
+      
+      return glutContext;
     }
 
     
