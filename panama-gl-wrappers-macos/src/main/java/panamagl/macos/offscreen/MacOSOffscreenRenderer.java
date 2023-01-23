@@ -116,24 +116,26 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
    * </ul>
    */
   protected void initContext(GLEventListener listener) {
-    Debug.debug("MacOSOffscreenRenderer : initContext");
+    Debug.debug(debug, "MacOSOffscreenRenderer : initContext");
 
     //counter = new RenderCounter();
 
     // GL Context  init
     context = factory.newGLContext();
 
-    Debug.debug("MacOSOffscreenRenderer : initContext : Get " + context);
+    Debug.debug(debug, "MacOSOffscreenRenderer : initContext : Got GLContext : " + context);
 
     // OpenGL init
     this.gl = factory.newGL();
     GLError.checkAndThrow(gl);
 
+    Debug.debug(debug, "MacOSOffscreenRenderer : initContext : Got GL : " + gl);
+
     // FBO init
     this.fbo = factory.newFBO(INIT_FBO_WIDTH, INIT_FBO_HEIGHT);
     this.fbo.prepare(gl);
 
-    Debug.debug("MacOSOffscreenRenderer : initContext : FBO done.");
+    Debug.debug(debug, "MacOSOffscreenRenderer : initContext : Got FBO : " + fbo);
 
     // --------------------------------------
     // Invoke GLEventListener.init(..)
