@@ -9,7 +9,6 @@ import java.util.Arrays;
 import cgl.macos.v10_15_7.cgl_h;
 import opengl.GLContext;
 import panamagl.Debug;
-import panamagl.performance.PanamaMemorySession;
 
 /**
  * The CGL API is a low-level, platform-independent API for creating, managing, and rendering 2D and
@@ -68,9 +67,10 @@ public class CGLContext_macOS implements GLContext {
     // System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
     System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
 
-    scope = PanamaMemorySession.get();
+    // The segments created in this function will be destroyed
+    // one the below scope and allocator are collected by GC.
+    scope = MemorySession.openConfined();
     allocator = SegmentAllocator.newNativeArena(scope);
-
   }
 
   // https://stackoverflow.com/questions/11383510/setting-up-an-opengl-context-with-cgl-on-mac-os-x

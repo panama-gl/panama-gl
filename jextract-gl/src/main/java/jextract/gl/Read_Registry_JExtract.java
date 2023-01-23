@@ -11,9 +11,7 @@ import opengl.ubuntu.v20.glut_h;
 /**
  * Enumerate all OpenGL methods available for generated binding.
  *
- * Run me with VM args : <code>
- * --enable-preview
- * </code>
+ * Run me with VM args : --enable-preview
  *
  */
 @SuppressWarnings("rawtypes")

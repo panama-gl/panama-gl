@@ -5,13 +5,11 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.ValueLayout;
 import java.lang.foreign.ValueLayout.OfByte;
-import java.lang.invoke.VarHandle;
 import java.nio.ByteOrder;
 import opengl.ByteUtils;
 import opengl.GL;
 import opengl.GLError;
 import panamagl.Debug;
-import panamagl.performance.PanamaMemorySession;
 import panamagl.utils.GraphicsUtils;
 import panamagl.utils.ImageUtils;
 
@@ -54,7 +52,7 @@ public class FBO {
   int idFrameBuffer = -1;
   int idRenderBuffer = -1;
   
-  MemorySession scope;
+  //MemorySession scope;
   MemorySegment frameBufferIds;
   MemorySegment renderBufferIds;
   MemorySegment textureBufferIds;
@@ -71,7 +69,7 @@ public class FBO {
     this.width = width;
     this.height = height;
     
-    this.scope = MemorySession.openImplicit();//PanamaMemorySession.get();
+    //this.scope = MemorySession.openConfined();//PanamaMemorySession.get();
   }
 
   public void prepare(GL gl) {
@@ -106,7 +104,7 @@ public class FBO {
     // ------------------------
     // Generate TEXTURE buffer
 
-    textureBufferIds = MemorySegment.allocateNative(1 * 4 * 3, scope);
+    textureBufferIds = MemorySegment.allocateNative(1 * 4 * 3, MemorySession.openImplicit());
     gl.glGenTextures(1, textureBufferIds);
     idTexture = (int) textureBufferIds.get(ValueLayout.JAVA_INT, 0);
 
@@ -129,7 +127,7 @@ public class FBO {
     // Create a texture to write to
     int byteSize = width * height * channels;
     
-    pixelBuffer = MemorySegment.allocateNative(byteSize, scope);
+    pixelBuffer = MemorySegment.allocateNative(byteSize, MemorySession.openImplicit());
     gl.glTexImage2D(gl.GL_TEXTURE_2D(), level, internalFormat, width, height, border, format,
         textureType, pixelBuffer);
     
@@ -137,7 +135,7 @@ public class FBO {
     // -------------------------
     // Generate FRAME buffer
 
-    frameBufferIds = MemorySegment.allocateNative(4, scope);
+    frameBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
     gl.glGenFramebuffers(1, frameBufferIds);
     idFrameBuffer = (int) frameBufferIds.get(ValueLayout.JAVA_INT, 0);
 
@@ -159,7 +157,7 @@ public class FBO {
     // -------------------------
     // Generate RENDER buffer
 
-    renderBufferIds = MemorySegment.allocateNative(4, scope);
+    renderBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
     gl.glGenRenderbuffers(1, renderBufferIds);
     idRenderBuffer = (int) renderBufferIds.get(ValueLayout.JAVA_INT, 0);
 
@@ -262,7 +260,10 @@ public class FBO {
     // Reading pixels
     int nBytes = width * height * channels;
     
-    MemorySegment pixelsRead = MemorySegment.allocateNative(nBytes, scope);
+    // The segments created in this function will be destroyed
+    // one the below scope and allocator are collected by GC.
+    MemorySession session = MemorySession.openImplicit();
+    MemorySegment pixelsRead = MemorySegment.allocateNative(nBytes, session);
     gl.glReadPixels(0, 0, width, height, format, textureType, pixelsRead);
     
     // Check for error after reading
@@ -296,7 +297,7 @@ public class FBO {
     
     //pixelsRead.unload();
     //pixelsRead.
-
+    //session.close();
     
     return out;
   }

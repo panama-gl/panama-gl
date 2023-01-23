@@ -13,7 +13,6 @@ import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.macos.PanamaGLMacOSFactory;
-import panamagl.performance.PanamaMemorySession;
 
 /**
  * VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview
@@ -78,7 +77,9 @@ public class DemoTeapot_Onscreen_macOS_Swing {
     return new GLEventAdapter() {
 
       public void init(GL gl) {
-        MemorySession scope = PanamaMemorySession.get();
+        // The segments created in this function will be destroyed
+        // one the below scope and allocator are collected by GC.
+        MemorySession scope = MemorySession.openConfined();
         SegmentAllocator allocator = SegmentAllocator.newNativeArena(scope);
 
         // Reset Background

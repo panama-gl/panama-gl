@@ -9,7 +9,6 @@ import opengl.GLContext;
 import opengl.macos.v10_15_7.glutDisplayFunc$func;
 import opengl.macos.v10_15_7.glutIdleFunc$func;
 import opengl.macos.v10_15_7.glut_h;
-import panamagl.performance.PanamaMemorySession;
 
 /**
  * This GLUT {@link GLContext} initialize a GLUT offscreen context allowing to then invoke
@@ -34,8 +33,9 @@ public class GLUTContext_macOS implements GLContext {
 
   public GLUTContext_macOS() {
     try {
-      scope = PanamaMemorySession.get();
+      scope = MemorySession.openConfined();
       allocator = SegmentAllocator.newNativeArena(scope);
+      
     } catch (Exception e) {
       e.printStackTrace();
     }
