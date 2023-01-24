@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import opengl.GL;
 import opengl.GLContext;
-import panamagl.GLAutoDrawable;
 import panamagl.OffscreenRenderer;
 import panamagl.canvas.GLCanvasAWT;
 import panamagl.canvas.GLCanvasSwing;
@@ -18,29 +17,25 @@ public interface PanamaGLFactory {
 
   GLCanvasAWT newCanvasAWT();
   GLCanvasSwing newCanvasSwing();
-  //GLAutoDrawable newCanvas(Class<? extends GLAutoDrawable> toolkit);
 
   GL newGL();
-
   GLContext newGLContext();
 
   FBO newFBO(int width, int height);
-
   OffscreenRenderer newOffscreenRenderer();
 
   void destroyContext();
   
+  /** Indicates if this factory is compatible with the current {@link OperatingSystem}. */
   boolean matches(OperatingSystem os);
-  
   
   /////////////////////////////////////////////////////
   //
   // Factory auto select
   //
   /////////////////////////////////////////////////////
-
   
-  
+  /** Returns the first factory that is is compatible with the current {@link OperatingSystem}.*/
   public static PanamaGLFactory select() {
     
     List<PanamaGLFactory> factories = findFactories();
@@ -56,20 +51,19 @@ public interface PanamaGLFactory {
   }
   
   public static List<PanamaGLFactory> findFactories() {
-    Class exclude = APanamaGLFactory.class;
-    Class implem = PanamaGLFactory.class;
+    Class<?> exclude = APanamaGLFactory.class;
+    Class<?> implem = PanamaGLFactory.class;
     String packge = "panamagl";
 
     return findFactories(exclude, implem, packge);
   }
   
-  public static List<PanamaGLFactory> findFactories(Class exclude, Class implem, String packge) {
+  public static List<PanamaGLFactory> findFactories(Class<?> exclude, Class<?> implem, String packge) {
     List<PanamaGLFactory> factories = new ArrayList<>();
 
     try {
       
-      for (Class c : ClassloaderUtils.findFactoryClasses(packge, implem, exclude)) {
-        //System.out.println(c);
+      for (Class<?> c : ClassloaderUtils.findFactoryClasses(packge, implem, exclude)) {
         try {
           PanamaGLFactory f = (PanamaGLFactory)c.getConstructors()[0].newInstance();
           factories.add(f);
