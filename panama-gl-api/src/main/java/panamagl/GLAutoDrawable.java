@@ -2,8 +2,8 @@ package panamagl;
 
 import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
-import opengl.GL;
-import opengl.GLContext;
+import panamagl.opengl.GL;
+import panamagl.opengl.GLContext;
 import panamagl.performance.RenderCounter;
 
 /**

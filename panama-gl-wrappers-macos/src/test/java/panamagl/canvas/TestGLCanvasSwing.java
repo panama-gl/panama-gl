@@ -5,13 +5,13 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.jzy3d.os.OperatingSystem;
 import junit.framework.Assert;
-import opengl.GL;
 import panamagl.GLAutoDrawable;
 import panamagl.GLEventAdapter;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.macos.OffscreenRenderer_macOS;
+import panamagl.opengl.GL;
+import panamagl.os.macos.OffscreenRenderer_macOS;
 import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
 

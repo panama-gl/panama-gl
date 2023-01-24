@@ -14,9 +14,9 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import demos.panamagl.macos.SampleTriangle;
-import opengl.GL;
 import panamagl.GLEventAdapter;
 import panamagl.factory.PanamaGLFactory;
+import panamagl.opengl.GL;
 import panamagl.utils.ImageUtils;
 
 /**

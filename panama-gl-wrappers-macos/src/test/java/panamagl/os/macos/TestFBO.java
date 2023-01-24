@@ -1,4 +1,4 @@
-package panamagl.macos;
+package panamagl.os.macos;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -6,8 +6,9 @@ import javax.imageio.ImageIO;
 import org.junit.Assert;
 import org.jzy3d.maths.Array;
 import demos.panamagl.macos.SampleTriangle;
-import opengl.ByteUtils;
-import opengl.GL;
+import panamagl.opengl.GL;
+import panamagl.os.macos.FBO_macOS;
+import panamagl.utils.ByteUtils;
 
 public class TestFBO {
   public static int[] RED = {255, 0, 0, 255};

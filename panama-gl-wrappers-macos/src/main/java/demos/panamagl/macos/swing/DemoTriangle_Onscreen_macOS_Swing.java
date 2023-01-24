@@ -4,12 +4,12 @@ import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import demos.panamagl.macos.SampleTriangle;
-import opengl.GL;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.macos.PanamaGLMacOSFactory;
+import panamagl.opengl.GL;
+import panamagl.os.macos.PanamaGLMacOSFactory;
 
 /**
  * VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign

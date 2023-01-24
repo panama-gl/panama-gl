@@ -8,14 +8,14 @@ import java.awt.event.WindowEvent;
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
 import javax.swing.SwingUtilities;
-import opengl.GL;
-import opengl.GLError;
 import opengl.macos.v10_15_7.glut_h;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.macos.PanamaGLMacOSFactory;
+import panamagl.opengl.GL;
+import panamagl.opengl.GLError;
+import panamagl.os.macos.PanamaGLMacOSFactory;
 
 /**
  * VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign

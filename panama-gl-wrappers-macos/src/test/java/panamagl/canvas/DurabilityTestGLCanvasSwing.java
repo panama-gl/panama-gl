@@ -3,9 +3,9 @@ package panamagl.canvas;
 import org.junit.Test;
 import org.jzy3d.os.OperatingSystem;
 import junit.framework.Assert;
-import opengl.GL;
 import panamagl.GLEventAdapter;
 import panamagl.factory.PanamaGLFactory;
+import panamagl.opengl.GL;
 
 /**
  * This test is intentionnaly named DurabilityTest* to be ignored by maven

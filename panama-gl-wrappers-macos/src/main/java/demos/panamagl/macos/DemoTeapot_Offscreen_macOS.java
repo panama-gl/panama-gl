@@ -4,13 +4,13 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import demos.panamagl.macos.swing.DemoTeapot_Onscreen_macOS_Swing;
-import opengl.GL;
-import opengl.GLContext;
 import panamagl.GLEventListener;
 import panamagl.fbo.FBO;
-import panamagl.macos.FBO_macOS;
-import panamagl.macos.GLUTContext_macOS;
-import panamagl.macos.GL_macOS_x86_64;
+import panamagl.opengl.GL;
+import panamagl.opengl.GLContext;
+import panamagl.os.macos.FBO_macOS;
+import panamagl.os.macos.GLUTContext_macOS;
+import panamagl.os.macos.GL_macOS_x86_64;
 
 /**
  * https://github.com/jzy3d/panama-gl/issues/5

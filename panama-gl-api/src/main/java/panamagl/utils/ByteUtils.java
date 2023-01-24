@@ -1,4 +1,4 @@
-package opengl;
+package panamagl.utils;
 
 /**
  * A ByteBuffer helping to convert colors to byte, int, float representation.

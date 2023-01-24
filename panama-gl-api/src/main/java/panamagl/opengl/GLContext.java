@@ -1,4 +1,4 @@
-package opengl;
+package panamagl.opengl;
 
 /**
  * A {@link GLContext} is responsible for establishing an OpenGL context with the OS

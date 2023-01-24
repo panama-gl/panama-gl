@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import opengl.GL;
-import opengl.GLContext;
 import panamagl.OffscreenRenderer;
 import panamagl.canvas.GLCanvasAWT;
 import panamagl.canvas.GLCanvasSwing;
 import panamagl.fbo.FBO;
+import panamagl.opengl.GL;
+import panamagl.opengl.GLContext;
 import panamagl.os.OperatingSystem;
 import panamagl.utils.ClassloaderUtils;
 

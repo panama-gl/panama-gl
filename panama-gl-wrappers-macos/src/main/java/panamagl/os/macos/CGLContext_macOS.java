@@ -1,4 +1,4 @@
-package panamagl.macos;
+package panamagl.os.macos;
 
 import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;
@@ -7,8 +7,8 @@ import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
 import java.util.Arrays;
 import cgl.macos.v10_15_7.cgl_h;
-import opengl.GLContext;
 import panamagl.Debug;
+import panamagl.opengl.GLContext;
 
 /**
  * The CGL API is a low-level, platform-independent API for creating, managing, and rendering 2D and

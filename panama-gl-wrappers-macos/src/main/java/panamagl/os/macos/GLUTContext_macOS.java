@@ -1,14 +1,14 @@
-package panamagl.macos;
+package panamagl.os.macos;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
-import opengl.GL;
-import opengl.GLContext;
 import opengl.macos.v10_15_7.glutDisplayFunc$func;
 import opengl.macos.v10_15_7.glutIdleFunc$func;
 import opengl.macos.v10_15_7.glut_h;
+import panamagl.opengl.GL;
+import panamagl.opengl.GLContext;
 
 /**
  * This GLUT {@link GLContext} initialize a GLUT offscreen context allowing to then invoke

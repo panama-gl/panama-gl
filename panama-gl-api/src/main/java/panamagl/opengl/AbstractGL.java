@@ -1,4 +1,4 @@
-package opengl;
+package panamagl.opengl;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;

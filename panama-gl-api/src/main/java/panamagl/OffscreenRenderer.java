@@ -1,8 +1,8 @@
 package panamagl;
 
-import opengl.GL;
-import opengl.GLContext;
 import panamagl.fbo.FBO;
+import panamagl.opengl.GL;
+import panamagl.opengl.GLContext;
 
 /**
  * The interface through which various {@link GLAutoDrawable} implementation can query

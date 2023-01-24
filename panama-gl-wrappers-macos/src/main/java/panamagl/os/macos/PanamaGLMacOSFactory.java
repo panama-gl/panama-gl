@@ -1,13 +1,13 @@
-package panamagl.macos;
+package panamagl.os.macos;
 
-import opengl.GL;
-import opengl.GLContext;
 import panamagl.Debug;
 import panamagl.GLAutoDrawable;
 import panamagl.OffscreenRenderer;
 import panamagl.factory.APanamaGLFactory;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.fbo.FBO;
+import panamagl.opengl.GL;
+import panamagl.opengl.GLContext;
 import panamagl.os.OperatingSystem;
 
 public class PanamaGLMacOSFactory extends APanamaGLFactory implements PanamaGLFactory {

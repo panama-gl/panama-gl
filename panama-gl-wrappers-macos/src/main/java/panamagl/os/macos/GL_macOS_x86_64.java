@@ -1,12 +1,12 @@
-package panamagl.macos;
+package panamagl.os.macos;
 
 
 import java.lang.foreign.Addressable;
 import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;
-import opengl.AbstractGL;
-import opengl.GL;
 import opengl.macos.v10_15_7.glut_h;
+import panamagl.opengl.AbstractGL;
+import panamagl.opengl.GL;
 
 /**
  * Look above ^^ this is how you link to platform binding.

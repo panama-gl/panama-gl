@@ -1,4 +1,4 @@
-package panamagl.macos;
+package panamagl.os.macos;
 
 import java.awt.image.BufferedImage;
 import java.lang.foreign.MemorySegment;
@@ -6,11 +6,11 @@ import java.lang.foreign.MemorySession;
 import java.lang.foreign.ValueLayout;
 import java.lang.foreign.ValueLayout.OfByte;
 import java.nio.ByteOrder;
-import opengl.ByteUtils;
-import opengl.GL;
-import opengl.GLError;
 import panamagl.Debug;
 import panamagl.fbo.FBO;
+import panamagl.opengl.GL;
+import panamagl.opengl.GLError;
+import panamagl.utils.ByteUtils;
 import panamagl.utils.GraphicsUtils;
 import panamagl.utils.ImageUtils;
 

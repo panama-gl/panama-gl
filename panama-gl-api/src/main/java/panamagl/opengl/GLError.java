@@ -1,4 +1,4 @@
-package opengl;
+package panamagl.opengl;
 
 /**
  * A toy helper to track GL errors.

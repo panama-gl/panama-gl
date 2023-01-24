@@ -1,9 +1,10 @@
-package panamagl.macos;
+package panamagl.os.macos;
 
 import java.lang.foreign.ValueLayout;
 import org.junit.Test;
 import org.jzy3d.os.OperatingSystem;
 import junit.framework.Assert;
+import panamagl.os.macos.CGLContext_macOS;
 
 //VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 

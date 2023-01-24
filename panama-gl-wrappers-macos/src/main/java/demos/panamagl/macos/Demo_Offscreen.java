@@ -3,9 +3,9 @@ package demos.panamagl.macos;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
-import opengl.GL;
 import panamagl.fbo.FBO;
-import panamagl.macos.FBO_macOS;
+import panamagl.opengl.GL;
+import panamagl.os.macos.FBO_macOS;
 
 /**
  * https://github.com/jzy3d/panama-gl/issues/5

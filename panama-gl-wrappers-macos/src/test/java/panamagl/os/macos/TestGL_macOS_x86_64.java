@@ -1,4 +1,4 @@
-package opengl.fbo.macos;
+package panamagl.os.macos;
 
 //import static org.mockito.Mockito.spy;
 import org.junit.Test;

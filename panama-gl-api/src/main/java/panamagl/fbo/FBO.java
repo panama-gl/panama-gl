@@ -1,7 +1,7 @@
 package panamagl.fbo;
 
 import java.awt.image.BufferedImage;
-import opengl.GL;
+import panamagl.opengl.GL;
 
 
 public interface FBO {

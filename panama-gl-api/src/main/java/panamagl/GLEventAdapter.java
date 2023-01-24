@@ -1,6 +1,6 @@
 package panamagl;
 
-import opengl.GL;
+import panamagl.opengl.GL;
 
 public class GLEventAdapter implements GLEventListener{
   @Override
