@@ -16,7 +16,7 @@ import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class TestGLCanvasSwing {
+public class TestGLCanvasSwing_macOS {
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
   
   @Test

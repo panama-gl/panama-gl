@@ -12,7 +12,7 @@ import panamagl.opengl.GL;
  * while running tests (surefire config keeps Test* or *Test or ITTest*)
  */
 //@Ignore("Will add to specific build profile later.")
-public class DurabilityTestGLCanvasSwing {
+public class DurabilityTestGLCanvasSwing_macOS {
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
 
   @Test

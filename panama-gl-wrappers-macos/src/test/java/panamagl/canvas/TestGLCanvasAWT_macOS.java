@@ -16,7 +16,7 @@ import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class TestGLCanvasAWT {
+public class TestGLCanvasAWT_macOS {
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
   
 @Ignore("Failing both from IDE and CLI : Cannot invoke \"sun.lwawt.LWWindowPeer.getPlatformWindow()\" because \"windowPeer\" is null")
