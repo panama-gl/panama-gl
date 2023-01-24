@@ -1,13 +1,11 @@
 package panamagl.canvas;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.jzy3d.os.OperatingSystem;
 import junit.framework.Assert;
 import opengl.GL;
 import panamagl.GLEventAdapter;
-import panamagl.factory.AbstractPanamaGLFactory;
-import panamagl.macos.PanamaGLMacOSFactory;
+import panamagl.factory.PanamaGLFactory;
 
 /**
  * This test is intentionnaly named DurabilityTest* to be ignored by maven
@@ -27,8 +25,8 @@ public class DurabilityTestGLCanvasSwing {
     
     EventCounter event = new EventCounter();
     
-    AbstractPanamaGLFactory factory = new PanamaGLMacOSFactory();
-    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(GLCanvasSwing.class);
+    PanamaGLFactory factory = PanamaGLFactory.select();
+    GLCanvasSwing panel = factory.newCanvasSwing();
     
     panel.setGLEventListener(new GLEventAdapter() {
       @Override

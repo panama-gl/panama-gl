@@ -5,7 +5,7 @@ import org.jzy3d.os.OperatingSystem;
 import opengl.GL;
 import opengl.GLContext;
 import panamagl.macos.cgl.CGLContext_macOS;
-import panamagl.macos.gl.GL_macOS;
+import panamagl.macos.gl.GL_macOS_x86_64;
 import panamagl.macos.glut.GLUTContext_macOS;
 
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules
@@ -27,7 +27,7 @@ public class TestFBO_macOS {
     glutContext.init();
 
     // Given a GL caller
-    GL gl = new GL_macOS();
+    GL gl = new GL_macOS_x86_64();
 
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
 
@@ -45,7 +45,7 @@ public class TestFBO_macOS {
     glutContext.init();
 
     // Given a GL caller
-    GL gl = new GL_macOS();
+    GL gl = new GL_macOS_x86_64();
 
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
 
@@ -61,7 +61,7 @@ public class TestFBO_macOS {
     GLContext context = new CGLContext_macOS();
     context.init();
 
-    GL gl = new GL_macOS();
+    GL gl = new GL_macOS_x86_64();
 
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
 

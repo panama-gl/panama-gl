@@ -10,8 +10,7 @@ import panamagl.GLAutoDrawable;
 import panamagl.GLEventAdapter;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
-import panamagl.factory.AbstractPanamaGLFactory;
-import panamagl.macos.PanamaGLMacOSFactory;
+import panamagl.factory.PanamaGLFactory;
 import panamagl.macos.offscreen.MacOSOffscreenRenderer;
 import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
@@ -31,8 +30,8 @@ public class TestGLCanvasAWT {
     
     EventCounter event = new EventCounter();
     
-    AbstractPanamaGLFactory factory = new PanamaGLMacOSFactory();
-    GLCanvasAWT panel = (GLCanvasAWT)factory.newCanvas(GLCanvasAWT.class);
+    PanamaGLFactory factory = PanamaGLFactory.select();
+    GLCanvasAWT panel = factory.newCanvasAWT();
     
     panel.setGLEventListener(new GLEventAdapter() {
       @Override
@@ -123,8 +122,9 @@ public class TestGLCanvasAWT {
     int HEIGHT= 100;
 
     // Given an initialized panel
-    AbstractPanamaGLFactory factory = new PanamaGLMacOSFactory();
-    GLCanvasAWT panel = (GLCanvasAWT)factory.newCanvas(GLCanvasAWT.class);
+    PanamaGLFactory factory = PanamaGLFactory.select();
+    GLCanvasAWT panel = factory.newCanvasAWT();
+
     
     Thread.sleep(1000);
     panel.addNotify();
@@ -173,7 +173,7 @@ public class TestGLCanvasAWT {
     
     TicToc t = new TicToc();
     
-    PanamaGLMacOSFactory factory = new PanamaGLMacOSFactory();
+    PanamaGLFactory factory = PanamaGLFactory.select();
 
     // ----------------------------------------------------------
     // Given an initialized panel with a test offscreen renderer
@@ -205,7 +205,8 @@ public class TestGLCanvasAWT {
         };
       }
     };
-    GLCanvasAWT panel = (GLCanvasAWT)factory.newCanvas(GLCanvasAWT.class);
+    GLCanvasAWT panel = factory.newCanvasAWT();
+
     panel.setOffscreenRenderer(renderer);
 
     // -------------------------------

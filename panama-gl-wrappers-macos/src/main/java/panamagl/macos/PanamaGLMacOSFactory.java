@@ -4,14 +4,15 @@ import opengl.GL;
 import opengl.GLContext;
 import panamagl.Debug;
 import panamagl.OffscreenRenderer;
-import panamagl.factory.AbstractPanamaGLFactory;
+import panamagl.factory.APanamaGLFactory;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.macos.cgl.CGLContext_macOS;
-import panamagl.macos.gl.GL_macOS;
+import panamagl.macos.gl.GL_macOS_x86_64;
 import panamagl.macos.glut.GLUTContext_macOS;
 import panamagl.macos.offscreen.MacOSOffscreenRenderer;
+import panamagl.os.OperatingSystem;
 
-public class PanamaGLMacOSFactory extends AbstractPanamaGLFactory implements PanamaGLFactory {
+public class PanamaGLMacOSFactory extends APanamaGLFactory implements PanamaGLFactory {
   protected boolean debug = Debug.check(PanamaGLMacOSFactory.class);
   
   protected CGLContext_macOS cglContext;
@@ -19,6 +20,12 @@ public class PanamaGLMacOSFactory extends AbstractPanamaGLFactory implements Pan
   protected boolean useGLUT = true;
   protected boolean useCGL = false;
 
+  public PanamaGLMacOSFactory() {}
+  
+  @Override
+  public boolean matches(OperatingSystem os) {
+    return os.isMac();
+  }
 
   /**
    * Invoked by the {@link GLAutoDrawable}, i.e. canvas that wishes to draw
@@ -34,7 +41,7 @@ public class PanamaGLMacOSFactory extends AbstractPanamaGLFactory implements Pan
 
   @Override
   public GL newGL() {
-    return new GL_macOS();
+    return new GL_macOS_x86_64();
   }
 
   @Override
@@ -77,4 +84,5 @@ public class PanamaGLMacOSFactory extends AbstractPanamaGLFactory implements Pan
       glutContext.destroy();
 
   }
+
 }

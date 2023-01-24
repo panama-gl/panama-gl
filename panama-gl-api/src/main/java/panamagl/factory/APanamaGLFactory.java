@@ -5,9 +5,18 @@ import panamagl.canvas.GLCanvasAWT;
 import panamagl.canvas.GLCanvasSwing;
 import panamagl.fbo.FBO;
 
-public abstract class AbstractPanamaGLFactory implements PanamaGLFactory {
-
+public abstract class APanamaGLFactory implements PanamaGLFactory {
   @Override
+  public GLCanvasSwing newCanvasSwing() {
+    return new GLCanvasSwing(this);
+  }
+  
+  @Override
+  public GLCanvasAWT newCanvasAWT() {
+    return new GLCanvasAWT(this);
+  }
+  
+  /*@Override
   public GLAutoDrawable newCanvas(Class<? extends GLAutoDrawable> type) {
     if (type.equals(GLCanvasAWT.class)) {
       return new GLCanvasAWT(this);
@@ -15,7 +24,7 @@ public abstract class AbstractPanamaGLFactory implements PanamaGLFactory {
       return new GLCanvasSwing(this);
     }
     return null;
-  }
+  }*/
 
   @Override
   public FBO newFBO(int width, int height) {

@@ -29,7 +29,7 @@ public class DemoTriangle_Onscreen_macOS_Swing {
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
     PanamaGLFactory factory = new PanamaGLMacOSFactory();
-    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(GLCanvasSwing.class);
+    GLCanvasSwing panel = factory.newCanvasSwing();
     panel.setGLEventListener(listener);
 
     // Create frame

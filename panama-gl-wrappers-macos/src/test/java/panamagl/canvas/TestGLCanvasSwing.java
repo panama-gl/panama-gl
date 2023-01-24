@@ -10,8 +10,7 @@ import panamagl.GLAutoDrawable;
 import panamagl.GLEventAdapter;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
-import panamagl.factory.AbstractPanamaGLFactory;
-import panamagl.macos.PanamaGLMacOSFactory;
+import panamagl.factory.PanamaGLFactory;
 import panamagl.macos.offscreen.MacOSOffscreenRenderer;
 import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
@@ -30,8 +29,8 @@ public class TestGLCanvasSwing {
     
     EventCounter event = new EventCounter();
     
-    AbstractPanamaGLFactory factory = new PanamaGLMacOSFactory();
-    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(GLCanvasSwing.class);
+    PanamaGLFactory factory = PanamaGLFactory.select();
+    GLCanvasSwing panel = factory.newCanvasSwing();
     
     panel.setGLEventListener(new GLEventAdapter() {
       @Override
@@ -122,8 +121,8 @@ public class TestGLCanvasSwing {
     int HEIGHT= 100;
 
     // Given an initialized panel
-    AbstractPanamaGLFactory factory = new PanamaGLMacOSFactory();
-    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(GLCanvasSwing.class);
+    PanamaGLFactory factory = PanamaGLFactory.select();
+    GLCanvasSwing panel = factory.newCanvasSwing();
     panel.addNotify();
     Assert.assertTrue(panel.isInitialized());
     
@@ -170,7 +169,7 @@ public class TestGLCanvasSwing {
     
     TicToc t = new TicToc();
     
-    PanamaGLMacOSFactory factory = new PanamaGLMacOSFactory();
+    PanamaGLFactory factory = PanamaGLFactory.select();
     
     
     // ----------------------------------------------------------
@@ -205,7 +204,7 @@ public class TestGLCanvasSwing {
     };
 
 
-    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(GLCanvasSwing.class);
+    GLCanvasSwing panel = factory.newCanvasSwing();
     panel.setOffscreenRenderer(renderer);
 
     // -------------------------------

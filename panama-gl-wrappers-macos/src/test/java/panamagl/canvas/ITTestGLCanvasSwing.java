@@ -16,8 +16,7 @@ import org.junit.Test;
 import demos.panamagl.macos.SampleTriangle;
 import opengl.GL;
 import panamagl.GLEventAdapter;
-import panamagl.factory.AbstractPanamaGLFactory;
-import panamagl.macos.PanamaGLMacOSFactory;
+import panamagl.factory.PanamaGLFactory;
 import panamagl.utils.ImageUtils;
 
 /**
@@ -64,8 +63,8 @@ public class ITTestGLCanvasSwing {
     // --------------------------------------------
     // Using a panel to ensure that GL get initialized in the main AWT thread.
     
-    AbstractPanamaGLFactory factory = new PanamaGLMacOSFactory();
-    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(GLCanvasSwing.class);
+    PanamaGLFactory factory = PanamaGLFactory.select();
+    GLCanvasSwing panel = factory.newCanvasSwing();
 
     panel.setGLEventListener(listener);
     
@@ -184,8 +183,8 @@ public class ITTestGLCanvasSwing {
     };
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
-    AbstractPanamaGLFactory factory = new PanamaGLMacOSFactory();
-    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(GLCanvasSwing.class);
+    PanamaGLFactory factory = PanamaGLFactory.select();
+    GLCanvasSwing panel = factory.newCanvasSwing();
 
     panel.setGLEventListener(listener);
     
