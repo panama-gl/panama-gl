@@ -9,6 +9,7 @@
 
 	<properties>
 		<version.jaxb>2.3.1</version.jaxb>
+		<version.panama>1.0.1-SNAPSHOT</version.panama>
 	</properties>
 
 	<dependencies>
@@ -56,18 +57,18 @@
 		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-wrappers-linux</artifactId>
-			<version>2.1.0-SNAPSHOT</version>
+			<version>${version.panama}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-wrappers-macos</artifactId>
-			<version>2.1.0-SNAPSHOT</version>
+			<version>${version.panama}</version>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-wrappers-windows</artifactId>
-			<version>2.1.0-SNAPSHOT</version>
-		</dependency>
+			<version>${version.panama}</version>
+		</dependency>-->
 
 
 		<!-- To test  -->
@@ -117,8 +118,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<source>17</source>
-					<target>17</target>
+					<source>19</source>
+					<target>19</target>
 					<encoding>UTF-8</encoding>
 					<compilerArgs>
 						<arg>--add-modules=jdk.incubator.foreign</arg>

@@ -53,12 +53,12 @@ public class GraphicsUtils {
     ImageCapabilities ic = gc.getImageCapabilities();
     System.out.println("  Img Caps     : " + str(ic));
     System.out.println("  Bounds       : " + gc.getBounds());
-    System.out.println("  Translucency :  " + gc.isTranslucencyCapable());
+    System.out.println("  Translucency : " + gc.isTranslucencyCapable());
 
     BufferCapabilities bc = gc.getBufferCapabilities();
-    System.out.println("  Buffer caps / Back:  " + str(bc.getBackBufferCapabilities()));
-    System.out.println("  Buffer caps / Front:  " + str(bc.getFrontBufferCapabilities()));
-    System.out.println("  Buffer caps / FullScreen:  " + bc.isFullScreenRequired());
+    System.out.println("  Buffer caps / Back       : " + str(bc.getBackBufferCapabilities()));
+    System.out.println("  Buffer caps / Front      : " + str(bc.getFrontBufferCapabilities()));
+    System.out.println("  Buffer caps / FullScreen : " + bc.isFullScreenRequired());
   }
 
   public static String str(ImageCapabilities ic) {

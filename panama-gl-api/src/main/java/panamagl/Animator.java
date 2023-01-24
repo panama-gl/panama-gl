@@ -2,6 +2,7 @@ package panamagl;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import panamagl.performance.RenderCounter;
 
 /**
  * A naive animator to ease testing.

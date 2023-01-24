@@ -1,6 +1,6 @@
 package panamagl;
 
-import opengl.GL;
+import panamagl.opengl.GL;
 
 public interface GLEventListener {
   void init(GL gl);

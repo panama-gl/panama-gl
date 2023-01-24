@@ -5,9 +5,9 @@ import java.lang.foreign.Addressable;
 import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;
 import glx.ubuntu.v20.glx_h;
-import opengl.AbstractGL;
-import opengl.GL;
 import opengl.ubuntu.v20.glut_h;
+import panamagl.opengl.AbstractGL;
+import panamagl.opengl.GL;
 
 /**
  * Look above ^^ this is how you link to platform binding.
