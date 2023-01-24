@@ -11,17 +11,17 @@ import panamagl.Debug;
 public class ClassloaderUtils {
   static boolean debug = Debug.check(ClassloaderUtils.class);
 
-  public static List<Class> findFactoryClasses(String packge, Class implem, Class exclude) throws ClassNotFoundException, IOException {
-    Class[] classes = getClasses(packge);
+  public static List<Class<?>> findFactoryClasses(String packge, Class<?> implem, Class<?> exclude) throws ClassNotFoundException, IOException {
+    Class<?>[] classes = getClasses(packge);
     
 
-    List<Class> factories = new ArrayList<>();
+    List<Class<?>> factories = new ArrayList<>();
 
-    for (Class clazz : classes) {
+    for (Class<?> clazz : classes) {
       if(clazz.equals(exclude)) 
         continue;
       
-      for (Class interf : clazz.getInterfaces()) {
+      for (Class<?> interf : clazz.getInterfaces()) {
         if (interf.equals(implem)) {
           factories.add(clazz);
         }
@@ -38,7 +38,7 @@ public class ClassloaderUtils {
   //
   /////////////////////////////////////////////////////
 
-  public static  Class[] getClasses(String packageName) throws ClassNotFoundException, IOException {
+  public static  Class<?>[] getClasses(String packageName) throws ClassNotFoundException, IOException {
     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
     assert classLoader != null;
     String path = packageName.replace('.', '/');
@@ -48,7 +48,7 @@ public class ClassloaderUtils {
       URL resource = resources.nextElement();
       dirs.add(new File(resource.getFile()));
     }
-    ArrayList<Class> classes = new ArrayList<Class>();
+    ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
     for (File directory : dirs) {
       classes.addAll(findClasses(directory, packageName));
     }
@@ -63,12 +63,12 @@ public class ClassloaderUtils {
    * @return The classes
    * @throws ClassNotFoundException
    */
-  public static List<Class> findClasses(File directory, String packageName)
+  public static List<Class<?>> findClasses(File directory, String packageName)
       throws ClassNotFoundException {
 
     Debug.debug(debug, "Search in " + directory);
 
-    List<Class> classes = new ArrayList<Class>();
+    List<Class<?>> classes = new ArrayList<Class<?>>();
     if (!directory.exists()) {
       return classes;
     }
