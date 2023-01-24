@@ -4,9 +4,6 @@ import org.junit.Test;
 import org.jzy3d.os.OperatingSystem;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
-import panamagl.os.macos.CGLContext_macOS;
-import panamagl.os.macos.GLUTContext_macOS;
-import panamagl.os.macos.GL_macOS_x86_64;
 
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules
 // jdk.incubator.foreign

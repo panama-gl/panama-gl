@@ -5,9 +5,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import org.junit.Assert;
 import org.jzy3d.maths.Array;
-import demos.panamagl.macos.SampleTriangle;
 import panamagl.opengl.GL;
-import panamagl.os.macos.FBO_macOS;
 import panamagl.utils.ByteUtils;
 
 public class TestFBO {

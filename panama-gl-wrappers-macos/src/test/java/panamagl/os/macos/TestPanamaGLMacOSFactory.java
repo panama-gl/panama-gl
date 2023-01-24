@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.jzy3d.os.OperatingSystem;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.os.macos.PanamaGLMacOSFactory;
 
 public class TestPanamaGLMacOSFactory {
   @Test
