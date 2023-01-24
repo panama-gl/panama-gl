@@ -69,10 +69,9 @@ public class FBO_macOS implements FBO {
   public FBO_macOS(int width, int height) {
     this.width = width;
     this.height = height;
-    
-    //this.scope = MemorySession.openConfined();//PanamaMemorySession.get();
   }
 
+  /** Prepare resources held by this FBO utility.*/
   @Override
   public void prepare(GL gl) {
     
@@ -215,11 +214,7 @@ public class FBO_macOS implements FBO {
     // https://stackoverflow.com/questions/2985034/glgentextures-keeps-returing-0s
   }
 
-  /**
-   * Release resources held by this FBO utility.
-   *
-   * @param gl
-   */
+  /** Release resources held by this FBO utility.*/
   @Override
   public void release(GL gl) {
     // Delete resources
