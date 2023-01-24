@@ -1,15 +1,14 @@
-package demos.panamagl.macos.swing;
+package demos.panamagl.swing;
 
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import demos.panamagl.macos.SampleTriangle;
+import demos.panamagl.SampleTriangle;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
-import panamagl.os.macos.PanamaGLMacOSFactory;
 
 /**
  * VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
@@ -18,7 +17,7 @@ import panamagl.os.macos.PanamaGLMacOSFactory;
  * @author Martin
  *
  */
-public class DemoTriangle_Onscreen_macOS_Swing {
+public class DemoTriangle_Onscreen_Swing {
 
   public static void main(String[] args) throws Exception {
     System.out
@@ -28,12 +27,12 @@ public class DemoTriangle_Onscreen_macOS_Swing {
     GLEventAdapter listener = RGBTriangleEventListenerAnim();
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
-    PanamaGLFactory factory = new PanamaGLMacOSFactory();
+    PanamaGLFactory factory = PanamaGLFactory.select();
     GLCanvasSwing panel = factory.newCanvasSwing();
     panel.setGLEventListener(listener);
 
     // Create frame
-    final JFrame frame = new JFrame(DemoTriangle_Onscreen_macOS_Swing.class.getSimpleName());
+    final JFrame frame = new JFrame(DemoTriangle_Onscreen_Swing.class.getSimpleName());
     frame.getContentPane().setLayout(new BorderLayout());
     // frame.pack();
     frame.setBounds(0, 0, 800, 600);

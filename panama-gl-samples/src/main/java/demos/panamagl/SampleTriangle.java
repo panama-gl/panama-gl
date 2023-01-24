@@ -1,4 +1,4 @@
-package demos.panamagl.macos;
+package demos.panamagl;
 
 import static opengl.macos.v10_15_7.glut_h.*;
 import opengl.macos.v10_15_7.glut_h;
