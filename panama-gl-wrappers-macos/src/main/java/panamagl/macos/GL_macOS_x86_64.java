@@ -1,4 +1,4 @@
-package panamagl.macos.gl;
+package panamagl.macos;
 
 
 import java.lang.foreign.Addressable;

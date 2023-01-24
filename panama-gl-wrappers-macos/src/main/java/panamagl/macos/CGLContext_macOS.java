@@ -1,4 +1,4 @@
-package panamagl.macos.cgl;
+package panamagl.macos;
 
 import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;

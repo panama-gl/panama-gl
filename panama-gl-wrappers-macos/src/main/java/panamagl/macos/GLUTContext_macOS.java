@@ -1,4 +1,4 @@
-package panamagl.macos.glut;
+package panamagl.macos;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;

@@ -1,4 +1,4 @@
-package panamagl.macos.offscreen;
+package panamagl.macos;
 
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
@@ -18,8 +18,8 @@ import panamagl.factory.PanamaGLFactory;
 import panamagl.fbo.FBO;
 import panamagl.utils.ImageUtils;
 
-public class MacOSOffscreenRenderer implements OffscreenRenderer{
-  protected boolean debug = Debug.check(MacOSOffscreenRenderer.class, GLCanvasSwing.class);
+public class OffscreenRenderer_macOS implements OffscreenRenderer{
+  protected boolean debug = Debug.check(OffscreenRenderer_macOS.class, GLCanvasSwing.class);
   protected String debugFile = null;// "target/glpanel";
   /** Only used to export debug images if a debug file is given */
   protected ExecutorService exec = Executors.newSingleThreadExecutor();
@@ -39,7 +39,7 @@ public class MacOSOffscreenRenderer implements OffscreenRenderer{
   protected static final int INIT_FBO_WIDTH = 10;
   protected static final int INIT_FBO_HEIGHT = 10;
 
-  public MacOSOffscreenRenderer(PanamaGLFactory factory) {
+  public OffscreenRenderer_macOS(PanamaGLFactory factory) {
     this.factory = factory;
 	  
   }

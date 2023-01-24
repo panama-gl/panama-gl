@@ -3,13 +3,11 @@ package panamagl.macos;
 import opengl.GL;
 import opengl.GLContext;
 import panamagl.Debug;
+import panamagl.GLAutoDrawable;
 import panamagl.OffscreenRenderer;
 import panamagl.factory.APanamaGLFactory;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.macos.cgl.CGLContext_macOS;
-import panamagl.macos.gl.GL_macOS_x86_64;
-import panamagl.macos.glut.GLUTContext_macOS;
-import panamagl.macos.offscreen.MacOSOffscreenRenderer;
+import panamagl.fbo.FBO;
 import panamagl.os.OperatingSystem;
 
 public class PanamaGLMacOSFactory extends APanamaGLFactory implements PanamaGLFactory {
@@ -31,13 +29,19 @@ public class PanamaGLMacOSFactory extends APanamaGLFactory implements PanamaGLFa
    * Invoked by the {@link GLAutoDrawable}, i.e. canvas that wishes to draw
    * offscreen rendered image.
    * 
-   * The offscreen renderer will initialize {@link GL}, {@link GLContext} and {@link FBO} 
+   * The offscreen renderer will initialize {@link GL}, {@link GLContext} and {@link FBO_macOS} 
    * instances through this factory.
    */
   @Override
   public OffscreenRenderer newOffscreenRenderer() {
-    return new MacOSOffscreenRenderer(this);
+    return new OffscreenRenderer_macOS(this);
   }
+  
+  @Override
+  public FBO newFBO(int width, int height) {
+    return new FBO_macOS(width, height);
+  }
+
 
   @Override
   public GL newGL() {

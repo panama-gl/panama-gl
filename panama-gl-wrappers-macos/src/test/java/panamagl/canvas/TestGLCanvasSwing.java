@@ -11,7 +11,7 @@ import panamagl.GLEventAdapter;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.macos.offscreen.MacOSOffscreenRenderer;
+import panamagl.macos.OffscreenRenderer_macOS;
 import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
 
@@ -176,7 +176,7 @@ public class TestGLCanvasSwing {
     // Given an initialized panel with a test offscreen renderer
     // performing a long task
     
-    OffscreenRenderer renderer = new MacOSOffscreenRenderer(factory) {
+    OffscreenRenderer renderer = new OffscreenRenderer_macOS(factory) {
     
       // Customize rendering task so that it is very very long
       @Override

@@ -1,12 +1,9 @@
-package panamagl.fbo;
+package panamagl.macos;
 
 import org.junit.Test;
 import org.jzy3d.os.OperatingSystem;
 import opengl.GL;
 import opengl.GLContext;
-import panamagl.macos.cgl.CGLContext_macOS;
-import panamagl.macos.gl.GL_macOS_x86_64;
-import panamagl.macos.glut.GLUTContext_macOS;
 
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules
 // jdk.incubator.foreign

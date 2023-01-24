@@ -8,8 +8,9 @@ import opengl.GL;
 import opengl.GLContext;
 import panamagl.GLEventListener;
 import panamagl.fbo.FBO;
-import panamagl.macos.gl.GL_macOS_x86_64;
-import panamagl.macos.glut.GLUTContext_macOS;
+import panamagl.macos.FBO_macOS;
+import panamagl.macos.GLUTContext_macOS;
+import panamagl.macos.GL_macOS_x86_64;
 
 /**
  * https://github.com/jzy3d/panama-gl/issues/5
@@ -27,7 +28,7 @@ public class DemoQuad_Offscreen_macOS {
     // Prepare VBO
     int width = 256;
     int height = 256;
-    FBO fbo = new FBO(width, height);
+    FBO fbo = new FBO_macOS(width, height);
     fbo.prepare(gl);
 
     //-------------------------

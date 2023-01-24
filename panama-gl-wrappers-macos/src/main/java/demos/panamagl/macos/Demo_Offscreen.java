@@ -5,6 +5,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import opengl.GL;
 import panamagl.fbo.FBO;
+import panamagl.macos.FBO_macOS;
 
 /**
  * https://github.com/jzy3d/panama-gl/issues/5
@@ -16,7 +17,7 @@ public class Demo_Offscreen {
     // Prepare VBO
     int width = 256;
     int height = 256;
-    FBO fbo = new FBO(width, height);
+    FBO fbo = new FBO_macOS(width, height);
     fbo.prepare(gl);
 
     //-------------------------

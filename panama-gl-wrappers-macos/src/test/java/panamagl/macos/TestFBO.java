@@ -1,4 +1,4 @@
-package panamagl.fbo;
+package panamagl.macos;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -24,7 +24,7 @@ public class TestFBO {
 
     int width = 256;
     int height = 256;
-    FBO fbo = new FBO(width, height);
+    FBO_macOS fbo = new FBO_macOS(width, height);
 
     // Ensure conforms to configuration
     Assert.assertEquals(width, fbo.getWidth());
