@@ -1,6 +1,5 @@
-package opengl.demos.ubuntu;
+package demos.opengl;
 
-import  opengl.ubuntu.v20.*;
 import static opengl.ubuntu.v20.glut_h.*;
 
 /*
@@ -48,10 +47,10 @@ import opengl.ubuntu.v20.glutIdleFunc$callback;
  * --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
  * </code>
  */
-public class TeapotUbuntu {
+public class Teapot_Panama_Ubuntu {
   private float rot = 0;
 
-  TeapotUbuntu(SegmentAllocator allocator) {
+  Teapot_Panama_Ubuntu(SegmentAllocator allocator) {
     // Reset Background
     glClearColor(0f, 0f, 0f, 0f);
     // Setup Lighting
@@ -94,7 +93,7 @@ public class TeapotUbuntu {
       glutInitDisplayMode(GLUT_DOUBLE() | GLUT_RGB() | GLUT_DEPTH());
       glutInitWindowSize(500, 500);
       glutCreateWindow(allocator.allocateUtf8String("Hello Panama!"));
-      var teapot = new TeapotUbuntu(allocator);
+      var teapot = new Teapot_Panama_Ubuntu(allocator);
       var displayStub = glutDisplayFunc$callback.allocate(teapot::display, scope);
       var idleStub = glutIdleFunc$callback.allocate(teapot::onIdle, scope);
       glutDisplayFunc(displayStub);
