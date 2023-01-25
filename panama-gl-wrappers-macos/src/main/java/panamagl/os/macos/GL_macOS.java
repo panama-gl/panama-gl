@@ -11,8 +11,8 @@ import panamagl.opengl.GL;
 /**
  * Look above ^^ this is how you link to platform binding.
  */
-public class GL_macOS_x86_64 extends AbstractGL implements GL {
-  public GL_macOS_x86_64() {
+public class GL_macOS extends AbstractGL implements GL {
+  public GL_macOS() {
     super();
   }
 

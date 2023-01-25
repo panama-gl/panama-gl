@@ -24,7 +24,7 @@ public class TestFBO_macOS {
     glutContext.init();
 
     // Given a GL caller
-    GL gl = new GL_macOS_x86_64();
+    GL gl = new GL_macOS();
 
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
 
@@ -42,7 +42,7 @@ public class TestFBO_macOS {
     glutContext.init();
 
     // Given a GL caller
-    GL gl = new GL_macOS_x86_64();
+    GL gl = new GL_macOS();
 
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
 
@@ -58,7 +58,7 @@ public class TestFBO_macOS {
     GLContext context = new CGLContext_macOS();
     context.init();
 
-    GL gl = new GL_macOS_x86_64();
+    GL gl = new GL_macOS();
 
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
 

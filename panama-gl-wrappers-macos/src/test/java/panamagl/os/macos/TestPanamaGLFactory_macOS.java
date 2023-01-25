@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.jzy3d.os.OperatingSystem;
 import panamagl.factory.PanamaGLFactory;
 
-public class TestPanamaGLMacOSFactory {
+public class TestPanamaGLFactory_macOS {
   @Test
   public void test() {
     if (!new OperatingSystem().isMac())

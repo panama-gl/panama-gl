@@ -3,7 +3,7 @@ package panamagl.os.macos;
 //import static org.mockito.Mockito.spy;
 import org.junit.Test;
 
-public class TestGL_macOS_x86_64 {
+public class TestGL_macOS {
     @Test
     public void whenInitDefault_ThenDoNotInvokeGlut(){
 

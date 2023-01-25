@@ -45,7 +45,7 @@ public class PanamaGLFactory_macOS extends APanamaGLFactory implements PanamaGLF
 
   @Override
   public GL newGL() {
-    return new GL_macOS_x86_64();
+    return new GL_macOS();
   }
 
   @Override
