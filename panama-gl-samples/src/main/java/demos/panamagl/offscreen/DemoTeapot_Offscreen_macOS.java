@@ -1,4 +1,4 @@
-package demos.panamagl;
+package demos.panamagl.offscreen;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

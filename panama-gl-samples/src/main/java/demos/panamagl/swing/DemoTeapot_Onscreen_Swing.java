@@ -12,11 +12,13 @@ import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
-import panamagl.os.macos.PanamaGLFactory_macOS;
 
 /**
  * VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview
  * -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+ * 
+ * or
+ * -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
  * 
  * @author Martin
  *

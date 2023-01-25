@@ -3,7 +3,7 @@ package demos.panamagl.swing;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
-import demos.panamagl.SampleTriangle;
+import demos.panamagl.offscreen.SampleTriangle;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasSwing;
@@ -13,6 +13,9 @@ import panamagl.opengl.GL;
 /**
  * VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
  * -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+ * 
+ * or
+ * -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
  * 
  * @author Martin
  *

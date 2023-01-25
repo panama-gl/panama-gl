@@ -1,4 +1,4 @@
-package demos.panamagl;
+package demos.panamagl.offscreen;
 
 import static opengl.macos.v10_15_7.glut_h.*;
 import opengl.macos.v10_15_7.glut_h;

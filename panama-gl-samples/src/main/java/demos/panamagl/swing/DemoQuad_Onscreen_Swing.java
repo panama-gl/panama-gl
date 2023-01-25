@@ -13,6 +13,9 @@ import panamagl.opengl.GL;
  * VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview
  * -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
  * 
+ * or
+ * -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
+ * 
  * @author Martin
  *
  */
