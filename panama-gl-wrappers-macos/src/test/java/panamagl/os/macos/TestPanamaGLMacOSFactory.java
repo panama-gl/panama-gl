@@ -13,7 +13,7 @@ public class TestPanamaGLMacOSFactory {
   
     PanamaGLFactory f = PanamaGLFactory.select();
     
-    boolean matched = f instanceof PanamaGLMacOSFactory;
+    boolean matched = f instanceof PanamaGLFactory_macOS;
     
     Assert.assertTrue(matched);
 
