@@ -1,3 +1,4 @@
+
 Display *dpy;             /* display variable */
 XVisualInfo *vi;          /* visual variable */
 Window win;               /* window variable */

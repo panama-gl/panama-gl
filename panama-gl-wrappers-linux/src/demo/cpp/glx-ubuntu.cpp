@@ -1,3 +1,4 @@
+
 //Compile with "g++ <filename>.cpp -std=c++11 -lX11 -lGL"
 
 #include <cassert>
