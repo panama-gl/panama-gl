@@ -1,4 +1,4 @@
-package jextract.gl.asm;
+package jextract.gl.generate.java.asm;
 
 import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
 import static org.objectweb.asm.Opcodes.ACC_STATIC;

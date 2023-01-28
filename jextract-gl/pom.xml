@@ -51,6 +51,14 @@
 		  <artifactId>asm-util</artifactId>
 		  <version>9.4</version>
 		</dependency>
+		
+		<!-- Another lib to generate java code -->
+		<dependency>
+		    <groupId>javassist</groupId>
+		    <artifactId>javassist</artifactId>
+		    <version>3.12.1.GA</version>
+		</dependency>
+
 
 		<!-- To read bindings bytecode -->
 

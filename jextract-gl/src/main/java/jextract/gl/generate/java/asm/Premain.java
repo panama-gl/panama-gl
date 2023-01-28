@@ -1,4 +1,4 @@
-package jextract.gl.asm;
+package jextract.gl.generate.java.asm;
 
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
