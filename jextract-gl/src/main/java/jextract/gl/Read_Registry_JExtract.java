@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.List;
 import com.google.common.collect.ArrayListMultimap;
-import jextract.gl.java.AcceptsMethodGL;
+import jextract.gl.java.AcceptsGLMethod;
 import jextract.gl.java.ClassMethodRegistry;
 import opengl.ubuntu.v20.glut_h;
 
@@ -29,7 +29,7 @@ public class Read_Registry_JExtract {
 
   protected static void byDirectLink() throws IllegalAccessException {
     ClassMethodRegistry registry = new ClassMethodRegistry();
-    List<Method> methods = registry.selectMethods(glut_h.class, new AcceptsMethodGL());
+    List<Method> methods = registry.selectMethods(glut_h.class, new AcceptsGLMethod());
     
     registry.sort(methods);
     registry.print(methods);
@@ -47,7 +47,7 @@ public class Read_Registry_JExtract {
     String packageName = "opengl.ubuntu.v20";
     // String classPattern = "constants\\$(\\d+)";
     String classPattern = "glut_h";
-    ArrayListMultimap<Class, Method> cm = registry.selectClassMethods(packageName, classPattern, new AcceptsMethodGL());
+    ArrayListMultimap<Class, Method> cm = registry.selectClassMethods(packageName, classPattern, new AcceptsGLMethod());
     System.out.println(cm.values().size() + " GL/GLU/GLUT methods");
     return registry;
   }

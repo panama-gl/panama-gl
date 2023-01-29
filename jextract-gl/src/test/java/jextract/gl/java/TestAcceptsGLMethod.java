@@ -3,11 +3,11 @@ package jextract.gl.java;
 import org.junit.Test;
 import junit.framework.Assert;
 
-public class TestAcceptsMethodGL {
+public class TestAcceptsGLMethod {
   @Test
   public void test() {
     
-    AcceptsMethodGL a = new AcceptsMethodGL();
+    AcceptsGLMethod a = new AcceptsGLMethod();
     
     Assert.assertTrue(a.acceptsName("glBegin"));
     Assert.assertTrue(a.acceptsName("gluTruc"));

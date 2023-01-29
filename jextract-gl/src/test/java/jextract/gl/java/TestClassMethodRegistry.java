@@ -12,7 +12,7 @@ public class TestClassMethodRegistry {
   public void test() throws IllegalAccessException {
     ClassMethodRegistry registry = new ClassMethodRegistry();
     
-    List<Method> methods = registry.selectMethods(glut_h.class, new AcceptsMethodGL());
+    List<Method> methods = registry.selectMethods(glut_h.class, new AcceptsGLMethod());
 
     Assert.assertEquals(673, methods.size());
   }

@@ -2,15 +2,12 @@ package jextract.gl;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import jextract.gl.generate.java.ClassCompiler;
 import jextract.gl.generate.java.ClassWriter;
-import jextract.gl.generate.java.ClassWriter.Arg;
-import jextract.gl.java.AcceptsMethodGL;
+import jextract.gl.java.AcceptsGLMethod;
 import jextract.gl.java.AcceptsMethod;
 import jextract.gl.java.ClassMethodRegistry;
 import jextract.gl.xml.OpenGLRegistry;
@@ -32,7 +29,7 @@ public class GenerateBottomUp {
     // Configure wrapper 
     Class<?> wrapped = opengl.macos.v10_15_7.glut_h.class;
     //Class<?> wrapped = opengl.ubuntu.v20.glut_h.class;
-    AcceptsMethod accepts = new AcceptsMethodGL();
+    AcceptsMethod accepts = new AcceptsGLMethod();
     String className = "GL_macOS";
     String javaFile = "target/"+className+".java";
 
@@ -60,8 +57,6 @@ public class GenerateBottomUp {
     Map<String, CommandWrap> xmlRegistry = getXMLRegistryCommands();
     Map<String, Method> javaRegistry = getJavaRegistryMethods(wrapped, accepts);
 
-
-    
     // ----------------------------------------------------
     // -------- ANALYSE IMPOSSIBLE BINDINGS ---------------
     // ----------------------------------------------------
@@ -73,7 +68,6 @@ public class GenerateBottomUp {
         missingJava++;
       }
     }
-    
 
     // ----------------------------------------------------
     // -------- GENERATES METHOD WRAPPERS -----------------
@@ -140,7 +134,6 @@ public class GenerateBottomUp {
     ClassMethodRegistry registryGLUT = new ClassMethodRegistry();
     List<Method> methods = registryGLUT.selectMethods(wrapped, accepts);
     registryGLUT.sort(methods);
-    //registryGLUT.print(methods);
     return methods;
   }
 
@@ -161,12 +154,12 @@ public class GenerateBottomUp {
     
     Map<String, CommandWrap> commandName = new HashMap<>();
     
-    System.out.println("OpenGL Commands : ");
+    //System.out.println("OpenGL Commands : ");
     for (CommandWrap c : cw) {
       commandName.put(c.getName(), c);
     }
-    System.out.println("------------------------");
-    System.out.println(cw.size() + " GL commands");
+    //System.out.println("------------------------");
+    //System.out.println(cw.size() + " GL commands");
     return commandName;
   }
 
