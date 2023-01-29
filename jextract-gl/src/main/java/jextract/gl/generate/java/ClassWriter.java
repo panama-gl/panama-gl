@@ -2,8 +2,11 @@ package jextract.gl.generate.java;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
+import jextract.gl.generate.java.ClassWriter.Arg;
 
 public class ClassWriter {
   String className;
@@ -177,8 +180,35 @@ public class ClassWriter {
     }
     
     // Wrapping line
-    Code c = new Code(wrapped + "." + name + "(" + sbargs.toString() + ");");
+    Code c;
     
+    if(out==null)
+      c = new Code(wrapped + "." + name + "(" + sbargs.toString() + ");");
+    else {
+      c = new Code("return " + wrapped + "." + name + "(" + sbargs.toString() + ");");
+      
+    }
     method(sb, name, in, out, List.of(c), throwz);
+  }
+  
+  public void wrapper(StringBuffer sb, Class<?> wrapped, Method method) {
+    List<Arg> argsIn = new ArrayList<>();
+    for(Parameter param : method.getParameters()) {
+      Arg arg = new Arg(param.getType(), param.getName());
+      argsIn.add(arg);
+
+    }
+    
+    Arg argOut = null;
+    
+    Class<?> retType = method.getReturnType();
+    if(!retType.getName().equals("void")) {
+      //method.retu
+        argOut = new Arg(retType);
+    }
+    
+    //List<Class<?>> throwz = Arrays.asList(method.getExceptionTypes());
+    
+    wrapper(sb, method.getName(), argsIn, argOut, wrapped.getSimpleName(), null);
   }
 }
