@@ -273,11 +273,53 @@ public class GLX_linux extends AbstractGL implements GL  {
     public void glPushMatrix() {
       glx_h.glPushMatrix();
     }
+    
+    // GLU
+    
+    @Override
+    public void gluSphere(double radius, int slices, int stacks) {
+      throw new RuntimeException("to be implemented");
+      //logger.error("to be implemented");
+      // GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
+      // opengl.glut_h.gluSphere(qobj, radius, slices, stacks);
+    }
+
+    @Override
+    public void gluCylinder(double base, double top, double height, int slices, int stacks) {
+      throw new RuntimeException("to be implemented");
+
+      // GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
+      // opengl.glut_h.gluCylinder(qobj, base, top, height, slices, stacks);
+    }
+    
+    // GLUT
 
     @Override
     public void glutSolidTeapot(double d) {
       glut_h.glutSolidTeapot(d);
     }
+    
+    @Override
+    public void glutSolidTeapot(float scale) {
+      glut_h.glutSolidTeapot(scale);
+    }
+
+    @Override
+    public void glutWireTeapot(float scale) {
+      glut_h.glutWireTeapot(scale);
+    }
+
+    @Override
+    public void glutSolidCube(float size) {
+      glut_h.glutSolidCube(size);
+
+    }
+    
+    @Override
+    public void glutSolidSphere(double radius, int slices, int stacks) {
+      glut_h.glutSolidSphere(radius, slices, stacks);
+    }
+
 
     @Override
     public void glPopMatrix() {
@@ -967,4 +1009,405 @@ public class GLX_linux extends AbstractGL implements GL  {
       // (target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
     }
 
+
+    @Override
+    public int GL_BACK() {
+      return glut_h.GL_BACK();
+    }
+
+
+    @Override
+    public int GL_VENDOR() {
+      return glut_h.GL_VENDOR();
+    }
+
+
+    @Override
+    public int GL_VERSION() {
+      return glut_h.GL_VERSION();
+    }
+
+
+    @Override
+    public int GL_EXTENSIONS() {
+      return glut_h.GL_EXTENSIONS();
+    }
+
+
+    @Override
+    public int GL_LESS() {
+      return glut_h.GL_LESS();
+    }
+
+
+    @Override
+    public int GL_SRC_ALPHA() {
+      return glut_h.GL_SRC_ALPHA();
+    }
+
+
+    @Override
+    public int GL_BLEND() {
+      return glut_h.GL_BLEND();
+    }
+
+
+    @Override
+    public int GL_ALPHA_TEST() {
+      return glut_h.GL_ALPHA_TEST();
+    }
+
+
+    @Override
+    public int GL_POLYGON_SMOOTH() {
+      return glut_h.GL_POLYGON_SMOOTH();
+    }
+
+
+    @Override
+    public int GL_LINE_SMOOTH() {
+      return glut_h.GL_LINE_SMOOTH();
+    }
+
+
+    @Override
+    public int GL_POINT_SMOOTH() {
+      return glut_h.GL_POINT_SMOOTH();
+    }
+
+
+    @Override
+    public int GL_VIEWPORT() {
+      return glut_h.GL_VIEWPORT();
+    }
+
+
+    @Override
+    public int GL_PROJECTION_MATRIX() {
+      return glut_h.GL_PROJECTION_MATRIX();
+    }
+
+
+    @Override
+    public int GL_MODELVIEW_MATRIX() {
+      return glut_h.GL_MODELVIEW_MATRIX();
+    }
+
+
+    @Override
+    public int GL_FRONT_AND_BACK() {
+      return glut_h.GL_FRONT_AND_BACK();
+    }
+
+
+    @Override
+    public int GL_FILL() {
+      return glut_h.GL_FILL();
+    }
+
+
+    @Override
+    public int GL_LINE() {
+      return glut_h.GL_LINE();
+    }
+
+
+    @Override
+    public int GL_PACK_ALIGNMENT() {
+      return glut_h.GL_PACK_ALIGNMENT();
+    }
+
+
+    @Override
+    public int GL_UNPACK_ALIGNMENT() {
+      return glut_h.GL_UNPACK_ALIGNMENT();
+    }
+
+
+    @Override
+    public int GL_COMPILE() {
+      return glut_h.GL_COMPILE();
+    }
+
+
+    @Override
+    public int GL_COMPILE_AND_EXECUTE() {
+      return glut_h.GL_COMPILE_AND_EXECUTE();
+    }
+
+    @Override
+    public int GL_LIGHT1() {
+      
+      return glut_h.GL_LIGHT1();
+    }
+
+
+    @Override
+    public int GL_LIGHT2() {
+      
+      return glut_h.GL_LIGHT2();
+    }
+
+
+    @Override
+    public int GL_LIGHT3() {
+      
+      return glut_h.GL_LIGHT3();
+    }
+
+
+    @Override
+    public int GL_LIGHT4() {
+      
+      return glut_h.GL_LIGHT4();
+    }
+
+
+    @Override
+    public int GL_LIGHT5() {
+      
+      return glut_h.GL_LIGHT5();
+    }
+
+
+    @Override
+    public int GL_LIGHT6() {
+      
+      return glut_h.GL_LIGHT6();
+    }
+
+
+    @Override
+    public int GL_LIGHT7() {
+      
+      return glut_h.GL_LIGHT7();
+    }
+
+
+    @Override
+    public int GL_RENDER() {
+      
+      return glut_h.GL_RENDER();
+    }
+
+
+    @Override
+    public int GL_SELECT() {
+      
+      return glut_h.GL_SELECT();
+    }
+
+
+    @Override
+    public int GL_FEEDBACK() {
+      
+      return glut_h.GL_FEEDBACK();
+    }
+
+
+    @Override
+    public int GL_ALWAYS() {
+      
+      return glut_h.GL_ALWAYS();
+    }
+
+
+    @Override
+    public int GL_EQUAL() {
+      
+      return glut_h.GL_EQUAL();
+    }
+
+
+    @Override
+    public int GL_TRUE() {
+      
+      return glut_h.GL_TRUE();
+    }
+
+
+    @Override
+    public int GL_FALSE() {
+      
+      return glut_h.GL_FALSE();
+    }
+
+
+    @Override
+    public int GL_DECR() {
+      
+      return glut_h.GL_DECR();
+    }
+
+
+    @Override
+    public int GL_INCR() {
+      
+      return glut_h.GL_INCR();
+    }
+
+
+    @Override
+    public int GL_INVERT() {
+      
+      return glut_h.GL_INVERT();
+    }
+
+
+    @Override
+    public int GL_KEEP() {
+      
+      return glut_h.GL_KEEP();
+    }
+
+
+    @Override
+    public int GL_REPLACE() {
+      
+      return glut_h.GL_REPLACE();
+    }
+
+
+    @Override
+    public int GL_ZERO() {
+      
+      return glut_h.GL_ZERO();
+    }
+
+
+    @Override
+    public int GL_CLIP_PLANE0() {
+      
+      return glut_h.GL_CLIP_PLANE0();
+    }
+
+
+    @Override
+    public int GL_CLIP_PLANE1() {
+      
+      return glut_h.GL_CLIP_PLANE1();
+    }
+
+
+    @Override
+    public int GL_CLIP_PLANE2() {
+      
+      return glut_h.GL_CLIP_PLANE2();
+    }
+
+
+    @Override
+    public int GL_CLIP_PLANE3() {
+      
+      return glut_h.GL_CLIP_PLANE3();
+    }
+
+
+    @Override
+    public int GL_CLIP_PLANE4() {
+      
+      return glut_h.GL_CLIP_PLANE4();
+    }
+
+
+    @Override
+    public int GL_CLIP_PLANE5() {
+      
+      return glut_h.GL_CLIP_PLANE5();
+    }
+
+
+    @Override
+    public int GL_DEPTH_RANGE() {
+      return glut_h.GL_DEPTH_RANGE();
+    }
+
+
+    @Override
+    public int GL_FLAT() {
+      return glut_h.GL_FLAT();
+    }
+
+
+    @Override
+    public int GL_CONSTANT_ATTENUATION() {
+      return glut_h.GL_CONSTANT_ATTENUATION();
+    }
+
+
+    @Override
+    public int GL_LINEAR_ATTENUATION() {
+      
+      return glut_h.GL_LINEAR_ATTENUATION();
+    }
+
+
+    @Override
+    public int GL_QUADRATIC_ATTENUATION() {
+      
+      return glut_h.GL_QUADRATIC_ATTENUATION();
+    }
+
+
+    @Override
+    public int GL_LIGHT_MODEL_TWO_SIDE() {
+      
+      return glut_h.GL_LIGHT_MODEL_TWO_SIDE();
+    }
+
+
+    @Override
+    public int GL_LIGHT_MODEL_LOCAL_VIEWER() {
+      
+      return glut_h.GL_LIGHT_MODEL_LOCAL_VIEWER();
+    }
+
+
+    @Override
+    public int GL_LIGHT_MODEL_AMBIENT() {
+      
+      return glut_h.GL_LIGHT_MODEL_AMBIENT();
+    }
+
+
+    @Override
+    public int GL_GREATER() {
+      
+      return glut_h.GL_GREATER();
+    }
+
+
+    @Override
+    public int GL_GEQUAL() {
+      
+      return glut_h.GL_GEQUAL();
+    }
+
+
+    @Override
+    public int GL_NEVER() {
+      
+      return glut_h.GL_NEVER();
+    }
+
+
+    @Override
+    public int GL_NOTEQUAL() {
+      
+      return glut_h.GL_NOTEQUAL();
+    }
+
+
+    @Override
+    public void glStencilOp(int int1, int int2, int int3) {
+      glut_h.glStencilOp(int1, int2, int3);
+      
+    }
+
+
+    @Override
+    public void glStencilFunc(int gl_GREATER, int ref, int mask) {
+      glut_h.glStencilFunc(gl_GREATER, ref, mask);
+      
+    }
 }

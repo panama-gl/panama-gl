@@ -95,7 +95,8 @@ public class EmbeddedPanamaGLPainter extends AbstractPainter implements PanamaGL
   }
 
   /////////////////////////////////////////////
-static int k = 0;
+/* static int k = 0;
+ * 
   public void glutStart(Chart chart, Rectangle bounds, String title, String message) {
     
     
@@ -120,7 +121,7 @@ System.out.println("post init");
     gl.glutCreateWindow(title + "/" + message);
 
     // GLUT Display/Idle callback
-    gl.glutDisplayFunc(glutDisplayFunc$func.allocate(renderer::display, scope));
+    gl.glutDisplayFunc();//glutDisplayFunc$func.allocate(renderer::display, scope)
     gl.glutReshapeFunc(glutReshapeFunc$func.allocate(renderer::reshape, scope));
     gl.glutIdleFunc(glutIdleFunc$func.allocate(renderer::onIdle, scope));
 
@@ -190,7 +191,7 @@ System.out.println("post init");
   }
   public int glutGetWindowHeight(){
     return gl.glutGet(gl.GLUT_WINDOW_HEIGHT());
-  }
+  }*/
 
   protected static MouseEvent mouseEvent(int x, int y, int modifiers) {
     return mouseEvent(x,y,modifiers,1);

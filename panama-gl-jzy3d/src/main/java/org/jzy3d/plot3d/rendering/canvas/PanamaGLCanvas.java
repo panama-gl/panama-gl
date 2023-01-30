@@ -24,7 +24,7 @@ import org.apache.log4j.Logger;
 import org.jzy3d.chart.IAnimator;
 import org.jzy3d.chart.factories.IChartFactory;
 import org.jzy3d.maths.Coord2d;
-import org.jzy3d.painters.PanamaGLPainter;
+import org.jzy3d.painters.natives.PanamaGLNativePainter;
 import org.jzy3d.plot3d.rendering.scene.Scene;
 import org.jzy3d.plot3d.rendering.view.PanamaGLRenderer;
 import org.jzy3d.plot3d.rendering.view.View;
@@ -35,7 +35,7 @@ public class PanamaGLCanvas implements IScreenCanvas{
   protected View view;
   protected IAnimator animator;
 
-  protected PanamaGLPainter painter;
+  protected PanamaGLNativePainter painter;
   protected PanamaGLRenderer renderer;
 
   protected Coord2d pixelRatio = new Coord2d(1,1);
@@ -44,7 +44,7 @@ public class PanamaGLCanvas implements IScreenCanvas{
   public PanamaGLCanvas(IChartFactory factory, Scene scene, Quality quality) {
     view = scene.newView(this, quality);
     renderer = new PanamaGLRenderer(view);
-    painter = (PanamaGLPainter)view.getPainter();
+    painter = (PanamaGLNativePainter)view.getPainter();
     animator = factory.getPainterFactory().newAnimator(this);
   }
 

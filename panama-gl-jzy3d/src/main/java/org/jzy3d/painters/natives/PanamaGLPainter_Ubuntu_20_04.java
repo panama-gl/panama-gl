@@ -68,7 +68,7 @@ import opengl.ubuntu.v20.glut_h;
 
 
 
-public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements PanamaGLPainter{
+public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements PanamaGLNativePainter{
   static Logger logger = Logger.getLogger(PanamaGLPainter_Ubuntu_20_04.class);
 
   MemorySession scope;
@@ -623,7 +623,8 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
     return 12 * string.length();
   }
   return 6 * string.length();*/
-  throw new RuntimeException("not implemented");
+  //throw new RuntimeException("not implemented");
+    return -1;
   }
 
   boolean allowAutoDetectTextLength = true;
@@ -791,6 +792,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
     glut_h.glutSolidCube(size);
 
   }
+
 
   // GL FEEDBACK BUFER
 

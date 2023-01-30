@@ -17,7 +17,7 @@
  *******************************************************************************/
 package org.jzy3d.plot3d.rendering.view;
 
-import org.jzy3d.painters.PanamaGLPainter;
+import org.jzy3d.painters.natives.PanamaGLNativePainter;
 
 public class PanamaGLRenderer {
   protected View view;
@@ -36,8 +36,7 @@ public class PanamaGLRenderer {
     view.clear();
     view.render();
 
-    PanamaGLPainter painter = (PanamaGLPainter)view.getPainter();
-
+    PanamaGLNativePainter painter = (PanamaGLNativePainter)view.getPainter();
     painter.glutSwapBuffers();
   }
 
@@ -46,7 +45,7 @@ public class PanamaGLRenderer {
   }
 
   public void onIdle() {
-    PanamaGLPainter painter = (PanamaGLPainter)view.getPainter();
+    PanamaGLNativePainter painter = (PanamaGLNativePainter)view.getPainter();
     painter.glutPostRedisplay();
   }
 

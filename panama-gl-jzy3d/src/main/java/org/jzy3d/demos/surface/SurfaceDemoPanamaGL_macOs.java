@@ -42,7 +42,7 @@ import opengl.macos.v10_15_7.glut_h;
  * @author Martin Pernollet
  *
  */
-//VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+//VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 
 public class SurfaceDemoPanamaGL_macOs {
 

@@ -67,7 +67,7 @@ import opengl.macos.v10_15_7.glutMotionFunc$func;
 import opengl.macos.v10_15_7.glutMouseFunc$func;
 import opengl.macos.v10_15_7.glut_h;
 
-public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements PanamaGLPainter{
+public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements PanamaGLNativePainter{
   static Logger logger = Logger.getLogger(PanamaGLPainter_MacOS_11_4.class);
 
   MemorySession scope;
@@ -607,7 +607,8 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
     return 12 * string.length();
   }
   return 6 * string.length();*/
-  throw new RuntimeException("not implemented");
+  //throw new RuntimeException("not implemented");
+    return -1;
   }
 
   boolean allowAutoDetectTextLength = true;

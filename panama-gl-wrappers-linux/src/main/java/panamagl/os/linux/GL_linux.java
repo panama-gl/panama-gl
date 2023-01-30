@@ -563,6 +563,7 @@ public class GL_linux extends AbstractGL implements GL  {
 
     @Override
     public void gluSphere(double radius, int slices, int stacks) {
+      throw new RuntimeException("to be implemented");
       //logger.error("to be implemented");
       // GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
       // opengl.glut_h.gluSphere(qobj, radius, slices, stacks);
