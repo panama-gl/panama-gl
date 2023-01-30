@@ -23,7 +23,7 @@ import java.lang.foreign.ValueLayout;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.ChartFactory;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
-import org.jzy3d.chart.factories.PanamaGLPainterFactory_MacOS_10_15_3;
+import org.jzy3d.chart.factories.natives.PanamaGLPainterFactory_MacOS_10_15_3;
 import org.jzy3d.colors.Color;
 import org.jzy3d.colors.ColorMapper;
 import org.jzy3d.colors.colormaps.ColorMapRainbow;

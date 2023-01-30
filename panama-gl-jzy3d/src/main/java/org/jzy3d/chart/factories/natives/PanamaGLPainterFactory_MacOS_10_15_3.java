@@ -15,20 +15,21 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package org.jzy3d.chart.factories;
+package org.jzy3d.chart.factories.natives;
 
+import org.jzy3d.chart.factories.AbstractPanamaGLPainterFactory;
 import org.jzy3d.painters.IPainter;
-import org.jzy3d.painters.PanamaGLPainter_MacOS_11_4;
+import org.jzy3d.painters.natives.PanamaGLPainter_MacOS_10_15_3;
 
-public class PanamaGLPainterFactory_MacOS_11_4 extends AbstractPanamaGLPainterFactory {
+public class PanamaGLPainterFactory_MacOS_10_15_3 extends AbstractPanamaGLPainterFactory {
 
 
-  public PanamaGLPainterFactory_MacOS_11_4() {
+  public PanamaGLPainterFactory_MacOS_10_15_3() {
   }
 
   @Override
   public IPainter newPainter() {
-    return new PanamaGLPainter_MacOS_11_4();
+    return new PanamaGLPainter_MacOS_10_15_3();
   }
 
   ///////////////////////

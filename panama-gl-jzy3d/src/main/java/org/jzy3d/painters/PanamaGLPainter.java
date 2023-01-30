@@ -23,7 +23,7 @@ import java.lang.foreign.SegmentAllocator;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.maths.Rectangle;
 
-public interface PanamaGLPainter {
+public interface PanamaGLPainter extends IPainter{
     public MemorySession getScope();
 
     public SegmentAllocator getAllocator();

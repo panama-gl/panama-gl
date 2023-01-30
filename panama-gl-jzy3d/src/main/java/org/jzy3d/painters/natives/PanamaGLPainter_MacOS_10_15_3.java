@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package org.jzy3d.painters;
+package org.jzy3d.painters.natives;
 
 import java.awt.Component;
 import java.awt.FontMetrics;
@@ -39,6 +39,16 @@ import org.jzy3d.maths.Array;
 import org.jzy3d.maths.Coord2d;
 import org.jzy3d.maths.Coord3d;
 import org.jzy3d.maths.Rectangle;
+import org.jzy3d.painters.AbstractPainter;
+import org.jzy3d.painters.ColorModel;
+import org.jzy3d.painters.DepthFunc;
+import org.jzy3d.painters.Font;
+import org.jzy3d.painters.ListMode;
+import org.jzy3d.painters.PanamaGLPainter;
+import org.jzy3d.painters.PixelStore;
+import org.jzy3d.painters.RenderMode;
+import org.jzy3d.painters.StencilFunc;
+import org.jzy3d.painters.StencilOp;
 import org.jzy3d.plot3d.pipelines.NotImplementedException;
 import org.jzy3d.plot3d.primitives.PolygonFill;
 import org.jzy3d.plot3d.primitives.PolygonMode;
@@ -48,23 +58,19 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
-import org.jzy3d.plot3d.rendering.view.View;
-import opengl.ubuntu.v20.glutDisplayFunc$callback;
-import opengl.ubuntu.v20.glutIdleFunc$callback;
-import opengl.ubuntu.v20.glutMotionFunc$callback;
-import opengl.ubuntu.v20.glutMouseFunc$callback;
-import opengl.ubuntu.v20.glutReshapeFunc$callback;
-import opengl.ubuntu.v20.glut_h;
+import opengl.macos.v10_15_7.glutDisplayFunc$func;
+import opengl.macos.v10_15_7.glutIdleFunc$func;
+import opengl.macos.v10_15_7.glutMotionFunc$func;
+import opengl.macos.v10_15_7.glutMouseFunc$func;
+import opengl.macos.v10_15_7.glutReshapeFunc$func;
+import opengl.macos.v10_15_7.glut_h;
 
-
-
-public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements PanamaGLPainter{
-  static Logger logger = Logger.getLogger(PanamaGLPainter_Ubuntu_20_04.class);
-
+public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements PanamaGLPainter {
+  static Logger logger = Logger.getLogger(PanamaGLPainter_MacOS_10_15_3.class);
   MemorySession scope;
   SegmentAllocator allocator;
 
-  public PanamaGLPainter_Ubuntu_20_04() {
+  public PanamaGLPainter_MacOS_10_15_3() {
     try {
       scope = MemorySession.openConfined();
       allocator = SegmentAllocator.newNativeArena(scope);
@@ -73,48 +79,42 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
       System.err.println(e);
     }
   }
-  
+
   /////////////////////////////////////////////
-  
-  @Override
+
   public MemorySession getScope() {
     return scope;
   }
 
-  @Override
   public SegmentAllocator getAllocator() {
     return allocator;
   }
 
-  @Override
   public MemorySegment alloc(double[] value) {
     return allocator.allocateArray(ValueLayout.JAVA_DOUBLE, value);
   }
 
-  @Override
   public MemorySegment alloc(float[] value) {
     return allocator.allocateArray(ValueLayout.JAVA_FLOAT, value);
   }
 
-  @Override
   public MemorySegment alloc(int[] value) {
     return allocator.allocateArray(ValueLayout.JAVA_INT, value);
   }
 
-  @Override
   public MemorySegment alloc(String value) {
     return allocator.allocateUtf8String(value);
   }
 
-  @Override
   public String glGetString(int stringID){
     return glut_h.glGetString(stringID).getUtf8String(0);
   }
 
   /////////////////////////////////////////////
-
-  @Override
+static int k = 0;
   public void glutStart(Chart chart, Rectangle bounds, String title, String message) {
+    System.out.println("Painter : glutStart " + (k++));
+
     var painter = (PanamaGLPainter) chart.getPainter();
     var canvas = (PanamaGLCanvas) chart.getCanvas();
     var renderer = canvas.getRenderer();
@@ -122,24 +122,27 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
     var allocator = painter.getAllocator();
     var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
 
+
     // GLUT Init window
     // https://github.com/jzy3d/panama-gl/issues/16
     // glut_h.glutInit(argc, argc);
 
+System.out.println("post init");
     glut_h.glutInitDisplayMode(glut_h.GLUT_DOUBLE() | glut_h.GLUT_RGB() | glut_h.GLUT_DEPTH());
     glut_h.glutInitWindowSize(bounds.width, bounds.height);
+    //glut_h.glutInitWindowPosition(bounds.x, bounds.y);
     glut_h.glutCreateWindow(alloc(title + "/" + message));
 
     // GLUT Display/Idle callback
-    glut_h.glutDisplayFunc(glutDisplayFunc$callback.allocate(renderer::display, scope));
-    glut_h.glutReshapeFunc(glutReshapeFunc$callback.allocate(renderer::reshape, scope));
-    glut_h.glutIdleFunc(glutIdleFunc$callback.allocate(renderer::onIdle, scope));
+    glut_h.glutDisplayFunc(glutDisplayFunc$func.allocate(renderer::display, scope));
+    glut_h.glutReshapeFunc(glutReshapeFunc$func.allocate(renderer::reshape, scope));
+    glut_h.glutIdleFunc(glutIdleFunc$func.allocate(renderer::onIdle, scope));
 
     // GLUT Mouse callbacks
     AWTCameraMouseController mouse = (AWTCameraMouseController) chart.getMouse();
 
     // GLUT Mouse click listener
-    glutMouseFunc$callback mouseClickCallback = new glutMouseFunc$callback(){
+    glutMouseFunc$func mouseClickCallback = new glutMouseFunc$func(){
       long time;
       long timePrev;
       @Override
@@ -161,24 +164,24 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
         //System.out.println("mouse x:"+x+" y:"+y + " button:" + button + " state:" + state);
       }
     };
-    glut_h.glutMouseFunc(glutMouseFunc$callback.allocate(mouseClickCallback, scope));
+    glut_h.glutMouseFunc(glutMouseFunc$func.allocate(mouseClickCallback, scope));
 
     // Motion is invoked if a mouse button is pressed, otherwise not
     // https://www.opengl.org/resources/libraries/glut/spec3/node51.html
-    glutMotionFunc$callback mouseMotionCallback = new glutMotionFunc$callback(){
+    glutMotionFunc$func mouseMotionCallback = new glutMotionFunc$func(){
       @Override
       public void apply(int x, int y) {
         mouse.mouseDragged(mouseEvent(x, y, InputEvent.BUTTON1_DOWN_MASK));
         //System.out.println("mouse motion.x:"+x+" y:"+y);
       }
     };
-    glut_h.glutMotionFunc(glutMotionFunc$callback.allocate(mouseMotionCallback, scope));
+    glut_h.glutMotionFunc(glutMotionFunc$func.allocate(mouseMotionCallback, scope));
 
 
     // -----------------------------------------------------
     // Version - GLUT need to be initialized
 
-    System.out.println(version(painter));
+    System.out.println(version(painter, true));
 
     // -----------------------------------------------------
     // Warn : this will block execution
@@ -188,22 +191,17 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
     // glut is OS specific
   }
 
-  @Override
   public void glutSwapBuffers(){
     glut_h.glutSwapBuffers();
   }
 
-  @Override
   public void glutPostRedisplay(){
     glut_h.glutPostRedisplay();
   }
 
-  @Override
   public int glutGetWindowWidth(){
     return glut_h.glutGet(glut_h.GLUT_WINDOW_WIDTH());
   }
-  
-  @Override
   public int glutGetWindowHeight(){
     return glut_h.glutGet(glut_h.GLUT_WINDOW_HEIGHT());
   }
@@ -217,7 +215,11 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
   }
   static Component dummy = new JPanel();
 
-  protected StringBuffer version(PanamaGLPainter painter){
+  protected StringBuffer version(PanamaGLPainter painter) {
+    return version(painter, true);
+  }
+
+  protected StringBuffer version(PanamaGLPainter painter, boolean showExtensions){
     StringBuffer sb = new StringBuffer();
     sb.append("GL_VENDOR     : " + painter.glGetString(glut_h.GL_VENDOR()) + "\n");
     sb.append("GL_RENDERER   : " + painter.glGetString(glut_h.GL_RENDERER()) + "\n");
@@ -227,8 +229,13 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
 
     if(ext!=null) {
       sb.append("GL_EXTENSIONS : " + "\n");
-      for(String e: ext.split(" ")) {
-        sb.append("\t" + e + "\n");
+      if(showExtensions) {
+        for (String e : ext.split(" ")) {
+          sb.append("\t" + e + "\n");
+        }
+      }
+      else{
+        sb.append(ext.split(" ").length);
       }
     }
     else {
@@ -302,7 +309,6 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
       glut_h.glEnable(glut_h.GL_POINT_SMOOTH());
     } else
       glut_h.glDisable(glut_h.GL_POINT_SMOOTH());
-    
   }
 
   @Override
@@ -516,10 +522,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
 
   @Override
   public void glRasterPos3f(float x, float y, float z) {
-    /*if (!(z == 0 || Float.isNaN(z)))
-      throw new NotImplementedException("z:" + z);
-    else*/
-      glut_h.glRasterPos3f(x, y, z);
+    glut_h.glRasterPos3f(x, y, z);
   }
 
   /**
@@ -534,6 +537,17 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
 
   // MOVE FOLLOWING TO GLImage
 
+
+  /**
+   * glPixelZoom is not implemented by GL. This method will do nothing but
+   * triggering a {@link NotImplementedException} in case x and y zoom factor are
+   * not both equal to 1 (i.e. in case a zoom is needed).
+<<<<<<< HEAD
+   *
+=======
+   * 
+>>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
+   */
   @Override
   public void glPixelZoom(float xfactor, float yfactor) {
     if (xfactor != 1 || yfactor != 1)
@@ -560,16 +574,15 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
   }
 
   @Override
-  public void glBitmap(int width, int height, float xorig, float yorig, float xmove, float ymove, byte[] bitmap,
-      int bitmap_offset) {
+  public void glBitmap(int width, int height, float xorig, float yorig, float xmove, float ymove,
+      byte[] bitmap, int bitmap_offset) {
     throw new NotImplementedException();
     // opengl.glut_h.glBitmap(width, height, xorig, yorig, xmove, ymove, bitmap,
     // bitmap_offset);
   }
 
   /**
-   * A very failing implementation. SHOULD SUPPORT AWT BufferedImage in EmulGL -
-   * or reverse converse
+   * A very failing implementation. SHOULD SUPPORT AWT BufferedImage in EmulGL - or reverse converse
    */
   @Override
   public void drawImage(ByteBuffer imageBuffer, int imageWidth, int imageHeight, Coord2d pixelZoom,
@@ -594,16 +607,14 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
 
   /**
    * Process the given font length to further process alignement.
-   * 
-   * Will only return a valid width for known {@link Font} (Helevetica and Times
-   * Roman).
-   * 
-   * Getting text width of any string can be done
-   * {@link #getTextLengthInPixels(Font, String)}.
+   *
+   * Will only return a valid width for known {@link Font} (Helevetica and Times Roman).
+   *
+   * Getting text width of any string can be done {@link #getTextLengthInPixels(Font, String)}.
    */
   @Override
   public int glutBitmapLength(int font, String string) {
-    if (font == Font.BITMAP_HELVETICA_12) {
+    /*if (font == Font.BITMAP_HELVETICA_12) {
       return 6 * string.length();
     } else if (font == Font.BITMAP_HELVETICA_18) {
       return 9 * string.length();
@@ -612,7 +623,8 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
     } else if (font == Font.BITMAP_TIMES_ROMAN_24) {
       return 12 * string.length();
     }
-    return 6 * string.length();
+    return 6 * string.length();*/
+    throw new RuntimeException("not implemented");
   }
 
   boolean allowAutoDetectTextLength = true;
@@ -626,8 +638,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
 
   /**
    * Text length processing based on AWT {@link FontMetrics} obtained by
-   * retrieving the graphic context of the canvas.
-   * 
+   * retrieving the graphic context of the GLCanvas.
    * In case no graphics is available
    */
   @Override
@@ -668,7 +679,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
 
   @Override
   public void glutBitmapString(int font, String string) {
-    //logger.error("not available in generated code");
+    //logger.error("glutBitmapString : not available in generated code");
     //opengl.glut_h.glutBitmapString(font, alloc(string));
 
     // Use freeglut
@@ -726,7 +737,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
   @Override
   public boolean glIsList(int list) {
     logger.error("to be implemented");
-    return false;//opengl.glut_h.glIsList(list);
+    return false;// opengl.glut_h.glIsList(list);
   }
 
   @Override
@@ -740,9 +751,9 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
   public void gluDisk(double inner, double outer, int slices, int loops) {
     logger.error("to be implemented");
 
-    //GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
-    //qobj.Normals = opengl.glut_h.GLU_NONE(); // https://github.com/jzy3d/jzy3d-api/issues/179
-    //opengl.glut_h.gluDisk(qobj, inner, outer, slices, loops);
+    // GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
+    // qobj.Normals = opengl.glut_h.GLU_NONE(); // https://github.com/jzy3d/jzy3d-api/issues/179
+    // opengl.glut_h.gluDisk(qobj, inner, outer, slices, loops);
   }
 
   @Override
@@ -763,8 +774,8 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
   @Override
   public void gluSphere(double radius, int slices, int stacks) {
     logger.error("to be implemented");
-    //GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
-    //opengl.glut_h.gluSphere(qobj, radius, slices, stacks);
+    // GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
+    // opengl.glut_h.gluSphere(qobj, radius, slices, stacks);
   }
 
   @Override
@@ -772,7 +783,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
     logger.error("to be implemented");
 
     // GLUquadricObj qobj = opengl.glut_h.gluNewQuadric();
-    //opengl.glut_h.gluCylinder(qobj, base, top, height, slices, stacks);
+    // opengl.glut_h.gluCylinder(qobj, base, top, height, slices, stacks);
   }
 
   @Override
@@ -811,8 +822,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
     glut_h.glPassThrough(token);
   }
 
-
-// GL STENCIL BUFFER
+  // GL STENCIL BUFFER
 
   @Override
   public void glStencilFunc(StencilFunc func, int ref, int mask) {
@@ -895,15 +905,10 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
   // GL VIEWPOINT
 
   @Override
-  public View getView() {
-    return super.getView();
-  }
-
-  @Override
   public void glOrtho(double left, double right, double bottom, double top, double near_val, double far_val) {
     glut_h.glOrtho(left, right, bottom, top, near_val, far_val);
   }
-  
+
   @Override
   public void gluOrtho2D(double left, double right, double bottom, double top) {
     glut_h.gluOrtho2D(left, right, bottom, top);
@@ -944,7 +949,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
   public void glDisable_ClipPlane(int plane) {
     glut_h.glDisable(clipPlaneId(plane));
   }
-
+  
   /** Return the GL clip plane ID according to an ID in [0;5]*/
   @Override
   public int clipPlaneId(int id) {
@@ -982,7 +987,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
     objPos[1] = (float) objY[0];
     objPos[2] = (float) objZ[0];
 
-    return st==1;
+    return st == 1;
   }
 
   protected double[] dbl(float[] values) {
@@ -994,8 +999,9 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
   }
 
   @Override
-  public boolean gluProject(float objX, float objY, float objZ, float[] model, int model_offset, float[] proj,
-      int proj_offset, int[] view, int view_offset, float[] winPos, int winPos_offset) {
+  public boolean gluProject(float objX, float objY, float objZ, float[] model, int model_offset,
+      float[] proj, int proj_offset, int[] view, int view_offset, float[] winPos,
+      int winPos_offset) {
     // throw new NotImplementedException();
     // opengl.glut_h.gluProject(objx, objy, objz, model, proj, viewport, winx, winy,
     // winz)
@@ -1024,7 +1030,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
     winPos[1] = (float) winy[0];
     winPos[2] = (float) winz[0];
 
-    return out==1;
+    return out == 1;
   }
 
   // GL GET
@@ -1153,7 +1159,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
   public void glLight_Specular(int lightId, Color specularColor) {
     glLightfv(lightId, glut_h.GL_SPECULAR(), specularColor.toArray(), 0);
   }
-  
+
   @Override
   public void glLight_Shininess(int lightId, float value) {
     glLightf(lightId, glut_h.GL_SHININESS(), value);
@@ -1295,6 +1301,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
   }
 
   /* ***************** SHORTCUTS TO GL CONSTANTS *************************** */
+
 
   @Override
   public void glEnable_PolygonOffsetFill() {

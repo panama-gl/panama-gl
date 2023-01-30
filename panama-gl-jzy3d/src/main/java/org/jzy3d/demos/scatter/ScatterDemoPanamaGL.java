@@ -21,7 +21,7 @@ import java.util.Random;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.IChartFactory;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
-import org.jzy3d.chart.factories.PanamaGLPainterFactory_MacOS_10_15_3;
+import org.jzy3d.chart.factories.natives.PanamaGLPainterFactory_MacOS_10_15_3;
 import org.jzy3d.colors.Color;
 import org.jzy3d.maths.Coord3d;
 import org.jzy3d.plot3d.primitives.Scatter;
