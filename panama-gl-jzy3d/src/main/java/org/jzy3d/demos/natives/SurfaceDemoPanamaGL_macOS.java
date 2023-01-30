@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package org.jzy3d.demos.surface;
+package org.jzy3d.demos.natives;
 
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
@@ -23,7 +23,7 @@ import java.lang.foreign.ValueLayout;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.ChartFactory;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
-import org.jzy3d.chart.factories.PanamaGLPainterFactory_MacOS_10_15_3;
+import org.jzy3d.chart.factories.natives.PanamaGLPainterFactory_MacOS_10_15_3;
 import org.jzy3d.colors.Color;
 import org.jzy3d.colors.ColorMapper;
 import org.jzy3d.colors.colormaps.ColorMapRainbow;
@@ -42,9 +42,9 @@ import opengl.macos.v10_15_7.glut_h;
  * @author Martin Pernollet
  *
  */
-//VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+//VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 
-public class SurfaceDemoPanamaGL_macOs {
+public class SurfaceDemoPanamaGL_macOS {
 
   static final float ALPHA_FACTOR = 0.55f;// .61f;
 
@@ -60,8 +60,6 @@ public class SurfaceDemoPanamaGL_macOs {
     glut_h.glutInit(argc, argc);
     
     // ------------------------
-
-    Shape surface = surface();
 
     /**
      * In case the below factory is not working, one can use CPU rendering fallback as follow
@@ -83,7 +81,7 @@ public class SurfaceDemoPanamaGL_macOs {
     float[] pixelScale = {2f,2f};
     chart.getCanvas().setPixelScale(pixelScale);
 
-    chart.open(800,600);
+    chart.open("Displaying in native window (not java)", 800, 600);
     // with GLUT, can't do anything after open until main loop ends
   }
 

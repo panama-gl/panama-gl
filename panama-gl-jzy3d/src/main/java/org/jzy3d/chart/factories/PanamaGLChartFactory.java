@@ -17,6 +17,8 @@
  *******************************************************************************/
 package org.jzy3d.chart.factories;
 
+import org.jzy3d.chart.factories.natives.PanamaGLPainterFactory_MacOS_10_15_3;
+
 public class PanamaGLChartFactory extends ChartFactory {
 
   public PanamaGLChartFactory() {

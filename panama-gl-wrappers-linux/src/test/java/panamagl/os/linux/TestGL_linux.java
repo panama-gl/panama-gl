@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2022 Martin Pernollet & contributors.
+ * Copyright (c) 2022, 2023 Martin Pernollet & contributors.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -15,38 +15,19 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package org.jzy3d.plot3d.rendering.view;
+package panamagl.os.linux;
 
-import org.jzy3d.painters.natives.PanamaGLNativePainter;
+//import static org.mockito.Mockito.spy;
+import org.junit.Test;
 
-public class PanamaGLRenderer {
-  protected View view;
-  
-  protected boolean init = false;
-  
-  public PanamaGLRenderer(View view) {
-    this.view = view;
-  }
+public class TestGL_linux extends LinuxTest{
+    @Test
+    public void whenInitDefault_ThenDoNotInvokeGlut(){
+      if (!checkPlatform())
+        return;
 
-  public void display() {
-    if(!init) {
-      view.init();
-      init = true;
+       // GL_macOS_10_15_3 gl = spy(GL_macOS_10_15_3.class);
+
+
     }
-    view.clear();
-    view.render();
-
-    PanamaGLNativePainter painter = (PanamaGLNativePainter)view.getPainter();
-    painter.glutSwapBuffers();
-  }
-
-  public void reshape(int width, int height) {
-    display();
-  }
-
-  public void onIdle() {
-    PanamaGLNativePainter painter = (PanamaGLNativePainter)view.getPainter();
-    painter.glutPostRedisplay();
-  }
-
 }

@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package org.jzy3d.plot3d.rendering.canvas;
+package org.jzy3d.plot3d.rendering.canvas.natives;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,27 +24,30 @@ import org.apache.log4j.Logger;
 import org.jzy3d.chart.IAnimator;
 import org.jzy3d.chart.factories.IChartFactory;
 import org.jzy3d.maths.Coord2d;
-import org.jzy3d.painters.PanamaGLPainter;
+import org.jzy3d.painters.natives.PanamaGLNativePainter;
+import org.jzy3d.plot3d.rendering.canvas.ICanvasListener;
+import org.jzy3d.plot3d.rendering.canvas.IScreenCanvas;
+import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.scene.Scene;
 import org.jzy3d.plot3d.rendering.view.PanamaGLRenderer;
 import org.jzy3d.plot3d.rendering.view.View;
 
-public class PanamaGLCanvas implements IScreenCanvas{
-  static Logger logger = Logger.getLogger(PanamaGLCanvas.class);
+public class PanamaGLNativeCanvas implements IScreenCanvas{
+  static Logger logger = Logger.getLogger(PanamaGLNativeCanvas.class);
   
   protected View view;
   protected IAnimator animator;
 
-  protected PanamaGLPainter painter;
+  protected PanamaGLNativePainter painter;
   protected PanamaGLRenderer renderer;
 
   protected Coord2d pixelRatio = new Coord2d(1,1);
 
 
-  public PanamaGLCanvas(IChartFactory factory, Scene scene, Quality quality) {
+  public PanamaGLNativeCanvas(IChartFactory factory, Scene scene, Quality quality) {
     view = scene.newView(this, quality);
     renderer = new PanamaGLRenderer(view);
-    painter = (PanamaGLPainter)view.getPainter();
+    painter = (PanamaGLNativePainter)view.getPainter();
     animator = factory.getPainterFactory().newAnimator(this);
   }
 

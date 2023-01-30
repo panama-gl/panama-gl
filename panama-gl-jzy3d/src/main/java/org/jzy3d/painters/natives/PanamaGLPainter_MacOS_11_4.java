@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package org.jzy3d.painters;
+package org.jzy3d.painters.natives;
 
 import static opengl.macos.v10_15_7.glut_h.C_INT;
 import java.awt.Component;
@@ -40,12 +40,22 @@ import org.jzy3d.maths.Array;
 import org.jzy3d.maths.Coord2d;
 import org.jzy3d.maths.Coord3d;
 import org.jzy3d.maths.Rectangle;
+import org.jzy3d.painters.AbstractPainter;
+import org.jzy3d.painters.ColorModel;
+import org.jzy3d.painters.DepthFunc;
+import org.jzy3d.painters.Font;
+import org.jzy3d.painters.ListMode;
+import org.jzy3d.painters.PanamaGLPainter;
+import org.jzy3d.painters.PixelStore;
+import org.jzy3d.painters.RenderMode;
+import org.jzy3d.painters.StencilFunc;
+import org.jzy3d.painters.StencilOp;
 import org.jzy3d.plot3d.pipelines.NotImplementedException;
 import org.jzy3d.plot3d.primitives.PolygonFill;
 import org.jzy3d.plot3d.primitives.PolygonMode;
 import org.jzy3d.plot3d.rendering.canvas.EmulGLCanvas;
-import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
+import org.jzy3d.plot3d.rendering.canvas.natives.PanamaGLNativeCanvas;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
@@ -57,7 +67,7 @@ import opengl.macos.v10_15_7.glutMotionFunc$func;
 import opengl.macos.v10_15_7.glutMouseFunc$func;
 import opengl.macos.v10_15_7.glut_h;
 
-public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements PanamaGLPainter{
+public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements PanamaGLNativePainter{
   static Logger logger = Logger.getLogger(PanamaGLPainter_MacOS_11_4.class);
 
   MemorySession scope;
@@ -107,7 +117,7 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
 
   public void glutStart(Chart chart, Rectangle bounds, String title, String message) {
     var painter = (PanamaGLPainter) chart.getPainter();
-    var canvas = (PanamaGLCanvas) chart.getCanvas();
+    var canvas = (PanamaGLNativeCanvas) chart.getCanvas();
     var renderer = canvas.getRenderer();
     var scope = painter.getScope();
     var allocator = painter.getAllocator();
@@ -587,16 +597,18 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
    */
   @Override
   public int glutBitmapLength(int font, String string) {
-    if (font == Font.BITMAP_HELVETICA_12) {
-      return 6 * string.length();
-    } else if (font == Font.BITMAP_HELVETICA_18) {
-      return 9 * string.length();
-    } else if (font == Font.BITMAP_TIMES_ROMAN_10) {
-      return 5 * string.length();
-    } else if (font == Font.BITMAP_TIMES_ROMAN_24) {
-      return 12 * string.length();
-    }
+    /*if (font == Font.BITMAP_HELVETICA_12) {
     return 6 * string.length();
+  } else if (font == Font.BITMAP_HELVETICA_18) {
+    return 9 * string.length();
+  } else if (font == Font.BITMAP_TIMES_ROMAN_10) {
+    return 5 * string.length();
+  } else if (font == Font.BITMAP_TIMES_ROMAN_24) {
+    return 12 * string.length();
+  }
+  return 6 * string.length();*/
+  //throw new RuntimeException("not implemented");
+    return -1;
   }
 
   boolean allowAutoDetectTextLength = true;

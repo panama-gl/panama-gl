@@ -17,11 +17,10 @@
  *******************************************************************************/
 package panamagl.os.macos;
 
-import static opengl.macos.v10_15_7.glut_h.*;
-import opengl.macos.v10_15_7.glut_h;
+import panamagl.opengl.GL;
 
 public class SampleTriangle {
-    public static void rgbaTriangle2D(int width, int height) {
+    /*public static void rgbaTriangle2D(int width, int height) {
         glViewport(0, 0, width, height);
         glMatrixMode(GL_PROJECTION());
         glLoadIdentity();
@@ -52,5 +51,39 @@ public class SampleTriangle {
         glut_h.glEnd();
         
         glut_h.glFlush();
-    }
+    }*/
+    
+    public static void rgbaTriangle2D(GL gl, int width, int height) {
+      gl.glViewport(0, 0, width, height);
+      gl.glMatrixMode(gl.GL_PROJECTION());
+      gl.glLoadIdentity();
+      gl.glOrtho(0.0, width, 0.0, height, -1.0, 1.0);
+      gl.glMatrixMode(gl.GL_MODELVIEW());
+      gl.glLoadIdentity();
+
+      //-------------------------
+      //glDisable(GL_TEXTURE_2D());
+      gl.glDisable(gl.GL_BLEND());
+      gl.glEnable(gl.GL_DEPTH_TEST());
+
+      //-------------------------
+
+      gl.glBegin(gl.GL_TRIANGLES());
+
+      // bottom left / red
+      gl.glColor4f(1,0,0,1);
+      gl.glVertex3d(0,0,0);
+
+      // bottom right / green
+      gl.glColor4f(0,1,0, 1);
+      gl.glVertex3d(width,0,0);
+
+      // top right / blue
+      gl.glColor4f(0,0,1,1);
+      gl.glVertex3d(width, height,0);
+      gl.glEnd();
+      
+      gl.glFlush();
+  }
+
 }

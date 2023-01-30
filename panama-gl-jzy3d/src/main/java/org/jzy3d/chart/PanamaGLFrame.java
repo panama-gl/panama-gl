@@ -26,7 +26,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import org.jzy3d.chart.factories.IFrame;
 import org.jzy3d.maths.Rectangle;
-import org.jzy3d.painters.PanamaGLPainter;
+import org.jzy3d.painters.natives.PanamaGLNativePainter;
 
 /**
  * This is not a real frame, but just a simple class calling the appropriate painter method to open a native frame.
@@ -51,7 +51,7 @@ public class PanamaGLFrame implements IFrame {
     public void initialize(Chart chart, Rectangle bounds, String title, String message) {
         getPixelScaleWithShortFrame(chart);
 
-        PanamaGLPainter painter = (PanamaGLPainter) chart.getPainter();
+        PanamaGLNativePainter painter = (PanamaGLNativePainter) chart.getPainter();
 
         painter.glutStart(chart, bounds, title, message);
 

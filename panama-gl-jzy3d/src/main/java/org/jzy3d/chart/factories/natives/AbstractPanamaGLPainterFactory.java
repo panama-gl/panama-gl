@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package org.jzy3d.chart.factories;
+package org.jzy3d.chart.factories.natives;
 
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.IAnimator;
@@ -26,13 +26,16 @@ import org.jzy3d.chart.controllers.keyboard.screenshot.IScreenshotKeyController;
 import org.jzy3d.chart.controllers.mouse.camera.AWTCameraMouseController;
 import org.jzy3d.chart.controllers.mouse.camera.ICameraMouseController;
 import org.jzy3d.chart.controllers.mouse.picking.IMousePickingController;
+import org.jzy3d.chart.factories.IChartFactory;
+import org.jzy3d.chart.factories.IFrame;
+import org.jzy3d.chart.factories.IPainterFactory;
 import org.jzy3d.maths.Dimension;
 import org.jzy3d.maths.Rectangle;
 import org.jzy3d.plot3d.pipelines.NotImplementedException;
 import org.jzy3d.plot3d.primitives.symbols.SymbolHandler;
 import org.jzy3d.plot3d.rendering.canvas.ICanvas;
-import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
+import org.jzy3d.plot3d.rendering.canvas.natives.PanamaGLNativeCanvas;
 import org.jzy3d.plot3d.rendering.image.IImageWrapper;
 import org.jzy3d.plot3d.rendering.scene.Scene;
 import org.jzy3d.plot3d.rendering.view.IViewOverlay;
@@ -66,12 +69,12 @@ public abstract class AbstractPanamaGLPainterFactory implements IPainterFactory 
 
     @Override
     public ICanvas newCanvas(IChartFactory factory, Scene scene, Quality quality) {
-        return new PanamaGLCanvas(factory, scene, quality);
+        return new PanamaGLNativeCanvas(factory, scene, quality);
     }
 
     @Override
     public IAnimator newAnimator(ICanvas canvas) {
-        return new PanamaGLAnimator((PanamaGLCanvas) canvas);
+        return new PanamaGLAnimator((PanamaGLNativeCanvas) canvas);
     }
 
     @Override

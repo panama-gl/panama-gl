@@ -15,10 +15,10 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package org.jzy3d.chart.factories;
+package org.jzy3d.chart.factories.natives;
 
 import org.jzy3d.painters.IPainter;
-import org.jzy3d.painters.PanamaGLPainter_Ubuntu_20_04;
+import org.jzy3d.painters.natives.PanamaGLPainter_Ubuntu_20_04;
 
 public class PanamaGLPainterFactory_Ubuntu_20_04 extends AbstractPanamaGLPainterFactory {
 

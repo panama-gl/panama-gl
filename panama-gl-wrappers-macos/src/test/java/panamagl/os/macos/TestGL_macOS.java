@@ -20,9 +20,11 @@ package panamagl.os.macos;
 //import static org.mockito.Mockito.spy;
 import org.junit.Test;
 
-public class TestGL_macOS {
+public class TestGL_macOS extends MacOSTest{
     @Test
     public void whenInitDefault_ThenDoNotInvokeGlut(){
+      if (!checkPlatform())
+        return;
 
        // GL_macOS_10_15_3 gl = spy(GL_macOS_10_15_3.class);
 
