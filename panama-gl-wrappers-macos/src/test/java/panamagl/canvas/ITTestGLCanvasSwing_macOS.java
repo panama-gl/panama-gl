@@ -64,7 +64,7 @@ public class ITTestGLCanvasSwing_macOS {
     
     GLEventAdapter listener = new GLEventAdapter() {
       public void display(GL gl) {
-        SampleTriangle.rgbaTriangle2D(w, h);
+        SampleTriangle.rgbaTriangle2D(gl, w, h);
         //System.out.println("GLEventAdapter : Triangle rendered!");
       }
       @Override
@@ -186,7 +186,7 @@ public class ITTestGLCanvasSwing_macOS {
     // This is the GL Scene to render
     GLEventAdapter listener = new GLEventAdapter() {
       public void display(GL gl) {
-        SampleTriangle.rgbaTriangle2D(w, h);
+        SampleTriangle.rgbaTriangle2D(gl, w, h);
         //System.out.println("GLEventAdapter : Triangle rendered!");
       }
       @Override

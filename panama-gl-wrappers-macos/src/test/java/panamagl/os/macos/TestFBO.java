@@ -31,8 +31,8 @@ public class TestFBO {
   public static int[] BLUE = {0, 0, 255, 255};
 
   public static void givenFBO_whenRenderSomething_ThenGetBufferedImage(GL gl) {
-    String file1 = "target/" + TestFBO_macOS.class.getSimpleName() + "-1.png";
-    String file2 = "target/" + TestFBO_macOS.class.getSimpleName() + "-2.png";
+    String file1 = "target/" + TestFBO.class.getSimpleName() + "-1.png";
+    String file2 = "target/" + TestFBO.class.getSimpleName() + "-2.png";
 
 
     // ----------------------------------
@@ -68,7 +68,7 @@ public class TestFBO {
     // ----------------------------------
     // When Render something and get image
 
-    SampleTriangle.rgbaTriangle2D(width, height);
+    SampleTriangle.rgbaTriangle2D(gl, width, height);
 
     BufferedImage image = fbo.getImage(gl);
 
@@ -136,7 +136,7 @@ public class TestFBO {
     fbo.prepare(gl);
 
     // re-render
-    SampleTriangle.rgbaTriangle2D(width, height);
+    SampleTriangle.rgbaTriangle2D(gl, width, height);
 
     // get a double sized image
     image = fbo.getImage(gl);

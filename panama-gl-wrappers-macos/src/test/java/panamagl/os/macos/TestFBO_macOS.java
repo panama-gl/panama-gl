@@ -25,11 +25,11 @@ import panamagl.opengl.GLContext;
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules
 // jdk.incubator.foreign
 // -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class TestFBO_macOS {
+public class TestFBO_macOS extends MacOSTest{
 
   @Test
   public void given_CGLAndGLUTContext_whenRenderSomething_ThenGetBufferedImage() {
-    if (!new OperatingSystem().isMac())
+    if (!checkPlatform())
       return;
 
     // Given a CGL Context
@@ -49,9 +49,7 @@ public class TestFBO_macOS {
 
   @Test
   public void given_GLUTContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {
-
-    OperatingSystem os = new OperatingSystem();
-    if (!os.isMac())
+    if (!checkPlatform())
       return;
 
     // Given a GLUT context
@@ -67,8 +65,7 @@ public class TestFBO_macOS {
 
   @Test
   public void given_CGLContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {
-    OperatingSystem os = new OperatingSystem();
-    if (!os.isMac())
+    if (!checkPlatform())
       return;
 
     // Given a CGL context ONLY
