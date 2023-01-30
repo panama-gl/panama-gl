@@ -17,7 +17,6 @@
  *******************************************************************************/
 package org.jzy3d.chart.factories.natives;
 
-import org.jzy3d.chart.factories.AbstractPanamaGLPainterFactory;
 import org.jzy3d.painters.IPainter;
 import org.jzy3d.painters.natives.PanamaGLPainter_Ubuntu_20_04;
 

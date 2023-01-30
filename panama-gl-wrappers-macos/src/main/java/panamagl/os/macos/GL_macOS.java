@@ -33,7 +33,6 @@ import org.jzy3d.maths.Array;
 import org.jzy3d.maths.Rectangle;
 import org.jzy3d.painters.Font;
 import org.jzy3d.painters.StencilOp;
-import opengl.macos.v10_15_7.glutMotionFunc$func;
 import opengl.macos.v10_15_7.glutMouseFunc$func;
 import opengl.macos.v10_15_7.glut_h;
 import panamagl.opengl.AbstractGL;
@@ -1471,6 +1470,90 @@ public class GL_macOS extends AbstractGL implements GL {
   public void glStencilFunc(int gl_GREATER, int ref, int mask) {
     glut_h.glStencilFunc(gl_GREATER, ref, mask);
     
+  }
+
+
+  @Override
+  public int GL_LINE_STIPPLE() {
+    return glut_h.GL_LINE_STIPPLE();
+  }
+
+
+  @Override
+  public int GL_POLYGON() {
+    return glut_h.GL_POLYGON();
+  }
+
+
+  @Override
+  public int GL_TRIANGLES() {
+    return glut_h.GL_TRIANGLES();
+  }
+
+
+  @Override
+  public int GL_POINTS() {
+    return glut_h.GL_POINTS();
+  }
+
+
+  @Override
+  public int GL_LINE_STRIP() {
+    return glut_h.GL_LINE_STRIP();
+  }
+
+
+  @Override
+  public int GL_LINE_LOOP() {
+    return glut_h.GL_LINE_LOOP();
+  }
+
+
+  @Override
+  public int GL_LINES() {
+    return glut_h.GL_LINES();
+  }
+
+
+  @Override
+  public int GL_CULL_FACE() {
+    return glut_h.GL_CULL_FACE();
+  }
+
+
+  @Override
+  public int GL_CCW() {
+    return glut_h.GL_CCW();
+  }
+
+
+  @Override
+  public int GL_COLOR_MATERIAL() {
+    return glut_h.GL_COLOR_MATERIAL();
+  }
+
+
+  @Override
+  public int GL_POINT_SMOOTH_HINT() {
+    return glut_h.GL_POINT_SMOOTH_HINT();
+  }
+
+
+  @Override
+  public int GL_STENCIL() {
+    return glut_h.GL_STENCIL();
+  }
+
+
+  @Override
+  public int GL_POLYGON_OFFSET_LINE() {
+    return glut_h.GL_POLYGON_OFFSET_LINE();
+  }
+
+
+  @Override
+  public int GL_POLYGON_OFFSET_FILL() {
+    return glut_h.GL_POLYGON_OFFSET_FILL();
   }
 
 

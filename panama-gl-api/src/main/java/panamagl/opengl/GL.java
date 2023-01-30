@@ -298,6 +298,21 @@ public interface GL {
     int GL_NOTEQUAL();
     void glStencilOp(int int1, int int2, int int3);
     void glStencilFunc(int gl_GREATER, int ref, int mask);
+    
+    int GL_LINE_STIPPLE();
+    int GL_POLYGON();
+    int GL_TRIANGLES();
+    int GL_POINTS();
+    int GL_LINE_STRIP();
+    int GL_LINE_LOOP();
+    int GL_LINES();
+    int GL_CULL_FACE();
+    int GL_CCW();
+    int GL_COLOR_MATERIAL();
+    int GL_POINT_SMOOTH_HINT();
+    int GL_STENCIL();
+    int GL_POLYGON_OFFSET_LINE();
+    int GL_POLYGON_OFFSET_FILL();
 
 }
 

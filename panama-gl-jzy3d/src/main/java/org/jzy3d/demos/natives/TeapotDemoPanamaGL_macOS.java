@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package org.jzy3d.demos.teapot;
+package org.jzy3d.demos.natives;
 
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.ChartFactory;
@@ -26,7 +26,7 @@ import org.jzy3d.plot3d.primitives.Teapot;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.lights.Light;
 
-public class TeapotDemoPanamaGL {
+public class TeapotDemoPanamaGL_macOS {
 
   public static void main(String[] args) {
     //LoggerUtils.maximal();

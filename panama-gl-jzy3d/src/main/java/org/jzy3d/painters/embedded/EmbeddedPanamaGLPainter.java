@@ -3,7 +3,6 @@ package org.jzy3d.painters.embedded;
 import java.awt.Component;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;
@@ -15,13 +14,10 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import javax.swing.JPanel;
 import org.apache.log4j.Logger;
-import org.jzy3d.chart.Chart;
-import org.jzy3d.chart.controllers.mouse.camera.AWTCameraMouseController;
 import org.jzy3d.colors.Color;
 import org.jzy3d.maths.Array;
 import org.jzy3d.maths.Coord2d;
 import org.jzy3d.maths.Coord3d;
-import org.jzy3d.maths.Rectangle;
 import org.jzy3d.painters.AbstractPainter;
 import org.jzy3d.painters.ColorModel;
 import org.jzy3d.painters.DepthFunc;
@@ -32,12 +28,10 @@ import org.jzy3d.painters.PixelStore;
 import org.jzy3d.painters.RenderMode;
 import org.jzy3d.painters.StencilFunc;
 import org.jzy3d.painters.StencilOp;
-import org.jzy3d.painters.natives.PanamaGLPainter_MacOS_10_15_3;
 import org.jzy3d.plot3d.pipelines.NotImplementedException;
 import org.jzy3d.plot3d.primitives.PolygonFill;
 import org.jzy3d.plot3d.primitives.PolygonMode;
 import org.jzy3d.plot3d.rendering.canvas.EmulGLCanvas;
-import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
@@ -64,7 +58,15 @@ public class EmbeddedPanamaGLPainter extends AbstractPainter implements PanamaGL
     }
   }
 
-  /////////////////////////////////////////////
+  public GL getGL() {
+    return gl;
+  }
+
+  public void setGL(GL gl) {
+    this.gl = gl;
+  }
+
+
 
   public MemorySession getScope() {
     return scope;
@@ -94,104 +96,6 @@ public class EmbeddedPanamaGLPainter extends AbstractPainter implements PanamaGL
     return gl.glGetString(stringID);
   }
 
-  /////////////////////////////////////////////
-/* static int k = 0;
- * 
-  public void glutStart(Chart chart, Rectangle bounds, String title, String message) {
-    
-    
-    System.out.println("Painter : glutStart " + (k++));
-
-    var painter = (PanamaGLPainter) chart.getPainter();
-    var canvas = (PanamaGLCanvas) chart.getCanvas();
-    var renderer = canvas.getRenderer();
-    var scope = painter.getScope();
-    var allocator = painter.getAllocator();
-    var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
-
-
-    // GLUT Init window
-    // https://github.com/jzy3d/panama-gl/issues/16
-    // gl.glutInit(argc, argc);
-
-System.out.println("post init");
-    gl.glutInitDisplayMode(gl.GLUT_DOUBLE() | gl.GLUT_RGB() | gl.GLUT_DEPTH());
-    gl.glutInitWindowSize(bounds.width, bounds.height);
-    //gl.glutInitWindowPosition(bounds.x, bounds.y);
-    gl.glutCreateWindow(title + "/" + message);
-
-    // GLUT Display/Idle callback
-    gl.glutDisplayFunc();//glutDisplayFunc$func.allocate(renderer::display, scope)
-    gl.glutReshapeFunc(glutReshapeFunc$func.allocate(renderer::reshape, scope));
-    gl.glutIdleFunc(glutIdleFunc$func.allocate(renderer::onIdle, scope));
-
-    // GLUT Mouse callbacks
-    AWTCameraMouseController mouse = (AWTCameraMouseController) chart.getMouse();
-
-    // GLUT Mouse click listener
-    glutMouseFunc$func mouseClickCallback = new glutMouseFunc$func(){
-      long time;
-      long timePrev;
-      @Override
-      public void apply(int button, int state, int x, int y) {
-        int clickCount = 1;
-        time = System.currentTimeMillis();
-        if(timePrev>0){
-          long elapsed = time-timePrev;
-          if(elapsed<200){
-            clickCount++;
-          }
-        }
-        if(state==0)
-          mouse.mousePressed(mouseEvent(x, y, InputEvent.BUTTON1_DOWN_MASK, clickCount));
-        else if(state==1)
-          mouse.mouseReleased(mouseEvent(x, y, InputEvent.BUTTON1_DOWN_MASK, clickCount));
-
-        timePrev = time;
-        //System.out.println("mouse x:"+x+" y:"+y + " button:" + button + " state:" + state);
-      }
-    };
-    gl.glutMouseFunc(glutMouseFunc$func.allocate(mouseClickCallback, scope));
-
-    // Motion is invoked if a mouse button is pressed, otherwise not
-    // https://www.opengl.org/resources/libraries/glut/spec3/node51.html
-    glutMotionFunc$func mouseMotionCallback = new glutMotionFunc$func(){
-      @Override
-      public void apply(int x, int y) {
-        mouse.mouseDragged(mouseEvent(x, y, InputEvent.BUTTON1_DOWN_MASK));
-        //System.out.println("mouse motion.x:"+x+" y:"+y);
-      }
-    };
-    gl.glutMotionFunc(glutMotionFunc$func.allocate(mouseMotionCallback, scope));
-
-
-    // -----------------------------------------------------
-    // Version - GLUT need to be initialized
-
-    System.out.println(version(painter, true));
-
-    // -----------------------------------------------------
-    // Warn : this will block execution
-
-    gl.glutMainLoop();
-
-    // glut is OS specific
-  }
-
-  public void glutSwapBuffers(){
-    gl.glutSwapBuffers();
-  }
-
-  public void glutPostRedisplay(){
-    gl.glutPostRedisplay();
-  }
-
-  public int glutGetWindowWidth(){
-    return gl.glutGet(gl.GLUT_WINDOW_WIDTH());
-  }
-  public int glutGetWindowHeight(){
-    return gl.glutGet(gl.GLUT_WINDOW_HEIGHT());
-  }*/
 
   protected static MouseEvent mouseEvent(int x, int y, int modifiers) {
     return mouseEvent(x,y,modifiers,1);
@@ -1248,202 +1152,199 @@ System.out.println("post init");
   }
 
   @Override
-  public void glMaterial(MaterialProperty material, Color color, boolean b) {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glMaterial(MaterialProperty material, float[] value, boolean b) {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glEnable_Blend() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glDisable_Blend() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glMatrixMode_ModelView() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glMatrixMode_Projection() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glBegin_Polygon() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glBegin_Quad() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glBegin_Triangle() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glBegin_Point() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glBegin_LineStrip() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glBegin_LineLoop() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glBegin_Line() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glEnable_LineStipple() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glDisable_LineStipple() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
   public void glEnable_PolygonOffsetFill() {
-    // TODO Auto-generated method stub
-    
+    glEnable(gl.GL_POLYGON_OFFSET_FILL());
   }
 
   @Override
   public void glDisable_PolygonOffsetFill() {
-    // TODO Auto-generated method stub
-    
+    glDisable(gl.GL_POLYGON_OFFSET_FILL());
   }
 
   @Override
   public void glEnable_PolygonOffsetLine() {
-    // TODO Auto-generated method stub
-    
+    glEnable(gl.GL_POLYGON_OFFSET_LINE());
   }
 
   @Override
   public void glDisable_PolygonOffsetLine() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glEnable_CullFace() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glDisable_CullFace() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glFrontFace_ClockWise() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glCullFace_Front() {
-    // TODO Auto-generated method stub
-    
+    glDisable(gl.GL_POLYGON_OFFSET_LINE());
   }
 
   @Override
   public void glDisable_Lighting() {
-    // TODO Auto-generated method stub
-    
+    glDisable(gl.GL_LIGHTING());
   }
 
   @Override
   public void glEnable_Lighting() {
-    // TODO Auto-generated method stub
-    
+    glEnable(gl.GL_LIGHTING());
+  }
+
+  @Override
+  public void glEnable_LineStipple() {
+    glEnable(gl.GL_LINE_STIPPLE());
+  }
+
+  @Override
+  public void glDisable_LineStipple() {
+    glDisable(gl.GL_LINE_STIPPLE());
+  }
+
+  @Override
+  public void glEnable_Blend() {
+    glEnable(gl.GL_BLEND());
+  }
+
+  @Override
+  public void glDisable_Blend() {
+    glDisable(gl.GL_BLEND());
+  }
+
+  @Override
+  public void glMatrixMode_ModelView() {
+    glMatrixMode(gl.GL_MODELVIEW());
+  }
+
+  @Override
+  public void glMatrixMode_Projection() {
+    glMatrixMode(gl.GL_PROJECTION());
+  }
+
+  @Override
+  public void glBegin_Polygon() {
+    glBegin(gl.GL_POLYGON());
+  }
+
+  @Override
+  public void glBegin_Quad() {
+    glBegin(gl.GL_QUADS());
+  }
+
+  @Override
+  public void glBegin_Triangle() {
+    glBegin(gl.GL_TRIANGLES());
+  }
+
+  @Override
+  public void glBegin_Point() {
+    glBegin(gl.GL_POINTS());
+  }
+
+  @Override
+  public void glBegin_LineStrip() {
+    glBegin(gl.GL_LINE_STRIP());
+  }
+
+  @Override
+  public void glBegin_LineLoop() {
+    glBegin(gl.GL_LINE_LOOP());
+  }
+
+  @Override
+  public void glBegin_Line() {
+    glBegin(gl.GL_LINES());
+  }
+
+  @Override
+  public void glEnable_CullFace() {
+    glEnable(gl.GL_CULL_FACE());
+  }
+
+  @Override
+  public void glDisable_CullFace() {
+    glDisable(gl.GL_CULL_FACE());
+  }
+
+  @Override
+  public void glFrontFace_ClockWise() {
+    glFrontFace(gl.GL_CCW());
+  }
+
+  @Override
+  public void glCullFace_Front() {
+    glCullFace(gl.GL_FRONT());
   }
 
   @Override
   public void glEnable_ColorMaterial() {
-    // TODO Auto-generated method stub
-    
+    glEnable(gl.GL_COLOR_MATERIAL());
+  }
+
+  @Override
+  public void glMaterial(MaterialProperty material, Color color, boolean isFront) {
+    if (isFront) {
+      glMaterialfv(gl.GL_FRONT(), materialProperty(material), color.toArray(), 0);
+    } else {
+      glMaterialfv(gl.GL_BACK(), materialProperty(material), color.toArray(), 0);
+    }
+  }
+
+  @Override
+  public void glMaterial(MaterialProperty material, float[] color, boolean isFront) {
+    if (isFront) {
+      glMaterialfv(gl.GL_FRONT(), materialProperty(material), color, 0);
+    } else {
+      glMaterialfv(gl.GL_BACK(), materialProperty(material), color, 0);
+    }
+  }
+
+  protected int materialProperty(MaterialProperty material) {
+    switch (material) {
+    case AMBIENT:
+      return gl.GL_AMBIENT();
+    case DIFFUSE:
+      return gl.GL_DIFFUSE();
+    case SPECULAR:
+      return gl.GL_SPECULAR();
+    case SHININESS:
+      return gl.GL_SHININESS();
+    }
+    throw new IllegalArgumentException("Unsupported property '" + material + "'");
   }
 
   @Override
   public void glEnable_PointSmooth() {
-    // TODO Auto-generated method stub
-    
+    glEnable(gl.GL_POINT_SMOOTH());
   }
 
   @Override
   public void glHint_PointSmooth_Nicest() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glEnable_DepthTest() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glDisable_DepthTest() {
-    // TODO Auto-generated method stub
-    
+    glHint(gl.GL_POINT_SMOOTH_HINT(), gl.GL_NICEST());
   }
 
   @Override
   public void glDepthFunc(DepthFunc func) {
-    // TODO Auto-generated method stub
-    
+    switch(func) {
+      case GL_ALWAYS: gl.glDepthFunc(gl.GL_ALWAYS()); break;
+      case GL_NEVER: gl.glDepthFunc(gl.GL_NEVER()); break;
+      case GL_EQUAL: gl.glDepthFunc(gl.GL_EQUAL()); break;
+      case GL_GEQUAL: gl.glDepthFunc(gl.GL_GEQUAL()); break;
+      case GL_GREATER: gl.glDepthFunc(gl.GL_GREATER()); break;
+      case GL_LEQUAL: gl.glDepthFunc(gl.GL_LEQUAL()); break;
+      case GL_LESS: gl.glDepthFunc(gl.GL_LESS()); break;
+      case GL_NOTEQUAL: gl.glDepthFunc(gl.GL_NOTEQUAL()); break;
+      default: throw new RuntimeException("Enum value not supported : " + func);
+    }
+  }
+
+  @Override
+  public void glEnable_DepthTest() {
+    gl.glEnable(gl.GL_DEPTH_TEST());
+  }
+
+  @Override
+  public void glDisable_DepthTest() {
+    gl.glDisable(gl.GL_DEPTH_TEST());
   }
 
   @Override
   public void glEnable_Stencil() {
-    // TODO Auto-generated method stub
-    
+    gl.glEnable(gl.GL_STENCIL());
   }
 
   @Override
   public void glDisable_Stencil() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  
+    gl.glDisable(gl.GL_STENCIL());
+  }  
 }

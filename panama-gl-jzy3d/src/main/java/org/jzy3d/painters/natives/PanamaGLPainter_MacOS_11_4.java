@@ -54,8 +54,8 @@ import org.jzy3d.plot3d.pipelines.NotImplementedException;
 import org.jzy3d.plot3d.primitives.PolygonFill;
 import org.jzy3d.plot3d.primitives.PolygonMode;
 import org.jzy3d.plot3d.rendering.canvas.EmulGLCanvas;
-import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
+import org.jzy3d.plot3d.rendering.canvas.natives.PanamaGLNativeCanvas;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
@@ -117,7 +117,7 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
 
   public void glutStart(Chart chart, Rectangle bounds, String title, String message) {
     var painter = (PanamaGLPainter) chart.getPainter();
-    var canvas = (PanamaGLCanvas) chart.getCanvas();
+    var canvas = (PanamaGLNativeCanvas) chart.getCanvas();
     var renderer = canvas.getRenderer();
     var scope = painter.getScope();
     var allocator = painter.getAllocator();

@@ -17,17 +17,17 @@
  *******************************************************************************/
 package org.jzy3d.chart;
 
-import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
+import org.jzy3d.plot3d.rendering.canvas.IScreenCanvas;
 
 public class PanamaGLAnimator implements IAnimator {
   private static final int RENDERING_LOOP_PAUSE = 100;
-  protected PanamaGLCanvas canvas;
+  protected IScreenCanvas canvas;
   protected Thread t;
   protected boolean loop = false;
   protected static int id = 0;
 
 
-  public PanamaGLAnimator(PanamaGLCanvas canvas) {
+  public PanamaGLAnimator(IScreenCanvas canvas) {
     this.canvas = canvas;
   }
 

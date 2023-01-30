@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package org.jzy3d.demos.scatter;
+package org.jzy3d.demos.natives;
 
 import java.util.Random;
 import org.jzy3d.chart.Chart;
@@ -28,7 +28,7 @@ import org.jzy3d.plot3d.primitives.Scatter;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 
 // -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class ScatterDemoPanamaGL  {
+public class ScatterDemoPanamaGL_macOS  {
   public static void main(String[] args) {
     IChartFactory f = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
     Chart chart = f.newChart(Quality.Advanced());

@@ -1353,4 +1353,87 @@ public class GL_linux extends AbstractGL implements GL  {
       glut_h.glStencilFunc(gl_GREATER, ref, mask);
       
     }
+    
+    @Override
+    public int GL_LINE_STIPPLE() {
+      return glut_h.GL_LINE_STIPPLE();
+    }
+
+
+    @Override
+    public int GL_POLYGON() {
+      return glut_h.GL_POLYGON();
+    }
+
+
+    @Override
+    public int GL_TRIANGLES() {
+      return glut_h.GL_TRIANGLES();
+    }
+
+
+    @Override
+    public int GL_POINTS() {
+      return glut_h.GL_POINTS();
+    }
+
+
+    @Override
+    public int GL_LINE_STRIP() {
+      return glut_h.GL_LINE_STRIP();
+    }
+
+
+    @Override
+    public int GL_LINE_LOOP() {
+      return glut_h.GL_LINE_LOOP();
+    }
+
+
+    @Override
+    public int GL_LINES() {
+      return glut_h.GL_LINES();
+    }
+
+
+    @Override
+    public int GL_CULL_FACE() {
+      return glut_h.GL_CULL_FACE();
+    }
+
+
+    @Override
+    public int GL_CCW() {
+      return glut_h.GL_CCW();
+    }
+
+
+    @Override
+    public int GL_COLOR_MATERIAL() {
+      return glut_h.GL_COLOR_MATERIAL();
+    }
+
+
+    @Override
+    public int GL_POINT_SMOOTH_HINT() {
+      return glut_h.GL_POINT_SMOOTH_HINT();
+    }
+
+
+    @Override
+    public int GL_STENCIL() {
+      return glut_h.GL_STENCIL();
+    }
+
+
+    @Override
+    public int GL_POLYGON_OFFSET_LINE() {
+      return glut_h.GL_POLYGON_OFFSET_LINE();
+    }
+
+
+    @Override
+    public int GL_POLYGON_OFFSET_FILL() {
+      return glut_h.GL_POLYGON_OFFSET_FILL();
+    }
 }
