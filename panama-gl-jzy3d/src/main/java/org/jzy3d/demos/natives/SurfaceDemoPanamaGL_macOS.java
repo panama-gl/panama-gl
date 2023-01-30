@@ -61,8 +61,6 @@ public class SurfaceDemoPanamaGL_macOS {
     
     // ------------------------
 
-    Shape surface = surface();
-
     /**
      * In case the below factory is not working, one can use CPU rendering fallback as follow
      * <code>

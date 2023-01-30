@@ -16,6 +16,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
 package org.jzy3d.demos.embedded;
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.SegmentAllocator;
+import java.lang.foreign.ValueLayout;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.ChartFactory;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
@@ -29,6 +32,8 @@ import org.jzy3d.plot3d.builder.SurfaceBuilder;
 import org.jzy3d.plot3d.builder.concrete.OrthonormalGrid;
 import org.jzy3d.plot3d.primitives.Shape;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
+import com.jogamp.opengl.GLProfile;
+import opengl.macos.v10_15_7.glut_h;
 
 
 
@@ -38,7 +43,7 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
  * @author Martin Pernollet
  *
  */
-//VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+//VM ARGS : -XstartOnFirstThread --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 
 public class SurfaceDemoPanamaGL_macOS_embedded {
   static {
@@ -50,9 +55,16 @@ public class SurfaceDemoPanamaGL_macOS_embedded {
   public static void main(String[] args) {
     //GLProfile.initSingleton();
     
-    // loading GL manually
+ // loading GL manually
     System.loadLibrary("GL");
     System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
+
+    // https://github.com/jzy3d/panama-gl/issues/16
+    var scope = MemorySession.openConfined();
+    var allocator = SegmentAllocator.newNativeArena(scope);
+    var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
+    glut_h.glutInit(argc, argc);
+    
 
     // https://github.com/jzy3d/panama-gl/issues/16
     /*var scope = MemorySession.openConfined();

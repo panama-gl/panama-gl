@@ -26,6 +26,8 @@ import org.jzy3d.plot3d.primitives.Teapot;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.lights.Light;
 
+
+// VMARGS : -XstartOnFirstThread --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class TeapotDemoPanamaGL_macOS {
 
   public static void main(String[] args) {
