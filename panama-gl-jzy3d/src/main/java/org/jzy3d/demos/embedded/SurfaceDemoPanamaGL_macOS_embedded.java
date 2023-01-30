@@ -16,7 +16,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
 package org.jzy3d.demos.embedded;
-
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.ChartFactory;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
@@ -32,6 +31,7 @@ import org.jzy3d.plot3d.primitives.Shape;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 
 
+
 /**
  * Demo an surface chart made with Panama (JEP-412).
  *
@@ -41,6 +41,9 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 //VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 
 public class SurfaceDemoPanamaGL_macOS_embedded {
+  static {
+    jogamp.nativewindow.jawt.JAWTUtil_ a;
+  }
 
   static final float ALPHA_FACTOR = 0.55f;// .61f;
 

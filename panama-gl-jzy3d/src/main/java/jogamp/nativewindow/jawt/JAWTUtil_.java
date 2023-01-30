@@ -43,27 +43,11 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.geom.AffineTransform;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
 import java.util.Map;
-
-import com.jogamp.nativewindow.AbstractGraphicsDevice;
-import com.jogamp.nativewindow.AbstractGraphicsScreen;
-import com.jogamp.nativewindow.NativeWindowException;
-import com.jogamp.nativewindow.NativeWindowFactory;
-import com.jogamp.nativewindow.ToolkitLock;
-import com.jogamp.nativewindow.awt.AWTGraphicsScreen;
-
-import jogamp.common.os.PlatformPropsImpl;
-import jogamp.nativewindow.Debug;
-import jogamp.nativewindow.NWJNILibLoader;
-import jogamp.nativewindow.jawt.x11.X11SunJDKReflection;
-import jogamp.nativewindow.macosx.OSXUtil;
-import jogamp.nativewindow.x11.X11Lib;
-
 import com.jogamp.common.ExceptionUtils;
 import com.jogamp.common.os.Platform;
 import com.jogamp.common.util.PropertyAccess;
@@ -71,6 +55,18 @@ import com.jogamp.common.util.UnsafeUtil;
 import com.jogamp.common.util.VersionNumber;
 import com.jogamp.common.util.locks.LockFactory;
 import com.jogamp.common.util.locks.RecursiveLock;
+import com.jogamp.nativewindow.AbstractGraphicsDevice;
+import com.jogamp.nativewindow.AbstractGraphicsScreen;
+import com.jogamp.nativewindow.NativeWindowException;
+import com.jogamp.nativewindow.NativeWindowFactory;
+import com.jogamp.nativewindow.ToolkitLock;
+import com.jogamp.nativewindow.awt.AWTGraphicsScreen;
+import jogamp.common.os.PlatformPropsImpl;
+import jogamp.nativewindow.Debug;
+import jogamp.nativewindow.NWJNILibLoader;
+import jogamp.nativewindow.jawt.x11.X11SunJDKReflection;
+import jogamp.nativewindow.macosx.OSXUtil;
+import jogamp.nativewindow.x11.X11Lib;
 
 public class JAWTUtil_ {
   public static final boolean DEBUG = Debug.debug("JAWT");
@@ -460,27 +456,27 @@ public class JAWTUtil_ {
 
     // trigger native AWT toolkit / properties initialization
     Map<?,?> desktophints = null;
-    try {
+    //try {
         if(EventQueue.isDispatchThread()) {
             desktophints = (Map<?,?>)(Toolkit.getDefaultToolkit().getDesktopProperty("awt.font.desktophints"));
         } else {
             final ArrayList<Map<?,?>> desktophintsBucket = new ArrayList<Map<?,?>>(1);
-            EventQueue.invokeAndWait(new Runnable() {
-                @Override
-                public void run() {
+            //EventQueue.invokeAndWait(new Runnable() {
+            //    @Override
+            //    public void run() {
                     final Map<?,?> _desktophints = (Map<?,?>)(Toolkit.getDefaultToolkit().getDesktopProperty("awt.font.desktophints"));
                     if(null!=_desktophints) {
                         desktophintsBucket.add(_desktophints);
                     }
-                }
-            });
+            //    }
+            //});
             desktophints = ( desktophintsBucket.size() > 0 ) ? desktophintsBucket.get(0) : null ;
         }
-    } catch (final InterruptedException ex) {
-        ex.printStackTrace();
-    } catch (final InvocationTargetException ex) {
-        ex.printStackTrace();
-    }
+    //} catch (final InterruptedException ex) {
+    //    ex.printStackTrace();
+    //} catch (final InvocationTargetException ex) {
+    //    ex.printStackTrace();
+    //}
 
     if (DEBUG) {
         System.err.println("JAWTUtil: Has sun.awt.SunToolkit: awtLock/awtUnlock " + hasSTKAWTLock + ", disableBackgroundErase "+(null!=stkDisableBackgroundEraseMID));
