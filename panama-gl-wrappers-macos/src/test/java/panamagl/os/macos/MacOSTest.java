@@ -12,7 +12,7 @@ public class MacOSTest {
     boolean ismacos = os.isMac();
 
     if(!ismacos) {
-      System.err.println("Skip test since not on macOS : " + os);
+      System.err.println(" !! \n    Skip test since not on macOS : " + os + "\n !!");
     }
     
     return ismacos;

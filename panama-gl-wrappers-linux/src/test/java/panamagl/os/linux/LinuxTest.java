@@ -12,7 +12,7 @@ public class LinuxTest {
     boolean isunix = os.isUnix();
 
     if(!isunix) {
-      System.err.println("Skip test since not on Linux : " + os);
+      System.err.println(" !! \n    Skip test since not on Linux : " + os + "\n !!");
     }
     
     return isunix;
