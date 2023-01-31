@@ -24,6 +24,14 @@ We here show how to use PanamaGL to run OpenGL based rendering application both 
 
 ## Demos
 
+You can find demos in these projects
+* [panama-gl-samples](panama-gl-samples) PanamaGL Swing & AWT Samples
+* [panama-gl-jzy3d](panama-gl-jzy3d) Benchmarks
+  * Jzy3D Native samples (direct draw to an OS window)
+  * Jzy3D Embedded samples (indirect draw to a Java window)
+* [panama-gl-wrappers-macos](panama-gl-wrappers-macos) Unit tests in src/test/java 
+
+
 ### 3D offscreen GL demo
 
 * `TestFBO_macOS` and `DemoFBO_Offscreen_macOS`
