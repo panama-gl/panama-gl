@@ -11,7 +11,7 @@
     <artifactId>panama-gl-ui-javafx</artifactId>
     <packaging>jar</packaging>
 
-    <name>PanamaGL for JavaFX</name>
+    <name>Panama GL JavaFX</name>
 
     <properties>
         <main.class>hellofx.HelloFX</main.class>
