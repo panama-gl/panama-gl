@@ -25,7 +25,7 @@ On macOS, OpenGL must be invoked from main thread.
 
 ### GLUT initialization
 
-`glut_h.glutInit(...)` must be called only once in the lifetime of a program. As it might be called by other libs than PanamaGL, the factory initializer of a `GLContext` (e.g. `PanamaGLFactory_macOS.newGLContext()`) may return a `GLUTContext` initialized with `init(false)` to prevent calling `glut_h.glutInit(...)` a second time.
+Console says `GLUT Warning: glutInit being called a second time.`? `glut_h.glutInit(...)` must be called only once in the lifetime of a program. As it might be called by other libs than PanamaGL, the factory initializer of a `GLContext` (e.g. `PanamaGLFactory_macOS.newGLContext()`) may return a `GLUTContext` initialized with `init(false)` to prevent calling `glut_h.glutInit(...)` a second time.
 
 I suspect GLUT being init first by the JVM, hence the bypass in the macOS factory implementation. 
 
