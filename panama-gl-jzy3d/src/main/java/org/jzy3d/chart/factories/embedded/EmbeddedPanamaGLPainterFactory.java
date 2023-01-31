@@ -1,6 +1,11 @@
 package org.jzy3d.chart.factories.embedded;
 
-import org.jzy3d.bridge.awt.FrameAWT;
+import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.SwingUtilities;
+
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.IAnimator;
 import org.jzy3d.chart.PanamaGLAnimator;
@@ -103,16 +108,92 @@ public class EmbeddedPanamaGLPainterFactory implements IPainterFactory{
 
   @Override
   public IFrame newFrame(Chart chart) {
-      return new PanamaGLFrame(chart);
+      
+	    // Use this to avoid Swing hangs
+	    /*SwingUtilities.invokeLater(new Runnable() {
+	      @Override
+	      public void run() {
+
+	        // Add panel to frame
+	        frame.add(panel, BorderLayout.CENTER);
+
+	        // Open frame
+	        System.out.println("-----------------------------");
+	        System.out.println("BEFORE Frame.setVisible(true)");
+	        System.out.println("-----------------------------");
+	        frame.setVisible(true);
+	        System.out.println("-----------------------------");
+	        System.out.println("AFTER Frame.setVisible(true)");
+	        System.out.println("-----------------------------");
+
+	      }
+	    });*/
+
+	  return newFrame(chart, new Rectangle(0,0, 800,600), "PanamaGL");
   }
 
   @Override
   public IFrame newFrame(Chart chart, Rectangle bounds, String title) {
-    FrameAWT f = new FrameAWT();
+    FrameSwing f = new FrameSwing();
     f.initialize(chart, bounds, title);
     
     return f;
   }
+  
+  public IFrame newFrameAWT(Chart chart, Rectangle bounds, String title) {
+	    FrameAWT f = new FrameAWT() {
+	    	  
+	    	  @Override
+	    	  public void initialize(Chart chart, Rectangle bounds, String title, String message) {
+	    	    this.chart = chart;
+	    	    if (message != null) {
+	    	      this.setTitle(title + message);
+	    	    } else {
+	    	      this.setTitle(title);
+	    	    }
+
+	    	    /*SwingUtilities.invokeLater(new Runnable() {
+	    		      @Override
+	    		      public void run() {*/
+
+	      		        System.out.println("-----------------------------");
+	      		        System.out.println("BEFORE Frame.setVisible(true)");
+	      		        System.out.println("-----------------------------");
+
+	    		        // Add panel to frame
+	    		        //add(panel, BorderLayout.CENTER);
+
+	    	    	    add((java.awt.Component) chart.getCanvas());
+	    	    	    pack();
+	    	    	    setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
+	    	    	    setVisible(true);
+
+	    		        // Open frame
+	    		        System.out.println("-----------------------------");
+	    		        System.out.println("AFTER Frame.setVisible(true)");
+	    		        System.out.println("-----------------------------");
+
+	    		      /*}
+	    		    });*/
+
+
+	    	    this.addWindowListener(new WindowAdapter() {
+	    	      @Override
+	    	      public void windowClosing(WindowEvent e) {
+	    	        if(chart!=null) {
+	    	          remove((java.awt.Component) chart.getCanvas());
+	    	          chart.stopAllThreads();
+	    	          chart.dispose();
+	    	          dispose();
+	    	        }
+	    	      }
+	    	    });
+	    	  }
+	    };
+	    f.initialize(chart, bounds, title);
+	    
+	    return f;
+	  }
 
   @Override
   public IChartFactory getChartFactory() {

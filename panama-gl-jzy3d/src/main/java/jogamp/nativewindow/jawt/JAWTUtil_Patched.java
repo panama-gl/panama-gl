@@ -68,7 +68,7 @@ import jogamp.nativewindow.jawt.x11.X11SunJDKReflection;
 import jogamp.nativewindow.macosx.OSXUtil;
 import jogamp.nativewindow.x11.X11Lib;
 
-public class JAWTUtil_ {
+public class JAWTUtil_Patched {
   public static final boolean DEBUG = Debug.debug("JAWT");
 
   private static final boolean SKIP_AWT_HIDPI;
@@ -122,7 +122,7 @@ public class JAWTUtil_ {
    */
   public static boolean isOffscreenLayerSupported() {
     return PlatformPropsImpl.OS_TYPE == Platform.OSType.MACOS &&
-           PlatformPropsImpl.OS_VERSION_NUMBER.compareTo(JAWTUtil_.JAWT_MacOSXCALayerMinVersion) >= 0;
+           PlatformPropsImpl.OS_VERSION_NUMBER.compareTo(JAWTUtil_Patched.JAWT_MacOSXCALayerMinVersion) >= 0;
   }
 
   /**
@@ -235,7 +235,7 @@ public class JAWTUtil_ {
   public static int getOSXCALayerQuirks() {
     int res = 0;
     if( PlatformPropsImpl.OS_TYPE == Platform.OSType.MACOS &&
-        PlatformPropsImpl.OS_VERSION_NUMBER.compareTo(JAWTUtil_.JAWT_MacOSXCALayerMinVersion) >= 0 ) {
+        PlatformPropsImpl.OS_VERSION_NUMBER.compareTo(JAWTUtil_Patched.JAWT_MacOSXCALayerMinVersion) >= 0 ) {
 
         /** Knowing impl. all expose the SIZE bug */
         res |= JAWT_OSX_CALAYER_QUIRK_SIZE;
@@ -265,8 +265,8 @@ public class JAWTUtil_ {
 
     if(isOffscreenLayerRequired()) {
         if(PlatformPropsImpl.OS_TYPE == Platform.OSType.MACOS) {
-            if(PlatformPropsImpl.OS_VERSION_NUMBER.compareTo(JAWTUtil_.JAWT_MacOSXCALayerMinVersion) >= 0) {
-                jawt_version_flags_offscreen |= JAWTUtil_.JAWT_MACOSX_USE_CALAYER;
+            if(PlatformPropsImpl.OS_VERSION_NUMBER.compareTo(JAWTUtil_Patched.JAWT_MacOSXCALayerMinVersion) >= 0) {
+                jawt_version_flags_offscreen |= JAWTUtil_Patched.JAWT_MACOSX_USE_CALAYER;
                 tryOffscreenLayer = true;
                 tryOnscreen = false;
             } else {
@@ -277,7 +277,7 @@ public class JAWTUtil_ {
         }
     } else if(useOffscreenLayerIfAvailable && isOffscreenLayerSupported()) {
         if(PlatformPropsImpl.OS_TYPE == Platform.OSType.MACOS) {
-            jawt_version_flags_offscreen |= JAWTUtil_.JAWT_MACOSX_USE_CALAYER;
+            jawt_version_flags_offscreen |= JAWTUtil_Patched.JAWT_MACOSX_USE_CALAYER;
             tryOffscreenLayer = true;
             tryOnscreen = true;
         } else {
@@ -311,7 +311,7 @@ public class JAWTUtil_ {
   }
 
   public static boolean isJAWTUsingOffscreenLayer(final JAWT jawt) {
-      return 0 != ( jawt.getCachedVersion() & JAWTUtil_.JAWT_MACOSX_USE_CALAYER );
+      return 0 != ( jawt.getCachedVersion() & JAWTUtil_Patched.JAWT_MACOSX_USE_CALAYER );
   }
 
   static {
@@ -434,15 +434,15 @@ public class JAWTUtil_ {
     jawtToolkitLock = new ToolkitLock() {
           @Override
           public final void lock() {
-              JAWTUtil_.lockToolkit();
+              JAWTUtil_Patched.lockToolkit();
           }
           @Override
           public final void unlock() {
-              JAWTUtil_.unlockToolkit();
+              JAWTUtil_Patched.unlockToolkit();
           }
           @Override
           public final void validateLocked() throws RuntimeException {
-              JAWTUtil_.validateLocked();
+              JAWTUtil_Patched.validateLocked();
           }
           @Override
           public final void dispose() {
@@ -718,7 +718,7 @@ public class JAWTUtil_ {
           maxScale[0] = 1f;
           maxScale[1] = 1f;
       } else {
-          changed = JAWTUtil_.getPixelScale(device, minScale, maxScale);
+          changed = JAWTUtil_Patched.getPixelScale(device, minScale, maxScale);
       }
       return changed;
   }

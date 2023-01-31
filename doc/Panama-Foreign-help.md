@@ -15,14 +15,4 @@
 * [Configuration of JExtract on JDK19](https://github.com/manuelbl/JavaDoesUSB/issues/5)
 * [Useful JExtract samples](https://github.com/manuelbl/JavaDoesUSB/tree/main/java-does-usb/jextract)
 
-## Troubleshooting
 
-### OOM Exceptions
-
-These JVM parameters have an effect on the available memory for Panama.
-* `-XX:MaxDirectMemorySize=512m` is how one can tune the off-heap memory used by Panama.
-* `-Xmx512m` had an effect when I was trying to resolve OOM (reducing available max memory helped triggering OOM faster).
-
-Suggestions from Maurizio :
-* If your application is using openConfined/openShared (w/o a cleaner parameter!), then, assuming it still calls `MemorySession::close` in the same places where it did in 17, nothing should have changed (in fact, the underlying implementation between 17 and 19 did not change much at all). In that case, all the memory segments associated with the session have their off-heap memory deallocated when the session is closed.
-* If you are using openImplicit, or openConfined/Shared (with a cleaner parameter!) then you are at the mercy of the GC - which means that you should make sure that the implicit session containing no-longer needed data is truly unreachable from within your application.

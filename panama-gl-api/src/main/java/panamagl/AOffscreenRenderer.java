@@ -47,26 +47,25 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
   public AOffscreenRenderer(PanamaGLFactory factory) {
     this.factory = factory;
   }
+  
+  // -------------------------------------------------------------
 
-  /** Indicates if the renderer has already been initialized. */
   @Override
-  public boolean isInitialized() {
-    return initialized;
-  }
+  public abstract void onInit(GLAutoDrawable drawable, GLEventListener listener);
 
-  public GL getGL() {
-    return gl;
-  }
+  @Override
+  public abstract void onDisplay(GLAutoDrawable drawable, GLEventListener listener);
 
-  public GLContext getContext() {
-    return context;
-  }
-
+  @Override
+  public abstract void onResize(GLAutoDrawable drawable, GLEventListener listener, int x, int y, int width, int height);
+  
   @Override
   public void onDestroy(GLAutoDrawable drawable, GLEventListener glEventListener) {
     destroyContext();
   }
 
+  // -------------------------------------------------------------
+  
   /**
    * In general, you should initialize any resources that are needed for rendering or other
    * functionality in the JPanel after the JPanel has been added to the Swing hierarchy, but before
@@ -187,10 +186,7 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
     }
   }
 
-  public AOffscreenRenderer() {
-    super();
-  }
-
+  @Override
   public boolean isFlipY() {
     return fbo.isFlipY();
   }
@@ -198,21 +194,42 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
   /**
    * Sets if image will be flipped vertically while being painted.
    */
+  @Override
   public void setFlipY(boolean flipY) {
     this.fbo.setFlipY(flipY);
   }
 
+  @Override
   public FBO getFBO() {
     return fbo;
   }
 
+  @Override
   public void setFBO(FBO fbo) {
     this.fbo = fbo;
   }
 
+  @Override
   public String getDebugFile() {
     return debugFile;
   }
+  
+  /** Indicates if the renderer has already been initialized. */
+  @Override
+  public boolean isInitialized() {
+    return initialized;
+  }
+
+  @Override
+  public GL getGL() {
+    return gl;
+  }
+
+  @Override
+  public GLContext getContext() {
+    return context;
+  }
+
 
   /**
    * If not null, the input pattern will be used to save offscreen generated image to disk.
@@ -220,8 +237,8 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
    * Example setDebugFile("target/glpanel");
    * 
    * Creates images in target/ folder under anme glpanel-1.png, glpanel-2.png, etc.
-   * 
    */
+  @Override
   public void setDebugFile(String debugFile) {
     if (exec == null) {
       exec = Executors.newSingleThreadExecutor();
@@ -229,6 +246,8 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
     this.debugFile = debugFile;
   }
 
+  // -------------------------------------------------------------
+  
   protected Runnable getTask_renderGLToImage(GLAutoDrawable drawable, GLEventListener listener,
       int width, int height) {
     return new Runnable() {

@@ -19,6 +19,9 @@ package org.jzy3d.demos.embedded;
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
+
+import javax.swing.SwingUtilities;
+
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.ChartFactory;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
@@ -47,7 +50,7 @@ import opengl.macos.v10_15_7.glut_h;
 
 public class SurfaceDemoPanamaGL_macOS_embedded {
   static {
-    jogamp.nativewindow.jawt.JAWTUtil_ a;
+    jogamp.nativewindow.jawt.JAWTUtil_Patched a;
   }
 
   static final float ALPHA_FACTOR = 0.55f;// .61f;
@@ -76,7 +79,7 @@ public class SurfaceDemoPanamaGL_macOS_embedded {
 
     ChartFactory factory = new PanamaGLChartFactory(new EmbeddedPanamaGLPainterFactory());
 
-    Quality q = Quality.Advanced();
+    Quality q = Quality.Advanced().setAnimated(false);
     Chart chart = factory.newChart(q);
     chart.add(surface());
 
@@ -84,8 +87,17 @@ public class SurfaceDemoPanamaGL_macOS_embedded {
     float[] pixelScale = {2f,2f};
     chart.getCanvas().setPixelScale(pixelScale);
 
-    chart.open(800,600);
-    // with GLUT, can't do anything after open until main loop ends
+    /*SwingUtilities.invokeLater(new Runnable() {
+
+		@Override
+		public void run() {
+			System.out.println("Before open");*/
+		    chart.open(800,600);
+			/*System.out.println("After open");
+		    // with GLUT, can't do anything after open until main loop ends
+		}
+    	
+    });*/
   }
 
 

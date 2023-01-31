@@ -94,7 +94,7 @@ public class DemoQuad_Onscreen_Swing {
         gl.glClearDepth(1.0f);
         gl.glEnable(gl.GL_DEPTH_TEST());
         gl.glDepthFunc(gl.GL_LEQUAL());
-        gl.glHint(gl.GL_PERSPECTIVE_CORRECTION_HINT(), gl.GL_NICEST());
+        //gl.glHint(gl.GL_PERSPECTIVE_CORRECTION_HINT(), gl.GL_NICEST());
 
         // GLError.checkAndThrow(gl);
       }
