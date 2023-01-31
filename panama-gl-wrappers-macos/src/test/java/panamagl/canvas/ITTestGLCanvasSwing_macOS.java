@@ -21,6 +21,9 @@ import java.awt.BorderLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.SegmentAllocator;
+import java.lang.foreign.ValueLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -30,6 +33,7 @@ import javax.swing.SwingUtilities;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import opengl.macos.v10_15_7.glut_h;
 import panamagl.GLEventAdapter;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
@@ -50,10 +54,10 @@ public class ITTestGLCanvasSwing_macOS {
   BufferedImage screenshotWhenShown = null;
   List<BufferedImage> screenshotWhenResize = new ArrayList<>();
 
-@Ignore("Work in progress")
+@Ignore("Work in progress : can't get GL invoked to draw")
   @Test
   public void main() throws InterruptedException {
-    
+
     CountDownLatch latch = new CountDownLatch(1);
     
     
@@ -102,13 +106,15 @@ public class ITTestGLCanvasSwing_macOS {
       public void componentResized(ComponentEvent e) {
         BufferedImage i = panel.getScreenshot();
         
+        //System.out.println(panel.getWidth());
+        
         if(i!=null) {
           ImageUtils.save(i, "target/TestGLPanel-"+(k++)+".png");
           screenshotWhenResize.add(i);
-          System.err.println("GOT SCREENSHOT! RESIZED");
+          System.err.println("GOT SCREENSHOT! RESIZED " + k);
         }
         else {
-          Assert.fail("expected a non null image");
+          Assert.fail("expected a non null image " + k);
         }
 
       }
@@ -139,8 +145,7 @@ public class ITTestGLCanvasSwing_macOS {
         System.out.println("-----------------------------");
         System.out.println("AFTER Frame.setVisible(true)");
         System.out.println("-----------------------------");
-        
-
+       
         // --------------------------------
         // Test scenario
         
@@ -149,13 +154,22 @@ public class ITTestGLCanvasSwing_macOS {
         
         //frame.repaint();
         //sleep(1000);
+        frame.repaint();
+        Thread.yield();
         frame.setSize(400, 400);
+        frame.repaint();
+        Thread.yield();
+        frame.repaint();
         sleep(1000);
         frame.setSize(600, 600);
+        Thread.yield();
+        frame.repaint();
+        sleep(1000);
+        frame.setSize(500, 400);
         sleep(1000);
         
 
-        sleep(2000);
+        //sleep(2000);
         latch.countDown();
       
       }
