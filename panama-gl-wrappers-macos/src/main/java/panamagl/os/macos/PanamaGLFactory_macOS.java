@@ -18,14 +18,14 @@
 package panamagl.os.macos;
 
 import panamagl.Debug;
-import panamagl.GLAutoDrawable;
+import panamagl.GLCanvas;
 import panamagl.OffscreenRenderer;
 import panamagl.factory.APanamaGLFactory;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.fbo.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
-import panamagl.os.OperatingSystem;
+import panamagl.os.Platform;
 
 public class PanamaGLFactory_macOS extends APanamaGLFactory implements PanamaGLFactory {
   protected boolean debug = Debug.check(PanamaGLFactory_macOS.class);
@@ -38,12 +38,12 @@ public class PanamaGLFactory_macOS extends APanamaGLFactory implements PanamaGLF
   public PanamaGLFactory_macOS() {}
   
   @Override
-  public boolean matches(OperatingSystem os) {
+  public boolean matches(Platform os) {
     return os.isMac();
   }
 
   /**
-   * Invoked by the {@link GLAutoDrawable}, i.e. canvas that wishes to draw
+   * Invoked by the {@link GLCanvas}, i.e. canvas that wishes to draw
    * offscreen rendered image.
    * 
    * The offscreen renderer will initialize {@link GL}, {@link GLContext} and {@link FBO_macOS} 

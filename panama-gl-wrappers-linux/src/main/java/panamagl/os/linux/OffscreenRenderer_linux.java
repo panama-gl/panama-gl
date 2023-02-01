@@ -18,7 +18,7 @@
 package panamagl.os.linux;
 
 import panamagl.AOffscreenRenderer;
-import panamagl.GLAutoDrawable;
+import panamagl.GLCanvas;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
 import panamagl.factory.PanamaGLFactory;
@@ -29,7 +29,7 @@ public class OffscreenRenderer_linux extends AOffscreenRenderer implements Offsc
   }
   
   @Override
-  public void onInit(GLAutoDrawable drawable, GLEventListener listener) {
+  public void onInit(GLCanvas drawable, GLEventListener listener) {
     // MACOS
     //GLProfile.initSingleton();
     //OSXUtil.RunOnMainThread(true, false, getTask_initContext(listener));
@@ -38,13 +38,13 @@ public class OffscreenRenderer_linux extends AOffscreenRenderer implements Offsc
   }
 
   @Override
-  public void onDisplay(GLAutoDrawable drawable, GLEventListener listener) {
+  public void onDisplay(GLCanvas drawable, GLEventListener listener) {
     Runnable r = getTask_renderGLToImage(drawable, listener, drawable.getWidth(), drawable.getHeight());
     r.run();
   }
 
   @Override
-  public void onResize(GLAutoDrawable drawable, GLEventListener listener, int x, int y, int width, int height) {
+  public void onResize(GLCanvas drawable, GLEventListener listener, int x, int y, int width, int height) {
     Runnable r = getTask_renderGLToImage(drawable, listener, drawable.getWidth(), drawable.getHeight());
     r.run();
   }

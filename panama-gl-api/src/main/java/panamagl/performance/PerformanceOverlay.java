@@ -19,11 +19,11 @@ package panamagl.performance;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import panamagl.GLAutoDrawable;
+import panamagl.GLCanvas;
 import panamagl.Overlay;
 
 public class PerformanceOverlay implements Overlay{
-  protected GLAutoDrawable drawable;
+  protected GLCanvas drawable;
   protected RenderCounter counter;
   protected PerfOverlay perfOverlay = new PerfOverlay();
   
@@ -37,7 +37,7 @@ public class PerformanceOverlay implements Overlay{
   }
 
   
-  public PerformanceOverlay(GLAutoDrawable drawable) {
+  public PerformanceOverlay(GLCanvas drawable) {
     super();
     this.drawable = drawable;
     this.counter = drawable.getMonitoring();

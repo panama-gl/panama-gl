@@ -52,6 +52,7 @@ public class EmbeddedPanamaGLPainterFactory implements IPainterFactory{
   public IPainter newPainter() {
     EmbeddedPanamaGLPainter p = new EmbeddedPanamaGLPainter();
     p.setGL(f.newGL());
+    
     return p;
   }
 

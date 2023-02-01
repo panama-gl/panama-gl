@@ -48,11 +48,11 @@ public class FrameSwing extends JFrame implements IFrame {
     panel3d.setLayout(new java.awt.BorderLayout());
     panel3d.add((JComponent) chart.getCanvas());
 
-    contentPane.add((JComponent) chart.getCanvas(), BorderLayout.CENTER);
     setVisible(true);
     setTitle(title + "[Swing]");
-    pack();
     setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
+    contentPane.add((JComponent) chart.getCanvas(), BorderLayout.CENTER);
+    pack();
   }
 
   private Chart chart;

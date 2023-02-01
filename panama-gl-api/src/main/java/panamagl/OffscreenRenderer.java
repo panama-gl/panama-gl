@@ -22,18 +22,18 @@ import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 
 /**
- * The interface through which various {@link GLAutoDrawable} implementation can query
+ * The interface through which various {@link GLCanvas} implementation can query
  * an offscreen rendering. 
  * 
- * This allows 
+ * This allows various platforms to use different threading policies, the macOS one being the most particular.
  * 
  * @author Martin
  */
 public interface OffscreenRenderer {
-  void onInit(GLAutoDrawable drawable, GLEventListener glEventListener);
-  void onDisplay(GLAutoDrawable drawable, GLEventListener glEventListener);
-  void onResize(GLAutoDrawable drawable, GLEventListener glEventListener, int x, int y, int width, int height);
-  void onDestroy(GLAutoDrawable drawable, GLEventListener glEventListener);
+  void onInit(GLCanvas drawable, GLEventListener glEventListener);
+  void onDisplay(GLCanvas drawable, GLEventListener glEventListener);
+  void onResize(GLCanvas drawable, GLEventListener glEventListener, int x, int y, int width, int height);
+  void onDestroy(GLCanvas drawable, GLEventListener glEventListener);
   
   GL getGL();
   GLContext getContext();

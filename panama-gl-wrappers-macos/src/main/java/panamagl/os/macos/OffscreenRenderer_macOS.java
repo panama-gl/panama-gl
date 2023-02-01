@@ -20,13 +20,16 @@ package panamagl.os.macos;
 import com.jogamp.opengl.GLProfile;
 import jogamp.nativewindow.macosx.OSXUtil;
 import panamagl.AOffscreenRenderer;
-import panamagl.GLAutoDrawable;
+import panamagl.GLCanvas;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
 import panamagl.factory.PanamaGLFactory;
 
 /**
  * This offscreen renderer is able to ensure that OpenGL queries are performed inside the main macOS thread.
+ * 
+ * 
+ * <img src="doc-files/threading-macOS.png"/>
  * 
  * @author Martin Pernollet
  */
@@ -36,12 +39,12 @@ public class OffscreenRenderer_macOS extends AOffscreenRenderer implements Offsc
   }
   
   @Override
-  public void onInit(GLAutoDrawable drawable, GLEventListener listener) {
+  public void onInit(GLCanvas drawable, GLEventListener listener) {
     initContext_OnMainThread(listener);
   }
 
   @Override
-  public void onDisplay(GLAutoDrawable drawable, GLEventListener listener) {
+  public void onDisplay(GLCanvas drawable, GLEventListener listener) {
     // FIXME : why does it work with this
     renderGLToImage_OnMainThread(drawable, listener, drawable.getWidth(), drawable.getHeight(), false, true);
     // FIXME : and not with this?
@@ -49,7 +52,7 @@ public class OffscreenRenderer_macOS extends AOffscreenRenderer implements Offsc
   }
 
   @Override
-  public void onResize(GLAutoDrawable drawable, GLEventListener listener, int x, int y, int width, int height) {
+  public void onResize(GLCanvas drawable, GLEventListener listener, int x, int y, int width, int height) {
     // wait=true causes deadlocks! So we do not wait
     // and then ask the rendering to asynchronously notify
     // this panel that a repaint should occur.
@@ -72,11 +75,11 @@ public class OffscreenRenderer_macOS extends AOffscreenRenderer implements Offsc
     OSXUtil.RunOnMainThread(true, false, getTask_initContext(listener));
   }
 
-  protected void renderGLToImage_OnMainThread(GLAutoDrawable drawable, GLEventListener listener, boolean waitUntilDone, boolean kickNSApp) {
+  protected void renderGLToImage_OnMainThread(GLCanvas drawable, GLEventListener listener, boolean waitUntilDone, boolean kickNSApp) {
     OSXUtil.RunOnMainThread(waitUntilDone, kickNSApp, getTask_renderGLToImage(drawable, listener));
   }
 
-  protected void renderGLToImage_OnMainThread(GLAutoDrawable drawable, GLEventListener listener, int width, int height, boolean waitUntilDone,
+  protected void renderGLToImage_OnMainThread(GLCanvas drawable, GLEventListener listener, int width, int height, boolean waitUntilDone,
       boolean kickNSApp) {
     OSXUtil.RunOnMainThread(waitUntilDone, kickNSApp, getTask_renderGLToImage(drawable, listener, width, height));
   }

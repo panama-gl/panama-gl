@@ -1,6 +1,6 @@
 package panamagl.os.macos;
 
-import panamagl.os.OperatingSystem;
+import panamagl.os.Platform;
 
 public class MacOSTest {
   /**
@@ -8,7 +8,7 @@ public class MacOSTest {
    * @return
    */
   public boolean checkPlatform() {
-    OperatingSystem os = new OperatingSystem();
+    Platform os = new Platform();
     boolean ismacos = os.isMac();
 
     if(!ismacos) {

@@ -19,6 +19,12 @@ package panamagl;
 
 import panamagl.opengl.GL;
 
+/**
+ * The interface to implement to let a {@link GLCanvas} perform OpenGL calls.
+ * 
+ * @author Martin Pernollet
+ *
+ */
 public interface GLEventListener {
   void init(GL gl);
   void display(GL gl);

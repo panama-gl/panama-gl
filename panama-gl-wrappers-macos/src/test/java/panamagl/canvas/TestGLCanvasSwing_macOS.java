@@ -22,7 +22,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.jzy3d.os.OperatingSystem;
 import junit.framework.Assert;
-import panamagl.GLAutoDrawable;
+import panamagl.GLCanvas;
 import panamagl.GLEventAdapter;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
@@ -197,7 +197,7 @@ public class TestGLCanvasSwing_macOS {
     
       // Customize rendering task so that it is very very long
       @Override
-      protected Runnable getTask_renderGLToImage(GLAutoDrawable drawable, GLEventListener listener, int width, int height) {
+      protected Runnable getTask_renderGLToImage(GLCanvas drawable, GLEventListener listener, int width, int height) {
         return new Runnable() {
           @Override
           public void run() {

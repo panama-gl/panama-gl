@@ -20,32 +20,32 @@ package panamagl.os;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TestOperatingSystem {
+public class TestPlatform {
   @Test
   public void windows() {
-    Assert.assertTrue(new OperatingSystem("Windows").isWindows());
-    Assert.assertTrue(new OperatingSystem("Windows 10").isWindows());
-    Assert.assertTrue(new OperatingSystem("Windows 11").isWindows());
-    Assert.assertFalse(new OperatingSystem("Windows").isMac());
-    Assert.assertFalse(new OperatingSystem("Windows").isUnix());
-    Assert.assertFalse(new OperatingSystem("Windows").isSolaris());
+    Assert.assertTrue(new Platform("Windows").isWindows());
+    Assert.assertTrue(new Platform("Windows 10").isWindows());
+    Assert.assertTrue(new Platform("Windows 11").isWindows());
+    Assert.assertFalse(new Platform("Windows").isMac());
+    Assert.assertFalse(new Platform("Windows").isUnix());
+    Assert.assertFalse(new Platform("Windows").isSolaris());
 
-    Assert.assertTrue(new OperatingSystem("mac os x").isMac());
-    Assert.assertFalse(new OperatingSystem("mac os x").isWindows());
+    Assert.assertTrue(new Platform("mac os x").isMac());
+    Assert.assertFalse(new Platform("mac os x").isWindows());
     
-    Assert.assertTrue(OperatingSystem.WINDOWS.isWindows());
+    Assert.assertTrue(Platform.WINDOWS.isWindows());
   }
   
   @Test
   public void macos() {
-    Assert.assertTrue(new OperatingSystem("mac os x").isMac());
-    Assert.assertFalse(new OperatingSystem("mac os x").isWindows());
+    Assert.assertTrue(new Platform("mac os x").isMac());
+    Assert.assertFalse(new Platform("mac os x").isWindows());
     
-    Assert.assertTrue(OperatingSystem.MACOS.isMac());
+    Assert.assertTrue(Platform.MACOS.isMac());
   }
   
   @Test
   public void unix() {
-    Assert.assertTrue(OperatingSystem.UNIX.isUnix());
+    Assert.assertTrue(Platform.UNIX.isUnix());
   }
 }

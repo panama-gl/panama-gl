@@ -24,11 +24,11 @@ import panamagl.opengl.GLContext;
 import panamagl.performance.RenderCounter;
 
 /**
- * A toy JOGL-like auto drawable interface that all canvas should implement
+ * A canvas able to perform OpenGL calls through the {@link GLEventListener} interface.
  * 
  * @author Martin Pernollet
  */
-public interface GLAutoDrawable {
+public interface GLCanvas {
   /** Trigger display. The component is responsible for rooting the request to the appropriate threads.*/
   void display();
   
@@ -39,7 +39,7 @@ public interface GLAutoDrawable {
   GLEventListener getGLEventListener();
 
   /** Set the event listener handling init, drawing and resize requests. */
-  void setGLEventListener(GLEventListener glEvents);
+  void setGLEventListener(GLEventListener listener);
 
   /** Return true if the panel has initialized GL ressource and is ready for display. */
   boolean isInitialized();

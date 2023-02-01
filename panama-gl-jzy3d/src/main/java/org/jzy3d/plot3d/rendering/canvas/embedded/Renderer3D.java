@@ -7,7 +7,7 @@ import org.jzy3d.painters.embedded.EmbeddedPanamaGLPainter;
 import org.jzy3d.plot3d.rendering.view.View;
 import com.jogamp.opengl.util.GLReadBufferUtil;
 import com.jogamp.opengl.util.texture.TextureData;
-import panamagl.GLAutoDrawable;
+import panamagl.GLCanvas;
 import panamagl.GLEventListener;
 import panamagl.opengl.GL;
 
@@ -45,7 +45,7 @@ public class Renderer3D implements GLEventListener{
   }
 
   /**
-   * Called when the {@link GLAutoDrawable} is rendered for the first time. When one calls
+   * Called when the {@link GLCanvas} is rendered for the first time. When one calls
    * Scene.init() function, this function is called and makes the OpenGL buffers initialization.
    * 
    * Note: in this implementation, GL Exceptions are not triggered. To do so, make te following call
@@ -71,7 +71,7 @@ public class Renderer3D implements GLEventListener{
   }
 
   /**
-   * Called when the {@link GLAutoDrawable} requires a rendering. All call to rendering methods
+   * Called when the {@link GLCanvas} requires a rendering. All call to rendering methods
    * should appear here.
    */
   @Override
@@ -99,7 +99,7 @@ public class Renderer3D implements GLEventListener{
   }
   
 
-  /** Called when the {@link GLAutoDrawable} is resized. */
+  /** Called when the {@link GLCanvas} is resized. */
   @Override
   public void reshape(GL canvas, int x, int y, int width, int height) {
     this.width = width;
@@ -120,7 +120,7 @@ public class Renderer3D implements GLEventListener{
 
   /**
    * This method allows configuring the {@link IPainter} with the current {@link GL} context
-   * provided by the {@link GLAutoDrawable}. This may be usefull to override in case of a mocking GL
+   * provided by the {@link GLCanvas}. This may be usefull to override in case of a mocking GL
    * (to avoid having the mock replaced by a real GL Context).
    * 
    * @param canvas

@@ -25,7 +25,7 @@ import java.awt.image.BufferedImage;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.swing.JPanel;
 import panamagl.Debug;
-import panamagl.GLAutoDrawable;
+import panamagl.GLCanvas;
 import panamagl.GLEventListener;
 import panamagl.OffscreenRenderer;
 import panamagl.factory.PanamaGLFactory;
@@ -68,7 +68,7 @@ import panamagl.utils.ImageUtils;
  * @author Martin Pernollet
  *
  */
-public class GLCanvasSwing extends JPanel implements GLAutoDrawable {
+public class GLCanvasSwing extends JPanel implements GLCanvas {
   private static final long serialVersionUID = -4601832524814661585L;
 
   protected GLEventListener listener;

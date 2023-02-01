@@ -17,14 +17,14 @@
  *******************************************************************************/
 package panamagl.os;
 
-public class OperatingSystem {
-  public static OperatingSystem MACOS = new OperatingSystem("macos"); 
-  public static OperatingSystem WINDOWS = new OperatingSystem("windows"); 
-  public static OperatingSystem UNIX = new OperatingSystem("unix"); 
+public class Platform {
+  public static Platform MACOS = new Platform("macos"); 
+  public static Platform WINDOWS = new Platform("windows"); 
+  public static Platform UNIX = new Platform("unix"); 
 
   protected String name;
   protected String version;
-  protected String arch;
+  protected String cpu;
   
   protected String jvm;
   
@@ -33,20 +33,20 @@ public class OperatingSystem {
   protected boolean unix;
   protected boolean solaris;
 
-  public OperatingSystem() {
+  public Platform() {
     this(System.getProperty("os.name"), System.getProperty("os.version"));  
   }
 
-  public OperatingSystem(String osName) {
+  public Platform(String osName) {
     this(osName, "?");
   }
   
   /** Mainly for test purpose.*/
-  public OperatingSystem(String osName, String osVersion) {
+  public Platform(String osName, String osVersion) {
     this.name = formatName(osName);
     this.version = osVersion;
     
-    this.arch = System.getProperty("os.arch");
+    this.cpu = System.getProperty("os.arch");
     this.jvm = System.getProperty("java.version");
     
     this.windows = (name.indexOf("win") >= 0);
@@ -60,10 +60,10 @@ public class OperatingSystem {
     return osName.toLowerCase();
   }
   
-  public OperatingSystem(String osName, String osVersion, String arch, String java, boolean windows, boolean mac, boolean unix, boolean solaris) {
+  public Platform(String osName, String osVersion, String cpu, String java, boolean windows, boolean mac, boolean unix, boolean solaris) {
     this.name = formatName(osName);
     this.version = osVersion;
-    this.arch = arch;
+    this.cpu = cpu;
     this.jvm = java;
     this.windows = windows;
     this.mac = mac;
@@ -83,8 +83,8 @@ public class OperatingSystem {
     return jvm;
   }
 
-  public String getArch() {
-    return arch;
+  public String getCPU() {
+    return cpu;
   }
 
   public boolean isWindows() {
@@ -104,11 +104,11 @@ public class OperatingSystem {
   }
 
   public String toString() {
-    return "OS name:" + name + " version:" + version + " CPU:" +arch + " JVM:" + jvm;
+    return "Platform : OS.name:" + name + " OS.version:" + version + " CPU:" +cpu + " JVM:" + jvm;
   }
 
   public static void main(String[] args) {
-    OperatingSystem os = new OperatingSystem();
+    Platform os = new Platform();
 
     if (os.isWindows()) {
       System.out.println("This is Windows");

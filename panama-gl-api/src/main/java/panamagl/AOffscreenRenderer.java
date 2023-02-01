@@ -51,16 +51,16 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
   // -------------------------------------------------------------
 
   @Override
-  public abstract void onInit(GLAutoDrawable drawable, GLEventListener listener);
+  public abstract void onInit(GLCanvas drawable, GLEventListener listener);
 
   @Override
-  public abstract void onDisplay(GLAutoDrawable drawable, GLEventListener listener);
+  public abstract void onDisplay(GLCanvas drawable, GLEventListener listener);
 
   @Override
-  public abstract void onResize(GLAutoDrawable drawable, GLEventListener listener, int x, int y, int width, int height);
+  public abstract void onResize(GLCanvas drawable, GLEventListener listener, int x, int y, int width, int height);
   
   @Override
-  public void onDestroy(GLAutoDrawable drawable, GLEventListener glEventListener) {
+  public void onDestroy(GLCanvas drawable, GLEventListener glEventListener) {
     destroyContext();
   }
 
@@ -125,7 +125,7 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
    * 
    * @see {@link #renderGLToImage()}
    */
-  protected void renderGLToImage(GLAutoDrawable drawable, GLEventListener listener, int width,
+  protected void renderGLToImage(GLCanvas drawable, GLEventListener listener, int width,
       int height) {
     Debug.debug(debug, "------------------------------------------------------");
     Debug.debug(debug, "AOffscreenRenderer : renderGLToImage " + width + " x " + height);
@@ -149,7 +149,7 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
    * This method can potentially execute in a separate thread (namely the main macOS thread) and
    * hence triggers repaint through SwingUtilities.invokeLater()
    */
-  protected void renderGLToImage(GLAutoDrawable drawable, GLEventListener listener) {
+  protected void renderGLToImage(GLCanvas drawable, GLEventListener listener) {
 
     // Render GL
     if (listener != null)
@@ -248,7 +248,7 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
 
   // -------------------------------------------------------------
   
-  protected Runnable getTask_renderGLToImage(GLAutoDrawable drawable, GLEventListener listener,
+  protected Runnable getTask_renderGLToImage(GLCanvas drawable, GLEventListener listener,
       int width, int height) {
     return new Runnable() {
       @Override
@@ -258,7 +258,7 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
     };
   }
 
-  protected Runnable getTask_renderGLToImage(GLAutoDrawable drawable, GLEventListener listener) {
+  protected Runnable getTask_renderGLToImage(GLCanvas drawable, GLEventListener listener) {
     return new Runnable() {
       @Override
       public void run() {

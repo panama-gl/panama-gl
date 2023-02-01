@@ -1,6 +1,6 @@
 package panamagl.os.linux;
 
-import panamagl.os.OperatingSystem;
+import panamagl.os.Platform;
 
 public class LinuxTest {
   /**
@@ -8,7 +8,7 @@ public class LinuxTest {
    * @return
    */
   public boolean checkPlatform() {
-    OperatingSystem os = new OperatingSystem();
+    Platform os = new Platform();
     boolean isunix = os.isUnix();
 
     if(!isunix) {

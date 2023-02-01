@@ -31,12 +31,12 @@ public class Animator {
   protected ExecutorService exec = Executors.newSingleThreadExecutor();
   protected int sleepTimeMs = RETINAL_PERSISTENCE; 
   protected boolean loop = true;
-  protected GLAutoDrawable drawable;
+  protected GLCanvas drawable;
   protected boolean adaptive = true;
   
   protected boolean yieldWhenDone = true;
 
-  public Animator(GLAutoDrawable drawable) {
+  public Animator(GLCanvas drawable) {
     this.drawable = drawable;
   }
 
