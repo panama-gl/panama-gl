@@ -20,6 +20,6 @@ build:
 deploy:
   stage: deploy
   script:
-    - mvn $MAVEN_CLI_OPTS deploy
+    - mvn $MAVEN_CLI_OPTS source:jar javadoc:jar deploy -DskipTests
   only:
     - main
