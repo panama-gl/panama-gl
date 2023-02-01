@@ -18,43 +18,29 @@
 package panamagl.os.macos.x86_64;
 
 import panamagl.Debug;
-import panamagl.GLCanvas;
-import panamagl.OffscreenRenderer;
-import panamagl.factory.APanamaGLFactory;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.fbo.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.os.Platform;
-import panamagl.os.macos.OffscreenRenderer_macOS;
+import panamagl.os.macos.APanamaGLFactory_macOS;
 
-public class PanamaGLFactory_macOS extends APanamaGLFactory implements PanamaGLFactory {
-  protected boolean debug = Debug.check(PanamaGLFactory_macOS.class);
+public class PanamaGLFactory_macOS_x86_64 extends APanamaGLFactory_macOS implements PanamaGLFactory {
+  protected boolean debug = Debug.check(PanamaGLFactory_macOS_x86_64.class);
   
   protected CGLContext_macOS cglContext;
   protected GLUTContext_macOS glutContext;
   protected boolean useGLUT = true;
   protected boolean useCGL = false;
 
-  public PanamaGLFactory_macOS() {}
+  public PanamaGLFactory_macOS_x86_64() {
+	super();}
   
   @Override
   public boolean matches(Platform os) {
     return os.isMac();
   }
 
-  /**
-   * Invoked by the {@link GLCanvas}, i.e. canvas that wishes to draw
-   * offscreen rendered image.
-   * 
-   * The offscreen renderer will initialize {@link GL}, {@link GLContext} and {@link FBO_macOS} 
-   * instances through this factory.
-   */
-  @Override
-  public OffscreenRenderer newOffscreenRenderer() {
-    return new OffscreenRenderer_macOS(this);
-  }
-  
   @Override
   public FBO newFBO(int width, int height) {
     return new FBO_macOS(width, height);
