@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.macos;
+package panamagl.os.macos.x86_64;
 
 import panamagl.Debug;
 import panamagl.GLCanvas;
@@ -26,6 +26,7 @@ import panamagl.fbo.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.os.Platform;
+import panamagl.os.macos.OffscreenRenderer_macOS;
 
 public class PanamaGLFactory_macOS extends APanamaGLFactory implements PanamaGLFactory {
   protected boolean debug = Debug.check(PanamaGLFactory_macOS.class);

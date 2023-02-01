@@ -32,7 +32,7 @@ import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
-import panamagl.os.macos.PanamaGLFactory_macOS;
+import panamagl.os.macos.x86_64.PanamaGLFactory_macOS;
 
 /**
  * VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign

@@ -15,33 +15,37 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.macos;
+package panamagl.os.macos.x86_64;
 
-import org.junit.Assert;
+import java.lang.foreign.ValueLayout;
 import org.junit.Test;
 import org.jzy3d.os.OperatingSystem;
-import panamagl.factory.PanamaGLFactory;
+import junit.framework.Assert;
+import panamagl.os.macos.x86_64.CGLContext_macOS;
 
-public class TestPanamaGLFactory_macOS {
+//VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+
+public class TestCGLContext extends MacOSTest{
   @Test
-  public void test() {
-    if (!new OperatingSystem().isMac())
+  public void createCGLContext() {
+    if (!checkPlatform())
       return;
-  
-    PanamaGLFactory f = PanamaGLFactory.select();
     
-    boolean matched = f instanceof PanamaGLFactory_macOS;
+    // Given
+    CGLContext_macOS cgl = new CGLContext_macOS();
     
-    Assert.assertTrue(matched);
+    // When
+    cgl.init();
+    
+    
+    // Then
+    int[] attribs = cgl.attribs.toArray(ValueLayout.JAVA_INT);
+    Assert.assertEquals(73, attribs[0]); // 
+    Assert.assertEquals(99, attribs[1]);
+    Assert.assertEquals(12800, attribs[2]); // OpenGL version
+    Assert.assertEquals(0, attribs[3]);
 
-    // Issue on context init
-    //Assert.assertNotNull(f.newGLContext());
-
-    Assert.assertNotNull(f.newGL());
-    Assert.assertNotNull(f.newOffscreenRenderer());
-    Assert.assertNotNull(f.newFBO(800, 600));
-    Assert.assertNotNull(f.newCanvasSwing());
-
-    ;
+    // Cleanup
+    cgl.destroy();
   }
 }

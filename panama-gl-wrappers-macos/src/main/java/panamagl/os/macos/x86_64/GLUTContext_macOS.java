@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.macos;
+package panamagl.os.macos.x86_64;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;

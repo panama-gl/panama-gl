@@ -16,7 +16,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
 
-package panamagl.os.macos;
+package panamagl.os.macos.x86_64;
 
 import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;

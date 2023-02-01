@@ -1,4 +1,4 @@
-package panamagl.os.macos;
+package panamagl.os.macos.x86_64;
 
 import panamagl.os.Platform;
 
