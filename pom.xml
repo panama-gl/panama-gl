@@ -121,26 +121,68 @@
 					</compilerArgs>
 				</configuration>
 			</plugin>
-			
-			<!-- Generate Javadoc jars  -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.2.0</version>
-			</plugin>
 
-			<!-- Generate Source jars  -->
+			<!-- SOURCE JAR -->
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>3.2.1</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
+			<!-- TEST JAR -->
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- JAVADOC JAR -->
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<additionalparam>-Xdoclint:none</additionalparam>
+					<doclint>none</doclint>
+					<source>8</source>
+					<quiet>true</quiet> <!-- only show warnings/errors -->
+					<failOnError>false</failOnError>
+					<additionalJOption>--no-module-directories</additionalJOption>
+					<configuration>
+						<docfilessubdirs>true</docfilessubdirs>
+					</configuration>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>aggregate</id>
+						<goals>
+							<goal>aggregate</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 			<!-- RELEASE PLUGIN TO HELP CREATE RELEASE BRANCHES -->
@@ -169,6 +211,7 @@
 		names are detected by maven with mvn enforcer:display-info -->
 
 	<profiles>
+
 		<!-- Unix related settings -->
 		<profile>
 			<id>Unix</id>
