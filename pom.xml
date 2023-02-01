@@ -121,7 +121,27 @@
 					</compilerArgs>
 				</configuration>
 			</plugin>
+			
+			<!-- Generate Javadoc jars  -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.2.0</version>
+			</plugin>
 
+			<!-- Generate Source jars  -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>3.2.1</version>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
+			</plugin>
 
 			<!-- RELEASE PLUGIN TO HELP CREATE RELEASE BRANCHES -->
 			<plugin>
