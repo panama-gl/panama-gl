@@ -1,19 +1,17 @@
 /*******************************************************************************
  * Copyright (c) 2022, 2023 Martin Pernollet & contributors.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA
  *******************************************************************************/
 package panamagl;
 
@@ -47,7 +45,7 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
   public AOffscreenRenderer(PanamaGLFactory factory) {
     this.factory = factory;
   }
-  
+
   // -------------------------------------------------------------
 
   @Override
@@ -57,15 +55,16 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
   public abstract void onDisplay(GLCanvas drawable, GLEventListener listener);
 
   @Override
-  public abstract void onResize(GLCanvas drawable, GLEventListener listener, int x, int y, int width, int height);
-  
+  public abstract void onResize(GLCanvas drawable, GLEventListener listener, int x, int y,
+      int width, int height);
+
   @Override
   public void onDestroy(GLCanvas drawable, GLEventListener glEventListener) {
     destroyContext();
   }
 
   // -------------------------------------------------------------
-  
+
   /**
    * In general, you should initialize any resources that are needed for rendering or other
    * functionality in the JPanel after the JPanel has been added to the Swing hierarchy, but before
@@ -125,7 +124,7 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
    * 
    * @see {@link #renderGLToImage()}
    */
-  protected void renderGLToImage(GLCanvas drawable, GLEventListener listener, int width,
+  protected void renderGLToImage(GLCanvas canvas, GLEventListener listener, int width,
       int height) {
     Debug.debug(debug, "------------------------------------------------------");
     Debug.debug(debug, "AOffscreenRenderer : renderGLToImage " + width + " x " + height);
@@ -139,7 +138,7 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
     if (listener != null)
       listener.reshape(gl, 0, 0, width, height);
 
-    renderGLToImage(drawable, listener);
+    renderGLToImage(canvas, listener);
   }
 
   /**
@@ -149,7 +148,7 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
    * This method can potentially execute in a separate thread (namely the main macOS thread) and
    * hence triggers repaint through SwingUtilities.invokeLater()
    */
-  protected void renderGLToImage(GLCanvas drawable, GLEventListener listener) {
+  protected void renderGLToImage(GLCanvas canvas, GLEventListener listener) {
 
     // Render GL
     if (listener != null)
@@ -165,18 +164,25 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
         throw new RuntimeException("FBO returned a null image!");
 
       // Give back the image to the onscreen panel
-      drawable.setScreenshot(out);
+      canvas.setScreenshot(out);
 
 
       // The image has been rendered in macOS main thread,
       // now we want to notify the component that it is ready
       // for rendering in the AWT Thread
-      SwingUtilities.invokeLater(new Runnable() {
-        @Override
-        public void run() {
-          drawable.repaint();
-        }
-      });
+
+      canvas.repaint();
+      
+      /*if (!SwingUtilities.isEventDispatchThread()) {
+        drawable.repaint();
+      } else {
+        SwingUtilities.invokeLater(new Runnable() {
+          @Override
+          public void run() {
+            drawable.repaint();
+          }
+        });
+      }*/
 
       if (debugFile != null) {
         exec.execute(getTask_saveImage(out, debugFile + "-" + (k++) + ".png"));
@@ -213,7 +219,7 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
   public String getDebugFile() {
     return debugFile;
   }
-  
+
   /** Indicates if the renderer has already been initialized. */
   @Override
   public boolean isInitialized() {
@@ -247,9 +253,9 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
   }
 
   // -------------------------------------------------------------
-  
-  protected Runnable getTask_renderGLToImage(GLCanvas drawable, GLEventListener listener,
-      int width, int height) {
+
+  protected Runnable getTask_renderGLToImage(GLCanvas drawable, GLEventListener listener, int width,
+      int height) {
     return new Runnable() {
       @Override
       public void run() {

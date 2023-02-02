@@ -2,6 +2,9 @@ package org.jzy3d.chart.factories.embedded;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.EventQueue;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -48,11 +51,23 @@ public class FrameSwing extends JFrame implements IFrame {
     panel3d.setLayout(new java.awt.BorderLayout());
     panel3d.add((JComponent) chart.getCanvas());
 
+    /*EventQueue.invokeLater(new Runnable() {
+        @Override
+        public void run() {
+	            ActionEvent event = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "My Action");
+           EventQueue queue = Toolkit.getDefaultToolkit().getSystemEventQueue();
+           queue.postEvent(event);
+           
+
+        }
+     });*/
+
     setVisible(true);
     setTitle(title + "[Swing]");
     setBounds(bounds.x, bounds.y, bounds.width, bounds.height);
     contentPane.add((JComponent) chart.getCanvas(), BorderLayout.CENTER);
     pack();
+
   }
 
   private Chart chart;

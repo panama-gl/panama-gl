@@ -16,6 +16,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
 package org.jzy3d.demos.embedded;
+
+import java.awt.EventQueue;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
@@ -35,10 +39,8 @@ import org.jzy3d.plot3d.builder.SurfaceBuilder;
 import org.jzy3d.plot3d.builder.concrete.OrthonormalGrid;
 import org.jzy3d.plot3d.primitives.Shape;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
-import com.jogamp.opengl.GLProfile;
+
 import opengl.macos.v10_15_7.glut_h;
-
-
 
 /**
  * Demo an surface chart made with Panama (JEP-412).
@@ -50,7 +52,7 @@ import opengl.macos.v10_15_7.glut_h;
 
 public class SurfaceDemoPanamaGL_macOS_embedded {
   static {
-    jogamp.nativewindow.jawt.JAWTUtil_Patched a;
+    jogamp.nativewindow.jawt.JAWTUtil a;
   }
 
   static final float ALPHA_FACTOR = 0.55f;// .61f;
@@ -93,11 +95,12 @@ public class SurfaceDemoPanamaGL_macOS_embedded {
 		public void run() {
 			System.out.println("Before open");*/
 		    chart.open(800,600);
-			/*System.out.println("After open");
+		/*	System.out.println("After open");
 		    // with GLUT, can't do anything after open until main loop ends
 		}
     	
     });*/
+		    
   }
 
 
