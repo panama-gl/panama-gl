@@ -47,11 +47,11 @@ public class SurfaceDemoPanamaGL_macOS_embedded {
   static final float ALPHA_FACTOR = 0.75f;// .61f;
 
   public static void main(String[] args) throws InterruptedException {
-    FrameSwing s = new FrameSwing();
+    /*FrameSwing s = new FrameSwing();
     s.pack();
     s.setSize(500, 500);
     s.setVisible(true);
-    s.setVisible(false);
+    s.setVisible(false);*/
     //Thread.sleep(800);
     
     // ------------------------

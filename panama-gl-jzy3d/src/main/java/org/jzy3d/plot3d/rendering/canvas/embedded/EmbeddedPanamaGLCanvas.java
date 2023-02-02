@@ -9,10 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import org.apache.logging.log4j.LogManager;
+import org.jzy3d.awt.AWTHelper;
 import org.jzy3d.chart.IAnimator;
 import org.jzy3d.chart.factories.IChartFactory;
 import org.jzy3d.maths.Coord2d;
 import org.jzy3d.maths.Dimension;
+import org.jzy3d.plot3d.rendering.canvas.EmulGLCanvas;
 import org.jzy3d.plot3d.rendering.canvas.ICanvasListener;
 import org.jzy3d.plot3d.rendering.canvas.IScreenCanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
@@ -71,7 +74,7 @@ public class EmbeddedPanamaGLCanvas extends JPanel implements IScreenCanvas{
 
   //@Override
   public void setGLEventListener(GLEventListener glEvents) {
-    this.glCanvas.setGLEventListener(glEvents);;
+    this.glCanvas.setGLEventListener(glEvents);
   }
   
   @Override
@@ -160,20 +163,18 @@ public class EmbeddedPanamaGLCanvas extends JPanel implements IScreenCanvas{
 
   @Override
   public void setPixelScale(float[] scale) {
-    // TODO Auto-generated method stub
-    
+    LogManager.getLogger(EmulGLCanvas.class)
+    .info("Not implemented. Pixel scale is driven by AWT Canvas itself and Panama adapts to it");
   }
 
   @Override
   public Coord2d getPixelScale() {
-    // TODO Auto-generated method stub
-    return null;
+    return new Coord2d(AWTHelper.getPixelScaleX(this), AWTHelper.getPixelScaleY(this));
   }
 
   @Override
   public Coord2d getPixelScaleJVM() {
-    // TODO Auto-generated method stub
-    return null;
+    return new Coord2d(AWTHelper.getPixelScaleX(this), AWTHelper.getPixelScaleY(this));
   }
 
   @Override
