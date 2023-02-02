@@ -34,7 +34,7 @@ public abstract class AbstractGL implements GL {
 
   public AbstractGL() {
     try {
-      scope = MemorySession.openConfined();
+      scope = MemorySession.openImplicit();
       allocator = SegmentAllocator.newNativeArena(scope);
     } catch (Exception e) {
       e.printStackTrace();

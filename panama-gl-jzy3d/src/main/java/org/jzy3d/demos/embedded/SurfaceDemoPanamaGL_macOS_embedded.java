@@ -17,12 +17,6 @@
  *******************************************************************************/
 package org.jzy3d.demos.embedded;
 
-import java.awt.EventQueue;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.lang.foreign.MemorySession;
-import java.lang.foreign.SegmentAllocator;
-import java.lang.foreign.ValueLayout;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.ChartFactory;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
@@ -37,7 +31,6 @@ import org.jzy3d.plot3d.builder.SurfaceBuilder;
 import org.jzy3d.plot3d.builder.concrete.OrthonormalGrid;
 import org.jzy3d.plot3d.primitives.Shape;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
-import opengl.macos.v10_15_7.glut_h;
 
 /**
  * Demo an surface chart made with Panama (JEP-412).
@@ -51,7 +44,7 @@ import opengl.macos.v10_15_7.glut_h;
 // Making context current in MacOSXCGLContext line 1474 
 
 public class SurfaceDemoPanamaGL_macOS_embedded {
-  static final float ALPHA_FACTOR = 0.55f;// .61f;
+  static final float ALPHA_FACTOR = 0.75f;// .61f;
 
   public static void main(String[] args) throws InterruptedException {
     FrameSwing s = new FrameSwing();
@@ -60,18 +53,6 @@ public class SurfaceDemoPanamaGL_macOS_embedded {
     s.setVisible(true);
     s.setVisible(false);
     //Thread.sleep(800);
-    
-    //GLProfile.initSingleton();
-    
- // loading GL manually
-    System.loadLibrary("GL");
-    System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
-
-    // https://github.com/jzy3d/panama-gl/issues/16
-    var scope = MemorySession.openConfined();
-    var allocator = SegmentAllocator.newNativeArena(scope);
-    var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
-    glut_h.glutInit(argc, argc);
     
     // ------------------------
 
@@ -89,17 +70,7 @@ public class SurfaceDemoPanamaGL_macOS_embedded {
         System.out.println("Before open");
         FrameSwing frame = (FrameSwing)chart.open(800,600);
         System.out.println("After open");
-        //frame.pack();
-        //frame.setVisible(true);
-        
-        /*FrameSwing s = new FrameSwing();
-        s.pack();
-        s.setSize(500, 500);
-        s.setVisible(true);
-        
-        EventQueue queue = Toolkit.getDefaultToolkit().getSystemEventQueue();
-        ActionEvent event = new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "My Action");
-        queue.postEvent(event);*/
+        frame.resize(800, 600);
       }
     };
 

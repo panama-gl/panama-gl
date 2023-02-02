@@ -313,6 +313,7 @@ public interface GL {
     int GL_STENCIL();
     int GL_POLYGON_OFFSET_LINE();
     int GL_POLYGON_OFFSET_FILL();
+    int GL_ONE_MINUS_SRC_ALPHA();
 
 }
 

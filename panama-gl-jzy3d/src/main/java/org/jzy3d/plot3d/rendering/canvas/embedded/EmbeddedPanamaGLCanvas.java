@@ -12,6 +12,7 @@ import javax.swing.SwingUtilities;
 import org.jzy3d.chart.IAnimator;
 import org.jzy3d.chart.factories.IChartFactory;
 import org.jzy3d.maths.Coord2d;
+import org.jzy3d.maths.Dimension;
 import org.jzy3d.plot3d.rendering.canvas.ICanvasListener;
 import org.jzy3d.plot3d.rendering.canvas.IScreenCanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
@@ -208,6 +209,11 @@ public class EmbeddedPanamaGLCanvas extends JPanel implements IScreenCanvas{
   public IAnimator getAnimation() {
     // TODO Auto-generated method stub
     return animator;
+  }
+
+  @Override
+  public Dimension getDimension() {
+    return new Dimension(getRendererWidth(), getRendererHeight());
   }
 
 }

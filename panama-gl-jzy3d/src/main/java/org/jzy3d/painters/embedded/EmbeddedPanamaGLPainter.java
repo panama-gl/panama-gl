@@ -97,13 +97,13 @@ public class EmbeddedPanamaGLPainter extends AbstractPainter implements PanamaGL
   }
 
 
-  protected static MouseEvent mouseEvent(int x, int y, int modifiers) {
+  /*protected static MouseEvent mouseEvent(int x, int y, int modifiers) {
     return mouseEvent(x,y,modifiers,1);
   }
 
   protected static MouseEvent mouseEvent(int x, int y, int modifiers, int clickCount) {
     return new MouseEvent(dummy, 0, 0, modifiers, x, y, 100, 100, clickCount, false, 0);
-  }
+  }*/
   static Component dummy = new JPanel();
 
   protected StringBuffer version(PanamaGLPainter painter) {
@@ -162,7 +162,7 @@ public class EmbeddedPanamaGLPainter extends AbstractPainter implements PanamaGL
     }
 
     // Blending : more beautifull with jGL without this
-    gl.glBlendFunc(gl.GL_SRC_ALPHA(), gl.GL_SRC_ALPHA());
+    gl.glBlendFunc(gl.GL_SRC_ALPHA(), gl.GL_ONE_MINUS_SRC_ALPHA());
 
     // GL_SRC_ALPHA_SATURATE
     // on/off is handled by each viewport (camera or image)
@@ -305,7 +305,7 @@ public class EmbeddedPanamaGLPainter extends AbstractPainter implements PanamaGL
 
   @Override
   public void glColor3f(float r, float g, float b) {
-    gl.glColor3f(r, b, b);
+    gl.glColor3f(r, g, b);
   }
 
   @Override

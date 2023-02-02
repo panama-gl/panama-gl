@@ -24,6 +24,7 @@ import org.apache.log4j.Logger;
 import org.jzy3d.chart.IAnimator;
 import org.jzy3d.chart.factories.IChartFactory;
 import org.jzy3d.maths.Coord2d;
+import org.jzy3d.maths.Dimension;
 import org.jzy3d.painters.natives.PanamaGLNativePainter;
 import org.jzy3d.plot3d.rendering.canvas.ICanvasListener;
 import org.jzy3d.plot3d.rendering.canvas.IScreenCanvas;
@@ -169,4 +170,10 @@ public class PanamaGLNativeCanvas implements IScreenCanvas{
   public boolean isNative() {
     return true;
   }
+  
+  @Override
+  public Dimension getDimension() {
+    return new Dimension(getRendererWidth(), getRendererHeight());
+  }
+
 }

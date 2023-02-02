@@ -1436,4 +1436,10 @@ public class GL_linux extends AbstractGL implements GL  {
     public int GL_POLYGON_OFFSET_FILL() {
       return glut_h.GL_POLYGON_OFFSET_FILL();
     }
+    
+    @Override
+    public int GL_ONE_MINUS_SRC_ALPHA() {
+      return glut_h.GL_ONE_MINUS_SRC_ALPHA();
+    }
+
 }

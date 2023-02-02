@@ -1557,5 +1557,11 @@ public class GL_macOS extends AbstractGL implements GL {
   }
 
 
+  @Override
+  public int GL_ONE_MINUS_SRC_ALPHA() {
+    return glut_h.GL_ONE_MINUS_SRC_ALPHA();
+  }
+
+
 
 }
