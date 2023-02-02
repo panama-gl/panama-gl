@@ -19,7 +19,12 @@ import org.jzy3d.chart.factories.IFrame;
 import org.jzy3d.maths.Rectangle;
 
 public class FrameSwing extends JFrame implements IFrame {
-
+  public static void main(String[] args) {
+    FrameSwing s = new FrameSwing();
+    s.pack();
+    s.setSize(500, 500);
+    s.setVisible(true);
+  }
   // public constructor for easier construction by reflexion
   public FrameSwing() {}
 

@@ -1,5 +1,6 @@
 package org.jzy3d.plot3d.rendering.canvas.embedded;
 
+import java.awt.GridLayout;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelListener;
 import java.io.File;
@@ -7,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import org.jzy3d.chart.IAnimator;
 import org.jzy3d.chart.factories.IChartFactory;
 import org.jzy3d.maths.Coord2d;
@@ -14,7 +16,6 @@ import org.jzy3d.plot3d.rendering.canvas.ICanvasListener;
 import org.jzy3d.plot3d.rendering.canvas.IScreenCanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.scene.Scene;
-import org.jzy3d.plot3d.rendering.view.Renderer3d;
 import org.jzy3d.plot3d.rendering.view.View;
 import panamagl.GLEventListener;
 import panamagl.canvas.GLCanvasSwing;
@@ -36,6 +37,7 @@ public class EmbeddedPanamaGLCanvas extends JPanel implements IScreenCanvas{
     
     this.glCanvas = glCanvas;
     
+    setLayout(new GridLayout(0, 1));
     add(glCanvas);
 
     view = scene.newView(this, quality);
@@ -104,7 +106,14 @@ public class EmbeddedPanamaGLCanvas extends JPanel implements IScreenCanvas{
 
   @Override
   public void forceRepaint() {
-    repaint();
+    /*SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {*/
+        //glCanvas.repaint();
+        glCanvas.display();
+        /*System.out.println("Embedded.repaint()");
+      }
+    });*/
   }
 
   @Override

@@ -534,7 +534,7 @@ public class EmbeddedPanamaGLPainter extends AbstractPainter implements PanamaGL
    */
   @Override
   public int getTextLengthInPixels(Font font, String string) {
-    EmulGLCanvas c = (EmulGLCanvas) getCanvas();
+    Component c = (Component) getCanvas();
     if (c != null) {
       Graphics g = c.getGraphics();
       if (g != null && font != null) {

@@ -54,7 +54,7 @@ public class Debug {
    * @return
    */
   public static boolean check(Class<?> clazz) {
-    return check(clazz.getName());
+    return check(clazz.getName()) || check(clazz.getSimpleName());
   }
 
   public static boolean check(String name) {

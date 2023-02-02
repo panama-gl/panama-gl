@@ -174,15 +174,15 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
       canvas.repaint();
       
       /*if (!SwingUtilities.isEventDispatchThread()) {
-        drawable.repaint();
+        canvas.repaint();
       } else {
         SwingUtilities.invokeLater(new Runnable() {
           @Override
           public void run() {
-            drawable.repaint();
+            canvas.repaint();
           }
-        });
-      }*/
+        });*/
+      //}
 
       if (debugFile != null) {
         exec.execute(getTask_saveImage(out, debugFile + "-" + (k++) + ".png"));
