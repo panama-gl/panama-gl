@@ -17,19 +17,15 @@
  *******************************************************************************/
 package org.jzy3d.demos.embedded;
 
+import java.util.Random;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.ChartFactory;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
-import org.jzy3d.chart.factories.embedded.EmbeddedPanamaGLPainterFactory;
+import org.jzy3d.chart.factories.SwingChartFactory;
 import org.jzy3d.chart.factories.embedded.FrameSwing;
 import org.jzy3d.colors.Color;
-import org.jzy3d.colors.ColorMapper;
-import org.jzy3d.colors.colormaps.ColorMapRainbow;
-import org.jzy3d.maths.Range;
-import org.jzy3d.plot3d.builder.Func3D;
-import org.jzy3d.plot3d.builder.SurfaceBuilder;
-import org.jzy3d.plot3d.builder.concrete.OrthonormalGrid;
-import org.jzy3d.plot3d.primitives.Shape;
+import org.jzy3d.maths.Coord3d;
+import org.jzy3d.plot3d.primitives.Scatter;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 
 /**
@@ -43,28 +39,26 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 
 // Making context current in MacOSXCGLContext line 1474 
 
-public class SurfaceDemoPanamaGL_macOS_embedded {
+public class ScatterDemo_JOGL {
   static final float ALPHA_FACTOR = 0.75f;// .61f;
 
   public static void main(String[] args) {
 
-    ChartFactory factory = new PanamaGLChartFactory(new EmbeddedPanamaGLPainterFactory());
+    ChartFactory factory = new SwingChartFactory();
+
+    //ChartFactory factory = new SwingChartFacto
 
     Quality q = Quality.Advanced().setAnimated(false);
     Chart chart = factory.newChart(q);
-    chart.add(surface());
+    chart.add(scatter());
     chart.getView().setAxisDisplayed(false);
-    chart.getView().getAxisLayout().setXAxisLabelDisplayed(false);
-    chart.getView().getAxisLayout().setYAxisLabelDisplayed(false);
-    chart.getView().getAxisLayout().setZAxisLabelDisplayed(false);
     
     Runnable open = new Runnable() {
       @Override
       public void run() {
         System.out.println("Before open");
-        FrameSwing frame = (FrameSwing)chart.open(800,600);
+        chart.open(800,600);
         System.out.println("After open");
-        frame.setSize(800, 600);
       }
     };
 
@@ -74,23 +68,29 @@ public class SurfaceDemoPanamaGL_macOS_embedded {
     chart.addMouse();    
   }
 
+  private static Scatter scatter() {
+    int size = 500000;
+    float x;
+    float y;
+    float z;
+    float a;
 
-  private static Shape surface() {
-    SurfaceBuilder builder = new SurfaceBuilder();
+    Coord3d[] points = new Coord3d[size];
+    Color[] colors = new Color[size];
 
-    Func3D func = new Func3D((x, y) -> x * Math.sin(x * y));
-    Range range = new Range(-3, 3);
-    int steps = 50;
+    Random r = new Random();
+    r.setSeed(0);
 
-    Shape surface = builder.orthonormal(new OrthonormalGrid(range, steps), func);
+    for (int i = 0; i < size; i++) {
+      x = r.nextFloat() - 0.5f;
+      y = r.nextFloat() - 0.5f;
+      z = r.nextFloat() - 0.5f;
+      points[i] = new Coord3d(x, y, z);
+      a = 0.25f;
+      colors[i] = new Color(x, y, z, a);
+    }
 
-    ColorMapper colorMapper = new ColorMapper(new ColorMapRainbow(), surface, new Color(1, 1, 1, ALPHA_FACTOR));
-    surface.setColorMapper(colorMapper);
-    surface.setFaceDisplayed(true);
-    surface.setWireframeDisplayed(true);
-    surface.setWireframeColor(Color.BLACK);
-    surface.setWireframeWidth(1);
-    return surface;
+    return new Scatter(points, colors);
   }
 
 }

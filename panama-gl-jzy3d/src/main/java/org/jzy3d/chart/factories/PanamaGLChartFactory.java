@@ -17,12 +17,12 @@
  *******************************************************************************/
 package org.jzy3d.chart.factories;
 
-import org.jzy3d.chart.factories.natives.PanamaGLPainterFactory_MacOS_10_15_3;
+import org.jzy3d.chart.factories.embedded.EmbeddedPanamaGLPainterFactory;
 
 public class PanamaGLChartFactory extends ChartFactory {
 
   public PanamaGLChartFactory() {
-    super(new PanamaGLPainterFactory_MacOS_10_15_3());
+    super(new EmbeddedPanamaGLPainterFactory());
   }
 
   public PanamaGLChartFactory(IPainterFactory painterFactory) {

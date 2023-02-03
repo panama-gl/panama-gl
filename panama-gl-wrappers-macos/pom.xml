@@ -34,7 +34,7 @@
 
 		<dependency>
 			<groupId>org.jzy3d</groupId>
-			<artifactId>jzy3d-native-jogl-core</artifactId>
+			<artifactId>jzy3d-native-jogl-swing</artifactId>
 			<version>${jzy3d.version}</version>
 		</dependency>
 
