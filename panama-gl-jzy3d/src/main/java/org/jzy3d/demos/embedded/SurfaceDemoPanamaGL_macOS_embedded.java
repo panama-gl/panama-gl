@@ -46,23 +46,17 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 public class SurfaceDemoPanamaGL_macOS_embedded {
   static final float ALPHA_FACTOR = 0.75f;// .61f;
 
-  public static void main(String[] args) throws InterruptedException {
-    /*FrameSwing s = new FrameSwing();
-    s.pack();
-    s.setSize(500, 500);
-    s.setVisible(true);
-    s.setVisible(false);*/
-    //Thread.sleep(800);
-    
-    // ------------------------
+  public static void main(String[] args) {
 
     ChartFactory factory = new PanamaGLChartFactory(new EmbeddedPanamaGLPainterFactory());
 
     Quality q = Quality.Advanced().setAnimated(false);
     Chart chart = factory.newChart(q);
     chart.add(surface());
-    chart.getView().setAxisDisplayed(true);
-
+    chart.getView().setAxisDisplayed(false);
+    chart.getView().getAxisLayout().setXAxisLabelDisplayed(false);
+    chart.getView().getAxisLayout().setYAxisLabelDisplayed(false);
+    chart.getView().getAxisLayout().setZAxisLabelDisplayed(false);
     
     Runnable open = new Runnable() {
       @Override
@@ -70,7 +64,7 @@ public class SurfaceDemoPanamaGL_macOS_embedded {
         System.out.println("Before open");
         FrameSwing frame = (FrameSwing)chart.open(800,600);
         System.out.println("After open");
-        frame.resize(800, 600);
+        frame.setSize(800, 600);
       }
     };
 

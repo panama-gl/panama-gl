@@ -52,7 +52,6 @@ import org.jzy3d.painters.StencilOp;
 import org.jzy3d.plot3d.pipelines.NotImplementedException;
 import org.jzy3d.plot3d.primitives.PolygonFill;
 import org.jzy3d.plot3d.primitives.PolygonMode;
-import org.jzy3d.plot3d.rendering.canvas.EmulGLCanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.canvas.natives.PanamaGLNativeCanvas;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
@@ -644,7 +643,7 @@ System.out.println("post init");
    */
   @Override
   public int getTextLengthInPixels(Font font, String string) {
-    EmulGLCanvas c = (EmulGLCanvas) getCanvas();
+    Component c = (Component) getCanvas();
     if (c != null) {
       Graphics g = c.getGraphics();
       if (g != null && font != null) {

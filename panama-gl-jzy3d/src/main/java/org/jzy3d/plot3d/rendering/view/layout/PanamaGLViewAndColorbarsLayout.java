@@ -19,8 +19,8 @@ package org.jzy3d.plot3d.rendering.view.layout;
 
 import java.util.List;
 import org.jzy3d.chart.Chart;
-import org.jzy3d.painters.EmulGLPainter;
 import org.jzy3d.painters.IPainter;
+import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.plot3d.rendering.canvas.ICanvas;
 import org.jzy3d.plot3d.rendering.legends.ILegend;
 import org.jzy3d.plot3d.rendering.view.View;
@@ -54,15 +54,15 @@ public class PanamaGLViewAndColorbarsLayout extends ViewAndColorbarsLayout {
   @Override
   protected void renderLegends(IPainter painter, float left, float right, List<ILegend> legends,
       ICanvas canvas) {
-    EmulGLPainter emulGL = (EmulGLPainter) painter;
+    PanamaGLPainter emulGL = (PanamaGLPainter) painter;
 
     int width = canvas.getRendererWidth();
     int height = canvas.getRendererHeight();
     
 
     if (fixHiDPI) {
-      width = (int) (sceneViewport.getWidth() * emulGL.getGL().getPixelScaleX());
-      height = (int) (sceneViewport.getHeight() * emulGL.getGL().getPixelScaleY());// canvas.getRendererHeight();
+      width = (int) (sceneViewport.getWidth() * painter.getCanvas().getPixelScale().x);
+      height = (int) (sceneViewport.getHeight() * painter.getCanvas().getPixelScale().y);// canvas.getRendererHeight();
     }
 
     // ---------------------------------------

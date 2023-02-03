@@ -15,7 +15,6 @@ import org.jzy3d.chart.IAnimator;
 import org.jzy3d.chart.factories.IChartFactory;
 import org.jzy3d.maths.Coord2d;
 import org.jzy3d.maths.Dimension;
-import org.jzy3d.plot3d.rendering.canvas.EmulGLCanvas;
 import org.jzy3d.plot3d.rendering.canvas.ICanvasListener;
 import org.jzy3d.plot3d.rendering.canvas.IScreenCanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
@@ -163,7 +162,7 @@ public class EmbeddedPanamaGLCanvas extends JPanel implements IScreenCanvas{
 
   @Override
   public void setPixelScale(float[] scale) {
-    LogManager.getLogger(EmulGLCanvas.class)
+    LogManager.getLogger(EmbeddedPanamaGLCanvas.class)
     .info("Not implemented. Pixel scale is driven by AWT Canvas itself and Panama adapts to it");
   }
 
