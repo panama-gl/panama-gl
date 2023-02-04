@@ -14,6 +14,4 @@ public abstract class AGLContext implements GLContext{
   public void setProfile(GLProfile profile) {
     this.profile = profile;
   }
-  
-  
 }
