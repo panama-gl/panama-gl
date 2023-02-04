@@ -18,63 +18,38 @@
 package panamagl.os.macos.x86_64;
 
 import org.junit.Test;
+import org.jzy3d.os.OperatingSystem;
+import panamagl.GLProfile;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
+import panamagl.os.macos.x86_64.CGLContext_macOS;
+import panamagl.os.macos.x86_64.GLUTContext_macOS;
+import panamagl.os.macos.x86_64.GL_macOS;
 
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules
 // jdk.incubator.foreign
 // -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class TestFBO_macOS extends MacOSTest{
+public class TestGLProfile_macOS extends MacOSTest{
 
   @Test
-  public void given_CGLAndGLUTContext_whenRenderSomething_ThenGetBufferedImage() {
-    if (!checkPlatform())
-      return;
-
-    // Given a CGL Context
-    GLContext cglContext = new CGLContext_macOS();
-    cglContext.init();
-
-    // Given a GLUT context
-    GLContext glutContext = new GLUTContext_macOS();
-    glutContext.init();
+  public void glProfile() {
+    //if (!checkPlatform())
+    //  return;
 
     // Given a GL caller
     GL gl = new GL_macOS();
 
-    TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
-
-  }
-
-  @Test
-  public void given_GLUTContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {
-    if (!checkPlatform())
-      return;
-
     // Given a GLUT context
-    GLContext glutContext = new GLUTContext_macOS();
-    glutContext.init();
+    GLUTContext_macOS glutContext = new GLUTContext_macOS();
+    glutContext.init(false);
 
-    // Given a GL caller
-    GL gl = new GL_macOS();
 
-    TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
-
+    GLProfile p = new GLProfile(gl);
+    System.out.println(p);
   }
 
-  @Test
-  public void given_CGLContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {
-    if (!checkPlatform())
-      return;
+  
 
-    // Given a CGL context ONLY
-    GLContext context = new CGLContext_macOS();
-    context.init();
 
-    GL gl = new GL_macOS();
-
-    TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
-
-  }
 
 }

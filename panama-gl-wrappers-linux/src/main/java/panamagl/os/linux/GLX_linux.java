@@ -1499,4 +1499,9 @@ public class GLX_linux extends AbstractGL implements GL  {
       return glut_h.GL_ONE_MINUS_SRC_ALPHA();
     }
 
+    @Override
+    public int GL_RENDERER() {
+      return glut_h.GL_RENDERER();
+    }
+
 }

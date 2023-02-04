@@ -31,11 +31,17 @@ import java.lang.foreign.ValueLayout;
 public abstract class AbstractGL implements GL {
   protected MemorySession scope;
   protected SegmentAllocator allocator;
+  protected MemorySession scopeConfined;
+  protected SegmentAllocator allocatorConfined;
 
   public AbstractGL() {
     try {
-      scope = MemorySession.openImplicit();
+      scope = MemorySession.openImplicit(); // /*Confined();*/
       allocator = SegmentAllocator.newNativeArena(scope);
+      
+      scopeConfined = MemorySession.openConfined();
+      allocatorConfined = SegmentAllocator.newNativeArena(scopeConfined);
+
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -72,5 +78,25 @@ public abstract class AbstractGL implements GL {
   public MemorySegment alloc(int[] value) {
     return allocator.allocateArray(ValueLayout.JAVA_INT, value);
   }
+  
+  public void copySegmentToArray(MemorySegment segment, int[] data) {
+    for (int i = 0; i < data.length; i++) {
+      //System.out.println(i);
+      data[i] = segment.getAtIndex(ValueLayout.JAVA_INT, i);
+    }
+  }
+
+  public void copySegmentToArray(MemorySegment segment, float[] data) {
+    for (int i = 0; i < data.length; i++) {
+      data[i] = segment.getAtIndex(ValueLayout.JAVA_FLOAT, i);
+    }
+  }
+
+  public void copySegmentToArray(MemorySegment segment, double[] data) {
+    for (int i = 0; i < data.length; i++) {
+      data[i] = segment.getAtIndex(ValueLayout.JAVA_DOUBLE, i);
+    }
+  }
+
 
 }

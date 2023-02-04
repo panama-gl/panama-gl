@@ -19,7 +19,6 @@ package panamagl.os.macos.x86_64;
 
 
 import java.awt.Component;
-import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 import java.lang.foreign.Addressable;
 import java.lang.foreign.MemoryAddress;
@@ -28,12 +27,9 @@ import java.lang.foreign.ValueLayout;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import javax.swing.JPanel;
-import org.jzy3d.chart.Chart;
 import org.jzy3d.maths.Array;
-import org.jzy3d.maths.Rectangle;
 import org.jzy3d.painters.Font;
 import org.jzy3d.painters.StencilOp;
-import opengl.macos.v10_15_7.glutMouseFunc$func;
 import opengl.macos.v10_15_7.glut_h;
 import panamagl.opengl.AbstractGL;
 import panamagl.opengl.GL;
@@ -857,17 +853,30 @@ public class GL_macOS extends AbstractGL implements GL {
 
   @Override
   public void glGetIntegerv(int pname, int[] data, int data_offset) {
-    glut_h.glGetIntegerv(pname, alloc(data));
+    //MemorySegment segment = alloc(data);
+    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_INT, 4);
+    glut_h.glGetIntegerv(pname, segment);
+    copySegmentToArray(segment, data);
+    
   }
 
   @Override
   public void glGetDoublev(int pname, double[] params, int params_offset) {
-    glut_h.glGetDoublev(pname, alloc(params));
+    //MemorySegment segment = alloc(params);
+    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_DOUBLE, 4);
+    glut_h.glGetDoublev(pname,segment);
+
+    copySegmentToArray(segment, params);
+
   }
 
   @Override
   public void glGetFloatv(int pname, float[] data, int data_offset) {
-    glut_h.glGetFloatv(pname, alloc(data));
+    //MemorySegment segment = alloc(data);
+    MemorySegment segment = allocatorConfined.allocateArray(ValueLayout.JAVA_FLOAT, 4);
+    glut_h.glGetFloatv(pname, segment);
+    
+    copySegmentToArray(segment, data);
   }
 
   @Override
@@ -1560,6 +1569,11 @@ public class GL_macOS extends AbstractGL implements GL {
   @Override
   public int GL_ONE_MINUS_SRC_ALPHA() {
     return glut_h.GL_ONE_MINUS_SRC_ALPHA();
+  }
+
+  @Override
+  public int GL_RENDERER() {
+    return glut_h.GL_RENDERER();
   }
 
 

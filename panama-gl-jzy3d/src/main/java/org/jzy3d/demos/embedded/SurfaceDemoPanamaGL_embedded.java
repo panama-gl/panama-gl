@@ -53,7 +53,7 @@ public class SurfaceDemoPanamaGL_embedded {
     Quality q = Quality.Advanced().setAnimated(false);
     Chart chart = factory.newChart(q);
     chart.add(surface());
-    chart.getView().setAxisDisplayed(false);
+    chart.getView().setAxisDisplayed(true);
     
     Runnable open = new Runnable() {
       @Override
