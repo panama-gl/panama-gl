@@ -1503,5 +1503,15 @@ public class GLX_linux extends AbstractGL implements GL  {
     public int GL_RENDERER() {
       return glut_h.GL_RENDERER();
     }
+    @Override
+    public int GL_RGBA() {
+      return glut_h.GL_RGBA();
+    }
+
+
+    @Override
+    public void glDrawPixels(int width, int height, int format, int type, Addressable addressable) {
+      glut_h.glDrawPixels(width, height, format, type, addressable);
+    }
 
 }

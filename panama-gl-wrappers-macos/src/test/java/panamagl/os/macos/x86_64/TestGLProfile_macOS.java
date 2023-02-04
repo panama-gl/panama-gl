@@ -33,8 +33,8 @@ public class TestGLProfile_macOS extends MacOSTest{
 
   @Test
   public void glProfile() {
-    //if (!checkPlatform())
-    //  return;
+    if (!checkPlatform())
+      return;
 
     // Given a GL caller
     GL gl = new GL_macOS();

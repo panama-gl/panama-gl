@@ -315,6 +315,8 @@ public interface GL {
     int GL_POLYGON_OFFSET_FILL();
     int GL_ONE_MINUS_SRC_ALPHA();
     int GL_RENDERER();
+    int GL_RGBA();
+    void glDrawPixels(int width, int height, int format, int type, Addressable addressable);
 
 }
 

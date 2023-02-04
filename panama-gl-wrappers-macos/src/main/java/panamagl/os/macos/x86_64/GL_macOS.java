@@ -793,15 +793,15 @@ public class GL_macOS extends AbstractGL implements GL {
       int proj_offset, int[] view, int view_offset, float[] objPos, int objPos_offset) {
     // throw new RuntimeException();
 
-    double objX[] = new double[1];
-    double objY[] = new double[1];
-    double objZ[] = new double[1];
+    MemorySegment objX = alloc(new double[1]);
+    MemorySegment objY = alloc(new double[1]);
+    MemorySegment objZ = alloc(new double[1]);
 
-    int st = glut_h.gluUnProject((double)winX, (double)winY, (double)winZ, alloc(dbl(model)), alloc(dbl(proj)), alloc(view), alloc(objX), alloc(objY), alloc(objZ));
+    int st = glut_h.gluUnProject((double)winX, (double)winY, (double)winZ, alloc(dbl(model)), alloc(dbl(proj)), alloc(view), objX, objY, objZ);
 
-    objPos[0] = (float) objX[0];
-    objPos[1] = (float) objY[0];
-    objPos[2] = (float) objZ[0];
+    objPos[0] = (float) objX.get(ValueLayout.JAVA_DOUBLE, 0);
+    objPos[1] = (float) objY.get(ValueLayout.JAVA_DOUBLE, 0);
+    objPos[2] = (float) objZ.get(ValueLayout.JAVA_DOUBLE, 0);
 
     return st == 1;
   }
@@ -835,16 +835,16 @@ public class GL_macOS extends AbstractGL implements GL {
       projD[i] = proj[i];
     }
 
-    double[] winx = new double[1];
-    double[] winy = new double[1];
-    double[] winz = new double[1];
+    MemorySegment mX = alloc(new double[1]);
+    MemorySegment mY = alloc(new double[1]);
+    MemorySegment mZ = alloc(new double[1]);
 
-    int out = glut_h.gluProject(objX, objY, objZ, alloc(modelD), alloc(projD), alloc(view), alloc(winx), alloc(winy), alloc(winz));
+    int out = glut_h.gluProject(objX, objY, objZ, alloc(modelD), alloc(projD), alloc(view), mX, mY, mZ);
 
     // winPos[0], winPos[1], winPos[2];
-    winPos[0] = (float) winx[0];
-    winPos[1] = (float) winy[0];
-    winPos[2] = (float) winz[0];
+    winPos[0] = (float)mX.get(ValueLayout.JAVA_DOUBLE, 0);//(float) winx[0];
+    winPos[1] = (float)mY.get(ValueLayout.JAVA_DOUBLE, 0);
+    winPos[2] = (float)mZ.get(ValueLayout.JAVA_DOUBLE, 0);
 
     return out == 1;
   }
@@ -1575,7 +1575,14 @@ public class GL_macOS extends AbstractGL implements GL {
   public int GL_RENDERER() {
     return glut_h.GL_RENDERER();
   }
+  @Override
+  public int GL_RGBA() {
+    return glut_h.GL_RGBA();
+  }
 
-
+  @Override
+  public void glDrawPixels(int width, int height, int format, int type, Addressable addressable) {
+    glut_h.glDrawPixels(width, height, format, type, addressable);
+  }
 
 }

@@ -428,12 +428,18 @@ public class EmbeddedPanamaGLPainter extends AbstractPainter implements PanamaGL
   }
 
   /**
-   * Not working yet.
+   * Warning, duplicate pixel buffer!!
    */
   @Override
   public void glDrawPixels(int width, int height, int format, int type, Buffer pixels) {
     logger.error("not implemented");
 
+    MemorySegment pixSegment = gl.alloc(((IntBuffer)pixels).array());
+    
+    gl.glDrawPixels(width, height, format, type, pixSegment);
+    
+    
+    //gl.glDraw
     // opengl.gl.glDrawPixels(width, height, format, type, pixels.array());
   }
 
@@ -590,9 +596,15 @@ public class EmbeddedPanamaGLPainter extends AbstractPainter implements PanamaGL
 
   @Override
   public void drawText(Font font, String label, Coord3d position, Color color, float rotation) {
-    glutBitmapString(font, label, position, color);
+    //glutBitmapString(font, label, position, color);
+    
+    //System.out.println("Painting text at " + position);
+    txt.draw(getGL(), label, position.x, position.y, position.z);
   }
 
+  BasicTextRenderer txt = new BasicTextRenderer();
+
+  
   @Override
   public void glutBitmapString(Font axisFont, String label, Coord3d p, Color c) {
     color(c);
