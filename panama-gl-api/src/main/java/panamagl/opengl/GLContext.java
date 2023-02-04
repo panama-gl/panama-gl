@@ -17,6 +17,8 @@
  *******************************************************************************/
 package panamagl.opengl;
 
+import panamagl.GLProfile;
+
 /**
  * A {@link GLContext} is responsible for establishing an OpenGL context with the OS
  * libraries, allowing to then invoke OpenGL methods.
@@ -37,4 +39,6 @@ public interface GLContext {
     void destroy();
     
     boolean isInitialized();
+    GLProfile getProfile();
+    void setProfile(GLProfile profile);
 }

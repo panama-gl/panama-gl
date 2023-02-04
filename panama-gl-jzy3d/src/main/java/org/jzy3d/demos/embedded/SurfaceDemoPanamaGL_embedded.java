@@ -26,6 +26,7 @@ import org.jzy3d.colors.Color;
 import org.jzy3d.colors.ColorMapper;
 import org.jzy3d.colors.colormaps.ColorMapRainbow;
 import org.jzy3d.maths.Range;
+import org.jzy3d.painters.embedded.EmbeddedPanamaGLPainter;
 import org.jzy3d.plot3d.builder.Func3D;
 import org.jzy3d.plot3d.builder.SurfaceBuilder;
 import org.jzy3d.plot3d.builder.concrete.OrthonormalGrid;
@@ -69,6 +70,12 @@ public class SurfaceDemoPanamaGL_embedded {
     open.run();
     
     chart.addMouse();    
+    
+    EmbeddedPanamaGLPainter painter = (EmbeddedPanamaGLPainter)chart.getPainter();
+    
+    
+    System.out.println(painter.getContext().getProfile());
+    
   }
 
 

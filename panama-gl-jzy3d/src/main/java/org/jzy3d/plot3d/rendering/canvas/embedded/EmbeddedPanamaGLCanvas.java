@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import org.apache.logging.log4j.LogManager;
 import org.jzy3d.awt.AWTHelper;
 import org.jzy3d.chart.IAnimator;
@@ -20,6 +19,7 @@ import org.jzy3d.plot3d.rendering.canvas.IScreenCanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.scene.Scene;
 import org.jzy3d.plot3d.rendering.view.View;
+import panamagl.GLCanvas;
 import panamagl.GLEventListener;
 import panamagl.canvas.GLCanvasSwing;
 
@@ -64,6 +64,10 @@ public class EmbeddedPanamaGLCanvas extends JPanel implements IScreenCanvas{
     
     //if (quality.isPreserveViewportSize())
     //  setPixelScale(newPixelScaleIdentity());
+  }
+  
+  public GLCanvas getGLCanvas() {
+    return glCanvas;
   }
   
   //@Override

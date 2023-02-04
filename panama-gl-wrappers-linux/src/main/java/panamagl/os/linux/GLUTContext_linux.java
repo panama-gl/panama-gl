@@ -24,6 +24,7 @@ import java.lang.foreign.ValueLayout;
 import opengl.ubuntu.v20.glutDisplayFunc$callback;
 import opengl.ubuntu.v20.glutIdleFunc$callback;
 import opengl.ubuntu.v20.glut_h;
+import panamagl.AGLContext;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 
@@ -37,7 +38,7 @@ import panamagl.opengl.GLContext;
  * 
  * @author Martin Pernollet
  */
-public class GLUTContext_linux implements GLContext {
+public class GLUTContext_linux extends AGLContext implements GLContext {
   protected MemorySession scope;
   protected SegmentAllocator allocator;
   protected String windowName = "InvisiblePanamaGLWindowForGLContext";

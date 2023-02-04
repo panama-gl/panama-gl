@@ -24,6 +24,7 @@ import java.lang.foreign.ValueLayout;
 import opengl.macos.v10_15_7.glutDisplayFunc$func;
 import opengl.macos.v10_15_7.glutIdleFunc$func;
 import opengl.macos.v10_15_7.glut_h;
+import panamagl.AGLContext;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 
@@ -37,15 +38,15 @@ import panamagl.opengl.GLContext;
  * 
  * @author Martin Pernollet
  */
-public class GLUTContext_macOS implements GLContext {
+public class GLUTContext_macOS extends AGLContext implements GLContext {
+  
   protected MemorySession scope;
   protected SegmentAllocator allocator;
   protected String windowName = "InvisiblePanamaGLWindowForGLContext";
 
   protected int initWidth = 100;
   protected int initHeight = 100;
-  protected boolean initialized = true;
-
+  protected boolean initialized = true;  
 
   /** Initialize GLUT and create a window */
   @Override

@@ -31,6 +31,7 @@ import org.jzy3d.plot3d.rendering.view.layout.PanamaGLViewAndColorbarsLayout;
 import com.jogamp.opengl.GLException;
 import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.PanamaGLFactory;
+import panamagl.opengl.GLContext;
 
 public class EmbeddedPanamaGLPainterFactory implements IPainterFactory {
   protected PanamaGLFactory f = PanamaGLFactory.select();
@@ -45,6 +46,7 @@ public class EmbeddedPanamaGLPainterFactory implements IPainterFactory {
   public IPainter newPainter() {
     EmbeddedPanamaGLPainter p = new EmbeddedPanamaGLPainter();
     p.setGL(f.newGL());
+    
 
     return p;
   }
@@ -53,7 +55,16 @@ public class EmbeddedPanamaGLPainterFactory implements IPainterFactory {
   @Override
   public ICanvas newCanvas(IChartFactory factory, Scene scene, Quality quality) {
     GLCanvasSwing glCanvas = f.newCanvasSwing();
+    
+    GLContext context = glCanvas.getContext();
+    
+    
     EmbeddedPanamaGLCanvas icanvas = new EmbeddedPanamaGLCanvas(factory, scene, quality, glCanvas);
+    
+    // Update painter with context
+    
+    //System.out.println();
+    ((EmbeddedPanamaGLPainter)icanvas.getView().getPainter()).setContext(context);
     return icanvas;
   }
 

@@ -854,7 +854,7 @@ public class GL_macOS extends AbstractGL implements GL {
   @Override
   public void glGetIntegerv(int pname, int[] data, int data_offset) {
     //MemorySegment segment = alloc(data);
-    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_INT, 4);
+    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_INT, data.length);
     glut_h.glGetIntegerv(pname, segment);
     copySegmentToArray(segment, data);
     
@@ -863,7 +863,7 @@ public class GL_macOS extends AbstractGL implements GL {
   @Override
   public void glGetDoublev(int pname, double[] params, int params_offset) {
     //MemorySegment segment = alloc(params);
-    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_DOUBLE, 4);
+    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_DOUBLE, params.length);
     glut_h.glGetDoublev(pname,segment);
 
     copySegmentToArray(segment, params);
@@ -873,7 +873,7 @@ public class GL_macOS extends AbstractGL implements GL {
   @Override
   public void glGetFloatv(int pname, float[] data, int data_offset) {
     //MemorySegment segment = alloc(data);
-    MemorySegment segment = allocatorConfined.allocateArray(ValueLayout.JAVA_FLOAT, 4);
+    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_FLOAT, data.length);
     glut_h.glGetFloatv(pname, segment);
     
     copySegmentToArray(segment, data);

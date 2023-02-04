@@ -25,6 +25,7 @@ import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
 import java.util.Arrays;
 import cgl.macos.v10_15_7.cgl_h;
+import panamagl.AGLContext;
 import panamagl.Debug;
 import panamagl.opengl.GLContext;
 
@@ -68,7 +69,7 @@ import panamagl.opengl.GLContext;
  *
  * @author Martin Pernollet
  */
-public class CGLContext_macOS implements GLContext {
+public class CGLContext_macOS extends AGLContext implements GLContext {
   protected MemorySession scope;
   protected SegmentAllocator allocator;
 

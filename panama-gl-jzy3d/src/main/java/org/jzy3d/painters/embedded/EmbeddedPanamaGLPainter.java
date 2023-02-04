@@ -31,15 +31,19 @@ import org.jzy3d.plot3d.pipelines.NotImplementedException;
 import org.jzy3d.plot3d.primitives.PolygonFill;
 import org.jzy3d.plot3d.primitives.PolygonMode;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
+import org.jzy3d.plot3d.rendering.canvas.embedded.EmbeddedPanamaGLCanvas;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
+import panamagl.GLCanvas;
 import panamagl.opengl.GL;
+import panamagl.opengl.GLContext;
 
 public class EmbeddedPanamaGLPainter extends AbstractPainter implements PanamaGLPainter{
   static Logger logger = Logger.getLogger(EmbeddedPanamaGLPainter.class);
 
   protected GL gl;
+  protected GLContext context;
 
   protected MemorySession scope;
   protected SegmentAllocator allocator;
@@ -64,7 +68,13 @@ public class EmbeddedPanamaGLPainter extends AbstractPainter implements PanamaGL
     this.gl = gl;
   }
 
+  public GLContext getContext() {
+    return context;
+  }
 
+  public void setContext(GLContext context) {
+    this.context = context;
+  }
 
   public MemorySession getScope() {
     return scope;
@@ -150,6 +160,9 @@ public class EmbeddedPanamaGLPainter extends AbstractPainter implements PanamaGL
 
   @Override
   public void configureGL(Quality quality) {
+    // store reference to context in painter!!  
+    GLCanvas glcanvas=  ((EmbeddedPanamaGLCanvas)getCanvas()).getGLCanvas();
+    setContext(glcanvas.getContext());
 
     // Activate Depth buffer
     if (quality.isDepthActivated()) {

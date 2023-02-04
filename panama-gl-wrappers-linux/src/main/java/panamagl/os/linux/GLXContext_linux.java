@@ -21,13 +21,14 @@ package panamagl.os.linux;
 import java.lang.foreign.Addressable;
 import java.lang.foreign.MemoryAddress;
 import glx.ubuntu.v20.glx_h;
+import panamagl.AGLContext;
 import panamagl.opengl.GLContext;
 
 // https://stackoverflow.com/questions/28378891/glxcreatecontext-magically-maps-window
 // https://community.khronos.org/t/minimal-glx-opengl3-0-example/55859
 // https://learnopengl.com/Advanced-OpenGL/Framebufferss
 // https://stackoverflow.com/questions/21851688/linux-rendering-offscreen-with-opengl-3-2-w-fbos
-public class GLXContext_linux implements GLContext{
+public class GLXContext_linux extends AGLContext implements GLContext{
   protected boolean initialized =false;
   public GLXContext_linux() {
     init();

@@ -91,6 +91,11 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
     // OpenGL init
     this.gl = factory.newGL();
     GLError.checkAndThrow(gl);
+    
+    
+    GLProfile profile = new GLProfile(gl);
+    context.setProfile(profile);
+    
 
     Debug.debug(debug, "AOffscreenRenderer : initContext : Got GL : " + gl);
 
@@ -290,5 +295,7 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
       }
     };
   }
+  
+  
 
 }
