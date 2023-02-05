@@ -1,4 +1,4 @@
-package org.jzy3d.painters.embedded;
+package panamagl.text;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,27 +11,21 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.foreign.MemorySegment;
 import javax.imageio.ImageIO;
+import panamagl.image.BasicImageRenderer;
 import panamagl.opengl.GL;
-import panamagl.text.TextRenderer;
 
 /**
- * Port AWTImageConvert.getImageAsByteBuffer to Panama
- * AWTImageViewport & NativeDesktopPainter to draw Legends
- *
+ * Render text to image which can then be drawn at a given 3D position.
  */
-public class BasicTextRenderer implements TextRenderer{
-  BufferedImage image;
-  MemorySegment imageForeign;
+public class BasicTextRenderer extends BasicImageRenderer implements TextRenderer{
   
   public BasicTextRenderer() {
-    
-    try {
+    /*try {
       image = ImageIO.read(new File("logo.png"));
     } catch (IOException e) {
       e.printStackTrace();
     }
-    
-    setImage(image);
+    setImage(image);*/
   }
 
   @Override
@@ -46,58 +40,16 @@ public class BasicTextRenderer implements TextRenderer{
     Graphics2D g = i.createGraphics();
     g.setFont(f);
     g.setColor(Color.black);
-    g.drawString(text, 0, height);
+    //g.drawString(text, 0, height);
+    
+    drawString(g, f, false, text, 0, height);
     
     setImage(i);
     
-    //if(imageForeign!=null && image!=null) {
-      drawForeignImage(gl, image, imageForeign, x, y, z);
-    //}
+    draw(gl, image, imageForeign, x, y, z);
   }
 
-  public void drawForeignImage(GL gl, BufferedImage image, MemorySegment foreign, float x, float y, float z) {
-    
- // Set viewport and projection
-    /*gl.glMatrixMode(gl.GL_PROJECTION());
-    gl.glPushMatrix();
-    gl.glLoadIdentity();*/
-    //applyViewport(painter);
-    
-    //gl.glOrtho(0, screenWidth, 0, screenHeight, -1, 1);
 
-    // Zoom and layout
-    gl.glMatrixMode(gl.GL_MODELVIEW());
-    gl.glPushMatrix();
-    gl.glLoadIdentity();
-
-    //painter.drawImage(imageData, imageWidth, imageHeight, iLayout.zoom, iLayout.position);
-    gl.glPixelZoom(1, 1);
-    gl.glRasterPos3f(x, y, z);
-    // painter.glRasterPos2f(xpict, ypict);
-    gl.glDrawPixels(image.getWidth(), image.getHeight(), gl.GL_RGBA(), gl.GL_UNSIGNED_BYTE(), foreign);
-
-    //imageWidth, imageHeight, GL_RGBA, GL_UNSIGNED_BYTE, imageBuffer);
-    gl.glPopMatrix();
-
-    // Restore matrices state
-    /*gl.glPopMatrix();
-    gl.glMatrixMode(gl.GL_PROJECTION());
-    gl.glPopMatrix();*/
-  }
-  
-  
-  public BufferedImage getImage() {
-    return image;
-  }
-
-  public void setImage(BufferedImage image) {
-    this.image = image;
-    this.imageForeign = BufferedImageForeign.toMemorySegment(image);
-  }
-
-  public MemorySegment getImageForeign() {
-    return imageForeign;
-  }
   
   
   /**
@@ -117,6 +69,7 @@ public class BasicTextRenderer implements TextRenderer{
     }
   }
 
+  /** Compute string width using the Graphics2D instance of a hidden image. */
   public static int stringWidth(String string, Font font) {
     Graphics2D g = i.createGraphics();
     g.setFont(font);

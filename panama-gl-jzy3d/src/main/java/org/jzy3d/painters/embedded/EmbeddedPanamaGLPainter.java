@@ -38,6 +38,7 @@ import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
 import panamagl.GLCanvas;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
+import panamagl.text.BasicTextRenderer;
 
 public class EmbeddedPanamaGLPainter extends AbstractPainter implements PanamaGLPainter{
   static Logger logger = Logger.getLogger(EmbeddedPanamaGLPainter.class);

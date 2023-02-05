@@ -1,4 +1,4 @@
-package org.jzy3d.painters.embedded;
+package panamagl.image;
 
 
 import java.awt.Graphics2D;
@@ -17,26 +17,26 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
-import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import org.jzy3d.painters.IPainter;
+import panamagl.opengl.GL;
 
 /**
- * Convert AWT {@link Image}s to {@link ByteBuffer} or <code>int[]</code> pixel buffers suitable for
- * direct OpenGL rendering via {@link IPainter#glDrawPixels(int, int, int, int, Buffer)}.
+ * Convert AWT {@link Image}s to {@link MemorySegment} or <code>int[]</code> pixel buffers suitable
+ * for direct OpenGL rendering via {@link GL#glDrawPixels(int, int, int, int, MemorySegment)}.
  * 
- * @author Martin
+ * @author Martin Pernollet
  */
 public class BufferedImageForeign {
+  static MemorySession scope = MemorySession.openImplicit();
+  static SegmentAllocator allocator = SegmentAllocator.newNativeArena(scope);
+
+
+  protected static final int SIZE_BYTE = 1;
+
   public static MemorySegment toMemorySegment(Image image) {
     return toMemorySegment(image, image.getWidth(null), image.getHeight(null));
   }
-
-  public static int[] getImagePixels(Image image) {
-    return getImagePixels(image, image.getWidth(null), image.getHeight(null));
-  }
-
 
   /**
    * Create a {@link ByteBuffer} containing a RGBA pixels out of an Image made of ARGB pixels.
@@ -53,6 +53,10 @@ public class BufferedImageForeign {
   public static MemorySegment toMemorySegment(Image image, int width, int height) {
     int[] px = getImagePixels(image, width, height);
     return convertARGBtoRGBA(px, width, height, true);
+  }
+  
+  public static int[] getImagePixels(Image image) {
+    return getImagePixels(image, image.getWidth(null), image.getHeight(null));
   }
 
   /**
@@ -79,12 +83,12 @@ public class BufferedImageForeign {
   }
 
   /**
-   * Convert ARGB pixels to a ByteBuffer containing RGBA pixels.
+   * Convert ARGB pixels to a {@link MemorySegment} containing RGBA pixels.
    * 
    * Can be drawn in ORTHO mode using:
    * 
    * <code>
-   * GL2.glDrawPixels(imgW, imgH, GL2.GL_RGBA, GL2.GL_UNSIGNED_BYTE, byteBuffer);
+   * GL2.glDrawPixels(imgW, imgH, GL2.GL_RGBA, GL2.GL_UNSIGNED_BYTE, segment);
    * </code>
    * 
    * If flipVertically is true, pixels will be flipped vertically for OpenGL coord system.
@@ -179,24 +183,19 @@ public class BufferedImageForeign {
   public static MemorySegment allocBytes(byte[] byteArray) {
     return allocator.allocateArray(ValueLayout.JAVA_BYTE, byteArray);
 
-    /*ByteBuffer bb =
-        ByteBuffer.allocateDirect(byteArray.length * SIZE_BYTE).order(ByteOrder.nativeOrder());
-    ((Buffer) bb.put(byteArray)).flip();
-    //formerly crashed with : bb.put(byteArray).flip();
-    return bb;*/
+    /*
+     * ByteBuffer bb = ByteBuffer.allocateDirect(byteArray.length *
+     * SIZE_BYTE).order(ByteOrder.nativeOrder()); ((Buffer) bb.put(byteArray)).flip(); //formerly
+     * crashed with : bb.put(byteArray).flip(); return bb;
+     */
   }
-  
-  static MemorySession scope = MemorySession.openImplicit();
-  static SegmentAllocator allocator = SegmentAllocator.newNativeArena(scope);
 
-
-  protected static final int SIZE_BYTE = 1;
 
   /**
    * Return a {@link ByteBuffer} out of the image.
    * 
-   * Not used in the framework. Look rather for {@link #toMemorySegment(Image, int, int)} that
-   * has same signature and more used implementation.
+   * Not used in the framework. Look rather for {@link #toMemorySegment(Image, int, int)} that has
+   * same signature and more used implementation.
    * 
    * @param img
    * @param width
