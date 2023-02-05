@@ -15,36 +15,19 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl;
+package panamagl.offscreen;
 
-import panamagl.fbo.FBO;
+import java.awt.image.BufferedImage;
 import panamagl.opengl.GL;
-import panamagl.opengl.GLContext;
 
-/**
- * The interface through which various {@link GLCanvas} implementation can query
- * an offscreen rendering. 
- * 
- * This allows various platforms to use different threading policies, the macOS one being the most particular.
- * 
- * @author Martin
- */
-public interface OffscreenRenderer {
-  void onInit(GLCanvas drawable, GLEventListener glEventListener);
-  void onDisplay(GLCanvas drawable, GLEventListener glEventListener);
-  void onResize(GLCanvas drawable, GLEventListener glEventListener, int x, int y, int width, int height);
-  void onDestroy(GLCanvas drawable, GLEventListener glEventListener);
-  
-  GL getGL();
-  GLContext getContext();
-  
+
+public interface FBO {
+  void prepare(GL gl);
+  void release(GL gl);
+  BufferedImage getImage(GL gl);
+  void resize(int width, int height);
+  int getWidth();
+  int getHeight();
   boolean isFlipY();
   void setFlipY(boolean flipY);
-  void setFBO(FBO fbo);
-  FBO getFBO();
-  
-  boolean isInitialized();
-  
-  public void setDebugFile(String debugFile);
-  public String getDebugFile();
 }

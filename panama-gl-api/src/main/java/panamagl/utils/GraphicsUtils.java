@@ -1,67 +1,108 @@
 /*******************************************************************************
  * Copyright (c) 2022, 2023 Martin Pernollet & contributors.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA
  *******************************************************************************/
 package panamagl.utils;
 
 import java.awt.BufferCapabilities;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.ImageCapabilities;
 import java.awt.Transparency;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
 import java.awt.image.BufferedImage;
 
 public class GraphicsUtils {
+  /**
+   * A draw string method allowing to bypass OS font rendering if noticing font rendering glitches.
+   *
+   * It may be worth invoking {@link #configureRenderingHints(Graphics2D)} right before.
+   */
+  public static void drawString(Graphics2D g2d, Font font, boolean useOSFontRendering,
+      String string, int x, int y) {
+    if (useOSFontRendering) {
+      g2d.setFont(font);
+      g2d.drawString(string, x, y);
+    } else {
+      FontRenderContext frc = g2d.getFontRenderContext();
+      GlyphVector gv = font.createGlyphVector(frc, string);
+      g2d.drawGlyphVector(gv, x, y);
+    }
+  }
+
+  /** Compute string width using the Graphics2D instance of a hidden image. */
+  public static int stringWidth(String string, Font font) {
+    Graphics2D g = i.createGraphics();
+    g.setFont(font);
+    return stringWidth(g, string);
+  }
+
+  static BufferedImage i = new BufferedImage(1, 1, BufferedImage.TYPE_4BYTE_ABGR);
+
+  public static int stringWidth(Graphics2D g2d, String string) {
+    FontMetrics fm = g2d.getFontMetrics();
+    if (fm != null) {
+      return fm.stringWidth(string);
+    } else {
+      return -1;
+    }
+  }
+  
   public static BufferedImage createCompatibleImage(int width, int height) {
     GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
     GraphicsDevice device = env.getDefaultScreenDevice();
     GraphicsConfiguration config = device.getDefaultConfiguration();
     BufferedImage image = config.createCompatibleImage(width, height, Transparency.TRANSLUCENT);
     return image;
-    //Graphics g = buffy.getGraphics();
+    // Graphics g = buffy.getGraphics();
   }
-  
+
   public static void printGraphicsEnvironment(String header) {
     System.out.println(header + " : sun.java2d.opengl=" + System.getProperty("sun.java2d.opengl"));
-    System.out.println(header + " : sun.java2d.noddraw:" + System.getProperty("sun.java2d.noddraw"));
+    System.out
+        .println(header + " : sun.java2d.noddraw:" + System.getProperty("sun.java2d.noddraw"));
 
     GraphicsEnvironment graphEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
     GraphicsDevice[] graphDevsOrig = graphEnv.getScreenDevices();
 
-    //GraphicsConfiguration gcDef = graphDevsOrig[0].getDefaultConfiguration();
+    // GraphicsConfiguration gcDef = graphDevsOrig[0].getDefaultConfiguration();
 
     for (int i = 0; i < graphDevsOrig.length; i++) {
-        System.out.println(header + " : Screen device # " + i + ": " + graphDevsOrig[i].getIDstring());
-        GraphicsConfiguration[] graphConfs = graphDevsOrig[i].getConfigurations();
+      System.out
+          .println(header + " : Screen device # " + i + ": " + graphDevsOrig[i].getIDstring());
+      GraphicsConfiguration[] graphConfs = graphDevsOrig[i].getConfigurations();
 
-        for (int j = 0; j < graphConfs.length; j++) {
-            GraphicsConfiguration gc = graphConfs[j];
+      for (int j = 0; j < graphConfs.length; j++) {
+        GraphicsConfiguration gc = graphConfs[j];
 
-            System.out.println(" Screen device # " + i + ", configuration # " + j + ":" + gc);
+        System.out.println(" Screen device # " + i + ", configuration # " + j + ":" + gc);
 
-            print(gc);
-            
-          //BufferedImage buffy = config.createCompatibleImage(width, height, Transparency.TRANSLUCENT);
-            //Graphics g = buffy.getGraphics();
-            
-        }
+        print(gc);
+
+        // BufferedImage buffy = config.createCompatibleImage(width, height,
+        // Transparency.TRANSLUCENT);
+        // Graphics g = buffy.getGraphics();
+
+      }
     }
   }
-  
+
   // see JoglContextTestCase in Jzy3D
   public static void print(GraphicsConfiguration gc) {
     System.out.println("" + gc);
@@ -79,7 +120,6 @@ public class GraphicsUtils {
   }
 
   public static String str(ImageCapabilities ic) {
-    return "accelerated: " + ic.isAccelerated()
-    + " true volatile: " + ic.isTrueVolatile();
+    return "accelerated: " + ic.isAccelerated() + " true volatile: " + ic.isTrueVolatile();
   }
 }

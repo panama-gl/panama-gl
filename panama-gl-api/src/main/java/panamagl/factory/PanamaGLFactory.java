@@ -18,16 +18,16 @@
 package panamagl.factory;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-
 import panamagl.GLCanvas;
 import panamagl.GLEventListener;
-import panamagl.OffscreenRenderer;
 import panamagl.canvas.GLCanvasAWT;
 import panamagl.canvas.GLCanvasSwing;
-import panamagl.fbo.FBO;
+import panamagl.offscreen.FBO;
+import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.os.Platform;
@@ -90,10 +90,14 @@ public interface PanamaGLFactory {
   
   /** Returns the first factory that is is compatible with the current {@link Platform}.*/
   public static PanamaGLFactory select() {
-    
-    List<PanamaGLFactory> factories = findFactories();
-    
+
     Platform os = new Platform();
+
+    return selectFor(os);
+  }
+  
+  public static PanamaGLFactory selectFor(Platform os) {
+    List<PanamaGLFactory> factories = findFactories();
     
     for(PanamaGLFactory factory : factories) {
       if(factory.matches(os)) {
@@ -118,8 +122,13 @@ public interface PanamaGLFactory {
       
       for (Class<?> c : ClassloaderUtils.findFactoryClasses(packge, implem, exclude)) {
         try {
-          PanamaGLFactory f = (PanamaGLFactory)c.getConstructors()[0].newInstance();
+          // Find the default constructor
+          Constructor<?> cons = findConstructor(c);
+
+          // Init the factory
+          PanamaGLFactory f = (PanamaGLFactory)cons.newInstance();
           factories.add(f);
+          
         } catch (IllegalArgumentException e) {
           e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -138,8 +147,20 @@ public interface PanamaGLFactory {
       e.printStackTrace();
     }
     
-    
     return factories;
+  }
+  
+  public static Constructor<?> findConstructor(Class<?> c) {
+    Constructor<?> cons = null;
+    for(Constructor<?>  co: c.getConstructors()) {
+      if(co.getParameterCount()==0) {
+        cons = co;
+      }
+    }
+    if(cons==null) {
+      throw new RuntimeException("No factory constructor with 0 argument for " + c.getName());
+    }
+    return cons;
   }
 
 }

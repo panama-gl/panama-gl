@@ -31,13 +31,15 @@ public class Animator {
   protected ExecutorService exec = Executors.newSingleThreadExecutor();
   protected int sleepTimeMs = RETINAL_PERSISTENCE; 
   protected boolean loop = true;
-  protected GLCanvas drawable;
+  protected GLCanvas canvas;
   protected boolean adaptive = true;
   
   protected boolean yieldWhenDone = true;
+  
+  protected int loops = 0;
 
-  public Animator(GLCanvas drawable) {
-    this.drawable = drawable;
+  public Animator(GLCanvas canvas) {
+    this.canvas = canvas;
   }
 
   public void start() {
@@ -51,13 +53,13 @@ public class Animator {
         while (loop) {
 
           // Don't try repainting if we did not initialized fully
-          if (drawable.isVisible()) {
+          if (canvas.isVisible()) {
 
             if (adaptive) {
               adaptiveDisplayWithLock();
             } 
             else {
-              drawable.display();
+              canvas.display();
             }
             
             // Try to wait a bit before retrying to update display
@@ -69,6 +71,8 @@ public class Animator {
             // keep this as an option
             if(yieldWhenDone)
               Thread.yield();
+            
+            loops++;
           }
         }
       }
@@ -101,15 +105,15 @@ public class Animator {
 
   /** Query a drawable display if it is not currently rendering. */
   protected void adaptiveDisplayWithLock() {
-    if(!drawable.isRendering()) {
-      drawable.display();
+    if(!canvas.isRendering()) {
+      canvas.display();
     }
   }
 
   /** Query a drawable display if previous time or number of event is not diverging. */
   protected void adaptiveDisplayWithDerivative() {
     // Is it worth trying to display?
-    RenderCounter counter = drawable.getMonitoring();
+    RenderCounter counter = canvas.getMonitoring();
 
     // If render time exceed sleep time
     if (counter.renderDriftDerivative() > 0) {
@@ -124,7 +128,7 @@ public class Animator {
     }
     // Otherwise, let's render
     else {
-      drawable.display();
+      canvas.display();
     }
   }
 
@@ -156,6 +160,8 @@ public class Animator {
   public void setYieldWhenDone(boolean yieldWhenDone) {
     this.yieldWhenDone = yieldWhenDone;
   }
-  
-  
+
+  public int getLoops() {
+    return loops;
+  }
 }

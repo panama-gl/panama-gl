@@ -1,4 +1,4 @@
-package panamagl.image;
+package panamagl.renderers.image;
 
 
 import java.awt.Graphics2D;

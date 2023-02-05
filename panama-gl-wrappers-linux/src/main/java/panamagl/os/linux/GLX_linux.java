@@ -27,13 +27,13 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import glx.ubuntu.v20.glx_h;
 import opengl.ubuntu.v20.glut_h;
-import panamagl.opengl.AbstractGL;
+import panamagl.opengl.AGL;
 import panamagl.opengl.GL;
 
 /**
  * Look above ^^ this is how you link to platform binding.
  */
-public class GLX_linux extends AbstractGL implements GL  {
+public class GLX_linux extends AGL implements GL  {
     public GLX_linux() {
         this(false);
     }
@@ -734,87 +734,43 @@ public class GLX_linux extends AbstractGL implements GL  {
       }
     }
 
-
     @Override
-    public boolean gluUnProject(float winX, float winY, float winZ, float[] model, int model_offset, float[] proj,
-        int proj_offset, int[] view, int view_offset, float[] objPos, int objPos_offset) {
-      // throw new NotImplementedException();
-
-      /*double objX[] = new double[1];
-      double objY[] = new double[1];
-      double objZ[] = new double[1];
-
-      int st = glx_h.gluUnProject((double)winX, (double)winY, (double)winZ, alloc(dbl(model)), alloc(dbl(proj)), alloc(view), alloc(objX), alloc(objY), alloc(objZ));
-
-      objPos[0] = (float) objX[0];
-      objPos[1] = (float) objY[0];
-      objPos[2] = (float) objZ[0];
-
-      return st == 1;*/
-      
-      throw new RuntimeException("not implemented");
-    }
-
-    protected double[] dbl(float[] values) {
-      double[] dbl = new double[values.length];
-      for (int i = 0; i < values.length; i++) {
-        dbl[i] = values[i];
-      }
-      return dbl;
+    public int gluUnprojectDouble(double winX, double winY, double winZ, MemorySegment model, MemorySegment proj,
+        MemorySegment view, MemorySegment objX, MemorySegment objY, MemorySegment objZ) {
+      return glut_h.gluUnProject(winX, winY, winZ, model, proj, view, objX, objY, objZ);
     }
 
     @Override
-    public boolean gluProject(float objX, float objY, float objZ, float[] model, int model_offset,
-        float[] proj, int proj_offset, int[] view, int view_offset, float[] winPos,
-        int winPos_offset) {
-      // throw new NotImplementedException();
-      // opengl.glx_h.gluProject(objx, objy, objz, model, proj, viewport, winx, winy,
-      // winz)
-
-      throw new RuntimeException("not implemented");
-      /*double[] modelD = new double[model.length];
-      for (int i = 0; i < model.length; i++) {
-        modelD[i] = model[i];
-      }
-
-      // double[] winy = new double[1];
-      // double[] winz = new double[1];
-
-      double[] projD = new double[proj.length];
-      for (int i = 0; i < proj.length; i++) {
-        projD[i] = proj[i];
-      }
-
-      double[] winx = new double[1];
-      double[] winy = new double[1];
-      double[] winz = new double[1];
-
-      int out = glx_h.gluProject(objX, objY, objZ, alloc(modelD), alloc(projD), alloc(view), alloc(winx), alloc(winy), alloc(winz));
-
-      // winPos[0], winPos[1], winPos[2];
-      winPos[0] = (float) winx[0];
-      winPos[1] = (float) winy[0];
-      winPos[2] = (float) winz[0];
-
-      return out == 1;*/
+    public int gluProjectDouble(float objX, float objY, float objZ, int[] view, double[] modelD,
+        double[] projD, MemorySegment mX, MemorySegment mY, MemorySegment mZ) {
+      int out = glut_h.gluProject(objX, objY, objZ, alloc(modelD), alloc(projD), alloc(view), mX, mY, mZ);
+      return out;
     }
+
 
     // GL GET
 
     @Override
     public void glGetIntegerv(int pname, int[] data, int data_offset) {
-      glx_h.glGetIntegerv(pname, alloc(data));
+      MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_INT, data.length);
+      glx_h.glGetIntegerv(pname, segment);
+      copySegmentToArray(segment, data);
     }
 
     @Override
     public void glGetDoublev(int pname, double[] params, int params_offset) {
-      glx_h.glGetDoublev(pname, alloc(params));
+      MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_DOUBLE, params.length);
+      glx_h.glGetDoublev(pname,segment);
+      copySegmentToArray(segment, params);
     }
 
     @Override
     public void glGetFloatv(int pname, float[] data, int data_offset) {
-      glx_h.glGetFloatv(pname, alloc(data));
+      MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_FLOAT, data.length);
+      glx_h.glGetFloatv(pname, segment);
+      copySegmentToArray(segment, data);
     }
+
 
     @Override
     public void glDepthFunc(int func) {

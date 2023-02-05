@@ -24,7 +24,7 @@ import java.lang.foreign.ValueLayout;
 import java.lang.foreign.ValueLayout.OfByte;
 import java.nio.ByteOrder;
 import panamagl.Debug;
-import panamagl.fbo.FBO;
+import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
 import panamagl.utils.ByteUtils;

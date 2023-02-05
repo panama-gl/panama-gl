@@ -24,17 +24,17 @@ import java.lang.foreign.ValueLayout;
 
 
 /**
- * A base class for Panama based OpenGL binding, implementing part of {@lin GL}
+ * A base abstract class for Panama based OpenGL binding, implementing part of {@link GL}
  * 
  * @author Martin Pernollet
  */
-public abstract class AbstractGL implements GL {
+public abstract class AGL implements GL {
   protected MemorySession scope;
   protected SegmentAllocator allocator;
   protected MemorySession scopeConfined;
   protected SegmentAllocator allocatorConfined;
 
-  public AbstractGL() {
+  public AGL() {
     try {
       scope = MemorySession.openImplicit(); // /*Confined();*/
       allocator = SegmentAllocator.newNativeArena(scope);
@@ -98,5 +98,49 @@ public abstract class AbstractGL implements GL {
     }
   }
 
+
+  
+  @Override
+  public boolean gluProject(float objX, float objY, float objZ, float[] model, int model_offset,
+      float[] proj, int proj_offset, int[] view, int view_offset, float[] winPos,
+      int winPos_offset) {
+    
+    MemorySegment mX = alloc(new double[1]);
+    MemorySegment mY = alloc(new double[1]);
+    MemorySegment mZ = alloc(new double[1]);
+
+    int out = gluProjectDouble(objX, objY, objZ, view, dbl(model), dbl(proj), mX, mY, mZ);
+
+    winPos[0] = (float)mX.get(ValueLayout.JAVA_DOUBLE, 0);
+    winPos[1] = (float)mY.get(ValueLayout.JAVA_DOUBLE, 0);
+    winPos[2] = (float)mZ.get(ValueLayout.JAVA_DOUBLE, 0);
+
+    return out == 1;
+  }
+  
+  @Override
+  public boolean gluUnProject(float winX, float winY, float winZ, float[] model, int model_offset, float[] proj,
+      int proj_offset, int[] view, int view_offset, float[] objPos, int objPos_offset) {
+
+    MemorySegment objX = alloc(new double[1]);
+    MemorySegment objY = alloc(new double[1]);
+    MemorySegment objZ = alloc(new double[1]);
+
+    int st = gluUnprojectDouble((double)winX, (double)winY, (double)winZ, alloc(dbl(model)), alloc(dbl(proj)), alloc(view), objX, objY, objZ);
+
+    objPos[0] = (float) objX.get(ValueLayout.JAVA_DOUBLE, 0);
+    objPos[1] = (float) objY.get(ValueLayout.JAVA_DOUBLE, 0);
+    objPos[2] = (float) objZ.get(ValueLayout.JAVA_DOUBLE, 0);
+
+    return st == 1;
+  }
+  
+  protected double[] dbl(float[] values) {
+    double[] dbl = new double[values.length];
+    for (int i = 0; i < values.length; i++) {
+      dbl[i] = values[i];
+    }
+    return dbl;
+  }
 
 }

@@ -19,10 +19,10 @@ package panamagl.os.linux;
 
 import panamagl.Debug;
 import panamagl.GLCanvas;
-import panamagl.OffscreenRenderer;
 import panamagl.factory.APanamaGLFactory;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.fbo.FBO;
+import panamagl.offscreen.FBO;
+import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.os.Platform;

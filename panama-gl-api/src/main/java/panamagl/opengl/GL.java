@@ -50,7 +50,14 @@ public interface GL {
     String gluErrorString(int err_string);
     int glGetError();
 
+    // HELPERS  ------------------------------
+    
+    public int gluProjectDouble(float objX, float objY, float objZ, int[] view, double[] modelD,
+        double[] projD, MemorySegment mX, MemorySegment mY, MemorySegment mZ);
 
+    public int gluUnprojectDouble(double winX, double winY, double winZ, MemorySegment model, MemorySegment proj,
+        MemorySegment view, MemorySegment objX, MemorySegment objY, MemorySegment objZ);
+    
     // FBO ------------------------------
 
     void glGenTextures(int size, MemorySegment ids);

@@ -27,9 +27,9 @@ import javax.swing.JPanel;
 import panamagl.Debug;
 import panamagl.GLCanvas;
 import panamagl.GLEventListener;
-import panamagl.OffscreenRenderer;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.fbo.FBO;
+import panamagl.offscreen.FBO;
+import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.performance.PerformanceOverlay;
@@ -80,7 +80,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
   protected PerformanceOverlay overlay;
 
   protected boolean debug = Debug.check(GLCanvasSwing.class);
-  protected boolean debugPerf = true;
+  protected boolean debugPerf = false;
 
 
   /**

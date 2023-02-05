@@ -31,13 +31,13 @@ import org.jzy3d.maths.Array;
 import org.jzy3d.painters.Font;
 import org.jzy3d.painters.StencilOp;
 import opengl.macos.v10_15_7.glut_h;
-import panamagl.opengl.AbstractGL;
+import panamagl.opengl.AGL;
 import panamagl.opengl.GL;
 
 /**
  * Look above ^^ this is how you link to platform binding.
  */
-public class GL_macOS extends AbstractGL implements GL {
+public class GL_macOS extends AGL implements GL {
   public GL_macOS() {
     super();
   }
@@ -787,66 +787,17 @@ public class GL_macOS extends AbstractGL implements GL {
     }
   }
 
-
   @Override
-  public boolean gluUnProject(float winX, float winY, float winZ, float[] model, int model_offset, float[] proj,
-      int proj_offset, int[] view, int view_offset, float[] objPos, int objPos_offset) {
-    // throw new RuntimeException();
-
-    MemorySegment objX = alloc(new double[1]);
-    MemorySegment objY = alloc(new double[1]);
-    MemorySegment objZ = alloc(new double[1]);
-
-    int st = glut_h.gluUnProject((double)winX, (double)winY, (double)winZ, alloc(dbl(model)), alloc(dbl(proj)), alloc(view), objX, objY, objZ);
-
-    objPos[0] = (float) objX.get(ValueLayout.JAVA_DOUBLE, 0);
-    objPos[1] = (float) objY.get(ValueLayout.JAVA_DOUBLE, 0);
-    objPos[2] = (float) objZ.get(ValueLayout.JAVA_DOUBLE, 0);
-
-    return st == 1;
-  }
-
-  protected double[] dbl(float[] values) {
-    double[] dbl = new double[values.length];
-    for (int i = 0; i < values.length; i++) {
-      dbl[i] = values[i];
-    }
-    return dbl;
+  public int gluUnprojectDouble(double winX, double winY, double winZ, MemorySegment model, MemorySegment proj,
+      MemorySegment view, MemorySegment objX, MemorySegment objY, MemorySegment objZ) {
+    return glut_h.gluUnProject(winX, winY, winZ, model, proj, view, objX, objY, objZ);
   }
 
   @Override
-  public boolean gluProject(float objX, float objY, float objZ, float[] model, int model_offset,
-      float[] proj, int proj_offset, int[] view, int view_offset, float[] winPos,
-      int winPos_offset) {
-    // throw new RuntimeException();
-    // opengl.glut_h.gluProject(objx, objy, objz, model, proj, viewport, winx, winy,
-    // winz)
-
-    double[] modelD = new double[model.length];
-    for (int i = 0; i < model.length; i++) {
-      modelD[i] = model[i];
-    }
-
-    // double[] winy = new double[1];
-    // double[] winz = new double[1];
-
-    double[] projD = new double[proj.length];
-    for (int i = 0; i < proj.length; i++) {
-      projD[i] = proj[i];
-    }
-
-    MemorySegment mX = alloc(new double[1]);
-    MemorySegment mY = alloc(new double[1]);
-    MemorySegment mZ = alloc(new double[1]);
-
+  public int gluProjectDouble(float objX, float objY, float objZ, int[] view, double[] modelD,
+      double[] projD, MemorySegment mX, MemorySegment mY, MemorySegment mZ) {
     int out = glut_h.gluProject(objX, objY, objZ, alloc(modelD), alloc(projD), alloc(view), mX, mY, mZ);
-
-    // winPos[0], winPos[1], winPos[2];
-    winPos[0] = (float)mX.get(ValueLayout.JAVA_DOUBLE, 0);//(float) winx[0];
-    winPos[1] = (float)mY.get(ValueLayout.JAVA_DOUBLE, 0);
-    winPos[2] = (float)mZ.get(ValueLayout.JAVA_DOUBLE, 0);
-
-    return out == 1;
+    return out;
   }
 
   // GL GET
@@ -857,7 +808,6 @@ public class GL_macOS extends AbstractGL implements GL {
     MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_INT, data.length);
     glut_h.glGetIntegerv(pname, segment);
     copySegmentToArray(segment, data);
-    
   }
 
   @Override
@@ -865,9 +815,7 @@ public class GL_macOS extends AbstractGL implements GL {
     //MemorySegment segment = alloc(params);
     MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_DOUBLE, params.length);
     glut_h.glGetDoublev(pname,segment);
-
     copySegmentToArray(segment, params);
-
   }
 
   @Override
@@ -875,7 +823,6 @@ public class GL_macOS extends AbstractGL implements GL {
     //MemorySegment segment = alloc(data);
     MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_FLOAT, data.length);
     glut_h.glGetFloatv(pname, segment);
-    
     copySegmentToArray(segment, data);
   }
 

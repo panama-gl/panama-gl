@@ -24,7 +24,7 @@ import java.lang.foreign.ValueLayout;
 import opengl.macos.v10_15_7.glutDisplayFunc$func;
 import opengl.macos.v10_15_7.glutIdleFunc$func;
 import opengl.macos.v10_15_7.glut_h;
-import panamagl.AGLContext;
+import panamagl.opengl.AGLContext;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 

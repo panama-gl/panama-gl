@@ -21,7 +21,7 @@ package panamagl.os.linux;
 import java.lang.foreign.Addressable;
 import java.lang.foreign.MemoryAddress;
 import glx.ubuntu.v20.glx_h;
-import panamagl.AGLContext;
+import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;
 
 // https://stackoverflow.com/questions/28378891/glxcreatecontext-magically-maps-window

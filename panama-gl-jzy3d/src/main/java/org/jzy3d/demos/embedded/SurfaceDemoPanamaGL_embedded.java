@@ -26,11 +26,16 @@ import org.jzy3d.colors.Color;
 import org.jzy3d.colors.ColorMapper;
 import org.jzy3d.colors.colormaps.ColorMapRainbow;
 import org.jzy3d.maths.Range;
+import org.jzy3d.painters.Font;
 import org.jzy3d.painters.embedded.EmbeddedPanamaGLPainter;
 import org.jzy3d.plot3d.builder.Func3D;
 import org.jzy3d.plot3d.builder.SurfaceBuilder;
 import org.jzy3d.plot3d.builder.concrete.OrthonormalGrid;
 import org.jzy3d.plot3d.primitives.Shape;
+import org.jzy3d.plot3d.primitives.axis.layout.AxisLayout;
+import org.jzy3d.plot3d.primitives.axis.layout.LabelOrientation;
+import org.jzy3d.plot3d.primitives.axis.layout.ZAxisSide;
+import org.jzy3d.plot3d.primitives.axis.layout.fonts.HiDPIProportionalFontSizePolicy;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 
 /**
@@ -47,14 +52,34 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 public class SurfaceDemoPanamaGL_embedded {
   static final float ALPHA_FACTOR = 0.75f;// .61f;
 
-  public static void main(String[] args) {
-
+  public static void main(String[] args) throws InterruptedException {
+Thread.sleep(5000);
     ChartFactory factory = new PanamaGLChartFactory();
 
     Quality q = Quality.Advanced().setAnimated(false);
     Chart chart = factory.newChart(q);
     chart.add(surface());
-    chart.getView().setAxisDisplayed(true);
+
+    AxisLayout layout = chart.getAxisLayout();
+    //layout.setFont(new Font("Apple Chancery", 20));
+    layout.setFont(new Font("Helvetica", 16));
+    layout.setFontSizePolicy(new HiDPIProportionalFontSizePolicy(chart.getView()));
+
+    /*layout.setXAxisLabel("My X axis label is a little long to draw");
+    layout.setYAxisLabel("My Y axis label is a little long to draw");
+    layout.setZAxisLabel("My Z axis label is a little long to draw");
+
+    layout.setZAxisSide(ZAxisSide.LEFT);
+    layout.setZAxisLabelOrientation(LabelOrientation.VERTICAL);
+    layout.setYAxisLabelOrientation(LabelOrientation.PARALLEL_TO_AXIS);
+    layout.setXAxisLabelOrientation(LabelOrientation.PARALLEL_TO_AXIS);
+    
+    layout.setAxisLabelOffsetAuto(true);
+    layout.setAxisLabelOffsetMargin(20);*/
+    
+    layout.setXTickColor(Color.RED);
+    layout.setYTickColor(Color.GREEN);
+    layout.setZTickColor(Color.BLUE);
     
     Runnable open = new Runnable() {
       @Override

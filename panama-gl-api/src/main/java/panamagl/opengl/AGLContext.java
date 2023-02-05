@@ -1,6 +1,6 @@
-package panamagl;
+package panamagl.opengl;
 
-import panamagl.opengl.GLContext;
+import panamagl.GLProfile;
 
 public abstract class AGLContext implements GLContext{
   protected GLProfile profile;

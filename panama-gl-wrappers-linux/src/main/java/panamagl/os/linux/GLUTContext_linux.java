@@ -24,7 +24,7 @@ import java.lang.foreign.ValueLayout;
 import opengl.ubuntu.v20.glutDisplayFunc$callback;
 import opengl.ubuntu.v20.glutIdleFunc$callback;
 import opengl.ubuntu.v20.glut_h;
-import panamagl.AGLContext;
+import panamagl.opengl.AGLContext;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 

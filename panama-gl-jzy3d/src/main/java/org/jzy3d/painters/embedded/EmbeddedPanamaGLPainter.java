@@ -13,6 +13,7 @@ import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import javax.swing.JPanel;
 import org.apache.log4j.Logger;
+import org.jzy3d.colors.AWTColor;
 import org.jzy3d.colors.Color;
 import org.jzy3d.maths.Array;
 import org.jzy3d.maths.Coord2d;
@@ -38,7 +39,8 @@ import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
 import panamagl.GLCanvas;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
-import panamagl.text.BasicTextRenderer;
+import panamagl.renderers.text.BasicTextRenderer;
+import panamagl.renderers.text.TextRenderer;
 
 public class EmbeddedPanamaGLPainter extends AbstractPainter implements PanamaGLPainter{
   static Logger logger = Logger.getLogger(EmbeddedPanamaGLPainter.class);
@@ -597,13 +599,10 @@ public class EmbeddedPanamaGLPainter extends AbstractPainter implements PanamaGL
 
   @Override
   public void drawText(Font font, String label, Coord3d position, Color color, float rotation) {
-    //glutBitmapString(font, label, position, color);
-    
-    //System.out.println("Painting text at " + position);
-    txt.draw(getGL(), label, position.x, position.y, position.z);
+    txt.draw(getGL(), toAWT(font), label, position.x, position.y, position.z, AWTColor.toAWT(color), rotation);
   }
 
-  BasicTextRenderer txt = new BasicTextRenderer();
+  TextRenderer txt = new BasicTextRenderer();
 
   
   @Override

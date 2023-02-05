@@ -19,11 +19,11 @@ package panamagl.os.macos;
 
 import com.jogamp.opengl.GLProfile;
 import jogamp.nativewindow.macosx.OSXUtil;
-import panamagl.AOffscreenRenderer;
 import panamagl.GLCanvas;
 import panamagl.GLEventListener;
-import panamagl.OffscreenRenderer;
 import panamagl.factory.PanamaGLFactory;
+import panamagl.offscreen.AOffscreenRenderer;
+import panamagl.offscreen.OffscreenRenderer;
 
 /**
  * This offscreen renderer is able to ensure that OpenGL queries are performed inside the main macOS thread.

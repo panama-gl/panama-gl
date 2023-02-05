@@ -25,8 +25,8 @@ import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
 import java.util.Arrays;
 import cgl.macos.v10_15_7.cgl_h;
-import panamagl.AGLContext;
 import panamagl.Debug;
+import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;
 
 /**

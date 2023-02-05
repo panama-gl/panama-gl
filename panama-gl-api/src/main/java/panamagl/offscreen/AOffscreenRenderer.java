@@ -13,20 +13,23 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA
  *******************************************************************************/
-package panamagl;
+package panamagl.offscreen;
 
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.swing.SwingUtilities;
+import panamagl.Debug;
+import panamagl.GLCanvas;
+import panamagl.GLEventListener;
+import panamagl.GLProfile;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.fbo.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.opengl.GLError;
 import panamagl.utils.ImageUtils;
 
-public abstract class AOffscreenRenderer implements OffscreenRenderer {
+public class AOffscreenRenderer implements OffscreenRenderer {
 
   protected boolean debug = Debug.check(AOffscreenRenderer.class);
   protected String debugFile = null;
@@ -49,15 +52,22 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
   // -------------------------------------------------------------
 
   @Override
-  public abstract void onInit(GLCanvas drawable, GLEventListener listener);
+  public void onInit(GLCanvas drawable, GLEventListener listener) {
+    Runnable r = getTask_initContext(listener);
+    r.run();
+  }
 
   @Override
-  public abstract void onDisplay(GLCanvas drawable, GLEventListener listener);
+  public void onDisplay(GLCanvas drawable, GLEventListener listener) {
+    Runnable r = getTask_renderGLToImage(drawable, listener, drawable.getWidth(), drawable.getHeight());
+    r.run();
+  }
 
   @Override
-  public abstract void onResize(GLCanvas drawable, GLEventListener listener, int x, int y,
-      int width, int height);
-
+  public void onResize(GLCanvas drawable, GLEventListener listener, int x, int y, int width, int height) {
+    Runnable r = getTask_renderGLToImage(drawable, listener, drawable.getWidth(), drawable.getHeight());
+    r.run();
+  }
   @Override
   public void onDestroy(GLCanvas drawable, GLEventListener glEventListener) {
     destroyContext();
@@ -165,8 +175,8 @@ public abstract class AOffscreenRenderer implements OffscreenRenderer {
       BufferedImage out = fbo.getImage(gl);
       // System.gc();
 
-      if (out == null)
-        throw new RuntimeException("FBO returned a null image!");
+      //if (out == null)
+      //  throw new RuntimeException("FBO returned a null image!");
 
       // Give back the image to the onscreen panel
       canvas.setScreenshot(out);
