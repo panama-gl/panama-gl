@@ -19,7 +19,7 @@ public class BasicImageRenderer implements ImageRenderer{
     
 
     
-    /*if(rotation==0) {
+    if(rotation==0) {
     }
     else {
       float rotationD = -(float) (360 * rotation / (2 * Math.PI));
@@ -45,7 +45,11 @@ public class BasicImageRenderer implements ImageRenderer{
 
 
 
-    }*/
+    }
+    
+    
+    
+    
     
     // Draw image
     gl.glPixelZoom(1, 1);

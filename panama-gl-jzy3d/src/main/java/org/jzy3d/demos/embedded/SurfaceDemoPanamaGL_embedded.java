@@ -65,7 +65,7 @@ Thread.sleep(5000);
     layout.setFont(new Font("Helvetica", 16));
     layout.setFontSizePolicy(new HiDPIProportionalFontSizePolicy(chart.getView()));
 
-    /*layout.setXAxisLabel("My X axis label is a little long to draw");
+    layout.setXAxisLabel("My X axis label is a little long to draw");
     layout.setYAxisLabel("My Y axis label is a little long to draw");
     layout.setZAxisLabel("My Z axis label is a little long to draw");
 
@@ -74,8 +74,8 @@ Thread.sleep(5000);
     layout.setYAxisLabelOrientation(LabelOrientation.PARALLEL_TO_AXIS);
     layout.setXAxisLabelOrientation(LabelOrientation.PARALLEL_TO_AXIS);
     
-    layout.setAxisLabelOffsetAuto(true);
-    layout.setAxisLabelOffsetMargin(20);*/
+    //layout.setAxisLabelOffsetAuto(true);
+    //layout.setAxisLabelOffsetMargin(20);
     
     layout.setXTickColor(Color.RED);
     layout.setYTickColor(Color.GREEN);

@@ -24,15 +24,25 @@ public class BasicTextRenderer extends BasicImageRenderer implements TextRendere
   protected ForeignImage createForeignImage(Font font, String text, Color color) {
     ForeignImage fi;
     int width = GraphicsUtils.stringWidth(text, font);
-
-    BufferedImage i = new BufferedImage(width, font.getSize(), BufferedImage.TYPE_4BYTE_ABGR);
+    //int height = (int)(font.getSize()*1.25f);
+    int height =font.getSize();
+    
+    BufferedImage i = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
     
     Graphics2D g = i.createGraphics();
+    
+    //g.setColor(Color.GRAY);
+    //g.drawRect(1, 1, width-2, height-2);
+
+    // Draw text
     g.setFont(font);
     g.setColor(color);
-    //g.drawString(text, 0, height);
     
-    GraphicsUtils.drawString(g, font, false, text, 0, font.getSize());
+    int y = height - (int)(height*0.25);
+    
+    GraphicsUtils.drawString(g, font, false, text, 0, y);
+    //GraphicsUtils.drawString(g, font, false, text, 0, 0);
+    
 
     fi = new ForeignImage();
     fi.image = i;
