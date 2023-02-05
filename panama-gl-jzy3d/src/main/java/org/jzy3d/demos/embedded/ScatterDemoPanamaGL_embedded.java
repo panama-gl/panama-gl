@@ -50,7 +50,6 @@ public class ScatterDemoPanamaGL_embedded {
     Quality q = Quality.Advanced().setAnimated(false);
     Chart chart = factory.newChart(q);
     chart.add(scatter());
-    chart.getView().setAxisDisplayed(false);
     
     Runnable open = new Runnable() {
       @Override
@@ -86,7 +85,7 @@ public class ScatterDemoPanamaGL_embedded {
       y = r.nextFloat() - 0.5f;
       z = r.nextFloat() - 0.5f;
       points[i] = new Coord3d(x, y, z);
-      a = 0.25f;
+      a = 0.75f;
       colors[i] = new Color(x, y, z, a);
     }
 

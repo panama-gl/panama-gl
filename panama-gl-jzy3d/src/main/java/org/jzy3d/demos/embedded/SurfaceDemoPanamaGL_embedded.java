@@ -65,14 +65,14 @@ Thread.sleep(5000);
     layout.setFont(new Font("Helvetica", 16));
     layout.setFontSizePolicy(new HiDPIProportionalFontSizePolicy(chart.getView()));
 
-    layout.setXAxisLabel("My X axis label is a little long to draw");
+    /*layout.setXAxisLabel("My X axis label is a little long to draw");
     layout.setYAxisLabel("My Y axis label is a little long to draw");
-    layout.setZAxisLabel("My Z axis label is a little long to draw");
+    layout.setZAxisLabel("My Z axis label is a little long to draw");*/
 
-    layout.setZAxisSide(ZAxisSide.LEFT);
+    /*layout.setZAxisSide(ZAxisSide.LEFT);
     layout.setZAxisLabelOrientation(LabelOrientation.VERTICAL);
     layout.setYAxisLabelOrientation(LabelOrientation.PARALLEL_TO_AXIS);
-    layout.setXAxisLabelOrientation(LabelOrientation.PARALLEL_TO_AXIS);
+    layout.setXAxisLabelOrientation(LabelOrientation.PARALLEL_TO_AXIS);*/
     
     //layout.setAxisLabelOffsetAuto(true);
     //layout.setAxisLabelOffsetMargin(20);
@@ -81,19 +81,11 @@ Thread.sleep(5000);
     layout.setYTickColor(Color.GREEN);
     layout.setZTickColor(Color.BLUE);
     
-    Runnable open = new Runnable() {
-      @Override
-      public void run() {
-        System.out.println("Before open");
-        FrameSwing frame = (FrameSwing)chart.open(800,600);
-        System.out.println("After open");
-        frame.setSize(800, 600);
-      }
-    };
+    System.out.println("Before open");
+    FrameSwing frame = (FrameSwing)chart.open(800,600);
+    System.out.println("After open");
+    frame.setSize(800, 600);
 
-    // Lock at unsafe.park
-    open.run();
-    
     chart.addMouse();    
     
     EmbeddedPanamaGLPainter painter = (EmbeddedPanamaGLPainter)chart.getPainter();
