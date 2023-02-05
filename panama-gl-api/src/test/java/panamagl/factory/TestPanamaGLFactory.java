@@ -50,7 +50,7 @@ public class TestPanamaGLFactory {
   }
   
   public static class MockFactory extends APanamaGLFactory implements PanamaGLFactory{
-    Platform platform;
+    Platform platform = Platform.UNIX;
     
     public MockFactory(Platform platform) {
       super();
