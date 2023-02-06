@@ -51,18 +51,26 @@ import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GLContext;
 
 public class EmbeddedPanamaGLPainterFactory implements IPainterFactory {
-  protected PanamaGLFactory f = PanamaGLFactory.select();
-
+  protected PanamaGLFactory panamaGLFactory = PanamaGLFactory.select();
 
   protected IChartFactory chartFactory;
   protected boolean offscreen = false;
   protected int width;
   protected int height;
+  
+  public PanamaGLFactory getPanamaGLFactory() {
+    return panamaGLFactory;
+  }
+
+  public void setPanamaGLFactory(PanamaGLFactory panamaGLFactory) {
+    this.panamaGLFactory = panamaGLFactory;
+  }
+
 
   @Override
   public IPainter newPainter() {
     EmbeddedPanamaGLPainter p = new EmbeddedPanamaGLPainter();
-    p.setGL(f.newGL());
+    p.setGL(panamaGLFactory.newGL());
     
 
     return p;
@@ -71,7 +79,7 @@ public class EmbeddedPanamaGLPainterFactory implements IPainterFactory {
 
   @Override
   public ICanvas newCanvas(IChartFactory factory, Scene scene, Quality quality) {
-    GLCanvasSwing glCanvas = f.newCanvasSwing();
+    GLCanvasSwing glCanvas = panamaGLFactory.newCanvasSwing();
     
     GLContext context = glCanvas.getContext();
     

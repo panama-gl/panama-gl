@@ -81,7 +81,9 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
   protected boolean debug = Debug.check(GLCanvasSwing.class);
   protected boolean debugPerf = false;
-
+  
+  // For mocking
+  public GLCanvasSwing() {}
 
   /**
    * Initialize a panel able to render OpenGL through a {@link GLEventListener} and related

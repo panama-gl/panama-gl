@@ -129,6 +129,12 @@ public class EmbeddedPanamaGLCanvas extends JPanel implements IScreenCanvas{
   }
 
   @Override
+  public void display() {
+    //repaint();
+    glCanvas.display();
+  }
+  
+  @Override
   public void forceRepaint() {
     /*SwingUtilities.invokeLater(new Runnable() {
       @Override
@@ -221,14 +227,10 @@ public class EmbeddedPanamaGLCanvas extends JPanel implements IScreenCanvas{
     return null;
   }
 
-  @Override
-  public void display() {
-    repaint();
-  }
+  
 
   @Override
   public IAnimator getAnimation() {
-    // TODO Auto-generated method stub
     return animator;
   }
 

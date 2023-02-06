@@ -19,11 +19,8 @@ package org.jzy3d.plot3d.rendering.canvas.embedded;
 
 import org.jzy3d.maths.TicToc;
 import org.jzy3d.painters.IPainter;
-import org.jzy3d.painters.NativeDesktopPainter;
 import org.jzy3d.painters.embedded.EmbeddedPanamaGLPainter;
 import org.jzy3d.plot3d.rendering.view.View;
-import com.jogamp.opengl.util.GLReadBufferUtil;
-import com.jogamp.opengl.util.texture.TextureData;
 import panamagl.GLCanvas;
 import panamagl.GLEventListener;
 import panamagl.opengl.GL;
