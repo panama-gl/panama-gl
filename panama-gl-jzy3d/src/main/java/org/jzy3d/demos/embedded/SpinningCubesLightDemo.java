@@ -4,7 +4,6 @@ import java.util.List;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.AWTChartFactory;
 import org.jzy3d.chart.factories.ChartFactory;
-import org.jzy3d.chart.factories.PanamaGLChartFactory;
 import org.jzy3d.colors.Color;
 import org.jzy3d.plot3d.primitives.Composite;
 import org.jzy3d.plot3d.primitives.Geometry;

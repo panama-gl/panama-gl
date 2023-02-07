@@ -19,9 +19,6 @@ package org.jzy3d.chart.factories;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.EventQueue;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -32,7 +29,6 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import org.jzy3d.chart.Chart;
-import org.jzy3d.chart.factories.IFrame;
 import org.jzy3d.maths.Rectangle;
 
 public class FrameSwing extends JFrame implements IFrame {

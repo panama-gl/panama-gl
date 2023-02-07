@@ -18,7 +18,6 @@ package panamagl.offscreen;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import javax.swing.SwingUtilities;
 import panamagl.Debug;
 import panamagl.GLCanvas;
 import panamagl.GLEventListener;

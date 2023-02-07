@@ -20,8 +20,6 @@ package org.jzy3d.demos.embedded;
 import java.util.Random;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.ChartFactory;
-import org.jzy3d.chart.factories.FrameSwing;
-import org.jzy3d.chart.factories.PanamaGLChartFactory;
 import org.jzy3d.chart.factories.SwingChartFactory;
 import org.jzy3d.colors.Color;
 import org.jzy3d.maths.Coord3d;

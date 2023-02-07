@@ -18,6 +18,7 @@
 package panamagl.opengl;
 
 
+import java.awt.Font;
 import java.lang.foreign.Addressable;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;

@@ -18,8 +18,8 @@
 package org.jzy3d.plot3d.rendering.canvas;
 
 import org.jzy3d.maths.TicToc;
-import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.painters.IPainter;
+import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.plot3d.rendering.view.View;
 import panamagl.GLCanvas;
 import panamagl.GLEventListener;
