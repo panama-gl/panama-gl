@@ -15,9 +15,10 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package org.jzy3d.plot3d.rendering.view;
+package org.jzy3d.chart.factories.natives;
 
 import org.jzy3d.painters.natives.PanamaGLNativePainter;
+import org.jzy3d.plot3d.rendering.view.View;
 
 public class PanamaGLRenderer {
   protected View view;
