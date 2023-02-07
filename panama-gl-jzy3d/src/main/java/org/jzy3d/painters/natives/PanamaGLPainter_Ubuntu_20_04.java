@@ -44,7 +44,6 @@ import org.jzy3d.painters.ColorModel;
 import org.jzy3d.painters.DepthFunc;
 import org.jzy3d.painters.Font;
 import org.jzy3d.painters.ListMode;
-import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.painters.PixelStore;
 import org.jzy3d.painters.RenderMode;
 import org.jzy3d.painters.StencilFunc;
@@ -85,37 +84,30 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
   
   /////////////////////////////////////////////
   
-  @Override
   public MemorySession getScope() {
     return scope;
   }
 
-  @Override
   public SegmentAllocator getAllocator() {
     return allocator;
   }
 
-  @Override
   public MemorySegment alloc(double[] value) {
     return allocator.allocateArray(ValueLayout.JAVA_DOUBLE, value);
   }
 
-  @Override
   public MemorySegment alloc(float[] value) {
     return allocator.allocateArray(ValueLayout.JAVA_FLOAT, value);
   }
 
-  @Override
   public MemorySegment alloc(int[] value) {
     return allocator.allocateArray(ValueLayout.JAVA_INT, value);
   }
 
-  @Override
   public MemorySegment alloc(String value) {
     return allocator.allocateUtf8String(value);
   }
 
-  @Override
   public String glGetString(int stringID){
     return glut_h.glGetString(stringID).getUtf8String(0);
   }
@@ -124,7 +116,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
 
   @Override
   public void glutStart(Chart chart, Rectangle bounds, String title, String message) {
-    var painter = (PanamaGLPainter) chart.getPainter();
+    var painter = (PanamaGLPainter_Ubuntu_20_04) chart.getPainter();
     var canvas = (PanamaGLNativeCanvas) chart.getCanvas();
     var renderer = canvas.getRenderer();
     var scope = painter.getScope();
@@ -187,7 +179,7 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
     // -----------------------------------------------------
     // Version - GLUT need to be initialized
 
-    System.out.println(version(painter));
+    System.out.println(version());
 
     // -----------------------------------------------------
     // Warn : this will block execution
@@ -226,13 +218,13 @@ public class PanamaGLPainter_Ubuntu_20_04 extends AbstractPainter implements Pan
   }
   static Component dummy = new JPanel();
 
-  protected StringBuffer version(PanamaGLPainter painter){
+  protected StringBuffer version(){
     StringBuffer sb = new StringBuffer();
-    sb.append("GL_VENDOR     : " + painter.glGetString(glut_h.GL_VENDOR()) + "\n");
-    sb.append("GL_RENDERER   : " + painter.glGetString(glut_h.GL_RENDERER()) + "\n");
-    sb.append("GL_VERSION    : " + painter.glGetString(glut_h.GL_VERSION()) + "\n");
+    sb.append("GL_VENDOR     : " + glGetString(glut_h.GL_VENDOR()) + "\n");
+    sb.append("GL_RENDERER   : " + glGetString(glut_h.GL_RENDERER()) + "\n");
+    sb.append("GL_VERSION    : " + glGetString(glut_h.GL_VERSION()) + "\n");
 
-    String ext = painter.glGetString(glut_h.GL_EXTENSIONS());
+    String ext = glGetString(glut_h.GL_EXTENSIONS());
 
     if(ext!=null) {
       sb.append("GL_EXTENSIONS : " + "\n");

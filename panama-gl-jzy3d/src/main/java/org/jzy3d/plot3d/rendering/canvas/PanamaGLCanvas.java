@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package org.jzy3d.plot3d.rendering.canvas.embedded;
+package org.jzy3d.plot3d.rendering.canvas;
 
 import java.awt.GridLayout;
 import java.awt.event.MouseMotionListener;
@@ -40,7 +40,7 @@ import panamagl.GLCanvas;
 import panamagl.GLEventListener;
 import panamagl.canvas.GLCanvasSwing;
 
-public class EmbeddedPanamaGLCanvas extends JPanel implements IScreenCanvas{
+public class PanamaGLCanvas extends JPanel implements IScreenCanvas{
   private static final long serialVersionUID = 2488043741850146830L;
   
   protected double pixelScaleX;
@@ -52,7 +52,7 @@ public class EmbeddedPanamaGLCanvas extends JPanel implements IScreenCanvas{
   
   protected GLCanvasSwing glCanvas;
 
-  public EmbeddedPanamaGLCanvas(IChartFactory factory, Scene scene, Quality quality, GLCanvasSwing glCanvas) {
+  public PanamaGLCanvas(IChartFactory factory, Scene scene, Quality quality, GLCanvasSwing glCanvas) {
     super();
     
     this.glCanvas = glCanvas;
@@ -189,7 +189,7 @@ public class EmbeddedPanamaGLCanvas extends JPanel implements IScreenCanvas{
 
   @Override
   public void setPixelScale(float[] scale) {
-    LogManager.getLogger(EmbeddedPanamaGLCanvas.class)
+    LogManager.getLogger(PanamaGLCanvas.class)
     .info("Not implemented. Pixel scale is driven by AWT Canvas itself and Panama adapts to it");
   }
 

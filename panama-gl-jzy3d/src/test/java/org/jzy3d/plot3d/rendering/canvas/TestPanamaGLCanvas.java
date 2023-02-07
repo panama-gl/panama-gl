@@ -1,4 +1,4 @@
-package org.jzy3d.plot3d.rendering.canvas.embedded;
+package org.jzy3d.plot3d.rendering.canvas;
 
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
@@ -8,7 +8,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.junit.Test;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
-import org.jzy3d.chart.factories.embedded.EmbeddedPanamaGLPainterFactory;
+import org.jzy3d.chart.factories.PanamaGLPainterFactory;
+import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.PanamaGLFactory;
@@ -17,7 +18,7 @@ import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 
-public class TestEmbeddedPanamaGLCanvas {
+public class TestPanamaGLCanvas {
   @Test
   public void forceRepaint() {
     
@@ -30,7 +31,7 @@ public class TestEmbeddedPanamaGLCanvas {
     
     // Add this mock factory to the chart painter factory
     PanamaGLChartFactory factory = new PanamaGLChartFactory();
-    EmbeddedPanamaGLPainterFactory p = (EmbeddedPanamaGLPainterFactory)factory.getPainterFactory();
+    PanamaGLPainterFactory p = (PanamaGLPainterFactory)factory.getPainterFactory();
     p.setPanamaGLFactory(f);
 
 
@@ -39,7 +40,7 @@ public class TestEmbeddedPanamaGLCanvas {
     glCanvas.setOffscreenRenderer(f.newOffscreenRenderer());
     
     // Given
-    EmbeddedPanamaGLCanvas c = new EmbeddedPanamaGLCanvas(factory, factory.newScene(false), Quality.Advanced(), glCanvas);
+    PanamaGLCanvas c = new PanamaGLCanvas(factory, factory.newScene(false), Quality.Advanced(), glCanvas);
     
     // Then
     verify(glCanvas, times(0)).display();

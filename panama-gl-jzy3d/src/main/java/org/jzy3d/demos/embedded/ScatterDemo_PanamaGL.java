@@ -20,8 +20,8 @@ package org.jzy3d.demos.embedded;
 import java.util.Random;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.ChartFactory;
+import org.jzy3d.chart.factories.FrameSwing;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
-import org.jzy3d.chart.factories.embedded.FrameSwing;
 import org.jzy3d.colors.Color;
 import org.jzy3d.maths.Coord3d;
 import org.jzy3d.plot3d.primitives.Scatter;
@@ -38,7 +38,7 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 
 // Making context current in MacOSXCGLContext line 1474 
 
-public class ScatterDemoPanamaGL_embedded {
+public class ScatterDemo_PanamaGL {
   static final float ALPHA_FACTOR = 0.25f;
 
   public static void main(String[] args) {

@@ -44,7 +44,6 @@ import org.jzy3d.painters.ColorModel;
 import org.jzy3d.painters.DepthFunc;
 import org.jzy3d.painters.Font;
 import org.jzy3d.painters.ListMode;
-import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.painters.PixelStore;
 import org.jzy3d.painters.RenderMode;
 import org.jzy3d.painters.StencilFunc;
@@ -114,7 +113,7 @@ static int k = 0;
   public void glutStart(Chart chart, Rectangle bounds, String title, String message) {
     System.out.println("Painter : glutStart " + (k++));
 
-    var painter = (PanamaGLPainter) chart.getPainter();
+    var painter = (PanamaGLPainter_MacOS_10_15_3) chart.getPainter();
     var canvas = (PanamaGLNativeCanvas) chart.getCanvas();
     var renderer = canvas.getRenderer();
     var scope = painter.getScope();
@@ -180,7 +179,7 @@ System.out.println("post init");
     // -----------------------------------------------------
     // Version - GLUT need to be initialized
 
-    System.out.println(version(painter, true));
+    System.out.println(version(true));
 
     // -----------------------------------------------------
     // Warn : this will block execution
@@ -214,17 +213,17 @@ System.out.println("post init");
   }
   static Component dummy = new JPanel();
 
-  protected StringBuffer version(PanamaGLPainter painter) {
-    return version(painter, true);
+  protected StringBuffer version() {
+    return version(true);
   }
 
-  protected StringBuffer version(PanamaGLPainter painter, boolean showExtensions){
+  protected StringBuffer version(boolean showExtensions){
     StringBuffer sb = new StringBuffer();
-    sb.append("GL_VENDOR     : " + painter.glGetString(glut_h.GL_VENDOR()) + "\n");
-    sb.append("GL_RENDERER   : " + painter.glGetString(glut_h.GL_RENDERER()) + "\n");
-    sb.append("GL_VERSION    : " + painter.glGetString(glut_h.GL_VERSION()) + "\n");
+    sb.append("GL_VENDOR     : " + glGetString(glut_h.GL_VENDOR()) + "\n");
+    sb.append("GL_RENDERER   : " + glGetString(glut_h.GL_RENDERER()) + "\n");
+    sb.append("GL_VERSION    : " + glGetString(glut_h.GL_VERSION()) + "\n");
 
-    String ext = painter.glGetString(glut_h.GL_EXTENSIONS());
+    String ext = glGetString(glut_h.GL_EXTENSIONS());
 
     if(ext!=null) {
       sb.append("GL_EXTENSIONS : " + "\n");

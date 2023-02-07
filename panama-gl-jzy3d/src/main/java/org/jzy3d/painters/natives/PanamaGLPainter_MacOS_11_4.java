@@ -45,7 +45,6 @@ import org.jzy3d.painters.ColorModel;
 import org.jzy3d.painters.DepthFunc;
 import org.jzy3d.painters.Font;
 import org.jzy3d.painters.ListMode;
-import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.painters.PixelStore;
 import org.jzy3d.painters.RenderMode;
 import org.jzy3d.painters.StencilFunc;
@@ -58,12 +57,11 @@ import org.jzy3d.plot3d.rendering.canvas.natives.PanamaGLNativeCanvas;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
-import opengl.macos.v10_15_7.glutReshapeFunc$func;
-import opengl.macos.v10_15_7.glutIdleFunc$func;
-
 import opengl.macos.v10_15_7.glutDisplayFunc$func;
+import opengl.macos.v10_15_7.glutIdleFunc$func;
 import opengl.macos.v10_15_7.glutMotionFunc$func;
 import opengl.macos.v10_15_7.glutMouseFunc$func;
+import opengl.macos.v10_15_7.glutReshapeFunc$func;
 import opengl.macos.v10_15_7.glut_h;
 
 public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements PanamaGLNativePainter{
@@ -115,7 +113,7 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
   /////////////////////////////////////////////
 
   public void glutStart(Chart chart, Rectangle bounds, String title, String message) {
-    var painter = (PanamaGLPainter) chart.getPainter();
+    var painter = (PanamaGLPainter_MacOS_11_4) chart.getPainter();
     var canvas = (PanamaGLNativeCanvas) chart.getCanvas();
     var renderer = canvas.getRenderer();
     var scope = painter.getScope();
@@ -176,7 +174,7 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
     // -----------------------------------------------------
     // Version - GLUT need to be initialized
 
-    System.out.println(version(painter));
+    System.out.println(version());
 
     // -----------------------------------------------------
     // Warn : this will block execution
@@ -210,13 +208,13 @@ public class PanamaGLPainter_MacOS_11_4 extends AbstractPainter implements Panam
   }
   static Component dummy = new JPanel();
 
-  protected StringBuffer version(PanamaGLPainter painter){
+  protected StringBuffer version(){
     StringBuffer sb = new StringBuffer();
-    sb.append("GL_VENDOR     : " + painter.glGetString(glut_h.GL_VENDOR()) + "\n");
-    sb.append("GL_RENDERER   : " + painter.glGetString(glut_h.GL_RENDERER()) + "\n");
-    sb.append("GL_VERSION    : " + painter.glGetString(glut_h.GL_VERSION()) + "\n");
+    sb.append("GL_VENDOR     : " + glGetString(glut_h.GL_VENDOR()) + "\n");
+    sb.append("GL_RENDERER   : " + glGetString(glut_h.GL_RENDERER()) + "\n");
+    sb.append("GL_VERSION    : " + glGetString(glut_h.GL_VERSION()) + "\n");
 
-    String ext = painter.glGetString(glut_h.GL_EXTENSIONS());
+    String ext = glGetString(glut_h.GL_EXTENSIONS());
 
     if(ext!=null) {
       sb.append("GL_EXTENSIONS : " + "\n");

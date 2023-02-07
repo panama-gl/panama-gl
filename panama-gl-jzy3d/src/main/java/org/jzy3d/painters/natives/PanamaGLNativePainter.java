@@ -19,9 +19,9 @@ package org.jzy3d.painters.natives;
 
 import org.jzy3d.chart.Chart;
 import org.jzy3d.maths.Rectangle;
-import org.jzy3d.painters.PanamaGLPainter;
+import org.jzy3d.painters.IPainter;
 
-public interface PanamaGLNativePainter extends PanamaGLPainter{
+public interface PanamaGLNativePainter extends IPainter{
   /**
    * This temporary helper allows starting a GLUT window like an AWT Frame would start
    * for a Jzy3D chart.

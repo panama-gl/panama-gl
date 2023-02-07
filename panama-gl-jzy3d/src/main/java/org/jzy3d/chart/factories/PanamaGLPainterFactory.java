@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package org.jzy3d.chart.factories.embedded;
+package org.jzy3d.chart.factories;
 
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.IAnimator;
@@ -32,14 +32,14 @@ import org.jzy3d.chart.factories.IFrame;
 import org.jzy3d.chart.factories.IPainterFactory;
 import org.jzy3d.maths.Dimension;
 import org.jzy3d.maths.Rectangle;
+import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.painters.IPainter;
-import org.jzy3d.painters.embedded.EmbeddedPanamaGLPainter;
 import org.jzy3d.plot3d.pipelines.NotImplementedException;
 import org.jzy3d.plot3d.primitives.symbols.SymbolHandler;
 import org.jzy3d.plot3d.rendering.canvas.ICanvas;
 import org.jzy3d.plot3d.rendering.canvas.IScreenCanvas;
+import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
-import org.jzy3d.plot3d.rendering.canvas.embedded.EmbeddedPanamaGLCanvas;
 import org.jzy3d.plot3d.rendering.image.IImageWrapper;
 import org.jzy3d.plot3d.rendering.scene.Scene;
 import org.jzy3d.plot3d.rendering.view.IViewOverlay;
@@ -50,7 +50,7 @@ import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GLContext;
 
-public class EmbeddedPanamaGLPainterFactory implements IPainterFactory {
+public class PanamaGLPainterFactory implements IPainterFactory {
   protected PanamaGLFactory panamaGLFactory = PanamaGLFactory.select();
 
   protected IChartFactory chartFactory;
@@ -69,7 +69,7 @@ public class EmbeddedPanamaGLPainterFactory implements IPainterFactory {
 
   @Override
   public IPainter newPainter() {
-    EmbeddedPanamaGLPainter p = new EmbeddedPanamaGLPainter();
+    PanamaGLPainter p = new PanamaGLPainter();
     p.setGL(panamaGLFactory.newGL());
     
 
@@ -84,12 +84,12 @@ public class EmbeddedPanamaGLPainterFactory implements IPainterFactory {
     GLContext context = glCanvas.getContext();
     
     
-    EmbeddedPanamaGLCanvas icanvas = new EmbeddedPanamaGLCanvas(factory, scene, quality, glCanvas);
+    PanamaGLCanvas icanvas = new PanamaGLCanvas(factory, scene, quality, glCanvas);
     
     // Update painter with context
     
     //System.out.println();
-    ((EmbeddedPanamaGLPainter)icanvas.getView().getPainter()).setContext(context);
+    ((PanamaGLPainter)icanvas.getView().getPainter()).setContext(context);
     return icanvas;
   }
 

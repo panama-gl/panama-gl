@@ -15,11 +15,11 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package org.jzy3d.plot3d.rendering.canvas.embedded;
+package org.jzy3d.plot3d.rendering.canvas;
 
 import org.jzy3d.maths.TicToc;
+import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.painters.IPainter;
-import org.jzy3d.painters.embedded.EmbeddedPanamaGLPainter;
 import org.jzy3d.plot3d.rendering.view.View;
 import panamagl.GLCanvas;
 import panamagl.GLEventListener;
@@ -140,7 +140,7 @@ public class Renderer3D implements GLEventListener{
    * @param canvas
    */
   protected void updatePainterWithGL(GL canvas) {
-    EmbeddedPanamaGLPainter painter = ((EmbeddedPanamaGLPainter) view.getPainter());
+    PanamaGLPainter painter = ((PanamaGLPainter) view.getPainter());
     painter.setGL(canvas);
   }
 

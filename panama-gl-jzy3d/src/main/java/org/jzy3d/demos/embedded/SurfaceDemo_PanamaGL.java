@@ -19,15 +19,15 @@ package org.jzy3d.demos.embedded;
 
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.ChartFactory;
+import org.jzy3d.chart.factories.FrameSwing;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
-import org.jzy3d.chart.factories.embedded.EmbeddedPanamaGLPainterFactory;
-import org.jzy3d.chart.factories.embedded.FrameSwing;
+import org.jzy3d.chart.factories.PanamaGLPainterFactory;
 import org.jzy3d.colors.Color;
 import org.jzy3d.colors.ColorMapper;
 import org.jzy3d.colors.colormaps.ColorMapRainbow;
 import org.jzy3d.maths.Range;
+import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.painters.Font;
-import org.jzy3d.painters.embedded.EmbeddedPanamaGLPainter;
 import org.jzy3d.plot3d.builder.Func3D;
 import org.jzy3d.plot3d.builder.SurfaceBuilder;
 import org.jzy3d.plot3d.builder.concrete.OrthonormalGrid;
@@ -49,7 +49,7 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 
 // Making context current in MacOSXCGLContext line 1474 
 
-public class SurfaceDemoPanamaGL_embedded {
+public class SurfaceDemo_PanamaGL {
   static final float ALPHA_FACTOR = 0.75f;// .61f;
 
   public static void main(String[] args) throws InterruptedException {
@@ -88,7 +88,7 @@ Thread.sleep(5000);
 
     chart.addMouse();    
     
-    EmbeddedPanamaGLPainter painter = (EmbeddedPanamaGLPainter)chart.getPainter();
+    PanamaGLPainter painter = (PanamaGLPainter)chart.getPainter();
     
     
     System.out.println(painter.getContext().getProfile());
