@@ -39,7 +39,7 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 // Making context current in MacOSXCGLContext line 1474 
 
 public class ScatterDemoPanamaGL_embedded {
-  static final float ALPHA_FACTOR = 0.75f;// .61f;
+  static final float ALPHA_FACTOR = 0.25f;
 
   public static void main(String[] args) {
 
@@ -85,7 +85,7 @@ public class ScatterDemoPanamaGL_embedded {
       y = r.nextFloat() - 0.5f;
       z = r.nextFloat() - 0.5f;
       points[i] = new Coord3d(x, y, z);
-      a = 0.75f;
+      a = ALPHA_FACTOR;
       colors[i] = new Color(x, y, z, a);
     }
 

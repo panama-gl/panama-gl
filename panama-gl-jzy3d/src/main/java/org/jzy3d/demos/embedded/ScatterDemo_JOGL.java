@@ -40,7 +40,7 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 // Making context current in MacOSXCGLContext line 1474 
 
 public class ScatterDemo_JOGL {
-  static final float ALPHA_FACTOR = 0.75f;// .61f;
+  static final float ALPHA_FACTOR = 0.25f;// .61f;
 
   public static void main(String[] args) {
 
@@ -51,7 +51,6 @@ public class ScatterDemo_JOGL {
     Quality q = Quality.Advanced().setAnimated(false);
     Chart chart = factory.newChart(q);
     chart.add(scatter());
-    chart.getView().setAxisDisplayed(false);
     
     Runnable open = new Runnable() {
       @Override
@@ -86,7 +85,7 @@ public class ScatterDemo_JOGL {
       y = r.nextFloat() - 0.5f;
       z = r.nextFloat() - 0.5f;
       points[i] = new Coord3d(x, y, z);
-      a = 0.25f;
+      a = ALPHA_FACTOR;
       colors[i] = new Color(x, y, z, a);
     }
 
