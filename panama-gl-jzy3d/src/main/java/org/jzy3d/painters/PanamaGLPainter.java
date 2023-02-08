@@ -71,7 +71,7 @@ public class PanamaGLPainter extends AbstractPainter {
 
   public PanamaGLPainter() {
     try {
-      scope = MemorySession.openConfined();
+      scope = MemorySession.openImplicit();//Confined();
       allocator = SegmentAllocator.newNativeArena(scope);
     } catch (Exception e) {
       e.printStackTrace();
