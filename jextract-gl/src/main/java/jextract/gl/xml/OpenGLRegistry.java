@@ -2,7 +2,9 @@ package jextract.gl.xml;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.xml.bind.JAXBElement;
 import jextract.gl.xml.model.CommandWrap;
 import jextractgl.Registry;
@@ -22,45 +24,50 @@ public class OpenGLRegistry {
 
   public OpenGLRegistry() throws Exception {
     this("src/main/resources/gl-original.xml");
-  }  
-  
+  }
+
   public OpenGLRegistry(String xml) throws Exception {
     registry = (jextractgl.Registry) h.unmarshall(xml);
   }
   
+  public Registry getRegistry(){
+    return registry;
+  }
+
   // ************************************************ //
 
   
+
   public List<CommandWrap> getCommands() {
     List<CommandWrap> out = new ArrayList<>();
-    
+
     Registry.Commands commands = registry.getCommands();
-    
+
     for (Command c : commands.getCommand()) {
       CommandWrap cw = new CommandWrap(c);
       out.add(cw);
     }
-    
+
     return out;
   }
-  
+
   // ************************************************ //
-  
+
   public void printTypes() {
     Types t = registry.getTypes();
-    
-    for(Types.Type type : t.getType()) {
-      System.out.print(" type : " );
 
-      List<?> v = (List<?>)type.getContent();
-      
-      for (Object oo: v) {
+    for (Types.Type type : t.getType()) {
+      System.out.print(" type : ");
+
+      List<?> v = (List<?>) type.getContent();
+
+      for (Object oo : v) {
         System.out.print(oo);
-        
+
       }
       System.out.println();
     }
-    
+
     System.out.println(t);
   }
 
@@ -69,63 +76,63 @@ public class OpenGLRegistry {
     System.err.println("COMMANDS");
 
     StringBuffer sb = new StringBuffer();
-    
+
     Registry.Commands commands = registry.getCommands();
-    
-    
-    
+
+
+
     System.out.println("Namespace : " + commands.getNamespace());
-    
+
     int k = 0;
-    
+
     for (Command c : commands.getCommand()) {
       // Command name
       Proto proto = c.getProto();
       Alias a = c.getAlias();
 
       String name = proto.getName();
-      
-      if(a!=null) {
+
+      if (a != null) {
         name = (name + "(aka:" + proto.getName() + ")");
       }
 
       sb.append(name + "\t {");
-      
+
       // Command parameters
-      for(Param param: c.getParam()) {
-        
+      for (Param param : c.getParam()) {
+
         param.getGroup();
         String len = param.getLen();
-        
-        List<?> ls = (List<?>)param.getContent();
-        
+
+        List<?> ls = (List<?>) param.getContent();
+
         // Each param content is a list containing, e.g. :
-        // ptype:GLuint64   name:vkSemaphore
-        for(Object parameterDescription: ls) {
-          if(parameterDescription instanceof JAXBElement) {
+        // ptype:GLuint64 name:vkSemaphore
+        for (Object parameterDescription : ls) {
+          if (parameterDescription instanceof JAXBElement) {
             JAXBElement<?> j = (JAXBElement<?>) parameterDescription;
             String parameterType = j.getName().toString();
-            String parameterName = (String)j.getValue();
+            String parameterName = (String) j.getValue();
 
             sb.append(parameterType + ":" + parameterName);
-            
+
           }
           // These cases should not occur
-          else if (parameterDescription instanceof String){
+          else if (parameterDescription instanceof String) {
             sb.append(parameterDescription);
-          }
-          else {
-            throw new RuntimeException("Unexpected type !!" + parameterDescription.getClass() + " for " + parameterDescription);
+          } else {
+            throw new RuntimeException("Unexpected type !!" + parameterDescription.getClass()
+                + " for " + parameterDescription);
           }
 
         }
-        
+
         sb.append(", ");
-        
+
       }
       sb.append("}");
       sb.append("\n");
-      
+
       k++;
     }
 
@@ -135,64 +142,59 @@ public class OpenGLRegistry {
 
   public void printFeatures() {
 
-    System.err.println("FEATURES");
-    
-    for (Feature feature : registry.getFeature()) {
-      System.out.println("Feature : " + feature.getApi() + " " + feature.getNumber() + " (" + feature.getName()  +")");
+    boolean printRequire = false;
 
-      for(Remove remove: feature.getRemove()) {
+    System.err.println("FEATURES");
+
+    for (Feature feature : registry.getFeature()) {
+      System.out.println("Feature : " + feature.getApi() + " " + feature.getNumber() + " ("
+          + feature.getName() + ")");
+
+      for (Remove remove : feature.getRemove()) {
         System.out.println(" Remove : " + remove);
       }
-      
-      
-      for(Require require: feature.getRequire()) {
-        System.out.println(" Require : " + require);
-        
-        for(Serializable s: require.getContent()) {
-          if(s instanceof Feature.Require.Enum) {
-            Feature.Require.Enum renum = (Feature.Require.Enum)s;
-            System.out.println("  Enum : " + renum.getName());
 
-          }
-          else if(s instanceof Registry.Feature.Require.Command) {
-            Registry.Feature.Require.Command com = (Registry.Feature.Require.Command)s;
-            System.out.println("  Command : " + com.getName());
-          }
-          else if(s instanceof Feature.Require.Type) {
-            Feature.Require.Type com = (Feature.Require.Type)s;
-            System.out.println("  Type : " + com.getName());
-          }
-          else if(s instanceof String) {
-          }
-          else if(s instanceof JAXBElement ) {
-            JAXBElement e = (JAXBElement)s;
-            
-            Object oo = e.getValue();
-            
-            if(oo instanceof Feature.Require.Enum) {
-              Feature.Require.Enum renum = (Feature.Require.Enum)oo;
+      if (printRequire)
+        for (Require require : feature.getRequire()) {
+          System.out.println(" Require : " + require);
+
+          for (Serializable s : require.getContent()) {
+            if (s instanceof Feature.Require.Enum) {
+              Feature.Require.Enum renum = (Feature.Require.Enum) s;
               System.out.println("  Enum : " + renum.getName());
 
-            }
-            else if(oo instanceof Registry.Feature.Require.Command) {
-              Registry.Feature.Require.Command com = (Registry.Feature.Require.Command)oo;
+            } else if (s instanceof Registry.Feature.Require.Command) {
+              Registry.Feature.Require.Command com = (Registry.Feature.Require.Command) s;
               System.out.println("  Command : " + com.getName());
-            }
-            else if(oo instanceof Feature.Require.Type) {
-              Feature.Require.Type com = (Feature.Require.Type)oo;
+            } else if (s instanceof Feature.Require.Type) {
+              Feature.Require.Type com = (Feature.Require.Type) s;
               System.out.println("  Type : " + com.getName());
+            } else if (s instanceof String) {
+            } else if (s instanceof JAXBElement) {
+              JAXBElement e = (JAXBElement) s;
+
+              Object oo = e.getValue();
+
+              if (oo instanceof Feature.Require.Enum) {
+                Feature.Require.Enum renum = (Feature.Require.Enum) oo;
+                System.out.println("  Enum : " + renum.getName());
+
+              } else if (oo instanceof Registry.Feature.Require.Command) {
+                Registry.Feature.Require.Command com = (Registry.Feature.Require.Command) oo;
+                System.out.println("  Command : " + com.getName());
+              } else if (oo instanceof Feature.Require.Type) {
+                Feature.Require.Type com = (Feature.Require.Type) oo;
+                System.out.println("  Type : " + com.getName());
+              } else {
+                System.out.println(" Jaxb : " + oo);
+              }
+
+            } else {
+              System.out.println(" ? : " + s.getClass().getName());
             }
-            else {
-              System.out.println(" Jaxb : " + oo);
-            }
-            
-          }
-          else {
-            System.out.println(" ? : " + s.getClass().getName());
           }
         }
-      }
-      //break;
+      // break;
     }
   }
 
@@ -200,22 +202,54 @@ public class OpenGLRegistry {
     System.err.println("ENUMS");
 
     for (Enums ee : registry.getEnums()) {
-      System.out.println(" Enums block : " + ee.getNamespace() + "/" + ee.getVendor() + " " + ee.getComment());
-      for(Serializable c: ee.getContent()) {
-        if(c instanceof JAXBElement) {
+      System.out.println(
+          " Enums block : " + ee.getNamespace() + "/" + ee.getVendor() + " " + ee.getComment());
+      for (Serializable c : ee.getContent()) {
+        if (c instanceof JAXBElement) {
           Object o = ((JAXBElement) c).getValue();
-          
-          if(o instanceof Registry.Enums.Enum) {
-            Registry.Enums.Enum enu = (Registry.Enums.Enum)o;
-            System.out.println("  Enum : " + enu.getValue1() /*+ " " + enu.getGroup()*/ + "  " + enu.getName());
-          }
-          
 
-        }
-        else {
-          //System.out.println("  Enum : " + c);
+          if (o instanceof Registry.Enums.Enum) {
+            Registry.Enums.Enum enu = (Registry.Enums.Enum) o;
+            System.out.println(
+                "  Enum : " + enu.getValue1() /* + " " + enu.getGroup() */ + "  " + enu.getName());
+          }
+
+
+        } else {
+          // System.out.println(" Enum : " + c);
         }
       }
     }
   }
+  
+  public Map<String, Registry.Enums.Enum> getEnums() {
+    System.err.println("ENUMS");
+
+    
+    Map<String, Registry.Enums.Enum> index = new HashMap<>();
+    
+    for (Enums ee : registry.getEnums()) {
+      System.out.println(
+          " Enums block : " + ee.getNamespace() + "/" + ee.getVendor() + " " + ee.getComment());
+      for (Serializable c : ee.getContent()) {
+        if (c instanceof JAXBElement) {
+          Object o = ((JAXBElement) c).getValue();
+
+          if (o instanceof Registry.Enums.Enum) {
+            Registry.Enums.Enum enu = (Registry.Enums.Enum) o;
+            //System.out.println(
+             //   "  Enum : " + enu.getType() /* + " " + enu.getGroup() */ + "  " + enu.getName() + " " + enu.getValue());
+            
+            index.put(enu.getName(), enu);
+          }
+
+
+        } else {
+          // System.out.println(" Enum : " + c);
+        }
+      }
+    }
+    return index;
+  }
+
 }

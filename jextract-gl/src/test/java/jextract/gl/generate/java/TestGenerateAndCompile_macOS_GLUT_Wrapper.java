@@ -3,7 +3,6 @@ package jextract.gl.generate.java;
 import java.io.IOException;
 import java.util.List;
 import org.junit.Test;
-import jextract.gl.generate.java.ClassWriter.Arg;
 import junit.framework.Assert;
 
 public class TestGenerateAndCompile_macOS_GLUT_Wrapper {

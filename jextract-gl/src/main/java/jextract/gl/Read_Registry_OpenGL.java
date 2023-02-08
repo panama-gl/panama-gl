@@ -11,7 +11,7 @@ public class Read_Registry_OpenGL {
     registry.printTypes();
     registry.printEnums();
     registry.printFeatures();
-    registry.printCommands();
+    //registry.printCommands();
   }
 
 

@@ -17,10 +17,10 @@ import opengl.ubuntu.v20.glut_h;
 /**
  * Run me with VM args : --enable-preview
  */
-public class GenerateBottomUp {
+public class GenerateWrapperFromBindings {
   OpenGLRegistry registry;
   
-  public GenerateBottomUp() throws Exception {
+  public GenerateWrapperFromBindings() throws Exception {
     registry = new OpenGLRegistry();
   }
   
@@ -34,7 +34,7 @@ public class GenerateBottomUp {
     String javaFile = "target/"+className+".java";
 
     // Write class
-    GenerateBottomUp gen = new GenerateBottomUp();
+    GenerateWrapperFromBindings gen = new GenerateWrapperFromBindings();
     gen.generateWrapper(wrapped, accepts, className, javaFile);
 
     // Compile class

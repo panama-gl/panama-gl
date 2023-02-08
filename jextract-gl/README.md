@@ -16,6 +16,18 @@ if missing element check XSD
 
 If "No schemas have been found" error, delete resource folder content and rerun, then reload mavn project
 
+Edit the `Registry.Enums.Enum` class so that it can properly load the value field : replace "value1" by "value" in the annotation field:
+
+```java
+public static class Enum {
+
+    @XmlValue
+    protected String value;
+    @XmlAttribute(name = "value")
+    protected String value1;
+
+```
+
 
 ## Generate Java code
 

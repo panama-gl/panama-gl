@@ -7,12 +7,12 @@ import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassWriter {
+public class InterfaceWriter {
   String className;
   String classPackage;
   List<String> imports = new ArrayList<>();
   
-  public ClassWriter(String classPackage, String className) {
+  public InterfaceWriter(String classPackage, String className) {
     this.classPackage = classPackage;
     this.className = className;
   }
@@ -39,7 +39,7 @@ public class ClassWriter {
     }
     sb.append("\n");
     
-    sb.append("public class " + className + " {\n");
+    sb.append("public interface " + className + " {\n");
   }
   
   public void close(StringBuffer sb) {
@@ -47,6 +47,8 @@ public class ClassWriter {
   }
 
   // --------------------------------------------------
+  
+  
 
   // --------------------------------------------------
   
@@ -115,64 +117,4 @@ public class ClassWriter {
   }
   
 
-  
-  // ------------------
-
-  public void wrapper(StringBuffer sb, String name, String wrapped) {
-    wrapper(sb, name, null, null, wrapped, null);
-  }
-
-  public void wrapper(StringBuffer sb, String name, List<Arg> in, String wrapped) {
-    wrapper(sb, name, in, null, wrapped, null);
-  }
-  
-  public void wrapper(StringBuffer sb, String name, List<Arg> in, Arg out, String wrapped) {
-    wrapper(sb, name, in, out, wrapped, null);
-  }
-  
-  public void wrapper(StringBuffer sb, String name, List<Arg> in, Arg out, String wrapped, List<Exception> throwz) {
-    StringBuffer sbargs = new StringBuffer();
-    
-    if(in!=null) {
-      for (int i = 0; i < in.size(); i++) {
-        Arg arg = in.get(i);
-        
-        sbargs.append(arg.name);
-        if(i<in.size()-1)
-          sbargs.append(", ");
-      }
-    }
-    
-    // Wrapping line
-    Code c;
-    
-    if(out==null)
-      c = new Code(wrapped + "." + name + "(" + sbargs.toString() + ");");
-    else {
-      c = new Code("return " + wrapped + "." + name + "(" + sbargs.toString() + ");");
-      
-    }
-    method(sb, name, in, out, List.of(c), throwz);
-  }
-  
-  public void wrapper(StringBuffer sb, Class<?> wrapped, Method method) {
-    List<Arg> argsIn = new ArrayList<>();
-    for(Parameter param : method.getParameters()) {
-      Arg arg = new Arg(param.getType(), param.getName());
-      argsIn.add(arg);
-
-    }
-    
-    Arg argOut = null;
-    
-    Class<?> retType = method.getReturnType();
-    if(!retType.getName().equals("void")) {
-      //method.retu
-        argOut = new Arg(retType);
-    }
-    
-    //List<Class<?>> throwz = Arrays.asList(method.getExceptionTypes());
-    
-    wrapper(sb, method.getName(), argsIn, argOut, wrapped.getSimpleName(), null);
-  }
 }
