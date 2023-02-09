@@ -1,47 +1,25 @@
 package jextract.gl.generate.java;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.ArrayList;
 import java.util.List;
 
-public class InterfaceWriter {
-  String className;
-  String classPackage;
-  List<String> imports = new ArrayList<>();
+public class InterfaceWriter extends JavaWriter{
   
   public InterfaceWriter(String classPackage, String className) {
     this.classPackage = classPackage;
     this.className = className;
   }
-  
-  public void writeTo(StringBuffer sb, String file) throws IOException {
-    FileWriter fw = new FileWriter(file);
-    fw.write(sb.toString());
-    fw.close();
-  }
-  
+    
   // --------------------------------------------------
   
-  public void addImport(String imprt) {
-    imports.add(imprt);
-  }
-
+  @Override
   public void start(StringBuffer sb) {
-    if(classPackage!=null) {
-      sb.append("package "  + classPackage + "; \n\n");
-    }
-    for(String imprt: imports) {
-      sb.append("import " + imprt + ";\n");
-      
-    }
-    sb.append("\n");
+    writePackage(sb);
+    writeImports(sb);
     
-    sb.append("public interface " + className + " {\n");
+    sb.append("public interface " + className + " " + writeExtends() + " {\n");
   }
   
+  @Override
   public void close(StringBuffer sb) {
     sb.append("}\n");
   }

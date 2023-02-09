@@ -37,7 +37,17 @@ public class OpenGLRegistry {
   // ************************************************ //
 
   
-
+  public Map<String,CommandWrap> getCommandIndex() {
+    Map<String,CommandWrap> index = new HashMap<>();
+    
+    for(CommandWrap com: getCommands()) {
+      index.put(com.getName(), com);
+    }
+    
+    return index;
+    
+  }
+  
   public List<CommandWrap> getCommands() {
     List<CommandWrap> out = new ArrayList<>();
 
@@ -222,34 +232,28 @@ public class OpenGLRegistry {
     }
   }
   
-  public Map<String, Registry.Enums.Enum> getEnums() {
-    System.err.println("ENUMS");
-
+  public Map<String, Registry.Enums.Enum> getEnumIndex() {
     
     Map<String, Registry.Enums.Enum> index = new HashMap<>();
     
     for (Enums ee : registry.getEnums()) {
-      System.out.println(
-          " Enums block : " + ee.getNamespace() + "/" + ee.getVendor() + " " + ee.getComment());
+
       for (Serializable c : ee.getContent()) {
         if (c instanceof JAXBElement) {
           Object o = ((JAXBElement) c).getValue();
 
           if (o instanceof Registry.Enums.Enum) {
             Registry.Enums.Enum enu = (Registry.Enums.Enum) o;
-            //System.out.println(
-             //   "  Enum : " + enu.getType() /* + " " + enu.getGroup() */ + "  " + enu.getName() + " " + enu.getValue());
             
             index.put(enu.getName(), enu);
           }
-
-
         } else {
-          // System.out.println(" Enum : " + c);
         }
       }
     }
     return index;
   }
+  
+
 
 }

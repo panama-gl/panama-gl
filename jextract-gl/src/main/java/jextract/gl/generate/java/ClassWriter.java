@@ -1,61 +1,35 @@
 package jextract.gl.generate.java;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassWriter {
-  String className;
-  String classPackage;
-  List<String> imports = new ArrayList<>();
-  
+public class ClassWriter extends JavaWriter {
   public ClassWriter(String classPackage, String className) {
+    super();
     this.classPackage = classPackage;
     this.className = className;
   }
   
-  public void writeTo(StringBuffer sb, String file) throws IOException {
-    FileWriter fw = new FileWriter(file);
-    fw.write(sb.toString());
-    fw.close();
-  }
-  
   // --------------------------------------------------
   
-  public void addImport(String imprt) {
-    imports.add(imprt);
-  }
-
+  @Override
   public void start(StringBuffer sb) {
-    if(classPackage!=null) {
-      sb.append("package "  + classPackage + "; \n\n");
-    }
-    for(String imprt: imports) {
-      sb.append("import " + imprt + ";\n");
-      
-    }
-    sb.append("\n");
+    writePackage(sb);
+    writeImports(sb);
     
     sb.append("public class " + className + " {\n");
   }
-  
+
+  @Override
   public void close(StringBuffer sb) {
     sb.append("}\n");
   }
 
-  // --------------------------------------------------
 
   // --------------------------------------------------
   
-  String tab = "  ";
-  String tab2 = "    ";
-  //StringBuffer sb = new StringBuffer();
-  
-  
-
   public void method(StringBuffer sb, String name, List<Code> body) {
     method(sb, name, null, null, body, null);
   }

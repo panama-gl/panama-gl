@@ -3,14 +3,16 @@ package jextract.gl.generate.java;
 public class Arg {
   Class<?> type;
   String name;
+  String typeName;
 
   public Arg(Class<?> type, String name) {
-    this.type = type;
     this.name = name;
+    this.type = type;
+    this.typeName = type.getName();
   }
 
-  public Arg(Class<?> cc) {
-    this.type = cc;
+  public Arg(Class<?> type) {
+    this(type, null);
   }
 
   public void typeName(StringBuffer sb) {
@@ -30,5 +32,19 @@ public class Arg {
       sb.append(type.getSimpleName() + " ");          
     }
   }
+
+  public String getName() {
+    return name;
+  }
+
+  public String getTypeName() {
+    return typeName;
+  }
+
+  public void setTypeName(String typeName) {
+    this.typeName = typeName;
+  }
+  
+  
 
 }
