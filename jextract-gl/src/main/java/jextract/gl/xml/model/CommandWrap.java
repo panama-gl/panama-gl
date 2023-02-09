@@ -143,7 +143,7 @@ public class CommandWrap {
     else if( 
         "GLsizeiptr".equals(type) || 
         "GLfixed".equals(type) || "GLclampx".equals(type)|| "GLDEBUGPROC".equals(type)) {
-       //type = "int";
+       type = "int";
      }
 
     return type;
