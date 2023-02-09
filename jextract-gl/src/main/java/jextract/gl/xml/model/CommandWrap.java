@@ -10,6 +10,7 @@ import jextractgl.Registry.Commands.Command.Param;
 import jextractgl.Registry.Commands.Command.Proto;
 
 public class CommandWrap {
+  private static final String ADDRESSABLE = "java.lang.foreign.Addressable";
   String name;
   String alias;
   List<Arg> args = new ArrayList<>();
@@ -50,14 +51,8 @@ public class CommandWrap {
         if(parameterDescription instanceof String) {
           String innerType = (String)parameterDescription ;
           
-          if( " *".equals(innerType) 
-              || "void *".equals(innerType) 
-              || "void **".equals(innerType) 
-              || "const void *".equals(innerType) 
-              || "const void *const*".equals(innerType) 
-              || "const <ptype>GLsizei</ptype> *".equals(innerType))
-            {
-            currentTypeName = "java.lang.foreign.Addressable";
+          if( isPointer(innerType)) {
+            currentTypeName = ADDRESSABLE;
           }
           
         }
@@ -93,27 +88,34 @@ public class CommandWrap {
       
     }
   }
+
+  private boolean isPointer(String innerType) {
+    return " *".equals(innerType) 
+        || "void *".equals(innerType) 
+        || "void **".equals(innerType) 
+        || " *const*".equals(innerType)
+        || "const void *".equals(innerType) 
+        || "const void *const*".equals(innerType) 
+        || "const <ptype>GLsizei</ptype> *".equals(innerType);
+  }
   
   public String GLToJavaType(String type) {
-    if("GLenum".equals(type) || "mask".equals(type)|| "GLsync".equals(type) || 
-       "GLsizei".equals(type) ||"GLsizeiptr".equals(type) || "GLbitfield".equals(type) || 
-       "GLfixed".equals(type) || "GLclampx".equals(type)|| "GLDEBUGPROC".equals(type)) {
+    if("GLenum".equals(type) || "mask".equals(type)|| "GLsizei".equals(type) || "GLbitfield".equals(type) ) {
       type = "int";
     }
-    // GLsizeiptrARB
-    else if("GLintptr".equals(type) || "GLintptrARB".equals(type)) {
-      type = "int[]";
-    }
-    else if("GLint".equals(type) || "GLuint".equals(type)|| "GLint64".equals(type)|| "GLuint64".equals(type)) {
+    else if("GLint".equals(type) || "GLuint".equals(type)|| "GLint64".equals(type)) {
       type = "int";
+    }
+    else if("GLuint64".equals(type)) {
+      type = "long";      
     }
     else if("GLboolean".equals(type)){
-      type = "boolean";
+      type = "byte";//"boolean";
     }
-    else if("GLdouble".equals(type)){
+    else if("GLdouble".equals(type) || "GLclampd".equals(type)){
       type = "double";
     }
-    else if("GLfloat".equals(type)){
+    else if("GLfloat".equals(type) || "GLclampf".equals(type)){
       type = "float";
     }
     else if("GLshort".equals(type) || "GLushort".equals(type) ){
@@ -125,6 +127,25 @@ public class CommandWrap {
     else if("GLchar".equals(type)){
       type = "char";
     }
+    else if("GLhandleARB".equals(type) || "GLcharARB".equals(type) || "GLsync".equals(type)) {
+      type = ADDRESSABLE;
+    }
+    // GLsizeiptrARB
+    else if("GLintptr".equals(type) || "GLintptrARB".equals(type)) {
+      type = "long";
+    }
+    else if( 
+        "GLsizeiptr".equals(type) || 
+        "GLsizeiptrARB".equals(type) ) {
+       type = "long";
+     }
+
+    else if( 
+        "GLsizeiptr".equals(type) || 
+        "GLfixed".equals(type) || "GLclampx".equals(type)|| "GLDEBUGPROC".equals(type)) {
+       //type = "int";
+     }
+
     return type;
   }
   

@@ -142,6 +142,14 @@ public class ClassWriter extends JavaWriter {
       print("- interface : ", specInterface.getArgs());
       print("- wrapper   : ", argsIn);
     }
+    else {
+      for (int i = 0; i < argsIn.size(); i++) {
+        if(!argsIn.get(i).typeName.equals(specInterface.getArgs().get(i).typeName)) {
+          System.out.println(wrappedMethod.getName() + "\t MISMATCH  on " + specInterface.getArgs().get(i).name + " : " + argsIn.get(i).typeName + " / spec : " + specInterface.getArgs().get(i).typeName);
+        }
+      }
+    }
+    
     
     wrapper(sb, wrappedMethod.getName(), argsIn, argOut, wrapped.getSimpleName(), null);
   }

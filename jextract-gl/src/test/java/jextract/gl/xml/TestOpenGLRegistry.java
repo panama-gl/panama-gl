@@ -8,6 +8,7 @@ import jextract.gl.xml.model.CommandWrap;
 import junit.framework.Assert;
 
 public class TestOpenGLRegistry {
+  private static final String LONG = "long";
   private static final String FLOAT = "float";
   private static final String INT = "int";
   private static final String ADDRESSABLE = "java.lang.foreign.Addressable";
@@ -25,8 +26,10 @@ public class TestOpenGLRegistry {
     assert_glColor4f(commandIndex);
     assert_glGetPointerv(commandIndex);
     assert_glIndexPointer(commandIndex);
-    assert_glMultiDrawElements(commandIndex);
     assert_glGetProgramBinary(commandIndex);
+    assert_glMultiDrawElements(commandIndex);
+    assert_glBindBufferOffsetEXT(commandIndex);
+    assert_glTransformFeedbackVaryingsEXT(commandIndex);
   }
   
 
@@ -162,7 +165,63 @@ public class TestOpenGLRegistry {
 
 
   }
+  
+  
+  
+  protected void assert_glBindBufferOffsetEXT(Map<String, CommandWrap> commandIndex) {
+    CommandWrap command = commandIndex.get("glBindBufferOffsetEXT");
+    
+    Assert.assertNotNull(command);
+    
+    Assert.assertEquals(4, command.getArgs().size());
+    
+    
+    Arg a0 = command.getArgs().get(0);
+    Assert.assertEquals("target", a0.getName());
+    Assert.assertEquals(INT, a0.getTypeName());
+    
+    Arg a1 = command.getArgs().get(1);
+    Assert.assertEquals("index", a1.getName());
+    Assert.assertEquals(INT, a1.getTypeName());
+    
+    Arg a2 = command.getArgs().get(2);
+    Assert.assertEquals("buffer", a2.getName());
+    Assert.assertEquals(INT, a2.getTypeName());
 
+    Arg a3 = command.getArgs().get(3);
+    Assert.assertEquals("offset", a3.getName());
+    Assert.assertEquals(LONG, a3.getTypeName());
+
+  }
+
+  
+  
+  protected void assert_glTransformFeedbackVaryingsEXT(Map<String, CommandWrap> commandIndex) {
+    CommandWrap command = commandIndex.get("glTransformFeedbackVaryingsEXT");
+    
+    Assert.assertNotNull(command);
+    
+    Assert.assertEquals(4, command.getArgs().size());
+    
+    
+    Arg a0 = command.getArgs().get(0);
+    Assert.assertEquals("program", a0.getName());
+    Assert.assertEquals(INT, a0.getTypeName());
+    
+    Arg a1 = command.getArgs().get(1);
+    Assert.assertEquals("count", a1.getName());
+    Assert.assertEquals(INT, a1.getTypeName());
+    
+    Arg a2 = command.getArgs().get(2);
+    Assert.assertEquals("varyings", a2.getName());
+    Assert.assertEquals(ADDRESSABLE, a2.getTypeName());
+
+    Arg a3 = command.getArgs().get(3);
+    Assert.assertEquals("bufferMode", a3.getName());
+    Assert.assertEquals(INT, a3.getTypeName());
+
+  }
+  
   // glGetProgramEnvParameterIivNV : <param len="4"><ptype>GLint</ptype> *<name>params</name></param>
 
 }
