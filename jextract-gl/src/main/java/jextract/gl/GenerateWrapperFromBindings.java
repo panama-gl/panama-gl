@@ -100,7 +100,7 @@ public class GenerateWrapperFromBindings {
         // --------------------------------------------
         // Write a wrapper method for this method
         
-        classWriter.wrapper(javaCode, wrapped, method);
+        classWriter.wrapper(javaCode, wrapped, method, command);
         
         // --------------------------------------------
         

@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
+import jextract.gl.xml.model.CommandWrap;
 
 public class ClassWriter extends JavaWriter {
   public ClassWriter(String classPackage, String className) {
@@ -57,7 +58,7 @@ public class ClassWriter extends JavaWriter {
       for (int i = 0; i < in.size(); i++) {
         Arg arg = in.get(i);
         
-        out.typeName(sb);
+        arg.typeName(sb);
         sb.append(arg.name);
         if(i<in.size()-1)
           sb.append(", ");
@@ -129,24 +130,49 @@ public class ClassWriter extends JavaWriter {
     method(sb, name, in, out, List.of(c), throwz);
   }
   
-  public void wrapper(StringBuffer sb, Class<?> wrapped, Method method) {
+  public void wrapper(StringBuffer sb, Class<?> wrapped, Method wrappedMethod, CommandWrap specInterface) {
+    List<Arg> argsIn = getArgsIn(wrappedMethod);
+    Arg argOut = getArgOut(wrappedMethod);
+    
+    
+    if(specInterface.getArgs().size()!=argsIn.size()) {
+      System.out.println(wrappedMethod.getName());
+      //System.out.println(argsIn);
+      
+      print("- interface : ", specInterface.getArgs());
+      print("- wrapper   : ", argsIn);
+    }
+    
+    wrapper(sb, wrappedMethod.getName(), argsIn, argOut, wrapped.getSimpleName(), null);
+  }
+  
+  public void print(String head, List<Arg> args) {
+    System.out.print(head);
+    for(Arg a: args) {
+      System.out.print(a.getTypeName() + " " + a.getName() + ", ");
+    }
+    System.out.println();
+  }
+  
+  
+
+  private Arg getArgOut(Method wrappedMethod) {
+    Arg argOut = null;
+    
+    Class<?> retType = wrappedMethod.getReturnType();
+    if(!retType.getName().equals("void")) {
+        argOut = new Arg(retType);
+    }
+    return argOut;
+  }
+
+  private List<Arg> getArgsIn(Method wrappedMethod) {
     List<Arg> argsIn = new ArrayList<>();
-    for(Parameter param : method.getParameters()) {
+    for(Parameter param : wrappedMethod.getParameters()) {
       Arg arg = new Arg(param.getType(), param.getName());
       argsIn.add(arg);
 
     }
-    
-    Arg argOut = null;
-    
-    Class<?> retType = method.getReturnType();
-    if(!retType.getName().equals("void")) {
-      //method.retu
-        argOut = new Arg(retType);
-    }
-    
-    //List<Class<?>> throwz = Arrays.asList(method.getExceptionTypes());
-    
-    wrapper(sb, method.getName(), argsIn, argOut, wrapped.getSimpleName(), null);
+    return argsIn;
   }
 }

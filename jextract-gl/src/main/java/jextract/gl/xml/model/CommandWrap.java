@@ -45,7 +45,25 @@ public class CommandWrap {
       String currentParamName = null;
 
       for(Object parameterDescription: content) {
-        if(parameterDescription instanceof JAXBElement) {
+        
+        // Get type (only) in content (not often, seamingly for buffers)
+        if(parameterDescription instanceof String) {
+          String innerType = (String)parameterDescription ;
+          
+          if( " *".equals(innerType) 
+              || "void *".equals(innerType) 
+              || "void **".equals(innerType) 
+              || "const void *".equals(innerType) 
+              || "const void *const*".equals(innerType) 
+              || "const <ptype>GLsizei</ptype> *".equals(innerType))
+            {
+            currentTypeName = "java.lang.foreign.Addressable";
+          }
+          
+        }
+        
+        // Get type or name in dedicated elements
+        else if(parameterDescription instanceof JAXBElement) {
           
           JAXBElement<?> j = (JAXBElement<?>) parameterDescription;
 
@@ -57,21 +75,19 @@ public class CommandWrap {
           else if("name".equals(j.getName().toString())) {
             currentParamName = j.getValue().toString();
           }
-          
-          // When both are available, can declare an argument
-          if(currentParamName!=null && currentTypeName!=null) {
-            // CREATE 
-            Arg arg = new Arg(Object.class, currentParamName);
-            arg.setTypeName(currentTypeName);
-            args.add(arg);
-          }
-        }
-        // These cases should not occur
-        else if (parameterDescription instanceof String){
         }
         else {
           throw new RuntimeException("Unexpected type !!" + parameterDescription.getClass() + " for " + parameterDescription);
         }
+        
+        // When both are available, can declare an argument
+        if(currentParamName!=null && currentTypeName!=null) {
+          // CREATE 
+          Arg arg = new Arg(Object.class, currentParamName);
+          arg.setTypeName(currentTypeName);
+          args.add(arg);
+        }
+
 
       }
       
@@ -84,7 +100,11 @@ public class CommandWrap {
        "GLfixed".equals(type) || "GLclampx".equals(type)|| "GLDEBUGPROC".equals(type)) {
       type = "int";
     }
-    else if("GLint".equals(type) || "GLuint".equals(type)|| "GLint64".equals(type)|| "GLuint64".equals(type)|| "GLintptr".equals(type)) {
+    // GLsizeiptrARB
+    else if("GLintptr".equals(type) || "GLintptrARB".equals(type)) {
+      type = "int[]";
+    }
+    else if("GLint".equals(type) || "GLuint".equals(type)|| "GLint64".equals(type)|| "GLuint64".equals(type)) {
       type = "int";
     }
     else if("GLboolean".equals(type)){

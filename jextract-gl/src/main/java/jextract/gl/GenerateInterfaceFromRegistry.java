@@ -190,11 +190,15 @@ public class GenerateInterfaceFromRegistry {
   protected void handleType(Feature.Require.Type com, StringBuffer javaCode) {
     // System.out.println(" Type : " + com.getName());
   }
+  
+  public CommandWrap getCommand(String name) {
+    return commandIndex.get(name);
+  }
 
   protected void handleCommand(Registry.Feature.Require.Command com, StringBuffer javaCode) {
     // System.out.println(" Command : " + com.getName() + "=" + com.getValue());
 
-    CommandWrap command = commandIndex.get(com.getName());
+    CommandWrap command = getCommand(com.getName());
 
     String methodName = "public void " + command.getName() + "(";
 
