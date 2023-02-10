@@ -18,6 +18,14 @@ public class GenerateAPI {
     wrapperGen = new GenerateWrapperFromBindings();
   }
   
+  public static class Wrapper{
+    Class<?> wrapped;
+    //Class<?> wrapped = opengl.ubuntu.v20.glut_h.class;
+    AcceptsMethod accepts ;
+    String className;
+    String javaFile;
+  }
+  
   public void run() throws Exception {
     List<String> javaFiles = interfGen.generateInterfaces("target/");
 
@@ -25,11 +33,12 @@ public class GenerateAPI {
 
     
     // Configure wrapper 
-    Class<?> wrapped = opengl.macos.v10_15_7.glut_h.class;
+    Wrapper wrapper = new Wrapper();
+    wrapper.wrapped = opengl.macos.v10_15_7.glut_h.class;
     //Class<?> wrapped = opengl.ubuntu.v20.glut_h.class;
-    AcceptsMethod accepts = new AcceptsGLMethod();
-    String className = "GL_macOS";
-    String javaFile = "target/"+className+".java";
+    wrapper.accepts = new AcceptsGLMethod();
+    wrapper.className = "GL_macOS";
+    wrapper.javaFile = "target/"+wrapper.className+".java";
 
     // Write class
     wrapperGen.generateWrapper(wrapped, accepts, className, javaFile);
