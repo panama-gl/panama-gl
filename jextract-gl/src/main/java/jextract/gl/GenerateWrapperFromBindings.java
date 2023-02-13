@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import jextract.gl.GenerateAPI.Wrapper;
 import jextract.gl.generate.java.ClassCompiler;
 import jextract.gl.generate.java.ClassWriter;
 import jextract.gl.java.AcceptsGLMethod;
@@ -20,25 +21,28 @@ import opengl.ubuntu.v20.glut_h;
 public class GenerateWrapperFromBindings {
   OpenGLRegistry registry;
   
+  boolean debug = false;
+  
   public GenerateWrapperFromBindings() throws Exception {
     registry = new OpenGLRegistry();
   }
   
   public static void main(String[] args) throws Exception {
 
-    // Configure wrapper 
-    Class<?> wrapped = opengl.macos.v10_15_7.glut_h.class;
-    //Class<?> wrapped = opengl.ubuntu.v20.glut_h.class;
-    AcceptsMethod accepts = new AcceptsGLMethod();
-    String className = "GL_macOS";
-    String javaFile = "target/"+className+".java";
+    Wrapper wrapper = new Wrapper();
+    wrapper.wrapped = opengl.macos.v10_15_7.glut_h.class;
+    
+    wrapper.accepts = new AcceptsGLMethod();
+    wrapper.className = "GL_macOS";
+    wrapper.javaFile = "target/"+wrapper.className+".java";
+
 
     // Write class
     GenerateWrapperFromBindings gen = new GenerateWrapperFromBindings();
-    gen.generateWrapper(wrapped, accepts, className, javaFile);
+    gen.generateWrapper(wrapper);
 
     // Compile class
-    gen.compile(List.of(javaFile));
+    gen.compile(List.of(wrapper.javaFile));
     
   }
   
@@ -47,15 +51,14 @@ public class GenerateWrapperFromBindings {
     c.compile(javaFile);    
   }
 
-  public void generateWrapper(Class<?> wrapped, AcceptsMethod accepts, String className,
-      String javaFile) throws IllegalAccessException, IOException {
+  public void generateWrapper(Wrapper wrapper) throws IllegalAccessException, IOException {
     
     // ----------------------------------------------------
     // -------- REGISTRIES --------------------------------
     // ----------------------------------------------------
     
     Map<String, CommandWrap> xmlRegistry = getXMLRegistryCommands();
-    Map<String, Method> javaRegistry = getJavaRegistryMethods(wrapped, accepts);
+    Map<String, Method> javaRegistry = getJavaRegistryMethods(wrapper.wrapped, wrapper.accepts);
 
     // ----------------------------------------------------
     // -------- ANALYSE IMPOSSIBLE BINDINGS ---------------
@@ -64,7 +67,8 @@ public class GenerateWrapperFromBindings {
     int missingJava = 0;
     for(String xmlMethod: xmlRegistry.keySet()) {
       if(javaRegistry.get(xmlMethod)==null) {
-        System.out.println("Not found in Java bindings ! " + xmlMethod);
+        if(debug)
+          System.out.println("Not found in Java bindings ! " + xmlMethod);
         missingJava++;
       }
     }
@@ -73,7 +77,8 @@ public class GenerateWrapperFromBindings {
     // -------- GENERATES METHOD WRAPPERS -----------------
     // ----------------------------------------------------
 
-    ClassWriter classWriter = newClassWriter(wrapped, className);
+    ClassWriter classWriter = newClassWriter(wrapper.wrapped, wrapper.className);
+    classWriter.addImplement(wrapper.implement);
     StringBuffer javaCode = new StringBuffer();
     
     classWriter.start(javaCode);
@@ -81,7 +86,7 @@ public class GenerateWrapperFromBindings {
     int methodNotFound = 0;
     int methodFound = 0;
     
-    List<Method> methods = getJavaMethods(wrapped, accepts);
+    List<Method> methods = getJavaMethods(wrapper.wrapped, wrapper.accepts);
     
     System.out.println(methods.size() + " methods in generated bindings (initially " + glut_h.class.getMethods().length + ")");
 
@@ -92,7 +97,8 @@ public class GenerateWrapperFromBindings {
       if(command==null) {
         
         methodNotFound++;
-        System.out.println("Not found in XML registry! " + method.getName());
+        if(debug)
+          System.out.println("Not found in XML registry! " + method.getName());
       }
       else {
         methodFound++;
@@ -100,7 +106,7 @@ public class GenerateWrapperFromBindings {
         // --------------------------------------------
         // Write a wrapper method for this method
         
-        classWriter.wrapper(javaCode, wrapped, method, command);
+        classWriter.wrapper(javaCode, wrapper.wrapped, method, command);
         
         // --------------------------------------------
         
@@ -117,7 +123,7 @@ public class GenerateWrapperFromBindings {
 
 
     // Write code to disk
-    classWriter.writeTo(javaCode, javaFile);
+    classWriter.writeTo(javaCode, wrapper.javaFile);
   }
 
 
@@ -162,5 +168,6 @@ public class GenerateWrapperFromBindings {
     //System.out.println(cw.size() + " GL commands");
     return commandName;
   }
+
 
 }

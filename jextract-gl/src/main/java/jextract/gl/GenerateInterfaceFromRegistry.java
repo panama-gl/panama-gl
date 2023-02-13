@@ -30,7 +30,7 @@ public class GenerateInterfaceFromRegistry {
   public static void main(String[] args) throws Exception {
     GenerateInterfaceFromRegistry gen = new GenerateInterfaceFromRegistry();
 
-    List<String> javaFiles = gen.generateInterfaces("target/");
+    List<String> javaFiles = gen.generateInterfaces("target/", "panama.opengl");
 
     gen.compile(javaFiles);
   }
@@ -43,7 +43,7 @@ public class GenerateInterfaceFromRegistry {
 
 
 
-  public List<String> generateInterfaces(String folder) throws Exception {
+  public List<String> generateInterfaces(String folder, String packge) throws Exception {
     List<String> javaFiles = new ArrayList<>();
 
 
@@ -55,7 +55,7 @@ public class GenerateInterfaceFromRegistry {
     for (Feature feature : registry.getRegistry().getFeature()) {
       String name = registryFeatureToGLInterfaceName(feature);
 
-      InterfaceWriter interfaceWriter = new InterfaceWriter("panama.opengl", name);
+      InterfaceWriter interfaceWriter = new InterfaceWriter(packge, name);
 
       interfaceWriters.put(name, interfaceWriter);
     }
