@@ -64,6 +64,7 @@ public class ClassWriter extends JavaWriter {
       List<Exception> throwz) {
 
     // Visibility
+    //sb.append(tab + "@Override\n");
     sb.append(tab + "public ");
 
     // Output type
@@ -129,6 +130,28 @@ public class ClassWriter extends JavaWriter {
 
   public void wrapper(StringBuffer sb, String name, List<Arg> in, Arg out, String wrapped,
       List<Exception> throwz) {
+    wrapper(sb, name, in, out, wrapped, throwz, null);
+  }
+  
+  public void wrapper(StringBuffer sb, String name, List<Arg> in, Arg out, String wrapped,
+      List<Exception> throwz, Code code) {
+    StringBuffer sbargs = writeInputArgs(in);
+
+    // Wrapping line
+    Code c = code;
+
+    // If na wrapping line(s) of code are given, generate default
+    if(c==null) {
+      if (out == null)
+        c = new Code(wrapped + "." + name + "(" + sbargs.toString() + ");");
+      else {
+        c = new Code("return " + wrapped + "." + name + "(" + sbargs.toString() + ");");
+      }
+    }
+    method(sb, name, in, out, List.of(c), throwz);
+  }
+
+  public static StringBuffer writeInputArgs(List<Arg> in) {
     StringBuffer sbargs = new StringBuffer();
 
     if (in != null) {
@@ -140,25 +163,65 @@ public class ClassWriter extends JavaWriter {
           sbargs.append(", ");
       }
     }
-
-    // Wrapping line
-    Code c;
-
-    if (out == null)
-      c = new Code(wrapped + "." + name + "(" + sbargs.toString() + ");");
-    else {
-      c = new Code("return " + wrapped + "." + name + "(" + sbargs.toString() + ");");
-
-    }
-    method(sb, name, in, out, List.of(c), throwz);
+    return sbargs;
   }
 
+  // ================================================================
+  // WRAPLETS TO MAKE TYPE GUESSING
+  // ================================================================
+  
+  public class Wraplet{
+    String spec;
+    String impl;
+    Code code;
+  }
+  
+  public class StringWraplet{
+    String spec;
+    String impl;
+    Code code;
+    
+    static boolean match(String spec, String impl) {
+      return "String".equals(spec) && ("MemoryAddress".equals(impl) || "java.lang.foreign.MemoryAddress".equals(impl));
+    }
+    
+    static Code wraplet(String wrapped, String method, List<Arg> in) {
+      Code c = null;
+      c = new Code("return " + wrapped + "." + method + "(" + writeInputArgs(in).toString() + ").getUtf8String(0);");
+
+      return c;
+    }
+    
+  }
+  
+  public class ByteBufferWraplet{
+    static boolean match(String methodName) {
+      return methodName.equals("glMapBuffer");
+    }
+  }
+
+  // ================================================================
+
+  /**
+   * Infer wrapping code based on potential type mismatch
+   * 
+   * @param sb
+   * @param wrapped
+   * @param wrappedMethod
+   * @param specInterface
+   */
   public void wrapper(StringBuffer sb, Class<?> wrapped, Method wrappedMethod,
       CommandWrap specInterface) {
     List<Arg> argsIn = getArgsIn(wrappedMethod);
     Arg argOut = getArgOut(wrappedMethod);
 
+    List<Exception> exceptions = null; 
+    
+    
+    Code code = null;
 
+    
+    // Check type compatibility
     if (specInterface.getArgs().size() != argsIn.size()) {
       System.out.println(wrappedMethod.getName());
       // System.out.println(argsIn);
@@ -166,18 +229,49 @@ public class ClassWriter extends JavaWriter {
       print("- interface : ", specInterface.getArgs());
       print("- wrapper   : ", argsIn);
     } else {
+      
+      // Check type mismatch in input parameters
       for (int i = 0; i < argsIn.size(); i++) {
+        
+        // Type mismatch WARNINGS
+        
         if (!argsIn.get(i).typeName.equals(specInterface.getArgs().get(i).typeName)) {
+          
+          // Ignore long class name difference
+          if(argsIn.get(i).typeName.equals("java.lang.foreign.Addressable") && specInterface.getArgs().get(i).typeName.equals("Addressable"))
+            continue;
+          
           System.out.println(wrappedMethod.getName() + "\t MISMATCH  on "
               + specInterface.getArgs().get(i).name + " : " + argsIn.get(i).typeName + " / spec : "
               + specInterface.getArgs().get(i).typeName);
         }
-      }
+      }      
     }
+    
+    
+    
+    // Check type mismatch in output parameters
+    if(argOut!=null && StringWraplet.match(specInterface.getOutputType(), argOut.getTypeName())) {
+      
+      // Generate a method call to extract string
+      code = StringWraplet.wraplet(wrapped.getSimpleName(), wrappedMethod.getName(), argsIn);
+      
+      // Change the output type to the string type
+      argOut.setType(String.class);
+      argOut.setTypeName("String");
+    }
+    
+    /*if("String".equals( specInterface.getOutputType()) && "MemoryAddress".equals(argOut.getTypeName())) {
+      
+    }*/
 
 
-    wrapper(sb, wrappedMethod.getName(), argsIn, argOut, wrapped.getSimpleName(), null);
+
+    wrapper(sb, wrappedMethod.getName(), argsIn, argOut, wrapped.getSimpleName(), exceptions, code);
   }
+  
+  // ================================
+
 
   public void print(String head, List<Arg> args) {
     System.out.print(head);

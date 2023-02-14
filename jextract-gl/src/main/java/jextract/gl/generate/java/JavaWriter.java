@@ -1,5 +1,6 @@
 package jextract.gl.generate.java;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +21,11 @@ public abstract class JavaWriter {
   public abstract void close(StringBuffer sb);
 
   public void writeTo(StringBuffer sb, String file) throws IOException {
-    FileWriter fw = new FileWriter(file);
+    File f = new File(file);
+    if(!f.getParentFile().exists()) {
+      f.getParentFile().mkdirs();
+    }
+    FileWriter fw = new FileWriter(f);
     fw.write(sb.toString());
     fw.close();
   }
@@ -39,7 +44,7 @@ public abstract class JavaWriter {
     else {
       String ext = "extends ";
       for (int i = 0; i < extensions.size(); i++) {
-        if(i<extensions.size()-2)
+        if(i<extensions.size()-1)
           ext+=extensions.get(i) + ", ";
         else
           ext+=extensions.get(i);

@@ -77,7 +77,8 @@ public class GenerateWrapperFromBindings {
     // -------- GENERATES METHOD WRAPPERS -----------------
     // ----------------------------------------------------
 
-    ClassWriter classWriter = newClassWriter(wrapper.wrapped, wrapper.className);
+    ClassWriter classWriter = newClassWriter(wrapper.packge, wrapper.wrapped, wrapper.className);
+    
     classWriter.addImplement(wrapper.implement);
     StringBuffer javaCode = new StringBuffer();
     
@@ -127,8 +128,8 @@ public class GenerateWrapperFromBindings {
   }
 
 
-  public ClassWriter newClassWriter(Class<?> wrapped, String className) {
-    ClassWriter classWriter = new ClassWriter("panamagl.gen", className);
+  public ClassWriter newClassWriter(String packge, Class<?> wrapped, String className) {
+    ClassWriter classWriter = new ClassWriter(packge, className);
     classWriter.addImport(wrapped.getName());
     classWriter.addImport("static " + wrapped.getName() + ".*");
     classWriter.addImport("java.lang.foreign.*");

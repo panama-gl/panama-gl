@@ -45,6 +45,8 @@ public class GenerateInterfaceFromRegistry {
 
   public List<String> generateInterfaces(String folder, String packge) throws Exception {
     List<String> javaFiles = new ArrayList<>();
+    
+    
 
 
     // ------------------------------------------
@@ -94,17 +96,80 @@ public class GenerateInterfaceFromRegistry {
     // ------------------------------------------
     // Write each interface body
 
+    writeInterfaceMinorVersion(folder, javaFiles, interfaceWriters, dependencies);
+    
+    // Create a single interface for MAJOR GL versions, including all minors
+    
+    writeInterfaceMajorVersion(folder, javaFiles, packge, interfaceWriters, "GL_1");
+
+
+    return javaFiles;
+  }
+
+  /**
+   * Create a major GL version interface embedding all minor versions
+   * @param folder
+   * @param javaFiles
+   * @param packge
+   * @param interfaceWriters
+   * @param major
+   * @throws IOException
+   */
+  private void writeInterfaceMajorVersion(String folder, List<String> javaFiles, String packge,
+      Map<String, InterfaceWriter> interfaceWriters, String major) throws IOException {
+    List<String> minors = new ArrayList<>();
+    for(String minor: interfaceWriters.keySet()) {
+      String[] i1s = major.split("_");
+      String[] i2s = minor.split("_");
+      
+      int name = 0;
+      int maj = 1;
+      int min = 2;
+      
+      if(i1s[name].equals(i2s[name]) && i1s[maj].equals(i2s[maj])) {
+        minors.add(minor);
+      }
+
+    }
+    
+    InterfaceWriter interfaceWriter = new InterfaceWriter(packge, major);
+    
+    for(String minor: minors) {
+      interfaceWriter.addExtension(minor);      
+    }
+    
+    StringBuffer javaCode = new StringBuffer();
+
+    interfaceWriter.start(javaCode);
+    interfaceWriter.close(javaCode);
+
+    // Write code to disk
+    String javaFile = folder + major + ".java";
+    interfaceWriter.writeTo(javaCode, javaFile);
+
+    // Keep track of the java file
+    javaFiles.add(javaFile);
+    
+  }
+
+  private void writeInterfaceMinorVersion(String folder, List<String> javaFiles,
+      Map<String, InterfaceWriter> interfaceWriters, ArrayListMultimap<String, String> dependencies)
+      throws IOException {
     for (Feature feature : registry.getRegistry().getFeature()) {
 
+      // -----------------
+      // Get and configure writer
       String name = registryFeatureToGLInterfaceName(feature);
       String javaFile = folder + name + ".java";
 
       InterfaceWriter interfaceWriter = interfaceWriters.get(name);
-      
+      interfaceWriter.addImport("java.lang.foreign.*");
       for(String dependency: dependencies.get(name)) {
         interfaceWriter.addExtension(dependency);
       }
       
+      // ----------------
+      // Does Write
       StringBuffer javaCode = new StringBuffer();
 
       interfaceWriter.start(javaCode);
@@ -118,8 +183,6 @@ public class GenerateInterfaceFromRegistry {
       javaFiles.add(javaFile);
 
     }
-
-    return javaFiles;
   }
 
   protected void generateInterfaceContent(Feature feature, StringBuffer javaCode) {
@@ -199,10 +262,15 @@ public class GenerateInterfaceFromRegistry {
     // System.out.println(" Command : " + com.getName() + "=" + com.getValue());
 
     CommandWrap command = getCommand(com.getName());
-
-    String methodName = "public void " + command.getName() + "(";
-
-    // if(javaCode.con)
+    
+    String outputType = command.getOutputType();
+    
+ // TODO : EXTRACT SPECIAL CASE    
+    if("glMapBuffer".equals(command.getName())){
+      outputType = "MemoryAddress";
+    }
+    
+    String methodName = "public " + outputType + " " + command.getName() + "(";
     StringBuffer argBuffer = new StringBuffer();
 
     argBuffer.append(methodName);
@@ -211,17 +279,19 @@ public class GenerateInterfaceFromRegistry {
     for (Arg arg : command.getArgs()) {
       String declare = arg.getTypeName() + " " + arg.getName();
 
-      if (argBuffer.toString().contains(declare)) {
-        k++;
-        continue;
-      } else {
+      /*if (argBuffer.toString().contains(declare)) {
+        //k++;
+        argBuffer.append(declare);
+        //continue;
+      } else {*/
         if (k == 0) {
           argBuffer.append(declare);
         } else {
           argBuffer.append(", " + declare);
         }
-        k++;
-      }
+      //}
+      k++;
+
     }
 
     argBuffer.append(");\n");

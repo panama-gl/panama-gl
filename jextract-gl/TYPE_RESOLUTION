@@ -1,0 +1,50 @@
+
+
+# CAST
+
+Generated code may not allow to know from interface what is the output type :
+
+  public MemoryAddress glGetString(int arg0) {
+    return glx_h.glGetString(arg0);
+  }
+
+
+  public byte glGetString(int name);
+
+public int glGetError();
+
+# Glue
+
+Generate use of readTYPE methods
+<command>
+    <proto>void <name>glGetIntegerv</name></proto>
+    <param group="GetPName"><ptype>GLenum</ptype> <name>pname</name></param>
+    <param len="COMPSIZE(pname)"><ptype>GLint</ptype> *<name>data</name></param>
+    <glx type="single" opcode="117"/>
+</command>
+<command>
+    <proto>void <name>glGetDoublev</name></proto>
+    <param group="GetPName"><ptype>GLenum</ptype> <name>pname</name></param>
+    <param len="COMPSIZE(pname)"><ptype>GLdouble</ptype> *<name>data</name></param>
+    <glx type="single" opcode="114"/>
+</command>
+<command>
+    <proto>void <name>glGetFloatv</name></proto>
+    <param group="GetPName"><ptype>GLenum</ptype> <name>pname</name></param>
+    <param len="COMPSIZE(pname)"><ptype>GLfloat</ptype> *<name>data</name></param>
+    <glx type="single" opcode="116"/>
+</command>
+<command>
+    <proto group="String">const <ptype>GLubyte</ptype> *<name>glGetString</name></proto>
+    <param group="StringName"><ptype>GLenum</ptype> <name>name</name></param>
+    <glx type="single" opcode="129"/>
+</command>
+
+
+# COPY
+
+
+Detect that a getter should write to input array (when abstract GL get glGetFloatv(int pname, int[])
+
+  public void glGetFloatv(int pname, java.lang.foreign.Addressable data);
+  public void glGetIntegerv(int pname, java.lang.foreign.Addressable data);

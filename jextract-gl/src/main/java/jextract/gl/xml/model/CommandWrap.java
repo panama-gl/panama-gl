@@ -10,10 +10,11 @@ import jextractgl.Registry.Commands.Command.Param;
 import jextractgl.Registry.Commands.Command.Proto;
 
 public class CommandWrap {
-  private static final String ADDRESSABLE = "java.lang.foreign.Addressable";
+  private static final String ADDRESSABLE = "Addressable"; // java.lang.foreign.
   String name;
   String alias;
   List<Arg> args = new ArrayList<>();
+  String outputType;
   
   public CommandWrap(Command c) {
     readCommand(c);
@@ -32,6 +33,19 @@ public class CommandWrap {
     
 
     readParams(c);
+    
+    if(proto.getPtype()!=null && !proto.getPtype().equals("void")) {
+      if("String".equals(proto.getGroup())) {
+        outputType = "String";
+      }
+      else {
+        outputType = GLToJavaType(proto.getPtype());
+      }
+    }
+    else {
+      outputType = "void";
+    }
+    
   }
 
   protected void readParams(Command c) {
@@ -161,5 +175,9 @@ public class CommandWrap {
 
   public List<Arg> getArgs() {
     return args;
+  }
+  
+  public String getOutputType() {
+    return outputType;
   }
 }
