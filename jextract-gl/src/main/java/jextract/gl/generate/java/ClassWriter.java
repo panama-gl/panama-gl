@@ -233,6 +233,8 @@ public class ClassWriter extends JavaWriter {
       // Check type mismatch in input parameters
       for (int i = 0; i < argsIn.size(); i++) {
         
+        argsIn.get(i).name = specInterface.getArgs().get(i).name;
+        
         // Type mismatch WARNINGS
         
         if (!argsIn.get(i).typeName.equals(specInterface.getArgs().get(i).typeName)) {

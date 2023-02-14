@@ -5,536 +5,536 @@ import static opengl.macos.v10_15_7.glut_h.*;
 import java.lang.foreign.*;
 
 public class GL_macOS implements GL_1_0, GL_1_1, GL_1_2, GL_1_3 {
-  public void glAccum(int arg0, float arg1) {
-    glut_h.glAccum(arg0, arg1);
+  public void glAccum(int op, float value) {
+    glut_h.glAccum(op, value);
   }
 
-  public void glActiveStencilFaceEXT(int arg0) {
-    glut_h.glActiveStencilFaceEXT(arg0);
+  public void glActiveStencilFaceEXT(int face) {
+    glut_h.glActiveStencilFaceEXT(face);
   }
 
-  public void glActiveTexture(int arg0) {
-    glut_h.glActiveTexture(arg0);
+  public void glActiveTexture(int texture) {
+    glut_h.glActiveTexture(texture);
   }
 
-  public void glActiveTextureARB(int arg0) {
-    glut_h.glActiveTextureARB(arg0);
+  public void glActiveTextureARB(int texture) {
+    glut_h.glActiveTextureARB(texture);
   }
 
-  public void glAlphaFunc(int arg0, float arg1) {
-    glut_h.glAlphaFunc(arg0, arg1);
+  public void glAlphaFunc(int func, float ref) {
+    glut_h.glAlphaFunc(func, ref);
   }
 
-  public byte glAreTexturesResident(int arg0, Addressable arg1, Addressable arg2) {
-    return glut_h.glAreTexturesResident(arg0, arg1, arg2);
+  public byte glAreTexturesResident(int n, Addressable textures, Addressable residences) {
+    return glut_h.glAreTexturesResident(n, textures, residences);
   }
 
-  public void glArrayElement(int arg0) {
-    glut_h.glArrayElement(arg0);
+  public void glArrayElement(int i) {
+    glut_h.glArrayElement(i);
   }
 
-  public void glAttachObjectARB(Addressable arg0, Addressable arg1) {
-    glut_h.glAttachObjectARB(arg0, arg1);
+  public void glAttachObjectARB(Addressable containerObj, Addressable obj) {
+    glut_h.glAttachObjectARB(containerObj, obj);
   }
 
-  public void glAttachShader(int arg0, int arg1) {
-    glut_h.glAttachShader(arg0, arg1);
+  public void glAttachShader(int program, int shader) {
+    glut_h.glAttachShader(program, shader);
   }
 
-  public void glBegin(int arg0) {
-    glut_h.glBegin(arg0);
+  public void glBegin(int mode) {
+    glut_h.glBegin(mode);
   }
 
-  public void glBeginConditionalRenderNV(int arg0, int arg1) {
-    glut_h.glBeginConditionalRenderNV(arg0, arg1);
+  public void glBeginConditionalRenderNV(int id, int mode) {
+    glut_h.glBeginConditionalRenderNV(id, mode);
   }
 
-  public void glBeginQuery(int arg0, int arg1) {
-    glut_h.glBeginQuery(arg0, arg1);
+  public void glBeginQuery(int target, int id) {
+    glut_h.glBeginQuery(target, id);
   }
 
-  public void glBeginQueryARB(int arg0, int arg1) {
-    glut_h.glBeginQueryARB(arg0, arg1);
+  public void glBeginQueryARB(int target, int id) {
+    glut_h.glBeginQueryARB(target, id);
   }
 
-  public void glBeginTransformFeedbackEXT(int arg0) {
-    glut_h.glBeginTransformFeedbackEXT(arg0);
+  public void glBeginTransformFeedbackEXT(int primitiveMode) {
+    glut_h.glBeginTransformFeedbackEXT(primitiveMode);
   }
 
-  public void glBindAttribLocation(int arg0, int arg1, Addressable arg2) {
-    glut_h.glBindAttribLocation(arg0, arg1, arg2);
+  public void glBindAttribLocation(int program, int index, Addressable name) {
+    glut_h.glBindAttribLocation(program, index, name);
   }
 
-  public void glBindAttribLocationARB(Addressable arg0, int arg1, Addressable arg2) {
-    glut_h.glBindAttribLocationARB(arg0, arg1, arg2);
+  public void glBindAttribLocationARB(Addressable programObj, int index, Addressable name) {
+    glut_h.glBindAttribLocationARB(programObj, index, name);
   }
 
-  public void glBindBuffer(int arg0, int arg1) {
-    glut_h.glBindBuffer(arg0, arg1);
+  public void glBindBuffer(int target, int buffer) {
+    glut_h.glBindBuffer(target, buffer);
   }
 
-  public void glBindBufferARB(int arg0, int arg1) {
-    glut_h.glBindBufferARB(arg0, arg1);
+  public void glBindBufferARB(int target, int buffer) {
+    glut_h.glBindBufferARB(target, buffer);
   }
 
-  public void glBindBufferBaseEXT(int arg0, int arg1, int arg2) {
-    glut_h.glBindBufferBaseEXT(arg0, arg1, arg2);
+  public void glBindBufferBaseEXT(int target, int index, int buffer) {
+    glut_h.glBindBufferBaseEXT(target, index, buffer);
   }
 
-  public void glBindBufferOffsetEXT(int arg0, int arg1, int arg2, long arg3) {
-    glut_h.glBindBufferOffsetEXT(arg0, arg1, arg2, arg3);
+  public void glBindBufferOffsetEXT(int target, int index, int buffer, long offset) {
+    glut_h.glBindBufferOffsetEXT(target, index, buffer, offset);
   }
 
-  public void glBindBufferRangeEXT(int arg0, int arg1, int arg2, long arg3, long arg4) {
-    glut_h.glBindBufferRangeEXT(arg0, arg1, arg2, arg3, arg4);
+  public void glBindBufferRangeEXT(int target, int index, int buffer, long offset, long size) {
+    glut_h.glBindBufferRangeEXT(target, index, buffer, offset, size);
   }
 
-  public void glBindFragDataLocationEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glBindFragDataLocationEXT(arg0, arg1, arg2);
+  public void glBindFragDataLocationEXT(int program, int color, Addressable name) {
+    glut_h.glBindFragDataLocationEXT(program, color, name);
   }
 
-  public void glBindFramebuffer(int arg0, int arg1) {
-    glut_h.glBindFramebuffer(arg0, arg1);
+  public void glBindFramebuffer(int target, int framebuffer) {
+    glut_h.glBindFramebuffer(target, framebuffer);
   }
 
-  public void glBindFramebufferEXT(int arg0, int arg1) {
-    glut_h.glBindFramebufferEXT(arg0, arg1);
+  public void glBindFramebufferEXT(int target, int framebuffer) {
+    glut_h.glBindFramebufferEXT(target, framebuffer);
   }
 
-  public void glBindProgramARB(int arg0, int arg1) {
-    glut_h.glBindProgramARB(arg0, arg1);
+  public void glBindProgramARB(int target, int program) {
+    glut_h.glBindProgramARB(target, program);
   }
 
-  public void glBindRenderbuffer(int arg0, int arg1) {
-    glut_h.glBindRenderbuffer(arg0, arg1);
+  public void glBindRenderbuffer(int target, int renderbuffer) {
+    glut_h.glBindRenderbuffer(target, renderbuffer);
   }
 
-  public void glBindRenderbufferEXT(int arg0, int arg1) {
-    glut_h.glBindRenderbufferEXT(arg0, arg1);
+  public void glBindRenderbufferEXT(int target, int renderbuffer) {
+    glut_h.glBindRenderbufferEXT(target, renderbuffer);
   }
 
-  public void glBindTexture(int arg0, int arg1) {
-    glut_h.glBindTexture(arg0, arg1);
+  public void glBindTexture(int target, int texture) {
+    glut_h.glBindTexture(target, texture);
   }
 
-  public void glBindVertexArrayAPPLE(int arg0) {
-    glut_h.glBindVertexArrayAPPLE(arg0);
+  public void glBindVertexArrayAPPLE(int array) {
+    glut_h.glBindVertexArrayAPPLE(array);
   }
 
-  public void glBitmap(int arg0, int arg1, float arg2, float arg3, float arg4, float arg5, Addressable arg6) {
-    glut_h.glBitmap(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glBitmap(int width, int height, float xorig, float yorig, float xmove, float ymove, Addressable bitmap) {
+    glut_h.glBitmap(width, height, xorig, yorig, xmove, ymove, bitmap);
   }
 
-  public void glBlendColor(float arg0, float arg1, float arg2, float arg3) {
-    glut_h.glBlendColor(arg0, arg1, arg2, arg3);
+  public void glBlendColor(float red, float green, float blue, float alpha) {
+    glut_h.glBlendColor(red, green, blue, alpha);
   }
 
-  public void glBlendColorEXT(float arg0, float arg1, float arg2, float arg3) {
-    glut_h.glBlendColorEXT(arg0, arg1, arg2, arg3);
+  public void glBlendColorEXT(float red, float green, float blue, float alpha) {
+    glut_h.glBlendColorEXT(red, green, blue, alpha);
   }
 
-  public void glBlendEquation(int arg0) {
-    glut_h.glBlendEquation(arg0);
+  public void glBlendEquation(int mode) {
+    glut_h.glBlendEquation(mode);
   }
 
-  public void glBlendEquationEXT(int arg0) {
-    glut_h.glBlendEquationEXT(arg0);
+  public void glBlendEquationEXT(int mode) {
+    glut_h.glBlendEquationEXT(mode);
   }
 
-  public void glBlendEquationSeparate(int arg0, int arg1) {
-    glut_h.glBlendEquationSeparate(arg0, arg1);
+  public void glBlendEquationSeparate(int modeRGB, int modeAlpha) {
+    glut_h.glBlendEquationSeparate(modeRGB, modeAlpha);
   }
 
-  public void glBlendEquationSeparateEXT(int arg0, int arg1) {
-    glut_h.glBlendEquationSeparateEXT(arg0, arg1);
+  public void glBlendEquationSeparateEXT(int modeRGB, int modeAlpha) {
+    glut_h.glBlendEquationSeparateEXT(modeRGB, modeAlpha);
   }
 
-  public void glBlendFunc(int arg0, int arg1) {
-    glut_h.glBlendFunc(arg0, arg1);
+  public void glBlendFunc(int sfactor, int dfactor) {
+    glut_h.glBlendFunc(sfactor, dfactor);
   }
 
-  public void glBlendFuncSeparate(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glBlendFuncSeparate(arg0, arg1, arg2, arg3);
+  public void glBlendFuncSeparate(int sfactorRGB, int dfactorRGB, int sfactorAlpha, int dfactorAlpha) {
+    glut_h.glBlendFuncSeparate(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
   }
 
-  public void glBlendFuncSeparateEXT(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glBlendFuncSeparateEXT(arg0, arg1, arg2, arg3);
+  public void glBlendFuncSeparateEXT(int sfactorRGB, int dfactorRGB, int sfactorAlpha, int dfactorAlpha) {
+    glut_h.glBlendFuncSeparateEXT(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
   }
 
-  public void glBlitFramebuffer(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9) {
-    glut_h.glBlitFramebuffer(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+  public void glBlitFramebuffer(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, int mask, int filter) {
+    glut_h.glBlitFramebuffer(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
   }
 
-  public void glBlitFramebufferEXT(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9) {
-    glut_h.glBlitFramebufferEXT(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+  public void glBlitFramebufferEXT(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, int mask, int filter) {
+    glut_h.glBlitFramebufferEXT(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
   }
 
-  public void glBufferData(int arg0, long arg1, Addressable arg2, int arg3) {
-    glut_h.glBufferData(arg0, arg1, arg2, arg3);
+  public void glBufferData(int target, long size, Addressable data, int usage) {
+    glut_h.glBufferData(target, size, data, usage);
   }
 
-  public void glBufferDataARB(int arg0, long arg1, Addressable arg2, int arg3) {
-    glut_h.glBufferDataARB(arg0, arg1, arg2, arg3);
+  public void glBufferDataARB(int target, long size, Addressable data, int usage) {
+    glut_h.glBufferDataARB(target, size, data, usage);
   }
 
-  public void glBufferParameteriAPPLE(int arg0, int arg1, int arg2) {
-    glut_h.glBufferParameteriAPPLE(arg0, arg1, arg2);
+  public void glBufferParameteriAPPLE(int target, int pname, int param) {
+    glut_h.glBufferParameteriAPPLE(target, pname, param);
   }
 
-  public void glBufferSubData(int arg0, long arg1, long arg2, Addressable arg3) {
-    glut_h.glBufferSubData(arg0, arg1, arg2, arg3);
+  public void glBufferSubData(int target, long offset, long size, Addressable data) {
+    glut_h.glBufferSubData(target, offset, size, data);
   }
 
-  public void glBufferSubDataARB(int arg0, long arg1, long arg2, Addressable arg3) {
-    glut_h.glBufferSubDataARB(arg0, arg1, arg2, arg3);
+  public void glBufferSubDataARB(int target, long offset, long size, Addressable data) {
+    glut_h.glBufferSubDataARB(target, offset, size, data);
   }
 
-  public void glCallList(int arg0) {
-    glut_h.glCallList(arg0);
+  public void glCallList(int list) {
+    glut_h.glCallList(list);
   }
 
-  public void glCallLists(int arg0, int arg1, Addressable arg2) {
-    glut_h.glCallLists(arg0, arg1, arg2);
+  public void glCallLists(int n, int type, Addressable lists) {
+    glut_h.glCallLists(n, type, lists);
   }
 
-  public int glCheckFramebufferStatus(int arg0) {
-    return glut_h.glCheckFramebufferStatus(arg0);
+  public int glCheckFramebufferStatus(int target) {
+    return glut_h.glCheckFramebufferStatus(target);
   }
 
-  public int glCheckFramebufferStatusEXT(int arg0) {
-    return glut_h.glCheckFramebufferStatusEXT(arg0);
+  public int glCheckFramebufferStatusEXT(int target) {
+    return glut_h.glCheckFramebufferStatusEXT(target);
   }
 
-  public void glClampColorARB(int arg0, int arg1) {
-    glut_h.glClampColorARB(arg0, arg1);
+  public void glClampColorARB(int target, int clamp) {
+    glut_h.glClampColorARB(target, clamp);
   }
 
-  public void glClear(int arg0) {
-    glut_h.glClear(arg0);
+  public void glClear(int mask) {
+    glut_h.glClear(mask);
   }
 
-  public void glClearAccum(float arg0, float arg1, float arg2, float arg3) {
-    glut_h.glClearAccum(arg0, arg1, arg2, arg3);
+  public void glClearAccum(float red, float green, float blue, float alpha) {
+    glut_h.glClearAccum(red, green, blue, alpha);
   }
 
-  public void glClearColor(float arg0, float arg1, float arg2, float arg3) {
-    glut_h.glClearColor(arg0, arg1, arg2, arg3);
+  public void glClearColor(float red, float green, float blue, float alpha) {
+    glut_h.glClearColor(red, green, blue, alpha);
   }
 
-  public void glClearColorIiEXT(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glClearColorIiEXT(arg0, arg1, arg2, arg3);
+  public void glClearColorIiEXT(int red, int green, int blue, int alpha) {
+    glut_h.glClearColorIiEXT(red, green, blue, alpha);
   }
 
-  public void glClearColorIuiEXT(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glClearColorIuiEXT(arg0, arg1, arg2, arg3);
+  public void glClearColorIuiEXT(int red, int green, int blue, int alpha) {
+    glut_h.glClearColorIuiEXT(red, green, blue, alpha);
   }
 
-  public void glClearDepth(double arg0) {
-    glut_h.glClearDepth(arg0);
+  public void glClearDepth(double depth) {
+    glut_h.glClearDepth(depth);
   }
 
-  public void glClearIndex(float arg0) {
-    glut_h.glClearIndex(arg0);
+  public void glClearIndex(float c) {
+    glut_h.glClearIndex(c);
   }
 
-  public void glClearStencil(int arg0) {
-    glut_h.glClearStencil(arg0);
+  public void glClearStencil(int s) {
+    glut_h.glClearStencil(s);
   }
 
-  public void glClientActiveTexture(int arg0) {
-    glut_h.glClientActiveTexture(arg0);
+  public void glClientActiveTexture(int texture) {
+    glut_h.glClientActiveTexture(texture);
   }
 
-  public void glClientActiveTextureARB(int arg0) {
-    glut_h.glClientActiveTextureARB(arg0);
+  public void glClientActiveTextureARB(int texture) {
+    glut_h.glClientActiveTextureARB(texture);
   }
 
-  public int glClientWaitSync(Addressable arg0, int arg1, long arg2) {
-    return glut_h.glClientWaitSync(arg0, arg1, arg2);
+  public int glClientWaitSync(Addressable sync, int flags, long timeout) {
+    return glut_h.glClientWaitSync(sync, flags, timeout);
   }
 
-  public void glClipPlane(int arg0, Addressable arg1) {
-    glut_h.glClipPlane(arg0, arg1);
+  public void glClipPlane(int plane, Addressable equation) {
+    glut_h.glClipPlane(plane, equation);
   }
 
-  public void glColor3b(byte arg0, byte arg1, byte arg2) {
-    glut_h.glColor3b(arg0, arg1, arg2);
+  public void glColor3b(byte red, byte green, byte blue) {
+    glut_h.glColor3b(red, green, blue);
   }
 
-  public void glColor3bv(Addressable arg0) {
-    glut_h.glColor3bv(arg0);
+  public void glColor3bv(Addressable v) {
+    glut_h.glColor3bv(v);
   }
 
-  public void glColor3d(double arg0, double arg1, double arg2) {
-    glut_h.glColor3d(arg0, arg1, arg2);
+  public void glColor3d(double red, double green, double blue) {
+    glut_h.glColor3d(red, green, blue);
   }
 
-  public void glColor3dv(Addressable arg0) {
-    glut_h.glColor3dv(arg0);
+  public void glColor3dv(Addressable v) {
+    glut_h.glColor3dv(v);
   }
 
-  public void glColor3f(float arg0, float arg1, float arg2) {
-    glut_h.glColor3f(arg0, arg1, arg2);
+  public void glColor3f(float red, float green, float blue) {
+    glut_h.glColor3f(red, green, blue);
   }
 
-  public void glColor3fv(Addressable arg0) {
-    glut_h.glColor3fv(arg0);
+  public void glColor3fv(Addressable v) {
+    glut_h.glColor3fv(v);
   }
 
-  public void glColor3i(int arg0, int arg1, int arg2) {
-    glut_h.glColor3i(arg0, arg1, arg2);
+  public void glColor3i(int red, int green, int blue) {
+    glut_h.glColor3i(red, green, blue);
   }
 
-  public void glColor3iv(Addressable arg0) {
-    glut_h.glColor3iv(arg0);
+  public void glColor3iv(Addressable v) {
+    glut_h.glColor3iv(v);
   }
 
-  public void glColor3s(short arg0, short arg1, short arg2) {
-    glut_h.glColor3s(arg0, arg1, arg2);
+  public void glColor3s(short red, short green, short blue) {
+    glut_h.glColor3s(red, green, blue);
   }
 
-  public void glColor3sv(Addressable arg0) {
-    glut_h.glColor3sv(arg0);
+  public void glColor3sv(Addressable v) {
+    glut_h.glColor3sv(v);
   }
 
-  public void glColor3ub(byte arg0, byte arg1, byte arg2) {
-    glut_h.glColor3ub(arg0, arg1, arg2);
+  public void glColor3ub(byte red, byte green, byte blue) {
+    glut_h.glColor3ub(red, green, blue);
   }
 
-  public void glColor3ubv(Addressable arg0) {
-    glut_h.glColor3ubv(arg0);
+  public void glColor3ubv(Addressable v) {
+    glut_h.glColor3ubv(v);
   }
 
-  public void glColor3ui(int arg0, int arg1, int arg2) {
-    glut_h.glColor3ui(arg0, arg1, arg2);
+  public void glColor3ui(int red, int green, int blue) {
+    glut_h.glColor3ui(red, green, blue);
   }
 
-  public void glColor3uiv(Addressable arg0) {
-    glut_h.glColor3uiv(arg0);
+  public void glColor3uiv(Addressable v) {
+    glut_h.glColor3uiv(v);
   }
 
-  public void glColor3us(short arg0, short arg1, short arg2) {
-    glut_h.glColor3us(arg0, arg1, arg2);
+  public void glColor3us(short red, short green, short blue) {
+    glut_h.glColor3us(red, green, blue);
   }
 
-  public void glColor3usv(Addressable arg0) {
-    glut_h.glColor3usv(arg0);
+  public void glColor3usv(Addressable v) {
+    glut_h.glColor3usv(v);
   }
 
-  public void glColor4b(byte arg0, byte arg1, byte arg2, byte arg3) {
-    glut_h.glColor4b(arg0, arg1, arg2, arg3);
+  public void glColor4b(byte red, byte green, byte blue, byte alpha) {
+    glut_h.glColor4b(red, green, blue, alpha);
   }
 
-  public void glColor4bv(Addressable arg0) {
-    glut_h.glColor4bv(arg0);
+  public void glColor4bv(Addressable v) {
+    glut_h.glColor4bv(v);
   }
 
-  public void glColor4d(double arg0, double arg1, double arg2, double arg3) {
-    glut_h.glColor4d(arg0, arg1, arg2, arg3);
+  public void glColor4d(double red, double green, double blue, double alpha) {
+    glut_h.glColor4d(red, green, blue, alpha);
   }
 
-  public void glColor4dv(Addressable arg0) {
-    glut_h.glColor4dv(arg0);
+  public void glColor4dv(Addressable v) {
+    glut_h.glColor4dv(v);
   }
 
-  public void glColor4f(float arg0, float arg1, float arg2, float arg3) {
-    glut_h.glColor4f(arg0, arg1, arg2, arg3);
+  public void glColor4f(float red, float green, float blue, float alpha) {
+    glut_h.glColor4f(red, green, blue, alpha);
   }
 
-  public void glColor4fv(Addressable arg0) {
-    glut_h.glColor4fv(arg0);
+  public void glColor4fv(Addressable v) {
+    glut_h.glColor4fv(v);
   }
 
-  public void glColor4i(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glColor4i(arg0, arg1, arg2, arg3);
+  public void glColor4i(int red, int green, int blue, int alpha) {
+    glut_h.glColor4i(red, green, blue, alpha);
   }
 
-  public void glColor4iv(Addressable arg0) {
-    glut_h.glColor4iv(arg0);
+  public void glColor4iv(Addressable v) {
+    glut_h.glColor4iv(v);
   }
 
-  public void glColor4s(short arg0, short arg1, short arg2, short arg3) {
-    glut_h.glColor4s(arg0, arg1, arg2, arg3);
+  public void glColor4s(short red, short green, short blue, short alpha) {
+    glut_h.glColor4s(red, green, blue, alpha);
   }
 
-  public void glColor4sv(Addressable arg0) {
-    glut_h.glColor4sv(arg0);
+  public void glColor4sv(Addressable v) {
+    glut_h.glColor4sv(v);
   }
 
-  public void glColor4ub(byte arg0, byte arg1, byte arg2, byte arg3) {
-    glut_h.glColor4ub(arg0, arg1, arg2, arg3);
+  public void glColor4ub(byte red, byte green, byte blue, byte alpha) {
+    glut_h.glColor4ub(red, green, blue, alpha);
   }
 
-  public void glColor4ubv(Addressable arg0) {
-    glut_h.glColor4ubv(arg0);
+  public void glColor4ubv(Addressable v) {
+    glut_h.glColor4ubv(v);
   }
 
-  public void glColor4ui(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glColor4ui(arg0, arg1, arg2, arg3);
+  public void glColor4ui(int red, int green, int blue, int alpha) {
+    glut_h.glColor4ui(red, green, blue, alpha);
   }
 
-  public void glColor4uiv(Addressable arg0) {
-    glut_h.glColor4uiv(arg0);
+  public void glColor4uiv(Addressable v) {
+    glut_h.glColor4uiv(v);
   }
 
-  public void glColor4us(short arg0, short arg1, short arg2, short arg3) {
-    glut_h.glColor4us(arg0, arg1, arg2, arg3);
+  public void glColor4us(short red, short green, short blue, short alpha) {
+    glut_h.glColor4us(red, green, blue, alpha);
   }
 
-  public void glColor4usv(Addressable arg0) {
-    glut_h.glColor4usv(arg0);
+  public void glColor4usv(Addressable v) {
+    glut_h.glColor4usv(v);
   }
 
-  public void glColorMask(byte arg0, byte arg1, byte arg2, byte arg3) {
-    glut_h.glColorMask(arg0, arg1, arg2, arg3);
+  public void glColorMask(byte red, byte green, byte blue, byte alpha) {
+    glut_h.glColorMask(red, green, blue, alpha);
   }
 
-  public void glColorMaskIndexedEXT(int arg0, byte arg1, byte arg2, byte arg3, byte arg4) {
-    glut_h.glColorMaskIndexedEXT(arg0, arg1, arg2, arg3, arg4);
+  public void glColorMaskIndexedEXT(int index, byte r, byte g, byte b, byte a) {
+    glut_h.glColorMaskIndexedEXT(index, r, g, b, a);
   }
 
-  public void glColorMaterial(int arg0, int arg1) {
-    glut_h.glColorMaterial(arg0, arg1);
+  public void glColorMaterial(int face, int mode) {
+    glut_h.glColorMaterial(face, mode);
   }
 
-  public void glColorPointer(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glColorPointer(arg0, arg1, arg2, arg3);
+  public void glColorPointer(int size, int type, int stride, Addressable pointer) {
+    glut_h.glColorPointer(size, type, stride, pointer);
   }
 
-  public void glColorSubTable(int arg0, int arg1, int arg2, int arg3, int arg4, Addressable arg5) {
-    glut_h.glColorSubTable(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glColorSubTable(int target, int start, int count, int format, int type, Addressable data) {
+    glut_h.glColorSubTable(target, start, count, format, type, data);
   }
 
-  public void glColorTable(int arg0, int arg1, int arg2, int arg3, int arg4, Addressable arg5) {
-    glut_h.glColorTable(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glColorTable(int target, int internalformat, int width, int format, int type, Addressable table) {
+    glut_h.glColorTable(target, internalformat, width, format, type, table);
   }
 
-  public void glColorTableParameterfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glColorTableParameterfv(arg0, arg1, arg2);
+  public void glColorTableParameterfv(int target, int pname, Addressable params) {
+    glut_h.glColorTableParameterfv(target, pname, params);
   }
 
-  public void glColorTableParameteriv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glColorTableParameteriv(arg0, arg1, arg2);
+  public void glColorTableParameteriv(int target, int pname, Addressable params) {
+    glut_h.glColorTableParameteriv(target, pname, params);
   }
 
-  public void glCompileShader(int arg0) {
-    glut_h.glCompileShader(arg0);
+  public void glCompileShader(int shader) {
+    glut_h.glCompileShader(shader);
   }
 
-  public void glCompileShaderARB(Addressable arg0) {
-    glut_h.glCompileShaderARB(arg0);
+  public void glCompileShaderARB(Addressable shaderObj) {
+    glut_h.glCompileShaderARB(shaderObj);
   }
 
-  public void glCompressedTexImage1D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, Addressable arg6) {
-    glut_h.glCompressedTexImage1D(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glCompressedTexImage1D(int target, int level, int internalformat, int width, int border, int imageSize, Addressable data) {
+    glut_h.glCompressedTexImage1D(target, level, internalformat, width, border, imageSize, data);
   }
 
-  public void glCompressedTexImage1DARB(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, Addressable arg6) {
-    glut_h.glCompressedTexImage1DARB(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glCompressedTexImage1DARB(int target, int level, int internalformat, int width, int border, int imageSize, Addressable data) {
+    glut_h.glCompressedTexImage1DARB(target, level, internalformat, width, border, imageSize, data);
   }
 
-  public void glCompressedTexImage2D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, Addressable arg7) {
-    glut_h.glCompressedTexImage2D(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+  public void glCompressedTexImage2D(int target, int level, int internalformat, int width, int height, int border, int imageSize, Addressable data) {
+    glut_h.glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data);
   }
 
-  public void glCompressedTexImage2DARB(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, Addressable arg7) {
-    glut_h.glCompressedTexImage2DARB(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+  public void glCompressedTexImage2DARB(int target, int level, int internalformat, int width, int height, int border, int imageSize, Addressable data) {
+    glut_h.glCompressedTexImage2DARB(target, level, internalformat, width, height, border, imageSize, data);
   }
 
-  public void glCompressedTexImage3D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, Addressable arg8) {
-    glut_h.glCompressedTexImage3D(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+  public void glCompressedTexImage3D(int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, Addressable data) {
+    glut_h.glCompressedTexImage3D(target, level, internalformat, width, height, depth, border, imageSize, data);
   }
 
-  public void glCompressedTexImage3DARB(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, Addressable arg8) {
-    glut_h.glCompressedTexImage3DARB(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+  public void glCompressedTexImage3DARB(int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, Addressable data) {
+    glut_h.glCompressedTexImage3DARB(target, level, internalformat, width, height, depth, border, imageSize, data);
   }
 
-  public void glCompressedTexSubImage1D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, Addressable arg6) {
-    glut_h.glCompressedTexSubImage1D(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glCompressedTexSubImage1D(int target, int level, int xoffset, int width, int format, int imageSize, Addressable data) {
+    glut_h.glCompressedTexSubImage1D(target, level, xoffset, width, format, imageSize, data);
   }
 
-  public void glCompressedTexSubImage1DARB(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, Addressable arg6) {
-    glut_h.glCompressedTexSubImage1DARB(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glCompressedTexSubImage1DARB(int target, int level, int xoffset, int width, int format, int imageSize, Addressable data) {
+    glut_h.glCompressedTexSubImage1DARB(target, level, xoffset, width, format, imageSize, data);
   }
 
-  public void glCompressedTexSubImage2D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, Addressable arg8) {
-    glut_h.glCompressedTexSubImage2D(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+  public void glCompressedTexSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, Addressable data) {
+    glut_h.glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data);
   }
 
-  public void glCompressedTexSubImage2DARB(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, Addressable arg8) {
-    glut_h.glCompressedTexSubImage2DARB(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+  public void glCompressedTexSubImage2DARB(int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, Addressable data) {
+    glut_h.glCompressedTexSubImage2DARB(target, level, xoffset, yoffset, width, height, format, imageSize, data);
   }
 
-  public void glCompressedTexSubImage3D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, Addressable arg10) {
-    glut_h.glCompressedTexSubImage3D(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+  public void glCompressedTexSubImage3D(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, Addressable data) {
+    glut_h.glCompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
   }
 
-  public void glCompressedTexSubImage3DARB(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, Addressable arg10) {
-    glut_h.glCompressedTexSubImage3DARB(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+  public void glCompressedTexSubImage3DARB(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, Addressable data) {
+    glut_h.glCompressedTexSubImage3DARB(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
   }
 
-  public void glConvolutionFilter1D(int arg0, int arg1, int arg2, int arg3, int arg4, Addressable arg5) {
-    glut_h.glConvolutionFilter1D(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glConvolutionFilter1D(int target, int internalformat, int width, int format, int type, Addressable image) {
+    glut_h.glConvolutionFilter1D(target, internalformat, width, format, type, image);
   }
 
-  public void glConvolutionFilter2D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, Addressable arg6) {
-    glut_h.glConvolutionFilter2D(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glConvolutionFilter2D(int target, int internalformat, int width, int height, int format, int type, Addressable image) {
+    glut_h.glConvolutionFilter2D(target, internalformat, width, height, format, type, image);
   }
 
-  public void glConvolutionParameterf(int arg0, int arg1, float arg2) {
-    glut_h.glConvolutionParameterf(arg0, arg1, arg2);
+  public void glConvolutionParameterf(int target, int pname, float params) {
+    glut_h.glConvolutionParameterf(target, pname, params);
   }
 
-  public void glConvolutionParameterfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glConvolutionParameterfv(arg0, arg1, arg2);
+  public void glConvolutionParameterfv(int target, int pname, Addressable params) {
+    glut_h.glConvolutionParameterfv(target, pname, params);
   }
 
-  public void glConvolutionParameteri(int arg0, int arg1, int arg2) {
-    glut_h.glConvolutionParameteri(arg0, arg1, arg2);
+  public void glConvolutionParameteri(int target, int pname, int params) {
+    glut_h.glConvolutionParameteri(target, pname, params);
   }
 
-  public void glConvolutionParameteriv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glConvolutionParameteriv(arg0, arg1, arg2);
+  public void glConvolutionParameteriv(int target, int pname, Addressable params) {
+    glut_h.glConvolutionParameteriv(target, pname, params);
   }
 
-  public void glCopyColorSubTable(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glCopyColorSubTable(arg0, arg1, arg2, arg3, arg4);
+  public void glCopyColorSubTable(int target, int start, int x, int y, int width) {
+    glut_h.glCopyColorSubTable(target, start, x, y, width);
   }
 
-  public void glCopyColorTable(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glCopyColorTable(arg0, arg1, arg2, arg3, arg4);
+  public void glCopyColorTable(int target, int internalformat, int x, int y, int width) {
+    glut_h.glCopyColorTable(target, internalformat, x, y, width);
   }
 
-  public void glCopyConvolutionFilter1D(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glCopyConvolutionFilter1D(arg0, arg1, arg2, arg3, arg4);
+  public void glCopyConvolutionFilter1D(int target, int internalformat, int x, int y, int width) {
+    glut_h.glCopyConvolutionFilter1D(target, internalformat, x, y, width);
   }
 
-  public void glCopyConvolutionFilter2D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
-    glut_h.glCopyConvolutionFilter2D(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glCopyConvolutionFilter2D(int target, int internalformat, int x, int y, int width, int height) {
+    glut_h.glCopyConvolutionFilter2D(target, internalformat, x, y, width, height);
   }
 
-  public void glCopyPixels(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glCopyPixels(arg0, arg1, arg2, arg3, arg4);
+  public void glCopyPixels(int x, int y, int width, int height, int type) {
+    glut_h.glCopyPixels(x, y, width, height, type);
   }
 
-  public void glCopyTexImage1D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6) {
-    glut_h.glCopyTexImage1D(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glCopyTexImage1D(int target, int level, int internalformat, int x, int y, int width, int border) {
+    glut_h.glCopyTexImage1D(target, level, internalformat, x, y, width, border);
   }
 
-  public void glCopyTexImage2D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
-    glut_h.glCopyTexImage2D(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+  public void glCopyTexImage2D(int target, int level, int internalformat, int x, int y, int width, int height, int border) {
+    glut_h.glCopyTexImage2D(target, level, internalformat, x, y, width, height, border);
   }
 
-  public void glCopyTexSubImage1D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
-    glut_h.glCopyTexSubImage1D(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glCopyTexSubImage1D(int target, int level, int xoffset, int x, int y, int width) {
+    glut_h.glCopyTexSubImage1D(target, level, xoffset, x, y, width);
   }
 
-  public void glCopyTexSubImage2D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7) {
-    glut_h.glCopyTexSubImage2D(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+  public void glCopyTexSubImage2D(int target, int level, int xoffset, int yoffset, int x, int y, int width, int height) {
+    glut_h.glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
   }
 
-  public void glCopyTexSubImage3D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8) {
-    glut_h.glCopyTexSubImage3D(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+  public void glCopyTexSubImage3D(int target, int level, int xoffset, int yoffset, int zoffset, int x, int y, int width, int height) {
+    glut_h.glCopyTexSubImage3D(target, level, xoffset, yoffset, zoffset, x, y, width, height);
   }
 
   public int glCreateProgram() {
@@ -545,232 +545,232 @@ public class GL_macOS implements GL_1_0, GL_1_1, GL_1_2, GL_1_3 {
     return glut_h.glCreateProgramObjectARB();
   }
 
-  public int glCreateShader(int arg0) {
-    return glut_h.glCreateShader(arg0);
+  public int glCreateShader(int type) {
+    return glut_h.glCreateShader(type);
   }
 
-  public MemoryAddress glCreateShaderObjectARB(int arg0) {
-    return glut_h.glCreateShaderObjectARB(arg0);
+  public MemoryAddress glCreateShaderObjectARB(int shaderType) {
+    return glut_h.glCreateShaderObjectARB(shaderType);
   }
 
-  public void glCullFace(int arg0) {
-    glut_h.glCullFace(arg0);
+  public void glCullFace(int mode) {
+    glut_h.glCullFace(mode);
   }
 
-  public void glDeleteBuffers(int arg0, Addressable arg1) {
-    glut_h.glDeleteBuffers(arg0, arg1);
+  public void glDeleteBuffers(int n, Addressable buffers) {
+    glut_h.glDeleteBuffers(n, buffers);
   }
 
-  public void glDeleteBuffersARB(int arg0, Addressable arg1) {
-    glut_h.glDeleteBuffersARB(arg0, arg1);
+  public void glDeleteBuffersARB(int n, Addressable buffers) {
+    glut_h.glDeleteBuffersARB(n, buffers);
   }
 
-  public void glDeleteFencesAPPLE(int arg0, Addressable arg1) {
-    glut_h.glDeleteFencesAPPLE(arg0, arg1);
+  public void glDeleteFencesAPPLE(int n, Addressable fences) {
+    glut_h.glDeleteFencesAPPLE(n, fences);
   }
 
-  public void glDeleteFramebuffers(int arg0, Addressable arg1) {
-    glut_h.glDeleteFramebuffers(arg0, arg1);
+  public void glDeleteFramebuffers(int n, Addressable framebuffers) {
+    glut_h.glDeleteFramebuffers(n, framebuffers);
   }
 
-  public void glDeleteFramebuffersEXT(int arg0, Addressable arg1) {
-    glut_h.glDeleteFramebuffersEXT(arg0, arg1);
+  public void glDeleteFramebuffersEXT(int n, Addressable framebuffers) {
+    glut_h.glDeleteFramebuffersEXT(n, framebuffers);
   }
 
-  public void glDeleteLists(int arg0, int arg1) {
-    glut_h.glDeleteLists(arg0, arg1);
+  public void glDeleteLists(int list, int range) {
+    glut_h.glDeleteLists(list, range);
   }
 
-  public void glDeleteObjectARB(Addressable arg0) {
-    glut_h.glDeleteObjectARB(arg0);
+  public void glDeleteObjectARB(Addressable obj) {
+    glut_h.glDeleteObjectARB(obj);
   }
 
-  public void glDeleteProgram(int arg0) {
-    glut_h.glDeleteProgram(arg0);
+  public void glDeleteProgram(int program) {
+    glut_h.glDeleteProgram(program);
   }
 
-  public void glDeleteProgramsARB(int arg0, Addressable arg1) {
-    glut_h.glDeleteProgramsARB(arg0, arg1);
+  public void glDeleteProgramsARB(int n, Addressable programs) {
+    glut_h.glDeleteProgramsARB(n, programs);
   }
 
-  public void glDeleteQueries(int arg0, Addressable arg1) {
-    glut_h.glDeleteQueries(arg0, arg1);
+  public void glDeleteQueries(int n, Addressable ids) {
+    glut_h.glDeleteQueries(n, ids);
   }
 
-  public void glDeleteQueriesARB(int arg0, Addressable arg1) {
-    glut_h.glDeleteQueriesARB(arg0, arg1);
+  public void glDeleteQueriesARB(int n, Addressable ids) {
+    glut_h.glDeleteQueriesARB(n, ids);
   }
 
-  public void glDeleteRenderbuffers(int arg0, Addressable arg1) {
-    glut_h.glDeleteRenderbuffers(arg0, arg1);
+  public void glDeleteRenderbuffers(int n, Addressable renderbuffers) {
+    glut_h.glDeleteRenderbuffers(n, renderbuffers);
   }
 
-  public void glDeleteRenderbuffersEXT(int arg0, Addressable arg1) {
-    glut_h.glDeleteRenderbuffersEXT(arg0, arg1);
+  public void glDeleteRenderbuffersEXT(int n, Addressable renderbuffers) {
+    glut_h.glDeleteRenderbuffersEXT(n, renderbuffers);
   }
 
-  public void glDeleteShader(int arg0) {
-    glut_h.glDeleteShader(arg0);
+  public void glDeleteShader(int shader) {
+    glut_h.glDeleteShader(shader);
   }
 
-  public void glDeleteSync(Addressable arg0) {
-    glut_h.glDeleteSync(arg0);
+  public void glDeleteSync(Addressable sync) {
+    glut_h.glDeleteSync(sync);
   }
 
-  public void glDeleteTextures(int arg0, Addressable arg1) {
-    glut_h.glDeleteTextures(arg0, arg1);
+  public void glDeleteTextures(int n, Addressable textures) {
+    glut_h.glDeleteTextures(n, textures);
   }
 
-  public void glDeleteVertexArraysAPPLE(int arg0, Addressable arg1) {
-    glut_h.glDeleteVertexArraysAPPLE(arg0, arg1);
+  public void glDeleteVertexArraysAPPLE(int n, Addressable arrays) {
+    glut_h.glDeleteVertexArraysAPPLE(n, arrays);
   }
 
-  public void glDepthBoundsEXT(double arg0, double arg1) {
-    glut_h.glDepthBoundsEXT(arg0, arg1);
+  public void glDepthBoundsEXT(double zmin, double zmax) {
+    glut_h.glDepthBoundsEXT(zmin, zmax);
   }
 
-  public void glDepthFunc(int arg0) {
-    glut_h.glDepthFunc(arg0);
+  public void glDepthFunc(int func) {
+    glut_h.glDepthFunc(func);
   }
 
-  public void glDepthMask(byte arg0) {
-    glut_h.glDepthMask(arg0);
+  public void glDepthMask(byte flag) {
+    glut_h.glDepthMask(flag);
   }
 
-  public void glDepthRange(double arg0, double arg1) {
-    glut_h.glDepthRange(arg0, arg1);
+  public void glDepthRange(double n, double f) {
+    glut_h.glDepthRange(n, f);
   }
 
-  public void glDetachObjectARB(Addressable arg0, Addressable arg1) {
-    glut_h.glDetachObjectARB(arg0, arg1);
+  public void glDetachObjectARB(Addressable containerObj, Addressable attachedObj) {
+    glut_h.glDetachObjectARB(containerObj, attachedObj);
   }
 
-  public void glDetachShader(int arg0, int arg1) {
-    glut_h.glDetachShader(arg0, arg1);
+  public void glDetachShader(int program, int shader) {
+    glut_h.glDetachShader(program, shader);
   }
 
-  public void glDisable(int arg0) {
-    glut_h.glDisable(arg0);
+  public void glDisable(int cap) {
+    glut_h.glDisable(cap);
   }
 
-  public void glDisableClientState(int arg0) {
-    glut_h.glDisableClientState(arg0);
+  public void glDisableClientState(int array) {
+    glut_h.glDisableClientState(array);
   }
 
-  public void glDisableIndexedEXT(int arg0, int arg1) {
-    glut_h.glDisableIndexedEXT(arg0, arg1);
+  public void glDisableIndexedEXT(int target, int index) {
+    glut_h.glDisableIndexedEXT(target, index);
   }
 
-  public void glDisableVertexAttribAPPLE(int arg0, int arg1) {
-    glut_h.glDisableVertexAttribAPPLE(arg0, arg1);
+  public void glDisableVertexAttribAPPLE(int index, int pname) {
+    glut_h.glDisableVertexAttribAPPLE(index, pname);
   }
 
-  public void glDisableVertexAttribArray(int arg0) {
-    glut_h.glDisableVertexAttribArray(arg0);
+  public void glDisableVertexAttribArray(int index) {
+    glut_h.glDisableVertexAttribArray(index);
   }
 
-  public void glDisableVertexAttribArrayARB(int arg0) {
-    glut_h.glDisableVertexAttribArrayARB(arg0);
+  public void glDisableVertexAttribArrayARB(int index) {
+    glut_h.glDisableVertexAttribArrayARB(index);
   }
 
-  public void glDrawArrays(int arg0, int arg1, int arg2) {
-    glut_h.glDrawArrays(arg0, arg1, arg2);
+  public void glDrawArrays(int mode, int first, int count) {
+    glut_h.glDrawArrays(mode, first, count);
   }
 
-  public void glDrawArraysInstancedARB(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glDrawArraysInstancedARB(arg0, arg1, arg2, arg3);
+  public void glDrawArraysInstancedARB(int mode, int first, int count, int primcount) {
+    glut_h.glDrawArraysInstancedARB(mode, first, count, primcount);
   }
 
-  public void glDrawBuffer(int arg0) {
-    glut_h.glDrawBuffer(arg0);
+  public void glDrawBuffer(int buf) {
+    glut_h.glDrawBuffer(buf);
   }
 
-  public void glDrawBuffers(int arg0, Addressable arg1) {
-    glut_h.glDrawBuffers(arg0, arg1);
+  public void glDrawBuffers(int n, Addressable bufs) {
+    glut_h.glDrawBuffers(n, bufs);
   }
 
-  public void glDrawBuffersARB(int arg0, Addressable arg1) {
-    glut_h.glDrawBuffersARB(arg0, arg1);
+  public void glDrawBuffersARB(int n, Addressable bufs) {
+    glut_h.glDrawBuffersARB(n, bufs);
   }
 
-  public void glDrawElementArrayAPPLE(int arg0, int arg1, int arg2) {
-    glut_h.glDrawElementArrayAPPLE(arg0, arg1, arg2);
+  public void glDrawElementArrayAPPLE(int mode, int first, int count) {
+    glut_h.glDrawElementArrayAPPLE(mode, first, count);
   }
 
-  public void glDrawElements(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glDrawElements(arg0, arg1, arg2, arg3);
+  public void glDrawElements(int mode, int count, int type, Addressable indices) {
+    glut_h.glDrawElements(mode, count, type, indices);
   }
 
-  public void glDrawElementsBaseVertex(int arg0, int arg1, int arg2, Addressable arg3, int arg4) {
-    glut_h.glDrawElementsBaseVertex(arg0, arg1, arg2, arg3, arg4);
+  public void glDrawElementsBaseVertex(int mode, int count, int type, Addressable indices, int basevertex) {
+    glut_h.glDrawElementsBaseVertex(mode, count, type, indices, basevertex);
   }
 
-  public void glDrawElementsInstancedARB(int arg0, int arg1, int arg2, Addressable arg3, int arg4) {
-    glut_h.glDrawElementsInstancedARB(arg0, arg1, arg2, arg3, arg4);
+  public void glDrawElementsInstancedARB(int mode, int count, int type, Addressable indices, int primcount) {
+    glut_h.glDrawElementsInstancedARB(mode, count, type, indices, primcount);
   }
 
-  public void glDrawElementsInstancedBaseVertex(int arg0, int arg1, int arg2, Addressable arg3, int arg4, int arg5) {
-    glut_h.glDrawElementsInstancedBaseVertex(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glDrawElementsInstancedBaseVertex(int mode, int count, int type, Addressable indices, int instancecount, int basevertex) {
+    glut_h.glDrawElementsInstancedBaseVertex(mode, count, type, indices, instancecount, basevertex);
   }
 
-  public void glDrawPixels(int arg0, int arg1, int arg2, int arg3, Addressable arg4) {
-    glut_h.glDrawPixels(arg0, arg1, arg2, arg3, arg4);
+  public void glDrawPixels(int width, int height, int format, int type, Addressable pixels) {
+    glut_h.glDrawPixels(width, height, format, type, pixels);
   }
 
-  public void glDrawRangeElementArrayAPPLE(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glDrawRangeElementArrayAPPLE(arg0, arg1, arg2, arg3, arg4);
+  public void glDrawRangeElementArrayAPPLE(int mode, int start, int end, int first, int count) {
+    glut_h.glDrawRangeElementArrayAPPLE(mode, start, end, first, count);
   }
 
-  public void glDrawRangeElements(int arg0, int arg1, int arg2, int arg3, int arg4, Addressable arg5) {
-    glut_h.glDrawRangeElements(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glDrawRangeElements(int mode, int start, int end, int count, int type, Addressable indices) {
+    glut_h.glDrawRangeElements(mode, start, end, count, type, indices);
   }
 
-  public void glDrawRangeElementsBaseVertex(int arg0, int arg1, int arg2, int arg3, int arg4, Addressable arg5, int arg6) {
-    glut_h.glDrawRangeElementsBaseVertex(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glDrawRangeElementsBaseVertex(int mode, int start, int end, int count, int type, Addressable indices, int basevertex) {
+    glut_h.glDrawRangeElementsBaseVertex(mode, start, end, count, type, indices, basevertex);
   }
 
-  public void glDrawRangeElementsEXT(int arg0, int arg1, int arg2, int arg3, int arg4, Addressable arg5) {
-    glut_h.glDrawRangeElementsEXT(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glDrawRangeElementsEXT(int mode, int start, int end, int count, int type, Addressable indices) {
+    glut_h.glDrawRangeElementsEXT(mode, start, end, count, type, indices);
   }
 
-  public void glEdgeFlag(byte arg0) {
-    glut_h.glEdgeFlag(arg0);
+  public void glEdgeFlag(byte flag) {
+    glut_h.glEdgeFlag(flag);
   }
 
-  public void glEdgeFlagPointer(int arg0, Addressable arg1) {
-    glut_h.glEdgeFlagPointer(arg0, arg1);
+  public void glEdgeFlagPointer(int stride, Addressable pointer) {
+    glut_h.glEdgeFlagPointer(stride, pointer);
   }
 
-  public void glEdgeFlagv(Addressable arg0) {
-    glut_h.glEdgeFlagv(arg0);
+  public void glEdgeFlagv(Addressable flag) {
+    glut_h.glEdgeFlagv(flag);
   }
 
-  public void glElementPointerAPPLE(int arg0, Addressable arg1) {
-    glut_h.glElementPointerAPPLE(arg0, arg1);
+  public void glElementPointerAPPLE(int type, Addressable pointer) {
+    glut_h.glElementPointerAPPLE(type, pointer);
   }
 
-  public void glEnable(int arg0) {
-    glut_h.glEnable(arg0);
+  public void glEnable(int cap) {
+    glut_h.glEnable(cap);
   }
 
-  public void glEnableClientState(int arg0) {
-    glut_h.glEnableClientState(arg0);
+  public void glEnableClientState(int array) {
+    glut_h.glEnableClientState(array);
   }
 
-  public void glEnableIndexedEXT(int arg0, int arg1) {
-    glut_h.glEnableIndexedEXT(arg0, arg1);
+  public void glEnableIndexedEXT(int target, int index) {
+    glut_h.glEnableIndexedEXT(target, index);
   }
 
-  public void glEnableVertexAttribAPPLE(int arg0, int arg1) {
-    glut_h.glEnableVertexAttribAPPLE(arg0, arg1);
+  public void glEnableVertexAttribAPPLE(int index, int pname) {
+    glut_h.glEnableVertexAttribAPPLE(index, pname);
   }
 
-  public void glEnableVertexAttribArray(int arg0) {
-    glut_h.glEnableVertexAttribArray(arg0);
+  public void glEnableVertexAttribArray(int index) {
+    glut_h.glEnableVertexAttribArray(index);
   }
 
-  public void glEnableVertexAttribArrayARB(int arg0) {
-    glut_h.glEnableVertexAttribArrayARB(arg0);
+  public void glEnableVertexAttribArrayARB(int index) {
+    glut_h.glEnableVertexAttribArrayARB(index);
   }
 
   public void glEnd() {
@@ -785,1500 +785,1500 @@ public class GL_macOS implements GL_1_0, GL_1_1, GL_1_2, GL_1_3 {
     glut_h.glEndList();
   }
 
-  public void glEndQuery(int arg0) {
-    glut_h.glEndQuery(arg0);
+  public void glEndQuery(int target) {
+    glut_h.glEndQuery(target);
   }
 
-  public void glEndQueryARB(int arg0) {
-    glut_h.glEndQueryARB(arg0);
+  public void glEndQueryARB(int target) {
+    glut_h.glEndQueryARB(target);
   }
 
   public void glEndTransformFeedbackEXT() {
     glut_h.glEndTransformFeedbackEXT();
   }
 
-  public void glEvalCoord1d(double arg0) {
-    glut_h.glEvalCoord1d(arg0);
+  public void glEvalCoord1d(double u) {
+    glut_h.glEvalCoord1d(u);
   }
 
-  public void glEvalCoord1dv(Addressable arg0) {
-    glut_h.glEvalCoord1dv(arg0);
+  public void glEvalCoord1dv(Addressable u) {
+    glut_h.glEvalCoord1dv(u);
   }
 
-  public void glEvalCoord1f(float arg0) {
-    glut_h.glEvalCoord1f(arg0);
+  public void glEvalCoord1f(float u) {
+    glut_h.glEvalCoord1f(u);
   }
 
-  public void glEvalCoord1fv(Addressable arg0) {
-    glut_h.glEvalCoord1fv(arg0);
+  public void glEvalCoord1fv(Addressable u) {
+    glut_h.glEvalCoord1fv(u);
   }
 
-  public void glEvalCoord2d(double arg0, double arg1) {
-    glut_h.glEvalCoord2d(arg0, arg1);
+  public void glEvalCoord2d(double u, double v) {
+    glut_h.glEvalCoord2d(u, v);
   }
 
-  public void glEvalCoord2dv(Addressable arg0) {
-    glut_h.glEvalCoord2dv(arg0);
+  public void glEvalCoord2dv(Addressable u) {
+    glut_h.glEvalCoord2dv(u);
   }
 
-  public void glEvalCoord2f(float arg0, float arg1) {
-    glut_h.glEvalCoord2f(arg0, arg1);
+  public void glEvalCoord2f(float u, float v) {
+    glut_h.glEvalCoord2f(u, v);
   }
 
-  public void glEvalCoord2fv(Addressable arg0) {
-    glut_h.glEvalCoord2fv(arg0);
+  public void glEvalCoord2fv(Addressable u) {
+    glut_h.glEvalCoord2fv(u);
   }
 
-  public void glEvalMesh1(int arg0, int arg1, int arg2) {
-    glut_h.glEvalMesh1(arg0, arg1, arg2);
+  public void glEvalMesh1(int mode, int i1, int i2) {
+    glut_h.glEvalMesh1(mode, i1, i2);
   }
 
-  public void glEvalMesh2(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glEvalMesh2(arg0, arg1, arg2, arg3, arg4);
+  public void glEvalMesh2(int mode, int i1, int i2, int j1, int j2) {
+    glut_h.glEvalMesh2(mode, i1, i2, j1, j2);
   }
 
-  public void glEvalPoint1(int arg0) {
-    glut_h.glEvalPoint1(arg0);
+  public void glEvalPoint1(int i) {
+    glut_h.glEvalPoint1(i);
   }
 
-  public void glEvalPoint2(int arg0, int arg1) {
-    glut_h.glEvalPoint2(arg0, arg1);
+  public void glEvalPoint2(int i, int j) {
+    glut_h.glEvalPoint2(i, j);
   }
 
-  public void glFeedbackBuffer(int arg0, int arg1, Addressable arg2) {
-    glut_h.glFeedbackBuffer(arg0, arg1, arg2);
+  public void glFeedbackBuffer(int size, int type, Addressable buffer) {
+    glut_h.glFeedbackBuffer(size, type, buffer);
   }
 
-  public MemoryAddress glFenceSync(int arg0, int arg1) {
-    return glut_h.glFenceSync(arg0, arg1);
+  public MemoryAddress glFenceSync(int condition, int flags) {
+    return glut_h.glFenceSync(condition, flags);
   }
 
   public void glFinish() {
     glut_h.glFinish();
   }
 
-  public void glFinishFenceAPPLE(int arg0) {
-    glut_h.glFinishFenceAPPLE(arg0);
+  public void glFinishFenceAPPLE(int fence) {
+    glut_h.glFinishFenceAPPLE(fence);
   }
 
-  public void glFinishObjectAPPLE(int arg0, int arg1) {
-    glut_h.glFinishObjectAPPLE(arg0, arg1);
+  public void glFinishObjectAPPLE(int object, int name) {
+    glut_h.glFinishObjectAPPLE(object, name);
   }
 
   public void glFlush() {
     glut_h.glFlush();
   }
 
-  public void glFlushMappedBufferRangeAPPLE(int arg0, long arg1, long arg2) {
-    glut_h.glFlushMappedBufferRangeAPPLE(arg0, arg1, arg2);
+  public void glFlushMappedBufferRangeAPPLE(int target, long offset, long size) {
+    glut_h.glFlushMappedBufferRangeAPPLE(target, offset, size);
   }
 
-  public void glFlushVertexArrayRangeAPPLE(int arg0, Addressable arg1) {
-    glut_h.glFlushVertexArrayRangeAPPLE(arg0, arg1);
+  public void glFlushVertexArrayRangeAPPLE(int length, Addressable pointer) {
+    glut_h.glFlushVertexArrayRangeAPPLE(length, pointer);
   }
 
-  public void glFogCoordPointer(int arg0, int arg1, Addressable arg2) {
-    glut_h.glFogCoordPointer(arg0, arg1, arg2);
+  public void glFogCoordPointer(int type, int stride, Addressable pointer) {
+    glut_h.glFogCoordPointer(type, stride, pointer);
   }
 
-  public void glFogCoordPointerEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glFogCoordPointerEXT(arg0, arg1, arg2);
+  public void glFogCoordPointerEXT(int type, int stride, Addressable pointer) {
+    glut_h.glFogCoordPointerEXT(type, stride, pointer);
   }
 
-  public void glFogCoordd(double arg0) {
-    glut_h.glFogCoordd(arg0);
+  public void glFogCoordd(double coord) {
+    glut_h.glFogCoordd(coord);
   }
 
-  public void glFogCoorddEXT(double arg0) {
-    glut_h.glFogCoorddEXT(arg0);
+  public void glFogCoorddEXT(double coord) {
+    glut_h.glFogCoorddEXT(coord);
   }
 
-  public void glFogCoorddv(Addressable arg0) {
-    glut_h.glFogCoorddv(arg0);
+  public void glFogCoorddv(Addressable coord) {
+    glut_h.glFogCoorddv(coord);
   }
 
-  public void glFogCoorddvEXT(Addressable arg0) {
-    glut_h.glFogCoorddvEXT(arg0);
+  public void glFogCoorddvEXT(Addressable coord) {
+    glut_h.glFogCoorddvEXT(coord);
   }
 
-  public void glFogCoordf(float arg0) {
-    glut_h.glFogCoordf(arg0);
+  public void glFogCoordf(float coord) {
+    glut_h.glFogCoordf(coord);
   }
 
-  public void glFogCoordfEXT(float arg0) {
-    glut_h.glFogCoordfEXT(arg0);
+  public void glFogCoordfEXT(float coord) {
+    glut_h.glFogCoordfEXT(coord);
   }
 
-  public void glFogCoordfv(Addressable arg0) {
-    glut_h.glFogCoordfv(arg0);
+  public void glFogCoordfv(Addressable coord) {
+    glut_h.glFogCoordfv(coord);
   }
 
-  public void glFogCoordfvEXT(Addressable arg0) {
-    glut_h.glFogCoordfvEXT(arg0);
+  public void glFogCoordfvEXT(Addressable coord) {
+    glut_h.glFogCoordfvEXT(coord);
   }
 
-  public void glFogf(int arg0, float arg1) {
-    glut_h.glFogf(arg0, arg1);
+  public void glFogf(int pname, float param) {
+    glut_h.glFogf(pname, param);
   }
 
-  public void glFogfv(int arg0, Addressable arg1) {
-    glut_h.glFogfv(arg0, arg1);
+  public void glFogfv(int pname, Addressable params) {
+    glut_h.glFogfv(pname, params);
   }
 
-  public void glFogi(int arg0, int arg1) {
-    glut_h.glFogi(arg0, arg1);
+  public void glFogi(int pname, int param) {
+    glut_h.glFogi(pname, param);
   }
 
-  public void glFogiv(int arg0, Addressable arg1) {
-    glut_h.glFogiv(arg0, arg1);
+  public void glFogiv(int pname, Addressable params) {
+    glut_h.glFogiv(pname, params);
   }
 
-  public void glFramebufferRenderbuffer(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glFramebufferRenderbuffer(arg0, arg1, arg2, arg3);
+  public void glFramebufferRenderbuffer(int target, int attachment, int renderbuffertarget, int renderbuffer) {
+    glut_h.glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer);
   }
 
-  public void glFramebufferRenderbufferEXT(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glFramebufferRenderbufferEXT(arg0, arg1, arg2, arg3);
+  public void glFramebufferRenderbufferEXT(int target, int attachment, int renderbuffertarget, int renderbuffer) {
+    glut_h.glFramebufferRenderbufferEXT(target, attachment, renderbuffertarget, renderbuffer);
   }
 
-  public void glFramebufferTexture1D(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glFramebufferTexture1D(arg0, arg1, arg2, arg3, arg4);
+  public void glFramebufferTexture1D(int target, int attachment, int textarget, int texture, int level) {
+    glut_h.glFramebufferTexture1D(target, attachment, textarget, texture, level);
   }
 
-  public void glFramebufferTexture1DEXT(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glFramebufferTexture1DEXT(arg0, arg1, arg2, arg3, arg4);
+  public void glFramebufferTexture1DEXT(int target, int attachment, int textarget, int texture, int level) {
+    glut_h.glFramebufferTexture1DEXT(target, attachment, textarget, texture, level);
   }
 
-  public void glFramebufferTexture2D(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glFramebufferTexture2D(arg0, arg1, arg2, arg3, arg4);
+  public void glFramebufferTexture2D(int target, int attachment, int textarget, int texture, int level) {
+    glut_h.glFramebufferTexture2D(target, attachment, textarget, texture, level);
   }
 
-  public void glFramebufferTexture2DEXT(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glFramebufferTexture2DEXT(arg0, arg1, arg2, arg3, arg4);
+  public void glFramebufferTexture2DEXT(int target, int attachment, int textarget, int texture, int level) {
+    glut_h.glFramebufferTexture2DEXT(target, attachment, textarget, texture, level);
   }
 
-  public void glFramebufferTexture3D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
-    glut_h.glFramebufferTexture3D(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glFramebufferTexture3D(int target, int attachment, int textarget, int texture, int level, int zoffset) {
+    glut_h.glFramebufferTexture3D(target, attachment, textarget, texture, level, zoffset);
   }
 
-  public void glFramebufferTexture3DEXT(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
-    glut_h.glFramebufferTexture3DEXT(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glFramebufferTexture3DEXT(int target, int attachment, int textarget, int texture, int level, int zoffset) {
+    glut_h.glFramebufferTexture3DEXT(target, attachment, textarget, texture, level, zoffset);
   }
 
-  public void glFramebufferTextureEXT(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glFramebufferTextureEXT(arg0, arg1, arg2, arg3);
+  public void glFramebufferTextureEXT(int target, int attachment, int texture, int level) {
+    glut_h.glFramebufferTextureEXT(target, attachment, texture, level);
   }
 
-  public void glFramebufferTextureFaceEXT(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glFramebufferTextureFaceEXT(arg0, arg1, arg2, arg3, arg4);
+  public void glFramebufferTextureFaceEXT(int target, int attachment, int texture, int level, int face) {
+    glut_h.glFramebufferTextureFaceEXT(target, attachment, texture, level, face);
   }
 
-  public void glFramebufferTextureLayer(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glFramebufferTextureLayer(arg0, arg1, arg2, arg3, arg4);
+  public void glFramebufferTextureLayer(int target, int attachment, int texture, int level, int layer) {
+    glut_h.glFramebufferTextureLayer(target, attachment, texture, level, layer);
   }
 
-  public void glFramebufferTextureLayerEXT(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glFramebufferTextureLayerEXT(arg0, arg1, arg2, arg3, arg4);
+  public void glFramebufferTextureLayerEXT(int target, int attachment, int texture, int level, int layer) {
+    glut_h.glFramebufferTextureLayerEXT(target, attachment, texture, level, layer);
   }
 
-  public void glFrontFace(int arg0) {
-    glut_h.glFrontFace(arg0);
+  public void glFrontFace(int mode) {
+    glut_h.glFrontFace(mode);
   }
 
-  public void glFrustum(double arg0, double arg1, double arg2, double arg3, double arg4, double arg5) {
-    glut_h.glFrustum(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glFrustum(double left, double right, double bottom, double top, double zNear, double zFar) {
+    glut_h.glFrustum(left, right, bottom, top, zNear, zFar);
   }
 
-  public void glGenBuffers(int arg0, Addressable arg1) {
-    glut_h.glGenBuffers(arg0, arg1);
+  public void glGenBuffers(int n, Addressable buffers) {
+    glut_h.glGenBuffers(n, buffers);
   }
 
-  public void glGenBuffersARB(int arg0, Addressable arg1) {
-    glut_h.glGenBuffersARB(arg0, arg1);
+  public void glGenBuffersARB(int n, Addressable buffers) {
+    glut_h.glGenBuffersARB(n, buffers);
   }
 
-  public void glGenFencesAPPLE(int arg0, Addressable arg1) {
-    glut_h.glGenFencesAPPLE(arg0, arg1);
+  public void glGenFencesAPPLE(int n, Addressable fences) {
+    glut_h.glGenFencesAPPLE(n, fences);
   }
 
-  public void glGenFramebuffers(int arg0, Addressable arg1) {
-    glut_h.glGenFramebuffers(arg0, arg1);
+  public void glGenFramebuffers(int n, Addressable framebuffers) {
+    glut_h.glGenFramebuffers(n, framebuffers);
   }
 
-  public void glGenFramebuffersEXT(int arg0, Addressable arg1) {
-    glut_h.glGenFramebuffersEXT(arg0, arg1);
+  public void glGenFramebuffersEXT(int n, Addressable framebuffers) {
+    glut_h.glGenFramebuffersEXT(n, framebuffers);
   }
 
-  public int glGenLists(int arg0) {
-    return glut_h.glGenLists(arg0);
+  public int glGenLists(int range) {
+    return glut_h.glGenLists(range);
   }
 
-  public void glGenProgramsARB(int arg0, Addressable arg1) {
-    glut_h.glGenProgramsARB(arg0, arg1);
+  public void glGenProgramsARB(int n, Addressable programs) {
+    glut_h.glGenProgramsARB(n, programs);
   }
 
-  public void glGenQueries(int arg0, Addressable arg1) {
-    glut_h.glGenQueries(arg0, arg1);
+  public void glGenQueries(int n, Addressable ids) {
+    glut_h.glGenQueries(n, ids);
   }
 
-  public void glGenQueriesARB(int arg0, Addressable arg1) {
-    glut_h.glGenQueriesARB(arg0, arg1);
+  public void glGenQueriesARB(int n, Addressable ids) {
+    glut_h.glGenQueriesARB(n, ids);
   }
 
-  public void glGenRenderbuffers(int arg0, Addressable arg1) {
-    glut_h.glGenRenderbuffers(arg0, arg1);
+  public void glGenRenderbuffers(int n, Addressable renderbuffers) {
+    glut_h.glGenRenderbuffers(n, renderbuffers);
   }
 
-  public void glGenRenderbuffersEXT(int arg0, Addressable arg1) {
-    glut_h.glGenRenderbuffersEXT(arg0, arg1);
+  public void glGenRenderbuffersEXT(int n, Addressable renderbuffers) {
+    glut_h.glGenRenderbuffersEXT(n, renderbuffers);
   }
 
-  public void glGenTextures(int arg0, Addressable arg1) {
-    glut_h.glGenTextures(arg0, arg1);
+  public void glGenTextures(int n, Addressable textures) {
+    glut_h.glGenTextures(n, textures);
   }
 
-  public void glGenVertexArraysAPPLE(int arg0, Addressable arg1) {
-    glut_h.glGenVertexArraysAPPLE(arg0, arg1);
+  public void glGenVertexArraysAPPLE(int n, Addressable arrays) {
+    glut_h.glGenVertexArraysAPPLE(n, arrays);
   }
 
-  public void glGenerateMipmap(int arg0) {
-    glut_h.glGenerateMipmap(arg0);
+  public void glGenerateMipmap(int target) {
+    glut_h.glGenerateMipmap(target);
   }
 
-  public void glGenerateMipmapEXT(int arg0) {
-    glut_h.glGenerateMipmapEXT(arg0);
+  public void glGenerateMipmapEXT(int target) {
+    glut_h.glGenerateMipmapEXT(target);
   }
 
-  public void glGetActiveAttrib(int arg0, int arg1, int arg2, Addressable arg3, Addressable arg4, Addressable arg5, Addressable arg6) {
-    glut_h.glGetActiveAttrib(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glGetActiveAttrib(int program, int index, int bufSize, Addressable length, Addressable size, Addressable type, Addressable name) {
+    glut_h.glGetActiveAttrib(program, index, bufSize, length, size, type, name);
   }
 
-  public void glGetActiveAttribARB(Addressable arg0, int arg1, int arg2, Addressable arg3, Addressable arg4, Addressable arg5, Addressable arg6) {
-    glut_h.glGetActiveAttribARB(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glGetActiveAttribARB(Addressable programObj, int index, int maxLength, Addressable length, Addressable size, Addressable type, Addressable name) {
+    glut_h.glGetActiveAttribARB(programObj, index, maxLength, length, size, type, name);
   }
 
-  public void glGetActiveUniform(int arg0, int arg1, int arg2, Addressable arg3, Addressable arg4, Addressable arg5, Addressable arg6) {
-    glut_h.glGetActiveUniform(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glGetActiveUniform(int program, int index, int bufSize, Addressable length, Addressable size, Addressable type, Addressable name) {
+    glut_h.glGetActiveUniform(program, index, bufSize, length, size, type, name);
   }
 
-  public void glGetActiveUniformARB(Addressable arg0, int arg1, int arg2, Addressable arg3, Addressable arg4, Addressable arg5, Addressable arg6) {
-    glut_h.glGetActiveUniformARB(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glGetActiveUniformARB(Addressable programObj, int index, int maxLength, Addressable length, Addressable size, Addressable type, Addressable name) {
+    glut_h.glGetActiveUniformARB(programObj, index, maxLength, length, size, type, name);
   }
 
-  public void glGetAttachedObjectsARB(Addressable arg0, int arg1, Addressable arg2, Addressable arg3) {
-    glut_h.glGetAttachedObjectsARB(arg0, arg1, arg2, arg3);
+  public void glGetAttachedObjectsARB(Addressable containerObj, int maxCount, Addressable count, Addressable obj) {
+    glut_h.glGetAttachedObjectsARB(containerObj, maxCount, count, obj);
   }
 
-  public void glGetAttachedShaders(int arg0, int arg1, Addressable arg2, Addressable arg3) {
-    glut_h.glGetAttachedShaders(arg0, arg1, arg2, arg3);
+  public void glGetAttachedShaders(int program, int maxCount, Addressable count, Addressable shaders) {
+    glut_h.glGetAttachedShaders(program, maxCount, count, shaders);
   }
 
-  public int glGetAttribLocation(int arg0, Addressable arg1) {
-    return glut_h.glGetAttribLocation(arg0, arg1);
+  public int glGetAttribLocation(int program, Addressable name) {
+    return glut_h.glGetAttribLocation(program, name);
   }
 
-  public int glGetAttribLocationARB(Addressable arg0, Addressable arg1) {
-    return glut_h.glGetAttribLocationARB(arg0, arg1);
+  public int glGetAttribLocationARB(Addressable programObj, Addressable name) {
+    return glut_h.glGetAttribLocationARB(programObj, name);
   }
 
-  public void glGetBooleanIndexedvEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetBooleanIndexedvEXT(arg0, arg1, arg2);
+  public void glGetBooleanIndexedvEXT(int target, int index, Addressable data) {
+    glut_h.glGetBooleanIndexedvEXT(target, index, data);
   }
 
-  public void glGetBooleanv(int arg0, Addressable arg1) {
-    glut_h.glGetBooleanv(arg0, arg1);
+  public void glGetBooleanv(int pname, Addressable data) {
+    glut_h.glGetBooleanv(pname, data);
   }
 
-  public void glGetBufferParameteriv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetBufferParameteriv(arg0, arg1, arg2);
+  public void glGetBufferParameteriv(int target, int pname, Addressable params) {
+    glut_h.glGetBufferParameteriv(target, pname, params);
   }
 
-  public void glGetBufferParameterivARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetBufferParameterivARB(arg0, arg1, arg2);
+  public void glGetBufferParameterivARB(int target, int pname, Addressable params) {
+    glut_h.glGetBufferParameterivARB(target, pname, params);
   }
 
-  public void glGetBufferPointerv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetBufferPointerv(arg0, arg1, arg2);
+  public void glGetBufferPointerv(int target, int pname, Addressable params) {
+    glut_h.glGetBufferPointerv(target, pname, params);
   }
 
-  public void glGetBufferPointervARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetBufferPointervARB(arg0, arg1, arg2);
+  public void glGetBufferPointervARB(int target, int pname, Addressable params) {
+    glut_h.glGetBufferPointervARB(target, pname, params);
   }
 
-  public void glGetBufferSubData(int arg0, long arg1, long arg2, Addressable arg3) {
-    glut_h.glGetBufferSubData(arg0, arg1, arg2, arg3);
+  public void glGetBufferSubData(int target, long offset, long size, Addressable data) {
+    glut_h.glGetBufferSubData(target, offset, size, data);
   }
 
-  public void glGetBufferSubDataARB(int arg0, long arg1, long arg2, Addressable arg3) {
-    glut_h.glGetBufferSubDataARB(arg0, arg1, arg2, arg3);
+  public void glGetBufferSubDataARB(int target, long offset, long size, Addressable data) {
+    glut_h.glGetBufferSubDataARB(target, offset, size, data);
   }
 
-  public void glGetClipPlane(int arg0, Addressable arg1) {
-    glut_h.glGetClipPlane(arg0, arg1);
+  public void glGetClipPlane(int plane, Addressable equation) {
+    glut_h.glGetClipPlane(plane, equation);
   }
 
-  public void glGetColorTable(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glGetColorTable(arg0, arg1, arg2, arg3);
+  public void glGetColorTable(int target, int format, int type, Addressable table) {
+    glut_h.glGetColorTable(target, format, type, table);
   }
 
-  public void glGetColorTableParameterfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetColorTableParameterfv(arg0, arg1, arg2);
+  public void glGetColorTableParameterfv(int target, int pname, Addressable params) {
+    glut_h.glGetColorTableParameterfv(target, pname, params);
   }
 
-  public void glGetColorTableParameteriv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetColorTableParameteriv(arg0, arg1, arg2);
+  public void glGetColorTableParameteriv(int target, int pname, Addressable params) {
+    glut_h.glGetColorTableParameteriv(target, pname, params);
   }
 
-  public void glGetCompressedTexImage(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetCompressedTexImage(arg0, arg1, arg2);
+  public void glGetCompressedTexImage(int target, int level, Addressable img) {
+    glut_h.glGetCompressedTexImage(target, level, img);
   }
 
-  public void glGetCompressedTexImageARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetCompressedTexImageARB(arg0, arg1, arg2);
+  public void glGetCompressedTexImageARB(int target, int level, Addressable img) {
+    glut_h.glGetCompressedTexImageARB(target, level, img);
   }
 
-  public void glGetConvolutionFilter(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glGetConvolutionFilter(arg0, arg1, arg2, arg3);
+  public void glGetConvolutionFilter(int target, int format, int type, Addressable image) {
+    glut_h.glGetConvolutionFilter(target, format, type, image);
   }
 
-  public void glGetConvolutionParameterfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetConvolutionParameterfv(arg0, arg1, arg2);
+  public void glGetConvolutionParameterfv(int target, int pname, Addressable params) {
+    glut_h.glGetConvolutionParameterfv(target, pname, params);
   }
 
-  public void glGetConvolutionParameteriv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetConvolutionParameteriv(arg0, arg1, arg2);
+  public void glGetConvolutionParameteriv(int target, int pname, Addressable params) {
+    glut_h.glGetConvolutionParameteriv(target, pname, params);
   }
 
-  public void glGetDoublev(int arg0, Addressable arg1) {
-    glut_h.glGetDoublev(arg0, arg1);
+  public void glGetDoublev(int pname, Addressable data) {
+    glut_h.glGetDoublev(pname, data);
   }
 
   public int glGetError() {
     return glut_h.glGetError();
   }
 
-  public void glGetFloatv(int arg0, Addressable arg1) {
-    glut_h.glGetFloatv(arg0, arg1);
+  public void glGetFloatv(int pname, Addressable data) {
+    glut_h.glGetFloatv(pname, data);
   }
 
-  public int glGetFragDataLocationEXT(int arg0, Addressable arg1) {
-    return glut_h.glGetFragDataLocationEXT(arg0, arg1);
+  public int glGetFragDataLocationEXT(int program, Addressable name) {
+    return glut_h.glGetFragDataLocationEXT(program, name);
   }
 
-  public void glGetFramebufferAttachmentParameteriv(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glGetFramebufferAttachmentParameteriv(arg0, arg1, arg2, arg3);
+  public void glGetFramebufferAttachmentParameteriv(int target, int attachment, int pname, Addressable params) {
+    glut_h.glGetFramebufferAttachmentParameteriv(target, attachment, pname, params);
   }
 
-  public void glGetFramebufferAttachmentParameterivEXT(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glGetFramebufferAttachmentParameterivEXT(arg0, arg1, arg2, arg3);
+  public void glGetFramebufferAttachmentParameterivEXT(int target, int attachment, int pname, Addressable params) {
+    glut_h.glGetFramebufferAttachmentParameterivEXT(target, attachment, pname, params);
   }
 
-  public MemoryAddress glGetHandleARB(int arg0) {
-    return glut_h.glGetHandleARB(arg0);
+  public MemoryAddress glGetHandleARB(int pname) {
+    return glut_h.glGetHandleARB(pname);
   }
 
-  public void glGetHistogram(int arg0, byte arg1, int arg2, int arg3, Addressable arg4) {
-    glut_h.glGetHistogram(arg0, arg1, arg2, arg3, arg4);
+  public void glGetHistogram(int target, byte reset, int format, int type, Addressable values) {
+    glut_h.glGetHistogram(target, reset, format, type, values);
   }
 
-  public void glGetHistogramParameterfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetHistogramParameterfv(arg0, arg1, arg2);
+  public void glGetHistogramParameterfv(int target, int pname, Addressable params) {
+    glut_h.glGetHistogramParameterfv(target, pname, params);
   }
 
-  public void glGetHistogramParameteriv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetHistogramParameteriv(arg0, arg1, arg2);
+  public void glGetHistogramParameteriv(int target, int pname, Addressable params) {
+    glut_h.glGetHistogramParameteriv(target, pname, params);
   }
 
-  public void glGetInfoLogARB(Addressable arg0, int arg1, Addressable arg2, Addressable arg3) {
-    glut_h.glGetInfoLogARB(arg0, arg1, arg2, arg3);
+  public void glGetInfoLogARB(Addressable obj, int maxLength, Addressable length, Addressable infoLog) {
+    glut_h.glGetInfoLogARB(obj, maxLength, length, infoLog);
   }
 
-  public void glGetInteger64v(int arg0, Addressable arg1) {
-    glut_h.glGetInteger64v(arg0, arg1);
+  public void glGetInteger64v(int pname, Addressable data) {
+    glut_h.glGetInteger64v(pname, data);
   }
 
-  public void glGetIntegerIndexedvEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetIntegerIndexedvEXT(arg0, arg1, arg2);
+  public void glGetIntegerIndexedvEXT(int target, int index, Addressable data) {
+    glut_h.glGetIntegerIndexedvEXT(target, index, data);
   }
 
-  public void glGetIntegerv(int arg0, Addressable arg1) {
-    glut_h.glGetIntegerv(arg0, arg1);
+  public void glGetIntegerv(int pname, Addressable data) {
+    glut_h.glGetIntegerv(pname, data);
   }
 
-  public void glGetLightfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetLightfv(arg0, arg1, arg2);
+  public void glGetLightfv(int light, int pname, Addressable params) {
+    glut_h.glGetLightfv(light, pname, params);
   }
 
-  public void glGetLightiv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetLightiv(arg0, arg1, arg2);
+  public void glGetLightiv(int light, int pname, Addressable params) {
+    glut_h.glGetLightiv(light, pname, params);
   }
 
-  public void glGetMapdv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetMapdv(arg0, arg1, arg2);
+  public void glGetMapdv(int target, int query, Addressable v) {
+    glut_h.glGetMapdv(target, query, v);
   }
 
-  public void glGetMapfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetMapfv(arg0, arg1, arg2);
+  public void glGetMapfv(int target, int query, Addressable v) {
+    glut_h.glGetMapfv(target, query, v);
   }
 
-  public void glGetMapiv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetMapiv(arg0, arg1, arg2);
+  public void glGetMapiv(int target, int query, Addressable v) {
+    glut_h.glGetMapiv(target, query, v);
   }
 
-  public void glGetMaterialfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetMaterialfv(arg0, arg1, arg2);
+  public void glGetMaterialfv(int face, int pname, Addressable params) {
+    glut_h.glGetMaterialfv(face, pname, params);
   }
 
-  public void glGetMaterialiv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetMaterialiv(arg0, arg1, arg2);
+  public void glGetMaterialiv(int face, int pname, Addressable params) {
+    glut_h.glGetMaterialiv(face, pname, params);
   }
 
-  public void glGetMinmax(int arg0, byte arg1, int arg2, int arg3, Addressable arg4) {
-    glut_h.glGetMinmax(arg0, arg1, arg2, arg3, arg4);
+  public void glGetMinmax(int target, byte reset, int format, int type, Addressable values) {
+    glut_h.glGetMinmax(target, reset, format, type, values);
   }
 
-  public void glGetMinmaxParameterfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetMinmaxParameterfv(arg0, arg1, arg2);
+  public void glGetMinmaxParameterfv(int target, int pname, Addressable params) {
+    glut_h.glGetMinmaxParameterfv(target, pname, params);
   }
 
-  public void glGetMinmaxParameteriv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetMinmaxParameteriv(arg0, arg1, arg2);
+  public void glGetMinmaxParameteriv(int target, int pname, Addressable params) {
+    glut_h.glGetMinmaxParameteriv(target, pname, params);
   }
 
-  public void glGetObjectLabelEXT(int arg0, int arg1, int arg2, Addressable arg3, Addressable arg4) {
-    glut_h.glGetObjectLabelEXT(arg0, arg1, arg2, arg3, arg4);
+  public void glGetObjectLabelEXT(int type, int object, int bufSize, Addressable length, Addressable label) {
+    glut_h.glGetObjectLabelEXT(type, object, bufSize, length, label);
   }
 
-  public void glGetObjectParameterfvARB(Addressable arg0, int arg1, Addressable arg2) {
-    glut_h.glGetObjectParameterfvARB(arg0, arg1, arg2);
+  public void glGetObjectParameterfvARB(Addressable obj, int pname, Addressable params) {
+    glut_h.glGetObjectParameterfvARB(obj, pname, params);
   }
 
-  public void glGetObjectParameterivAPPLE(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glGetObjectParameterivAPPLE(arg0, arg1, arg2, arg3);
+  public void glGetObjectParameterivAPPLE(int objectType, int name, int pname, Addressable params) {
+    glut_h.glGetObjectParameterivAPPLE(objectType, name, pname, params);
   }
 
-  public void glGetObjectParameterivARB(Addressable arg0, int arg1, Addressable arg2) {
-    glut_h.glGetObjectParameterivARB(arg0, arg1, arg2);
+  public void glGetObjectParameterivARB(Addressable obj, int pname, Addressable params) {
+    glut_h.glGetObjectParameterivARB(obj, pname, params);
   }
 
-  public void glGetPixelMapfv(int arg0, Addressable arg1) {
-    glut_h.glGetPixelMapfv(arg0, arg1);
+  public void glGetPixelMapfv(int map, Addressable values) {
+    glut_h.glGetPixelMapfv(map, values);
   }
 
-  public void glGetPixelMapuiv(int arg0, Addressable arg1) {
-    glut_h.glGetPixelMapuiv(arg0, arg1);
+  public void glGetPixelMapuiv(int map, Addressable values) {
+    glut_h.glGetPixelMapuiv(map, values);
   }
 
-  public void glGetPixelMapusv(int arg0, Addressable arg1) {
-    glut_h.glGetPixelMapusv(arg0, arg1);
+  public void glGetPixelMapusv(int map, Addressable values) {
+    glut_h.glGetPixelMapusv(map, values);
   }
 
-  public void glGetPointerv(int arg0, Addressable arg1) {
-    glut_h.glGetPointerv(arg0, arg1);
+  public void glGetPointerv(int pname, Addressable params) {
+    glut_h.glGetPointerv(pname, params);
   }
 
-  public void glGetPolygonStipple(Addressable arg0) {
-    glut_h.glGetPolygonStipple(arg0);
+  public void glGetPolygonStipple(Addressable mask) {
+    glut_h.glGetPolygonStipple(mask);
   }
 
-  public void glGetProgramEnvParameterdvARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetProgramEnvParameterdvARB(arg0, arg1, arg2);
+  public void glGetProgramEnvParameterdvARB(int target, int index, Addressable params) {
+    glut_h.glGetProgramEnvParameterdvARB(target, index, params);
   }
 
-  public void glGetProgramEnvParameterfvARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetProgramEnvParameterfvARB(arg0, arg1, arg2);
+  public void glGetProgramEnvParameterfvARB(int target, int index, Addressable params) {
+    glut_h.glGetProgramEnvParameterfvARB(target, index, params);
   }
 
-  public void glGetProgramInfoLog(int arg0, int arg1, Addressable arg2, Addressable arg3) {
-    glut_h.glGetProgramInfoLog(arg0, arg1, arg2, arg3);
+  public void glGetProgramInfoLog(int program, int bufSize, Addressable length, Addressable infoLog) {
+    glut_h.glGetProgramInfoLog(program, bufSize, length, infoLog);
   }
 
-  public void glGetProgramLocalParameterdvARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetProgramLocalParameterdvARB(arg0, arg1, arg2);
+  public void glGetProgramLocalParameterdvARB(int target, int index, Addressable params) {
+    glut_h.glGetProgramLocalParameterdvARB(target, index, params);
   }
 
-  public void glGetProgramLocalParameterfvARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetProgramLocalParameterfvARB(arg0, arg1, arg2);
+  public void glGetProgramLocalParameterfvARB(int target, int index, Addressable params) {
+    glut_h.glGetProgramLocalParameterfvARB(target, index, params);
   }
 
-  public void glGetProgramStringARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetProgramStringARB(arg0, arg1, arg2);
+  public void glGetProgramStringARB(int target, int pname, Addressable string) {
+    glut_h.glGetProgramStringARB(target, pname, string);
   }
 
-  public void glGetProgramiv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetProgramiv(arg0, arg1, arg2);
+  public void glGetProgramiv(int program, int pname, Addressable params) {
+    glut_h.glGetProgramiv(program, pname, params);
   }
 
-  public void glGetProgramivARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetProgramivARB(arg0, arg1, arg2);
+  public void glGetProgramivARB(int target, int pname, Addressable params) {
+    glut_h.glGetProgramivARB(target, pname, params);
   }
 
-  public void glGetQueryObjecti64vEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetQueryObjecti64vEXT(arg0, arg1, arg2);
+  public void glGetQueryObjecti64vEXT(int id, int pname, Addressable params) {
+    glut_h.glGetQueryObjecti64vEXT(id, pname, params);
   }
 
-  public void glGetQueryObjectiv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetQueryObjectiv(arg0, arg1, arg2);
+  public void glGetQueryObjectiv(int id, int pname, Addressable params) {
+    glut_h.glGetQueryObjectiv(id, pname, params);
   }
 
-  public void glGetQueryObjectivARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetQueryObjectivARB(arg0, arg1, arg2);
+  public void glGetQueryObjectivARB(int id, int pname, Addressable params) {
+    glut_h.glGetQueryObjectivARB(id, pname, params);
   }
 
-  public void glGetQueryObjectui64vEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetQueryObjectui64vEXT(arg0, arg1, arg2);
+  public void glGetQueryObjectui64vEXT(int id, int pname, Addressable params) {
+    glut_h.glGetQueryObjectui64vEXT(id, pname, params);
   }
 
-  public void glGetQueryObjectuiv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetQueryObjectuiv(arg0, arg1, arg2);
+  public void glGetQueryObjectuiv(int id, int pname, Addressable params) {
+    glut_h.glGetQueryObjectuiv(id, pname, params);
   }
 
-  public void glGetQueryObjectuivARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetQueryObjectuivARB(arg0, arg1, arg2);
+  public void glGetQueryObjectuivARB(int id, int pname, Addressable params) {
+    glut_h.glGetQueryObjectuivARB(id, pname, params);
   }
 
-  public void glGetQueryiv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetQueryiv(arg0, arg1, arg2);
+  public void glGetQueryiv(int target, int pname, Addressable params) {
+    glut_h.glGetQueryiv(target, pname, params);
   }
 
-  public void glGetQueryivARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetQueryivARB(arg0, arg1, arg2);
+  public void glGetQueryivARB(int target, int pname, Addressable params) {
+    glut_h.glGetQueryivARB(target, pname, params);
   }
 
-  public void glGetRenderbufferParameteriv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetRenderbufferParameteriv(arg0, arg1, arg2);
+  public void glGetRenderbufferParameteriv(int target, int pname, Addressable params) {
+    glut_h.glGetRenderbufferParameteriv(target, pname, params);
   }
 
-  public void glGetRenderbufferParameterivEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetRenderbufferParameterivEXT(arg0, arg1, arg2);
+  public void glGetRenderbufferParameterivEXT(int target, int pname, Addressable params) {
+    glut_h.glGetRenderbufferParameterivEXT(target, pname, params);
   }
 
-  public void glGetSeparableFilter(int arg0, int arg1, int arg2, Addressable arg3, Addressable arg4, Addressable arg5) {
-    glut_h.glGetSeparableFilter(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glGetSeparableFilter(int target, int format, int type, Addressable row, Addressable column, Addressable span) {
+    glut_h.glGetSeparableFilter(target, format, type, row, column, span);
   }
 
-  public void glGetShaderInfoLog(int arg0, int arg1, Addressable arg2, Addressable arg3) {
-    glut_h.glGetShaderInfoLog(arg0, arg1, arg2, arg3);
+  public void glGetShaderInfoLog(int shader, int bufSize, Addressable length, Addressable infoLog) {
+    glut_h.glGetShaderInfoLog(shader, bufSize, length, infoLog);
   }
 
-  public void glGetShaderSource(int arg0, int arg1, Addressable arg2, Addressable arg3) {
-    glut_h.glGetShaderSource(arg0, arg1, arg2, arg3);
+  public void glGetShaderSource(int shader, int bufSize, Addressable length, Addressable source) {
+    glut_h.glGetShaderSource(shader, bufSize, length, source);
   }
 
-  public void glGetShaderSourceARB(Addressable arg0, int arg1, Addressable arg2, Addressable arg3) {
-    glut_h.glGetShaderSourceARB(arg0, arg1, arg2, arg3);
+  public void glGetShaderSourceARB(Addressable obj, int maxLength, Addressable length, Addressable source) {
+    glut_h.glGetShaderSourceARB(obj, maxLength, length, source);
   }
 
-  public void glGetShaderiv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetShaderiv(arg0, arg1, arg2);
+  public void glGetShaderiv(int shader, int pname, Addressable params) {
+    glut_h.glGetShaderiv(shader, pname, params);
   }
 
-  public String glGetString(int arg0) {
-    return glut_h.glGetString(arg0).getUtf8String(0);
+  public String glGetString(int name) {
+    return glut_h.glGetString(name).getUtf8String(0);
   }
 
-  public void glGetSynciv(Addressable arg0, int arg1, int arg2, Addressable arg3, Addressable arg4) {
-    glut_h.glGetSynciv(arg0, arg1, arg2, arg3, arg4);
+  public void glGetSynciv(Addressable sync, int pname, int count, Addressable length, Addressable values) {
+    glut_h.glGetSynciv(sync, pname, count, length, values);
   }
 
-  public void glGetTexEnvfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetTexEnvfv(arg0, arg1, arg2);
+  public void glGetTexEnvfv(int target, int pname, Addressable params) {
+    glut_h.glGetTexEnvfv(target, pname, params);
   }
 
-  public void glGetTexEnviv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetTexEnviv(arg0, arg1, arg2);
+  public void glGetTexEnviv(int target, int pname, Addressable params) {
+    glut_h.glGetTexEnviv(target, pname, params);
   }
 
-  public void glGetTexGendv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetTexGendv(arg0, arg1, arg2);
+  public void glGetTexGendv(int coord, int pname, Addressable params) {
+    glut_h.glGetTexGendv(coord, pname, params);
   }
 
-  public void glGetTexGenfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetTexGenfv(arg0, arg1, arg2);
+  public void glGetTexGenfv(int coord, int pname, Addressable params) {
+    glut_h.glGetTexGenfv(coord, pname, params);
   }
 
-  public void glGetTexGeniv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetTexGeniv(arg0, arg1, arg2);
+  public void glGetTexGeniv(int coord, int pname, Addressable params) {
+    glut_h.glGetTexGeniv(coord, pname, params);
   }
 
-  public void glGetTexImage(int arg0, int arg1, int arg2, int arg3, Addressable arg4) {
-    glut_h.glGetTexImage(arg0, arg1, arg2, arg3, arg4);
+  public void glGetTexImage(int target, int level, int format, int type, Addressable pixels) {
+    glut_h.glGetTexImage(target, level, format, type, pixels);
   }
 
-  public void glGetTexLevelParameterfv(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glGetTexLevelParameterfv(arg0, arg1, arg2, arg3);
+  public void glGetTexLevelParameterfv(int target, int level, int pname, Addressable params) {
+    glut_h.glGetTexLevelParameterfv(target, level, pname, params);
   }
 
-  public void glGetTexLevelParameteriv(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glGetTexLevelParameteriv(arg0, arg1, arg2, arg3);
+  public void glGetTexLevelParameteriv(int target, int level, int pname, Addressable params) {
+    glut_h.glGetTexLevelParameteriv(target, level, pname, params);
   }
 
-  public void glGetTexParameterIivEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetTexParameterIivEXT(arg0, arg1, arg2);
+  public void glGetTexParameterIivEXT(int target, int pname, Addressable params) {
+    glut_h.glGetTexParameterIivEXT(target, pname, params);
   }
 
-  public void glGetTexParameterIuivEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetTexParameterIuivEXT(arg0, arg1, arg2);
+  public void glGetTexParameterIuivEXT(int target, int pname, Addressable params) {
+    glut_h.glGetTexParameterIuivEXT(target, pname, params);
   }
 
-  public void glGetTexParameterPointervAPPLE(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetTexParameterPointervAPPLE(arg0, arg1, arg2);
+  public void glGetTexParameterPointervAPPLE(int target, int pname, Addressable params) {
+    glut_h.glGetTexParameterPointervAPPLE(target, pname, params);
   }
 
-  public void glGetTexParameterfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetTexParameterfv(arg0, arg1, arg2);
+  public void glGetTexParameterfv(int target, int pname, Addressable params) {
+    glut_h.glGetTexParameterfv(target, pname, params);
   }
 
-  public void glGetTexParameteriv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetTexParameteriv(arg0, arg1, arg2);
+  public void glGetTexParameteriv(int target, int pname, Addressable params) {
+    glut_h.glGetTexParameteriv(target, pname, params);
   }
 
-  public void glGetTransformFeedbackVaryingEXT(int arg0, int arg1, int arg2, Addressable arg3, Addressable arg4, Addressable arg5, Addressable arg6) {
-    glut_h.glGetTransformFeedbackVaryingEXT(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glGetTransformFeedbackVaryingEXT(int program, int index, int bufSize, Addressable length, Addressable size, Addressable type, Addressable name) {
+    glut_h.glGetTransformFeedbackVaryingEXT(program, index, bufSize, length, size, type, name);
   }
 
-  public int glGetUniformBufferSizeEXT(int arg0, int arg1) {
-    return glut_h.glGetUniformBufferSizeEXT(arg0, arg1);
+  public int glGetUniformBufferSizeEXT(int program, int location) {
+    return glut_h.glGetUniformBufferSizeEXT(program, location);
   }
 
-  public int glGetUniformLocation(int arg0, Addressable arg1) {
-    return glut_h.glGetUniformLocation(arg0, arg1);
+  public int glGetUniformLocation(int program, Addressable name) {
+    return glut_h.glGetUniformLocation(program, name);
   }
 
-  public int glGetUniformLocationARB(Addressable arg0, Addressable arg1) {
-    return glut_h.glGetUniformLocationARB(arg0, arg1);
+  public int glGetUniformLocationARB(Addressable programObj, Addressable name) {
+    return glut_h.glGetUniformLocationARB(programObj, name);
   }
 
-  public long glGetUniformOffsetEXT(int arg0, int arg1) {
-    return glut_h.glGetUniformOffsetEXT(arg0, arg1);
+  public long glGetUniformOffsetEXT(int program, int location) {
+    return glut_h.glGetUniformOffsetEXT(program, location);
   }
 
-  public void glGetUniformfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetUniformfv(arg0, arg1, arg2);
+  public void glGetUniformfv(int program, int location, Addressable params) {
+    glut_h.glGetUniformfv(program, location, params);
   }
 
-  public void glGetUniformfvARB(Addressable arg0, int arg1, Addressable arg2) {
-    glut_h.glGetUniformfvARB(arg0, arg1, arg2);
+  public void glGetUniformfvARB(Addressable programObj, int location, Addressable params) {
+    glut_h.glGetUniformfvARB(programObj, location, params);
   }
 
-  public void glGetUniformiv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetUniformiv(arg0, arg1, arg2);
+  public void glGetUniformiv(int program, int location, Addressable params) {
+    glut_h.glGetUniformiv(program, location, params);
   }
 
-  public void glGetUniformivARB(Addressable arg0, int arg1, Addressable arg2) {
-    glut_h.glGetUniformivARB(arg0, arg1, arg2);
+  public void glGetUniformivARB(Addressable programObj, int location, Addressable params) {
+    glut_h.glGetUniformivARB(programObj, location, params);
   }
 
-  public void glGetUniformuivEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetUniformuivEXT(arg0, arg1, arg2);
+  public void glGetUniformuivEXT(int program, int location, Addressable params) {
+    glut_h.glGetUniformuivEXT(program, location, params);
   }
 
-  public void glGetVertexAttribIivEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetVertexAttribIivEXT(arg0, arg1, arg2);
+  public void glGetVertexAttribIivEXT(int index, int pname, Addressable params) {
+    glut_h.glGetVertexAttribIivEXT(index, pname, params);
   }
 
-  public void glGetVertexAttribIuivEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetVertexAttribIuivEXT(arg0, arg1, arg2);
+  public void glGetVertexAttribIuivEXT(int index, int pname, Addressable params) {
+    glut_h.glGetVertexAttribIuivEXT(index, pname, params);
   }
 
-  public void glGetVertexAttribPointerv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetVertexAttribPointerv(arg0, arg1, arg2);
+  public void glGetVertexAttribPointerv(int index, int pname, Addressable pointer) {
+    glut_h.glGetVertexAttribPointerv(index, pname, pointer);
   }
 
-  public void glGetVertexAttribPointervARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetVertexAttribPointervARB(arg0, arg1, arg2);
+  public void glGetVertexAttribPointervARB(int index, int pname, Addressable pointer) {
+    glut_h.glGetVertexAttribPointervARB(index, pname, pointer);
   }
 
-  public void glGetVertexAttribdv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetVertexAttribdv(arg0, arg1, arg2);
+  public void glGetVertexAttribdv(int index, int pname, Addressable params) {
+    glut_h.glGetVertexAttribdv(index, pname, params);
   }
 
-  public void glGetVertexAttribdvARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetVertexAttribdvARB(arg0, arg1, arg2);
+  public void glGetVertexAttribdvARB(int index, int pname, Addressable params) {
+    glut_h.glGetVertexAttribdvARB(index, pname, params);
   }
 
-  public void glGetVertexAttribfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetVertexAttribfv(arg0, arg1, arg2);
+  public void glGetVertexAttribfv(int index, int pname, Addressable params) {
+    glut_h.glGetVertexAttribfv(index, pname, params);
   }
 
-  public void glGetVertexAttribfvARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetVertexAttribfvARB(arg0, arg1, arg2);
+  public void glGetVertexAttribfvARB(int index, int pname, Addressable params) {
+    glut_h.glGetVertexAttribfvARB(index, pname, params);
   }
 
-  public void glGetVertexAttribiv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetVertexAttribiv(arg0, arg1, arg2);
+  public void glGetVertexAttribiv(int index, int pname, Addressable params) {
+    glut_h.glGetVertexAttribiv(index, pname, params);
   }
 
-  public void glGetVertexAttribivARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glGetVertexAttribivARB(arg0, arg1, arg2);
+  public void glGetVertexAttribivARB(int index, int pname, Addressable params) {
+    glut_h.glGetVertexAttribivARB(index, pname, params);
   }
 
-  public void glHint(int arg0, int arg1) {
-    glut_h.glHint(arg0, arg1);
+  public void glHint(int target, int mode) {
+    glut_h.glHint(target, mode);
   }
 
-  public void glHistogram(int arg0, int arg1, int arg2, byte arg3) {
-    glut_h.glHistogram(arg0, arg1, arg2, arg3);
+  public void glHistogram(int target, int width, int internalformat, byte sink) {
+    glut_h.glHistogram(target, width, internalformat, sink);
   }
 
-  public void glIndexMask(int arg0) {
-    glut_h.glIndexMask(arg0);
+  public void glIndexMask(int mask) {
+    glut_h.glIndexMask(mask);
   }
 
-  public void glIndexPointer(int arg0, int arg1, Addressable arg2) {
-    glut_h.glIndexPointer(arg0, arg1, arg2);
+  public void glIndexPointer(int type, int stride, Addressable pointer) {
+    glut_h.glIndexPointer(type, stride, pointer);
   }
 
-  public void glIndexd(double arg0) {
-    glut_h.glIndexd(arg0);
+  public void glIndexd(double c) {
+    glut_h.glIndexd(c);
   }
 
-  public void glIndexdv(Addressable arg0) {
-    glut_h.glIndexdv(arg0);
+  public void glIndexdv(Addressable c) {
+    glut_h.glIndexdv(c);
   }
 
-  public void glIndexf(float arg0) {
-    glut_h.glIndexf(arg0);
+  public void glIndexf(float c) {
+    glut_h.glIndexf(c);
   }
 
-  public void glIndexfv(Addressable arg0) {
-    glut_h.glIndexfv(arg0);
+  public void glIndexfv(Addressable c) {
+    glut_h.glIndexfv(c);
   }
 
-  public void glIndexi(int arg0) {
-    glut_h.glIndexi(arg0);
+  public void glIndexi(int c) {
+    glut_h.glIndexi(c);
   }
 
-  public void glIndexiv(Addressable arg0) {
-    glut_h.glIndexiv(arg0);
+  public void glIndexiv(Addressable c) {
+    glut_h.glIndexiv(c);
   }
 
-  public void glIndexs(short arg0) {
-    glut_h.glIndexs(arg0);
+  public void glIndexs(short c) {
+    glut_h.glIndexs(c);
   }
 
-  public void glIndexsv(Addressable arg0) {
-    glut_h.glIndexsv(arg0);
+  public void glIndexsv(Addressable c) {
+    glut_h.glIndexsv(c);
   }
 
-  public void glIndexub(byte arg0) {
-    glut_h.glIndexub(arg0);
+  public void glIndexub(byte c) {
+    glut_h.glIndexub(c);
   }
 
-  public void glIndexubv(Addressable arg0) {
-    glut_h.glIndexubv(arg0);
+  public void glIndexubv(Addressable c) {
+    glut_h.glIndexubv(c);
   }
 
   public void glInitNames() {
     glut_h.glInitNames();
   }
 
-  public void glInsertEventMarkerEXT(int arg0, Addressable arg1) {
-    glut_h.glInsertEventMarkerEXT(arg0, arg1);
+  public void glInsertEventMarkerEXT(int length, Addressable marker) {
+    glut_h.glInsertEventMarkerEXT(length, marker);
   }
 
-  public void glInterleavedArrays(int arg0, int arg1, Addressable arg2) {
-    glut_h.glInterleavedArrays(arg0, arg1, arg2);
+  public void glInterleavedArrays(int format, int stride, Addressable pointer) {
+    glut_h.glInterleavedArrays(format, stride, pointer);
   }
 
-  public byte glIsBuffer(int arg0) {
-    return glut_h.glIsBuffer(arg0);
+  public byte glIsBuffer(int buffer) {
+    return glut_h.glIsBuffer(buffer);
   }
 
-  public byte glIsBufferARB(int arg0) {
-    return glut_h.glIsBufferARB(arg0);
+  public byte glIsBufferARB(int buffer) {
+    return glut_h.glIsBufferARB(buffer);
   }
 
-  public byte glIsEnabled(int arg0) {
-    return glut_h.glIsEnabled(arg0);
+  public byte glIsEnabled(int cap) {
+    return glut_h.glIsEnabled(cap);
   }
 
-  public byte glIsEnabledIndexedEXT(int arg0, int arg1) {
-    return glut_h.glIsEnabledIndexedEXT(arg0, arg1);
+  public byte glIsEnabledIndexedEXT(int target, int index) {
+    return glut_h.glIsEnabledIndexedEXT(target, index);
   }
 
-  public byte glIsFenceAPPLE(int arg0) {
-    return glut_h.glIsFenceAPPLE(arg0);
+  public byte glIsFenceAPPLE(int fence) {
+    return glut_h.glIsFenceAPPLE(fence);
   }
 
-  public byte glIsFramebuffer(int arg0) {
-    return glut_h.glIsFramebuffer(arg0);
+  public byte glIsFramebuffer(int framebuffer) {
+    return glut_h.glIsFramebuffer(framebuffer);
   }
 
-  public byte glIsFramebufferEXT(int arg0) {
-    return glut_h.glIsFramebufferEXT(arg0);
+  public byte glIsFramebufferEXT(int framebuffer) {
+    return glut_h.glIsFramebufferEXT(framebuffer);
   }
 
-  public byte glIsList(int arg0) {
-    return glut_h.glIsList(arg0);
+  public byte glIsList(int list) {
+    return glut_h.glIsList(list);
   }
 
-  public byte glIsProgram(int arg0) {
-    return glut_h.glIsProgram(arg0);
+  public byte glIsProgram(int program) {
+    return glut_h.glIsProgram(program);
   }
 
-  public byte glIsProgramARB(int arg0) {
-    return glut_h.glIsProgramARB(arg0);
+  public byte glIsProgramARB(int program) {
+    return glut_h.glIsProgramARB(program);
   }
 
-  public byte glIsQuery(int arg0) {
-    return glut_h.glIsQuery(arg0);
+  public byte glIsQuery(int id) {
+    return glut_h.glIsQuery(id);
   }
 
-  public byte glIsQueryARB(int arg0) {
-    return glut_h.glIsQueryARB(arg0);
+  public byte glIsQueryARB(int id) {
+    return glut_h.glIsQueryARB(id);
   }
 
-  public byte glIsRenderbuffer(int arg0) {
-    return glut_h.glIsRenderbuffer(arg0);
+  public byte glIsRenderbuffer(int renderbuffer) {
+    return glut_h.glIsRenderbuffer(renderbuffer);
   }
 
-  public byte glIsRenderbufferEXT(int arg0) {
-    return glut_h.glIsRenderbufferEXT(arg0);
+  public byte glIsRenderbufferEXT(int renderbuffer) {
+    return glut_h.glIsRenderbufferEXT(renderbuffer);
   }
 
-  public byte glIsShader(int arg0) {
-    return glut_h.glIsShader(arg0);
+  public byte glIsShader(int shader) {
+    return glut_h.glIsShader(shader);
   }
 
-  public byte glIsSync(Addressable arg0) {
-    return glut_h.glIsSync(arg0);
+  public byte glIsSync(Addressable sync) {
+    return glut_h.glIsSync(sync);
   }
 
-  public byte glIsTexture(int arg0) {
-    return glut_h.glIsTexture(arg0);
+  public byte glIsTexture(int texture) {
+    return glut_h.glIsTexture(texture);
   }
 
-  public byte glIsVertexArrayAPPLE(int arg0) {
-    return glut_h.glIsVertexArrayAPPLE(arg0);
+  public byte glIsVertexArrayAPPLE(int array) {
+    return glut_h.glIsVertexArrayAPPLE(array);
   }
 
-  public byte glIsVertexAttribEnabledAPPLE(int arg0, int arg1) {
-    return glut_h.glIsVertexAttribEnabledAPPLE(arg0, arg1);
+  public byte glIsVertexAttribEnabledAPPLE(int index, int pname) {
+    return glut_h.glIsVertexAttribEnabledAPPLE(index, pname);
   }
 
-  public void glLabelObjectEXT(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glLabelObjectEXT(arg0, arg1, arg2, arg3);
+  public void glLabelObjectEXT(int type, int object, int length, Addressable label) {
+    glut_h.glLabelObjectEXT(type, object, length, label);
   }
 
-  public void glLightModelf(int arg0, float arg1) {
-    glut_h.glLightModelf(arg0, arg1);
+  public void glLightModelf(int pname, float param) {
+    glut_h.glLightModelf(pname, param);
   }
 
-  public void glLightModelfv(int arg0, Addressable arg1) {
-    glut_h.glLightModelfv(arg0, arg1);
+  public void glLightModelfv(int pname, Addressable params) {
+    glut_h.glLightModelfv(pname, params);
   }
 
-  public void glLightModeli(int arg0, int arg1) {
-    glut_h.glLightModeli(arg0, arg1);
+  public void glLightModeli(int pname, int param) {
+    glut_h.glLightModeli(pname, param);
   }
 
-  public void glLightModeliv(int arg0, Addressable arg1) {
-    glut_h.glLightModeliv(arg0, arg1);
+  public void glLightModeliv(int pname, Addressable params) {
+    glut_h.glLightModeliv(pname, params);
   }
 
-  public void glLightf(int arg0, int arg1, float arg2) {
-    glut_h.glLightf(arg0, arg1, arg2);
+  public void glLightf(int light, int pname, float param) {
+    glut_h.glLightf(light, pname, param);
   }
 
-  public void glLightfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glLightfv(arg0, arg1, arg2);
+  public void glLightfv(int light, int pname, Addressable params) {
+    glut_h.glLightfv(light, pname, params);
   }
 
-  public void glLighti(int arg0, int arg1, int arg2) {
-    glut_h.glLighti(arg0, arg1, arg2);
+  public void glLighti(int light, int pname, int param) {
+    glut_h.glLighti(light, pname, param);
   }
 
-  public void glLightiv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glLightiv(arg0, arg1, arg2);
+  public void glLightiv(int light, int pname, Addressable params) {
+    glut_h.glLightiv(light, pname, params);
   }
 
-  public void glLineStipple(int arg0, short arg1) {
-    glut_h.glLineStipple(arg0, arg1);
+  public void glLineStipple(int factor, short pattern) {
+    glut_h.glLineStipple(factor, pattern);
   }
 
-  public void glLineWidth(float arg0) {
-    glut_h.glLineWidth(arg0);
+  public void glLineWidth(float width) {
+    glut_h.glLineWidth(width);
   }
 
-  public void glLinkProgram(int arg0) {
-    glut_h.glLinkProgram(arg0);
+  public void glLinkProgram(int program) {
+    glut_h.glLinkProgram(program);
   }
 
-  public void glLinkProgramARB(Addressable arg0) {
-    glut_h.glLinkProgramARB(arg0);
+  public void glLinkProgramARB(Addressable programObj) {
+    glut_h.glLinkProgramARB(programObj);
   }
 
-  public void glListBase(int arg0) {
-    glut_h.glListBase(arg0);
+  public void glListBase(int base) {
+    glut_h.glListBase(base);
   }
 
   public void glLoadIdentity() {
     glut_h.glLoadIdentity();
   }
 
-  public void glLoadMatrixd(Addressable arg0) {
-    glut_h.glLoadMatrixd(arg0);
+  public void glLoadMatrixd(Addressable m) {
+    glut_h.glLoadMatrixd(m);
   }
 
-  public void glLoadMatrixf(Addressable arg0) {
-    glut_h.glLoadMatrixf(arg0);
+  public void glLoadMatrixf(Addressable m) {
+    glut_h.glLoadMatrixf(m);
   }
 
-  public void glLoadName(int arg0) {
-    glut_h.glLoadName(arg0);
+  public void glLoadName(int name) {
+    glut_h.glLoadName(name);
   }
 
-  public void glLoadTransposeMatrixd(Addressable arg0) {
-    glut_h.glLoadTransposeMatrixd(arg0);
+  public void glLoadTransposeMatrixd(Addressable m) {
+    glut_h.glLoadTransposeMatrixd(m);
   }
 
-  public void glLoadTransposeMatrixdARB(Addressable arg0) {
-    glut_h.glLoadTransposeMatrixdARB(arg0);
+  public void glLoadTransposeMatrixdARB(Addressable m) {
+    glut_h.glLoadTransposeMatrixdARB(m);
   }
 
-  public void glLoadTransposeMatrixf(Addressable arg0) {
-    glut_h.glLoadTransposeMatrixf(arg0);
+  public void glLoadTransposeMatrixf(Addressable m) {
+    glut_h.glLoadTransposeMatrixf(m);
   }
 
-  public void glLoadTransposeMatrixfARB(Addressable arg0) {
-    glut_h.glLoadTransposeMatrixfARB(arg0);
+  public void glLoadTransposeMatrixfARB(Addressable m) {
+    glut_h.glLoadTransposeMatrixfARB(m);
   }
 
-  public void glLogicOp(int arg0) {
-    glut_h.glLogicOp(arg0);
+  public void glLogicOp(int opcode) {
+    glut_h.glLogicOp(opcode);
   }
 
-  public void glMap1d(int arg0, double arg1, double arg2, int arg3, int arg4, Addressable arg5) {
-    glut_h.glMap1d(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glMap1d(int target, double u1, double u2, int stride, int order, Addressable points) {
+    glut_h.glMap1d(target, u1, u2, stride, order, points);
   }
 
-  public void glMap1f(int arg0, float arg1, float arg2, int arg3, int arg4, Addressable arg5) {
-    glut_h.glMap1f(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glMap1f(int target, float u1, float u2, int stride, int order, Addressable points) {
+    glut_h.glMap1f(target, u1, u2, stride, order, points);
   }
 
-  public void glMap2d(int arg0, double arg1, double arg2, int arg3, int arg4, double arg5, double arg6, int arg7, int arg8, Addressable arg9) {
-    glut_h.glMap2d(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+  public void glMap2d(int target, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, Addressable points) {
+    glut_h.glMap2d(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
   }
 
-  public void glMap2f(int arg0, float arg1, float arg2, int arg3, int arg4, float arg5, float arg6, int arg7, int arg8, Addressable arg9) {
-    glut_h.glMap2f(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+  public void glMap2f(int target, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, Addressable points) {
+    glut_h.glMap2f(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
   }
 
-  public MemoryAddress glMapBuffer(int arg0, int arg1) {
-    return glut_h.glMapBuffer(arg0, arg1);
+  public MemoryAddress glMapBuffer(int target, int access) {
+    return glut_h.glMapBuffer(target, access);
   }
 
-  public MemoryAddress glMapBufferARB(int arg0, int arg1) {
-    return glut_h.glMapBufferARB(arg0, arg1);
+  public MemoryAddress glMapBufferARB(int target, int access) {
+    return glut_h.glMapBufferARB(target, access);
   }
 
-  public void glMapGrid1d(int arg0, double arg1, double arg2) {
-    glut_h.glMapGrid1d(arg0, arg1, arg2);
+  public void glMapGrid1d(int un, double u1, double u2) {
+    glut_h.glMapGrid1d(un, u1, u2);
   }
 
-  public void glMapGrid1f(int arg0, float arg1, float arg2) {
-    glut_h.glMapGrid1f(arg0, arg1, arg2);
+  public void glMapGrid1f(int un, float u1, float u2) {
+    glut_h.glMapGrid1f(un, u1, u2);
   }
 
-  public void glMapGrid2d(int arg0, double arg1, double arg2, int arg3, double arg4, double arg5) {
-    glut_h.glMapGrid2d(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glMapGrid2d(int un, double u1, double u2, int vn, double v1, double v2) {
+    glut_h.glMapGrid2d(un, u1, u2, vn, v1, v2);
   }
 
-  public void glMapGrid2f(int arg0, float arg1, float arg2, int arg3, float arg4, float arg5) {
-    glut_h.glMapGrid2f(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glMapGrid2f(int un, float u1, float u2, int vn, float v1, float v2) {
+    glut_h.glMapGrid2f(un, u1, u2, vn, v1, v2);
   }
 
-  public void glMapVertexAttrib1dAPPLE(int arg0, int arg1, double arg2, double arg3, int arg4, int arg5, Addressable arg6) {
-    glut_h.glMapVertexAttrib1dAPPLE(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glMapVertexAttrib1dAPPLE(int index, int size, double u1, double u2, int stride, int order, Addressable points) {
+    glut_h.glMapVertexAttrib1dAPPLE(index, size, u1, u2, stride, order, points);
   }
 
-  public void glMapVertexAttrib1fAPPLE(int arg0, int arg1, float arg2, float arg3, int arg4, int arg5, Addressable arg6) {
-    glut_h.glMapVertexAttrib1fAPPLE(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glMapVertexAttrib1fAPPLE(int index, int size, float u1, float u2, int stride, int order, Addressable points) {
+    glut_h.glMapVertexAttrib1fAPPLE(index, size, u1, u2, stride, order, points);
   }
 
-  public void glMapVertexAttrib2dAPPLE(int arg0, int arg1, double arg2, double arg3, int arg4, int arg5, double arg6, double arg7, int arg8, int arg9, Addressable arg10) {
-    glut_h.glMapVertexAttrib2dAPPLE(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+  public void glMapVertexAttrib2dAPPLE(int index, int size, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, Addressable points) {
+    glut_h.glMapVertexAttrib2dAPPLE(index, size, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
   }
 
-  public void glMapVertexAttrib2fAPPLE(int arg0, int arg1, float arg2, float arg3, int arg4, int arg5, float arg6, float arg7, int arg8, int arg9, Addressable arg10) {
-    glut_h.glMapVertexAttrib2fAPPLE(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+  public void glMapVertexAttrib2fAPPLE(int index, int size, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, Addressable points) {
+    glut_h.glMapVertexAttrib2fAPPLE(index, size, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
   }
 
-  public void glMaterialf(int arg0, int arg1, float arg2) {
-    glut_h.glMaterialf(arg0, arg1, arg2);
+  public void glMaterialf(int face, int pname, float param) {
+    glut_h.glMaterialf(face, pname, param);
   }
 
-  public void glMaterialfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glMaterialfv(arg0, arg1, arg2);
+  public void glMaterialfv(int face, int pname, Addressable params) {
+    glut_h.glMaterialfv(face, pname, params);
   }
 
-  public void glMateriali(int arg0, int arg1, int arg2) {
-    glut_h.glMateriali(arg0, arg1, arg2);
+  public void glMateriali(int face, int pname, int param) {
+    glut_h.glMateriali(face, pname, param);
   }
 
-  public void glMaterialiv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glMaterialiv(arg0, arg1, arg2);
+  public void glMaterialiv(int face, int pname, Addressable params) {
+    glut_h.glMaterialiv(face, pname, params);
   }
 
-  public void glMatrixMode(int arg0) {
-    glut_h.glMatrixMode(arg0);
+  public void glMatrixMode(int mode) {
+    glut_h.glMatrixMode(mode);
   }
 
-  public void glMinmax(int arg0, int arg1, byte arg2) {
-    glut_h.glMinmax(arg0, arg1, arg2);
+  public void glMinmax(int target, int internalformat, byte sink) {
+    glut_h.glMinmax(target, internalformat, sink);
   }
 
-  public void glMultMatrixd(Addressable arg0) {
-    glut_h.glMultMatrixd(arg0);
+  public void glMultMatrixd(Addressable m) {
+    glut_h.glMultMatrixd(m);
   }
 
-  public void glMultMatrixf(Addressable arg0) {
-    glut_h.glMultMatrixf(arg0);
+  public void glMultMatrixf(Addressable m) {
+    glut_h.glMultMatrixf(m);
   }
 
-  public void glMultTransposeMatrixd(Addressable arg0) {
-    glut_h.glMultTransposeMatrixd(arg0);
+  public void glMultTransposeMatrixd(Addressable m) {
+    glut_h.glMultTransposeMatrixd(m);
   }
 
-  public void glMultTransposeMatrixdARB(Addressable arg0) {
-    glut_h.glMultTransposeMatrixdARB(arg0);
+  public void glMultTransposeMatrixdARB(Addressable m) {
+    glut_h.glMultTransposeMatrixdARB(m);
   }
 
-  public void glMultTransposeMatrixf(Addressable arg0) {
-    glut_h.glMultTransposeMatrixf(arg0);
+  public void glMultTransposeMatrixf(Addressable m) {
+    glut_h.glMultTransposeMatrixf(m);
   }
 
-  public void glMultTransposeMatrixfARB(Addressable arg0) {
-    glut_h.glMultTransposeMatrixfARB(arg0);
+  public void glMultTransposeMatrixfARB(Addressable m) {
+    glut_h.glMultTransposeMatrixfARB(m);
   }
 
-  public void glMultiDrawArrays(int arg0, Addressable arg1, Addressable arg2, int arg3) {
-    glut_h.glMultiDrawArrays(arg0, arg1, arg2, arg3);
+  public void glMultiDrawArrays(int mode, Addressable first, Addressable count, int drawcount) {
+    glut_h.glMultiDrawArrays(mode, first, count, drawcount);
   }
 
-  public void glMultiDrawArraysEXT(int arg0, Addressable arg1, Addressable arg2, int arg3) {
-    glut_h.glMultiDrawArraysEXT(arg0, arg1, arg2, arg3);
+  public void glMultiDrawArraysEXT(int mode, Addressable first, Addressable count, int primcount) {
+    glut_h.glMultiDrawArraysEXT(mode, first, count, primcount);
   }
 
-  public void glMultiDrawElementArrayAPPLE(int arg0, Addressable arg1, Addressable arg2, int arg3) {
-    glut_h.glMultiDrawElementArrayAPPLE(arg0, arg1, arg2, arg3);
+  public void glMultiDrawElementArrayAPPLE(int mode, Addressable first, Addressable count, int primcount) {
+    glut_h.glMultiDrawElementArrayAPPLE(mode, first, count, primcount);
   }
 
-  public void glMultiDrawElements(int arg0, Addressable arg1, int arg2, Addressable arg3, int arg4) {
-    glut_h.glMultiDrawElements(arg0, arg1, arg2, arg3, arg4);
+  public void glMultiDrawElements(int mode, Addressable count, int type, Addressable indices, int drawcount) {
+    glut_h.glMultiDrawElements(mode, count, type, indices, drawcount);
   }
 
-  public void glMultiDrawElementsBaseVertex(int arg0, Addressable arg1, int arg2, Addressable arg3, int arg4, Addressable arg5) {
-    glut_h.glMultiDrawElementsBaseVertex(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glMultiDrawElementsBaseVertex(int mode, Addressable count, int type, Addressable indices, int drawcount, Addressable basevertex) {
+    glut_h.glMultiDrawElementsBaseVertex(mode, count, type, indices, drawcount, basevertex);
   }
 
-  public void glMultiDrawElementsEXT(int arg0, Addressable arg1, int arg2, Addressable arg3, int arg4) {
-    glut_h.glMultiDrawElementsEXT(arg0, arg1, arg2, arg3, arg4);
+  public void glMultiDrawElementsEXT(int mode, Addressable count, int type, Addressable indices, int primcount) {
+    glut_h.glMultiDrawElementsEXT(mode, count, type, indices, primcount);
   }
 
-  public void glMultiDrawRangeElementArrayAPPLE(int arg0, int arg1, int arg2, Addressable arg3, Addressable arg4, int arg5) {
-    glut_h.glMultiDrawRangeElementArrayAPPLE(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glMultiDrawRangeElementArrayAPPLE(int mode, int start, int end, Addressable first, Addressable count, int primcount) {
+    glut_h.glMultiDrawRangeElementArrayAPPLE(mode, start, end, first, count, primcount);
   }
 
-  public void glMultiTexCoord1d(int arg0, double arg1) {
-    glut_h.glMultiTexCoord1d(arg0, arg1);
+  public void glMultiTexCoord1d(int target, double s) {
+    glut_h.glMultiTexCoord1d(target, s);
   }
 
-  public void glMultiTexCoord1dARB(int arg0, double arg1) {
-    glut_h.glMultiTexCoord1dARB(arg0, arg1);
+  public void glMultiTexCoord1dARB(int target, double s) {
+    glut_h.glMultiTexCoord1dARB(target, s);
   }
 
-  public void glMultiTexCoord1dv(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord1dv(arg0, arg1);
+  public void glMultiTexCoord1dv(int target, Addressable v) {
+    glut_h.glMultiTexCoord1dv(target, v);
   }
 
-  public void glMultiTexCoord1dvARB(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord1dvARB(arg0, arg1);
+  public void glMultiTexCoord1dvARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord1dvARB(target, v);
   }
 
-  public void glMultiTexCoord1f(int arg0, float arg1) {
-    glut_h.glMultiTexCoord1f(arg0, arg1);
+  public void glMultiTexCoord1f(int target, float s) {
+    glut_h.glMultiTexCoord1f(target, s);
   }
 
-  public void glMultiTexCoord1fARB(int arg0, float arg1) {
-    glut_h.glMultiTexCoord1fARB(arg0, arg1);
+  public void glMultiTexCoord1fARB(int target, float s) {
+    glut_h.glMultiTexCoord1fARB(target, s);
   }
 
-  public void glMultiTexCoord1fv(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord1fv(arg0, arg1);
+  public void glMultiTexCoord1fv(int target, Addressable v) {
+    glut_h.glMultiTexCoord1fv(target, v);
   }
 
-  public void glMultiTexCoord1fvARB(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord1fvARB(arg0, arg1);
+  public void glMultiTexCoord1fvARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord1fvARB(target, v);
   }
 
-  public void glMultiTexCoord1i(int arg0, int arg1) {
-    glut_h.glMultiTexCoord1i(arg0, arg1);
+  public void glMultiTexCoord1i(int target, int s) {
+    glut_h.glMultiTexCoord1i(target, s);
   }
 
-  public void glMultiTexCoord1iARB(int arg0, int arg1) {
-    glut_h.glMultiTexCoord1iARB(arg0, arg1);
+  public void glMultiTexCoord1iARB(int target, int s) {
+    glut_h.glMultiTexCoord1iARB(target, s);
   }
 
-  public void glMultiTexCoord1iv(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord1iv(arg0, arg1);
+  public void glMultiTexCoord1iv(int target, Addressable v) {
+    glut_h.glMultiTexCoord1iv(target, v);
   }
 
-  public void glMultiTexCoord1ivARB(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord1ivARB(arg0, arg1);
+  public void glMultiTexCoord1ivARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord1ivARB(target, v);
   }
 
-  public void glMultiTexCoord1s(int arg0, short arg1) {
-    glut_h.glMultiTexCoord1s(arg0, arg1);
+  public void glMultiTexCoord1s(int target, short s) {
+    glut_h.glMultiTexCoord1s(target, s);
   }
 
-  public void glMultiTexCoord1sARB(int arg0, short arg1) {
-    glut_h.glMultiTexCoord1sARB(arg0, arg1);
+  public void glMultiTexCoord1sARB(int target, short s) {
+    glut_h.glMultiTexCoord1sARB(target, s);
   }
 
-  public void glMultiTexCoord1sv(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord1sv(arg0, arg1);
+  public void glMultiTexCoord1sv(int target, Addressable v) {
+    glut_h.glMultiTexCoord1sv(target, v);
   }
 
-  public void glMultiTexCoord1svARB(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord1svARB(arg0, arg1);
+  public void glMultiTexCoord1svARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord1svARB(target, v);
   }
 
-  public void glMultiTexCoord2d(int arg0, double arg1, double arg2) {
-    glut_h.glMultiTexCoord2d(arg0, arg1, arg2);
+  public void glMultiTexCoord2d(int target, double s, double t) {
+    glut_h.glMultiTexCoord2d(target, s, t);
   }
 
-  public void glMultiTexCoord2dARB(int arg0, double arg1, double arg2) {
-    glut_h.glMultiTexCoord2dARB(arg0, arg1, arg2);
+  public void glMultiTexCoord2dARB(int target, double s, double t) {
+    glut_h.glMultiTexCoord2dARB(target, s, t);
   }
 
-  public void glMultiTexCoord2dv(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord2dv(arg0, arg1);
+  public void glMultiTexCoord2dv(int target, Addressable v) {
+    glut_h.glMultiTexCoord2dv(target, v);
   }
 
-  public void glMultiTexCoord2dvARB(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord2dvARB(arg0, arg1);
+  public void glMultiTexCoord2dvARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord2dvARB(target, v);
   }
 
-  public void glMultiTexCoord2f(int arg0, float arg1, float arg2) {
-    glut_h.glMultiTexCoord2f(arg0, arg1, arg2);
+  public void glMultiTexCoord2f(int target, float s, float t) {
+    glut_h.glMultiTexCoord2f(target, s, t);
   }
 
-  public void glMultiTexCoord2fARB(int arg0, float arg1, float arg2) {
-    glut_h.glMultiTexCoord2fARB(arg0, arg1, arg2);
+  public void glMultiTexCoord2fARB(int target, float s, float t) {
+    glut_h.glMultiTexCoord2fARB(target, s, t);
   }
 
-  public void glMultiTexCoord2fv(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord2fv(arg0, arg1);
+  public void glMultiTexCoord2fv(int target, Addressable v) {
+    glut_h.glMultiTexCoord2fv(target, v);
   }
 
-  public void glMultiTexCoord2fvARB(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord2fvARB(arg0, arg1);
+  public void glMultiTexCoord2fvARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord2fvARB(target, v);
   }
 
-  public void glMultiTexCoord2i(int arg0, int arg1, int arg2) {
-    glut_h.glMultiTexCoord2i(arg0, arg1, arg2);
+  public void glMultiTexCoord2i(int target, int s, int t) {
+    glut_h.glMultiTexCoord2i(target, s, t);
   }
 
-  public void glMultiTexCoord2iARB(int arg0, int arg1, int arg2) {
-    glut_h.glMultiTexCoord2iARB(arg0, arg1, arg2);
+  public void glMultiTexCoord2iARB(int target, int s, int t) {
+    glut_h.glMultiTexCoord2iARB(target, s, t);
   }
 
-  public void glMultiTexCoord2iv(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord2iv(arg0, arg1);
+  public void glMultiTexCoord2iv(int target, Addressable v) {
+    glut_h.glMultiTexCoord2iv(target, v);
   }
 
-  public void glMultiTexCoord2ivARB(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord2ivARB(arg0, arg1);
+  public void glMultiTexCoord2ivARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord2ivARB(target, v);
   }
 
-  public void glMultiTexCoord2s(int arg0, short arg1, short arg2) {
-    glut_h.glMultiTexCoord2s(arg0, arg1, arg2);
+  public void glMultiTexCoord2s(int target, short s, short t) {
+    glut_h.glMultiTexCoord2s(target, s, t);
   }
 
-  public void glMultiTexCoord2sARB(int arg0, short arg1, short arg2) {
-    glut_h.glMultiTexCoord2sARB(arg0, arg1, arg2);
+  public void glMultiTexCoord2sARB(int target, short s, short t) {
+    glut_h.glMultiTexCoord2sARB(target, s, t);
   }
 
-  public void glMultiTexCoord2sv(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord2sv(arg0, arg1);
+  public void glMultiTexCoord2sv(int target, Addressable v) {
+    glut_h.glMultiTexCoord2sv(target, v);
   }
 
-  public void glMultiTexCoord2svARB(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord2svARB(arg0, arg1);
+  public void glMultiTexCoord2svARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord2svARB(target, v);
   }
 
-  public void glMultiTexCoord3d(int arg0, double arg1, double arg2, double arg3) {
-    glut_h.glMultiTexCoord3d(arg0, arg1, arg2, arg3);
+  public void glMultiTexCoord3d(int target, double s, double t, double r) {
+    glut_h.glMultiTexCoord3d(target, s, t, r);
   }
 
-  public void glMultiTexCoord3dARB(int arg0, double arg1, double arg2, double arg3) {
-    glut_h.glMultiTexCoord3dARB(arg0, arg1, arg2, arg3);
+  public void glMultiTexCoord3dARB(int target, double s, double t, double r) {
+    glut_h.glMultiTexCoord3dARB(target, s, t, r);
   }
 
-  public void glMultiTexCoord3dv(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord3dv(arg0, arg1);
+  public void glMultiTexCoord3dv(int target, Addressable v) {
+    glut_h.glMultiTexCoord3dv(target, v);
   }
 
-  public void glMultiTexCoord3dvARB(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord3dvARB(arg0, arg1);
+  public void glMultiTexCoord3dvARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord3dvARB(target, v);
   }
 
-  public void glMultiTexCoord3f(int arg0, float arg1, float arg2, float arg3) {
-    glut_h.glMultiTexCoord3f(arg0, arg1, arg2, arg3);
+  public void glMultiTexCoord3f(int target, float s, float t, float r) {
+    glut_h.glMultiTexCoord3f(target, s, t, r);
   }
 
-  public void glMultiTexCoord3fARB(int arg0, float arg1, float arg2, float arg3) {
-    glut_h.glMultiTexCoord3fARB(arg0, arg1, arg2, arg3);
+  public void glMultiTexCoord3fARB(int target, float s, float t, float r) {
+    glut_h.glMultiTexCoord3fARB(target, s, t, r);
   }
 
-  public void glMultiTexCoord3fv(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord3fv(arg0, arg1);
+  public void glMultiTexCoord3fv(int target, Addressable v) {
+    glut_h.glMultiTexCoord3fv(target, v);
   }
 
-  public void glMultiTexCoord3fvARB(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord3fvARB(arg0, arg1);
+  public void glMultiTexCoord3fvARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord3fvARB(target, v);
   }
 
-  public void glMultiTexCoord3i(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glMultiTexCoord3i(arg0, arg1, arg2, arg3);
+  public void glMultiTexCoord3i(int target, int s, int t, int r) {
+    glut_h.glMultiTexCoord3i(target, s, t, r);
   }
 
-  public void glMultiTexCoord3iARB(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glMultiTexCoord3iARB(arg0, arg1, arg2, arg3);
+  public void glMultiTexCoord3iARB(int target, int s, int t, int r) {
+    glut_h.glMultiTexCoord3iARB(target, s, t, r);
   }
 
-  public void glMultiTexCoord3iv(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord3iv(arg0, arg1);
+  public void glMultiTexCoord3iv(int target, Addressable v) {
+    glut_h.glMultiTexCoord3iv(target, v);
   }
 
-  public void glMultiTexCoord3ivARB(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord3ivARB(arg0, arg1);
+  public void glMultiTexCoord3ivARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord3ivARB(target, v);
   }
 
-  public void glMultiTexCoord3s(int arg0, short arg1, short arg2, short arg3) {
-    glut_h.glMultiTexCoord3s(arg0, arg1, arg2, arg3);
+  public void glMultiTexCoord3s(int target, short s, short t, short r) {
+    glut_h.glMultiTexCoord3s(target, s, t, r);
   }
 
-  public void glMultiTexCoord3sARB(int arg0, short arg1, short arg2, short arg3) {
-    glut_h.glMultiTexCoord3sARB(arg0, arg1, arg2, arg3);
+  public void glMultiTexCoord3sARB(int target, short s, short t, short r) {
+    glut_h.glMultiTexCoord3sARB(target, s, t, r);
   }
 
-  public void glMultiTexCoord3sv(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord3sv(arg0, arg1);
+  public void glMultiTexCoord3sv(int target, Addressable v) {
+    glut_h.glMultiTexCoord3sv(target, v);
   }
 
-  public void glMultiTexCoord3svARB(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord3svARB(arg0, arg1);
+  public void glMultiTexCoord3svARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord3svARB(target, v);
   }
 
-  public void glMultiTexCoord4d(int arg0, double arg1, double arg2, double arg3, double arg4) {
-    glut_h.glMultiTexCoord4d(arg0, arg1, arg2, arg3, arg4);
+  public void glMultiTexCoord4d(int target, double s, double t, double r, double q) {
+    glut_h.glMultiTexCoord4d(target, s, t, r, q);
   }
 
-  public void glMultiTexCoord4dARB(int arg0, double arg1, double arg2, double arg3, double arg4) {
-    glut_h.glMultiTexCoord4dARB(arg0, arg1, arg2, arg3, arg4);
+  public void glMultiTexCoord4dARB(int target, double s, double t, double r, double q) {
+    glut_h.glMultiTexCoord4dARB(target, s, t, r, q);
   }
 
-  public void glMultiTexCoord4dv(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord4dv(arg0, arg1);
+  public void glMultiTexCoord4dv(int target, Addressable v) {
+    glut_h.glMultiTexCoord4dv(target, v);
   }
 
-  public void glMultiTexCoord4dvARB(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord4dvARB(arg0, arg1);
+  public void glMultiTexCoord4dvARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord4dvARB(target, v);
   }
 
-  public void glMultiTexCoord4f(int arg0, float arg1, float arg2, float arg3, float arg4) {
-    glut_h.glMultiTexCoord4f(arg0, arg1, arg2, arg3, arg4);
+  public void glMultiTexCoord4f(int target, float s, float t, float r, float q) {
+    glut_h.glMultiTexCoord4f(target, s, t, r, q);
   }
 
-  public void glMultiTexCoord4fARB(int arg0, float arg1, float arg2, float arg3, float arg4) {
-    glut_h.glMultiTexCoord4fARB(arg0, arg1, arg2, arg3, arg4);
+  public void glMultiTexCoord4fARB(int target, float s, float t, float r, float q) {
+    glut_h.glMultiTexCoord4fARB(target, s, t, r, q);
   }
 
-  public void glMultiTexCoord4fv(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord4fv(arg0, arg1);
+  public void glMultiTexCoord4fv(int target, Addressable v) {
+    glut_h.glMultiTexCoord4fv(target, v);
   }
 
-  public void glMultiTexCoord4fvARB(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord4fvARB(arg0, arg1);
+  public void glMultiTexCoord4fvARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord4fvARB(target, v);
   }
 
-  public void glMultiTexCoord4i(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glMultiTexCoord4i(arg0, arg1, arg2, arg3, arg4);
+  public void glMultiTexCoord4i(int target, int s, int t, int r, int q) {
+    glut_h.glMultiTexCoord4i(target, s, t, r, q);
   }
 
-  public void glMultiTexCoord4iARB(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glMultiTexCoord4iARB(arg0, arg1, arg2, arg3, arg4);
+  public void glMultiTexCoord4iARB(int target, int s, int t, int r, int q) {
+    glut_h.glMultiTexCoord4iARB(target, s, t, r, q);
   }
 
-  public void glMultiTexCoord4iv(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord4iv(arg0, arg1);
+  public void glMultiTexCoord4iv(int target, Addressable v) {
+    glut_h.glMultiTexCoord4iv(target, v);
   }
 
-  public void glMultiTexCoord4ivARB(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord4ivARB(arg0, arg1);
+  public void glMultiTexCoord4ivARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord4ivARB(target, v);
   }
 
-  public void glMultiTexCoord4s(int arg0, short arg1, short arg2, short arg3, short arg4) {
-    glut_h.glMultiTexCoord4s(arg0, arg1, arg2, arg3, arg4);
+  public void glMultiTexCoord4s(int target, short s, short t, short r, short q) {
+    glut_h.glMultiTexCoord4s(target, s, t, r, q);
   }
 
-  public void glMultiTexCoord4sARB(int arg0, short arg1, short arg2, short arg3, short arg4) {
-    glut_h.glMultiTexCoord4sARB(arg0, arg1, arg2, arg3, arg4);
+  public void glMultiTexCoord4sARB(int target, short s, short t, short r, short q) {
+    glut_h.glMultiTexCoord4sARB(target, s, t, r, q);
   }
 
-  public void glMultiTexCoord4sv(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord4sv(arg0, arg1);
+  public void glMultiTexCoord4sv(int target, Addressable v) {
+    glut_h.glMultiTexCoord4sv(target, v);
   }
 
-  public void glMultiTexCoord4svARB(int arg0, Addressable arg1) {
-    glut_h.glMultiTexCoord4svARB(arg0, arg1);
+  public void glMultiTexCoord4svARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord4svARB(target, v);
   }
 
-  public void glNewList(int arg0, int arg1) {
-    glut_h.glNewList(arg0, arg1);
+  public void glNewList(int list, int mode) {
+    glut_h.glNewList(list, mode);
   }
 
-  public void glNormal3b(byte arg0, byte arg1, byte arg2) {
-    glut_h.glNormal3b(arg0, arg1, arg2);
+  public void glNormal3b(byte nx, byte ny, byte nz) {
+    glut_h.glNormal3b(nx, ny, nz);
   }
 
-  public void glNormal3bv(Addressable arg0) {
-    glut_h.glNormal3bv(arg0);
+  public void glNormal3bv(Addressable v) {
+    glut_h.glNormal3bv(v);
   }
 
-  public void glNormal3d(double arg0, double arg1, double arg2) {
-    glut_h.glNormal3d(arg0, arg1, arg2);
+  public void glNormal3d(double nx, double ny, double nz) {
+    glut_h.glNormal3d(nx, ny, nz);
   }
 
-  public void glNormal3dv(Addressable arg0) {
-    glut_h.glNormal3dv(arg0);
+  public void glNormal3dv(Addressable v) {
+    glut_h.glNormal3dv(v);
   }
 
-  public void glNormal3f(float arg0, float arg1, float arg2) {
-    glut_h.glNormal3f(arg0, arg1, arg2);
+  public void glNormal3f(float nx, float ny, float nz) {
+    glut_h.glNormal3f(nx, ny, nz);
   }
 
-  public void glNormal3fv(Addressable arg0) {
-    glut_h.glNormal3fv(arg0);
+  public void glNormal3fv(Addressable v) {
+    glut_h.glNormal3fv(v);
   }
 
-  public void glNormal3i(int arg0, int arg1, int arg2) {
-    glut_h.glNormal3i(arg0, arg1, arg2);
+  public void glNormal3i(int nx, int ny, int nz) {
+    glut_h.glNormal3i(nx, ny, nz);
   }
 
-  public void glNormal3iv(Addressable arg0) {
-    glut_h.glNormal3iv(arg0);
+  public void glNormal3iv(Addressable v) {
+    glut_h.glNormal3iv(v);
   }
 
-  public void glNormal3s(short arg0, short arg1, short arg2) {
-    glut_h.glNormal3s(arg0, arg1, arg2);
+  public void glNormal3s(short nx, short ny, short nz) {
+    glut_h.glNormal3s(nx, ny, nz);
   }
 
-  public void glNormal3sv(Addressable arg0) {
-    glut_h.glNormal3sv(arg0);
+  public void glNormal3sv(Addressable v) {
+    glut_h.glNormal3sv(v);
   }
 
-  public void glNormalPointer(int arg0, int arg1, Addressable arg2) {
-    glut_h.glNormalPointer(arg0, arg1, arg2);
+  public void glNormalPointer(int type, int stride, Addressable pointer) {
+    glut_h.glNormalPointer(type, stride, pointer);
   }
 
-  public int glObjectPurgeableAPPLE(int arg0, int arg1, int arg2) {
-    return glut_h.glObjectPurgeableAPPLE(arg0, arg1, arg2);
+  public int glObjectPurgeableAPPLE(int objectType, int name, int option) {
+    return glut_h.glObjectPurgeableAPPLE(objectType, name, option);
   }
 
-  public int glObjectUnpurgeableAPPLE(int arg0, int arg1, int arg2) {
-    return glut_h.glObjectUnpurgeableAPPLE(arg0, arg1, arg2);
+  public int glObjectUnpurgeableAPPLE(int objectType, int name, int option) {
+    return glut_h.glObjectUnpurgeableAPPLE(objectType, name, option);
   }
 
-  public void glOrtho(double arg0, double arg1, double arg2, double arg3, double arg4, double arg5) {
-    glut_h.glOrtho(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glOrtho(double left, double right, double bottom, double top, double zNear, double zFar) {
+    glut_h.glOrtho(left, right, bottom, top, zNear, zFar);
   }
 
-  public void glPassThrough(float arg0) {
-    glut_h.glPassThrough(arg0);
+  public void glPassThrough(float token) {
+    glut_h.glPassThrough(token);
   }
 
-  public void glPixelMapfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glPixelMapfv(arg0, arg1, arg2);
+  public void glPixelMapfv(int map, int mapsize, Addressable values) {
+    glut_h.glPixelMapfv(map, mapsize, values);
   }
 
-  public void glPixelMapuiv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glPixelMapuiv(arg0, arg1, arg2);
+  public void glPixelMapuiv(int map, int mapsize, Addressable values) {
+    glut_h.glPixelMapuiv(map, mapsize, values);
   }
 
-  public void glPixelMapusv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glPixelMapusv(arg0, arg1, arg2);
+  public void glPixelMapusv(int map, int mapsize, Addressable values) {
+    glut_h.glPixelMapusv(map, mapsize, values);
   }
 
-  public void glPixelStoref(int arg0, float arg1) {
-    glut_h.glPixelStoref(arg0, arg1);
+  public void glPixelStoref(int pname, float param) {
+    glut_h.glPixelStoref(pname, param);
   }
 
-  public void glPixelStorei(int arg0, int arg1) {
-    glut_h.glPixelStorei(arg0, arg1);
+  public void glPixelStorei(int pname, int param) {
+    glut_h.glPixelStorei(pname, param);
   }
 
-  public void glPixelTransferf(int arg0, float arg1) {
-    glut_h.glPixelTransferf(arg0, arg1);
+  public void glPixelTransferf(int pname, float param) {
+    glut_h.glPixelTransferf(pname, param);
   }
 
-  public void glPixelTransferi(int arg0, int arg1) {
-    glut_h.glPixelTransferi(arg0, arg1);
+  public void glPixelTransferi(int pname, int param) {
+    glut_h.glPixelTransferi(pname, param);
   }
 
-  public void glPixelZoom(float arg0, float arg1) {
-    glut_h.glPixelZoom(arg0, arg1);
+  public void glPixelZoom(float xfactor, float yfactor) {
+    glut_h.glPixelZoom(xfactor, yfactor);
   }
 
-  public void glPointParameterf(int arg0, float arg1) {
-    glut_h.glPointParameterf(arg0, arg1);
+  public void glPointParameterf(int pname, float param) {
+    glut_h.glPointParameterf(pname, param);
   }
 
-  public void glPointParameterfARB(int arg0, float arg1) {
-    glut_h.glPointParameterfARB(arg0, arg1);
+  public void glPointParameterfARB(int pname, float param) {
+    glut_h.glPointParameterfARB(pname, param);
   }
 
-  public void glPointParameterfv(int arg0, Addressable arg1) {
-    glut_h.glPointParameterfv(arg0, arg1);
+  public void glPointParameterfv(int pname, Addressable params) {
+    glut_h.glPointParameterfv(pname, params);
   }
 
-  public void glPointParameterfvARB(int arg0, Addressable arg1) {
-    glut_h.glPointParameterfvARB(arg0, arg1);
+  public void glPointParameterfvARB(int pname, Addressable params) {
+    glut_h.glPointParameterfvARB(pname, params);
   }
 
-  public void glPointParameteri(int arg0, int arg1) {
-    glut_h.glPointParameteri(arg0, arg1);
+  public void glPointParameteri(int pname, int param) {
+    glut_h.glPointParameteri(pname, param);
   }
 
-  public void glPointParameteriNV(int arg0, int arg1) {
-    glut_h.glPointParameteriNV(arg0, arg1);
+  public void glPointParameteriNV(int pname, int param) {
+    glut_h.glPointParameteriNV(pname, param);
   }
 
-  public void glPointParameteriv(int arg0, Addressable arg1) {
-    glut_h.glPointParameteriv(arg0, arg1);
+  public void glPointParameteriv(int pname, Addressable params) {
+    glut_h.glPointParameteriv(pname, params);
   }
 
-  public void glPointParameterivNV(int arg0, Addressable arg1) {
-    glut_h.glPointParameterivNV(arg0, arg1);
+  public void glPointParameterivNV(int pname, Addressable params) {
+    glut_h.glPointParameterivNV(pname, params);
   }
 
-  public void glPointSize(float arg0) {
-    glut_h.glPointSize(arg0);
+  public void glPointSize(float size) {
+    glut_h.glPointSize(size);
   }
 
-  public void glPolygonMode(int arg0, int arg1) {
-    glut_h.glPolygonMode(arg0, arg1);
+  public void glPolygonMode(int face, int mode) {
+    glut_h.glPolygonMode(face, mode);
   }
 
-  public void glPolygonOffset(float arg0, float arg1) {
-    glut_h.glPolygonOffset(arg0, arg1);
+  public void glPolygonOffset(float factor, float units) {
+    glut_h.glPolygonOffset(factor, units);
   }
 
-  public void glPolygonStipple(Addressable arg0) {
-    glut_h.glPolygonStipple(arg0);
+  public void glPolygonStipple(Addressable mask) {
+    glut_h.glPolygonStipple(mask);
   }
 
   public void glPopAttrib() {
@@ -2301,1620 +2301,1620 @@ public class GL_macOS implements GL_1_0, GL_1_1, GL_1_2, GL_1_3 {
     glut_h.glPopName();
   }
 
-  public void glPrioritizeTextures(int arg0, Addressable arg1, Addressable arg2) {
-    glut_h.glPrioritizeTextures(arg0, arg1, arg2);
+  public void glPrioritizeTextures(int n, Addressable textures, Addressable priorities) {
+    glut_h.glPrioritizeTextures(n, textures, priorities);
   }
 
-  public void glProgramEnvParameter4dARB(int arg0, int arg1, double arg2, double arg3, double arg4, double arg5) {
-    glut_h.glProgramEnvParameter4dARB(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glProgramEnvParameter4dARB(int target, int index, double x, double y, double z, double w) {
+    glut_h.glProgramEnvParameter4dARB(target, index, x, y, z, w);
   }
 
-  public void glProgramEnvParameter4dvARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glProgramEnvParameter4dvARB(arg0, arg1, arg2);
+  public void glProgramEnvParameter4dvARB(int target, int index, Addressable params) {
+    glut_h.glProgramEnvParameter4dvARB(target, index, params);
   }
 
-  public void glProgramEnvParameter4fARB(int arg0, int arg1, float arg2, float arg3, float arg4, float arg5) {
-    glut_h.glProgramEnvParameter4fARB(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glProgramEnvParameter4fARB(int target, int index, float x, float y, float z, float w) {
+    glut_h.glProgramEnvParameter4fARB(target, index, x, y, z, w);
   }
 
-  public void glProgramEnvParameter4fvARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glProgramEnvParameter4fvARB(arg0, arg1, arg2);
+  public void glProgramEnvParameter4fvARB(int target, int index, Addressable params) {
+    glut_h.glProgramEnvParameter4fvARB(target, index, params);
   }
 
-  public void glProgramEnvParameters4fvEXT(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glProgramEnvParameters4fvEXT(arg0, arg1, arg2, arg3);
+  public void glProgramEnvParameters4fvEXT(int target, int index, int count, Addressable params) {
+    glut_h.glProgramEnvParameters4fvEXT(target, index, count, params);
   }
 
-  public void glProgramLocalParameter4dARB(int arg0, int arg1, double arg2, double arg3, double arg4, double arg5) {
-    glut_h.glProgramLocalParameter4dARB(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glProgramLocalParameter4dARB(int target, int index, double x, double y, double z, double w) {
+    glut_h.glProgramLocalParameter4dARB(target, index, x, y, z, w);
   }
 
-  public void glProgramLocalParameter4dvARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glProgramLocalParameter4dvARB(arg0, arg1, arg2);
+  public void glProgramLocalParameter4dvARB(int target, int index, Addressable params) {
+    glut_h.glProgramLocalParameter4dvARB(target, index, params);
   }
 
-  public void glProgramLocalParameter4fARB(int arg0, int arg1, float arg2, float arg3, float arg4, float arg5) {
-    glut_h.glProgramLocalParameter4fARB(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glProgramLocalParameter4fARB(int target, int index, float x, float y, float z, float w) {
+    glut_h.glProgramLocalParameter4fARB(target, index, x, y, z, w);
   }
 
-  public void glProgramLocalParameter4fvARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glProgramLocalParameter4fvARB(arg0, arg1, arg2);
+  public void glProgramLocalParameter4fvARB(int target, int index, Addressable params) {
+    glut_h.glProgramLocalParameter4fvARB(target, index, params);
   }
 
-  public void glProgramLocalParameters4fvEXT(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glProgramLocalParameters4fvEXT(arg0, arg1, arg2, arg3);
+  public void glProgramLocalParameters4fvEXT(int target, int index, int count, Addressable params) {
+    glut_h.glProgramLocalParameters4fvEXT(target, index, count, params);
   }
 
-  public void glProgramParameteriEXT(int arg0, int arg1, int arg2) {
-    glut_h.glProgramParameteriEXT(arg0, arg1, arg2);
+  public void glProgramParameteriEXT(int program, int pname, int value) {
+    glut_h.glProgramParameteriEXT(program, pname, value);
   }
 
-  public void glProgramStringARB(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glProgramStringARB(arg0, arg1, arg2, arg3);
+  public void glProgramStringARB(int target, int format, int len, Addressable string) {
+    glut_h.glProgramStringARB(target, format, len, string);
   }
 
-  public void glProvokingVertex(int arg0) {
-    glut_h.glProvokingVertex(arg0);
+  public void glProvokingVertex(int mode) {
+    glut_h.glProvokingVertex(mode);
   }
 
-  public void glProvokingVertexEXT(int arg0) {
-    glut_h.glProvokingVertexEXT(arg0);
+  public void glProvokingVertexEXT(int mode) {
+    glut_h.glProvokingVertexEXT(mode);
   }
 
-  public void glPushAttrib(int arg0) {
-    glut_h.glPushAttrib(arg0);
+  public void glPushAttrib(int mask) {
+    glut_h.glPushAttrib(mask);
   }
 
-  public void glPushClientAttrib(int arg0) {
-    glut_h.glPushClientAttrib(arg0);
+  public void glPushClientAttrib(int mask) {
+    glut_h.glPushClientAttrib(mask);
   }
 
-  public void glPushGroupMarkerEXT(int arg0, Addressable arg1) {
-    glut_h.glPushGroupMarkerEXT(arg0, arg1);
+  public void glPushGroupMarkerEXT(int length, Addressable marker) {
+    glut_h.glPushGroupMarkerEXT(length, marker);
   }
 
   public void glPushMatrix() {
     glut_h.glPushMatrix();
   }
 
-  public void glPushName(int arg0) {
-    glut_h.glPushName(arg0);
+  public void glPushName(int name) {
+    glut_h.glPushName(name);
   }
 
-  public void glRasterPos2d(double arg0, double arg1) {
-    glut_h.glRasterPos2d(arg0, arg1);
+  public void glRasterPos2d(double x, double y) {
+    glut_h.glRasterPos2d(x, y);
   }
 
-  public void glRasterPos2dv(Addressable arg0) {
-    glut_h.glRasterPos2dv(arg0);
+  public void glRasterPos2dv(Addressable v) {
+    glut_h.glRasterPos2dv(v);
   }
 
-  public void glRasterPos2f(float arg0, float arg1) {
-    glut_h.glRasterPos2f(arg0, arg1);
+  public void glRasterPos2f(float x, float y) {
+    glut_h.glRasterPos2f(x, y);
   }
 
-  public void glRasterPos2fv(Addressable arg0) {
-    glut_h.glRasterPos2fv(arg0);
+  public void glRasterPos2fv(Addressable v) {
+    glut_h.glRasterPos2fv(v);
   }
 
-  public void glRasterPos2i(int arg0, int arg1) {
-    glut_h.glRasterPos2i(arg0, arg1);
+  public void glRasterPos2i(int x, int y) {
+    glut_h.glRasterPos2i(x, y);
   }
 
-  public void glRasterPos2iv(Addressable arg0) {
-    glut_h.glRasterPos2iv(arg0);
+  public void glRasterPos2iv(Addressable v) {
+    glut_h.glRasterPos2iv(v);
   }
 
-  public void glRasterPos2s(short arg0, short arg1) {
-    glut_h.glRasterPos2s(arg0, arg1);
+  public void glRasterPos2s(short x, short y) {
+    glut_h.glRasterPos2s(x, y);
   }
 
-  public void glRasterPos2sv(Addressable arg0) {
-    glut_h.glRasterPos2sv(arg0);
+  public void glRasterPos2sv(Addressable v) {
+    glut_h.glRasterPos2sv(v);
   }
 
-  public void glRasterPos3d(double arg0, double arg1, double arg2) {
-    glut_h.glRasterPos3d(arg0, arg1, arg2);
+  public void glRasterPos3d(double x, double y, double z) {
+    glut_h.glRasterPos3d(x, y, z);
   }
 
-  public void glRasterPos3dv(Addressable arg0) {
-    glut_h.glRasterPos3dv(arg0);
+  public void glRasterPos3dv(Addressable v) {
+    glut_h.glRasterPos3dv(v);
   }
 
-  public void glRasterPos3f(float arg0, float arg1, float arg2) {
-    glut_h.glRasterPos3f(arg0, arg1, arg2);
+  public void glRasterPos3f(float x, float y, float z) {
+    glut_h.glRasterPos3f(x, y, z);
   }
 
-  public void glRasterPos3fv(Addressable arg0) {
-    glut_h.glRasterPos3fv(arg0);
+  public void glRasterPos3fv(Addressable v) {
+    glut_h.glRasterPos3fv(v);
   }
 
-  public void glRasterPos3i(int arg0, int arg1, int arg2) {
-    glut_h.glRasterPos3i(arg0, arg1, arg2);
+  public void glRasterPos3i(int x, int y, int z) {
+    glut_h.glRasterPos3i(x, y, z);
   }
 
-  public void glRasterPos3iv(Addressable arg0) {
-    glut_h.glRasterPos3iv(arg0);
+  public void glRasterPos3iv(Addressable v) {
+    glut_h.glRasterPos3iv(v);
   }
 
-  public void glRasterPos3s(short arg0, short arg1, short arg2) {
-    glut_h.glRasterPos3s(arg0, arg1, arg2);
+  public void glRasterPos3s(short x, short y, short z) {
+    glut_h.glRasterPos3s(x, y, z);
   }
 
-  public void glRasterPos3sv(Addressable arg0) {
-    glut_h.glRasterPos3sv(arg0);
+  public void glRasterPos3sv(Addressable v) {
+    glut_h.glRasterPos3sv(v);
   }
 
-  public void glRasterPos4d(double arg0, double arg1, double arg2, double arg3) {
-    glut_h.glRasterPos4d(arg0, arg1, arg2, arg3);
+  public void glRasterPos4d(double x, double y, double z, double w) {
+    glut_h.glRasterPos4d(x, y, z, w);
   }
 
-  public void glRasterPos4dv(Addressable arg0) {
-    glut_h.glRasterPos4dv(arg0);
+  public void glRasterPos4dv(Addressable v) {
+    glut_h.glRasterPos4dv(v);
   }
 
-  public void glRasterPos4f(float arg0, float arg1, float arg2, float arg3) {
-    glut_h.glRasterPos4f(arg0, arg1, arg2, arg3);
+  public void glRasterPos4f(float x, float y, float z, float w) {
+    glut_h.glRasterPos4f(x, y, z, w);
   }
 
-  public void glRasterPos4fv(Addressable arg0) {
-    glut_h.glRasterPos4fv(arg0);
+  public void glRasterPos4fv(Addressable v) {
+    glut_h.glRasterPos4fv(v);
   }
 
-  public void glRasterPos4i(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glRasterPos4i(arg0, arg1, arg2, arg3);
+  public void glRasterPos4i(int x, int y, int z, int w) {
+    glut_h.glRasterPos4i(x, y, z, w);
   }
 
-  public void glRasterPos4iv(Addressable arg0) {
-    glut_h.glRasterPos4iv(arg0);
+  public void glRasterPos4iv(Addressable v) {
+    glut_h.glRasterPos4iv(v);
   }
 
-  public void glRasterPos4s(short arg0, short arg1, short arg2, short arg3) {
-    glut_h.glRasterPos4s(arg0, arg1, arg2, arg3);
+  public void glRasterPos4s(short x, short y, short z, short w) {
+    glut_h.glRasterPos4s(x, y, z, w);
   }
 
-  public void glRasterPos4sv(Addressable arg0) {
-    glut_h.glRasterPos4sv(arg0);
+  public void glRasterPos4sv(Addressable v) {
+    glut_h.glRasterPos4sv(v);
   }
 
-  public void glReadBuffer(int arg0) {
-    glut_h.glReadBuffer(arg0);
+  public void glReadBuffer(int src) {
+    glut_h.glReadBuffer(src);
   }
 
-  public void glReadPixels(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, Addressable arg6) {
-    glut_h.glReadPixels(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glReadPixels(int x, int y, int width, int height, int format, int type, Addressable pixels) {
+    glut_h.glReadPixels(x, y, width, height, format, type, pixels);
   }
 
-  public void glRectd(double arg0, double arg1, double arg2, double arg3) {
-    glut_h.glRectd(arg0, arg1, arg2, arg3);
+  public void glRectd(double x1, double y1, double x2, double y2) {
+    glut_h.glRectd(x1, y1, x2, y2);
   }
 
-  public void glRectdv(Addressable arg0, Addressable arg1) {
-    glut_h.glRectdv(arg0, arg1);
+  public void glRectdv(Addressable v1, Addressable v2) {
+    glut_h.glRectdv(v1, v2);
   }
 
-  public void glRectf(float arg0, float arg1, float arg2, float arg3) {
-    glut_h.glRectf(arg0, arg1, arg2, arg3);
+  public void glRectf(float x1, float y1, float x2, float y2) {
+    glut_h.glRectf(x1, y1, x2, y2);
   }
 
-  public void glRectfv(Addressable arg0, Addressable arg1) {
-    glut_h.glRectfv(arg0, arg1);
+  public void glRectfv(Addressable v1, Addressable v2) {
+    glut_h.glRectfv(v1, v2);
   }
 
-  public void glRecti(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glRecti(arg0, arg1, arg2, arg3);
+  public void glRecti(int x1, int y1, int x2, int y2) {
+    glut_h.glRecti(x1, y1, x2, y2);
   }
 
-  public void glRectiv(Addressable arg0, Addressable arg1) {
-    glut_h.glRectiv(arg0, arg1);
+  public void glRectiv(Addressable v1, Addressable v2) {
+    glut_h.glRectiv(v1, v2);
   }
 
-  public void glRects(short arg0, short arg1, short arg2, short arg3) {
-    glut_h.glRects(arg0, arg1, arg2, arg3);
+  public void glRects(short x1, short y1, short x2, short y2) {
+    glut_h.glRects(x1, y1, x2, y2);
   }
 
-  public void glRectsv(Addressable arg0, Addressable arg1) {
-    glut_h.glRectsv(arg0, arg1);
+  public void glRectsv(Addressable v1, Addressable v2) {
+    glut_h.glRectsv(v1, v2);
   }
 
-  public int glRenderMode(int arg0) {
-    return glut_h.glRenderMode(arg0);
+  public int glRenderMode(int mode) {
+    return glut_h.glRenderMode(mode);
   }
 
-  public void glRenderbufferStorage(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glRenderbufferStorage(arg0, arg1, arg2, arg3);
+  public void glRenderbufferStorage(int target, int internalformat, int width, int height) {
+    glut_h.glRenderbufferStorage(target, internalformat, width, height);
   }
 
-  public void glRenderbufferStorageEXT(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glRenderbufferStorageEXT(arg0, arg1, arg2, arg3);
+  public void glRenderbufferStorageEXT(int target, int internalformat, int width, int height) {
+    glut_h.glRenderbufferStorageEXT(target, internalformat, width, height);
   }
 
-  public void glRenderbufferStorageMultisample(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glRenderbufferStorageMultisample(arg0, arg1, arg2, arg3, arg4);
+  public void glRenderbufferStorageMultisample(int target, int samples, int internalformat, int width, int height) {
+    glut_h.glRenderbufferStorageMultisample(target, samples, internalformat, width, height);
   }
 
-  public void glRenderbufferStorageMultisampleEXT(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glRenderbufferStorageMultisampleEXT(arg0, arg1, arg2, arg3, arg4);
+  public void glRenderbufferStorageMultisampleEXT(int target, int samples, int internalformat, int width, int height) {
+    glut_h.glRenderbufferStorageMultisampleEXT(target, samples, internalformat, width, height);
   }
 
-  public void glResetHistogram(int arg0) {
-    glut_h.glResetHistogram(arg0);
+  public void glResetHistogram(int target) {
+    glut_h.glResetHistogram(target);
   }
 
-  public void glResetMinmax(int arg0) {
-    glut_h.glResetMinmax(arg0);
+  public void glResetMinmax(int target) {
+    glut_h.glResetMinmax(target);
   }
 
-  public void glRotated(double arg0, double arg1, double arg2, double arg3) {
-    glut_h.glRotated(arg0, arg1, arg2, arg3);
+  public void glRotated(double angle, double x, double y, double z) {
+    glut_h.glRotated(angle, x, y, z);
   }
 
-  public void glRotatef(float arg0, float arg1, float arg2, float arg3) {
-    glut_h.glRotatef(arg0, arg1, arg2, arg3);
+  public void glRotatef(float angle, float x, float y, float z) {
+    glut_h.glRotatef(angle, x, y, z);
   }
 
-  public void glSampleCoverage(float arg0, byte arg1) {
-    glut_h.glSampleCoverage(arg0, arg1);
+  public void glSampleCoverage(float value, byte invert) {
+    glut_h.glSampleCoverage(value, invert);
   }
 
-  public void glSampleCoverageARB(float arg0, byte arg1) {
-    glut_h.glSampleCoverageARB(arg0, arg1);
+  public void glSampleCoverageARB(float value, byte invert) {
+    glut_h.glSampleCoverageARB(value, invert);
   }
 
-  public void glScaled(double arg0, double arg1, double arg2) {
-    glut_h.glScaled(arg0, arg1, arg2);
+  public void glScaled(double x, double y, double z) {
+    glut_h.glScaled(x, y, z);
   }
 
-  public void glScalef(float arg0, float arg1, float arg2) {
-    glut_h.glScalef(arg0, arg1, arg2);
+  public void glScalef(float x, float y, float z) {
+    glut_h.glScalef(x, y, z);
   }
 
-  public void glScissor(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glScissor(arg0, arg1, arg2, arg3);
+  public void glScissor(int x, int y, int width, int height) {
+    glut_h.glScissor(x, y, width, height);
   }
 
-  public void glSecondaryColor3b(byte arg0, byte arg1, byte arg2) {
-    glut_h.glSecondaryColor3b(arg0, arg1, arg2);
+  public void glSecondaryColor3b(byte red, byte green, byte blue) {
+    glut_h.glSecondaryColor3b(red, green, blue);
   }
 
-  public void glSecondaryColor3bEXT(byte arg0, byte arg1, byte arg2) {
-    glut_h.glSecondaryColor3bEXT(arg0, arg1, arg2);
+  public void glSecondaryColor3bEXT(byte red, byte green, byte blue) {
+    glut_h.glSecondaryColor3bEXT(red, green, blue);
   }
 
-  public void glSecondaryColor3bv(Addressable arg0) {
-    glut_h.glSecondaryColor3bv(arg0);
+  public void glSecondaryColor3bv(Addressable v) {
+    glut_h.glSecondaryColor3bv(v);
   }
 
-  public void glSecondaryColor3bvEXT(Addressable arg0) {
-    glut_h.glSecondaryColor3bvEXT(arg0);
+  public void glSecondaryColor3bvEXT(Addressable v) {
+    glut_h.glSecondaryColor3bvEXT(v);
   }
 
-  public void glSecondaryColor3d(double arg0, double arg1, double arg2) {
-    glut_h.glSecondaryColor3d(arg0, arg1, arg2);
+  public void glSecondaryColor3d(double red, double green, double blue) {
+    glut_h.glSecondaryColor3d(red, green, blue);
   }
 
-  public void glSecondaryColor3dEXT(double arg0, double arg1, double arg2) {
-    glut_h.glSecondaryColor3dEXT(arg0, arg1, arg2);
+  public void glSecondaryColor3dEXT(double red, double green, double blue) {
+    glut_h.glSecondaryColor3dEXT(red, green, blue);
   }
 
-  public void glSecondaryColor3dv(Addressable arg0) {
-    glut_h.glSecondaryColor3dv(arg0);
+  public void glSecondaryColor3dv(Addressable v) {
+    glut_h.glSecondaryColor3dv(v);
   }
 
-  public void glSecondaryColor3dvEXT(Addressable arg0) {
-    glut_h.glSecondaryColor3dvEXT(arg0);
+  public void glSecondaryColor3dvEXT(Addressable v) {
+    glut_h.glSecondaryColor3dvEXT(v);
   }
 
-  public void glSecondaryColor3f(float arg0, float arg1, float arg2) {
-    glut_h.glSecondaryColor3f(arg0, arg1, arg2);
+  public void glSecondaryColor3f(float red, float green, float blue) {
+    glut_h.glSecondaryColor3f(red, green, blue);
   }
 
-  public void glSecondaryColor3fEXT(float arg0, float arg1, float arg2) {
-    glut_h.glSecondaryColor3fEXT(arg0, arg1, arg2);
+  public void glSecondaryColor3fEXT(float red, float green, float blue) {
+    glut_h.glSecondaryColor3fEXT(red, green, blue);
   }
 
-  public void glSecondaryColor3fv(Addressable arg0) {
-    glut_h.glSecondaryColor3fv(arg0);
+  public void glSecondaryColor3fv(Addressable v) {
+    glut_h.glSecondaryColor3fv(v);
   }
 
-  public void glSecondaryColor3fvEXT(Addressable arg0) {
-    glut_h.glSecondaryColor3fvEXT(arg0);
+  public void glSecondaryColor3fvEXT(Addressable v) {
+    glut_h.glSecondaryColor3fvEXT(v);
   }
 
-  public void glSecondaryColor3i(int arg0, int arg1, int arg2) {
-    glut_h.glSecondaryColor3i(arg0, arg1, arg2);
+  public void glSecondaryColor3i(int red, int green, int blue) {
+    glut_h.glSecondaryColor3i(red, green, blue);
   }
 
-  public void glSecondaryColor3iEXT(int arg0, int arg1, int arg2) {
-    glut_h.glSecondaryColor3iEXT(arg0, arg1, arg2);
+  public void glSecondaryColor3iEXT(int red, int green, int blue) {
+    glut_h.glSecondaryColor3iEXT(red, green, blue);
   }
 
-  public void glSecondaryColor3iv(Addressable arg0) {
-    glut_h.glSecondaryColor3iv(arg0);
+  public void glSecondaryColor3iv(Addressable v) {
+    glut_h.glSecondaryColor3iv(v);
   }
 
-  public void glSecondaryColor3ivEXT(Addressable arg0) {
-    glut_h.glSecondaryColor3ivEXT(arg0);
+  public void glSecondaryColor3ivEXT(Addressable v) {
+    glut_h.glSecondaryColor3ivEXT(v);
   }
 
-  public void glSecondaryColor3s(short arg0, short arg1, short arg2) {
-    glut_h.glSecondaryColor3s(arg0, arg1, arg2);
+  public void glSecondaryColor3s(short red, short green, short blue) {
+    glut_h.glSecondaryColor3s(red, green, blue);
   }
 
-  public void glSecondaryColor3sEXT(short arg0, short arg1, short arg2) {
-    glut_h.glSecondaryColor3sEXT(arg0, arg1, arg2);
+  public void glSecondaryColor3sEXT(short red, short green, short blue) {
+    glut_h.glSecondaryColor3sEXT(red, green, blue);
   }
 
-  public void glSecondaryColor3sv(Addressable arg0) {
-    glut_h.glSecondaryColor3sv(arg0);
+  public void glSecondaryColor3sv(Addressable v) {
+    glut_h.glSecondaryColor3sv(v);
   }
 
-  public void glSecondaryColor3svEXT(Addressable arg0) {
-    glut_h.glSecondaryColor3svEXT(arg0);
+  public void glSecondaryColor3svEXT(Addressable v) {
+    glut_h.glSecondaryColor3svEXT(v);
   }
 
-  public void glSecondaryColor3ub(byte arg0, byte arg1, byte arg2) {
-    glut_h.glSecondaryColor3ub(arg0, arg1, arg2);
+  public void glSecondaryColor3ub(byte red, byte green, byte blue) {
+    glut_h.glSecondaryColor3ub(red, green, blue);
   }
 
-  public void glSecondaryColor3ubEXT(byte arg0, byte arg1, byte arg2) {
-    glut_h.glSecondaryColor3ubEXT(arg0, arg1, arg2);
+  public void glSecondaryColor3ubEXT(byte red, byte green, byte blue) {
+    glut_h.glSecondaryColor3ubEXT(red, green, blue);
   }
 
-  public void glSecondaryColor3ubv(Addressable arg0) {
-    glut_h.glSecondaryColor3ubv(arg0);
+  public void glSecondaryColor3ubv(Addressable v) {
+    glut_h.glSecondaryColor3ubv(v);
   }
 
-  public void glSecondaryColor3ubvEXT(Addressable arg0) {
-    glut_h.glSecondaryColor3ubvEXT(arg0);
+  public void glSecondaryColor3ubvEXT(Addressable v) {
+    glut_h.glSecondaryColor3ubvEXT(v);
   }
 
-  public void glSecondaryColor3ui(int arg0, int arg1, int arg2) {
-    glut_h.glSecondaryColor3ui(arg0, arg1, arg2);
+  public void glSecondaryColor3ui(int red, int green, int blue) {
+    glut_h.glSecondaryColor3ui(red, green, blue);
   }
 
-  public void glSecondaryColor3uiEXT(int arg0, int arg1, int arg2) {
-    glut_h.glSecondaryColor3uiEXT(arg0, arg1, arg2);
+  public void glSecondaryColor3uiEXT(int red, int green, int blue) {
+    glut_h.glSecondaryColor3uiEXT(red, green, blue);
   }
 
-  public void glSecondaryColor3uiv(Addressable arg0) {
-    glut_h.glSecondaryColor3uiv(arg0);
+  public void glSecondaryColor3uiv(Addressable v) {
+    glut_h.glSecondaryColor3uiv(v);
   }
 
-  public void glSecondaryColor3uivEXT(Addressable arg0) {
-    glut_h.glSecondaryColor3uivEXT(arg0);
+  public void glSecondaryColor3uivEXT(Addressable v) {
+    glut_h.glSecondaryColor3uivEXT(v);
   }
 
-  public void glSecondaryColor3us(short arg0, short arg1, short arg2) {
-    glut_h.glSecondaryColor3us(arg0, arg1, arg2);
+  public void glSecondaryColor3us(short red, short green, short blue) {
+    glut_h.glSecondaryColor3us(red, green, blue);
   }
 
-  public void glSecondaryColor3usEXT(short arg0, short arg1, short arg2) {
-    glut_h.glSecondaryColor3usEXT(arg0, arg1, arg2);
+  public void glSecondaryColor3usEXT(short red, short green, short blue) {
+    glut_h.glSecondaryColor3usEXT(red, green, blue);
   }
 
-  public void glSecondaryColor3usv(Addressable arg0) {
-    glut_h.glSecondaryColor3usv(arg0);
+  public void glSecondaryColor3usv(Addressable v) {
+    glut_h.glSecondaryColor3usv(v);
   }
 
-  public void glSecondaryColor3usvEXT(Addressable arg0) {
-    glut_h.glSecondaryColor3usvEXT(arg0);
+  public void glSecondaryColor3usvEXT(Addressable v) {
+    glut_h.glSecondaryColor3usvEXT(v);
   }
 
-  public void glSecondaryColorPointer(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glSecondaryColorPointer(arg0, arg1, arg2, arg3);
+  public void glSecondaryColorPointer(int size, int type, int stride, Addressable pointer) {
+    glut_h.glSecondaryColorPointer(size, type, stride, pointer);
   }
 
-  public void glSecondaryColorPointerEXT(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glSecondaryColorPointerEXT(arg0, arg1, arg2, arg3);
+  public void glSecondaryColorPointerEXT(int size, int type, int stride, Addressable pointer) {
+    glut_h.glSecondaryColorPointerEXT(size, type, stride, pointer);
   }
 
-  public void glSelectBuffer(int arg0, Addressable arg1) {
-    glut_h.glSelectBuffer(arg0, arg1);
+  public void glSelectBuffer(int size, Addressable buffer) {
+    glut_h.glSelectBuffer(size, buffer);
   }
 
-  public void glSeparableFilter2D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, Addressable arg6, Addressable arg7) {
-    glut_h.glSeparableFilter2D(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+  public void glSeparableFilter2D(int target, int internalformat, int width, int height, int format, int type, Addressable row, Addressable column) {
+    glut_h.glSeparableFilter2D(target, internalformat, width, height, format, type, row, column);
   }
 
-  public void glSetFenceAPPLE(int arg0) {
-    glut_h.glSetFenceAPPLE(arg0);
+  public void glSetFenceAPPLE(int fence) {
+    glut_h.glSetFenceAPPLE(fence);
   }
 
-  public void glShadeModel(int arg0) {
-    glut_h.glShadeModel(arg0);
+  public void glShadeModel(int mode) {
+    glut_h.glShadeModel(mode);
   }
 
-  public void glShaderSource(int arg0, int arg1, Addressable arg2, Addressable arg3) {
-    glut_h.glShaderSource(arg0, arg1, arg2, arg3);
+  public void glShaderSource(int shader, int count, Addressable string, Addressable length) {
+    glut_h.glShaderSource(shader, count, string, length);
   }
 
-  public void glShaderSourceARB(Addressable arg0, int arg1, Addressable arg2, Addressable arg3) {
-    glut_h.glShaderSourceARB(arg0, arg1, arg2, arg3);
+  public void glShaderSourceARB(Addressable shaderObj, int count, Addressable string, Addressable length) {
+    glut_h.glShaderSourceARB(shaderObj, count, string, length);
   }
 
-  public void glStencilFunc(int arg0, int arg1, int arg2) {
-    glut_h.glStencilFunc(arg0, arg1, arg2);
+  public void glStencilFunc(int func, int ref, int mask) {
+    glut_h.glStencilFunc(func, ref, mask);
   }
 
-  public void glStencilFuncSeparate(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glStencilFuncSeparate(arg0, arg1, arg2, arg3);
+  public void glStencilFuncSeparate(int face, int func, int ref, int mask) {
+    glut_h.glStencilFuncSeparate(face, func, ref, mask);
   }
 
-  public void glStencilFuncSeparateATI(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glStencilFuncSeparateATI(arg0, arg1, arg2, arg3);
+  public void glStencilFuncSeparateATI(int frontfunc, int backfunc, int ref, int mask) {
+    glut_h.glStencilFuncSeparateATI(frontfunc, backfunc, ref, mask);
   }
 
-  public void glStencilMask(int arg0) {
-    glut_h.glStencilMask(arg0);
+  public void glStencilMask(int mask) {
+    glut_h.glStencilMask(mask);
   }
 
-  public void glStencilMaskSeparate(int arg0, int arg1) {
-    glut_h.glStencilMaskSeparate(arg0, arg1);
+  public void glStencilMaskSeparate(int face, int mask) {
+    glut_h.glStencilMaskSeparate(face, mask);
   }
 
-  public void glStencilOp(int arg0, int arg1, int arg2) {
-    glut_h.glStencilOp(arg0, arg1, arg2);
+  public void glStencilOp(int fail, int zfail, int zpass) {
+    glut_h.glStencilOp(fail, zfail, zpass);
   }
 
-  public void glStencilOpSeparate(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glStencilOpSeparate(arg0, arg1, arg2, arg3);
+  public void glStencilOpSeparate(int face, int sfail, int dpfail, int dppass) {
+    glut_h.glStencilOpSeparate(face, sfail, dpfail, dppass);
   }
 
-  public void glStencilOpSeparateATI(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glStencilOpSeparateATI(arg0, arg1, arg2, arg3);
+  public void glStencilOpSeparateATI(int face, int sfail, int dpfail, int dppass) {
+    glut_h.glStencilOpSeparateATI(face, sfail, dpfail, dppass);
   }
 
-  public byte glTestFenceAPPLE(int arg0) {
-    return glut_h.glTestFenceAPPLE(arg0);
+  public byte glTestFenceAPPLE(int fence) {
+    return glut_h.glTestFenceAPPLE(fence);
   }
 
-  public byte glTestObjectAPPLE(int arg0, int arg1) {
-    return glut_h.glTestObjectAPPLE(arg0, arg1);
+  public byte glTestObjectAPPLE(int object, int name) {
+    return glut_h.glTestObjectAPPLE(object, name);
   }
 
-  public void glTexCoord1d(double arg0) {
-    glut_h.glTexCoord1d(arg0);
+  public void glTexCoord1d(double s) {
+    glut_h.glTexCoord1d(s);
   }
 
-  public void glTexCoord1dv(Addressable arg0) {
-    glut_h.glTexCoord1dv(arg0);
+  public void glTexCoord1dv(Addressable v) {
+    glut_h.glTexCoord1dv(v);
   }
 
-  public void glTexCoord1f(float arg0) {
-    glut_h.glTexCoord1f(arg0);
+  public void glTexCoord1f(float s) {
+    glut_h.glTexCoord1f(s);
   }
 
-  public void glTexCoord1fv(Addressable arg0) {
-    glut_h.glTexCoord1fv(arg0);
+  public void glTexCoord1fv(Addressable v) {
+    glut_h.glTexCoord1fv(v);
   }
 
-  public void glTexCoord1i(int arg0) {
-    glut_h.glTexCoord1i(arg0);
+  public void glTexCoord1i(int s) {
+    glut_h.glTexCoord1i(s);
   }
 
-  public void glTexCoord1iv(Addressable arg0) {
-    glut_h.glTexCoord1iv(arg0);
+  public void glTexCoord1iv(Addressable v) {
+    glut_h.glTexCoord1iv(v);
   }
 
-  public void glTexCoord1s(short arg0) {
-    glut_h.glTexCoord1s(arg0);
+  public void glTexCoord1s(short s) {
+    glut_h.glTexCoord1s(s);
   }
 
-  public void glTexCoord1sv(Addressable arg0) {
-    glut_h.glTexCoord1sv(arg0);
+  public void glTexCoord1sv(Addressable v) {
+    glut_h.glTexCoord1sv(v);
   }
 
-  public void glTexCoord2d(double arg0, double arg1) {
-    glut_h.glTexCoord2d(arg0, arg1);
+  public void glTexCoord2d(double s, double t) {
+    glut_h.glTexCoord2d(s, t);
   }
 
-  public void glTexCoord2dv(Addressable arg0) {
-    glut_h.glTexCoord2dv(arg0);
+  public void glTexCoord2dv(Addressable v) {
+    glut_h.glTexCoord2dv(v);
   }
 
-  public void glTexCoord2f(float arg0, float arg1) {
-    glut_h.glTexCoord2f(arg0, arg1);
+  public void glTexCoord2f(float s, float t) {
+    glut_h.glTexCoord2f(s, t);
   }
 
-  public void glTexCoord2fv(Addressable arg0) {
-    glut_h.glTexCoord2fv(arg0);
+  public void glTexCoord2fv(Addressable v) {
+    glut_h.glTexCoord2fv(v);
   }
 
-  public void glTexCoord2i(int arg0, int arg1) {
-    glut_h.glTexCoord2i(arg0, arg1);
+  public void glTexCoord2i(int s, int t) {
+    glut_h.glTexCoord2i(s, t);
   }
 
-  public void glTexCoord2iv(Addressable arg0) {
-    glut_h.glTexCoord2iv(arg0);
+  public void glTexCoord2iv(Addressable v) {
+    glut_h.glTexCoord2iv(v);
   }
 
-  public void glTexCoord2s(short arg0, short arg1) {
-    glut_h.glTexCoord2s(arg0, arg1);
+  public void glTexCoord2s(short s, short t) {
+    glut_h.glTexCoord2s(s, t);
   }
 
-  public void glTexCoord2sv(Addressable arg0) {
-    glut_h.glTexCoord2sv(arg0);
+  public void glTexCoord2sv(Addressable v) {
+    glut_h.glTexCoord2sv(v);
   }
 
-  public void glTexCoord3d(double arg0, double arg1, double arg2) {
-    glut_h.glTexCoord3d(arg0, arg1, arg2);
+  public void glTexCoord3d(double s, double t, double r) {
+    glut_h.glTexCoord3d(s, t, r);
   }
 
-  public void glTexCoord3dv(Addressable arg0) {
-    glut_h.glTexCoord3dv(arg0);
+  public void glTexCoord3dv(Addressable v) {
+    glut_h.glTexCoord3dv(v);
   }
 
-  public void glTexCoord3f(float arg0, float arg1, float arg2) {
-    glut_h.glTexCoord3f(arg0, arg1, arg2);
+  public void glTexCoord3f(float s, float t, float r) {
+    glut_h.glTexCoord3f(s, t, r);
   }
 
-  public void glTexCoord3fv(Addressable arg0) {
-    glut_h.glTexCoord3fv(arg0);
+  public void glTexCoord3fv(Addressable v) {
+    glut_h.glTexCoord3fv(v);
   }
 
-  public void glTexCoord3i(int arg0, int arg1, int arg2) {
-    glut_h.glTexCoord3i(arg0, arg1, arg2);
+  public void glTexCoord3i(int s, int t, int r) {
+    glut_h.glTexCoord3i(s, t, r);
   }
 
-  public void glTexCoord3iv(Addressable arg0) {
-    glut_h.glTexCoord3iv(arg0);
+  public void glTexCoord3iv(Addressable v) {
+    glut_h.glTexCoord3iv(v);
   }
 
-  public void glTexCoord3s(short arg0, short arg1, short arg2) {
-    glut_h.glTexCoord3s(arg0, arg1, arg2);
+  public void glTexCoord3s(short s, short t, short r) {
+    glut_h.glTexCoord3s(s, t, r);
   }
 
-  public void glTexCoord3sv(Addressable arg0) {
-    glut_h.glTexCoord3sv(arg0);
+  public void glTexCoord3sv(Addressable v) {
+    glut_h.glTexCoord3sv(v);
   }
 
-  public void glTexCoord4d(double arg0, double arg1, double arg2, double arg3) {
-    glut_h.glTexCoord4d(arg0, arg1, arg2, arg3);
+  public void glTexCoord4d(double s, double t, double r, double q) {
+    glut_h.glTexCoord4d(s, t, r, q);
   }
 
-  public void glTexCoord4dv(Addressable arg0) {
-    glut_h.glTexCoord4dv(arg0);
+  public void glTexCoord4dv(Addressable v) {
+    glut_h.glTexCoord4dv(v);
   }
 
-  public void glTexCoord4f(float arg0, float arg1, float arg2, float arg3) {
-    glut_h.glTexCoord4f(arg0, arg1, arg2, arg3);
+  public void glTexCoord4f(float s, float t, float r, float q) {
+    glut_h.glTexCoord4f(s, t, r, q);
   }
 
-  public void glTexCoord4fv(Addressable arg0) {
-    glut_h.glTexCoord4fv(arg0);
+  public void glTexCoord4fv(Addressable v) {
+    glut_h.glTexCoord4fv(v);
   }
 
-  public void glTexCoord4i(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glTexCoord4i(arg0, arg1, arg2, arg3);
+  public void glTexCoord4i(int s, int t, int r, int q) {
+    glut_h.glTexCoord4i(s, t, r, q);
   }
 
-  public void glTexCoord4iv(Addressable arg0) {
-    glut_h.glTexCoord4iv(arg0);
+  public void glTexCoord4iv(Addressable v) {
+    glut_h.glTexCoord4iv(v);
   }
 
-  public void glTexCoord4s(short arg0, short arg1, short arg2, short arg3) {
-    glut_h.glTexCoord4s(arg0, arg1, arg2, arg3);
+  public void glTexCoord4s(short s, short t, short r, short q) {
+    glut_h.glTexCoord4s(s, t, r, q);
   }
 
-  public void glTexCoord4sv(Addressable arg0) {
-    glut_h.glTexCoord4sv(arg0);
+  public void glTexCoord4sv(Addressable v) {
+    glut_h.glTexCoord4sv(v);
   }
 
-  public void glTexCoordPointer(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glTexCoordPointer(arg0, arg1, arg2, arg3);
+  public void glTexCoordPointer(int size, int type, int stride, Addressable pointer) {
+    glut_h.glTexCoordPointer(size, type, stride, pointer);
   }
 
-  public void glTexEnvf(int arg0, int arg1, float arg2) {
-    glut_h.glTexEnvf(arg0, arg1, arg2);
+  public void glTexEnvf(int target, int pname, float param) {
+    glut_h.glTexEnvf(target, pname, param);
   }
 
-  public void glTexEnvfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glTexEnvfv(arg0, arg1, arg2);
+  public void glTexEnvfv(int target, int pname, Addressable params) {
+    glut_h.glTexEnvfv(target, pname, params);
   }
 
-  public void glTexEnvi(int arg0, int arg1, int arg2) {
-    glut_h.glTexEnvi(arg0, arg1, arg2);
+  public void glTexEnvi(int target, int pname, int param) {
+    glut_h.glTexEnvi(target, pname, param);
   }
 
-  public void glTexEnviv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glTexEnviv(arg0, arg1, arg2);
+  public void glTexEnviv(int target, int pname, Addressable params) {
+    glut_h.glTexEnviv(target, pname, params);
   }
 
-  public void glTexGend(int arg0, int arg1, double arg2) {
-    glut_h.glTexGend(arg0, arg1, arg2);
+  public void glTexGend(int coord, int pname, double param) {
+    glut_h.glTexGend(coord, pname, param);
   }
 
-  public void glTexGendv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glTexGendv(arg0, arg1, arg2);
+  public void glTexGendv(int coord, int pname, Addressable params) {
+    glut_h.glTexGendv(coord, pname, params);
   }
 
-  public void glTexGenf(int arg0, int arg1, float arg2) {
-    glut_h.glTexGenf(arg0, arg1, arg2);
+  public void glTexGenf(int coord, int pname, float param) {
+    glut_h.glTexGenf(coord, pname, param);
   }
 
-  public void glTexGenfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glTexGenfv(arg0, arg1, arg2);
+  public void glTexGenfv(int coord, int pname, Addressable params) {
+    glut_h.glTexGenfv(coord, pname, params);
   }
 
-  public void glTexGeni(int arg0, int arg1, int arg2) {
-    glut_h.glTexGeni(arg0, arg1, arg2);
+  public void glTexGeni(int coord, int pname, int param) {
+    glut_h.glTexGeni(coord, pname, param);
   }
 
-  public void glTexGeniv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glTexGeniv(arg0, arg1, arg2);
+  public void glTexGeniv(int coord, int pname, Addressable params) {
+    glut_h.glTexGeniv(coord, pname, params);
   }
 
-  public void glTexImage1D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, Addressable arg7) {
-    glut_h.glTexImage1D(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+  public void glTexImage1D(int target, int level, int internalformat, int width, int border, int format, int type, Addressable pixels) {
+    glut_h.glTexImage1D(target, level, internalformat, width, border, format, type, pixels);
   }
 
-  public void glTexImage2D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, Addressable arg8) {
-    glut_h.glTexImage2D(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+  public void glTexImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, Addressable pixels) {
+    glut_h.glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
   }
 
-  public void glTexImage3D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, Addressable arg9) {
-    glut_h.glTexImage3D(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+  public void glTexImage3D(int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, Addressable pixels) {
+    glut_h.glTexImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels);
   }
 
-  public void glTexParameterIivEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glTexParameterIivEXT(arg0, arg1, arg2);
+  public void glTexParameterIivEXT(int target, int pname, Addressable params) {
+    glut_h.glTexParameterIivEXT(target, pname, params);
   }
 
-  public void glTexParameterIuivEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glTexParameterIuivEXT(arg0, arg1, arg2);
+  public void glTexParameterIuivEXT(int target, int pname, Addressable params) {
+    glut_h.glTexParameterIuivEXT(target, pname, params);
   }
 
-  public void glTexParameterf(int arg0, int arg1, float arg2) {
-    glut_h.glTexParameterf(arg0, arg1, arg2);
+  public void glTexParameterf(int target, int pname, float param) {
+    glut_h.glTexParameterf(target, pname, param);
   }
 
-  public void glTexParameterfv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glTexParameterfv(arg0, arg1, arg2);
+  public void glTexParameterfv(int target, int pname, Addressable params) {
+    glut_h.glTexParameterfv(target, pname, params);
   }
 
-  public void glTexParameteri(int arg0, int arg1, int arg2) {
-    glut_h.glTexParameteri(arg0, arg1, arg2);
+  public void glTexParameteri(int target, int pname, int param) {
+    glut_h.glTexParameteri(target, pname, param);
   }
 
-  public void glTexParameteriv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glTexParameteriv(arg0, arg1, arg2);
+  public void glTexParameteriv(int target, int pname, Addressable params) {
+    glut_h.glTexParameteriv(target, pname, params);
   }
 
-  public void glTexSubImage1D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, Addressable arg6) {
-    glut_h.glTexSubImage1D(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  public void glTexSubImage1D(int target, int level, int xoffset, int width, int format, int type, Addressable pixels) {
+    glut_h.glTexSubImage1D(target, level, xoffset, width, format, type, pixels);
   }
 
-  public void glTexSubImage2D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, Addressable arg8) {
-    glut_h.glTexSubImage2D(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+  public void glTexSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, Addressable pixels) {
+    glut_h.glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
   }
 
-  public void glTexSubImage3D(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, Addressable arg10) {
-    glut_h.glTexSubImage3D(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+  public void glTexSubImage3D(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, Addressable pixels) {
+    glut_h.glTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
   }
 
   public void glTextureBarrierNV() {
     glut_h.glTextureBarrierNV();
   }
 
-  public void glTextureRangeAPPLE(int arg0, int arg1, Addressable arg2) {
-    glut_h.glTextureRangeAPPLE(arg0, arg1, arg2);
+  public void glTextureRangeAPPLE(int target, int length, Addressable pointer) {
+    glut_h.glTextureRangeAPPLE(target, length, pointer);
   }
 
-  public void glTransformFeedbackVaryingsEXT(int arg0, int arg1, Addressable arg2, int arg3) {
-    glut_h.glTransformFeedbackVaryingsEXT(arg0, arg1, arg2, arg3);
+  public void glTransformFeedbackVaryingsEXT(int program, int count, Addressable varyings, int bufferMode) {
+    glut_h.glTransformFeedbackVaryingsEXT(program, count, varyings, bufferMode);
   }
 
-  public void glTranslated(double arg0, double arg1, double arg2) {
-    glut_h.glTranslated(arg0, arg1, arg2);
+  public void glTranslated(double x, double y, double z) {
+    glut_h.glTranslated(x, y, z);
   }
 
-  public void glTranslatef(float arg0, float arg1, float arg2) {
-    glut_h.glTranslatef(arg0, arg1, arg2);
+  public void glTranslatef(float x, float y, float z) {
+    glut_h.glTranslatef(x, y, z);
   }
 
-  public void glUniform1f(int arg0, float arg1) {
-    glut_h.glUniform1f(arg0, arg1);
+  public void glUniform1f(int location, float v0) {
+    glut_h.glUniform1f(location, v0);
   }
 
-  public void glUniform1fARB(int arg0, float arg1) {
-    glut_h.glUniform1fARB(arg0, arg1);
+  public void glUniform1fARB(int location, float v0) {
+    glut_h.glUniform1fARB(location, v0);
   }
 
-  public void glUniform1fv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform1fv(arg0, arg1, arg2);
+  public void glUniform1fv(int location, int count, Addressable value) {
+    glut_h.glUniform1fv(location, count, value);
   }
 
-  public void glUniform1fvARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform1fvARB(arg0, arg1, arg2);
+  public void glUniform1fvARB(int location, int count, Addressable value) {
+    glut_h.glUniform1fvARB(location, count, value);
   }
 
-  public void glUniform1i(int arg0, int arg1) {
-    glut_h.glUniform1i(arg0, arg1);
+  public void glUniform1i(int location, int v0) {
+    glut_h.glUniform1i(location, v0);
   }
 
-  public void glUniform1iARB(int arg0, int arg1) {
-    glut_h.glUniform1iARB(arg0, arg1);
+  public void glUniform1iARB(int location, int v0) {
+    glut_h.glUniform1iARB(location, v0);
   }
 
-  public void glUniform1iv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform1iv(arg0, arg1, arg2);
+  public void glUniform1iv(int location, int count, Addressable value) {
+    glut_h.glUniform1iv(location, count, value);
   }
 
-  public void glUniform1ivARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform1ivARB(arg0, arg1, arg2);
+  public void glUniform1ivARB(int location, int count, Addressable value) {
+    glut_h.glUniform1ivARB(location, count, value);
   }
 
-  public void glUniform1uiEXT(int arg0, int arg1) {
-    glut_h.glUniform1uiEXT(arg0, arg1);
+  public void glUniform1uiEXT(int location, int v0) {
+    glut_h.glUniform1uiEXT(location, v0);
   }
 
-  public void glUniform1uivEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform1uivEXT(arg0, arg1, arg2);
+  public void glUniform1uivEXT(int location, int count, Addressable value) {
+    glut_h.glUniform1uivEXT(location, count, value);
   }
 
-  public void glUniform2f(int arg0, float arg1, float arg2) {
-    glut_h.glUniform2f(arg0, arg1, arg2);
+  public void glUniform2f(int location, float v0, float v1) {
+    glut_h.glUniform2f(location, v0, v1);
   }
 
-  public void glUniform2fARB(int arg0, float arg1, float arg2) {
-    glut_h.glUniform2fARB(arg0, arg1, arg2);
+  public void glUniform2fARB(int location, float v0, float v1) {
+    glut_h.glUniform2fARB(location, v0, v1);
   }
 
-  public void glUniform2fv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform2fv(arg0, arg1, arg2);
+  public void glUniform2fv(int location, int count, Addressable value) {
+    glut_h.glUniform2fv(location, count, value);
   }
 
-  public void glUniform2fvARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform2fvARB(arg0, arg1, arg2);
+  public void glUniform2fvARB(int location, int count, Addressable value) {
+    glut_h.glUniform2fvARB(location, count, value);
   }
 
-  public void glUniform2i(int arg0, int arg1, int arg2) {
-    glut_h.glUniform2i(arg0, arg1, arg2);
+  public void glUniform2i(int location, int v0, int v1) {
+    glut_h.glUniform2i(location, v0, v1);
   }
 
-  public void glUniform2iARB(int arg0, int arg1, int arg2) {
-    glut_h.glUniform2iARB(arg0, arg1, arg2);
+  public void glUniform2iARB(int location, int v0, int v1) {
+    glut_h.glUniform2iARB(location, v0, v1);
   }
 
-  public void glUniform2iv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform2iv(arg0, arg1, arg2);
+  public void glUniform2iv(int location, int count, Addressable value) {
+    glut_h.glUniform2iv(location, count, value);
   }
 
-  public void glUniform2ivARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform2ivARB(arg0, arg1, arg2);
+  public void glUniform2ivARB(int location, int count, Addressable value) {
+    glut_h.glUniform2ivARB(location, count, value);
   }
 
-  public void glUniform2uiEXT(int arg0, int arg1, int arg2) {
-    glut_h.glUniform2uiEXT(arg0, arg1, arg2);
+  public void glUniform2uiEXT(int location, int v0, int v1) {
+    glut_h.glUniform2uiEXT(location, v0, v1);
   }
 
-  public void glUniform2uivEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform2uivEXT(arg0, arg1, arg2);
+  public void glUniform2uivEXT(int location, int count, Addressable value) {
+    glut_h.glUniform2uivEXT(location, count, value);
   }
 
-  public void glUniform3f(int arg0, float arg1, float arg2, float arg3) {
-    glut_h.glUniform3f(arg0, arg1, arg2, arg3);
+  public void glUniform3f(int location, float v0, float v1, float v2) {
+    glut_h.glUniform3f(location, v0, v1, v2);
   }
 
-  public void glUniform3fARB(int arg0, float arg1, float arg2, float arg3) {
-    glut_h.glUniform3fARB(arg0, arg1, arg2, arg3);
+  public void glUniform3fARB(int location, float v0, float v1, float v2) {
+    glut_h.glUniform3fARB(location, v0, v1, v2);
   }
 
-  public void glUniform3fv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform3fv(arg0, arg1, arg2);
+  public void glUniform3fv(int location, int count, Addressable value) {
+    glut_h.glUniform3fv(location, count, value);
   }
 
-  public void glUniform3fvARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform3fvARB(arg0, arg1, arg2);
+  public void glUniform3fvARB(int location, int count, Addressable value) {
+    glut_h.glUniform3fvARB(location, count, value);
   }
 
-  public void glUniform3i(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glUniform3i(arg0, arg1, arg2, arg3);
+  public void glUniform3i(int location, int v0, int v1, int v2) {
+    glut_h.glUniform3i(location, v0, v1, v2);
   }
 
-  public void glUniform3iARB(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glUniform3iARB(arg0, arg1, arg2, arg3);
+  public void glUniform3iARB(int location, int v0, int v1, int v2) {
+    glut_h.glUniform3iARB(location, v0, v1, v2);
   }
 
-  public void glUniform3iv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform3iv(arg0, arg1, arg2);
+  public void glUniform3iv(int location, int count, Addressable value) {
+    glut_h.glUniform3iv(location, count, value);
   }
 
-  public void glUniform3ivARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform3ivARB(arg0, arg1, arg2);
+  public void glUniform3ivARB(int location, int count, Addressable value) {
+    glut_h.glUniform3ivARB(location, count, value);
   }
 
-  public void glUniform3uiEXT(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glUniform3uiEXT(arg0, arg1, arg2, arg3);
+  public void glUniform3uiEXT(int location, int v0, int v1, int v2) {
+    glut_h.glUniform3uiEXT(location, v0, v1, v2);
   }
 
-  public void glUniform3uivEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform3uivEXT(arg0, arg1, arg2);
+  public void glUniform3uivEXT(int location, int count, Addressable value) {
+    glut_h.glUniform3uivEXT(location, count, value);
   }
 
-  public void glUniform4f(int arg0, float arg1, float arg2, float arg3, float arg4) {
-    glut_h.glUniform4f(arg0, arg1, arg2, arg3, arg4);
+  public void glUniform4f(int location, float v0, float v1, float v2, float v3) {
+    glut_h.glUniform4f(location, v0, v1, v2, v3);
   }
 
-  public void glUniform4fARB(int arg0, float arg1, float arg2, float arg3, float arg4) {
-    glut_h.glUniform4fARB(arg0, arg1, arg2, arg3, arg4);
+  public void glUniform4fARB(int location, float v0, float v1, float v2, float v3) {
+    glut_h.glUniform4fARB(location, v0, v1, v2, v3);
   }
 
-  public void glUniform4fv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform4fv(arg0, arg1, arg2);
+  public void glUniform4fv(int location, int count, Addressable value) {
+    glut_h.glUniform4fv(location, count, value);
   }
 
-  public void glUniform4fvARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform4fvARB(arg0, arg1, arg2);
+  public void glUniform4fvARB(int location, int count, Addressable value) {
+    glut_h.glUniform4fvARB(location, count, value);
   }
 
-  public void glUniform4i(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glUniform4i(arg0, arg1, arg2, arg3, arg4);
+  public void glUniform4i(int location, int v0, int v1, int v2, int v3) {
+    glut_h.glUniform4i(location, v0, v1, v2, v3);
   }
 
-  public void glUniform4iARB(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glUniform4iARB(arg0, arg1, arg2, arg3, arg4);
+  public void glUniform4iARB(int location, int v0, int v1, int v2, int v3) {
+    glut_h.glUniform4iARB(location, v0, v1, v2, v3);
   }
 
-  public void glUniform4iv(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform4iv(arg0, arg1, arg2);
+  public void glUniform4iv(int location, int count, Addressable value) {
+    glut_h.glUniform4iv(location, count, value);
   }
 
-  public void glUniform4ivARB(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform4ivARB(arg0, arg1, arg2);
+  public void glUniform4ivARB(int location, int count, Addressable value) {
+    glut_h.glUniform4ivARB(location, count, value);
   }
 
-  public void glUniform4uiEXT(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glUniform4uiEXT(arg0, arg1, arg2, arg3, arg4);
+  public void glUniform4uiEXT(int location, int v0, int v1, int v2, int v3) {
+    glut_h.glUniform4uiEXT(location, v0, v1, v2, v3);
   }
 
-  public void glUniform4uivEXT(int arg0, int arg1, Addressable arg2) {
-    glut_h.glUniform4uivEXT(arg0, arg1, arg2);
+  public void glUniform4uivEXT(int location, int count, Addressable value) {
+    glut_h.glUniform4uivEXT(location, count, value);
   }
 
-  public void glUniformBufferEXT(int arg0, int arg1, int arg2) {
-    glut_h.glUniformBufferEXT(arg0, arg1, arg2);
+  public void glUniformBufferEXT(int program, int location, int buffer) {
+    glut_h.glUniformBufferEXT(program, location, buffer);
   }
 
-  public void glUniformMatrix2fv(int arg0, int arg1, byte arg2, Addressable arg3) {
-    glut_h.glUniformMatrix2fv(arg0, arg1, arg2, arg3);
+  public void glUniformMatrix2fv(int location, int count, byte transpose, Addressable value) {
+    glut_h.glUniformMatrix2fv(location, count, transpose, value);
   }
 
-  public void glUniformMatrix2fvARB(int arg0, int arg1, byte arg2, Addressable arg3) {
-    glut_h.glUniformMatrix2fvARB(arg0, arg1, arg2, arg3);
+  public void glUniformMatrix2fvARB(int location, int count, byte transpose, Addressable value) {
+    glut_h.glUniformMatrix2fvARB(location, count, transpose, value);
   }
 
-  public void glUniformMatrix2x3fv(int arg0, int arg1, byte arg2, Addressable arg3) {
-    glut_h.glUniformMatrix2x3fv(arg0, arg1, arg2, arg3);
+  public void glUniformMatrix2x3fv(int location, int count, byte transpose, Addressable value) {
+    glut_h.glUniformMatrix2x3fv(location, count, transpose, value);
   }
 
-  public void glUniformMatrix2x4fv(int arg0, int arg1, byte arg2, Addressable arg3) {
-    glut_h.glUniformMatrix2x4fv(arg0, arg1, arg2, arg3);
+  public void glUniformMatrix2x4fv(int location, int count, byte transpose, Addressable value) {
+    glut_h.glUniformMatrix2x4fv(location, count, transpose, value);
   }
 
-  public void glUniformMatrix3fv(int arg0, int arg1, byte arg2, Addressable arg3) {
-    glut_h.glUniformMatrix3fv(arg0, arg1, arg2, arg3);
+  public void glUniformMatrix3fv(int location, int count, byte transpose, Addressable value) {
+    glut_h.glUniformMatrix3fv(location, count, transpose, value);
   }
 
-  public void glUniformMatrix3fvARB(int arg0, int arg1, byte arg2, Addressable arg3) {
-    glut_h.glUniformMatrix3fvARB(arg0, arg1, arg2, arg3);
+  public void glUniformMatrix3fvARB(int location, int count, byte transpose, Addressable value) {
+    glut_h.glUniformMatrix3fvARB(location, count, transpose, value);
   }
 
-  public void glUniformMatrix3x2fv(int arg0, int arg1, byte arg2, Addressable arg3) {
-    glut_h.glUniformMatrix3x2fv(arg0, arg1, arg2, arg3);
+  public void glUniformMatrix3x2fv(int location, int count, byte transpose, Addressable value) {
+    glut_h.glUniformMatrix3x2fv(location, count, transpose, value);
   }
 
-  public void glUniformMatrix3x4fv(int arg0, int arg1, byte arg2, Addressable arg3) {
-    glut_h.glUniformMatrix3x4fv(arg0, arg1, arg2, arg3);
+  public void glUniformMatrix3x4fv(int location, int count, byte transpose, Addressable value) {
+    glut_h.glUniformMatrix3x4fv(location, count, transpose, value);
   }
 
-  public void glUniformMatrix4fv(int arg0, int arg1, byte arg2, Addressable arg3) {
-    glut_h.glUniformMatrix4fv(arg0, arg1, arg2, arg3);
+  public void glUniformMatrix4fv(int location, int count, byte transpose, Addressable value) {
+    glut_h.glUniformMatrix4fv(location, count, transpose, value);
   }
 
-  public void glUniformMatrix4fvARB(int arg0, int arg1, byte arg2, Addressable arg3) {
-    glut_h.glUniformMatrix4fvARB(arg0, arg1, arg2, arg3);
+  public void glUniformMatrix4fvARB(int location, int count, byte transpose, Addressable value) {
+    glut_h.glUniformMatrix4fvARB(location, count, transpose, value);
   }
 
-  public void glUniformMatrix4x2fv(int arg0, int arg1, byte arg2, Addressable arg3) {
-    glut_h.glUniformMatrix4x2fv(arg0, arg1, arg2, arg3);
+  public void glUniformMatrix4x2fv(int location, int count, byte transpose, Addressable value) {
+    glut_h.glUniformMatrix4x2fv(location, count, transpose, value);
   }
 
-  public void glUniformMatrix4x3fv(int arg0, int arg1, byte arg2, Addressable arg3) {
-    glut_h.glUniformMatrix4x3fv(arg0, arg1, arg2, arg3);
+  public void glUniformMatrix4x3fv(int location, int count, byte transpose, Addressable value) {
+    glut_h.glUniformMatrix4x3fv(location, count, transpose, value);
   }
 
-  public byte glUnmapBuffer(int arg0) {
-    return glut_h.glUnmapBuffer(arg0);
+  public byte glUnmapBuffer(int target) {
+    return glut_h.glUnmapBuffer(target);
   }
 
-  public byte glUnmapBufferARB(int arg0) {
-    return glut_h.glUnmapBufferARB(arg0);
+  public byte glUnmapBufferARB(int target) {
+    return glut_h.glUnmapBufferARB(target);
   }
 
-  public void glUseProgram(int arg0) {
-    glut_h.glUseProgram(arg0);
+  public void glUseProgram(int program) {
+    glut_h.glUseProgram(program);
   }
 
-  public void glUseProgramObjectARB(Addressable arg0) {
-    glut_h.glUseProgramObjectARB(arg0);
+  public void glUseProgramObjectARB(Addressable programObj) {
+    glut_h.glUseProgramObjectARB(programObj);
   }
 
-  public void glValidateProgram(int arg0) {
-    glut_h.glValidateProgram(arg0);
+  public void glValidateProgram(int program) {
+    glut_h.glValidateProgram(program);
   }
 
-  public void glValidateProgramARB(Addressable arg0) {
-    glut_h.glValidateProgramARB(arg0);
+  public void glValidateProgramARB(Addressable programObj) {
+    glut_h.glValidateProgramARB(programObj);
   }
 
-  public void glVertex2d(double arg0, double arg1) {
-    glut_h.glVertex2d(arg0, arg1);
+  public void glVertex2d(double x, double y) {
+    glut_h.glVertex2d(x, y);
   }
 
-  public void glVertex2dv(Addressable arg0) {
-    glut_h.glVertex2dv(arg0);
+  public void glVertex2dv(Addressable v) {
+    glut_h.glVertex2dv(v);
   }
 
-  public void glVertex2f(float arg0, float arg1) {
-    glut_h.glVertex2f(arg0, arg1);
+  public void glVertex2f(float x, float y) {
+    glut_h.glVertex2f(x, y);
   }
 
-  public void glVertex2fv(Addressable arg0) {
-    glut_h.glVertex2fv(arg0);
+  public void glVertex2fv(Addressable v) {
+    glut_h.glVertex2fv(v);
   }
 
-  public void glVertex2i(int arg0, int arg1) {
-    glut_h.glVertex2i(arg0, arg1);
+  public void glVertex2i(int x, int y) {
+    glut_h.glVertex2i(x, y);
   }
 
-  public void glVertex2iv(Addressable arg0) {
-    glut_h.glVertex2iv(arg0);
+  public void glVertex2iv(Addressable v) {
+    glut_h.glVertex2iv(v);
   }
 
-  public void glVertex2s(short arg0, short arg1) {
-    glut_h.glVertex2s(arg0, arg1);
+  public void glVertex2s(short x, short y) {
+    glut_h.glVertex2s(x, y);
   }
 
-  public void glVertex2sv(Addressable arg0) {
-    glut_h.glVertex2sv(arg0);
+  public void glVertex2sv(Addressable v) {
+    glut_h.glVertex2sv(v);
   }
 
-  public void glVertex3d(double arg0, double arg1, double arg2) {
-    glut_h.glVertex3d(arg0, arg1, arg2);
+  public void glVertex3d(double x, double y, double z) {
+    glut_h.glVertex3d(x, y, z);
   }
 
-  public void glVertex3dv(Addressable arg0) {
-    glut_h.glVertex3dv(arg0);
+  public void glVertex3dv(Addressable v) {
+    glut_h.glVertex3dv(v);
   }
 
-  public void glVertex3f(float arg0, float arg1, float arg2) {
-    glut_h.glVertex3f(arg0, arg1, arg2);
+  public void glVertex3f(float x, float y, float z) {
+    glut_h.glVertex3f(x, y, z);
   }
 
-  public void glVertex3fv(Addressable arg0) {
-    glut_h.glVertex3fv(arg0);
+  public void glVertex3fv(Addressable v) {
+    glut_h.glVertex3fv(v);
   }
 
-  public void glVertex3i(int arg0, int arg1, int arg2) {
-    glut_h.glVertex3i(arg0, arg1, arg2);
+  public void glVertex3i(int x, int y, int z) {
+    glut_h.glVertex3i(x, y, z);
   }
 
-  public void glVertex3iv(Addressable arg0) {
-    glut_h.glVertex3iv(arg0);
+  public void glVertex3iv(Addressable v) {
+    glut_h.glVertex3iv(v);
   }
 
-  public void glVertex3s(short arg0, short arg1, short arg2) {
-    glut_h.glVertex3s(arg0, arg1, arg2);
+  public void glVertex3s(short x, short y, short z) {
+    glut_h.glVertex3s(x, y, z);
   }
 
-  public void glVertex3sv(Addressable arg0) {
-    glut_h.glVertex3sv(arg0);
+  public void glVertex3sv(Addressable v) {
+    glut_h.glVertex3sv(v);
   }
 
-  public void glVertex4d(double arg0, double arg1, double arg2, double arg3) {
-    glut_h.glVertex4d(arg0, arg1, arg2, arg3);
+  public void glVertex4d(double x, double y, double z, double w) {
+    glut_h.glVertex4d(x, y, z, w);
   }
 
-  public void glVertex4dv(Addressable arg0) {
-    glut_h.glVertex4dv(arg0);
+  public void glVertex4dv(Addressable v) {
+    glut_h.glVertex4dv(v);
   }
 
-  public void glVertex4f(float arg0, float arg1, float arg2, float arg3) {
-    glut_h.glVertex4f(arg0, arg1, arg2, arg3);
+  public void glVertex4f(float x, float y, float z, float w) {
+    glut_h.glVertex4f(x, y, z, w);
   }
 
-  public void glVertex4fv(Addressable arg0) {
-    glut_h.glVertex4fv(arg0);
+  public void glVertex4fv(Addressable v) {
+    glut_h.glVertex4fv(v);
   }
 
-  public void glVertex4i(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glVertex4i(arg0, arg1, arg2, arg3);
+  public void glVertex4i(int x, int y, int z, int w) {
+    glut_h.glVertex4i(x, y, z, w);
   }
 
-  public void glVertex4iv(Addressable arg0) {
-    glut_h.glVertex4iv(arg0);
+  public void glVertex4iv(Addressable v) {
+    glut_h.glVertex4iv(v);
   }
 
-  public void glVertex4s(short arg0, short arg1, short arg2, short arg3) {
-    glut_h.glVertex4s(arg0, arg1, arg2, arg3);
+  public void glVertex4s(short x, short y, short z, short w) {
+    glut_h.glVertex4s(x, y, z, w);
   }
 
-  public void glVertex4sv(Addressable arg0) {
-    glut_h.glVertex4sv(arg0);
+  public void glVertex4sv(Addressable v) {
+    glut_h.glVertex4sv(v);
   }
 
-  public void glVertexArrayParameteriAPPLE(int arg0, int arg1) {
-    glut_h.glVertexArrayParameteriAPPLE(arg0, arg1);
+  public void glVertexArrayParameteriAPPLE(int pname, int param) {
+    glut_h.glVertexArrayParameteriAPPLE(pname, param);
   }
 
-  public void glVertexArrayRangeAPPLE(int arg0, Addressable arg1) {
-    glut_h.glVertexArrayRangeAPPLE(arg0, arg1);
+  public void glVertexArrayRangeAPPLE(int length, Addressable pointer) {
+    glut_h.glVertexArrayRangeAPPLE(length, pointer);
   }
 
-  public void glVertexAttrib1d(int arg0, double arg1) {
-    glut_h.glVertexAttrib1d(arg0, arg1);
+  public void glVertexAttrib1d(int index, double x) {
+    glut_h.glVertexAttrib1d(index, x);
   }
 
-  public void glVertexAttrib1dARB(int arg0, double arg1) {
-    glut_h.glVertexAttrib1dARB(arg0, arg1);
+  public void glVertexAttrib1dARB(int index, double x) {
+    glut_h.glVertexAttrib1dARB(index, x);
   }
 
-  public void glVertexAttrib1dv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib1dv(arg0, arg1);
+  public void glVertexAttrib1dv(int index, Addressable v) {
+    glut_h.glVertexAttrib1dv(index, v);
   }
 
-  public void glVertexAttrib1dvARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib1dvARB(arg0, arg1);
+  public void glVertexAttrib1dvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib1dvARB(index, v);
   }
 
-  public void glVertexAttrib1f(int arg0, float arg1) {
-    glut_h.glVertexAttrib1f(arg0, arg1);
+  public void glVertexAttrib1f(int index, float x) {
+    glut_h.glVertexAttrib1f(index, x);
   }
 
-  public void glVertexAttrib1fARB(int arg0, float arg1) {
-    glut_h.glVertexAttrib1fARB(arg0, arg1);
+  public void glVertexAttrib1fARB(int index, float x) {
+    glut_h.glVertexAttrib1fARB(index, x);
   }
 
-  public void glVertexAttrib1fv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib1fv(arg0, arg1);
+  public void glVertexAttrib1fv(int index, Addressable v) {
+    glut_h.glVertexAttrib1fv(index, v);
   }
 
-  public void glVertexAttrib1fvARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib1fvARB(arg0, arg1);
+  public void glVertexAttrib1fvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib1fvARB(index, v);
   }
 
-  public void glVertexAttrib1s(int arg0, short arg1) {
-    glut_h.glVertexAttrib1s(arg0, arg1);
+  public void glVertexAttrib1s(int index, short x) {
+    glut_h.glVertexAttrib1s(index, x);
   }
 
-  public void glVertexAttrib1sARB(int arg0, short arg1) {
-    glut_h.glVertexAttrib1sARB(arg0, arg1);
+  public void glVertexAttrib1sARB(int index, short x) {
+    glut_h.glVertexAttrib1sARB(index, x);
   }
 
-  public void glVertexAttrib1sv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib1sv(arg0, arg1);
+  public void glVertexAttrib1sv(int index, Addressable v) {
+    glut_h.glVertexAttrib1sv(index, v);
   }
 
-  public void glVertexAttrib1svARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib1svARB(arg0, arg1);
+  public void glVertexAttrib1svARB(int index, Addressable v) {
+    glut_h.glVertexAttrib1svARB(index, v);
   }
 
-  public void glVertexAttrib2d(int arg0, double arg1, double arg2) {
-    glut_h.glVertexAttrib2d(arg0, arg1, arg2);
+  public void glVertexAttrib2d(int index, double x, double y) {
+    glut_h.glVertexAttrib2d(index, x, y);
   }
 
-  public void glVertexAttrib2dARB(int arg0, double arg1, double arg2) {
-    glut_h.glVertexAttrib2dARB(arg0, arg1, arg2);
+  public void glVertexAttrib2dARB(int index, double x, double y) {
+    glut_h.glVertexAttrib2dARB(index, x, y);
   }
 
-  public void glVertexAttrib2dv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib2dv(arg0, arg1);
+  public void glVertexAttrib2dv(int index, Addressable v) {
+    glut_h.glVertexAttrib2dv(index, v);
   }
 
-  public void glVertexAttrib2dvARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib2dvARB(arg0, arg1);
+  public void glVertexAttrib2dvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib2dvARB(index, v);
   }
 
-  public void glVertexAttrib2f(int arg0, float arg1, float arg2) {
-    glut_h.glVertexAttrib2f(arg0, arg1, arg2);
+  public void glVertexAttrib2f(int index, float x, float y) {
+    glut_h.glVertexAttrib2f(index, x, y);
   }
 
-  public void glVertexAttrib2fARB(int arg0, float arg1, float arg2) {
-    glut_h.glVertexAttrib2fARB(arg0, arg1, arg2);
+  public void glVertexAttrib2fARB(int index, float x, float y) {
+    glut_h.glVertexAttrib2fARB(index, x, y);
   }
 
-  public void glVertexAttrib2fv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib2fv(arg0, arg1);
+  public void glVertexAttrib2fv(int index, Addressable v) {
+    glut_h.glVertexAttrib2fv(index, v);
   }
 
-  public void glVertexAttrib2fvARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib2fvARB(arg0, arg1);
+  public void glVertexAttrib2fvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib2fvARB(index, v);
   }
 
-  public void glVertexAttrib2s(int arg0, short arg1, short arg2) {
-    glut_h.glVertexAttrib2s(arg0, arg1, arg2);
+  public void glVertexAttrib2s(int index, short x, short y) {
+    glut_h.glVertexAttrib2s(index, x, y);
   }
 
-  public void glVertexAttrib2sARB(int arg0, short arg1, short arg2) {
-    glut_h.glVertexAttrib2sARB(arg0, arg1, arg2);
+  public void glVertexAttrib2sARB(int index, short x, short y) {
+    glut_h.glVertexAttrib2sARB(index, x, y);
   }
 
-  public void glVertexAttrib2sv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib2sv(arg0, arg1);
+  public void glVertexAttrib2sv(int index, Addressable v) {
+    glut_h.glVertexAttrib2sv(index, v);
   }
 
-  public void glVertexAttrib2svARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib2svARB(arg0, arg1);
+  public void glVertexAttrib2svARB(int index, Addressable v) {
+    glut_h.glVertexAttrib2svARB(index, v);
   }
 
-  public void glVertexAttrib3d(int arg0, double arg1, double arg2, double arg3) {
-    glut_h.glVertexAttrib3d(arg0, arg1, arg2, arg3);
+  public void glVertexAttrib3d(int index, double x, double y, double z) {
+    glut_h.glVertexAttrib3d(index, x, y, z);
   }
 
-  public void glVertexAttrib3dARB(int arg0, double arg1, double arg2, double arg3) {
-    glut_h.glVertexAttrib3dARB(arg0, arg1, arg2, arg3);
+  public void glVertexAttrib3dARB(int index, double x, double y, double z) {
+    glut_h.glVertexAttrib3dARB(index, x, y, z);
   }
 
-  public void glVertexAttrib3dv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib3dv(arg0, arg1);
+  public void glVertexAttrib3dv(int index, Addressable v) {
+    glut_h.glVertexAttrib3dv(index, v);
   }
 
-  public void glVertexAttrib3dvARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib3dvARB(arg0, arg1);
+  public void glVertexAttrib3dvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib3dvARB(index, v);
   }
 
-  public void glVertexAttrib3f(int arg0, float arg1, float arg2, float arg3) {
-    glut_h.glVertexAttrib3f(arg0, arg1, arg2, arg3);
+  public void glVertexAttrib3f(int index, float x, float y, float z) {
+    glut_h.glVertexAttrib3f(index, x, y, z);
   }
 
-  public void glVertexAttrib3fARB(int arg0, float arg1, float arg2, float arg3) {
-    glut_h.glVertexAttrib3fARB(arg0, arg1, arg2, arg3);
+  public void glVertexAttrib3fARB(int index, float x, float y, float z) {
+    glut_h.glVertexAttrib3fARB(index, x, y, z);
   }
 
-  public void glVertexAttrib3fv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib3fv(arg0, arg1);
+  public void glVertexAttrib3fv(int index, Addressable v) {
+    glut_h.glVertexAttrib3fv(index, v);
   }
 
-  public void glVertexAttrib3fvARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib3fvARB(arg0, arg1);
+  public void glVertexAttrib3fvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib3fvARB(index, v);
   }
 
-  public void glVertexAttrib3s(int arg0, short arg1, short arg2, short arg3) {
-    glut_h.glVertexAttrib3s(arg0, arg1, arg2, arg3);
+  public void glVertexAttrib3s(int index, short x, short y, short z) {
+    glut_h.glVertexAttrib3s(index, x, y, z);
   }
 
-  public void glVertexAttrib3sARB(int arg0, short arg1, short arg2, short arg3) {
-    glut_h.glVertexAttrib3sARB(arg0, arg1, arg2, arg3);
+  public void glVertexAttrib3sARB(int index, short x, short y, short z) {
+    glut_h.glVertexAttrib3sARB(index, x, y, z);
   }
 
-  public void glVertexAttrib3sv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib3sv(arg0, arg1);
+  public void glVertexAttrib3sv(int index, Addressable v) {
+    glut_h.glVertexAttrib3sv(index, v);
   }
 
-  public void glVertexAttrib3svARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib3svARB(arg0, arg1);
+  public void glVertexAttrib3svARB(int index, Addressable v) {
+    glut_h.glVertexAttrib3svARB(index, v);
   }
 
-  public void glVertexAttrib4Nbv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4Nbv(arg0, arg1);
+  public void glVertexAttrib4Nbv(int index, Addressable v) {
+    glut_h.glVertexAttrib4Nbv(index, v);
   }
 
-  public void glVertexAttrib4NbvARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4NbvARB(arg0, arg1);
+  public void glVertexAttrib4NbvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4NbvARB(index, v);
   }
 
-  public void glVertexAttrib4Niv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4Niv(arg0, arg1);
+  public void glVertexAttrib4Niv(int index, Addressable v) {
+    glut_h.glVertexAttrib4Niv(index, v);
   }
 
-  public void glVertexAttrib4NivARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4NivARB(arg0, arg1);
+  public void glVertexAttrib4NivARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4NivARB(index, v);
   }
 
-  public void glVertexAttrib4Nsv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4Nsv(arg0, arg1);
+  public void glVertexAttrib4Nsv(int index, Addressable v) {
+    glut_h.glVertexAttrib4Nsv(index, v);
   }
 
-  public void glVertexAttrib4NsvARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4NsvARB(arg0, arg1);
+  public void glVertexAttrib4NsvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4NsvARB(index, v);
   }
 
-  public void glVertexAttrib4Nub(int arg0, byte arg1, byte arg2, byte arg3, byte arg4) {
-    glut_h.glVertexAttrib4Nub(arg0, arg1, arg2, arg3, arg4);
+  public void glVertexAttrib4Nub(int index, byte x, byte y, byte z, byte w) {
+    glut_h.glVertexAttrib4Nub(index, x, y, z, w);
   }
 
-  public void glVertexAttrib4NubARB(int arg0, byte arg1, byte arg2, byte arg3, byte arg4) {
-    glut_h.glVertexAttrib4NubARB(arg0, arg1, arg2, arg3, arg4);
+  public void glVertexAttrib4NubARB(int index, byte x, byte y, byte z, byte w) {
+    glut_h.glVertexAttrib4NubARB(index, x, y, z, w);
   }
 
-  public void glVertexAttrib4Nubv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4Nubv(arg0, arg1);
+  public void glVertexAttrib4Nubv(int index, Addressable v) {
+    glut_h.glVertexAttrib4Nubv(index, v);
   }
 
-  public void glVertexAttrib4NubvARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4NubvARB(arg0, arg1);
+  public void glVertexAttrib4NubvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4NubvARB(index, v);
   }
 
-  public void glVertexAttrib4Nuiv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4Nuiv(arg0, arg1);
+  public void glVertexAttrib4Nuiv(int index, Addressable v) {
+    glut_h.glVertexAttrib4Nuiv(index, v);
   }
 
-  public void glVertexAttrib4NuivARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4NuivARB(arg0, arg1);
+  public void glVertexAttrib4NuivARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4NuivARB(index, v);
   }
 
-  public void glVertexAttrib4Nusv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4Nusv(arg0, arg1);
+  public void glVertexAttrib4Nusv(int index, Addressable v) {
+    glut_h.glVertexAttrib4Nusv(index, v);
   }
 
-  public void glVertexAttrib4NusvARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4NusvARB(arg0, arg1);
+  public void glVertexAttrib4NusvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4NusvARB(index, v);
   }
 
-  public void glVertexAttrib4bv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4bv(arg0, arg1);
+  public void glVertexAttrib4bv(int index, Addressable v) {
+    glut_h.glVertexAttrib4bv(index, v);
   }
 
-  public void glVertexAttrib4bvARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4bvARB(arg0, arg1);
+  public void glVertexAttrib4bvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4bvARB(index, v);
   }
 
-  public void glVertexAttrib4d(int arg0, double arg1, double arg2, double arg3, double arg4) {
-    glut_h.glVertexAttrib4d(arg0, arg1, arg2, arg3, arg4);
+  public void glVertexAttrib4d(int index, double x, double y, double z, double w) {
+    glut_h.glVertexAttrib4d(index, x, y, z, w);
   }
 
-  public void glVertexAttrib4dARB(int arg0, double arg1, double arg2, double arg3, double arg4) {
-    glut_h.glVertexAttrib4dARB(arg0, arg1, arg2, arg3, arg4);
+  public void glVertexAttrib4dARB(int index, double x, double y, double z, double w) {
+    glut_h.glVertexAttrib4dARB(index, x, y, z, w);
   }
 
-  public void glVertexAttrib4dv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4dv(arg0, arg1);
+  public void glVertexAttrib4dv(int index, Addressable v) {
+    glut_h.glVertexAttrib4dv(index, v);
   }
 
-  public void glVertexAttrib4dvARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4dvARB(arg0, arg1);
+  public void glVertexAttrib4dvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4dvARB(index, v);
   }
 
-  public void glVertexAttrib4f(int arg0, float arg1, float arg2, float arg3, float arg4) {
-    glut_h.glVertexAttrib4f(arg0, arg1, arg2, arg3, arg4);
+  public void glVertexAttrib4f(int index, float x, float y, float z, float w) {
+    glut_h.glVertexAttrib4f(index, x, y, z, w);
   }
 
-  public void glVertexAttrib4fARB(int arg0, float arg1, float arg2, float arg3, float arg4) {
-    glut_h.glVertexAttrib4fARB(arg0, arg1, arg2, arg3, arg4);
+  public void glVertexAttrib4fARB(int index, float x, float y, float z, float w) {
+    glut_h.glVertexAttrib4fARB(index, x, y, z, w);
   }
 
-  public void glVertexAttrib4fv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4fv(arg0, arg1);
+  public void glVertexAttrib4fv(int index, Addressable v) {
+    glut_h.glVertexAttrib4fv(index, v);
   }
 
-  public void glVertexAttrib4fvARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4fvARB(arg0, arg1);
+  public void glVertexAttrib4fvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4fvARB(index, v);
   }
 
-  public void glVertexAttrib4iv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4iv(arg0, arg1);
+  public void glVertexAttrib4iv(int index, Addressable v) {
+    glut_h.glVertexAttrib4iv(index, v);
   }
 
-  public void glVertexAttrib4ivARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4ivARB(arg0, arg1);
+  public void glVertexAttrib4ivARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4ivARB(index, v);
   }
 
-  public void glVertexAttrib4s(int arg0, short arg1, short arg2, short arg3, short arg4) {
-    glut_h.glVertexAttrib4s(arg0, arg1, arg2, arg3, arg4);
+  public void glVertexAttrib4s(int index, short x, short y, short z, short w) {
+    glut_h.glVertexAttrib4s(index, x, y, z, w);
   }
 
-  public void glVertexAttrib4sARB(int arg0, short arg1, short arg2, short arg3, short arg4) {
-    glut_h.glVertexAttrib4sARB(arg0, arg1, arg2, arg3, arg4);
+  public void glVertexAttrib4sARB(int index, short x, short y, short z, short w) {
+    glut_h.glVertexAttrib4sARB(index, x, y, z, w);
   }
 
-  public void glVertexAttrib4sv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4sv(arg0, arg1);
+  public void glVertexAttrib4sv(int index, Addressable v) {
+    glut_h.glVertexAttrib4sv(index, v);
   }
 
-  public void glVertexAttrib4svARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4svARB(arg0, arg1);
+  public void glVertexAttrib4svARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4svARB(index, v);
   }
 
-  public void glVertexAttrib4ubv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4ubv(arg0, arg1);
+  public void glVertexAttrib4ubv(int index, Addressable v) {
+    glut_h.glVertexAttrib4ubv(index, v);
   }
 
-  public void glVertexAttrib4ubvARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4ubvARB(arg0, arg1);
+  public void glVertexAttrib4ubvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4ubvARB(index, v);
   }
 
-  public void glVertexAttrib4uiv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4uiv(arg0, arg1);
+  public void glVertexAttrib4uiv(int index, Addressable v) {
+    glut_h.glVertexAttrib4uiv(index, v);
   }
 
-  public void glVertexAttrib4uivARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4uivARB(arg0, arg1);
+  public void glVertexAttrib4uivARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4uivARB(index, v);
   }
 
-  public void glVertexAttrib4usv(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4usv(arg0, arg1);
+  public void glVertexAttrib4usv(int index, Addressable v) {
+    glut_h.glVertexAttrib4usv(index, v);
   }
 
-  public void glVertexAttrib4usvARB(int arg0, Addressable arg1) {
-    glut_h.glVertexAttrib4usvARB(arg0, arg1);
+  public void glVertexAttrib4usvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4usvARB(index, v);
   }
 
-  public void glVertexAttribDivisorARB(int arg0, int arg1) {
-    glut_h.glVertexAttribDivisorARB(arg0, arg1);
+  public void glVertexAttribDivisorARB(int index, int divisor) {
+    glut_h.glVertexAttribDivisorARB(index, divisor);
   }
 
-  public void glVertexAttribI1iEXT(int arg0, int arg1) {
-    glut_h.glVertexAttribI1iEXT(arg0, arg1);
+  public void glVertexAttribI1iEXT(int index, int x) {
+    glut_h.glVertexAttribI1iEXT(index, x);
   }
 
-  public void glVertexAttribI1ivEXT(int arg0, Addressable arg1) {
-    glut_h.glVertexAttribI1ivEXT(arg0, arg1);
+  public void glVertexAttribI1ivEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI1ivEXT(index, v);
   }
 
-  public void glVertexAttribI1uiEXT(int arg0, int arg1) {
-    glut_h.glVertexAttribI1uiEXT(arg0, arg1);
+  public void glVertexAttribI1uiEXT(int index, int x) {
+    glut_h.glVertexAttribI1uiEXT(index, x);
   }
 
-  public void glVertexAttribI1uivEXT(int arg0, Addressable arg1) {
-    glut_h.glVertexAttribI1uivEXT(arg0, arg1);
+  public void glVertexAttribI1uivEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI1uivEXT(index, v);
   }
 
-  public void glVertexAttribI2iEXT(int arg0, int arg1, int arg2) {
-    glut_h.glVertexAttribI2iEXT(arg0, arg1, arg2);
+  public void glVertexAttribI2iEXT(int index, int x, int y) {
+    glut_h.glVertexAttribI2iEXT(index, x, y);
   }
 
-  public void glVertexAttribI2ivEXT(int arg0, Addressable arg1) {
-    glut_h.glVertexAttribI2ivEXT(arg0, arg1);
+  public void glVertexAttribI2ivEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI2ivEXT(index, v);
   }
 
-  public void glVertexAttribI2uiEXT(int arg0, int arg1, int arg2) {
-    glut_h.glVertexAttribI2uiEXT(arg0, arg1, arg2);
+  public void glVertexAttribI2uiEXT(int index, int x, int y) {
+    glut_h.glVertexAttribI2uiEXT(index, x, y);
   }
 
-  public void glVertexAttribI2uivEXT(int arg0, Addressable arg1) {
-    glut_h.glVertexAttribI2uivEXT(arg0, arg1);
+  public void glVertexAttribI2uivEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI2uivEXT(index, v);
   }
 
-  public void glVertexAttribI3iEXT(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glVertexAttribI3iEXT(arg0, arg1, arg2, arg3);
+  public void glVertexAttribI3iEXT(int index, int x, int y, int z) {
+    glut_h.glVertexAttribI3iEXT(index, x, y, z);
   }
 
-  public void glVertexAttribI3ivEXT(int arg0, Addressable arg1) {
-    glut_h.glVertexAttribI3ivEXT(arg0, arg1);
+  public void glVertexAttribI3ivEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI3ivEXT(index, v);
   }
 
-  public void glVertexAttribI3uiEXT(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glVertexAttribI3uiEXT(arg0, arg1, arg2, arg3);
+  public void glVertexAttribI3uiEXT(int index, int x, int y, int z) {
+    glut_h.glVertexAttribI3uiEXT(index, x, y, z);
   }
 
-  public void glVertexAttribI3uivEXT(int arg0, Addressable arg1) {
-    glut_h.glVertexAttribI3uivEXT(arg0, arg1);
+  public void glVertexAttribI3uivEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI3uivEXT(index, v);
   }
 
-  public void glVertexAttribI4bvEXT(int arg0, Addressable arg1) {
-    glut_h.glVertexAttribI4bvEXT(arg0, arg1);
+  public void glVertexAttribI4bvEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI4bvEXT(index, v);
   }
 
-  public void glVertexAttribI4iEXT(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glVertexAttribI4iEXT(arg0, arg1, arg2, arg3, arg4);
+  public void glVertexAttribI4iEXT(int index, int x, int y, int z, int w) {
+    glut_h.glVertexAttribI4iEXT(index, x, y, z, w);
   }
 
-  public void glVertexAttribI4ivEXT(int arg0, Addressable arg1) {
-    glut_h.glVertexAttribI4ivEXT(arg0, arg1);
+  public void glVertexAttribI4ivEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI4ivEXT(index, v);
   }
 
-  public void glVertexAttribI4svEXT(int arg0, Addressable arg1) {
-    glut_h.glVertexAttribI4svEXT(arg0, arg1);
+  public void glVertexAttribI4svEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI4svEXT(index, v);
   }
 
-  public void glVertexAttribI4ubvEXT(int arg0, Addressable arg1) {
-    glut_h.glVertexAttribI4ubvEXT(arg0, arg1);
+  public void glVertexAttribI4ubvEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI4ubvEXT(index, v);
   }
 
-  public void glVertexAttribI4uiEXT(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    glut_h.glVertexAttribI4uiEXT(arg0, arg1, arg2, arg3, arg4);
+  public void glVertexAttribI4uiEXT(int index, int x, int y, int z, int w) {
+    glut_h.glVertexAttribI4uiEXT(index, x, y, z, w);
   }
 
-  public void glVertexAttribI4uivEXT(int arg0, Addressable arg1) {
-    glut_h.glVertexAttribI4uivEXT(arg0, arg1);
+  public void glVertexAttribI4uivEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI4uivEXT(index, v);
   }
 
-  public void glVertexAttribI4usvEXT(int arg0, Addressable arg1) {
-    glut_h.glVertexAttribI4usvEXT(arg0, arg1);
+  public void glVertexAttribI4usvEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI4usvEXT(index, v);
   }
 
-  public void glVertexAttribIPointerEXT(int arg0, int arg1, int arg2, int arg3, Addressable arg4) {
-    glut_h.glVertexAttribIPointerEXT(arg0, arg1, arg2, arg3, arg4);
+  public void glVertexAttribIPointerEXT(int index, int size, int type, int stride, Addressable pointer) {
+    glut_h.glVertexAttribIPointerEXT(index, size, type, stride, pointer);
   }
 
-  public void glVertexAttribPointer(int arg0, int arg1, int arg2, byte arg3, int arg4, Addressable arg5) {
-    glut_h.glVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glVertexAttribPointer(int index, int size, int type, byte normalized, int stride, Addressable pointer) {
+    glut_h.glVertexAttribPointer(index, size, type, normalized, stride, pointer);
   }
 
-  public void glVertexAttribPointerARB(int arg0, int arg1, int arg2, byte arg3, int arg4, Addressable arg5) {
-    glut_h.glVertexAttribPointerARB(arg0, arg1, arg2, arg3, arg4, arg5);
+  public void glVertexAttribPointerARB(int index, int size, int type, byte normalized, int stride, Addressable pointer) {
+    glut_h.glVertexAttribPointerARB(index, size, type, normalized, stride, pointer);
   }
 
-  public void glVertexBlendARB(int arg0) {
-    glut_h.glVertexBlendARB(arg0);
+  public void glVertexBlendARB(int count) {
+    glut_h.glVertexBlendARB(count);
   }
 
-  public void glVertexPointer(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glVertexPointer(arg0, arg1, arg2, arg3);
+  public void glVertexPointer(int size, int type, int stride, Addressable pointer) {
+    glut_h.glVertexPointer(size, type, stride, pointer);
   }
 
-  public void glViewport(int arg0, int arg1, int arg2, int arg3) {
-    glut_h.glViewport(arg0, arg1, arg2, arg3);
+  public void glViewport(int x, int y, int width, int height) {
+    glut_h.glViewport(x, y, width, height);
   }
 
-  public void glWaitSync(Addressable arg0, int arg1, long arg2) {
-    glut_h.glWaitSync(arg0, arg1, arg2);
+  public void glWaitSync(Addressable sync, int flags, long timeout) {
+    glut_h.glWaitSync(sync, flags, timeout);
   }
 
-  public void glWeightPointerARB(int arg0, int arg1, int arg2, Addressable arg3) {
-    glut_h.glWeightPointerARB(arg0, arg1, arg2, arg3);
+  public void glWeightPointerARB(int size, int type, int stride, Addressable pointer) {
+    glut_h.glWeightPointerARB(size, type, stride, pointer);
   }
 
-  public void glWeightbvARB(int arg0, Addressable arg1) {
-    glut_h.glWeightbvARB(arg0, arg1);
+  public void glWeightbvARB(int size, Addressable weights) {
+    glut_h.glWeightbvARB(size, weights);
   }
 
-  public void glWeightdvARB(int arg0, Addressable arg1) {
-    glut_h.glWeightdvARB(arg0, arg1);
+  public void glWeightdvARB(int size, Addressable weights) {
+    glut_h.glWeightdvARB(size, weights);
   }
 
-  public void glWeightfvARB(int arg0, Addressable arg1) {
-    glut_h.glWeightfvARB(arg0, arg1);
+  public void glWeightfvARB(int size, Addressable weights) {
+    glut_h.glWeightfvARB(size, weights);
   }
 
-  public void glWeightivARB(int arg0, Addressable arg1) {
-    glut_h.glWeightivARB(arg0, arg1);
+  public void glWeightivARB(int size, Addressable weights) {
+    glut_h.glWeightivARB(size, weights);
   }
 
-  public void glWeightsvARB(int arg0, Addressable arg1) {
-    glut_h.glWeightsvARB(arg0, arg1);
+  public void glWeightsvARB(int size, Addressable weights) {
+    glut_h.glWeightsvARB(size, weights);
   }
 
-  public void glWeightubvARB(int arg0, Addressable arg1) {
-    glut_h.glWeightubvARB(arg0, arg1);
+  public void glWeightubvARB(int size, Addressable weights) {
+    glut_h.glWeightubvARB(size, weights);
   }
 
-  public void glWeightuivARB(int arg0, Addressable arg1) {
-    glut_h.glWeightuivARB(arg0, arg1);
+  public void glWeightuivARB(int size, Addressable weights) {
+    glut_h.glWeightuivARB(size, weights);
   }
 
-  public void glWeightusvARB(int arg0, Addressable arg1) {
-    glut_h.glWeightusvARB(arg0, arg1);
+  public void glWeightusvARB(int size, Addressable weights) {
+    glut_h.glWeightusvARB(size, weights);
   }
 
-  public void glWindowPos2d(double arg0, double arg1) {
-    glut_h.glWindowPos2d(arg0, arg1);
+  public void glWindowPos2d(double x, double y) {
+    glut_h.glWindowPos2d(x, y);
   }
 
-  public void glWindowPos2dARB(double arg0, double arg1) {
-    glut_h.glWindowPos2dARB(arg0, arg1);
+  public void glWindowPos2dARB(double x, double y) {
+    glut_h.glWindowPos2dARB(x, y);
   }
 
-  public void glWindowPos2dv(Addressable arg0) {
-    glut_h.glWindowPos2dv(arg0);
+  public void glWindowPos2dv(Addressable v) {
+    glut_h.glWindowPos2dv(v);
   }
 
-  public void glWindowPos2dvARB(Addressable arg0) {
-    glut_h.glWindowPos2dvARB(arg0);
+  public void glWindowPos2dvARB(Addressable v) {
+    glut_h.glWindowPos2dvARB(v);
   }
 
-  public void glWindowPos2f(float arg0, float arg1) {
-    glut_h.glWindowPos2f(arg0, arg1);
+  public void glWindowPos2f(float x, float y) {
+    glut_h.glWindowPos2f(x, y);
   }
 
-  public void glWindowPos2fARB(float arg0, float arg1) {
-    glut_h.glWindowPos2fARB(arg0, arg1);
+  public void glWindowPos2fARB(float x, float y) {
+    glut_h.glWindowPos2fARB(x, y);
   }
 
-  public void glWindowPos2fv(Addressable arg0) {
-    glut_h.glWindowPos2fv(arg0);
+  public void glWindowPos2fv(Addressable v) {
+    glut_h.glWindowPos2fv(v);
   }
 
-  public void glWindowPos2fvARB(Addressable arg0) {
-    glut_h.glWindowPos2fvARB(arg0);
+  public void glWindowPos2fvARB(Addressable v) {
+    glut_h.glWindowPos2fvARB(v);
   }
 
-  public void glWindowPos2i(int arg0, int arg1) {
-    glut_h.glWindowPos2i(arg0, arg1);
+  public void glWindowPos2i(int x, int y) {
+    glut_h.glWindowPos2i(x, y);
   }
 
-  public void glWindowPos2iARB(int arg0, int arg1) {
-    glut_h.glWindowPos2iARB(arg0, arg1);
+  public void glWindowPos2iARB(int x, int y) {
+    glut_h.glWindowPos2iARB(x, y);
   }
 
-  public void glWindowPos2iv(Addressable arg0) {
-    glut_h.glWindowPos2iv(arg0);
+  public void glWindowPos2iv(Addressable v) {
+    glut_h.glWindowPos2iv(v);
   }
 
-  public void glWindowPos2ivARB(Addressable arg0) {
-    glut_h.glWindowPos2ivARB(arg0);
+  public void glWindowPos2ivARB(Addressable v) {
+    glut_h.glWindowPos2ivARB(v);
   }
 
-  public void glWindowPos2s(short arg0, short arg1) {
-    glut_h.glWindowPos2s(arg0, arg1);
+  public void glWindowPos2s(short x, short y) {
+    glut_h.glWindowPos2s(x, y);
   }
 
-  public void glWindowPos2sARB(short arg0, short arg1) {
-    glut_h.glWindowPos2sARB(arg0, arg1);
+  public void glWindowPos2sARB(short x, short y) {
+    glut_h.glWindowPos2sARB(x, y);
   }
 
-  public void glWindowPos2sv(Addressable arg0) {
-    glut_h.glWindowPos2sv(arg0);
+  public void glWindowPos2sv(Addressable v) {
+    glut_h.glWindowPos2sv(v);
   }
 
-  public void glWindowPos2svARB(Addressable arg0) {
-    glut_h.glWindowPos2svARB(arg0);
+  public void glWindowPos2svARB(Addressable v) {
+    glut_h.glWindowPos2svARB(v);
   }
 
-  public void glWindowPos3d(double arg0, double arg1, double arg2) {
-    glut_h.glWindowPos3d(arg0, arg1, arg2);
+  public void glWindowPos3d(double x, double y, double z) {
+    glut_h.glWindowPos3d(x, y, z);
   }
 
-  public void glWindowPos3dARB(double arg0, double arg1, double arg2) {
-    glut_h.glWindowPos3dARB(arg0, arg1, arg2);
+  public void glWindowPos3dARB(double x, double y, double z) {
+    glut_h.glWindowPos3dARB(x, y, z);
   }
 
-  public void glWindowPos3dv(Addressable arg0) {
-    glut_h.glWindowPos3dv(arg0);
+  public void glWindowPos3dv(Addressable v) {
+    glut_h.glWindowPos3dv(v);
   }
 
-  public void glWindowPos3dvARB(Addressable arg0) {
-    glut_h.glWindowPos3dvARB(arg0);
+  public void glWindowPos3dvARB(Addressable v) {
+    glut_h.glWindowPos3dvARB(v);
   }
 
-  public void glWindowPos3f(float arg0, float arg1, float arg2) {
-    glut_h.glWindowPos3f(arg0, arg1, arg2);
+  public void glWindowPos3f(float x, float y, float z) {
+    glut_h.glWindowPos3f(x, y, z);
   }
 
-  public void glWindowPos3fARB(float arg0, float arg1, float arg2) {
-    glut_h.glWindowPos3fARB(arg0, arg1, arg2);
+  public void glWindowPos3fARB(float x, float y, float z) {
+    glut_h.glWindowPos3fARB(x, y, z);
   }
 
-  public void glWindowPos3fv(Addressable arg0) {
-    glut_h.glWindowPos3fv(arg0);
+  public void glWindowPos3fv(Addressable v) {
+    glut_h.glWindowPos3fv(v);
   }
 
-  public void glWindowPos3fvARB(Addressable arg0) {
-    glut_h.glWindowPos3fvARB(arg0);
+  public void glWindowPos3fvARB(Addressable v) {
+    glut_h.glWindowPos3fvARB(v);
   }
 
-  public void glWindowPos3i(int arg0, int arg1, int arg2) {
-    glut_h.glWindowPos3i(arg0, arg1, arg2);
+  public void glWindowPos3i(int x, int y, int z) {
+    glut_h.glWindowPos3i(x, y, z);
   }
 
-  public void glWindowPos3iARB(int arg0, int arg1, int arg2) {
-    glut_h.glWindowPos3iARB(arg0, arg1, arg2);
+  public void glWindowPos3iARB(int x, int y, int z) {
+    glut_h.glWindowPos3iARB(x, y, z);
   }
 
-  public void glWindowPos3iv(Addressable arg0) {
-    glut_h.glWindowPos3iv(arg0);
+  public void glWindowPos3iv(Addressable v) {
+    glut_h.glWindowPos3iv(v);
   }
 
-  public void glWindowPos3ivARB(Addressable arg0) {
-    glut_h.glWindowPos3ivARB(arg0);
+  public void glWindowPos3ivARB(Addressable v) {
+    glut_h.glWindowPos3ivARB(v);
   }
 
-  public void glWindowPos3s(short arg0, short arg1, short arg2) {
-    glut_h.glWindowPos3s(arg0, arg1, arg2);
+  public void glWindowPos3s(short x, short y, short z) {
+    glut_h.glWindowPos3s(x, y, z);
   }
 
-  public void glWindowPos3sARB(short arg0, short arg1, short arg2) {
-    glut_h.glWindowPos3sARB(arg0, arg1, arg2);
+  public void glWindowPos3sARB(short x, short y, short z) {
+    glut_h.glWindowPos3sARB(x, y, z);
   }
 
-  public void glWindowPos3sv(Addressable arg0) {
-    glut_h.glWindowPos3sv(arg0);
+  public void glWindowPos3sv(Addressable v) {
+    glut_h.glWindowPos3sv(v);
   }
 
-  public void glWindowPos3svARB(Addressable arg0) {
-    glut_h.glWindowPos3svARB(arg0);
+  public void glWindowPos3svARB(Addressable v) {
+    glut_h.glWindowPos3svARB(v);
   }
 
 }
