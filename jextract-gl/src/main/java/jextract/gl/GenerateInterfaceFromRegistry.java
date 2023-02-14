@@ -101,6 +101,9 @@ public class GenerateInterfaceFromRegistry {
     // Create a single interface for MAJOR GL versions, including all minors
     
     writeInterfaceMajorVersion(folder, javaFiles, packge, interfaceWriters, "GL_1");
+    writeInterfaceMajorVersion(folder, javaFiles, packge, interfaceWriters, "GL_2");
+    writeInterfaceMajorVersion(folder, javaFiles, packge, interfaceWriters, "GL_3");
+    writeInterfaceMajorVersion(folder, javaFiles, packge, interfaceWriters, "GL_4");
 
 
     return javaFiles;
