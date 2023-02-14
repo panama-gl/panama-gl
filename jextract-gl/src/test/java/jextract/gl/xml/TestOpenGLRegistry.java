@@ -13,6 +13,7 @@ public class TestOpenGLRegistry {
   private static final String FLOAT = "float";
   private static final String INT = "int";
   private static final String DOUBLE = "double";
+  private static final String BOOLEAN = "boolean";
   private static final String BYTE = "byte";
   private static final String STRING = "String";
   private static final String VOID = "void";
@@ -50,15 +51,19 @@ public class TestOpenGLRegistry {
     assert_glMultiTexCoord4i(commandIndex);
     assert_glGetProgramBinary(commandIndex);
     assert_glMultiDrawElements(commandIndex);
+    assert_glVertexAttribPointer(commandIndex);
+    
     assert_glBindBufferOffsetEXT(commandIndex);
     assert_glTransformFeedbackVaryingsEXT(commandIndex);
+    
+
   }
   
   @Test
   public void single() throws Exception {
     Map<String,CommandWrap> commandIndex = registry.getCommandIndex();
 
-    assert_glMultiTexCoord4i(commandIndex);
+    assert_glVertexAttribPointer(commandIndex);
 
 
   }
@@ -198,6 +203,7 @@ public class TestOpenGLRegistry {
   }
   
   
+  
   protected void assert_glMultiTexCoord2i(Map<String, CommandWrap> commandIndex) {
     CommandWrap command = commandIndex.get("glMultiTexCoord2i");
     
@@ -219,6 +225,45 @@ public class TestOpenGLRegistry {
     Assert.assertEquals(INT, a2.getTypeName());
   }
 
+  
+
+  protected void assert_glVertexAttribPointer(Map<String, CommandWrap> commandIndex) {
+    CommandWrap command = commandIndex.get("glVertexAttribPointer");
+    
+    Assert.assertNotNull(command);
+    
+    Assert.assertEquals(6, command.getArgs().size());
+    
+    
+    Arg a0 = command.getArgs().get(0);
+    Assert.assertEquals("index", a0.getName());
+    Assert.assertEquals(INT, a0.getTypeName());
+    
+    Arg a1 = command.getArgs().get(1);
+    Assert.assertEquals("size", a1.getName());
+    Assert.assertEquals(INT, a1.getTypeName());
+
+    Arg a2 = command.getArgs().get(2);
+    Assert.assertEquals("type", a2.getName());
+    Assert.assertEquals(INT, a2.getTypeName());
+
+    Arg a3 = command.getArgs().get(3);
+    Assert.assertEquals("normalized", a3.getName());
+    Assert.assertEquals(BYTE, a3.getTypeName());
+
+    Arg a4 = command.getArgs().get(4);
+    Assert.assertEquals("stride", a4.getName());
+    Assert.assertEquals(INT, a4.getTypeName());
+
+    Arg a5 = command.getArgs().get(5);
+    Assert.assertEquals("pointer", a5.getName());
+    Assert.assertEquals(ADDRESSABLE, a5.getTypeName());
+
+    //Assert.assertEquals(ADDRESSABLE, command.getOutputType());
+
+  }
+  
+  
   protected void assert_glMultiTexCoord4i(Map<String, CommandWrap> commandIndex) {
     CommandWrap command = commandIndex.get("glMultiTexCoord4i");
     
