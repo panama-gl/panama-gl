@@ -69,7 +69,7 @@ public class GenerateAPI {
     interfGen.compile(javaInterfacesFiles);
     
     //List<String> GL = List.of("GL_1");//, "GL_1_2");
-    List<String> GL = List.of("GL_1_0", "GL_1_1", "GL_1_2", "GL_1_3", "GL_2_0");//skip , "GL_1_4"//, "GL_1_5");
+    List<String> GL = List.of("GL_1_0", "GL_1_1", "GL_1_2", "GL_1_3");//, "GL_2_0");//skip , "GL_1_4"//, "GL_1_5");
     //GL.add("GL_2");
     
     // ============================================================================
@@ -79,13 +79,13 @@ public class GenerateAPI {
     wrapperGen.skipAlreadyBindedMethodNAME = true;
     
     // Configure macOS wrapper
-    //makeWrapper_macOS(javaInterfacesFiles, GL);
+    makeWrapper_macOS(javaInterfacesFiles, GL);
 
     // Configure Linux wrapper
     makeWrapper_linux(javaInterfacesFiles, GL);
 
     // Configure GLX wrapper
-    //makeWrapper_GLX(javaInterfacesFiles, GL);
+    makeWrapper_GLX(javaInterfacesFiles, GL);
 
   }
 
