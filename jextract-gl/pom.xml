@@ -114,7 +114,7 @@
 
 					<!-- Configure Panama -->
 					<argLine>
-						--enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
+						--enable-native-access=ALL-UNNAMED --enable-preview
 					</argLine>
 
 				</configuration>
@@ -130,7 +130,7 @@
 					<target>19</target>
 					<encoding>UTF-8</encoding>
 					<compilerArgs>
-						<arg>--add-modules=jdk.incubator.foreign</arg>
+						<arg>--enable-preview</arg>
 					</compilerArgs>
 				</configuration>
 			</plugin>

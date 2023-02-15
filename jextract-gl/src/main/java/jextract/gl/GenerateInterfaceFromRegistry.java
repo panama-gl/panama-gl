@@ -315,7 +315,7 @@ public class GenerateInterfaceFromRegistry {
       type = "long";
     }
 
-    String line = "public static " + type + " " + enumC.getName() + " = " + value + ";";
+    String line = "public static final " + type + " " + enumC.getName() + " = " + value + ";";
 
     // Check if this line of code as allready been writen
     if (!javaCode.toString().contains(line))
