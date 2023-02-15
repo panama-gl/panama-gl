@@ -2,9 +2,13 @@ package panamagl.opengl;
 
 import opengl.ubuntu.v20.glut_h;
 import static opengl.ubuntu.v20.glut_h.*;
+import glxext.ubuntu.v20.glxext_h;
+import static glxext.ubuntu.v20.glxext_h.*;
+import glext.ubuntu.v20.glext_h;
+import static glext.ubuntu.v20.glext_h.*;
 import java.lang.foreign.*;
 
-public class GL_linux implements GL_1_0, GL_1_1, GL_1_2, GL_1_3 {
+public class GL_linux implements GL_1_0, GL_1_1, GL_1_2, GL_1_3, GL_2_0 {
   public void glAccum(int op, float value) {
     glut_h.glAccum(op, value);
   }

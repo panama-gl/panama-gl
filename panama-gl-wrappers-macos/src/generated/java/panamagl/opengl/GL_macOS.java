@@ -2,9 +2,11 @@ package panamagl.opengl;
 
 import opengl.macos.v10_15_7.glut_h;
 import static opengl.macos.v10_15_7.glut_h.*;
+import glext.macos.v10_15_7.glext_h;
+import static glext.macos.v10_15_7.glext_h.*;
 import java.lang.foreign.*;
 
-public class GL_macOS implements GL_1_0, GL_1_1, GL_1_2, GL_1_3 {
+public class GL_macOS implements GL_1_0, GL_1_1, GL_1_2, GL_1_3, GL_2_0 {
   public void glAccum(int op, float value) {
     glut_h.glAccum(op, value);
   }

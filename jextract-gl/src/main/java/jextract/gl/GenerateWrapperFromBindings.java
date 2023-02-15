@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import jextract.gl.GenerateAPI.Wrapper;
 import jextract.gl.generate.java.ClassCompiler;
 import jextract.gl.generate.java.ClassWriter;
@@ -23,6 +24,7 @@ public class GenerateWrapperFromBindings {
   OpenGLRegistry registry;
   
   boolean addUnimplementedMethodsUponMissingBinding = true;
+  boolean skipAlreadyBindedMethodNAME = true;
   boolean debug = false;
   
   public GenerateWrapperFromBindings() throws Exception {
@@ -32,7 +34,7 @@ public class GenerateWrapperFromBindings {
   public static void main(String[] args) throws Exception {
 
     Wrapper wrapper = new Wrapper();
-    wrapper.wrapped = opengl.macos.v10_15_7.glut_h.class;
+    wrapper.wrapped = Set.of(opengl.macos.v10_15_7.glut_h.class);
     
     wrapper.accepts = new AcceptsGLMethod();
     wrapper.className = "GL_macOS";
@@ -60,15 +62,32 @@ public class GenerateWrapperFromBindings {
     // ----------------------------------------------------
     
     Map<String, CommandWrap> xmlRegistry = getXMLRegistryCommands();
-    Map<String, Method> javaRegistry = getJavaRegistryMethods(wrapper.wrapped, wrapper.accepts);
-
+    
     // ----------------------------------------------------
     // -------- ANALYSE IMPOSSIBLE BINDINGS ---------------
     // ----------------------------------------------------
 
     int missingJava = 0;
+
+    Map<Class<?>,Map<String, Method>> javaRegistry = new HashMap<>();
+    
+    for(Class<?> binding: wrapper.wrapped) {
+      javaRegistry.put(binding, getJavaRegistryMethods(binding, wrapper.accepts));
+    }
+    
+    //getJavaRegistryMethods(wrapper.wrapped, wrapper.accepts);
+
     for(String xmlMethod: xmlRegistry.keySet()) {
-      if(javaRegistry.get(xmlMethod)==null) {
+
+      // Search this method in all binding registries
+      boolean found = false;
+      for(Map<String, Method> bindingRegistry: javaRegistry.values()) {
+        if(bindingRegistry.get(xmlMethod)!=null) {
+          found = true;
+        }
+      }
+
+      if(!found) {
         if(debug)
           System.out.println("Not found in Java bindings ! " + xmlMethod);
         missingJava++;
@@ -89,37 +108,53 @@ public class GenerateWrapperFromBindings {
     int methodNotFound = 0;
     int methodFound = 0;
     
-    List<Method> methods = getJavaMethods(wrapper.wrapped, wrapper.accepts);
+    // Index all methods provided by each binding to wrap
+    Map<Class<?>,List<Method>> methods = new HashMap<>();
     
-    System.out.println(methods.size() + " methods in generated bindings (initially " + glut_h.class.getMethods().length + ")");
+    for(Class<?> binding: wrapper.wrapped) {
+      List<Method> bindingMethods = getJavaMethods(binding, wrapper.accepts);
+      methods.put(binding, bindingMethods);
+
+      System.out.println(bindingMethods.size() + " methods in generated bindings for " +  binding.getName());
+    }
+    
     
     // ---------------------------------------------------------------------------
     // Wrap all binded methods under GL interfaces
     //
-    //
 
     List<CommandWrap> wrappedCommands = new ArrayList<>();
 
-    for(Method bindedMethod: methods) {
-      CommandWrap registryCommand = xmlRegistry.get(bindedMethod.getName());
+    // For each binding class to wrap
+    for(Class<?> wrapped: wrapper.wrapped) {
       
-      // Skip wrapping if this method can't be found in the OpenGL specification
-      if(registryCommand==null) {
+      // For each of its method
+      for(Method bindedMethod: methods.get(wrapped)) {
+        CommandWrap registryCommand = xmlRegistry.get(bindedMethod.getName());
         
-        methodNotFound++;
-        if(debug)
-          System.out.println("Not found in XML registry! " + bindedMethod.getName());
+        // Skip command if already handled
+        if(skipAlreadyBindedMethodNAME && wrappedCommands.contains(registryCommand)) {
+          continue;
+        }
+        
+        // Skip wrapping if this method can't be found in the OpenGL specification
+        if(registryCommand==null) {
+          
+          methodNotFound++;
+          if(debug)
+            System.out.println("Not found in XML registry! " + bindedMethod.getName());
+        }
+        
+        // Write a wrapper method for this method if a registry command was found
+        else {
+          methodFound++;
+          
+          classWriter.wrapper(javaCode, wrapped, bindedMethod, registryCommand);
+          
+          wrappedCommands.add(registryCommand);
+        }
+        
       }
-      
-      // Write a wrapper method for this method if a registry command was found
-      else {
-        methodFound++;
-        
-        classWriter.wrapper(javaCode, wrapper.wrapped, bindedMethod, registryCommand);
-        
-        wrappedCommands.add(registryCommand);
-      }
-      
     }
     
     // ---------------------------------------------------------------------------
@@ -162,10 +197,13 @@ public class GenerateWrapperFromBindings {
   }
 
 
-  public ClassWriter newClassWriter(String packge, Class<?> wrapped, String className) {
+  public ClassWriter newClassWriter(String packge, Set<Class<?>> wrapped, String className) {
     ClassWriter classWriter = new ClassWriter(packge, className);
-    classWriter.addImport(wrapped.getName());
-    classWriter.addImport("static " + wrapped.getName() + ".*");
+    
+    for(Class<?> wrpd: wrapped) {
+      classWriter.addImport(wrpd.getName());
+      classWriter.addImport("static " + wrpd.getName() + ".*");
+    }
     classWriter.addImport("java.lang.foreign.*");
     return classWriter;
   }
@@ -179,9 +217,11 @@ public class GenerateWrapperFromBindings {
   }
 
   public Map<String, Method> getJavaRegistryMethods(Class<?> wrapped, AcceptsMethod accepts) throws IllegalAccessException {
+    Map<String, Method> methodRegistry = new HashMap<> ();
+
+    
     List<Method> methods = getJavaMethods(wrapped, accepts);
 
-    Map<String, Method> methodRegistry = new HashMap<> ();
     
     for(Method m: methods) {
       methodRegistry.put(m.getName(), m);

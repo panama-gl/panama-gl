@@ -3,6 +3,7 @@ package jextract.gl;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import jextract.gl.java.AcceptsGLMethod;
 import jextract.gl.java.AcceptsMethod;
 
@@ -29,7 +30,7 @@ public class GenerateAPI {
   }
 
   public static class Wrapper {
-    Class<?> wrapped;
+    Set<Class<?>> wrapped;
     // Class<?> wrapped = opengl.ubuntu.v20.glut_h.class;
     AcceptsMethod accepts;
     String className;
@@ -68,17 +69,32 @@ public class GenerateAPI {
     interfGen.compile(javaInterfacesFiles);
     
     //List<String> GL = List.of("GL_1");//, "GL_1_2");
-    List<String> GL = List.of("GL_1_0", "GL_1_1", "GL_1_2", "GL_1_3");//skip , "GL_1_4"//, "GL_1_5");
+    List<String> GL = List.of("GL_1_0", "GL_1_1", "GL_1_2", "GL_1_3", "GL_2_0");//skip , "GL_1_4"//, "GL_1_5");
     //GL.add("GL_2");
     
     // ============================================================================
     // IMPLEMENTATION
     
     wrapperGen.addUnimplementedMethodsUponMissingBinding = false;
+    wrapperGen.skipAlreadyBindedMethodNAME = true;
     
     // Configure macOS wrapper
+    //makeWrapper_macOS(javaInterfacesFiles, GL);
+
+    // Configure Linux wrapper
+    makeWrapper_linux(javaInterfacesFiles, GL);
+
+    // Configure GLX wrapper
+    //makeWrapper_GLX(javaInterfacesFiles, GL);
+
+  }
+
+
+
+  private void makeWrapper_macOS(List<String> javaInterfacesFiles, List<String> GL)
+      throws IllegalAccessException, IOException {
     Wrapper wrapper = new Wrapper();
-    wrapper.wrapped = opengl.macos.v10_15_7.glut_h.class;
+    wrapper.wrapped = Set.of(opengl.macos.v10_15_7.glut_h.class, glext.macos.v10_15_7.glext_h.class);
     wrapper.accepts = new AcceptsGLMethod();
     wrapper.className = "GL_macOS";
     wrapper.packge = GL_PACKAGE;
@@ -87,11 +103,12 @@ public class GenerateAPI {
 
     // Write and compile
     makeWrapper(javaInterfacesFiles, wrapper);
-
-    // ============================================================================
-    // Configure Linux wrapper
-    wrapper = new Wrapper();
-    wrapper.wrapped = opengl.ubuntu.v20.glut_h.class;
+  }
+  
+  private void makeWrapper_linux(List<String> javaInterfacesFiles, List<String> GL)
+      throws IllegalAccessException, IOException {
+    Wrapper wrapper = new Wrapper();
+    wrapper.wrapped = Set.of(opengl.ubuntu.v20.glut_h.class, glext.ubuntu.v20.glext_h.class, glxext.ubuntu.v20.glxext_h.class);
     wrapper.accepts = new AcceptsGLMethod();
     wrapper.className = "GL_linux";
     wrapper.packge = GL_PACKAGE;
@@ -100,11 +117,12 @@ public class GenerateAPI {
 
     // Write and compile
     makeWrapper(javaInterfacesFiles, wrapper);
-
-    // ============================================================================
-    // Configure GLX wrapper
-    wrapper = new Wrapper();
-    wrapper.wrapped = glx.ubuntu.v20.glx_h.class;
+  }
+  
+  private void makeWrapper_GLX(List<String> javaInterfacesFiles, List<String> GL)
+      throws IllegalAccessException, IOException {
+    Wrapper  wrapper = new Wrapper();
+    wrapper.wrapped = Set.of(glx.ubuntu.v20.glx_h.class);
     wrapper.accepts = new AcceptsGLMethod();
     wrapper.className = "GLX_linux";
     wrapper.packge = GL_PACKAGE;
@@ -113,8 +131,8 @@ public class GenerateAPI {
 
     // Write and compile
     makeWrapper(javaInterfacesFiles, wrapper);
-
   }
+
 
   private void makeWrapper(List<String> javaInterfacesFiles, Wrapper wrapper)
       throws IllegalAccessException, IOException {
