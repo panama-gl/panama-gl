@@ -2,6 +2,7 @@ package jextract.gl;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import opengl.ubuntu.v20.glut_h;
 public class GenerateWrapperFromBindings {
   OpenGLRegistry registry;
   
+  boolean addUnimplementedMethodsUponMissingBinding = true;
   boolean debug = false;
   
   public GenerateWrapperFromBindings() throws Exception {
@@ -90,36 +92,68 @@ public class GenerateWrapperFromBindings {
     List<Method> methods = getJavaMethods(wrapper.wrapped, wrapper.accepts);
     
     System.out.println(methods.size() + " methods in generated bindings (initially " + glut_h.class.getMethods().length + ")");
-
     
-    for(Method method: methods) {
-      CommandWrap command = xmlRegistry.get(method.getName());
+    // ---------------------------------------------------------------------------
+    // Wrap all binded methods under GL interfaces
+    //
+    //
+
+    List<CommandWrap> wrappedCommands = new ArrayList<>();
+
+    for(Method bindedMethod: methods) {
+      CommandWrap registryCommand = xmlRegistry.get(bindedMethod.getName());
       
-      if(command==null) {
+      // Skip wrapping if this method can't be found in the OpenGL specification
+      if(registryCommand==null) {
         
         methodNotFound++;
         if(debug)
-          System.out.println("Not found in XML registry! " + method.getName());
+          System.out.println("Not found in XML registry! " + bindedMethod.getName());
       }
+      
+      // Write a wrapper method for this method if a registry command was found
       else {
         methodFound++;
         
-        // --------------------------------------------
-        // Write a wrapper method for this method
+        classWriter.wrapper(javaCode, wrapper.wrapped, bindedMethod, registryCommand);
         
-        classWriter.wrapper(javaCode, wrapper.wrapped, method, command);
-        
-        // --------------------------------------------
-        
+        wrappedCommands.add(registryCommand);
       }
       
     }
+    
+    // ---------------------------------------------------------------------------
+    // Create default implementation throwing NOT IMPL EXCEPT if the registry command has
+    // not been implement already (and is part of the target GL versions)
+    
+    int nUnimplemented = 0;
+    
+    if(addUnimplementedMethodsUponMissingBinding) {
+      for(CommandWrap registryCommand : xmlRegistry.values()) {
+        if(!wrappedCommands.contains(registryCommand)) {
+          
+          classWriter.wrapperNotImplemented(javaCode, registryCommand);
+          
+          wrappedCommands.add(registryCommand);
+          
+          nUnimplemented++;
+          
+          System.out.println(registryCommand.getName() + "(..) \twrapped but not implemented!");
+        }
+      }
+    }
+
+    
+    // ---------------------------------------------------------------------------
+    // Finish
+    
     classWriter.close(javaCode);
 
     System.out.println("------------------------------------------------------------------");
     System.out.println("Methods wrapped                                 : " + methodFound);
     System.out.println("Methods not wrapped (not found in XML registry) : " + methodNotFound);
     System.out.println("Methods missed (not found in java bindings)     : " + missingJava);
+    System.out.println("Generated unimplemented methods                 : " + nUnimplemented);
     System.out.println("------------------------------------------------------------------");
 
 

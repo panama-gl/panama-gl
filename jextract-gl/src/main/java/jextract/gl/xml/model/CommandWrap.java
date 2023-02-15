@@ -2,6 +2,7 @@ package jextract.gl.xml.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.xml.bind.JAXBElement;
 import jextract.gl.generate.java.Arg;
 import jextractgl.Registry.Commands.Command;
@@ -145,7 +146,7 @@ public class CommandWrap {
       type = ADDRESSABLE;
     }
     // GLsizeiptrARB
-    else if("GLintptr".equals(type) || "GLintptrARB".equals(type)) {
+    else if("GLintptr".equals(type) || "GLintptrARB".equals(type) || "GLuint64EXT".equals(type)|| "GLint64EXT".equals(type)) {
       type = "long";
     }
     else if( 
@@ -153,10 +154,17 @@ public class CommandWrap {
         "GLsizeiptrARB".equals(type) ) {
        type = "long";
      }
-
     else if( 
         "GLsizeiptr".equals(type) || 
-        "GLfixed".equals(type) || "GLclampx".equals(type)|| "GLDEBUGPROC".equals(type)) {
+        "GLfixed".equals(type) || "GLclampx".equals(type)) {
+       type = "int";
+     }
+    // DON T KNOW
+    else if( 
+        "GLhalfNV".equals(type) || "GLvdpauSurfaceNV".equals(type) || 
+        "GLeglImageOES".equals(type) || "GLeglClientBufferEXT".equals(type) || 
+        "GLDEBUGPROCARB".equals(type) || "GLDEBUGPROCAMD".equals(type)|| "GLDEBUGPROCKHR".equals(type) || "GLDEBUGPROC".equals(type) ||
+        "GLVULKANPROCNV".equals(type)) {
        type = "int";
      }
 
@@ -180,4 +188,24 @@ public class CommandWrap {
   public String getOutputType() {
     return outputType;
   }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(alias, args, name, outputType);
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    CommandWrap other = (CommandWrap) obj;
+    return Objects.equals(alias, other.alias) && Objects.equals(args, other.args)
+        && Objects.equals(name, other.name) && Objects.equals(outputType, other.outputType);
+  }
+  
+  
 }

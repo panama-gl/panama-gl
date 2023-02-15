@@ -228,6 +228,8 @@ public class ClassWriter extends JavaWriter {
 
       print("- interface : ", specInterface.getArgs());
       print("- wrapper   : ", argsIn);
+      
+      throw new RuntimeException("interface do not match parameter number");
     } else {
       
       // Check type mismatch in input parameters
@@ -246,6 +248,8 @@ public class ClassWriter extends JavaWriter {
           System.out.println(wrappedMethod.getName() + "\t MISMATCH  on "
               + specInterface.getArgs().get(i).name + " : " + argsIn.get(i).typeName + " / spec : "
               + specInterface.getArgs().get(i).typeName);
+          
+          throw new RuntimeException("Type mismatch");
         }
       }      
     }
@@ -270,6 +274,15 @@ public class ClassWriter extends JavaWriter {
 
 
     wrapper(sb, wrappedMethod.getName(), argsIn, argOut, wrapped.getSimpleName(), exceptions, code);
+  }
+  
+  public void wrapperNotImplemented(StringBuffer javaCode, CommandWrap registryCommand) {
+    // Wrapping line
+    Code c = new Code("throw new RuntimeException(\"This method is not available in the generated binding.\");");
+
+    Arg out = new Arg(registryCommand.getOutputType(), "out");
+    
+    method(javaCode, registryCommand.getName(), registryCommand.getArgs(), out, List.of(c), null);
   }
   
   // ================================
@@ -308,4 +321,6 @@ public class ClassWriter extends JavaWriter {
   public void addImplement(List<String> implement) {
     this.implement = implement;
   }
+
+
 }

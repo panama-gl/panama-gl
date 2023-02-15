@@ -52,6 +52,10 @@ public class GenerateAPI {
   }
 
   public void run() throws Exception {
+    
+    // ============================================================================
+    // SPECIFICATION
+    
     Interf interf = new Interf();
     interf.javaFolder = GL_INTERFACE_SOURCES + GL_PACKAGE.replace(".", "/") + "/";
     interf.packge = GL_PACKAGE;
@@ -64,9 +68,14 @@ public class GenerateAPI {
     interfGen.compile(javaInterfacesFiles);
     
     //List<String> GL = List.of("GL_1");//, "GL_1_2");
-    List<String> GL = List.of("GL_1_0", "GL_1_1", "GL_1_2", "GL_1_3");//, "GL_2_0");//, "GL_1_5");//, "GL_2");
-
+    List<String> GL = List.of("GL_1_0", "GL_1_1", "GL_1_2", "GL_1_3");//skip , "GL_1_4"//, "GL_1_5");
+    //GL.add("GL_2");
+    
     // ============================================================================
+    // IMPLEMENTATION
+    
+    wrapperGen.addUnimplementedMethodsUponMissingBinding = false;
+    
     // Configure macOS wrapper
     Wrapper wrapper = new Wrapper();
     wrapper.wrapped = opengl.macos.v10_15_7.glut_h.class;
