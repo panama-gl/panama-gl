@@ -19,10 +19,16 @@ package panamagl.os.linux;
 
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
+import panamagl.opengl.GL_OLD;
 
 public class PanamaGLFactory_linux extends APanamaGLFactory_linux implements PanamaGLFactory {
+  //@Override
+  public GL_OLD newGL_OLD() {
+    return new GL_linux();
+  }
+
   @Override
   public GL newGL() {
-    return new GL_linux();
+    return null;
   }
 }

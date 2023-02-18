@@ -341,6 +341,15 @@ public class ClassWriter extends JavaWriter {
     method(javaCode, registryCommand.getName(), registryCommand.getArgs(), out, List.of(c), null);
   }
   
+  public void wrapperAuto(StringBuffer sb, Class<?> wrapped, Method wrappedMethod) {
+    List<Arg> argsIn = getArgsIn(wrappedMethod);
+    Arg argOut = getArgOut(wrappedMethod);
+
+    List<Exception> exceptions = null; 
+    
+    wrapper(sb, wrappedMethod.getName(), argsIn, argOut, wrapped.getSimpleName(), exceptions);
+  }
+  
   // ================================
 
 

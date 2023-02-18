@@ -1,5 +1,8 @@
 package jextract.gl.generate.java;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InterfaceWriter extends JavaWriter{
@@ -42,7 +45,35 @@ public class InterfaceWriter extends JavaWriter{
   public void method(StringBuffer sb, String name, List<Arg> in, Arg out, List<Code> body) {
     method(sb, name, in, out, body, null);
   }  
-  
+
+  public void method(StringBuffer sb, Method method) {
+    List<Arg> in = getInputArgs(method);
+    Arg o = getOutputArg(method);
+    
+    //method(sb, method.getName(), in, o, null, null);
+    
+    String methodName = "public " + o.typeName + " " + method.getName() + "(";
+    //StringBuffer argBuffer = new StringBuffer();
+
+    sb.append(methodName);
+
+    int k = 0;
+    for (Arg arg : in) {
+      String declare = arg.getTypeName() + " " + arg.getName();
+
+        if (k == 0) {
+          sb.append(declare);
+        } else {
+          sb.append(", " + declare);
+        }
+      k++;
+
+    }
+
+    sb.append(");\n");
+  }
+
+    
   public void method(StringBuffer sb, String name, List<Arg> in, Arg out, List<Code> body, List<Exception> throwz) {
     
     // Visibility

@@ -139,11 +139,11 @@ public class PanamaGLPainter extends AbstractPainter {
 
   protected StringBuffer version(boolean showExtensions){
     StringBuffer sb = new StringBuffer();
-    sb.append("GL_VENDOR     : " + glGetString(gl.GL_VENDOR()) + "\n");
-    sb.append("GL_RENDERER   : " + glGetString(gl.GL_RENDERBUFFER()) + "\n");
-    sb.append("GL_VERSION    : " + glGetString(gl.GL_VERSION()) + "\n");
+    sb.append("GL_VENDOR     : " + glGetString(GL.GL_VENDOR) + "\n");
+    sb.append("GL_RENDERER   : " + glGetString(GL.GL_RENDERBUFFER) + "\n");
+    sb.append("GL_VERSION    : " + glGetString(GL.GL_VERSION) + "\n");
 
-    String ext = glGetString(gl.GL_EXTENSIONS());
+    String ext = glGetString(GL.GL_EXTENSIONS);
 
     if(ext!=null) {
       sb.append("GL_EXTENSIONS : " + "\n");
@@ -185,31 +185,31 @@ public class PanamaGLPainter extends AbstractPainter {
 
     // Activate Depth buffer
     if (quality.isDepthActivated()) {
-      gl.glEnable(gl.GL_DEPTH_TEST());
-      gl.glDepthFunc(gl.GL_LESS());
+      gl.glEnable(GL.GL_DEPTH_TEST);
+      gl.glDepthFunc(GL.GL_LESS);
     } else {
-      gl.glDisable(gl.GL_DEPTH_TEST());
+      gl.glDisable(GL.GL_DEPTH_TEST);
     }
 
     // Blending : more beautifull with jGL without this
-    gl.glBlendFunc(gl.GL_SRC_ALPHA(), gl.GL_ONE_MINUS_SRC_ALPHA());
+    gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
 
     // GL_SRC_ALPHA_SATURATE
     // on/off is handled by each viewport (camera or image)
 
     // Activate tranparency
     if (quality.isAlphaActivated()) {
-      gl.glEnable(gl.GL_BLEND());
-      gl.glEnable(gl.GL_ALPHA_TEST());
+      gl.glEnable(GL.GL_BLEND);
+      gl.glEnable(GL.GL_ALPHA_TEST);
 
       if (quality.isDisableDepthBufferWhenAlpha()) {
         // Disable depth test to keeping pixels of
         // "what's behind a polygon" when drawing with
         // alpha
-        gl.glDisable(gl.GL_DEPTH_TEST());
+        gl.glDisable(GL.GL_DEPTH_TEST);
       }
     } else {
-      gl.glDisable(gl.GL_ALPHA_TEST());
+      gl.glDisable(GL.GL_ALPHA_TEST);
     }
 
     // Make smooth colors for polygons (interpolate color between points)
@@ -217,53 +217,53 @@ public class PanamaGLPainter extends AbstractPainter {
 
     // Make smoothing setting
     if (quality.isSmoothPolygon()) {
-      gl.glEnable(gl.GL_POLYGON_SMOOTH());
+      gl.glEnable(GL.GL_POLYGON_SMOOTH);
     } else
-      gl.glDisable(gl.GL_POLYGON_SMOOTH());
+      gl.glDisable(GL.GL_POLYGON_SMOOTH);
 
     if (quality.isSmoothLine()) {
-      gl.glEnable(gl.GL_LINE_SMOOTH());
+      gl.glEnable(GL.GL_LINE_SMOOTH);
     } else
-      gl.glDisable(gl.GL_LINE_SMOOTH());
+      gl.glDisable(GL.GL_LINE_SMOOTH);
 
     if (quality.isSmoothPoint()) {
-      gl.glEnable(gl.GL_POINT_SMOOTH());
+      gl.glEnable(GL.GL_POINT_SMOOTH);
     } else
-      gl.glDisable(gl.GL_POINT_SMOOTH());
+      gl.glDisable(GL.GL_POINT_SMOOTH);
   }
 
   @Override
   public int[] getViewPortAsInt() {
     int viewport[] = new int[4];
-    glGetIntegerv(gl.GL_VIEWPORT(), viewport, 0);
+    glGetIntegerv(GL.GL_VIEWPORT, viewport, 0);
     return viewport;
   }
 
   @Override
   public double[] getProjectionAsDouble() {
     double projection[] = new double[16];
-    glGetDoublev(gl.GL_PROJECTION_MATRIX(), projection, 0);
+    glGetDoublev(GL.GL_PROJECTION_MATRIX, projection, 0);
     return projection;
   }
 
   @Override
   public float[] getProjectionAsFloat() {
     float projection[] = new float[16];
-    glGetFloatv(gl.GL_PROJECTION_MATRIX(), projection, 0);
+    glGetFloatv(GL.GL_PROJECTION_MATRIX, projection, 0);
     return projection;
   }
 
   @Override
   public double[] getModelViewAsDouble() {
     double modelview[] = new double[16];
-    glGetDoublev(gl.GL_MODELVIEW_MATRIX(), modelview, 0);
+    glGetDoublev(GL.GL_MODELVIEW_MATRIX, modelview, 0);
     return modelview;
   }
 
   @Override
   public float[] getModelViewAsFloat() {
     float modelview[] = new float[16];
-    glGetFloatv(gl.GL_MODELVIEW_MATRIX(), modelview, 0);
+    glGetFloatv(GL.GL_MODELVIEW_MATRIX, modelview, 0);
     return modelview;
   }
 
@@ -379,11 +379,11 @@ public class PanamaGLPainter extends AbstractPainter {
   protected int polygonModeValue(PolygonMode mode) {
     switch (mode) {
     case FRONT:
-      return gl.GL_FRONT();
+      return GL.GL_FRONT;
     case BACK:
-      return gl.GL_BACK();
+      return GL.GL_BACK;
     case FRONT_AND_BACK:
-      return gl.GL_FRONT_AND_BACK();
+      return GL.GL_FRONT_AND_BACK;
     default:
       throw new IllegalArgumentException("Unsupported mode '" + mode + "'");
     }
@@ -392,9 +392,9 @@ public class PanamaGLPainter extends AbstractPainter {
   protected int polygonFillValue(PolygonFill mode) {
     switch (mode) {
     case FILL:
-      return gl.GL_FILL();
+      return GL.GL_FILL;
     case LINE:
-      return gl.GL_LINE();
+      return GL.GL_LINE;
     default:
       throw new IllegalArgumentException("Unsupported mode '" + mode + "'");
     }
@@ -491,10 +491,10 @@ public class PanamaGLPainter extends AbstractPainter {
   public void glPixelStore(PixelStore store, int param) {
     switch (store) {
     case PACK_ALIGNMENT:
-      gl.glPixelStorei(gl.GL_PACK_ALIGNMENT(), param);
+      gl.glPixelStorei(GL.GL_PACK_ALIGNMENT, param);
       break;
     case UNPACK_ALIGNMENT:
-      gl.glPixelStorei(gl.GL_UNPACK_ALIGNMENT(), param);
+      gl.glPixelStorei(GL.GL_UNPACK_ALIGNMENT, param);
       break;
     }
     throw new IllegalArgumentException("Unsupported mode '" + store + "'");
@@ -648,9 +648,9 @@ public class PanamaGLPainter extends AbstractPainter {
   public void glNewList(int list, ListMode mode) {
     switch (mode) {
     case COMPILE:
-      glNewList(list, gl.GL_COMPILE());
+      glNewList(list, GL.GL_COMPILE);
     case COMPILE_AND_EXECUTE:
-      glNewList(list, gl.GL_COMPILE_AND_EXECUTE());
+      glNewList(list, GL.GL_COMPILE_AND_EXECUTE);
     }
   }
 
@@ -738,11 +738,11 @@ public class PanamaGLPainter extends AbstractPainter {
   public int glRenderMode(RenderMode mode) {
     switch (mode) {
     case RENDER:
-      return glRenderMode(gl.GL_RENDER());
+      return glRenderMode(GL.GL_RENDER);
     case SELECT:
-      return glRenderMode(gl.GL_SELECT());
+      return glRenderMode(GL.GL_SELECT);
     case FEEDBACK:
-      return glRenderMode(gl.GL_FEEDBACK());
+      return glRenderMode(GL.GL_FEEDBACK);
     }
     throw new IllegalArgumentException("Unsupported mode '" + mode + "'");
   }
@@ -758,28 +758,28 @@ public class PanamaGLPainter extends AbstractPainter {
   public void glStencilFunc(StencilFunc func, int ref, int mask) {
     switch (func) {
       case GL_ALWAYS:
-        gl.glStencilOp(gl.GL_ALWAYS(), ref, mask);
+        gl.glStencilOp(GL.GL_ALWAYS, ref, mask);
         break;
       case GL_EQUAL:
-        gl.glStencilOp(gl.GL_EQUAL(), ref, mask);
+        gl.glStencilOp(GL.GL_EQUAL, ref, mask);
         break;
       case GL_GREATER:
-        gl.glStencilFunc(gl.GL_GREATER(), ref, mask);
+        gl.glStencilFunc(GL.GL_GREATER, ref, mask);
         break;
       case GL_GEQUAL:
-        gl.glStencilFunc(gl.GL_GEQUAL(), ref, mask);
+        gl.glStencilFunc(GL.GL_GEQUAL, ref, mask);
         break;
       case GL_LEQUAL:
-        gl.glStencilOp(gl.GL_LEQUAL(), ref, mask);
+        gl.glStencilOp(GL.GL_LEQUAL, ref, mask);
         break;
       case GL_LESS:
-        gl.glStencilOp(gl.GL_LESS(), ref, mask);
+        gl.glStencilOp(GL.GL_LESS, ref, mask);
         break;
       case GL_NEVER:
-        gl.glStencilFunc(gl.GL_NEVER(), ref, mask);
+        gl.glStencilFunc(GL.GL_NEVER, ref, mask);
         break;
       case GL_NOTEQUAL:
-        gl.glStencilFunc(gl.GL_NOTEQUAL(), ref, mask);
+        gl.glStencilFunc(GL.GL_NOTEQUAL, ref, mask);
         break;
 
       default:
@@ -794,12 +794,12 @@ public class PanamaGLPainter extends AbstractPainter {
 
   @Override
   public void glStencilMask_True() {
-    gl.glStencilMask(gl.GL_TRUE());
+    gl.glStencilMask(GL.GL_TRUE);
   }
 
   @Override
   public void glStencilMask_False(){
-    gl.glStencilMask(gl.GL_FALSE());
+    gl.glStencilMask(GL.GL_FALSE);
   }
 
 
@@ -816,17 +816,17 @@ public class PanamaGLPainter extends AbstractPainter {
   protected int toInt(StencilOp fail) {
     switch (fail) {
       case GL_DECR:
-        return gl.GL_DECR();
+        return GL.GL_DECR;
       case GL_INCR:
-        return gl.GL_INCR();
+        return GL.GL_INCR;
       case GL_INVERT:
-        return gl.GL_INVERT();
+        return GL.GL_INVERT;
       case GL_KEEP:
-        return gl.GL_KEEP();
+        return GL.GL_KEEP;
       case GL_REPLACE:
-        return gl.GL_REPLACE();
+        return GL.GL_REPLACE;
       case GL_ZERO:
-        return gl.GL_ZERO();
+        return GL.GL_ZERO;
       default:
         throw new IllegalArgumentException("Unknown enum value for StencilOp: " + fail);
     }
@@ -885,17 +885,17 @@ public class PanamaGLPainter extends AbstractPainter {
   public int clipPlaneId(int id) {
     switch (id) {
       case 0:
-        return gl.GL_CLIP_PLANE0();
+        return GL.GL_CLIP_PLANE0;
       case 1:
-        return gl.GL_CLIP_PLANE1();
+        return GL.GL_CLIP_PLANE1;
       case 2:
-        return gl.GL_CLIP_PLANE2();
+        return GL.GL_CLIP_PLANE2;
       case 3:
-        return gl.GL_CLIP_PLANE3();
+        return GL.GL_CLIP_PLANE3;
       case 4:
-        return gl.GL_CLIP_PLANE4();
+        return GL.GL_CLIP_PLANE4;
       case 5:
-        return gl.GL_CLIP_PLANE5();
+        return GL.GL_CLIP_PLANE5;
       default:
         throw new IllegalArgumentException("Expect a plane ID in [0;5]");
     }
@@ -928,6 +928,7 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public void glGetIntegerv(int pname, int[] data, int data_offset) {
     gl.glGetIntegerv(pname, data, data_offset);
+    
   }
 
   @Override
@@ -953,7 +954,7 @@ public class PanamaGLPainter extends AbstractPainter {
 
   public void printGLDepthRange() {
     float[] params = new float[2];
-    gl.glGetFloatv(gl.GL_DEPTH_RANGE(), params, 0);
+    gl.glGetFloatv(GL.GL_DEPTH_RANGE, params, 0);
     // Logger.getLogger(EmulGLPainter.class).info();
     Array.print(params);
   }
@@ -976,9 +977,9 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public void glShadeModel(ColorModel colorModel) {
     if (ColorModel.SMOOTH.equals(colorModel)) {
-      gl.glShadeModel(gl.GL_SMOOTH());
+      gl.glShadeModel(GL.GL_SMOOTH);
     } else if (ColorModel.FLAT.equals(colorModel)) {
-      gl.glShadeModel(gl.GL_FLAT());
+      gl.glShadeModel(GL.GL_FLAT);
     } else {
       throw new IllegalArgumentException("Unsupported setting : '" + colorModel + "'");
     }
@@ -991,12 +992,12 @@ public class PanamaGLPainter extends AbstractPainter {
 
   @Override
   public void glShadeModel_Smooth() {
-    gl.glShadeModel(gl.GL_SMOOTH());
+    gl.glShadeModel(GL.GL_SMOOTH);
   }
 
   @Override
   public void glShadeModel_Flat() {
-    gl.glShadeModel(gl.GL_FLAT());
+    gl.glShadeModel(GL.GL_FLAT);
   }
 
   @Override
@@ -1012,11 +1013,11 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public void glLightf(int light, Attenuation.Type attenuationType, float value) {
     if (Attenuation.Type.CONSTANT.equals(attenuationType)) {
-      glLightf(light, gl.GL_CONSTANT_ATTENUATION(), value);
+      glLightf(light, GL.GL_CONSTANT_ATTENUATION, value);
     } else if (Attenuation.Type.LINEAR.equals(attenuationType)) {
-      glLightf(light, gl.GL_LINEAR_ATTENUATION(), value);
+      glLightf(light, GL.GL_LINEAR_ATTENUATION, value);
     } else if (Attenuation.Type.QUADRATIC.equals(attenuationType)) {
-      glLightf(light, gl.GL_QUADRATIC_ATTENUATION(), value);
+      glLightf(light, GL.GL_QUADRATIC_ATTENUATION, value);
     }
   }
 
@@ -1032,27 +1033,27 @@ public class PanamaGLPainter extends AbstractPainter {
 
   @Override
   public void glLight_Position(int lightId, float[] positionZero) {
-    glLightfv(lightId, gl.GL_POSITION(), positionZero, 0);
+    glLightfv(lightId, GL.GL_POSITION, positionZero, 0);
   }
 
   @Override
   public void glLight_Ambiant(int lightId, Color ambiantColor) {
-    glLightfv(lightId, gl.GL_AMBIENT(), ambiantColor.toArray(), 0);
+    glLightfv(lightId, GL.GL_AMBIENT, ambiantColor.toArray(), 0);
   }
 
   @Override
   public void glLight_Diffuse(int lightId, Color diffuseColor) {
-    glLightfv(lightId, gl.GL_DIFFUSE(), diffuseColor.toArray(), 0);
+    glLightfv(lightId, GL.GL_DIFFUSE, diffuseColor.toArray(), 0);
   }
 
   @Override
   public void glLight_Specular(int lightId, Color specularColor) {
-    glLightfv(lightId, gl.GL_SPECULAR(), specularColor.toArray(), 0);
+    glLightfv(lightId, GL.GL_SPECULAR, specularColor.toArray(), 0);
   }
 
   @Override
   public void glLight_Shininess(int lightId, float value) {
-    glLightf(lightId, gl.GL_SHININESS(), value);
+    glLightf(lightId, GL.GL_SHININESS, value);
   }
 
   @Override
@@ -1068,21 +1069,21 @@ public class PanamaGLPainter extends AbstractPainter {
   protected int lightId(int id) {
     switch (id) {
     case 0:
-      return gl.GL_LIGHT0();
+      return GL.GL_LIGHT0;
     case 1:
-      return gl.GL_LIGHT1();
+      return GL.GL_LIGHT1;
     case (2):
-      return gl.GL_LIGHT2();
+      return GL.GL_LIGHT2;
     case 3:
-      return gl.GL_LIGHT3();
+      return GL.GL_LIGHT3;
     case 4:
-      return gl.GL_LIGHT4();
+      return GL.GL_LIGHT4;
     case 5:
-      return gl.GL_LIGHT5();
+      return GL.GL_LIGHT5;
     case 6:
-      return gl.GL_LIGHT6();
+      return GL.GL_LIGHT6;
     case 7:
-      return gl.GL_LIGHT7();
+      return GL.GL_LIGHT7;
     }
     throw new IllegalArgumentException("Unsupported light ID '" + id + "'");
   }
@@ -1100,9 +1101,9 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public void glLightModel(LightModel model, boolean value) {
     if (LightModel.LIGHT_MODEL_TWO_SIDE.equals(model)) {
-      glLightModeli(gl.GL_LIGHT_MODEL_TWO_SIDE(), value ? 1 : 0);
+      glLightModeli(GL.GL_LIGHT_MODEL_TWO_SIDE, value ? 1 : 0);
     } else if (LightModel.LIGHT_MODEL_LOCAL_VIEWER.equals(model)) {
-      glLightModeli(gl.GL_LIGHT_MODEL_LOCAL_VIEWER(), value ? 1 : 0);
+      glLightModeli(GL.GL_LIGHT_MODEL_LOCAL_VIEWER, value ? 1 : 0);
     } else {
       throw new IllegalArgumentException("Unsupported model '" + model + "'");
     }
@@ -1111,7 +1112,7 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public void glLightModel(LightModel model, Color color) {
     if (LightModel.LIGHT_MODEL_AMBIENT.equals(model)) {
-      glLightModelfv(gl.GL_LIGHT_MODEL_AMBIENT(), color.toArray());
+      glLightModelfv(GL.GL_LIGHT_MODEL_AMBIENT, color.toArray());
     } else {
       throw new IllegalArgumentException("Unsupported model '" + model + "'");
     }
@@ -1136,7 +1137,7 @@ public class PanamaGLPainter extends AbstractPainter {
 
   @Override
   public void glClearColorAndDepthBuffers() {
-    glClear(gl.GL_COLOR_BUFFER_BIT() | gl.GL_DEPTH_BUFFER_BIT());
+    glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
   }
 
   // GL PICKING
@@ -1192,198 +1193,198 @@ public class PanamaGLPainter extends AbstractPainter {
 
   @Override
   public void glEnable_PolygonOffsetFill() {
-    glEnable(gl.GL_POLYGON_OFFSET_FILL());
+    glEnable(GL.GL_POLYGON_OFFSET_FILL);
   }
 
   @Override
   public void glDisable_PolygonOffsetFill() {
-    glDisable(gl.GL_POLYGON_OFFSET_FILL());
+    glDisable(GL.GL_POLYGON_OFFSET_FILL);
   }
 
   @Override
   public void glEnable_PolygonOffsetLine() {
-    glEnable(gl.GL_POLYGON_OFFSET_LINE());
+    glEnable(GL.GL_POLYGON_OFFSET_LINE);
   }
 
   @Override
   public void glDisable_PolygonOffsetLine() {
-    glDisable(gl.GL_POLYGON_OFFSET_LINE());
+    glDisable(GL.GL_POLYGON_OFFSET_LINE);
   }
 
   @Override
   public void glDisable_Lighting() {
-    glDisable(gl.GL_LIGHTING());
+    glDisable(GL.GL_LIGHTING);
   }
 
   @Override
   public void glEnable_Lighting() {
-    glEnable(gl.GL_LIGHTING());
+    glEnable(GL.GL_LIGHTING);
   }
 
   @Override
   public void glEnable_LineStipple() {
-    glEnable(gl.GL_LINE_STIPPLE());
+    glEnable(GL.GL_LINE_STIPPLE);
   }
 
   @Override
   public void glDisable_LineStipple() {
-    glDisable(gl.GL_LINE_STIPPLE());
+    glDisable(GL.GL_LINE_STIPPLE);
   }
 
   @Override
   public void glEnable_Blend() {
-    glEnable(gl.GL_BLEND());
+    glEnable(GL.GL_BLEND);
   }
 
   @Override
   public void glDisable_Blend() {
-    glDisable(gl.GL_BLEND());
+    glDisable(GL.GL_BLEND);
   }
 
   @Override
   public void glMatrixMode_ModelView() {
-    glMatrixMode(gl.GL_MODELVIEW());
+    glMatrixMode(GL.GL_MODELVIEW);
   }
 
   @Override
   public void glMatrixMode_Projection() {
-    glMatrixMode(gl.GL_PROJECTION());
+    glMatrixMode(GL.GL_PROJECTION);
   }
 
   @Override
   public void glBegin_Polygon() {
-    glBegin(gl.GL_POLYGON());
+    glBegin(GL.GL_POLYGON);
   }
 
   @Override
   public void glBegin_Quad() {
-    glBegin(gl.GL_QUADS());
+    glBegin(GL.GL_QUADS);
   }
 
   @Override
   public void glBegin_Triangle() {
-    glBegin(gl.GL_TRIANGLES());
+    glBegin(GL.GL_TRIANGLES);
   }
 
   @Override
   public void glBegin_Point() {
-    glBegin(gl.GL_POINTS());
+    glBegin(GL.GL_POINTS);
   }
 
   @Override
   public void glBegin_LineStrip() {
-    glBegin(gl.GL_LINE_STRIP());
+    glBegin(GL.GL_LINE_STRIP);
   }
 
   @Override
   public void glBegin_LineLoop() {
-    glBegin(gl.GL_LINE_LOOP());
+    glBegin(GL.GL_LINE_LOOP);
   }
 
   @Override
   public void glBegin_Line() {
-    glBegin(gl.GL_LINES());
+    glBegin(GL.GL_LINES);
   }
 
   @Override
   public void glEnable_CullFace() {
-    glEnable(gl.GL_CULL_FACE());
+    glEnable(GL.GL_CULL_FACE);
   }
 
   @Override
   public void glDisable_CullFace() {
-    glDisable(gl.GL_CULL_FACE());
+    glDisable(GL.GL_CULL_FACE);
   }
 
   @Override
   public void glFrontFace_ClockWise() {
-    glFrontFace(gl.GL_CCW());
+    glFrontFace(GL.GL_CCW);
   }
 
   @Override
   public void glCullFace_Front() {
-    glCullFace(gl.GL_FRONT());
+    glCullFace(GL.GL_FRONT);
   }
 
   @Override
   public void glEnable_ColorMaterial() {
-    glEnable(gl.GL_COLOR_MATERIAL());
+    glEnable(GL.GL_COLOR_MATERIAL);
   }
 
   @Override
   public void glMaterial(MaterialProperty material, Color color, boolean isFront) {
     if (isFront) {
-      glMaterialfv(gl.GL_FRONT(), materialProperty(material), color.toArray(), 0);
+      glMaterialfv(GL.GL_FRONT, materialProperty(material), color.toArray(), 0);
     } else {
-      glMaterialfv(gl.GL_BACK(), materialProperty(material), color.toArray(), 0);
+      glMaterialfv(GL.GL_BACK, materialProperty(material), color.toArray(), 0);
     }
   }
 
   @Override
   public void glMaterial(MaterialProperty material, float[] color, boolean isFront) {
     if (isFront) {
-      glMaterialfv(gl.GL_FRONT(), materialProperty(material), color, 0);
+      glMaterialfv(GL.GL_FRONT, materialProperty(material), color, 0);
     } else {
-      glMaterialfv(gl.GL_BACK(), materialProperty(material), color, 0);
+      glMaterialfv(GL.GL_BACK, materialProperty(material), color, 0);
     }
   }
 
   protected int materialProperty(MaterialProperty material) {
     switch (material) {
     case AMBIENT:
-      return gl.GL_AMBIENT();
+      return GL.GL_AMBIENT;
     case DIFFUSE:
-      return gl.GL_DIFFUSE();
+      return GL.GL_DIFFUSE;
     case SPECULAR:
-      return gl.GL_SPECULAR();
+      return GL.GL_SPECULAR;
     case SHININESS:
-      return gl.GL_SHININESS();
+      return GL.GL_SHININESS;
     }
     throw new IllegalArgumentException("Unsupported property '" + material + "'");
   }
 
   @Override
   public void glEnable_PointSmooth() {
-    glEnable(gl.GL_POINT_SMOOTH());
+    glEnable(GL.GL_POINT_SMOOTH);
   }
 
   @Override
   public void glHint_PointSmooth_Nicest() {
-    glHint(gl.GL_POINT_SMOOTH_HINT(), gl.GL_NICEST());
+    glHint(GL.GL_POINT_SMOOTH_HINT, GL.GL_NICEST);
   }
 
   @Override
   public void glDepthFunc(DepthFunc func) {
     switch(func) {
-      case GL_ALWAYS: gl.glDepthFunc(gl.GL_ALWAYS()); break;
-      case GL_NEVER: gl.glDepthFunc(gl.GL_NEVER()); break;
-      case GL_EQUAL: gl.glDepthFunc(gl.GL_EQUAL()); break;
-      case GL_GEQUAL: gl.glDepthFunc(gl.GL_GEQUAL()); break;
-      case GL_GREATER: gl.glDepthFunc(gl.GL_GREATER()); break;
-      case GL_LEQUAL: gl.glDepthFunc(gl.GL_LEQUAL()); break;
-      case GL_LESS: gl.glDepthFunc(gl.GL_LESS()); break;
-      case GL_NOTEQUAL: gl.glDepthFunc(gl.GL_NOTEQUAL()); break;
+      case GL_ALWAYS: gl.glDepthFunc(GL.GL_ALWAYS); break;
+      case GL_NEVER: gl.glDepthFunc(GL.GL_NEVER); break;
+      case GL_EQUAL: gl.glDepthFunc(GL.GL_EQUAL); break;
+      case GL_GEQUAL: gl.glDepthFunc(GL.GL_GEQUAL); break;
+      case GL_GREATER: gl.glDepthFunc(GL.GL_GREATER); break;
+      case GL_LEQUAL: gl.glDepthFunc(GL.GL_LEQUAL); break;
+      case GL_LESS: gl.glDepthFunc(GL.GL_LESS); break;
+      case GL_NOTEQUAL: gl.glDepthFunc(GL.GL_NOTEQUAL); break;
       default: throw new RuntimeException("Enum value not supported : " + func);
     }
   }
 
   @Override
   public void glEnable_DepthTest() {
-    gl.glEnable(gl.GL_DEPTH_TEST());
+    gl.glEnable(GL.GL_DEPTH_TEST);
   }
 
   @Override
   public void glDisable_DepthTest() {
-    gl.glDisable(gl.GL_DEPTH_TEST());
+    gl.glDisable(GL.GL_DEPTH_TEST);
   }
 
   @Override
   public void glEnable_Stencil() {
-    gl.glEnable(gl.GL_STENCIL());
+    gl.glEnable(GL.GL_STENCIL);
   }
 
   @Override
   public void glDisable_Stencil() {
-    gl.glDisable(gl.GL_STENCIL());
+    gl.glDisable(GL.GL_STENCIL);
   }  
 }

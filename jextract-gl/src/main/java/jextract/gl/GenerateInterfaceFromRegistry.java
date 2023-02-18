@@ -289,17 +289,11 @@ public class GenerateInterfaceFromRegistry {
     for (Arg arg : command.getArgs()) {
       String declare = arg.getTypeName() + " " + arg.getName();
 
-      /*if (argBuffer.toString().contains(declare)) {
-        //k++;
-        argBuffer.append(declare);
-        //continue;
-      } else {*/
         if (k == 0) {
           argBuffer.append(declare);
         } else {
           argBuffer.append(", " + declare);
         }
-      //}
       k++;
 
     }

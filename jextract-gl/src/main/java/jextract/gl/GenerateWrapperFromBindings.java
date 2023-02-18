@@ -25,9 +25,11 @@ public class GenerateWrapperFromBindings {
   
   boolean addUnimplementedMethodsUponMissingBinding = true;
   boolean skipAlreadyBindedMethodNAME = true;
-  boolean debug = false;
+  boolean debug = true;
 
   public Set<String> addUnimplementedMethodsFor = new HashSet<>();
+  
+  protected List<Method> autoWrappedMethods;
   
   public GenerateWrapperFromBindings() throws Exception {
     registry = new OpenGLRegistry();
@@ -58,6 +60,8 @@ public class GenerateWrapperFromBindings {
   }
 
   public void generateWrapper(Wrapper wrapper) throws IllegalAccessException, IOException {
+    autoWrappedMethods = new ArrayList<>();
+    addUnimplementedMethodsFor = new HashSet<>();
     
     // ----------------------------------------------------
     // -------- REGISTRIES --------------------------------
@@ -83,6 +87,10 @@ public class GenerateWrapperFromBindings {
 
       // Search this method in all binding registries
       boolean found = false;
+      
+      if(xmlMethod.startsWith("glu") || xmlMethod.startsWith("glut"))
+        found = true;
+      
       for(Map<String, Method> bindingRegistry: javaRegistry.values()) {
         if(bindingRegistry.get(xmlMethod)!=null) {
           found = true;
@@ -126,6 +134,8 @@ public class GenerateWrapperFromBindings {
     //
 
     List<CommandWrap> wrappedCommands = new ArrayList<>();
+    
+    Set<String> autoWrappedMethodNames = new HashSet<>();
 
     // For each binding class to wrap
     for(Class<?> wrapped: wrapper.wrapped) {
@@ -139,21 +149,39 @@ public class GenerateWrapperFromBindings {
           continue;
         }
         
-        // Skip wrapping if this method can't be found in the OpenGL specification
-        if(registryCommand==null) {
-          
-          methodNotFound++;
-          if(debug)
-            System.out.println("Not found in XML registry! " + bindedMethod.getName());
-        }
-        
         // Write a wrapper method for this method if a registry command was found
-        else {
+        if(registryCommand!=null) {
           methodFound++;
           
           classWriter.wrapper(javaCode, wrapped, bindedMethod, registryCommand);
           
           wrappedCommands.add(registryCommand);
+        }
+        else {
+          // Deal with known but out of registry methods : automatic interface generation
+          
+          if((bindedMethod.getName().startsWith("glu") || bindedMethod.getName().startsWith("glut")) && ! bindedMethod.getName().contains("$")) {
+            
+            // check the method name and not the method itself, since the same
+            // method may appear in multiple wrapped binding.
+            if(!autoWrappedMethodNames.contains(bindedMethod.getName())) {
+              
+              autoWrappedMethods.add(bindedMethod);
+              autoWrappedMethodNames.add(bindedMethod.getName());
+              
+              classWriter.wrapperAuto(javaCode, wrapped, bindedMethod);
+            }
+            
+            
+          }
+          // Skip wrapping if this method can't be found in the OpenGL specification
+          else {
+            methodNotFound++;
+            if(debug)
+              System.out.println("Not found in XML registry! " + bindedMethod.getName());
+            
+          }
+
         }
         
       }
@@ -175,7 +203,8 @@ public class GenerateWrapperFromBindings {
           
           nUnimplemented++;
           
-          System.out.println(registryCommand.getName() + "(..) \twrapped but not implemented!");
+          if(debug)
+            System.out.println(registryCommand.getName() + "(..) \twrapped but not implemented!");
         }
       }
     }
@@ -205,6 +234,8 @@ public class GenerateWrapperFromBindings {
     // Write code to disk
     classWriter.writeTo(javaCode, wrapper.javaFile);
   }
+  
+  
 
 
   public ClassWriter newClassWriter(String packge, Set<Class<?>> wrapped, String className) {
@@ -254,5 +285,11 @@ public class GenerateWrapperFromBindings {
     return commandName;
   }
 
+  /** Methods that have been added to the wrapper despite they are not visible in the GL registry. That may be the case for GLU or GLUT methods that are not in registry but available in all bindings */
+  public List<Method> getAutoWrappedMethods() {
+    return autoWrappedMethods;
+  }
+
+  
 
 }

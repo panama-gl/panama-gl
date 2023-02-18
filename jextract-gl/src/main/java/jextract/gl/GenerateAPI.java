@@ -1,6 +1,7 @@
 package jextract.gl;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -48,7 +49,7 @@ public class GenerateAPI {
     wrapperGen = new GenerateWrapperFromBindings();
   }
 
-  
+  //enum Platform{ MACOS, LINUX}
 
 
   public void run() throws Exception {
@@ -60,21 +61,18 @@ public class GenerateAPI {
     interf.packge = GL_PACKAGE;
     interf.javaFolder = GL_INTERFACE_SOURCES + interf.packge.replace(".", "/") + "/";
     
+    
+    
     System.out.println("----------------------------------------------------------");
     System.out.println("[Interfaces]");
 
-    List<String> javaInterfacesFiles = interfGen.generateInterfaces(interf);
-
-    compile(javaInterfacesFiles);
-    
-    //List<String> GL = List.of("panamagl.opengl.GL_1", "panamagl.opengl.GL_2");
-    //List<String> GL = List.of("GL_1", "GL_2", "GL_3", "GL_4"); 
-    
-    String superGL = "SuperGL";
+    String superGL = "GL";
     InterfaceWriter glInterfaceWriter = new InterfaceWriter(interf.packge, superGL);
     
     glInterfaceWriter.addExtension("GL_1");
     glInterfaceWriter.addExtension("GL_2");
+    glInterfaceWriter.addExtension("GLU");
+    glInterfaceWriter.addExtension("GLUT");
     
     StringBuffer javaCode = new StringBuffer();
 
@@ -82,8 +80,17 @@ public class GenerateAPI {
     glInterfaceWriter.start(javaCode);
     glInterfaceWriter.close(javaCode);    
     glInterfaceWriter.writeTo(javaCode, javaFile);
+
+    
+    
+    List<String> javaInterfacesFiles = interfGen.generateInterfaces(interf);
+
+    
     // ============================================================================
     // GL IMPLEMENTATION
+    
+    boolean MACOS = true;
+    boolean LINUX = true;
     
     wrapperGen.addUnimplementedMethodsUponMissingBinding = false;
     //wrapperGen.addUnimplementedMethodsFor = Sets.of("glDebugMessageCallback");
@@ -94,54 +101,89 @@ public class GenerateAPI {
     
     // ========================================================
     // Configure macOS wrapper
-    wrapper = new Wrapper();
-    wrapper.platform = "macOS_x86";
-    wrapper.wrapped = Set.of(opengl.macos.v10_15_7.glut_h.class, glext.macos.v10_15_7.glext_h.class, cgl.macos.v10_15_7.cgl_h.class);
-    wrapper.accepts = new AcceptsGLMethod();
-    wrapper.className = GL_IMPL;
-    wrapper.packge = GL_PACKAGE_MACOS_x86;
-    wrapper.setFileIn(GL_MACOS_SOURCES);
-
-    wrapper.addImplement(interf.packge + "." + superGL);
-
-    // Write and compile
-    makeWrapper(javaInterfacesFiles, wrapper);
-
-    // Configure macOS factory
-    factory = new PlatformFactory();
-    factory.base = APanamaGLFactory_macOS.class;
-    factory.name = "PanamaGLFactory_" + wrapper.platform;
-    factory.packge = GL_PACKAGE_MACOS_x86;
-    factory.setFileIn(GL_MACOS_SOURCES);
     
-    makeFactory(javaInterfacesFiles, wrapper, factory);
+    if(MACOS) {
+      wrapper = new Wrapper();
+      wrapper.platform = "macOS_x86";
+      wrapper.wrapped = Set.of(opengl.macos.v10_15_7.glut_h.class, glext.macos.v10_15_7.glext_h.class, cgl.macos.v10_15_7.cgl_h.class);
+      wrapper.accepts = new AcceptsGLMethod();
+      wrapper.className = GL_IMPL;
+      wrapper.packge = GL_PACKAGE_MACOS_x86;
+      wrapper.setFileIn(GL_MACOS_SOURCES);
+  
+      wrapper.addImplement(interf.packge + "." + superGL);
+      wrapper.addImplement(interf.packge + ".GLU");
+      wrapper.addImplement(interf.packge + ".GLUT");
+      
+      // Write and compile
+      List<Method> extra = makeWrapper(javaInterfacesFiles, wrapper);
+      
+      // Create GLU et GLUT interface
+      InterfaceWriter gluWriter = new InterfaceWriter(interf.packge, "GLU");
+      InterfaceWriter glutWriter = new InterfaceWriter(interf.packge, "GLUT");
+      String glutFile = interf.javaFolder + "/GLUT.java";
+      String gluFile = interf.javaFolder + "/GLU.java";
+
+      StringBuffer glutCode= new StringBuffer();
+      StringBuffer gluCode= new StringBuffer();   
+      
+      glutWriter.start(glutCode);
+      gluWriter.start(gluCode);
+      for(Method method: extra) {
+        if(method.getName().startsWith("glut") && ! method.getName().contains("$")) {
+          glutWriter.method(glutCode, method);
+        }
+        else if(method.getName().startsWith("glu") && ! method.getName().contains("$")) {
+          gluWriter.method(gluCode, method);
+        }
+      }
+      glutWriter.close(glutCode);
+      gluWriter.close(gluCode);
+      
+      glutWriter.writeTo(glutCode, glutFile);
+      gluWriter.writeTo(gluCode, gluFile);
+      
+      // Configure macOS factory
+      factory = new PlatformFactory();
+      factory.base = APanamaGLFactory_macOS.class;
+      factory.name = "PanamaGLFactory_" + wrapper.platform;
+      factory.packge = GL_PACKAGE_MACOS_x86;
+      factory.setFileIn(GL_MACOS_SOURCES);
+      
+      makeFactory(javaInterfacesFiles, wrapper, factory);
+    }
+    
+    // Compile ALL
+    compile(javaInterfacesFiles);
+
 
     // ========================================================
     // Configure Linux wrapper
-    wrapper = new Wrapper();
-    wrapper.platform = "linux_x86";
-    wrapper.wrapped = Set.of(opengl.ubuntu.v20.glut_h.class, glext.ubuntu.v20.glext_h.class, glxext.ubuntu.v20.glxext_h.class);
-    wrapper.accepts = new AcceptsGLMethod();
-    wrapper.className = GL_IMPL;
-    wrapper.packge = GL_PACKAGE_LINUX_x86;
-    wrapper.setFileIn(GL_LINUX_SOURCES);
-    wrapper.addImplement(interf.packge + "." + superGL);
+    if(LINUX) {
+      wrapper = new Wrapper();
+      wrapper.platform = "linux_x86";
+      wrapper.wrapped = Set.of(opengl.ubuntu.v20.glut_h.class, glext.ubuntu.v20.glext_h.class, glxext.ubuntu.v20.glxext_h.class);
+      wrapper.accepts = new AcceptsGLMethod();
+      wrapper.className = GL_IMPL;
+      wrapper.packge = GL_PACKAGE_LINUX_x86;
+      wrapper.setFileIn(GL_LINUX_SOURCES);
+      wrapper.addImplement(interf.packge + "." + superGL);
+      wrapper.addImplement(interf.packge + ".GLU");
+      wrapper.addImplement(interf.packge + ".GLUT");
 
-    // Write and compile
-    makeWrapper(javaInterfacesFiles, wrapper);
+      // Write and compile
+      List<Method> extra = makeWrapper(javaInterfacesFiles, wrapper);
+  
+      // Configure Linux factory
+      factory = new PlatformFactory();
+      factory.base = APanamaGLFactory_linux.class;
+      factory.name = "PanamaGLFactory_" + wrapper.platform;
+      factory.packge = GL_PACKAGE_LINUX_x86;
+      factory.setFileIn(GL_LINUX_SOURCES);
+      
+      makeFactory(javaInterfacesFiles, wrapper, factory);
 
-    // Configure Linux factory
-    factory = new PlatformFactory();
-    factory.base = APanamaGLFactory_linux.class;
-    factory.name = "PanamaGLFactory_" + wrapper.platform;
-    factory.packge = GL_PACKAGE_LINUX_x86;
-    factory.setFileIn(GL_LINUX_SOURCES);
-    
-    makeFactory(javaInterfacesFiles, wrapper, factory);
-
-    // Configure GLX wrapper
-    //makeWrapper_GLX_x86(javaInterfacesFiles, GL);
-    
+    }    
     
     // Compile ALL
     compile(javaInterfacesFiles);
@@ -159,8 +201,8 @@ public class GenerateAPI {
     
     StringBuffer javaCode = new StringBuffer();
     factoryWriter.start(javaCode);
-    factoryWriter.method(javaCode, "newGL_", null, new Arg(/*wrapper.packge +*/ "panamagl.opengl.GL_2", "out"), c);
-    factoryWriter.method(javaCode, "newGL", null, new Arg("panamagl.opengl.GL", "out"), Code.throwNotImplemented());
+    factoryWriter.method(javaCode, "newGL", null, new Arg(/*wrapper.packge +*/ "panamagl.opengl.GL", "out"), c);
+    //factoryWriter.method(javaCode, "newGL", null, new Arg("panamagl.opengl.GL", "out"), Code.throwNotImplemented());
     factoryWriter.close(javaCode);
     factoryWriter.writeTo(javaCode, factory.javaFile);
     
@@ -168,32 +210,15 @@ public class GenerateAPI {
   }
 
 
-
-  /*private Wrapper makeWrapper_GLX_x86(List<String> javaInterfacesFiles, List<String> GL)
+  protected List<Method> makeWrapper(List<String> javaInterfacesFiles, Wrapper wrapper)
       throws IllegalAccessException, IOException {
-    Wrapper  wrapper = new Wrapper();
-    wrapper.wrapped = Set.of(glx.ubuntu.v20.glx_h.class);
-    wrapper.accepts = new AcceptsGLMethod();
-    wrapper.className = "GLX_linux";
-    wrapper.packge = GL_PACKAGE_LINUX +  ".x86";
-    wrapper.javaFile = GL_LINUX_SOURCES + GL_PACKAGE.replace(".", "/") + "/" + wrapper.className + ".java";
-    wrapper.addImplement(GL);
-
-    // Write and compile
-    makeWrapper(javaInterfacesFiles, wrapper);
+    List<String> cmp = new ArrayList<>(javaInterfacesFiles);
+    cmp.add(wrapper.javaFile);
     
-    return wrapper;
-  }*/
-
-
-  protected void makeWrapper(List<String> javaInterfacesFiles, Wrapper wrapper)
-      throws IllegalAccessException, IOException {
     System.out.println("----------------------------------------------------------");
     System.out.println("[Wrapping] " + wrapper.wrapped + " in " + wrapper.className);
     wrapperGen.generateWrapper(wrapper);
-
-    List<String> cmp = new ArrayList<>(javaInterfacesFiles);
-    cmp.add(wrapper.javaFile);
+    return wrapperGen.getAutoWrappedMethods();
   }
   
   public void compile(List<String> javaFile) throws IOException {

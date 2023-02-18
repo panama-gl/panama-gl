@@ -106,21 +106,21 @@ public class DemoTeapot_Onscreen_Swing {
         gl.glClearColor(1f, 1f, 1f, 1f);
 
         // Setup Lighting
-        gl.glShadeModel(gl.GL_SMOOTH());
+        gl.glShadeModel(GL.GL_SMOOTH);
         
         var pos = allocator.allocateArray(ValueLayout.JAVA_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
-        gl.glLightfv(gl.GL_LIGHT0(), gl.GL_POSITION(), pos);
+        gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, pos);
         
         var spec = allocator.allocateArray(ValueLayout.JAVA_FLOAT, new float[] {1, 1, 1, 0});
-        gl.glLightfv(gl.GL_LIGHT0(), gl.GL_AMBIENT(), spec);
-        gl.glLightfv(gl.GL_LIGHT0(), gl.GL_DIFFUSE(), spec);
-        gl.glLightfv(gl.GL_LIGHT0(), gl.GL_SPECULAR(), spec);
+        gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, spec);
+        gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, spec);
+        gl.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, spec);
         
         var shini = allocator.allocate(ValueLayout.JAVA_FLOAT, 113);
-        gl.glMaterialfv(gl.GL_FRONT(), gl.GL_SHININESS(), shini);
-        gl.glEnable(gl.GL_LIGHTING());
-        gl.glEnable(gl.GL_LIGHT0());
-        gl.glEnable(gl.GL_DEPTH_TEST());
+        gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, shini);
+        gl.glEnable(GL.GL_LIGHTING);
+        gl.glEnable(GL.GL_LIGHT0);
+        gl.glEnable(GL.GL_DEPTH_TEST);
 
         GLError.checkAndThrow(gl);
       }
@@ -128,7 +128,7 @@ public class DemoTeapot_Onscreen_Swing {
       public void display(GL gl) {
         // Reset Background
         gl.glClearColor(1f, 1f, 1f, 1f);
-        gl.glClear(gl.GL_COLOR_BUFFER_BIT() | gl.GL_DEPTH_BUFFER_BIT());
+        gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
         gl.glPushMatrix();
         gl.glRotatef(-20f, 1f, 1f, 0f);

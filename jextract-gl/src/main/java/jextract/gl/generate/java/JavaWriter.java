@@ -3,6 +3,8 @@ package jextract.gl.generate.java;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +70,18 @@ public abstract class JavaWriter {
     }
   }
 
+  public Arg getOutputArg(Method method) {
+    return new Arg(method.getReturnType().getName(), "out");
+  }
+
+  public List<Arg> getInputArgs(Method method) {
+    List<Arg> in = new ArrayList<>();
+    for(Parameter p: method.getParameters()) {
+      Arg i = new Arg(p.getType().getName(), p.getName());
+      in.add(i);
+    }
+    return in;
+  }
 
 
 

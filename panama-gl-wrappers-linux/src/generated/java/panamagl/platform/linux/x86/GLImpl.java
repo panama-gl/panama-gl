@@ -2,13 +2,13 @@ package panamagl.platform.linux.x86;
 
 import opengl.ubuntu.v20.glut_h;
 import static opengl.ubuntu.v20.glut_h.*;
-import glext.ubuntu.v20.glext_h;
-import static glext.ubuntu.v20.glext_h.*;
 import glxext.ubuntu.v20.glxext_h;
 import static glxext.ubuntu.v20.glxext_h.*;
+import glext.ubuntu.v20.glext_h;
+import static glext.ubuntu.v20.glext_h.*;
 import java.lang.foreign.*;
 
-public class GLImpl  implements panamagl.opengl.SuperGL {
+public class GLImpl  implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
   public void glAccum(int op, float value) {
     glut_h.glAccum(op, value);
   }
@@ -1823,6 +1823,698 @@ public class GLImpl  implements panamagl.opengl.SuperGL {
 
   public void glViewport(int x, int y, int width, int height) {
     glut_h.glViewport(x, y, width, height);
+  }
+
+  public void gluBeginCurve(Addressable arg0) {
+    glut_h.gluBeginCurve(arg0);
+  }
+
+  public void gluBeginPolygon(Addressable arg0) {
+    glut_h.gluBeginPolygon(arg0);
+  }
+
+  public void gluBeginSurface(Addressable arg0) {
+    glut_h.gluBeginSurface(arg0);
+  }
+
+  public void gluBeginTrim(Addressable arg0) {
+    glut_h.gluBeginTrim(arg0);
+  }
+
+  public int gluBuild1DMipmapLevels(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, Addressable arg8) {
+    return glut_h.gluBuild1DMipmapLevels(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+  }
+
+  public int gluBuild1DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, Addressable arg5) {
+    return glut_h.gluBuild1DMipmaps(arg0, arg1, arg2, arg3, arg4, arg5);
+  }
+
+  public int gluBuild2DMipmapLevels(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, Addressable arg9) {
+    return glut_h.gluBuild2DMipmapLevels(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+  }
+
+  public int gluBuild2DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, Addressable arg6) {
+    return glut_h.gluBuild2DMipmaps(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  }
+
+  public int gluBuild3DMipmapLevels(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, Addressable arg10) {
+    return glut_h.gluBuild3DMipmapLevels(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+  }
+
+  public int gluBuild3DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, Addressable arg7) {
+    return glut_h.gluBuild3DMipmaps(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
+  }
+
+  public byte gluCheckExtension(Addressable arg0, Addressable arg1) {
+    return glut_h.gluCheckExtension(arg0, arg1);
+  }
+
+  public void gluCylinder(Addressable arg0, double arg1, double arg2, double arg3, int arg4, int arg5) {
+    glut_h.gluCylinder(arg0, arg1, arg2, arg3, arg4, arg5);
+  }
+
+  public void gluDeleteNurbsRenderer(Addressable arg0) {
+    glut_h.gluDeleteNurbsRenderer(arg0);
+  }
+
+  public void gluDeleteQuadric(Addressable arg0) {
+    glut_h.gluDeleteQuadric(arg0);
+  }
+
+  public void gluDeleteTess(Addressable arg0) {
+    glut_h.gluDeleteTess(arg0);
+  }
+
+  public void gluDisk(Addressable arg0, double arg1, double arg2, int arg3, int arg4) {
+    glut_h.gluDisk(arg0, arg1, arg2, arg3, arg4);
+  }
+
+  public void gluEndCurve(Addressable arg0) {
+    glut_h.gluEndCurve(arg0);
+  }
+
+  public void gluEndPolygon(Addressable arg0) {
+    glut_h.gluEndPolygon(arg0);
+  }
+
+  public void gluEndSurface(Addressable arg0) {
+    glut_h.gluEndSurface(arg0);
+  }
+
+  public void gluEndTrim(Addressable arg0) {
+    glut_h.gluEndTrim(arg0);
+  }
+
+  public MemoryAddress gluErrorString(int arg0) {
+    return glut_h.gluErrorString(arg0);
+  }
+
+  public void gluGetNurbsProperty(Addressable arg0, int arg1, Addressable arg2) {
+    glut_h.gluGetNurbsProperty(arg0, arg1, arg2);
+  }
+
+  public MemoryAddress gluGetString(int arg0) {
+    return glut_h.gluGetString(arg0);
+  }
+
+  public void gluGetTessProperty(Addressable arg0, int arg1, Addressable arg2) {
+    glut_h.gluGetTessProperty(arg0, arg1, arg2);
+  }
+
+  public void gluLoadSamplingMatrices(Addressable arg0, Addressable arg1, Addressable arg2, Addressable arg3) {
+    glut_h.gluLoadSamplingMatrices(arg0, arg1, arg2, arg3);
+  }
+
+  public void gluLookAt(double arg0, double arg1, double arg2, double arg3, double arg4, double arg5, double arg6, double arg7, double arg8) {
+    glut_h.gluLookAt(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+  }
+
+  public MemoryAddress gluNewNurbsRenderer() {
+    return glut_h.gluNewNurbsRenderer();
+  }
+
+  public MemoryAddress gluNewQuadric() {
+    return glut_h.gluNewQuadric();
+  }
+
+  public MemoryAddress gluNewTess() {
+    return glut_h.gluNewTess();
+  }
+
+  public void gluNextContour(Addressable arg0, int arg1) {
+    glut_h.gluNextContour(arg0, arg1);
+  }
+
+  public void gluNurbsCallback(Addressable arg0, int arg1, Addressable arg2) {
+    glut_h.gluNurbsCallback(arg0, arg1, arg2);
+  }
+
+  public void gluNurbsCallbackData(Addressable arg0, Addressable arg1) {
+    glut_h.gluNurbsCallbackData(arg0, arg1);
+  }
+
+  public void gluNurbsCallbackDataEXT(Addressable arg0, Addressable arg1) {
+    glut_h.gluNurbsCallbackDataEXT(arg0, arg1);
+  }
+
+  public void gluNurbsCurve(Addressable arg0, int arg1, Addressable arg2, int arg3, Addressable arg4, int arg5, int arg6) {
+    glut_h.gluNurbsCurve(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  }
+
+  public void gluNurbsProperty(Addressable arg0, int arg1, float arg2) {
+    glut_h.gluNurbsProperty(arg0, arg1, arg2);
+  }
+
+  public void gluNurbsSurface(Addressable arg0, int arg1, Addressable arg2, int arg3, Addressable arg4, int arg5, int arg6, Addressable arg7, int arg8, int arg9, int arg10) {
+    glut_h.gluNurbsSurface(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+  }
+
+  public void gluOrtho2D(double arg0, double arg1, double arg2, double arg3) {
+    glut_h.gluOrtho2D(arg0, arg1, arg2, arg3);
+  }
+
+  public void gluPartialDisk(Addressable arg0, double arg1, double arg2, int arg3, int arg4, double arg5, double arg6) {
+    glut_h.gluPartialDisk(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+  }
+
+  public void gluPerspective(double arg0, double arg1, double arg2, double arg3) {
+    glut_h.gluPerspective(arg0, arg1, arg2, arg3);
+  }
+
+  public void gluPickMatrix(double arg0, double arg1, double arg2, double arg3, Addressable arg4) {
+    glut_h.gluPickMatrix(arg0, arg1, arg2, arg3, arg4);
+  }
+
+  public int gluProject(double arg0, double arg1, double arg2, Addressable arg3, Addressable arg4, Addressable arg5, Addressable arg6, Addressable arg7, Addressable arg8) {
+    return glut_h.gluProject(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+  }
+
+  public void gluPwlCurve(Addressable arg0, int arg1, Addressable arg2, int arg3, int arg4) {
+    glut_h.gluPwlCurve(arg0, arg1, arg2, arg3, arg4);
+  }
+
+  public void gluQuadricCallback(Addressable arg0, int arg1, Addressable arg2) {
+    glut_h.gluQuadricCallback(arg0, arg1, arg2);
+  }
+
+  public void gluQuadricDrawStyle(Addressable arg0, int arg1) {
+    glut_h.gluQuadricDrawStyle(arg0, arg1);
+  }
+
+  public void gluQuadricNormals(Addressable arg0, int arg1) {
+    glut_h.gluQuadricNormals(arg0, arg1);
+  }
+
+  public void gluQuadricOrientation(Addressable arg0, int arg1) {
+    glut_h.gluQuadricOrientation(arg0, arg1);
+  }
+
+  public void gluQuadricTexture(Addressable arg0, byte arg1) {
+    glut_h.gluQuadricTexture(arg0, arg1);
+  }
+
+  public int gluScaleImage(int arg0, int arg1, int arg2, int arg3, Addressable arg4, int arg5, int arg6, int arg7, Addressable arg8) {
+    return glut_h.gluScaleImage(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+  }
+
+  public void gluSphere(Addressable arg0, double arg1, int arg2, int arg3) {
+    glut_h.gluSphere(arg0, arg1, arg2, arg3);
+  }
+
+  public void gluTessBeginContour(Addressable arg0) {
+    glut_h.gluTessBeginContour(arg0);
+  }
+
+  public void gluTessBeginPolygon(Addressable arg0, Addressable arg1) {
+    glut_h.gluTessBeginPolygon(arg0, arg1);
+  }
+
+  public void gluTessCallback(Addressable arg0, int arg1, Addressable arg2) {
+    glut_h.gluTessCallback(arg0, arg1, arg2);
+  }
+
+  public void gluTessEndContour(Addressable arg0) {
+    glut_h.gluTessEndContour(arg0);
+  }
+
+  public void gluTessEndPolygon(Addressable arg0) {
+    glut_h.gluTessEndPolygon(arg0);
+  }
+
+  public void gluTessNormal(Addressable arg0, double arg1, double arg2, double arg3) {
+    glut_h.gluTessNormal(arg0, arg1, arg2, arg3);
+  }
+
+  public void gluTessProperty(Addressable arg0, int arg1, double arg2) {
+    glut_h.gluTessProperty(arg0, arg1, arg2);
+  }
+
+  public void gluTessVertex(Addressable arg0, Addressable arg1, Addressable arg2) {
+    glut_h.gluTessVertex(arg0, arg1, arg2);
+  }
+
+  public int gluUnProject(double arg0, double arg1, double arg2, Addressable arg3, Addressable arg4, Addressable arg5, Addressable arg6, Addressable arg7, Addressable arg8) {
+    return glut_h.gluUnProject(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+  }
+
+  public int gluUnProject4(double arg0, double arg1, double arg2, double arg3, Addressable arg4, Addressable arg5, Addressable arg6, double arg7, double arg8, Addressable arg9, Addressable arg10, Addressable arg11, Addressable arg12) {
+    return glut_h.gluUnProject4(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
+  }
+
+  public void glutAddMenuEntry(Addressable arg0, int arg1) {
+    glut_h.glutAddMenuEntry(arg0, arg1);
+  }
+
+  public void glutAddSubMenu(Addressable arg0, int arg1) {
+    glut_h.glutAddSubMenu(arg0, arg1);
+  }
+
+  public void glutAttachMenu(int arg0) {
+    glut_h.glutAttachMenu(arg0);
+  }
+
+  public void glutBitmapCharacter(Addressable arg0, int arg1) {
+    glut_h.glutBitmapCharacter(arg0, arg1);
+  }
+
+  public int glutBitmapLength(Addressable arg0, Addressable arg1) {
+    return glut_h.glutBitmapLength(arg0, arg1);
+  }
+
+  public int glutBitmapWidth(Addressable arg0, int arg1) {
+    return glut_h.glutBitmapWidth(arg0, arg1);
+  }
+
+  public void glutButtonBoxFunc(Addressable arg0) {
+    glut_h.glutButtonBoxFunc(arg0);
+  }
+
+  public void glutChangeToMenuEntry(int arg0, Addressable arg1, int arg2) {
+    glut_h.glutChangeToMenuEntry(arg0, arg1, arg2);
+  }
+
+  public void glutChangeToSubMenu(int arg0, Addressable arg1, int arg2) {
+    glut_h.glutChangeToSubMenu(arg0, arg1, arg2);
+  }
+
+  public void glutCopyColormap(int arg0) {
+    glut_h.glutCopyColormap(arg0);
+  }
+
+  public int glutCreateMenu(Addressable arg0) {
+    return glut_h.glutCreateMenu(arg0);
+  }
+
+  public int glutCreateSubWindow(int arg0, int arg1, int arg2, int arg3, int arg4) {
+    return glut_h.glutCreateSubWindow(arg0, arg1, arg2, arg3, arg4);
+  }
+
+  public int glutCreateWindow(Addressable arg0) {
+    return glut_h.glutCreateWindow(arg0);
+  }
+
+  public void glutDestroyMenu(int arg0) {
+    glut_h.glutDestroyMenu(arg0);
+  }
+
+  public void glutDestroyWindow(int arg0) {
+    glut_h.glutDestroyWindow(arg0);
+  }
+
+  public void glutDetachMenu(int arg0) {
+    glut_h.glutDetachMenu(arg0);
+  }
+
+  public int glutDeviceGet(int arg0) {
+    return glut_h.glutDeviceGet(arg0);
+  }
+
+  public void glutDialsFunc(Addressable arg0) {
+    glut_h.glutDialsFunc(arg0);
+  }
+
+  public void glutDisplayFunc(Addressable arg0) {
+    glut_h.glutDisplayFunc(arg0);
+  }
+
+  public int glutEnterGameMode() {
+    return glut_h.glutEnterGameMode();
+  }
+
+  public void glutEntryFunc(Addressable arg0) {
+    glut_h.glutEntryFunc(arg0);
+  }
+
+  public void glutEstablishOverlay() {
+    glut_h.glutEstablishOverlay();
+  }
+
+  public int glutExtensionSupported(Addressable arg0) {
+    return glut_h.glutExtensionSupported(arg0);
+  }
+
+  public void glutForceJoystickFunc() {
+    glut_h.glutForceJoystickFunc();
+  }
+
+  public void glutFullScreen() {
+    glut_h.glutFullScreen();
+  }
+
+  public int glutGameModeGet(int arg0) {
+    return glut_h.glutGameModeGet(arg0);
+  }
+
+  public void glutGameModeString(Addressable arg0) {
+    glut_h.glutGameModeString(arg0);
+  }
+
+  public int glutGet(int arg0) {
+    return glut_h.glutGet(arg0);
+  }
+
+  public float glutGetColor(int arg0, int arg1) {
+    return glut_h.glutGetColor(arg0, arg1);
+  }
+
+  public int glutGetMenu() {
+    return glut_h.glutGetMenu();
+  }
+
+  public int glutGetModifiers() {
+    return glut_h.glutGetModifiers();
+  }
+
+  public int glutGetWindow() {
+    return glut_h.glutGetWindow();
+  }
+
+  public void glutHideOverlay() {
+    glut_h.glutHideOverlay();
+  }
+
+  public void glutHideWindow() {
+    glut_h.glutHideWindow();
+  }
+
+  public void glutIconifyWindow() {
+    glut_h.glutIconifyWindow();
+  }
+
+  public void glutIdleFunc(Addressable arg0) {
+    glut_h.glutIdleFunc(arg0);
+  }
+
+  public void glutIgnoreKeyRepeat(int arg0) {
+    glut_h.glutIgnoreKeyRepeat(arg0);
+  }
+
+  public void glutInit(Addressable arg0, Addressable arg1) {
+    glut_h.glutInit(arg0, arg1);
+  }
+
+  public void glutInitDisplayMode(int arg0) {
+    glut_h.glutInitDisplayMode(arg0);
+  }
+
+  public void glutInitDisplayString(Addressable arg0) {
+    glut_h.glutInitDisplayString(arg0);
+  }
+
+  public void glutInitWindowPosition(int arg0, int arg1) {
+    glut_h.glutInitWindowPosition(arg0, arg1);
+  }
+
+  public void glutInitWindowSize(int arg0, int arg1) {
+    glut_h.glutInitWindowSize(arg0, arg1);
+  }
+
+  public void glutJoystickFunc(Addressable arg0, int arg1) {
+    glut_h.glutJoystickFunc(arg0, arg1);
+  }
+
+  public void glutKeyboardFunc(Addressable arg0) {
+    glut_h.glutKeyboardFunc(arg0);
+  }
+
+  public void glutKeyboardUpFunc(Addressable arg0) {
+    glut_h.glutKeyboardUpFunc(arg0);
+  }
+
+  public int glutLayerGet(int arg0) {
+    return glut_h.glutLayerGet(arg0);
+  }
+
+  public void glutLeaveGameMode() {
+    glut_h.glutLeaveGameMode();
+  }
+
+  public void glutMainLoop() {
+    glut_h.glutMainLoop();
+  }
+
+  public void glutMenuStateFunc(Addressable arg0) {
+    glut_h.glutMenuStateFunc(arg0);
+  }
+
+  public void glutMenuStatusFunc(Addressable arg0) {
+    glut_h.glutMenuStatusFunc(arg0);
+  }
+
+  public void glutMotionFunc(Addressable arg0) {
+    glut_h.glutMotionFunc(arg0);
+  }
+
+  public void glutMouseFunc(Addressable arg0) {
+    glut_h.glutMouseFunc(arg0);
+  }
+
+  public void glutOverlayDisplayFunc(Addressable arg0) {
+    glut_h.glutOverlayDisplayFunc(arg0);
+  }
+
+  public void glutPassiveMotionFunc(Addressable arg0) {
+    glut_h.glutPassiveMotionFunc(arg0);
+  }
+
+  public void glutPopWindow() {
+    glut_h.glutPopWindow();
+  }
+
+  public void glutPositionWindow(int arg0, int arg1) {
+    glut_h.glutPositionWindow(arg0, arg1);
+  }
+
+  public void glutPostOverlayRedisplay() {
+    glut_h.glutPostOverlayRedisplay();
+  }
+
+  public void glutPostRedisplay() {
+    glut_h.glutPostRedisplay();
+  }
+
+  public void glutPostWindowOverlayRedisplay(int arg0) {
+    glut_h.glutPostWindowOverlayRedisplay(arg0);
+  }
+
+  public void glutPostWindowRedisplay(int arg0) {
+    glut_h.glutPostWindowRedisplay(arg0);
+  }
+
+  public void glutPushWindow() {
+    glut_h.glutPushWindow();
+  }
+
+  public void glutRemoveMenuItem(int arg0) {
+    glut_h.glutRemoveMenuItem(arg0);
+  }
+
+  public void glutRemoveOverlay() {
+    glut_h.glutRemoveOverlay();
+  }
+
+  public void glutReportErrors() {
+    glut_h.glutReportErrors();
+  }
+
+  public void glutReshapeFunc(Addressable arg0) {
+    glut_h.glutReshapeFunc(arg0);
+  }
+
+  public void glutReshapeWindow(int arg0, int arg1) {
+    glut_h.glutReshapeWindow(arg0, arg1);
+  }
+
+  public void glutSetColor(int arg0, float arg1, float arg2, float arg3) {
+    glut_h.glutSetColor(arg0, arg1, arg2, arg3);
+  }
+
+  public void glutSetCursor(int arg0) {
+    glut_h.glutSetCursor(arg0);
+  }
+
+  public void glutSetIconTitle(Addressable arg0) {
+    glut_h.glutSetIconTitle(arg0);
+  }
+
+  public void glutSetKeyRepeat(int arg0) {
+    glut_h.glutSetKeyRepeat(arg0);
+  }
+
+  public void glutSetMenu(int arg0) {
+    glut_h.glutSetMenu(arg0);
+  }
+
+  public void glutSetWindow(int arg0) {
+    glut_h.glutSetWindow(arg0);
+  }
+
+  public void glutSetWindowTitle(Addressable arg0) {
+    glut_h.glutSetWindowTitle(arg0);
+  }
+
+  public void glutSetupVideoResizing() {
+    glut_h.glutSetupVideoResizing();
+  }
+
+  public void glutShowOverlay() {
+    glut_h.glutShowOverlay();
+  }
+
+  public void glutShowWindow() {
+    glut_h.glutShowWindow();
+  }
+
+  public void glutSolidCone(double arg0, double arg1, int arg2, int arg3) {
+    glut_h.glutSolidCone(arg0, arg1, arg2, arg3);
+  }
+
+  public void glutSolidCube(double arg0) {
+    glut_h.glutSolidCube(arg0);
+  }
+
+  public void glutSolidDodecahedron() {
+    glut_h.glutSolidDodecahedron();
+  }
+
+  public void glutSolidIcosahedron() {
+    glut_h.glutSolidIcosahedron();
+  }
+
+  public void glutSolidOctahedron() {
+    glut_h.glutSolidOctahedron();
+  }
+
+  public void glutSolidSphere(double arg0, int arg1, int arg2) {
+    glut_h.glutSolidSphere(arg0, arg1, arg2);
+  }
+
+  public void glutSolidTeapot(double arg0) {
+    glut_h.glutSolidTeapot(arg0);
+  }
+
+  public void glutSolidTetrahedron() {
+    glut_h.glutSolidTetrahedron();
+  }
+
+  public void glutSolidTorus(double arg0, double arg1, int arg2, int arg3) {
+    glut_h.glutSolidTorus(arg0, arg1, arg2, arg3);
+  }
+
+  public void glutSpaceballButtonFunc(Addressable arg0) {
+    glut_h.glutSpaceballButtonFunc(arg0);
+  }
+
+  public void glutSpaceballMotionFunc(Addressable arg0) {
+    glut_h.glutSpaceballMotionFunc(arg0);
+  }
+
+  public void glutSpaceballRotateFunc(Addressable arg0) {
+    glut_h.glutSpaceballRotateFunc(arg0);
+  }
+
+  public void glutSpecialFunc(Addressable arg0) {
+    glut_h.glutSpecialFunc(arg0);
+  }
+
+  public void glutSpecialUpFunc(Addressable arg0) {
+    glut_h.glutSpecialUpFunc(arg0);
+  }
+
+  public void glutStopVideoResizing() {
+    glut_h.glutStopVideoResizing();
+  }
+
+  public void glutStrokeCharacter(Addressable arg0, int arg1) {
+    glut_h.glutStrokeCharacter(arg0, arg1);
+  }
+
+  public int glutStrokeLength(Addressable arg0, Addressable arg1) {
+    return glut_h.glutStrokeLength(arg0, arg1);
+  }
+
+  public int glutStrokeWidth(Addressable arg0, int arg1) {
+    return glut_h.glutStrokeWidth(arg0, arg1);
+  }
+
+  public void glutSwapBuffers() {
+    glut_h.glutSwapBuffers();
+  }
+
+  public void glutTabletButtonFunc(Addressable arg0) {
+    glut_h.glutTabletButtonFunc(arg0);
+  }
+
+  public void glutTabletMotionFunc(Addressable arg0) {
+    glut_h.glutTabletMotionFunc(arg0);
+  }
+
+  public void glutTimerFunc(int arg0, Addressable arg1, int arg2) {
+    glut_h.glutTimerFunc(arg0, arg1, arg2);
+  }
+
+  public void glutUseLayer(int arg0) {
+    glut_h.glutUseLayer(arg0);
+  }
+
+  public void glutVideoPan(int arg0, int arg1, int arg2, int arg3) {
+    glut_h.glutVideoPan(arg0, arg1, arg2, arg3);
+  }
+
+  public void glutVideoResize(int arg0, int arg1, int arg2, int arg3) {
+    glut_h.glutVideoResize(arg0, arg1, arg2, arg3);
+  }
+
+  public int glutVideoResizeGet(int arg0) {
+    return glut_h.glutVideoResizeGet(arg0);
+  }
+
+  public void glutVisibilityFunc(Addressable arg0) {
+    glut_h.glutVisibilityFunc(arg0);
+  }
+
+  public void glutWarpPointer(int arg0, int arg1) {
+    glut_h.glutWarpPointer(arg0, arg1);
+  }
+
+  public void glutWindowStatusFunc(Addressable arg0) {
+    glut_h.glutWindowStatusFunc(arg0);
+  }
+
+  public void glutWireCone(double arg0, double arg1, int arg2, int arg3) {
+    glut_h.glutWireCone(arg0, arg1, arg2, arg3);
+  }
+
+  public void glutWireCube(double arg0) {
+    glut_h.glutWireCube(arg0);
+  }
+
+  public void glutWireDodecahedron() {
+    glut_h.glutWireDodecahedron();
+  }
+
+  public void glutWireIcosahedron() {
+    glut_h.glutWireIcosahedron();
+  }
+
+  public void glutWireOctahedron() {
+    glut_h.glutWireOctahedron();
+  }
+
+  public void glutWireSphere(double arg0, int arg1, int arg2) {
+    glut_h.glutWireSphere(arg0, arg1, arg2);
+  }
+
+  public void glutWireTeapot(double arg0) {
+    glut_h.glutWireTeapot(arg0);
+  }
+
+  public void glutWireTetrahedron() {
+    glut_h.glutWireTetrahedron();
+  }
+
+  public void glutWireTorus(double arg0, double arg1, int arg2, int arg3) {
+    glut_h.glutWireTorus(arg0, arg1, arg2, arg3);
   }
 
   public void glAccumxOES(int op, int value) {

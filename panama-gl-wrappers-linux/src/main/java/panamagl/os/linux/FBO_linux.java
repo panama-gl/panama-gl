@@ -112,12 +112,12 @@ public class FBO_linux implements FBO {
     // what is the
     // preferred format with glGetInternalFormativ(GL_TEXTURE_2D, GL_RGBA8, GL_TEXTURE_IMAGE_FORMAT,
     // 1, &preferred_format).
-    format = gl.GL_BGRA();
-    internalFormat = gl.GL_RGBA8();// gl.GL_BGRA();
-    textureType = gl.GL_UNSIGNED_BYTE();
+    format = GL.GL_BGRA;
+    internalFormat = GL.GL_RGBA8;// GL.GL_BGRA;
+    textureType = GL.GL_UNSIGNED_BYTE;
 
-    Debug.debug(debug, "FBO.internalFormat : " + internalFormat + " (default gl.GL_RGBA8)");
-    Debug.debug(debug, "FBO.format         : " + format + " (default gl.GL_BGRA)");
+    Debug.debug(debug, "FBO.internalFormat : " + internalFormat + " (default GL.GL_RGBA8)");
+    Debug.debug(debug, "FBO.format         : " + format + " (default GL.GL_BGRA)");
 
     // ------------------------
     // Generate TEXTURE buffer
@@ -136,17 +136,17 @@ public class FBO_linux implements FBO {
 
 
     // Bind texture and set parameters
-    gl.glBindTexture(gl.GL_TEXTURE_2D(), idTexture);
-    gl.glTexParameteri(gl.GL_TEXTURE_2D(), gl.GL_TEXTURE_WRAP_S(), gl.GL_REPEAT());
-    gl.glTexParameteri(gl.GL_TEXTURE_2D(), gl.GL_TEXTURE_WRAP_T(), gl.GL_REPEAT());
-    gl.glTexParameteri(gl.GL_TEXTURE_2D(), gl.GL_TEXTURE_MIN_FILTER(), gl.GL_NEAREST());
-    gl.glTexParameteri(gl.GL_TEXTURE_2D(), gl.GL_TEXTURE_MAG_FILTER(), gl.GL_NEAREST());
+    gl.glBindTexture(GL.GL_TEXTURE_2D, idTexture);
+    gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
+    gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
+    gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL.GL_NEAREST);
+    gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_NEAREST);
 
     // Create a texture to write to
     int byteSize = width * height * channels;
     
     pixelBuffer = MemorySegment.allocateNative(byteSize, MemorySession.openImplicit());
-    gl.glTexImage2D(gl.GL_TEXTURE_2D(), level, internalFormat, width, height, border, format,
+    gl.glTexImage2D(GL.GL_TEXTURE_2D, level, internalFormat, width, height, border, format,
         textureType, pixelBuffer);
     
 
@@ -166,10 +166,10 @@ public class FBO_linux implements FBO {
 
 
     // Bind frame buffer
-    gl.glBindFramebuffer(gl.GL_FRAMEBUFFER(), idFrameBuffer);
+    gl.glBindFramebuffer(GL.GL_FRAMEBUFFER, idFrameBuffer);
 
     // Attach 2D texture to this FBO
-    gl.glFramebufferTexture2D(gl.GL_FRAMEBUFFER(), gl.GL_COLOR_ATTACHMENT0(), gl.GL_TEXTURE_2D(),
+    gl.glFramebufferTexture2D(GL.GL_FRAMEBUFFER, GL.GL_COLOR_ATTACHMENT0, GL.GL_TEXTURE_2D,
         idTexture, 0);
 
     // -------------------------
@@ -185,33 +185,33 @@ public class FBO_linux implements FBO {
     Debug.debug(debug, "FBO: Got RenderBuffer ID : " + idRenderBuffer);
 
     // Bind render buffer
-    gl.glBindRenderbuffer(gl.GL_RENDERBUFFER(), idRenderBuffer);
-    gl.glRenderbufferStorage(gl.GL_RENDERBUFFER(), gl.GL_DEPTH_COMPONENT24(), width, height);
+    gl.glBindRenderbuffer(GL.GL_RENDERBUFFER, idRenderBuffer);
+    gl.glRenderbufferStorage(GL.GL_RENDERBUFFER, GL.GL_DEPTH_COMPONENT24, width, height);
 
     
     // -------------------------
     // Attach depth buffer to FBO
 
-    gl.glFramebufferRenderbuffer(gl.GL_FRAMEBUFFER(), gl.GL_DEPTH_ATTACHMENT(),
-        gl.GL_RENDERBUFFER(), idRenderBuffer);
+    gl.glFramebufferRenderbuffer(GL.GL_FRAMEBUFFER, GL.GL_DEPTH_ATTACHMENT,
+        GL.GL_RENDERBUFFER, idRenderBuffer);
 
     // -------------------------
     // Does the GPU support current FBO configuration?
 
-    int status = gl.glCheckFramebufferStatus(gl.GL_FRAMEBUFFER());
+    int status = gl.glCheckFramebufferStatus(GL.GL_FRAMEBUFFER);
 
-    if (status != gl.GL_FRAMEBUFFER_COMPLETE()) {
+    if (status != GL.GL_FRAMEBUFFER_COMPLETE) {
       throw new RuntimeException("Incomplete framebuffer, not supporting current FBO config : "
-          + status + " != GL_FRAMEBUFFER_COMPLETE (" + gl.GL_FRAMEBUFFER_COMPLETE() + ")");
+          + status + " != GL_FRAMEBUFFER_COMPLETE (" + GL.GL_FRAMEBUFFER_COMPLETE + ")");
     }
 
     // -------------------------
     // and now you can render to GL_TEXTURE_2D
 
-    gl.glBindFramebuffer(gl.GL_FRAMEBUFFER(), idFrameBuffer);
+    gl.glBindFramebuffer(GL.GL_FRAMEBUFFER, idFrameBuffer);
     gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     gl.glClearDepth(1.0f);
-    gl.glClear(gl.GL_COLOR_BUFFER_BIT() | gl.GL_DEPTH_BUFFER_BIT());
+    gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
 
     // Mark as prepared
     prepared = true;
@@ -236,9 +236,10 @@ public class FBO_linux implements FBO {
   public void release(GL gl) {
     // Delete resources
     gl.glDeleteTextures(1, textureBufferIds);
+    
     gl.glDeleteRenderbuffers(1, renderBufferIds);
     // Bind 0, which means render to back buffer, as a result, fb is unbound
-    gl.glBindFramebuffer(gl.GL_FRAMEBUFFER(), 0);
+    gl.glBindFramebuffer(GL.GL_FRAMEBUFFER, 0);
     gl.glDeleteFramebuffers(1, frameBufferIds);
 
     // FIXME : Not mapped exception is not relevant
@@ -308,7 +309,7 @@ public class FBO_linux implements FBO {
     
     
     // Bind 0, which means render to back buffer
-    gl.glBindFramebuffer(gl.GL_FRAMEBUFFER(), 0);
+    gl.glBindFramebuffer(GL.GL_FRAMEBUFFER(), 0);
 
     
     //pixelsRead.unload();

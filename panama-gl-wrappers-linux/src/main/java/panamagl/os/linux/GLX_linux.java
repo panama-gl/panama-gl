@@ -28,12 +28,12 @@ import java.nio.IntBuffer;
 import glx.ubuntu.v20.glx_h;
 import opengl.ubuntu.v20.glut_h;
 import panamagl.opengl.AGL;
-import panamagl.opengl.GL;
+import panamagl.opengl.GL_OLD;
 
 /**
  * Look above ^^ this is how you link to platform binding.
  */
-public class GLX_linux extends AGL implements GL  {
+public class GLX_linux extends AGL implements GL_OLD  {
     public GLX_linux() {
         this(false);
     }

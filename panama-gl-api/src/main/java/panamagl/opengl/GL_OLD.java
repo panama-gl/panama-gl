@@ -33,7 +33,7 @@ import java.nio.IntBuffer;
  * @author Martin Pernollet
  */
 @Deprecated
-public interface GL {
+public interface GL_OLD {
     MemorySession getScope();
     SegmentAllocator getAllocator();
     MemorySegment alloc(double[] value);
