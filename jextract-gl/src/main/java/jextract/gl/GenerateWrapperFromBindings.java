@@ -4,18 +4,18 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import jextract.gl.GenerateAPI.Wrapper;
 import jextract.gl.generate.java.ClassCompiler;
 import jextract.gl.generate.java.ClassWriter;
+import jextract.gl.generate.java.Wrapper;
 import jextract.gl.java.AcceptsGLMethod;
 import jextract.gl.java.AcceptsMethod;
 import jextract.gl.java.ClassMethodRegistry;
 import jextract.gl.xml.OpenGLRegistry;
 import jextract.gl.xml.model.CommandWrap;
-import opengl.ubuntu.v20.glut_h;
 
 /**
  * Run me with VM args : --enable-preview
@@ -26,6 +26,8 @@ public class GenerateWrapperFromBindings {
   boolean addUnimplementedMethodsUponMissingBinding = true;
   boolean skipAlreadyBindedMethodNAME = true;
   boolean debug = false;
+
+  public Set<String> addUnimplementedMethodsFor = new HashSet<>();
   
   public GenerateWrapperFromBindings() throws Exception {
     registry = new OpenGLRegistry();
@@ -175,6 +177,14 @@ public class GenerateWrapperFromBindings {
           
           System.out.println(registryCommand.getName() + "(..) \twrapped but not implemented!");
         }
+      }
+    }
+    else {
+      for(String stubRequested: addUnimplementedMethodsFor) {
+        CommandWrap registryCommand = xmlRegistry.get(stubRequested);
+        
+        classWriter.wrapperNotImplemented(javaCode, registryCommand);
+
       }
     }
 

@@ -288,7 +288,7 @@ public interface GL_3_0  {
   public static final int GL_MAP_INVALIDATE_BUFFER_BIT = 0x0008;
   public static final int GL_MAP_FLUSH_EXPLICIT_BIT = 0x0010;
   public static final int GL_MAP_UNSYNCHRONIZED_BIT = 0x0020;
-  public void glMapBufferRange(int target, long offset, long length, int access);
+  public MemoryAddress glMapBufferRange(int target, long offset, long length, int access);
   public void glFlushMappedBufferRange(int target, long offset, long length);
   public static final int GL_COMPRESSED_RED_RGTC1 = 0x8DBB;
   public static final int GL_COMPRESSED_SIGNED_RED_RGTC1 = 0x8DBC;

@@ -4,6 +4,7 @@ public class Arg {
   Class<?> type;
   String name;
   String typeName;
+  String expand;
 
   public Arg(String typeName, String name) {
     this.name = name;
@@ -64,9 +65,12 @@ public class Arg {
   public void setType(Class<?> type) {
     this.type = type;
   }
-  
-  
-  
-  
 
+  public String getExpand() {
+    return expand;
+  }
+
+  public void setExpand(String expand) {
+    this.expand = expand;
+  }
 }

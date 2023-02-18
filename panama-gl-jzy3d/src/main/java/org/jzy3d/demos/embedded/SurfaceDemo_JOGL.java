@@ -51,7 +51,7 @@ public class SurfaceDemo_JOGL {
     Quality q = Quality.Advanced().setAnimated(false);
     Chart chart = factory.newChart(q);
     chart.add(surface());
-    chart.getView().setAxisDisplayed(false);
+    //chart.getView().setAxisDisplayed(false);
     
     Runnable open = new Runnable() {
       @Override

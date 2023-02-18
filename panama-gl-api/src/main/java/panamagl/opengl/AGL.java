@@ -28,6 +28,7 @@ import java.lang.foreign.ValueLayout;
  * 
  * @author Martin Pernollet
  */
+@Deprecated
 public abstract class AGL implements GL {
   protected MemorySession scope;
   protected SegmentAllocator allocator;

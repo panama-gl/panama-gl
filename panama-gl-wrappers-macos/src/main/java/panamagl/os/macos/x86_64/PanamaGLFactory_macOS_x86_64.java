@@ -27,70 +27,11 @@ import panamagl.os.macos.APanamaGLFactory_macOS;
 
 public class PanamaGLFactory_macOS_x86_64 extends APanamaGLFactory_macOS implements PanamaGLFactory {
   protected boolean debug = Debug.check(PanamaGLFactory_macOS_x86_64.class);
-  
-  protected CGLContext_macOS cglContext;
-  protected GLUTContext_macOS glutContext;
-  protected boolean useGLUT = true;
-  protected boolean useCGL = false;
-
-  public PanamaGLFactory_macOS_x86_64() {
-	super();}
-  
-  @Override
-  public boolean matches(Platform os) {
-    return os.isMac();
-  }
-
-  @Override
-  public FBO newFBO(int width, int height) {
-    return new FBO_macOS(width, height);
-  }
-
-
+    
   @Override
   public GL newGL() {
     return new GL_macOS();
   }
 
-  @Override
-  public GLContext newGLContext() {
-    
- // --------------------------------------
-    // A GL Context with CGL
-    if (useCGL) {
-      cglContext = new CGLContext_macOS();
-      cglContext.init();
-      Debug.debug(debug, "PanamaGLMacOSFactory : initContext : CGL done");
-      
-      return cglContext;
-    }
-
-    // --------------------------------------
-    // A GL Context with GLUT
-    // - hanging while ONSCREEN
-    // - not generating FBO properly if omitted
-    if (useGLUT) {
-      glutContext = new GLUTContext_macOS();
-      glutContext.init(false); // do not init GLUT a second time
-      Debug.debug(debug, "PanamaGLMacOSFactory : initContext : GLUT done");
-      
-      return glutContext;
-    }
-
-    
-    return null;
-  }
-  
-  @Override
-  public void destroyContext() {
-    // Clean up CGL context
-    if (cglContext != null)
-      cglContext.destroy();
-
-    // Clean up GLUT context
-    if (glutContext != null)
-      glutContext.destroy();
-
-  }
 
 }

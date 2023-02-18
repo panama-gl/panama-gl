@@ -12,6 +12,7 @@ import javax.xml.bind.JAXBElement;
 import com.google.common.collect.ArrayListMultimap;
 import jextract.gl.generate.java.Arg;
 import jextract.gl.generate.java.ClassCompiler;
+import jextract.gl.generate.java.Interf;
 import jextract.gl.generate.java.InterfaceWriter;
 import jextract.gl.xml.OpenGLRegistry;
 import jextract.gl.xml.model.CommandWrap;
@@ -29,8 +30,11 @@ public class GenerateInterfaceFromRegistry {
 
   public static void main(String[] args) throws Exception {
     GenerateInterfaceFromRegistry gen = new GenerateInterfaceFromRegistry();
-
-    List<String> javaFiles = gen.generateInterfaces("target/", "panama.opengl");
+    Interf interf = new Interf();
+    interf.javaFolder = "target/";
+    interf.packge = "panama.opengl";
+    
+    List<String> javaFiles = gen.generateInterfaces(interf);
 
     gen.compile(javaFiles);
   }
@@ -43,7 +47,7 @@ public class GenerateInterfaceFromRegistry {
 
 
 
-  public List<String> generateInterfaces(String folder, String packge) throws Exception {
+  public List<String> generateInterfaces(Interf interf) throws Exception {
     List<String> javaFiles = new ArrayList<>();
     
     
@@ -57,7 +61,7 @@ public class GenerateInterfaceFromRegistry {
     for (Feature feature : registry.getRegistry().getFeature()) {
       String name = registryFeatureToGLInterfaceName(feature);
 
-      InterfaceWriter interfaceWriter = new InterfaceWriter(packge, name);
+      InterfaceWriter interfaceWriter = new InterfaceWriter(interf.packge, name);
 
       interfaceWriters.put(name, interfaceWriter);
     }
@@ -96,14 +100,14 @@ public class GenerateInterfaceFromRegistry {
     // ------------------------------------------
     // Write each interface body
 
-    writeInterfaceMinorVersion(folder, javaFiles, interfaceWriters, dependencies);
+    writeInterfaceMinorVersion(interf.javaFolder, javaFiles, interfaceWriters, dependencies);
     
     // Create a single interface for MAJOR GL versions, including all minors
     
-    writeInterfaceMajorVersion(folder, javaFiles, packge, interfaceWriters, "GL_1");
-    writeInterfaceMajorVersion(folder, javaFiles, packge, interfaceWriters, "GL_2");
-    writeInterfaceMajorVersion(folder, javaFiles, packge, interfaceWriters, "GL_3");
-    writeInterfaceMajorVersion(folder, javaFiles, packge, interfaceWriters, "GL_4");
+    writeInterfaceMajorVersion(interf.javaFolder, javaFiles, interf.packge, interfaceWriters, "GL_1");
+    writeInterfaceMajorVersion(interf.javaFolder, javaFiles, interf.packge, interfaceWriters, "GL_2");
+    writeInterfaceMajorVersion(interf.javaFolder, javaFiles, interf.packge, interfaceWriters, "GL_3");
+    writeInterfaceMajorVersion(interf.javaFolder, javaFiles, interf.packge, interfaceWriters, "GL_4");
 
 
     return javaFiles;
@@ -269,7 +273,10 @@ public class GenerateInterfaceFromRegistry {
     String outputType = command.getOutputType();
     
  // TODO : EXTRACT SPECIAL CASE    
-    if("glMapBuffer".equals(command.getName())){
+    if("glMapBuffer".equals(command.getName())
+     || "glMapBufferRange".equals(command.getName())
+     || "glMapNamedBuffer".equals(command.getName())
+     || "glMapNamedBufferRange".equals(command.getName())){
       outputType = "MemoryAddress";
     }
     

@@ -44,7 +44,11 @@ public class TestOpenGLRegistry {
     assert_glGetIntegerv(commandIndex);
     assert_glGetPointerv(commandIndex);
     
+    assert_glAttachObjectARB(commandIndex);
+    assert_glColorPointerListIBM(commandIndex);
+    
     assert_glMapBuffer(commandIndex);
+    assert_glMapBufferRange(commandIndex);
     
     assert_glIndexPointer(commandIndex);
     assert_glMultiTexCoord2i(commandIndex);
@@ -63,7 +67,7 @@ public class TestOpenGLRegistry {
   public void single() throws Exception {
     Map<String,CommandWrap> commandIndex = registry.getCommandIndex();
 
-    assert_glVertexAttribPointer(commandIndex);
+    assert_glColorPointerListIBM(commandIndex);
 
 
   }
@@ -131,6 +135,36 @@ public class TestOpenGLRegistry {
     Assert.assertEquals(VOID, command.getOutputType());
 
   }
+  
+  protected void assert_glMapBufferRange(Map<String, CommandWrap> commandIndex) {
+    CommandWrap command = commandIndex.get("glMapBufferRange");
+    
+    Assert.assertNotNull(command);
+    
+    Assert.assertEquals(4, command.getArgs().size());
+    
+    
+    Arg a0 = command.getArgs().get(0);
+    Assert.assertEquals("target", a0.getName());
+    Assert.assertEquals(INT, a0.getTypeName());
+
+    Arg a1 = command.getArgs().get(1);
+    Assert.assertEquals("offset", a1.getName());
+    Assert.assertEquals(LONG, a1.getTypeName());
+
+    Arg a2 = command.getArgs().get(2);
+    Assert.assertEquals("length", a2.getName());
+    Assert.assertEquals(LONG, a2.getTypeName());
+
+    Arg a3 = command.getArgs().get(3);
+    Assert.assertEquals("access", a3.getName());
+    Assert.assertEquals(INT, a3.getTypeName());
+
+    Assert.assertEquals(ADDRESSABLE, command.getOutputType());
+
+  }
+
+  
   protected void assert_glGetString(Map<String, CommandWrap> commandIndex) {
     CommandWrap command = commandIndex.get("glGetString");
     
@@ -202,7 +236,23 @@ public class TestOpenGLRegistry {
 
   }
   
-  
+  protected void assert_glAttachObjectARB(Map<String, CommandWrap> commandIndex) {
+    CommandWrap command = commandIndex.get("glAttachObjectARB");
+    
+    Assert.assertNotNull(command);
+    
+    Assert.assertEquals(2, command.getArgs().size());
+    
+    
+    Arg a0 = command.getArgs().get(0);
+    Assert.assertEquals("containerObj", a0.getName());
+    Assert.assertEquals(ADDRESSABLE, a0.getTypeName());
+    
+    Arg a1 = command.getArgs().get(1);
+    Assert.assertEquals("obj", a1.getName());
+    Assert.assertEquals(ADDRESSABLE, a1.getTypeName());
+  }
+
   
   protected void assert_glMultiTexCoord2i(Map<String, CommandWrap> commandIndex) {
     CommandWrap command = commandIndex.get("glMultiTexCoord2i");
@@ -226,6 +276,39 @@ public class TestOpenGLRegistry {
   }
 
   
+  
+  
+  protected void assert_glColorPointerListIBM(Map<String, CommandWrap> commandIndex) {
+    CommandWrap command = commandIndex.get("glColorPointerListIBM");
+    
+    Assert.assertNotNull(command);
+    
+    Assert.assertEquals(5, command.getArgs().size());
+    
+    
+
+    Arg a0 = command.getArgs().get(0);
+    Assert.assertEquals("size", a0.getName());
+    Assert.assertEquals(INT, a0.getTypeName());
+    
+    Arg a1 = command.getArgs().get(1);
+    Assert.assertEquals("type", a1.getName());
+    Assert.assertEquals(INT, a1.getTypeName());
+
+    Arg a2 = command.getArgs().get(2);
+    Assert.assertEquals("stride", a2.getName());
+    Assert.assertEquals(INT, a2.getTypeName());
+
+    Arg a3 = command.getArgs().get(3);
+    Assert.assertEquals("pointer", a3.getName());
+    Assert.assertEquals(ADDRESSABLE, a3.getTypeName());
+
+    Arg a4 = command.getArgs().get(4);
+    Assert.assertEquals("ptrstride", a4.getName());
+    Assert.assertEquals(INT, a4.getTypeName());
+
+
+  }
 
   protected void assert_glVertexAttribPointer(Map<String, CommandWrap> commandIndex) {
     CommandWrap command = commandIndex.get("glVertexAttribPointer");

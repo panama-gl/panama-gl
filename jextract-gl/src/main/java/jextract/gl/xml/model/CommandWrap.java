@@ -11,7 +11,6 @@ import jextractgl.Registry.Commands.Command.Param;
 import jextractgl.Registry.Commands.Command.Proto;
 
 public class CommandWrap {
-  private static final String ADDRESSABLE = "Addressable"; // java.lang.foreign.
   String name;
   String alias;
   List<Arg> args = new ArrayList<>();
@@ -40,7 +39,7 @@ public class CommandWrap {
         outputType = "String";
       }
       else {
-        outputType = GLToJavaType(proto.getPtype());
+        outputType = GLTypeInJava.toJava(proto.getPtype());
       }
     }
     else {
@@ -66,8 +65,8 @@ public class CommandWrap {
         if(parameterDescription instanceof String) {
           String innerType = (String)parameterDescription ;
           
-          if( isPointer(innerType)) {
-            currentTypeName = ADDRESSABLE;
+          if( GLTypeInJava.isPointer(innerType)) {
+            currentTypeName = GLTypeInJava.ADDRESSABLE;
           }
           
         }
@@ -79,7 +78,7 @@ public class CommandWrap {
 
           // We get the parameter type name
           if("ptype".equals(j.getName().toString())) {
-            currentTypeName = GLToJavaType(j.getValue().toString());
+            currentTypeName = GLTypeInJava.toJava(j.getValue().toString());
           }
           // We get the parameter name
           else if("name".equals(j.getName().toString())) {
@@ -104,72 +103,7 @@ public class CommandWrap {
     }
   }
 
-  private boolean isPointer(String innerType) {
-    return " *".equals(innerType) 
-        || "void *".equals(innerType) 
-        || "void **".equals(innerType) 
-        || " *const*".equals(innerType)
-        || "const void *".equals(innerType) 
-        || "const void *const*".equals(innerType) 
-        || "const <ptype>GLsizei</ptype> *".equals(innerType);
-  }
-  
-  public String GLToJavaType(String type) {
-    if("GLenum".equals(type) || "mask".equals(type)|| "GLsizei".equals(type) || "GLbitfield".equals(type) ) {
-      type = "int";
-    }
-    else if("GLint".equals(type) || "GLuint".equals(type)|| "GLint64".equals(type)) {
-      type = "int";
-    }
-    else if("GLuint64".equals(type)) {
-      type = "long";      
-    }
-    else if("GLboolean".equals(type)){
-      type = "byte";//"boolean";
-    }
-    else if("GLdouble".equals(type) || "GLclampd".equals(type)){
-      type = "double";
-    }
-    else if("GLfloat".equals(type) || "GLclampf".equals(type)){
-      type = "float";
-    }
-    else if("GLshort".equals(type) || "GLushort".equals(type) ){
-      type = "short";
-    }
-    else if("GLbyte".equals(type) || "GLubyte".equals(type)) {
-      type = "byte";
-    }
-    else if("GLchar".equals(type)){
-      type = "char";
-    }
-    else if("GLhandleARB".equals(type) || "GLcharARB".equals(type) || "GLsync".equals(type)) {
-      type = ADDRESSABLE;
-    }
-    // GLsizeiptrARB
-    else if("GLintptr".equals(type) || "GLintptrARB".equals(type) || "GLuint64EXT".equals(type)|| "GLint64EXT".equals(type)) {
-      type = "long";
-    }
-    else if( 
-        "GLsizeiptr".equals(type) || 
-        "GLsizeiptrARB".equals(type) ) {
-       type = "long";
-     }
-    else if( 
-        "GLsizeiptr".equals(type) || 
-        "GLfixed".equals(type) || "GLclampx".equals(type)) {
-       type = "int";
-     }
-    // DON T KNOW
-    else if( 
-        "GLhalfNV".equals(type) || "GLvdpauSurfaceNV".equals(type) || 
-        "GLeglImageOES".equals(type) || "GLeglClientBufferEXT".equals(type) || 
-        "GLDEBUGPROCARB".equals(type) || "GLDEBUGPROCAMD".equals(type)|| "GLDEBUGPROCKHR".equals(type) || "GLDEBUGPROC".equals(type) ||
-        "GLVULKANPROCNV".equals(type)) {
-       type = "int";
-     }
 
-    return type;
-  }
   
   // *****************************************
   

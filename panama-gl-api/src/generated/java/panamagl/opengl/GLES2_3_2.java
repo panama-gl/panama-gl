@@ -64,7 +64,7 @@ public interface GLES2_3_2 extends GLES2_3_1 {
   public static final int GL_STACK_UNDERFLOW = 0x0504;
   public void glDebugMessageControl(int source, int type, int severity, int count, Addressable ids, byte enabled);
   public void glDebugMessageInsert(int source, int type, int id, int severity, int length, Addressable buf);
-  public void glDebugMessageCallback(int callback, Addressable userParam);
+  public void glDebugMessageCallback(Addressable callback, Addressable userParam);
   public int glGetDebugMessageLog(int count, int bufSize, Addressable sources, Addressable types, Addressable ids, Addressable severities, Addressable lengths, Addressable messageLog);
   public void glPushDebugGroup(int source, int id, int length, Addressable message);
   public void glPopDebugGroup();

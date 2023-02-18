@@ -350,7 +350,7 @@ public interface GLES2_3_0  {
   public void glBlitFramebuffer(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, int mask, int filter);
   public void glRenderbufferStorageMultisample(int target, int samples, int internalformat, int width, int height);
   public void glFramebufferTextureLayer(int target, int attachment, int texture, int level, int layer);
-  public void glMapBufferRange(int target, long offset, long length, int access);
+  public MemoryAddress glMapBufferRange(int target, long offset, long length, int access);
   public void glFlushMappedBufferRange(int target, long offset, long length);
   public void glBindVertexArray(int array);
   public void glDeleteVertexArrays(int n, Addressable arrays);

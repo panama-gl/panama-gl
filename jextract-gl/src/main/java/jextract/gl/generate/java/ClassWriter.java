@@ -1,5 +1,6 @@
 package jextract.gl.generate.java;
 
+import java.lang.foreign.ValueLayout;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class ClassWriter extends JavaWriter {
   }
 
   private void writeClass(StringBuffer sb) {
-    sb.append("public class " + className);
+    sb.append("public class " + className + " " + writeExtends() );
     writeImplements(sb);
     sb.append(" {\n");
   }
@@ -56,6 +57,10 @@ public class ClassWriter extends JavaWriter {
     method(sb, name, null, null, body, null);
   }
 
+  public void method(StringBuffer sb, String name, List<Arg> in, Arg out, Code body) {
+    method(sb, name, in, out, List.of(body));
+  }
+  
   public void method(StringBuffer sb, String name, List<Arg> in, Arg out, List<Code> body) {
     method(sb, name, in, out, body, null);
   }
@@ -158,7 +163,15 @@ public class ClassWriter extends JavaWriter {
       for (int i = 0; i < in.size(); i++) {
         Arg arg = in.get(i);
 
-        sbargs.append(arg.name);
+        // use the expansion instead of parameter name
+        if(arg.expand!=null) {
+          sbargs.append(arg.expand);
+        }
+        // or simply param name copy
+        else {
+          sbargs.append(arg.name);
+        }
+        
         if (i < in.size() - 1)
           sbargs.append(", ");
       }
@@ -174,6 +187,14 @@ public class ClassWriter extends JavaWriter {
     String spec;
     String impl;
     Code code;
+    
+    static boolean mismatch(Arg spec, Arg impl) {
+      return !impl.typeName.equals(spec.typeName);
+    }
+    
+    static boolean ignore(Arg spec, Arg impl) {
+      return impl.typeName.equals("java.lang.foreign.Addressable") && spec.typeName.equals("Addressable");
+    }
   }
   
   public class StringWraplet{
@@ -191,7 +212,15 @@ public class ClassWriter extends JavaWriter {
 
       return c;
     }
-    
+  }
+
+  public class AddressableInputIntWraplet{
+    static boolean match(Arg spec, Arg impl) {
+      return "Addressable".equals(spec.typeName) && ("int".equals(impl.typeName));
+    }
+    static String expand(Arg spec) {
+      return spec.name + ".get(ValueLayout.JAVA_INT, 0)";
+    }
   }
   
   public class ByteBufferWraplet{
@@ -235,21 +264,48 @@ public class ClassWriter extends JavaWriter {
       // Check type mismatch in input parameters
       for (int i = 0; i < argsIn.size(); i++) {
         
+        // Force implementation to use the spec arg name
         argsIn.get(i).name = specInterface.getArgs().get(i).name;
         
         // Type mismatch WARNINGS
         
-        if (!argsIn.get(i).typeName.equals(specInterface.getArgs().get(i).typeName)) {
+        Arg spec = specInterface.getArgs().get(i);
+        Arg impl = argsIn.get(i);
+        
+        if (Wraplet.mismatch(spec, impl)) {
           
           // Ignore long class name difference
-          if(argsIn.get(i).typeName.equals("java.lang.foreign.Addressable") && specInterface.getArgs().get(i).typeName.equals("Addressable"))
+          if(Wraplet.ignore(spec, impl))
             continue;
           
-          System.out.println(wrappedMethod.getName() + "\t MISMATCH  on "
-              + specInterface.getArgs().get(i).name + " : " + argsIn.get(i).typeName + " / spec : "
-              + specInterface.getArgs().get(i).typeName);
+          // Expand adressable content when IMPL expect int (and SPEC provides Addressable)
+          /*else if(AddressableInputIntWraplet.match(spec, impl)){
+            
+            // mark the argument as being expandable (replace the variable reference
+            // by a read expression : adressable.get(ValueLayout.JAVA_INT, 0)
+            impl.expand = AddressableInputIntWraplet.expand(spec);
+            
+            // this is the type name that will be used to write 
+            // the method parameters, so we have to fix the mismatch
+            impl.typeName = "Addressable";
+          }*/
           
-          throw new RuntimeException("Type mismatch");
+          // Type mismatch not resolvable
+          else {
+            String error = wrappedMethod.getName() + "\t MISMATCH  on "
+                + specInterface.getArgs().get(i).name + " : " + argsIn.get(i).typeName + " / spec : "
+                + specInterface.getArgs().get(i).typeName;
+            
+            
+            System.err.println(error);
+            
+            print("- interface : ", specInterface.getArgs());
+            print("- wrapper   : ", argsIn);
+
+            
+            //throw new RuntimeException("Type " + error);
+            
+          }
         }
       }      
     }

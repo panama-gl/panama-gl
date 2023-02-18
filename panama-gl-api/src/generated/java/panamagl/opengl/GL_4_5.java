@@ -43,8 +43,8 @@ public interface GL_4_5 extends GL_4_4 {
   public void glCopyNamedBufferSubData(int readBuffer, int writeBuffer, long readOffset, long writeOffset, long size);
   public void glClearNamedBufferData(int buffer, int internalformat, int format, int type, Addressable data);
   public void glClearNamedBufferSubData(int buffer, int internalformat, long offset, long size, int format, int type, Addressable data);
-  public void glMapNamedBuffer(int buffer, int access);
-  public void glMapNamedBufferRange(int buffer, long offset, long length, int access);
+  public MemoryAddress glMapNamedBuffer(int buffer, int access);
+  public MemoryAddress glMapNamedBufferRange(int buffer, long offset, long length, int access);
   public byte glUnmapNamedBuffer(int buffer);
   public void glFlushMappedNamedBufferRange(int buffer, long offset, long length);
   public void glGetNamedBufferParameteriv(int buffer, int pname, Addressable params);
