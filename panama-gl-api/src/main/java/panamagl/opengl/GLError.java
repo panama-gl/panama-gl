@@ -61,7 +61,7 @@ public class GLError {
     
     
     int code = gl.glGetError();
-    String message = gl.gluErrorString(code);
+    String message = gl.gluErrorString(code).getUtf8String(0);
     
     if(code!=0) {
       return new GLError(code, message);

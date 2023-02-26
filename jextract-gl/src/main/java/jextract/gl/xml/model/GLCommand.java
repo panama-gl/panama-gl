@@ -10,13 +10,32 @@ import jextractgl.Registry.Commands.Command.Alias;
 import jextractgl.Registry.Commands.Command.Param;
 import jextractgl.Registry.Commands.Command.Proto;
 
-public class CommandWrap {
+/**
+ * A wrapper around the generated XML reader to help reading input/output parameters of a GL command.
+ * 
+ * @author Martin Pernollet
+ */
+public class GLCommand {
   String name;
   String alias;
   List<Arg> args = new ArrayList<>();
   String outputType;
+
+  public GLCommand(String name, String outputType) {
+    this.name = name;
+    this.alias = name;
+    this.args = new ArrayList<>();
+    this.outputType = outputType;
+  }
   
-  public CommandWrap(Command c) {
+  public GLCommand(String name, List<Arg> input, String outputType) {
+    this.name = name;
+    this.alias = name;
+    this.args = input;
+    this.outputType = outputType;
+  }
+  
+  public GLCommand(Command c) {
     readCommand(c);
   }
 
@@ -136,7 +155,7 @@ public class CommandWrap {
       return false;
     if (getClass() != obj.getClass())
       return false;
-    CommandWrap other = (CommandWrap) obj;
+    GLCommand other = (GLCommand) obj;
     return Objects.equals(alias, other.alias) && Objects.equals(args, other.args)
         && Objects.equals(name, other.name) && Objects.equals(outputType, other.outputType);
   }

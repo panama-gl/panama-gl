@@ -40,7 +40,7 @@ public class TestFBO_macOS extends MacOSTest{
     glutContext.init();
 
     // Given a GL caller
-    GL gl = new GL_macOS();
+    GL gl = new panamagl.platform.macos.x86.GLImpl();
 
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
 
@@ -56,7 +56,7 @@ public class TestFBO_macOS extends MacOSTest{
     glutContext.init();
 
     // Given a GL caller
-    GL gl = new GL_macOS();
+    GL gl = new panamagl.platform.macos.x86.GLImpl();
 
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
 
@@ -71,7 +71,7 @@ public class TestFBO_macOS extends MacOSTest{
     GLContext context = new CGLContext_macOS();
     context.init();
 
-    GL gl = new GL_macOS();
+    GL gl = new panamagl.platform.macos.x86.GLImpl();
 
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
 

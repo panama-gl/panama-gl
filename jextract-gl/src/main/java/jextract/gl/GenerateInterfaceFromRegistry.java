@@ -15,7 +15,7 @@ import jextract.gl.generate.java.ClassCompiler;
 import jextract.gl.generate.java.Interf;
 import jextract.gl.generate.java.InterfaceWriter;
 import jextract.gl.xml.OpenGLRegistry;
-import jextract.gl.xml.model.CommandWrap;
+import jextract.gl.xml.model.GLCommand;
 import jextractgl.Registry;
 import jextractgl.Registry.Feature;
 import jextractgl.Registry.Feature.Remove;
@@ -24,7 +24,7 @@ import jextractgl.Registry.Feature.Require;
 public class GenerateInterfaceFromRegistry {
   OpenGLRegistry registry;
   Map<String, Registry.Enums.Enum> enumIndex;
-  Map<String, CommandWrap> commandIndex;
+  Map<String, GLCommand> commandIndex;
 
 
 
@@ -261,14 +261,14 @@ public class GenerateInterfaceFromRegistry {
     // System.out.println(" Type : " + com.getName());
   }
   
-  public CommandWrap getCommand(String name) {
+  public GLCommand getCommand(String name) {
     return commandIndex.get(name);
   }
 
   protected void handleCommand(Registry.Feature.Require.Command com, StringBuffer javaCode) {
     // System.out.println(" Command : " + com.getName() + "=" + com.getValue());
 
-    CommandWrap command = getCommand(com.getName());
+    GLCommand command = getCommand(com.getName());
     
     String outputType = command.getOutputType();
     

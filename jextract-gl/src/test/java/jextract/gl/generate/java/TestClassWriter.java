@@ -5,7 +5,7 @@ import java.util.List;
 import org.junit.Test;
 import junit.framework.Assert;
 
-public class TestGenerateAndCompile_macOS_GLUT_Wrapper {
+public class TestClassWriter {
   @Test
   public void test() throws IOException {
 
@@ -39,8 +39,8 @@ public class TestGenerateAndCompile_macOS_GLUT_Wrapper {
     
     // Generates a method with arguments
     //Arg a1 = new Arg(Integer.class, "value");
-    Arg a2 = new Arg(String.class, "name");
-    Arg out = new Arg(Integer.class);
+    //Arg a2 = new Arg(String.class, "name");
+    //Arg out = new Arg(Integer.class);
 
     //c.method(sb, "method", List.of(a1, a2), out, List.of(new Code("glut_h.glPolygonMode(name, value);")), null);
     
@@ -61,8 +61,7 @@ public class TestGenerateAndCompile_macOS_GLUT_Wrapper {
     
     Assert.assertTrue(java.contains("package panamagl.gen;"));
     Assert.assertTrue(java.contains("import java.util.List;"));
-    Assert.assertTrue(java.contains("public class GL {"));
-    //Assert.assertTrue(java.contains("  public void glPolygonMode(int frontOrBack, int fill) {"));
+    Assert.assertTrue(java.contains("public class GL"));
     Assert.assertTrue(java.contains("  public void glPolygonOffset(float factor, float unit) {"));
   
   

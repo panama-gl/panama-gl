@@ -8,7 +8,7 @@ import glext.ubuntu.v20.glext_h;
 import static glext.ubuntu.v20.glext_h.*;
 import java.lang.foreign.*;
 
-public class GLImpl  implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
+public class GLImpl extends panamagl.opengl.AGL implements panamagl.opengl.GL {
   public void glAccum(int op, float value) {
     glut_h.glAccum(op, value);
   }

@@ -28,15 +28,16 @@ import java.lang.foreign.ValueLayout;
  * 
  * @author Martin Pernollet
  */
-public abstract class AGL implements GL {
+@Deprecated
+public abstract class AGL_OLD implements GL_OLD {
   protected MemorySession scope;
   protected SegmentAllocator allocator;
   protected MemorySession scopeConfined;
   protected SegmentAllocator allocatorConfined;
 
-  public AGL() {
+  public AGL_OLD() {
     try {
-      scope = MemorySession.openImplicit(); 
+      scope = MemorySession.openImplicit(); // /*Confined();*/
       allocator = SegmentAllocator.newNativeArena(scope);
       
       scopeConfined = MemorySession.openConfined();
@@ -49,26 +50,32 @@ public abstract class AGL implements GL {
 
   /////////////////////////////////////////////
 
+  @Override
   public MemorySession getScope() {
     return scope;
   }
 
+  @Override
   public SegmentAllocator getAllocator() {
     return allocator;
   }
 
+  @Override
   public MemorySegment alloc(String value) {
     return allocator.allocateUtf8String(value);
   }
 
+  @Override
   public MemorySegment alloc(double[] value) {
     return allocator.allocateArray(ValueLayout.JAVA_DOUBLE, value);
   }
 
+  @Override
   public MemorySegment alloc(float[] value) {
     return allocator.allocateArray(ValueLayout.JAVA_FLOAT, value);
   }
 
+  @Override
   public MemorySegment alloc(int[] value) {
     return allocator.allocateArray(ValueLayout.JAVA_INT, value);
   }
@@ -92,6 +99,9 @@ public abstract class AGL implements GL {
     }
   }
 
+
+  
+  @Override
   public boolean gluProject(float objX, float objY, float objZ, float[] model, int model_offset,
       float[] proj, int proj_offset, int[] view, int view_offset, float[] winPos,
       int winPos_offset) {
@@ -100,11 +110,7 @@ public abstract class AGL implements GL {
     MemorySegment mY = alloc(new double[1]);
     MemorySegment mZ = alloc(new double[1]);
 
-    MemorySegment sm = alloc(dbl(model));
-    MemorySegment sp = alloc(dbl(proj));    
-    MemorySegment sv = alloc(dbl(view));
-    
-    int out = gluProject((double)objX, (double)objY, (double)objZ, sv, sm, sp, mX, mY, mZ);
+    int out = gluProjectDouble(objX, objY, objZ, view, dbl(model), dbl(proj), mX, mY, mZ);
 
     winPos[0] = (float)mX.get(ValueLayout.JAVA_DOUBLE, 0);
     winPos[1] = (float)mY.get(ValueLayout.JAVA_DOUBLE, 0);
@@ -113,6 +119,7 @@ public abstract class AGL implements GL {
     return out == 1;
   }
   
+  @Override
   public boolean gluUnProject(float winX, float winY, float winZ, float[] model, int model_offset, float[] proj,
       int proj_offset, int[] view, int view_offset, float[] objPos, int objPos_offset) {
 
@@ -120,11 +127,7 @@ public abstract class AGL implements GL {
     MemorySegment objY = alloc(new double[1]);
     MemorySegment objZ = alloc(new double[1]);
 
-    MemorySegment sm = alloc(dbl(model));
-    MemorySegment sp = alloc(dbl(proj));
-    MemorySegment sv = alloc(dbl(view));
-
-    int st = gluUnProject((double)winX, (double)winY, (double)winZ, sm, sp, sv, objX, objY, objZ);
+    int st = gluUnprojectDouble((double)winX, (double)winY, (double)winZ, alloc(dbl(model)), alloc(dbl(proj)), alloc(view), objX, objY, objZ);
 
     objPos[0] = (float) objX.get(ValueLayout.JAVA_DOUBLE, 0);
     objPos[1] = (float) objY.get(ValueLayout.JAVA_DOUBLE, 0);
@@ -134,13 +137,6 @@ public abstract class AGL implements GL {
   }
   
   protected double[] dbl(float[] values) {
-    double[] dbl = new double[values.length];
-    for (int i = 0; i < values.length; i++) {
-      dbl[i] = values[i];
-    }
-    return dbl;
-  }
-  protected double[] dbl(int[] values) {
     double[] dbl = new double[values.length];
     for (int i = 0; i < values.length; i++) {
       dbl[i] = values[i];

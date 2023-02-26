@@ -35,15 +35,6 @@ import org.jzy3d.colors.Color;
 import org.jzy3d.maths.Array;
 import org.jzy3d.maths.Coord2d;
 import org.jzy3d.maths.Coord3d;
-import org.jzy3d.painters.AbstractPainter;
-import org.jzy3d.painters.ColorModel;
-import org.jzy3d.painters.DepthFunc;
-import org.jzy3d.painters.Font;
-import org.jzy3d.painters.ListMode;
-import org.jzy3d.painters.PixelStore;
-import org.jzy3d.painters.RenderMode;
-import org.jzy3d.painters.StencilFunc;
-import org.jzy3d.painters.StencilOp;
 import org.jzy3d.plot3d.pipelines.NotImplementedException;
 import org.jzy3d.plot3d.primitives.PolygonFill;
 import org.jzy3d.plot3d.primitives.PolygonMode;
@@ -53,6 +44,7 @@ import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
 import panamagl.GLCanvas;
+import panamagl.opengl.AGL;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.renderers.text.BasicTextRenderer;
@@ -453,7 +445,7 @@ public class PanamaGLPainter extends AbstractPainter {
   public void glDrawPixels(int width, int height, int format, int type, Buffer pixels) {
     logger.error("not implemented");
 
-    MemorySegment pixSegment = gl.alloc(((IntBuffer)pixels).array());
+    MemorySegment pixSegment = ((AGL)gl).alloc(((IntBuffer)pixels).array());
     
     gl.glDrawPixels(width, height, format, type, pixSegment);
     
@@ -469,11 +461,6 @@ public class PanamaGLPainter extends AbstractPainter {
    * glPixelZoom is not implemented by GL. This method will do nothing but
    * triggering a {@link NotImplementedException} in case x and y zoom factor are
    * not both equal to 1 (i.e. in case a zoom is needed).
-<<<<<<< HEAD
-   *
-=======
-   * 
->>>>>>> 054de1e380125dad590da82faa05cd5b976224f2
    */
   @Override
   public void glPixelZoom(float xfactor, float yfactor) {

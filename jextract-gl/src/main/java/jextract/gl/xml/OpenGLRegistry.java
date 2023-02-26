@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.xml.bind.JAXBElement;
-import jextract.gl.xml.model.CommandWrap;
+import jextract.gl.xml.model.GLCommand;
 import jextractgl.Registry;
 import jextractgl.Registry.Commands.Command;
 import jextractgl.Registry.Commands.Command.Alias;
@@ -37,10 +37,10 @@ public class OpenGLRegistry {
   // ************************************************ //
 
   
-  public Map<String,CommandWrap> getCommandIndex() {
-    Map<String,CommandWrap> index = new HashMap<>();
+  public Map<String,GLCommand> getCommandIndex() {
+    Map<String,GLCommand> index = new HashMap<>();
     
-    for(CommandWrap com: getCommands()) {
+    for(GLCommand com: getCommands()) {
       index.put(com.getName(), com);
     }
     
@@ -48,13 +48,13 @@ public class OpenGLRegistry {
     
   }
   
-  public List<CommandWrap> getCommands() {
-    List<CommandWrap> out = new ArrayList<>();
+  public List<GLCommand> getCommands() {
+    List<GLCommand> out = new ArrayList<>();
 
     Registry.Commands commands = registry.getCommands();
 
     for (Command c : commands.getCommand()) {
-      CommandWrap cw = new CommandWrap(c);
+      GLCommand cw = new GLCommand(c);
       out.add(cw);
     }
 

@@ -16,6 +16,8 @@ public abstract class JavaWriter {
   protected String classPackage;
   protected List<String> imports = new ArrayList<>();
   protected List<String> extensions = new ArrayList<>();
+  protected List<String> implement = new ArrayList<>();
+
   protected String tab = "  ";
   protected String tab2 = "    ";
 

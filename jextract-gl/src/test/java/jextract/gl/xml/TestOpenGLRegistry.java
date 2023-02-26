@@ -5,7 +5,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import jextract.gl.generate.java.Arg;
-import jextract.gl.xml.model.CommandWrap;
+import jextract.gl.xml.model.GLCommand;
 import junit.framework.Assert;
 
 public class TestOpenGLRegistry {
@@ -29,11 +29,11 @@ public class TestOpenGLRegistry {
   
   @Test
   public void all() throws Exception {
-    List<CommandWrap> cw = registry.getCommands();
+    List<GLCommand> cw = registry.getCommands();
     Assert.assertEquals(3291, cw.size());
     
     
-    Map<String,CommandWrap> commandIndex = registry.getCommandIndex();
+    Map<String,GLCommand> commandIndex = registry.getCommandIndex();
     
     assert_glColor4f(commandIndex);
     assert_glGenLists(commandIndex);
@@ -65,7 +65,7 @@ public class TestOpenGLRegistry {
   
   @Test
   public void single() throws Exception {
-    Map<String,CommandWrap> commandIndex = registry.getCommandIndex();
+    Map<String,GLCommand> commandIndex = registry.getCommandIndex();
 
     assert_glColorPointerListIBM(commandIndex);
 
@@ -73,8 +73,8 @@ public class TestOpenGLRegistry {
   }
   
 
-  protected void assert_glColor4f(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glColor4f");
+  protected void assert_glColor4f(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glColor4f");
     
     Assert.assertNotNull(command);
     
@@ -98,8 +98,8 @@ public class TestOpenGLRegistry {
     Assert.assertEquals(FLOAT, a3.getTypeName());
   }
   
-  protected void assert_glGenLists(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glGenLists");
+  protected void assert_glGenLists(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glGenLists");
     
     Assert.assertNotNull(command);
     
@@ -116,8 +116,8 @@ public class TestOpenGLRegistry {
   
   
   
-  protected void assert_glMapBuffer(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glMapBuffer");
+  protected void assert_glMapBuffer(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glMapBuffer");
     
     Assert.assertNotNull(command);
     
@@ -136,8 +136,8 @@ public class TestOpenGLRegistry {
 
   }
   
-  protected void assert_glMapBufferRange(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glMapBufferRange");
+  protected void assert_glMapBufferRange(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glMapBufferRange");
     
     Assert.assertNotNull(command);
     
@@ -165,8 +165,8 @@ public class TestOpenGLRegistry {
   }
 
   
-  protected void assert_glGetString(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glGetString");
+  protected void assert_glGetString(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glGetString");
     
     Assert.assertNotNull(command);
     
@@ -182,8 +182,8 @@ public class TestOpenGLRegistry {
   }
 
   
-  protected void assert_glGetIntegerv(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glGetIntegerv");
+  protected void assert_glGetIntegerv(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glGetIntegerv");
     
     Assert.assertNotNull(command);
     
@@ -200,8 +200,8 @@ public class TestOpenGLRegistry {
 
   }
 
-  protected void assert_glGetFloatv(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glGetFloatv");
+  protected void assert_glGetFloatv(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glGetFloatv");
     
     Assert.assertNotNull(command);
     
@@ -218,8 +218,8 @@ public class TestOpenGLRegistry {
 
   }
 
-  protected void assert_glGetDoublev(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glGetDoublev");
+  protected void assert_glGetDoublev(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glGetDoublev");
     
     Assert.assertNotNull(command);
     
@@ -236,8 +236,8 @@ public class TestOpenGLRegistry {
 
   }
   
-  protected void assert_glAttachObjectARB(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glAttachObjectARB");
+  protected void assert_glAttachObjectARB(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glAttachObjectARB");
     
     Assert.assertNotNull(command);
     
@@ -254,8 +254,8 @@ public class TestOpenGLRegistry {
   }
 
   
-  protected void assert_glMultiTexCoord2i(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glMultiTexCoord2i");
+  protected void assert_glMultiTexCoord2i(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glMultiTexCoord2i");
     
     Assert.assertNotNull(command);
     
@@ -278,8 +278,8 @@ public class TestOpenGLRegistry {
   
   
   
-  protected void assert_glColorPointerListIBM(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glColorPointerListIBM");
+  protected void assert_glColorPointerListIBM(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glColorPointerListIBM");
     
     Assert.assertNotNull(command);
     
@@ -310,8 +310,8 @@ public class TestOpenGLRegistry {
 
   }
 
-  protected void assert_glVertexAttribPointer(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glVertexAttribPointer");
+  protected void assert_glVertexAttribPointer(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glVertexAttribPointer");
     
     Assert.assertNotNull(command);
     
@@ -347,8 +347,8 @@ public class TestOpenGLRegistry {
   }
   
   
-  protected void assert_glMultiTexCoord4i(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glMultiTexCoord4i");
+  protected void assert_glMultiTexCoord4i(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glMultiTexCoord4i");
     
     Assert.assertNotNull(command);
     
@@ -379,8 +379,8 @@ public class TestOpenGLRegistry {
 
 
   // glGetPointerv : void **
-  protected void assert_glGetPointerv(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glGetPointerv");
+  protected void assert_glGetPointerv(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glGetPointerv");
     
     Assert.assertNotNull(command);
     
@@ -399,8 +399,8 @@ public class TestOpenGLRegistry {
   
   // glIndexPointer : const void *
 
-  protected void assert_glIndexPointer(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glIndexPointer");
+  protected void assert_glIndexPointer(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glIndexPointer");
     
     Assert.assertNotNull(command);
     
@@ -424,8 +424,8 @@ public class TestOpenGLRegistry {
   
   // glGetProgramBinary : void *
   
-  protected void assert_glGetProgramBinary(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glGetProgramBinary");
+  protected void assert_glGetProgramBinary(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glGetProgramBinary");
     
     Assert.assertNotNull(command);
     
@@ -455,8 +455,8 @@ public class TestOpenGLRegistry {
 
   }
 
-  protected void assert_glMultiDrawElements(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glMultiDrawElements");
+  protected void assert_glMultiDrawElements(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glMultiDrawElements");
     
     Assert.assertNotNull(command);
     
@@ -488,8 +488,8 @@ public class TestOpenGLRegistry {
   
   
   
-  protected void assert_glBindBufferOffsetEXT(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glBindBufferOffsetEXT");
+  protected void assert_glBindBufferOffsetEXT(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glBindBufferOffsetEXT");
     
     Assert.assertNotNull(command);
     
@@ -516,8 +516,8 @@ public class TestOpenGLRegistry {
 
   
   
-  protected void assert_glTransformFeedbackVaryingsEXT(Map<String, CommandWrap> commandIndex) {
-    CommandWrap command = commandIndex.get("glTransformFeedbackVaryingsEXT");
+  protected void assert_glTransformFeedbackVaryingsEXT(Map<String, GLCommand> commandIndex) {
+    GLCommand command = commandIndex.get("glTransformFeedbackVaryingsEXT");
     
     Assert.assertNotNull(command);
     

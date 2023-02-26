@@ -23,6 +23,7 @@ import java.lang.foreign.MemorySession;
 import java.lang.foreign.ValueLayout;
 import java.lang.foreign.ValueLayout.OfByte;
 import java.nio.ByteOrder;
+import opengl.macos.v10_15_7.glut_h;
 import panamagl.Debug;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
@@ -154,7 +155,7 @@ public class FBO_macOS implements FBO {
     // Generate FRAME buffer
 
     frameBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
-    gl.glGenFramebuffers(1, frameBufferIds);
+    glut_h.glGenFramebuffers(1, frameBufferIds);
     idFrameBuffer = (int) frameBufferIds.get(ValueLayout.JAVA_INT, 0);
 
     Debug.debug(debug, "FBO: Got FB ID : " + idFrameBuffer);
@@ -166,17 +167,17 @@ public class FBO_macOS implements FBO {
 
 
     // Bind frame buffer
-    gl.glBindFramebuffer(GL.GL_FRAMEBUFFER, idFrameBuffer);
+    glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
 
     // Attach 2D texture to this FBO
-    gl.glFramebufferTexture2D(GL.GL_FRAMEBUFFER, GL.GL_COLOR_ATTACHMENT0, GL.GL_TEXTURE_2D,
+    glut_h.glFramebufferTexture2D(glut_h.GL_FRAMEBUFFER(), glut_h.GL_COLOR_ATTACHMENT0(), glut_h.GL_TEXTURE_2D(),
         idTexture, 0);
 
     // -------------------------
     // Generate RENDER buffer
 
     renderBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
-    gl.glGenRenderbuffers(1, renderBufferIds);
+    glut_h.glGenRenderbuffers(1, renderBufferIds);
     idRenderBuffer = (int) renderBufferIds.get(ValueLayout.JAVA_INT, 0);
 
     // Check for error after reading
@@ -185,30 +186,30 @@ public class FBO_macOS implements FBO {
     Debug.debug(debug, "FBO: Got RenderBuffer ID : " + idRenderBuffer);
 
     // Bind render buffer
-    gl.glBindRenderbuffer(GL.GL_RENDERBUFFER, idRenderBuffer);
-    gl.glRenderbufferStorage(GL.GL_RENDERBUFFER, GL.GL_DEPTH_COMPONENT24, width, height);
+    glut_h.glBindRenderbuffer(glut_h.GL_RENDERBUFFER(), idRenderBuffer);
+    glut_h.glRenderbufferStorage(glut_h.GL_RENDERBUFFER(), GL.GL_DEPTH_COMPONENT24, width, height);
 
     
     // -------------------------
     // Attach depth buffer to FBO
 
-    gl.glFramebufferRenderbuffer(GL.GL_FRAMEBUFFER, GL.GL_DEPTH_ATTACHMENT,
-        GL.GL_RENDERBUFFER, idRenderBuffer);
+    glut_h.glFramebufferRenderbuffer(glut_h.GL_FRAMEBUFFER(), glut_h.GL_DEPTH_ATTACHMENT(),
+        glut_h.GL_RENDERBUFFER(), idRenderBuffer);
 
     // -------------------------
     // Does the GPU support current FBO configuration?
 
-    int status = gl.glCheckFramebufferStatus(GL.GL_FRAMEBUFFER);
+    int status = glut_h.glCheckFramebufferStatus(glut_h.GL_FRAMEBUFFER());
 
-    if (status != GL.GL_FRAMEBUFFER_COMPLETE) {
+    if (status != glut_h.GL_FRAMEBUFFER_COMPLETE()) {
       throw new RuntimeException("Incomplete framebuffer, not supporting current FBO config : "
-          + status + " != GL_FRAMEBUFFER_COMPLETE (" + GL.GL_FRAMEBUFFER_COMPLETE + ")");
+          + status + " != GL_FRAMEBUFFER_COMPLETE (" + glut_h.GL_FRAMEBUFFER_COMPLETE() + ")");
     }
 
     // -------------------------
     // and now you can render to GL_TEXTURE_2D
 
-    gl.glBindFramebuffer(GL.GL_FRAMEBUFFER, idFrameBuffer);
+    glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
     gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     gl.glClearDepth(1.0f);
     gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
@@ -236,10 +237,11 @@ public class FBO_macOS implements FBO {
   public void release(GL gl) {
     // Delete resources
     gl.glDeleteTextures(1, textureBufferIds);
-    gl.glDeleteRenderbuffers(1, renderBufferIds);
+    
+    glut_h.glDeleteRenderbuffers(1, renderBufferIds);
     // Bind 0, which means render to back buffer, as a result, fb is unbound
-    gl.glBindFramebuffer(GL.GL_FRAMEBUFFER, 0);
-    gl.glDeleteFramebuffers(1, frameBufferIds);
+    glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), 0);
+    glut_h.glDeleteFramebuffers(1, frameBufferIds);
 
     // FIXME : Not mapped exception is not relevant
     // FIXME : See if later versions of Panama do not throw exception
@@ -308,7 +310,7 @@ public class FBO_macOS implements FBO {
     
     
     // Bind 0, which means render to back buffer
-    gl.glBindFramebuffer(GL.GL_FRAMEBUFFER, 0);
+    glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), 0);
 
     
     //pixelsRead.unload();

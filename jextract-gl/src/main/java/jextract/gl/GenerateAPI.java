@@ -115,6 +115,8 @@ public class GenerateAPI {
       wrapper.addImplement(interf.packge + ".GLU");
       wrapper.addImplement(interf.packge + ".GLUT");
       
+      wrapper.addExtension(interf.packge + ".AGL");
+      
       // Write and compile
       List<Method> extra = makeWrapper(javaInterfacesFiles, wrapper);
       
@@ -167,9 +169,13 @@ public class GenerateAPI {
       wrapper.className = GL_IMPL;
       wrapper.packge = GL_PACKAGE_LINUX_x86;
       wrapper.setFileIn(GL_LINUX_SOURCES);
+      
       wrapper.addImplement(interf.packge + "." + superGL);
       wrapper.addImplement(interf.packge + ".GLU");
       wrapper.addImplement(interf.packge + ".GLUT");
+      
+      wrapper.addExtension(interf.packge + ".AGL");
+
 
       // Write and compile
       List<Method> extra = makeWrapper(javaInterfacesFiles, wrapper);
@@ -192,7 +198,7 @@ public class GenerateAPI {
 
 
 
-  private void makeFactory(List<String> javaInterfacesFiles, Wrapper wrapper,
+  protected void makeFactory(List<String> javaInterfacesFiles, Wrapper wrapper,
       PlatformFactory factory) throws IOException {
     ClassWriter factoryWriter = new ClassWriter(factory.packge, factory.name);
     factoryWriter.addExtension(factory.base.getName());

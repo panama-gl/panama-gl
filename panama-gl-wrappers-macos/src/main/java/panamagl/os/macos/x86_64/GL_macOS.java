@@ -31,13 +31,13 @@ import org.jzy3d.maths.Array;
 import org.jzy3d.painters.Font;
 import org.jzy3d.painters.StencilOp;
 import opengl.macos.v10_15_7.glut_h;
-import panamagl.opengl.AGL;
+import panamagl.opengl.AGL_OLD;
 import panamagl.opengl.GL_OLD;
 
 /**
  * Look above ^^ this is how you link to platform binding.
  */
-public class GL_macOS extends AGL implements GL_OLD {
+public class GL_macOS extends AGL_OLD implements GL_OLD {
   public GL_macOS() {
     super();
   }

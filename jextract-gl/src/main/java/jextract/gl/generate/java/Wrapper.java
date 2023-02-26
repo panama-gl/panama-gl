@@ -13,6 +13,7 @@ public class Wrapper {
   public String packge;
   public String javaFile;
   public List<String> implement = new ArrayList<>();
+  public List<String> extend = new ArrayList<>();
   public String platform;
   
   public void setFileIn(String folder) {
@@ -26,6 +27,13 @@ public class Wrapper {
 
   public void addImplement(List<String> impl) {
     implement.addAll(impl);
+  }
+  public void addExtension(String impl) {
+    extend.add(impl);
+  }
+
+  public void addExtension(List<String> impl) {
+    extend.addAll(impl);
   }
 
 }

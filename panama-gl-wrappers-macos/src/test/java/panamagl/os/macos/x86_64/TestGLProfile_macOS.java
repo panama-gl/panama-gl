@@ -37,7 +37,7 @@ public class TestGLProfile_macOS extends MacOSTest{
       return;
 
     // Given a GL caller
-    GL gl = new GL_macOS();
+    GL gl = new panamagl.platform.macos.x86.GLImpl();
 
     // Given a GLUT context
     GLUTContext_macOS glutContext = new GLUTContext_macOS();

@@ -5,10 +5,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
-import jextract.gl.xml.model.CommandWrap;
+import jextract.gl.xml.model.GLCommand;
 
 public class ClassWriter extends JavaWriter {
-  List<String> implement;
 
   public ClassWriter(String classPackage, String className) {
     super();
@@ -240,7 +239,7 @@ public class ClassWriter extends JavaWriter {
    * @param specInterface
    */
   public void wrapper(StringBuffer sb, Class<?> wrapped, Method wrappedMethod,
-      CommandWrap specInterface) {
+      GLCommand specInterface) {
     List<Arg> argsIn = getArgsIn(wrappedMethod);
     Arg argOut = getArgOut(wrappedMethod);
 
@@ -332,7 +331,7 @@ public class ClassWriter extends JavaWriter {
     wrapper(sb, wrappedMethod.getName(), argsIn, argOut, wrapped.getSimpleName(), exceptions, code);
   }
   
-  public void wrapperNotImplemented(StringBuffer javaCode, CommandWrap registryCommand) {
+  public void wrapperNotImplemented(StringBuffer javaCode, GLCommand registryCommand) {
     // Wrapping line
     Code c = new Code("throw new RuntimeException(\"This method is not available in the generated binding.\");");
 
@@ -367,7 +366,7 @@ public class ClassWriter extends JavaWriter {
     Arg argOut = null;
 
     Class<?> retType = wrappedMethod.getReturnType();
-    if (!retType.getName().equals("void")) {
+    if (retType!=null && !retType.getName().equals("void")) {
       argOut = new Arg(retType);
     }
     return argOut;
@@ -384,7 +383,11 @@ public class ClassWriter extends JavaWriter {
   }
 
   public void addImplement(List<String> implement) {
-    this.implement = implement;
+    this.implement.addAll(implement);
+  }
+
+  public void addExtension(List<String> extend) {
+    this.extensions.addAll(extend);
   }
 
 

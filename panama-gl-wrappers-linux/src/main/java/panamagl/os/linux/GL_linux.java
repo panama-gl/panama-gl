@@ -25,13 +25,13 @@ import java.lang.foreign.ValueLayout;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import opengl.ubuntu.v20.glut_h;
-import panamagl.opengl.AGL;
+import panamagl.opengl.AGL_OLD;
 import panamagl.opengl.GL_OLD;
 
 /**
  * Look above ^^ this is how you link to platform binding.
  */
-public class GL_linux extends AGL implements GL_OLD  {
+public class GL_linux extends AGL_OLD implements GL_OLD  {
     public GL_linux() {
         this(false);
     }
