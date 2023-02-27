@@ -31,7 +31,7 @@ public class DemoTriangle_Offscreen_macOS {
     GLContext context = new GLUTContext_macOS();
     context.init();
 
-    GL gl = new panamagl.platform.macos.x86.GLImpl();
+    GL gl = new panamagl.platform.macos.x86.GL_macOS_x86();
 
     demos.panamagl.offscreen.Demo_Offscreen.fbo_offscreen(gl);
   }

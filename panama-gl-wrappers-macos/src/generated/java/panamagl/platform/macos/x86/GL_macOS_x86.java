@@ -2,13 +2,13 @@ package panamagl.platform.macos.x86;
 
 import glext.macos.v10_15_7.glext_h;
 import static glext.macos.v10_15_7.glext_h.*;
-import opengl.macos.v10_15_7.glut_h;
-import static opengl.macos.v10_15_7.glut_h.*;
 import cgl.macos.v10_15_7.cgl_h;
 import static cgl.macos.v10_15_7.cgl_h.*;
+import opengl.macos.v10_15_7.glut_h;
+import static opengl.macos.v10_15_7.glut_h.*;
 import java.lang.foreign.*;
 
-public class GLImpl extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
+public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
   public void glActiveStencilFaceEXT(int face) {
     glext_h.glActiveStencilFaceEXT(face);
   }

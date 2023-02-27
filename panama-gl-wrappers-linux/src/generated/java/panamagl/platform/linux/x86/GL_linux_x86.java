@@ -2,13 +2,13 @@ package panamagl.platform.linux.x86;
 
 import opengl.ubuntu.v20.glut_h;
 import static opengl.ubuntu.v20.glut_h.*;
-import glxext.ubuntu.v20.glxext_h;
-import static glxext.ubuntu.v20.glxext_h.*;
 import glext.ubuntu.v20.glext_h;
 import static glext.ubuntu.v20.glext_h.*;
+import glxext.ubuntu.v20.glxext_h;
+import static glxext.ubuntu.v20.glxext_h.*;
 import java.lang.foreign.*;
 
-public class GLImpl extends panamagl.opengl.AGL implements panamagl.opengl.GL {
+public class GL_linux_x86 extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
   public void glAccum(int op, float value) {
     glut_h.glAccum(op, value);
   }
@@ -12547,6 +12547,1346 @@ public class GLImpl extends panamagl.opengl.AGL implements panamagl.opengl.GL {
 
   public void glWriteMaskEXT(int res, int in, int outX, int outY, int outZ, int outW) {
     glext_h.glWriteMaskEXT(res, in, outX, outY, outZ, outW);
+  }
+
+  public int glCheckFramebufferStatusOES(int target) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glClipPlanex(int plane, Addressable equation) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexBufferRangeEXT(int target, int internalformat, int buffer, long offset, long size) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glClipControlEXT(int origin, int depth) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glClipPlanef(int p, Addressable eqn) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glClearPixelLocalStorageuiEXT(int offset, int n, Addressable values) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glClearTexImageEXT(int texture, int level, int format, int type, Addressable data) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexStorageAttribs3DEXT(int target, int levels, int internalformat, int width, int height, int depth, int attrib_list) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glPrimitiveBoundingBoxOES(float minX, float minY, float minZ, float minW, float maxX, float maxY, float maxZ, float maxW) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glCopyImageSubDataEXT(int srcName, int srcTarget, int srcLevel, int srcX, int srcY, int srcZ, int dstName, int dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth, int srcHeight, int srcDepth) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBufferStorageEXT(int target, long size, Addressable data, int flags) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glMinSampleShadingOES(float value) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDepthRangeIndexeddNV(int index, double n, double f) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glMultiDrawElementsBaseVertexEXT(int mode, Addressable count, int type, Addressable indices, int drawcount, Addressable basevertex) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBindProgramPipelineEXT(int pipeline) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public int glGetProgramResourceLocationIndexEXT(int program, int programInterface, Addressable name) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetTranslatedShaderSourceANGLE(int shader, int bufSize, Addressable length, Addressable source) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glLightxv(int light, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glUseProgramStagesEXT(int pipeline, int stages, int program) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawArraysInstancedNV(int mode, int first, int count, int primcount) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetInteger64vAPPLE(int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glLoadMatrixx(Addressable m) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDeleteVertexArraysOES(int n, Addressable arrays) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawElementsInstancedBaseVertexBaseInstanceEXT(int mode, int count, int type, Addressable indices, int instancecount, int basevertex, int baseinstance) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glMultiDrawElementsIndirectEXT(int mode, int type, Addressable indirect, int drawcount, int stride) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetTexParameterIivOES(int target, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDepthRangeArrayfvOES(int first, int count, Addressable v) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glQueryCounterEXT(int id, int target) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexParameterx(int target, int pname, int param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTextureViewOES(int texture, int target, int origtexture, int internalformat, int minlevel, int numlevels, int minlayer, int numlayers) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetTexGenivOES(int coord, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glLightx(int light, int pname, int param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawTexxOES(int x, int y, int z, int width, int height) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glMultMatrixx(Addressable m) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBlendEquationiEXT(int buf, int mode) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDebugMessageControlKHR(int source, int type, int severity, int count, Addressable ids, byte enabled) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGenRenderbuffersOES(int n, Addressable renderbuffers) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetnUniformivEXT(int program, int location, int bufSize, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDeleteFramebuffersOES(int n, Addressable framebuffers) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexBufferOES(int target, int internalformat, int buffer) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glExtGetBuffersQCOM(Addressable buffers, int maxBuffers, Addressable numBuffers) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawTexivOES(Addressable coords) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glViewportArrayvOES(int first, int count, Addressable v) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glRenderbufferStorageMultisampleAPPLE(int target, int samples, int internalformat, int width, int height) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFramebufferTexture2DMultisampleEXT(int target, int attachment, int textarget, int texture, int level, int samples) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFogx(int pname, int param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetProgramPipelineivEXT(int pipeline, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetMaterialxv(int face, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetnUniformfvEXT(int program, int location, int bufSize, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glStartTilingQCOM(int x, int y, int width, int height, int preserveMask) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexEnvx(int target, int pname, int param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glPatchParameteriOES(int pname, int value) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDeleteSyncAPPLE(Addressable sync) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glEndTilingQCOM(int preserveMask) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawTexxvOES(Addressable coords) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glClearColorx(int red, int green, int blue, int alpha) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glSamplerParameterIuivEXT(int sampler, int pname, Addressable param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glResolveMultisampleFramebufferAPPLE() {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glUniformMatrix2x3fvNV(int location, int count, byte transpose, Addressable value) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glScissorIndexedvNV(int index, Addressable v) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetDriverControlsQCOM(Addressable num, int size, Addressable driverControls) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glShadingRateEXT(int rate) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glWaitSyncAPPLE(Addressable sync, int flags, long timeout) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glUniformHandleui64IMG(int location, long value) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glCopyTextureLevelsAPPLE(int destinationTexture, int sourceTexture, int sourceBaseLevel, int sourceLevelCount) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDeleteProgramPipelinesEXT(int n, Addressable pipelines) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glPrimitiveBoundingBoxEXT(float minX, float minY, float minZ, float minW, float maxX, float maxY, float maxZ, float maxW) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBlitFramebufferNV(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, int mask, int filter) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetObjectLabelKHR(int identifier, int name, int bufSize, Addressable length, Addressable label) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glProgramUniformHandleui64vIMG(int program, int location, int count, Addressable values) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawArraysInstancedBaseInstanceEXT(int mode, int first, int count, int instancecount, int baseinstance) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBeginQueryEXT(int target, int id) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetQueryObjectivEXT(int id, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetLightxv(int light, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTextureFoveationParametersQCOM(int texture, int layer, int focalPoint, float focalX, float focalY, float gainX, float gainY, float foveaArea) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glOrthof(float l, float r, float b, float t, float n, float f) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glOrthox(int l, int r, int b, int t, int n, int f) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexEnvxv(int target, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glSemaphoreParameterivNV(int semaphore, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFramebufferTextureLayerDownsampleIMG(int target, int attachment, int texture, int level, int layer, int xscale, int yscale) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDisableDriverControlQCOM(int driverControl) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glExtGetProgramsQCOM(Addressable programs, int maxPrograms, Addressable numPrograms) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glViewportIndexedfvNV(int index, Addressable v) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public int glGetFramebufferPixelLocalStorageSizeEXT(int target) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glExtGetFramebuffersQCOM(Addressable framebuffers, int maxFramebuffers, Addressable numFramebuffers) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetSemaphoreParameterivNV(int semaphore, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawElementsInstancedBaseVertexEXT(int mode, int count, int type, Addressable indices, int instancecount, int basevertex) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glExtrapolateTex2DQCOM(int src1, int src2, int output, float scaleFactor) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glVertexAttribDivisorANGLE(int index, int divisor) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public byte glIsRenderbufferOES(int renderbuffer) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glUniformMatrix4x3fvNV(int location, int count, byte transpose, Addressable value) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glSamplerParameterIuivOES(int sampler, int pname, Addressable param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBlendFunciEXT(int buf, int src, int dst) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDisableiEXT(int target, int index) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetFixedv(int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetObjectPtrLabelKHR(Addressable ptr, int bufSize, Addressable length, Addressable label) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGenVertexArraysOES(int n, Addressable arrays) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glEnableiNV(int target, int index) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetnUniformivKHR(int program, int location, int bufSize, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glReadnPixelsKHR(int x, int y, int width, int height, int format, int type, int bufSize, Addressable data) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawTransformFeedbackInstancedEXT(int mode, int id, int instancecount) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glUniformMatrix3x4fvNV(int location, int count, byte transpose, Addressable value) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public Addressable glFenceSyncAPPLE(int condition, int flags) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glClipPlanexIMG(int p, Addressable eqn) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glPointSizex(int size) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDebugMessageCallbackKHR(Addressable callback, Addressable userParam) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDisableiNV(int target, int index) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glMultiTexCoord4x(int texture, int s, int t, int r, int q) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFlushMappedBufferRangeEXT(int target, long offset, long length) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDiscardFramebufferEXT(int target, int numAttachments, Addressable attachments) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glProgramUniformHandleui64IMG(int program, int location, long value) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glSampleCoveragex(int value, byte invert) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glSamplerParameterIivOES(int sampler, int pname, Addressable param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glAlphaFuncQCOM(int func, float ref) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glExtGetProgramBinarySourceQCOM(int program, int shadertype, Addressable source, Addressable length) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glCurrentPaletteMatrixOES(int matrixpaletteindex) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFramebufferTextureOES(int target, int attachment, int texture, int level) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFogxv(int pname, Addressable param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public int glGetDebugMessageLogKHR(int count, int bufSize, Addressable sources, Addressable types, Addressable ids, Addressable severities, Addressable lengths, Addressable messageLog) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawTexfvOES(Addressable coords) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glProgramBinaryOES(int program, int binaryFormat, Addressable binary, int length) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glCreateSemaphoresNV(int n, Addressable semaphores) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFramebufferFetchBarrierQCOM() {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawArraysInstancedANGLE(int mode, int first, int count, int primcount) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBlendFunciOES(int buf, int src, int dst) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public int glGetGraphicsResetStatusEXT() {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glPrimitiveBoundingBox(float minX, float minY, float minZ, float minW, float maxX, float maxY, float maxZ, float maxW) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDepthRangeArrayfvNV(int first, int count, Addressable v) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glRenderbufferStorageMultisampleNV(int target, int samples, int internalformat, int width, int height) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetSyncivAPPLE(Addressable sync, int pname, int count, Addressable length, Addressable values) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glClearDepthx(int depth) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFramebufferShadingRateEXT(int target, int attachment, int texture, int baseLayer, int numLayers, int texelWidth, int texelHeight) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glObjectPtrLabelKHR(Addressable ptr, int length, Addressable label) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDisableiOES(int target, int index) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glScissorArrayvNV(int first, int count, Addressable v) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glValidateProgramPipelineEXT(int pipeline) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glSamplerParameterIivEXT(int sampler, int pname, Addressable param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glExtGetRenderbuffersQCOM(Addressable renderbuffers, int maxRenderbuffers, Addressable numRenderbuffers) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glRotatex(int angle, int x, int y, int z) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexGenfvOES(int coord, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glMatrixIndexPointerOES(int size, int type, int stride, Addressable pointer) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBlitFramebufferANGLE(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, int mask, int filter) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetTexParameterIuivOES(int target, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFramebufferFoveationParametersQCOM(int framebuffer, int layer, int focalPoint, float focalX, float focalY, float gainX, float gainY, float foveaArea) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetQueryObjectuivEXT(int id, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTextureViewEXT(int texture, int target, int origtexture, int internalformat, int minlevel, int numlevels, int minlayer, int numlayers) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDebugMessageInsertKHR(int source, int type, int id, int severity, int length, Addressable buf) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glPointParameterx(int pname, int param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glColor4x(int red, int green, int blue, int alpha) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glLightModelxv(int pname, Addressable param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexStorage3DEXT(int target, int levels, int internalformat, int width, int height, int depth) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public byte glIsProgramPipelineEXT(int pipeline) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetIntegeri_vEXT(int target, int index, Addressable data) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDeleteQueriesEXT(int n, Addressable ids) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glCopyImageSubDataOES(int srcName, int srcTarget, int srcLevel, int srcX, int srcY, int srcZ, int dstName, int dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth, int srcHeight, int srcDepth) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBindRenderbufferOES(int target, int renderbuffer) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glNamedBufferPageCommitmentMemNV(int buffer, long offset, long size, int memory, long memOffset, byte commit) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetnUniformuivKHR(int program, int location, int bufSize, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBlendEquationiOES(int buf, int mode) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFramebufferTexture3DOES(int target, int attachment, int textarget, int texture, int level, int zoffset) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexGeniOES(int coord, int pname, int param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glScissorIndexedNV(int index, int left, int bottom, int width, int height) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glUniformMatrix4x2fvNV(int location, int count, byte transpose, Addressable value) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetFragmentShadingRatesEXT(int samples, int maxCount, Addressable count, Addressable shadingRates) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public int glGetFragDataIndexEXT(int program, Addressable name) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBindFragDataLocationIndexedEXT(int program, int colorNumber, int index, Addressable name) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public byte glIsEnablediEXT(int target, int index) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glRenderbufferStorageMultisampleIMG(int target, int samples, int internalformat, int width, int height) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glCompressedTexSubImage3DOES(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, Addressable data) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexImage3DOES(int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, Addressable pixels) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDeleteRenderbuffersOES(int n, Addressable renderbuffers) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetnUniformfvKHR(int program, int location, int bufSize, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public byte glExtIsProgramBinaryQCOM(int program) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawRangeElementsBaseVertexEXT(int mode, int start, int end, int count, int type, Addressable indices, int basevertex) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public long glGetTextureSamplerHandleIMG(int texture, int sampler) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public byte glIsVertexArrayOES(int array) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexEstimateMotionQCOM(int ref, int target, int output) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawTexiOES(int x, int y, int z, int width, int height) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetSamplerParameterIivEXT(int sampler, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glMapBufferRangeEXT(int target, long offset, long length, int access) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBlendFuncSeparateiOES(int buf, int srcRGB, int dstRGB, int srcAlpha, int dstAlpha) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetSamplerParameterIuivOES(int sampler, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glVertexAttribDivisorNV(int index, int divisor) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetSamplerParameterIivOES(int sampler, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glExtTexObjectStateOverrideiQCOM(int target, int pname, int param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawTransformFeedbackEXT(int mode, int id) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexStorage3DMultisampleOES(int target, int samples, int internalformat, int width, int height, int depth, byte fixedsamplelocations) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glViewportArrayvNV(int first, int count, Addressable v) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawTexfOES(float x, float y, float z, float width, float height) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetInteger64vEXT(int pname, Addressable data) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glCopyTexSubImage3DOES(int target, int level, int xoffset, int yoffset, int zoffset, int x, int y, int width, int height) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glWeightPointerOES(int size, int type, int stride, Addressable pointer) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDepthRangex(int n, int f) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexGenfOES(int coord, int pname, float param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetFramebufferAttachmentParameterivOES(int target, int attachment, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glEnableiEXT(int target, int index) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexGenivOES(int coord, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glShadingRateCombinerOpsEXT(int combinerOp0, int combinerOp1) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glColorMaskiEXT(int index, byte r, byte g, byte b, byte a) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glMaterialx(int face, int pname, int param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexEstimateMotionRegionsQCOM(int ref, int target, int output, int mask) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glViewportIndexedfOES(int index, float x, float y, float w, float h) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glNormal3x(int nx, int ny, int nz) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawRangeElementsBaseVertexOES(int mode, int start, int end, int count, int type, Addressable indices, int basevertex) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawElementsInstancedANGLE(int mode, int count, int type, Addressable indices, int primcount) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glScissorIndexedvOES(int index, Addressable v) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetFloati_vNV(int target, int index, Addressable data) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glExtGetTexLevelParameterivQCOM(int texture, int face, int level, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexParameterxv(int target, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBlendEquationSeparateiEXT(int buf, int modeRGB, int modeAlpha) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetSamplerParameterIuivEXT(int sampler, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetProgramPipelineInfoLogEXT(int pipeline, int bufSize, Addressable length, Addressable infoLog) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexSubImage3DOES(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, Addressable pixels) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glLoadPaletteFromModelViewMatrixOES() {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glLineWidthx(int width) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glLightModelx(int pname, int param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetQueryivEXT(int target, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawBuffersIndexedEXT(int n, Addressable location, Addressable indices) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFrustumx(int l, int r, int b, int t, int n, int f) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFrustumf(float l, float r, float b, float t, float n, float f) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFramebufferTextureMultisampleMultiviewOVR(int target, int attachment, int texture, int level, int samples, int baseViewIndex, int numViews) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glRenderbufferStorageOES(int target, int internalformat, int width, int height) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glScalex(int x, int y, int z) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glEnableiOES(int target, int index) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glRenderbufferStorageMultisampleANGLE(int target, int samples, int internalformat, int width, int height) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexStorage2DEXT(int target, int levels, int internalformat, int width, int height) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBlendEquationSeparateiOES(int buf, int modeRGB, int modeAlpha) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBlendFuncSeparateiEXT(int buf, int srcRGB, int dstRGB, int srcAlpha, int dstAlpha) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glViewportIndexedfvOES(int index, Addressable v) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glExtGetTexSubImageQCOM(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, Addressable texels) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glColorMaskiOES(int index, byte r, byte g, byte b, byte a) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBindVertexArrayOES(int array) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFramebufferFoveationConfigQCOM(int framebuffer, int numLayers, int focalPointsPerLayer, int requestedFeatures, Addressable providedFeatures) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGenQueriesEXT(int n, Addressable ids) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBufferPageCommitmentMemNV(int target, long offset, long size, int memory, long memOffset, byte commit) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glShadingRateQCOM(int rate) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFramebufferRenderbufferOES(int target, int attachment, int renderbuffertarget, int renderbuffer) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetBufferPointervOES(int target, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBlendEquationSeparateOES(int modeRGB, int modeAlpha) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawBuffersNV(int n, Addressable bufs) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glCopyBufferSubDataNV(int readTarget, int writeTarget, long readOffset, long writeOffset, long size) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawElementsInstancedBaseInstanceEXT(int mode, int count, int type, Addressable indices, int instancecount, int baseinstance) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexStorageAttribs2DEXT(int target, int levels, int internalformat, int width, int height, int attrib_list) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glAlphaFuncx(int func, int ref) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glUniformHandleui64vIMG(int location, int count, Addressable value) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glCoverageMaskNV(byte mask) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBlendEquationOES(int mode) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGenerateMipmapOES(int target) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glCoverageOperationNV(int operation) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glClipPlanefIMG(int p, Addressable eqn) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glCompressedTexImage3DOES(int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, Addressable data) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public byte glIsEnablediNV(int target, int index) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glScissorIndexedOES(int index, int left, int bottom, int width, int height) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetProgramBinaryOES(int program, int bufSize, Addressable length, Addressable binaryFormat, Addressable binary) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawBuffersEXT(int n, Addressable bufs) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public int glCreateShaderProgramvEXT(int type, int count, Addressable strings) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetRenderbufferParameterivOES(int target, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glViewportIndexedfNV(int index, float x, float y, float w, float h) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawElementsBaseVertexOES(int mode, int count, int type, Addressable indices, int basevertex) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glExtGetShadersQCOM(Addressable shaders, int maxShaders, Addressable numShaders) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFramebufferTexture2DOES(int target, int attachment, int textarget, int texture, int level) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glPolygonOffsetx(int factor, int units) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDepthRangeIndexedfOES(int index, float n, float f) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDepthRangeIndexedfNV(int index, float n, float f) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFramebufferTexture2DMultisampleIMG(int target, int attachment, int textarget, int texture, int level, int samples) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glPointParameterxv(int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetDriverControlStringQCOM(int driverControl, int bufSize, Addressable length, Addressable driverControlString) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetLightxvOES(int light, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetTexParameterxv(int target, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glSampleCoveragexOES(int value, byte invert) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBlendBarrier() {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glUniformMatrix3x2fvNV(int location, int count, byte transpose, Addressable value) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glPopDebugGroupKHR() {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawElementsInstancedBaseVertexOES(int mode, int count, int type, Addressable indices, int instancecount, int basevertex) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public int glClientWaitSyncAPPLE(Addressable sync, int flags, long timeout) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glActiveShaderProgramEXT(int pipeline, int program) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glPatchParameteriEXT(int pname, int value) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexPageCommitmentEXT(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, byte commit) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexParameterIuivOES(int target, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDepthRangeArraydvNV(int first, int count, Addressable v) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glObjectLabelKHR(int identifier, int name, int length, Addressable label) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glEndQueryEXT(int target) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexParameterIivOES(int target, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBlendFuncSeparateOES(int srcRGB, int dstRGB, int srcAlpha, int dstAlpha) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glReadBufferIndexedEXT(int src, int index) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public long glGetTextureHandleIMG(int texture) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glEnableDriverControlQCOM(int driverControl) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawElementsInstancedNV(int mode, int count, int type, Addressable indices, int primcount) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public byte glIsQueryEXT(int id) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glPointParameterxOES(int pname, int param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glExtGetBufferPointervQCOM(int target, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public byte glIsEnablediOES(int target, int index) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glMultiDrawArraysIndirectEXT(int mode, Addressable indirect, int drawcount, int stride) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glVertexAttribDivisorEXT(int index, int divisor) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glMapBufferOES(int target, int access) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glBindFramebufferOES(int target, int framebuffer) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexBufferRangeOES(int target, int internalformat, int buffer, long offset, long size) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFramebufferTexture2DDownsampleIMG(int target, int attachment, int textarget, int texture, int level, int xscale, int yscale) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetTexGenfvOES(int coord, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawTexsOES(short x, short y, short z, short width, short height) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public byte glUnmapBufferOES(int target) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glUniformMatrix2x4fvNV(int location, int count, byte transpose, Addressable value) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glExtGetTexturesQCOM(Addressable textures, int maxTextures, Addressable numTextures) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glScissorArrayvOES(int first, int count, Addressable v) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawElementsBaseVertexEXT(int mode, int count, int type, Addressable indices, int basevertex) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public byte glIsSyncAPPLE(Addressable sync) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetMaterialxvOES(int face, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glPolygonModeNV(int face, int mode) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetTexEnvxv(int target, int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTranslatex(int x, int y, int z) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glReadnPixelsEXT(int x, int y, int width, int height, int format, int type, int bufSize, Addressable data) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetClipPlanex(int plane, Addressable equation) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGenFramebuffersOES(int n, Addressable framebuffers) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetClipPlanef(int plane, Addressable equation) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetFloati_vOES(int target, int index, Addressable data) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glFramebufferPixelLocalStorageSizeEXT(int target, int size) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexStorage1DEXT(int target, int levels, int internalformat, int width) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public int glGetGraphicsResetStatusKHR() {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glReadBufferNV(int mode) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public byte glIsFramebufferOES(int framebuffer) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glDrawTexsvOES(Addressable coords) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glClearTexSubImageEXT(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, Addressable data) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexPageCommitmentMemNV(int target, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int memory, long offset, byte commit) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGenProgramPipelinesEXT(int n, Addressable pipelines) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glGetPointervKHR(int pname, Addressable params) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glPointSizePointerOES(int type, int stride, Addressable pointer) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glMaterialxv(int face, int pname, Addressable param) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glTexturePageCommitmentMemNV(int texture, int layer, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int memory, long offset, byte commit) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  public void glPushDebugGroupKHR(int source, int id, int length, Addressable message) {
+    throw new RuntimeException("This method is not available in the generated binding.");
+  }
+
+  @Override
+  public void glutCheckLoop() {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public MemoryAddress glutGetProcAddress(Addressable arg0) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void glutSurfaceTexture(int arg0, int arg1, int arg2) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void glutWMCloseFunc(Addressable arg0) {
+    // TODO Auto-generated method stub
+    
   }
 
 }

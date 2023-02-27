@@ -42,6 +42,8 @@ public abstract class JavaWriter {
     extensions.add(extension);
   }
   
+
+  
   protected String writeExtends() {
     if(extensions==null || extensions.size()==0)
       return "";
@@ -71,6 +73,15 @@ public abstract class JavaWriter {
       sb.append("package "  + classPackage + "; \n\n");
     }
   }
+  
+  public void constant(StringBuffer sb, String name, String type, String value) {
+    String line = "public static final " + type + " " + name + " = " + value + ";";
+
+    // Check if this line of code as allready been writen
+    if (!sb.toString().contains(line))
+      sb.append("  " + line + "\n");
+  }
+
 
   public Arg getOutputArg(Method method) {
     return new Arg(method.getReturnType().getName(), "out");

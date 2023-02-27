@@ -132,7 +132,7 @@ public class PanamaGLPainter extends AbstractPainter {
   protected StringBuffer version(boolean showExtensions){
     StringBuffer sb = new StringBuffer();
     sb.append("GL_VENDOR     : " + glGetString(GL.GL_VENDOR) + "\n");
-    sb.append("GL_RENDERER   : " + glGetString(GL.GL_RENDERBUFFER) + "\n");
+    //sb.append("GL_RENDERER   : " + glGetString(GL.GL_RENDERBUFFER) + "\n");
     sb.append("GL_VERSION    : " + glGetString(GL.GL_VERSION) + "\n");
 
     String ext = glGetString(GL.GL_EXTENSIONS);

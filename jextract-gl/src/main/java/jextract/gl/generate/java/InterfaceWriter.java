@@ -27,6 +27,36 @@ public class InterfaceWriter extends JavaWriter{
     sb.append("}\n");
   }
 
+  /** Generate an interface method declaration based on a base type definition. */
+  public void method(StringBuffer sb, String name, List<Arg> input, String outputType) {
+    StringBuffer argBuffer = new StringBuffer();
+
+    
+    String methodDecl = "public " + outputType + " " + name + "(";
+    
+    argBuffer.append(methodDecl);
+
+    // arguments
+    int k = 0;
+    for (Arg arg : input) {
+      String declare = arg.getTypeName() + " " + arg.getName();
+
+        if (k == 0) {
+          argBuffer.append(declare);
+        } else {
+          argBuffer.append(", " + declare);
+        }
+      k++;
+
+    }
+
+    argBuffer.append(");\n");
+
+    if (!sb.toString().contains(argBuffer.toString())) {
+      sb.append("  " + argBuffer.toString());
+    }
+  }
+  
   /** Generate an interface method declaration based on a Java method definition. */
   public void method(StringBuffer sb, Method method) {
     List<Arg> in = getInputArgs(method);

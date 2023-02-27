@@ -30,7 +30,7 @@ public class PanamaGLFactory_macOS_x86_64 extends APanamaGLFactory_macOS impleme
     
   @Override
   public GL newGL() {
-    return new panamagl.platform.macos.x86.GLImpl();
+    return new panamagl.platform.macos.x86.GL_macOS_x86();
   }
 
 

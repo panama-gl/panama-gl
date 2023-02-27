@@ -107,7 +107,7 @@ public class GenerateAPI {
       wrapper.platform = "macOS_x86";
       wrapper.wrapped = Set.of(opengl.macos.v10_15_7.glut_h.class, glext.macos.v10_15_7.glext_h.class, cgl.macos.v10_15_7.cgl_h.class);
       wrapper.accepts = new AcceptsGLMethod();
-      wrapper.className = GL_IMPL;
+      wrapper.className = "GL_" + wrapper.platform;
       wrapper.packge = GL_PACKAGE_MACOS_x86;
       wrapper.setFileIn(GL_MACOS_SOURCES);
   
@@ -166,7 +166,7 @@ public class GenerateAPI {
       wrapper.platform = "linux_x86";
       wrapper.wrapped = Set.of(opengl.ubuntu.v20.glut_h.class, glext.ubuntu.v20.glext_h.class, glxext.ubuntu.v20.glxext_h.class);
       wrapper.accepts = new AcceptsGLMethod();
-      wrapper.className = GL_IMPL;
+      wrapper.className = "GL_" + wrapper.platform;
       wrapper.packge = GL_PACKAGE_LINUX_x86;
       wrapper.setFileIn(GL_LINUX_SOURCES);
       
@@ -175,6 +175,8 @@ public class GenerateAPI {
       wrapper.addImplement(interf.packge + ".GLUT");
       
       wrapper.addExtension(interf.packge + ".AGL");
+
+wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
 
 
       // Write and compile

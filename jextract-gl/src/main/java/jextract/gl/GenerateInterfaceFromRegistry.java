@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeSet;
 import javax.xml.bind.JAXBElement;
 import com.google.common.collect.ArrayListMultimap;
@@ -22,11 +21,9 @@ import jextractgl.Registry.Feature.Remove;
 import jextractgl.Registry.Feature.Require;
 
 public class GenerateInterfaceFromRegistry {
-  OpenGLRegistry registry;
-  Map<String, Registry.Enums.Enum> enumIndex;
-  Map<String, GLCommand> commandIndex;
-
-
+  protected OpenGLRegistry registry;
+  protected Map<String, Registry.Enums.Enum> enumIndex;
+  protected Map<String, GLCommand> commandIndex;
 
   public static void main(String[] args) throws Exception {
     GenerateInterfaceFromRegistry gen = new GenerateInterfaceFromRegistry();
@@ -180,7 +177,7 @@ public class GenerateInterfaceFromRegistry {
       StringBuffer javaCode = new StringBuffer();
 
       interfaceWriter.start(javaCode);
-      generateInterfaceContent(feature, javaCode);
+      generateInterfaceContent(interfaceWriter, feature, javaCode);
       interfaceWriter.close(javaCode);
 
       // Write code to disk
@@ -192,7 +189,7 @@ public class GenerateInterfaceFromRegistry {
     }
   }
 
-  protected void generateInterfaceContent(Feature feature, StringBuffer javaCode) {
+  protected void generateInterfaceContent(InterfaceWriter interfaceWriter, Feature feature, StringBuffer javaCode) {
     for (Remove remove : feature.getRemove()) {
       // System.out.println(" Remove : " + remove);
     }
@@ -205,19 +202,17 @@ public class GenerateInterfaceFromRegistry {
 
         if (s instanceof Feature.Require.Enum) {
           Feature.Require.Enum renum = (Feature.Require.Enum) s;
-          handleEnum(renum, javaCode);
+          handleEnum(interfaceWriter, renum, javaCode);
         }
-
 
         else if (s instanceof Registry.Feature.Require.Command) {
           Registry.Feature.Require.Command com = (Registry.Feature.Require.Command) s;
-          handleCommand(com, javaCode);
+          handleCommand(interfaceWriter, com, javaCode);
         }
-
 
         else if (s instanceof Feature.Require.Type) {
           Feature.Require.Type com = (Feature.Require.Type) s;
-          handleType(com, javaCode);
+          handleType(interfaceWriter, com, javaCode);
         }
 
         else if (s instanceof String) {
@@ -231,13 +226,13 @@ public class GenerateInterfaceFromRegistry {
 
           if (oo instanceof Feature.Require.Enum) {
             Feature.Require.Enum renum = (Feature.Require.Enum) oo;
-            handleEnum(renum, javaCode);
+            handleEnum(interfaceWriter, renum, javaCode);
           } else if (oo instanceof Registry.Feature.Require.Command) {
             Registry.Feature.Require.Command com = (Registry.Feature.Require.Command) oo;
-            handleCommand(com, javaCode);
+            handleCommand(interfaceWriter, com, javaCode);
           } else if (oo instanceof Feature.Require.Type) {
             Feature.Require.Type com = (Feature.Require.Type) oo;
-            handleType(com, javaCode);
+            handleType(interfaceWriter, com, javaCode);
           }
 
           else {
@@ -257,15 +252,12 @@ public class GenerateInterfaceFromRegistry {
     return name;
   }
 
-  protected void handleType(Feature.Require.Type com, StringBuffer javaCode) {
+  protected void handleType(InterfaceWriter interfaceWriter, Feature.Require.Type com, StringBuffer javaCode) {
     // System.out.println(" Type : " + com.getName());
   }
   
-  public GLCommand getCommand(String name) {
-    return commandIndex.get(name);
-  }
 
-  protected void handleCommand(Registry.Feature.Require.Command com, StringBuffer javaCode) {
+  protected void handleCommand(InterfaceWriter interfaceWriter, Registry.Feature.Require.Command com, StringBuffer javaCode) {
     // System.out.println(" Command : " + com.getName() + "=" + com.getValue());
 
     GLCommand command = getCommand(com.getName());
@@ -280,32 +272,16 @@ public class GenerateInterfaceFromRegistry {
       outputType = "MemoryAddress";
     }
     
-    String methodName = "public " + outputType + " " + command.getName() + "(";
-    StringBuffer argBuffer = new StringBuffer();
-
-    argBuffer.append(methodName);
-
-    int k = 0;
-    for (Arg arg : command.getArgs()) {
-      String declare = arg.getTypeName() + " " + arg.getName();
-
-        if (k == 0) {
-          argBuffer.append(declare);
-        } else {
-          argBuffer.append(", " + declare);
-        }
-      k++;
-
-    }
-
-    argBuffer.append(");\n");
-
-    if (!javaCode.toString().contains(argBuffer.toString())) {
-      javaCode.append("  " + argBuffer.toString());
-    }
+    String methodName = command.getName();
+    List<Arg> input = command.getArgs();
+    
+    
+    interfaceWriter.method(javaCode, methodName, input, outputType);
   }
 
-  private void handleEnum(Feature.Require.Enum renum, StringBuffer javaCode) {
+
+
+  private void handleEnum(InterfaceWriter interfaceWriter, Feature.Require.Enum renum, StringBuffer javaCode) {
     Registry.Enums.Enum enumC = enumIndex.get(renum.getName());
 
     String value = enumC.getValue1();
@@ -316,14 +292,15 @@ public class GenerateInterfaceFromRegistry {
       type = "long";
     }
 
-    String line = "public static final " + type + " " + enumC.getName() + " = " + value + ";";
-
-    // Check if this line of code as allready been writen
-    if (!javaCode.toString().contains(line))
-      javaCode.append("  " + line + "\n");
+    String name = enumC.getName();
+    interfaceWriter.constant(javaCode, name, type, value);
 
     // System.out.println(" Enum : " + line);
 
+  }
+
+  public GLCommand getCommand(String name) {
+    return commandIndex.get(name);
   }
 
 
