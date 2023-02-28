@@ -17,6 +17,18 @@ import jextract.gl.java.AcceptsGLMethod;
 import panamagl.os.linux.APanamaGLFactory_linux;
 import panamagl.os.macos.APanamaGLFactory_macOS;
 
+/**
+ * Generate an OpenGL API with per-platform implementations wrapping the bindings made available by JExtract.
+ * <br>
+ * 
+ * The API roughly takes the bellow form :
+ * 
+ * 
+ * <img src="doc-files/JExtract-GL.png"/>
+ * 
+ * @author Martin Pernollet
+ *
+ */
 public class GenerateAPI {
   public static String ROOT = "../";
   public static String GL_INTERFACE_SOURCES = ROOT+"panama-gl-api/src/generated/java/";
@@ -34,7 +46,7 @@ public class GenerateAPI {
   public static String GL_PACKAGE_LINUX_x86 = "panamagl.platform.linux.x86";
   public static String GL_PACKAGE_WINDOWS_x86 = "panamagl.platform.windows.x86";
   
-  public static String GL_IMPL = "GLImpl";
+  //public static String GL_IMPL = "GLImpl";
 
   public static void main(String[] args) throws Exception {
     GenerateAPI gen = new GenerateAPI();

@@ -927,23 +927,25 @@ public class PanamaGLPainter extends AbstractPainter {
 
   @Override
   public void glGetIntegerv(int pname, int[] data, int data_offset) {
-    MemorySegment s = alloc(data);
-    gl.glGetIntegerv(pname, s);
-    ((AGL)gl).copySegmentToArray(s, data);
+    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_INT, data.length);
+    gl.glGetIntegerv(pname, segment);
+    ((AGL)gl).copySegmentToArray(segment, data);
   }
 
   @Override
   public void glGetDoublev(int pname, double[] params, int params_offset) {
-    MemorySegment s = alloc(params);
-    gl.glGetDoublev(pname, s);
-    ((AGL)gl).copySegmentToArray(s, params);
+    //MemorySegment s = alloc(params);
+    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_DOUBLE, params.length);
+    gl.glGetDoublev(pname, segment);
+    ((AGL)gl).copySegmentToArray(segment, params);
   }
 
   @Override
   public void glGetFloatv(int pname, float[] data, int data_offset) {
-    MemorySegment s = alloc(data);
-    gl.glGetFloatv(pname, s);
-    ((AGL)gl).copySegmentToArray(s, data);
+   // MemorySegment s = alloc(data);
+    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_FLOAT, data.length);
+    gl.glGetFloatv(pname, segment);
+    ((AGL)gl).copySegmentToArray(segment, data);
   }
 
   @Override

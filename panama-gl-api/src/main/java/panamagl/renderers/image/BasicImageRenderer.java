@@ -59,7 +59,6 @@ public class BasicImageRenderer implements ImageRenderer{
 
     }*/
     
-    
     // Draw image
     gl.glPixelZoom(1, 1);
     gl.glRasterPos3f(x, y, z);
