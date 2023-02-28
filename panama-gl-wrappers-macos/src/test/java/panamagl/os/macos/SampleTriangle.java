@@ -15,36 +15,43 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.macos.x86_64;
+package panamagl.os.macos;
 
-import org.junit.Test;
-import panamagl.GLProfile;
 import panamagl.opengl.GL;
 
-// VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules
-// jdk.incubator.foreign
-// -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class TestGLProfile_macOS extends MacOSTest{
+public class SampleTriangle {
 
-  @Test
-  public void glProfile() {
-    if (!checkPlatform())
-      return;
+    public static void rgbaTriangle2D(GL gl, int width, int height) {
+      gl.glViewport(0, 0, width, height);
+      gl.glMatrixMode(GL.GL_PROJECTION);
+      gl.glLoadIdentity();
+      gl.glOrtho(0.0, width, 0.0, height, -1.0, 1.0);
+      gl.glMatrixMode(GL.GL_MODELVIEW);
+      gl.glLoadIdentity();
 
-    // Given a GL caller
-    GL gl = new panamagl.platform.macos.x86.GL_macOS_x86();
+      //-------------------------
+      //glDisable(GL_TEXTURE_2D);
+      gl.glDisable(GL.GL_BLEND);
+      gl.glEnable(GL.GL_DEPTH_TEST);
 
-    // Given a GLUT context
-    GLUTContext_macOS glutContext = new GLUTContext_macOS();
-    glutContext.init(false);
+      //-------------------------
 
+      gl.glBegin(GL.GL_TRIANGLES);
 
-    GLProfile p = new GLProfile(gl);
-    System.out.println(p);
+      // bottom left / red
+      gl.glColor4f(1,0,0,1);
+      gl.glVertex3d(0,0,0);
+
+      // bottom right / green
+      gl.glColor4f(0,1,0, 1);
+      gl.glVertex3d(width,0,0);
+
+      // top right / blue
+      gl.glColor4f(0,0,1,1);
+      gl.glVertex3d(width, height,0);
+      gl.glEnd();
+      
+      gl.glFlush();
   }
-
-  
-
-
 
 }

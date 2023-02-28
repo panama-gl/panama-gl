@@ -15,19 +15,36 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.macos.x86_64;
+package panamagl.os.macos;
 
-//import static org.mockito.Mockito.spy;
 import org.junit.Test;
+import panamagl.GLProfile;
+import panamagl.opengl.GL;
 
-public class TestGL_macOS extends MacOSTest{
-    @Test
-    public void whenInitDefault_ThenDoNotInvokeGlut(){
-      if (!checkPlatform())
-        return;
+// VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules
+// jdk.incubator.foreign
+// -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+public class TestGLProfile_macOS extends MacOSTest{
 
-       // GL_macOS_10_15_3 gl = spy(GL_macOS_10_15_3.class);
+  @Test
+  public void glProfile() {
+    if (!checkPlatform())
+      return;
+
+    // Given a GL caller
+    GL gl = new panamagl.platform.macos.x86.GL_macOS_x86();
+
+    // Given a GLUT context
+    GLUTContext_macOS glutContext = new GLUTContext_macOS();
+    glutContext.init(false);
 
 
-    }
+    GLProfile p = new GLProfile(gl);
+    System.out.println(p);
+  }
+
+  
+
+
+
 }

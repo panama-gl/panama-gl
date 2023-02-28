@@ -24,9 +24,6 @@ import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.os.Platform;
-import panamagl.os.macos.x86_64.CGLContext_macOS;
-import panamagl.os.macos.x86_64.FBO_macOS;
-import panamagl.os.macos.x86_64.GLUTContext_macOS;
 
 public abstract class APanamaGLFactory_macOS extends APanamaGLFactory {
   protected boolean debug = Debug.check(APanamaGLFactory_macOS.class, PanamaGLFactory.class);

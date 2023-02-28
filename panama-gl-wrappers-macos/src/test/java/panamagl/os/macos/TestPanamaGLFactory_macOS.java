@@ -15,43 +15,34 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.macos.x86_64;
+package panamagl.os.macos;
 
-import panamagl.opengl.GL;
+import org.junit.Assert;
+import org.junit.Test;
+import org.jzy3d.os.OperatingSystem;
+import panamagl.factory.PanamaGLFactory;
+import panamagl.platform.macos.x86.PanamaGLFactory_macOS_x86;
 
-public class SampleTriangle {
+public class TestPanamaGLFactory_macOS {
+  @Test
+  public void test() {
+    if (!new OperatingSystem().isMac())
+      return;
+  
+    PanamaGLFactory f = PanamaGLFactory.select();
+    
+    boolean matched = f instanceof PanamaGLFactory_macOS_x86;
+    
+    Assert.assertTrue(matched);
 
-    public static void rgbaTriangle2D(GL gl, int width, int height) {
-      gl.glViewport(0, 0, width, height);
-      gl.glMatrixMode(GL.GL_PROJECTION);
-      gl.glLoadIdentity();
-      gl.glOrtho(0.0, width, 0.0, height, -1.0, 1.0);
-      gl.glMatrixMode(GL.GL_MODELVIEW);
-      gl.glLoadIdentity();
+    // Issue on context init
+    //Assert.assertNotNull(f.newGLContext());
 
-      //-------------------------
-      //glDisable(GL_TEXTURE_2D);
-      gl.glDisable(GL.GL_BLEND);
-      gl.glEnable(GL.GL_DEPTH_TEST);
+    Assert.assertNotNull(f.newGL());
+    Assert.assertNotNull(f.newOffscreenRenderer());
+    Assert.assertNotNull(f.newFBO(800, 600));
+    Assert.assertNotNull(f.newCanvasSwing());
 
-      //-------------------------
-
-      gl.glBegin(GL.GL_TRIANGLES);
-
-      // bottom left / red
-      gl.glColor4f(1,0,0,1);
-      gl.glVertex3d(0,0,0);
-
-      // bottom right / green
-      gl.glColor4f(0,1,0, 1);
-      gl.glVertex3d(width,0,0);
-
-      // top right / blue
-      gl.glColor4f(0,0,1,1);
-      gl.glVertex3d(width, height,0);
-      gl.glEnd();
-      
-      gl.glFlush();
+    ;
   }
-
 }
