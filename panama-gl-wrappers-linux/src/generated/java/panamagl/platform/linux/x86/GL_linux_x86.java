@@ -13867,26 +13867,19 @@ public class GL_linux_x86 extends panamagl.opengl.AGL implements panamagl.opengl
 
   @Override
   public void glutCheckLoop() {
-    // TODO Auto-generated method stub
-    
   }
 
   @Override
   public MemoryAddress glutGetProcAddress(Addressable arg0) {
-    // TODO Auto-generated method stub
     return null;
   }
 
   @Override
   public void glutSurfaceTexture(int arg0, int arg1, int arg2) {
-    // TODO Auto-generated method stub
-    
   }
 
   @Override
   public void glutWMCloseFunc(Addressable arg0) {
-    // TODO Auto-generated method stub
-    
   }
 
 }

@@ -27,7 +27,6 @@ import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.os.macos.x86_64.FBO_macOS;
 import panamagl.os.macos.x86_64.GLUTContext_macOS;
-import panamagl.os.macos.x86_64.GL_macOS;
 
 /**
  * https://github.com/jzy3d/panama-gl/issues/5
