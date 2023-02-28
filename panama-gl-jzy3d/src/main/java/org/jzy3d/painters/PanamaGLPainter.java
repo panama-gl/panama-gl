@@ -26,6 +26,7 @@ import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
+import java.nio.DoubleBuffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import javax.swing.JPanel;
@@ -105,6 +106,18 @@ public class PanamaGLPainter extends AbstractPainter {
 
   public MemorySegment alloc(int[] value) {
     return allocator.allocateArray(ValueLayout.JAVA_INT, value);
+  }
+
+  public MemorySegment alloc(FloatBuffer value) {
+    return allocator.allocateArray(ValueLayout.JAVA_FLOAT, value.array());
+  }
+
+  public MemorySegment alloc(IntBuffer value) {
+    return allocator.allocateArray(ValueLayout.JAVA_INT, value.array());
+  }
+  
+  public MemorySegment alloc(DoubleBuffer value) {
+    return allocator.allocateArray(ValueLayout.JAVA_DOUBLE, value.array());
   }
 
   public MemorySegment alloc(String value) {
@@ -713,7 +726,7 @@ public class PanamaGLPainter extends AbstractPainter {
 
   @Override
   public void glFeedbackBuffer(int size, int type, FloatBuffer buffer) {
-    gl.glFeedbackBuffer(size, type, buffer);
+    gl.glFeedbackBuffer(size, type, alloc(buffer));
   }
 
   @Override
@@ -854,7 +867,7 @@ public class PanamaGLPainter extends AbstractPainter {
 
   @Override
   public void glClipPlane(int plane, double[] equation) {
-    gl.glClipPlane(clipPlaneId(plane), equation);
+    gl.glClipPlane(clipPlaneId(plane), alloc(equation));
   }
 
   @Override
@@ -892,7 +905,7 @@ public class PanamaGLPainter extends AbstractPainter {
   @Override
   public boolean gluUnProject(float winX, float winY, float winZ, float[] model, int model_offset, float[] proj,
       int proj_offset, int[] view, int view_offset, float[] objPos, int objPos_offset) {
-    return gl.gluUnProject(winX, winY, winZ, model, model_offset, proj, proj_offset, view, view_offset, objPos, objPos_offset);
+    return ((AGL)gl).gluUnProject(winX, winY, winZ, model, model_offset, proj, proj_offset, view, view_offset, objPos, objPos_offset);
   }
 
   protected double[] dbl(float[] values) {
@@ -907,25 +920,30 @@ public class PanamaGLPainter extends AbstractPainter {
   public boolean gluProject(float objX, float objY, float objZ, float[] model, int model_offset,
       float[] proj, int proj_offset, int[] view, int view_offset, float[] winPos,
       int winPos_offset) {
-        return gl.gluProject(objX, objY, objZ, model, model_offset, proj, proj_offset, view, view_offset, winPos, winPos_offset);
+        return ((AGL)gl).gluProject(objX, objY, objZ, model, model_offset, proj, proj_offset, view, view_offset, winPos, winPos_offset);
   }
 
   // GL GET
 
   @Override
   public void glGetIntegerv(int pname, int[] data, int data_offset) {
-    gl.glGetIntegerv(pname, data, data_offset);
-    
+    MemorySegment s = alloc(data);
+    gl.glGetIntegerv(pname, s);
+    ((AGL)gl).copySegmentToArray(s, data);
   }
 
   @Override
   public void glGetDoublev(int pname, double[] params, int params_offset) {
-    gl.glGetDoublev(pname, params, params_offset);
+    MemorySegment s = alloc(params);
+    gl.glGetDoublev(pname, s);
+    ((AGL)gl).copySegmentToArray(s, params);
   }
 
   @Override
   public void glGetFloatv(int pname, float[] data, int data_offset) {
-    gl.glGetFloatv(pname, data, data_offset);
+    MemorySegment s = alloc(data);
+    gl.glGetFloatv(pname, s);
+    ((AGL)gl).copySegmentToArray(s, data);
   }
 
   @Override
@@ -935,14 +953,12 @@ public class PanamaGLPainter extends AbstractPainter {
 
   @Override
   public void glDepthRangef(float near, float far) {
-    // printGLDepthRange();
-    gl.glDepthRangef(near, far);
+    gl.glDepthRange(near, far);
   }
 
   public void printGLDepthRange() {
     float[] params = new float[2];
-    gl.glGetFloatv(GL.GL_DEPTH_RANGE, params, 0);
-    // Logger.getLogger(EmulGLPainter.class).info();
+    glGetFloatv(GL.GL_DEPTH_RANGE, params, 0);
     Array.print(params);
   }
 
@@ -1082,7 +1098,7 @@ public class PanamaGLPainter extends AbstractPainter {
 
   @Override
   public void glLightModelfv(int mode, float[] value) {
-    gl.glLightModelfv(mode, value);
+    gl.glLightModelfv(mode, alloc(value));
   }
 
   @Override
@@ -1151,12 +1167,12 @@ public class PanamaGLPainter extends AbstractPainter {
 
   @Override
   public void glSelectBuffer(int size, IntBuffer buffer) {
-    gl.glSelectBuffer(size, buffer);
+    gl.glSelectBuffer(size, alloc(buffer));
   }
 
   @Override
   public void gluPickMatrix(double x, double y, double delX, double delY, int[] viewport, int viewport_offset) {
-    gl.gluPickMatrix(x, y, delX, delY, viewport, 0);
+    gl.gluPickMatrix(x, y, delX, delY, alloc(viewport));
   }
 
   @Override

@@ -104,7 +104,7 @@ public abstract class AGL implements GL {
     MemorySegment sp = alloc(dbl(proj));    
     MemorySegment sv = alloc(dbl(view));
     
-    int out = gluProject((double)objX, (double)objY, (double)objZ, sv, sm, sp, mX, mY, mZ);
+    int out = gluProject((double)objX, (double)objY, (double)objZ, sm, sp, sv, mX, mY, mZ);
 
     winPos[0] = (float)mX.get(ValueLayout.JAVA_DOUBLE, 0);
     winPos[1] = (float)mY.get(ValueLayout.JAVA_DOUBLE, 0);
