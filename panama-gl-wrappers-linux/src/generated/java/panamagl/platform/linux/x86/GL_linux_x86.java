@@ -2,10 +2,10 @@ package panamagl.platform.linux.x86;
 
 import opengl.ubuntu.v20.glut_h;
 import static opengl.ubuntu.v20.glut_h.*;
-import glext.ubuntu.v20.glext_h;
-import static glext.ubuntu.v20.glext_h.*;
 import glxext.ubuntu.v20.glxext_h;
 import static glxext.ubuntu.v20.glxext_h.*;
+import glext.ubuntu.v20.glext_h;
+import static glext.ubuntu.v20.glext_h.*;
 import java.lang.foreign.*;
 
 public class GL_linux_x86 extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {

@@ -21,7 +21,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.jzy3d.os.OperatingSystem;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.os.macos.x86_64.PanamaGLFactory_macOS_x86_64;
+import panamagl.platform.macos.x86.PanamaGLFactory_macOS_x86;
 
 public class TestPanamaGLFactory_macOS {
   @Test
@@ -31,7 +31,7 @@ public class TestPanamaGLFactory_macOS {
   
     PanamaGLFactory f = PanamaGLFactory.select();
     
-    boolean matched = f instanceof PanamaGLFactory_macOS_x86_64;
+    boolean matched = f instanceof PanamaGLFactory_macOS_x86;
     
     Assert.assertTrue(matched);
 

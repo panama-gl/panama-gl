@@ -27,8 +27,6 @@ import panamagl.os.Platform;
 import panamagl.os.macos.x86_64.CGLContext_macOS;
 import panamagl.os.macos.x86_64.FBO_macOS;
 import panamagl.os.macos.x86_64.GLUTContext_macOS;
-import panamagl.os.macos.x86_64.GL_macOS;
-import panamagl.os.macos.x86_64.PanamaGLFactory_macOS_x86_64;
 
 public abstract class APanamaGLFactory_macOS extends APanamaGLFactory {
   protected boolean debug = Debug.check(APanamaGLFactory_macOS.class, PanamaGLFactory.class);

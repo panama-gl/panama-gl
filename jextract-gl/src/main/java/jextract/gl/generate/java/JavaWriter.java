@@ -42,6 +42,18 @@ public abstract class JavaWriter {
     extensions.add(extension);
   }
   
+  public void addImplement(String implement) {
+    this.implement.add(implement);
+  }
+
+  public void addImplement(List<String> implement) {
+    this.implement.addAll(implement);
+  }
+
+  public void addExtension(List<String> extend) {
+    this.extensions.addAll(extend);
+  }
+
 
   
   protected String writeExtends() {

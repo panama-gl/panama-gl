@@ -204,6 +204,7 @@ wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
       PlatformFactory factory) throws IOException {
     ClassWriter factoryWriter = new ClassWriter(factory.packge, factory.name);
     factoryWriter.addExtension(factory.base.getName());
+    factoryWriter.addImplement(panamagl.factory.PanamaGLFactory.class.getName());
     
     Code c = new Code("return new " + wrapper.packge + "." + wrapper.className + "();");
     

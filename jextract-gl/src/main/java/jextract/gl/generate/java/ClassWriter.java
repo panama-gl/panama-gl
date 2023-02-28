@@ -382,13 +382,6 @@ public class ClassWriter extends JavaWriter {
     return argsIn;
   }
 
-  public void addImplement(List<String> implement) {
-    this.implement.addAll(implement);
-  }
-
-  public void addExtension(List<String> extend) {
-    this.extensions.addAll(extend);
-  }
 
 
 }
