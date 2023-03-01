@@ -18,9 +18,7 @@
 package jextract.gl.generate.java;
 
 import java.io.IOException;
-import java.util.List;
 import org.junit.Test;
-import junit.framework.Assert;
 
 public class TestInterfaceWriter {
   @Test

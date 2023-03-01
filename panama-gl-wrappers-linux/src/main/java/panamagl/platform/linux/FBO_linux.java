@@ -153,8 +153,6 @@ public class FBO_linux implements FBO {
 
     // -------------------------
     // Generate FRAME buffer
-    glut_h h;
-    
     frameBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
  // >>>>>> glut_h.glGenFramebuffers(1, frameBufferIds);
     idFrameBuffer = (int) frameBufferIds.get(ValueLayout.JAVA_INT, 0);

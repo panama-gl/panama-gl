@@ -34,7 +34,6 @@ import jextract.gl.xml.OpenGLRegistry;
 import jextract.gl.xml.model.GLCommand;
 import jextractgl.Registry;
 import jextractgl.Registry.Feature;
-import jextractgl.Registry.Feature.Remove;
 import jextractgl.Registry.Feature.Require;
 
 public class GenerateInterfaceFromRegistry {
@@ -85,8 +84,6 @@ public class GenerateInterfaceFromRegistry {
     //
     // create GL_4_6 -> GL_4_5 -> etc
 
-    Map<String, String> versionMesh = new HashMap<>();
-
     List<String> interfaceInOrder = new ArrayList<>(new TreeSet<>(interfaceWriters.keySet()));
 
     System.out.println(interfaceInOrder);
@@ -102,7 +99,7 @@ public class GenerateInterfaceFromRegistry {
       
       int name = 0;
       int major = 1;
-      int minor = 2;
+      //int minor = 2;
       
       if(i1s[name].equals(i2s[name]) && i1s[major].equals(i2s[major])) {
         dependencies.put(i2, i1);
@@ -145,7 +142,7 @@ public class GenerateInterfaceFromRegistry {
       
       int name = 0;
       int maj = 1;
-      int min = 2;
+      //int min = 2;
       
       if(i1s[name].equals(i2s[name]) && i1s[maj].equals(i2s[maj])) {
         minors.add(minor);
@@ -207,9 +204,9 @@ public class GenerateInterfaceFromRegistry {
   }
 
   protected void generateInterfaceContent(InterfaceWriter interfaceWriter, Feature feature, StringBuffer javaCode) {
-    for (Remove remove : feature.getRemove()) {
+    /*for (Remove remove : feature.getRemove()) {
       // System.out.println(" Remove : " + remove);
-    }
+    }*/
 
     for (Require require : feature.getRequire()) {
       // System.out.println(" Require : " + require.getComment());
@@ -237,6 +234,7 @@ public class GenerateInterfaceFromRegistry {
 
 
         else if (s instanceof JAXBElement) {
+          @SuppressWarnings("rawtypes")
           JAXBElement e = (JAXBElement) s;
 
           Object oo = e.getValue();

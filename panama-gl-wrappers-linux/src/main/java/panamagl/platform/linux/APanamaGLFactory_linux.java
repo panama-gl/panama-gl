@@ -22,7 +22,6 @@ package panamagl.platform.linux;
 import panamagl.Debug;
 import panamagl.GLCanvas;
 import panamagl.factory.APanamaGLFactory;
-import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.FBO;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
