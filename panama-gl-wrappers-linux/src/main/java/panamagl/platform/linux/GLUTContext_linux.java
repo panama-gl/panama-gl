@@ -15,15 +15,15 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.macos;
+package panamagl.platform.linux;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
-import opengl.macos.v10_15_7.glutDisplayFunc$func;
-import opengl.macos.v10_15_7.glutIdleFunc$func;
-import opengl.macos.v10_15_7.glut_h;
+import opengl.ubuntu.v20.glutDisplayFunc$callback;
+import opengl.ubuntu.v20.glutIdleFunc$callback;
+import opengl.ubuntu.v20.glut_h;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
@@ -38,15 +38,15 @@ import panamagl.opengl.GLContext;
  * 
  * @author Martin Pernollet
  */
-public class GLUTContext_macOS extends AGLContext implements GLContext {
-  
+public class GLUTContext_linux extends AGLContext implements GLContext {
   protected MemorySession scope;
   protected SegmentAllocator allocator;
   protected String windowName = "InvisiblePanamaGLWindowForGLContext";
 
   protected int initWidth = 100;
   protected int initHeight = 100;
-  protected boolean initialized = true;  
+  protected boolean initialized = true;
+
 
   /** Initialize GLUT and create a window */
   @Override
@@ -73,7 +73,7 @@ public class GLUTContext_macOS extends AGLContext implements GLContext {
     // This dummy stub registration is required to get macOS onscreen rendering working
     // It will avoid error message
     // "GLUT Fatal Error: redisplay needed for window 1, but no display callback."
-    glutDisplayFunc(GLUTContext_macOS::dummy);
+    glutDisplayFunc(GLUTContext_linux::dummy);
 
     initialized = true;
   }
@@ -102,13 +102,13 @@ public class GLUTContext_macOS extends AGLContext implements GLContext {
     initialized = false;
   }
 
-  protected void glutDisplayFunc(glutDisplayFunc$func fi) {
-    MemorySegment displayStub = glutDisplayFunc$func.allocate(fi, scope);
+  protected void glutDisplayFunc(glutDisplayFunc$callback fi) {
+    MemorySegment displayStub = glutDisplayFunc$callback.allocate(fi, scope);
     glut_h.glutDisplayFunc(displayStub);
   }
 
-  protected void glutIdleFunc(glutIdleFunc$func fi) {
-    MemorySegment idleStub = glutIdleFunc$func.allocate(fi, scope);
+  protected void glutIdleFunc(glutIdleFunc$callback fi) {
+    MemorySegment idleStub = glutIdleFunc$callback.allocate(fi, scope);
     glut_h.glutIdleFunc(idleStub);
 
   }

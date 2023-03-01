@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.macos;
+package panamagl.platform.macos;
 
 import com.jogamp.opengl.GLProfile;
 import jogamp.nativewindow.macosx.OSXUtil;

@@ -15,25 +15,36 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.linux;
+package panamagl.platform.macos;
 
-import panamagl.os.Platform;
+import java.lang.foreign.ValueLayout;
+import org.junit.Test;
+import junit.framework.Assert;
+import panamagl.platform.macos.CGLContext_macOS;
 
-public class LinuxTest {
-  /**
-   * Indicate a message in console if not running on macos
-   * @return
-   */
-  public boolean checkPlatform() {
-    Platform os = new Platform();
-    boolean isunix = os.isUnix();
+//VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 
-    if(!isunix) {
-      System.err.println(" !! \n    Skip test since not on Linux : " + os + "\n !!");
-    }
+public class TestCGLContext extends MacOSTest{
+  @Test
+  public void createCGLContext() {
+    if (!checkPlatform())
+      return;
     
-    return isunix;
-  }
-  
+    // Given
+    CGLContext_macOS cgl = new CGLContext_macOS();
+    
+    // When
+    cgl.init();
+    
+    
+    // Then
+    int[] attribs = cgl.attribs.toArray(ValueLayout.JAVA_INT);
+    Assert.assertEquals(73, attribs[0]); // 
+    Assert.assertEquals(99, attribs[1]);
+    Assert.assertEquals(12800, attribs[2]); // OpenGL version
+    Assert.assertEquals(0, attribs[3]);
 
+    // Cleanup
+    cgl.destroy();
+  }
 }

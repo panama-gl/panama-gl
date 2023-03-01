@@ -15,15 +15,19 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.linux;
+package panamagl.platform.macos;
 
-import panamagl.factory.PanamaGLFactory;
-import panamagl.offscreen.AOffscreenRenderer;
-import panamagl.offscreen.OffscreenRenderer;
+//import static org.mockito.Mockito.spy;
+import org.junit.Test;
 
-// Now does not do anything else more than the abstract class
-public class OffscreenRenderer_linux extends AOffscreenRenderer implements OffscreenRenderer{
-  public OffscreenRenderer_linux(PanamaGLFactory factory) {
-    super(factory);
-  }
+public class TestGL_macOS extends MacOSTest{
+    @Test
+    public void whenInitDefault_ThenDoNotInvokeGlut(){
+      if (!checkPlatform())
+        return;
+
+       // GL_macOS_10_15_3 gl = spy(GL_macOS_10_15_3.class);
+
+
+    }
 }

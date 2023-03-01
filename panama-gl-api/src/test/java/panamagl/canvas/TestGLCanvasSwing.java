@@ -28,7 +28,7 @@ import panamagl.offscreen.AOffscreenRenderer;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
-import panamagl.os.Platform;
+import panamagl.platform.Platform;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class TestGLCanvasSwing {

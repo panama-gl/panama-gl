@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.macos;
+package panamagl.platform.linux;
 
 import java.awt.image.BufferedImage;
 import java.lang.foreign.MemorySegment;
@@ -23,7 +23,7 @@ import java.lang.foreign.MemorySession;
 import java.lang.foreign.ValueLayout;
 import java.lang.foreign.ValueLayout.OfByte;
 import java.nio.ByteOrder;
-import opengl.macos.v10_15_7.glut_h;
+import opengl.ubuntu.v20.glut_h;
 import panamagl.Debug;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
@@ -33,7 +33,7 @@ import panamagl.utils.GraphicsUtils;
 import panamagl.utils.ImageUtils;
 
 /**
- * A frame buffer object, or {@link FBO_macOS}, can render OpenGL into an offscreen buffer that can later
+ * A frame buffer object, or {@link FBO_linux}, can render OpenGL into an offscreen buffer that can later
  * be converted to a {@link BufferedImage}.
  *
  * See : https://www.khronos.org/opengl/wiki/Framebuffer_Object
@@ -45,7 +45,7 @@ import panamagl.utils.ImageUtils;
  *
  * @author Martin Pernollet
  */
-public class FBO_macOS implements FBO {
+public class FBO_linux implements FBO {
   // default
   int level = 0;
   int width = 256;
@@ -60,7 +60,7 @@ public class FBO_macOS implements FBO {
   int internalFormat = -1;
   int textureType = -1;
 
-  boolean debug = Debug.check(FBO_macOS.class);
+  boolean debug = Debug.check(FBO_linux.class);
 
   // supposed to copy to BufferedImage faster when true
   // using false allows to make copy by tweaking bytes
@@ -82,9 +82,9 @@ public class FBO_macOS implements FBO {
   boolean prepared = false;
 
 
-  public FBO_macOS() {}
+  public FBO_linux() {}
 
-  public FBO_macOS(int width, int height) {
+  public FBO_linux(int width, int height) {
     this.width = width;
     this.height = height;
   }
@@ -153,9 +153,10 @@ public class FBO_macOS implements FBO {
 
     // -------------------------
     // Generate FRAME buffer
-
+    glut_h h;
+    
     frameBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
-    glut_h.glGenFramebuffers(1, frameBufferIds);
+ // >>>>>> glut_h.glGenFramebuffers(1, frameBufferIds);
     idFrameBuffer = (int) frameBufferIds.get(ValueLayout.JAVA_INT, 0);
 
     Debug.debug(debug, "FBO: Got FB ID : " + idFrameBuffer);
@@ -167,17 +168,16 @@ public class FBO_macOS implements FBO {
 
 
     // Bind frame buffer
-    glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
+ // >>>>>> glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
 
     // Attach 2D texture to this FBO
-    glut_h.glFramebufferTexture2D(glut_h.GL_FRAMEBUFFER(), glut_h.GL_COLOR_ATTACHMENT0(), glut_h.GL_TEXTURE_2D(),
-        idTexture, 0);
+ // >>>>>> glut_h.glFramebufferTexture2D(glut_h.GL_FRAMEBUFFER(), glut_h.GL_COLOR_ATTACHMENT0(), GL.GL_TEXTURE_2D, idTexture, 0);
 
     // -------------------------
     // Generate RENDER buffer
 
     renderBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
-    glut_h.glGenRenderbuffers(1, renderBufferIds);
+ // >>>>>> glut_h.glGenRenderbuffers(1, renderBufferIds);
     idRenderBuffer = (int) renderBufferIds.get(ValueLayout.JAVA_INT, 0);
 
     // Check for error after reading
@@ -186,20 +186,19 @@ public class FBO_macOS implements FBO {
     Debug.debug(debug, "FBO: Got RenderBuffer ID : " + idRenderBuffer);
 
     // Bind render buffer
-    glut_h.glBindRenderbuffer(glut_h.GL_RENDERBUFFER(), idRenderBuffer);
-    glut_h.glRenderbufferStorage(glut_h.GL_RENDERBUFFER(), GL.GL_DEPTH_COMPONENT24, width, height);
+ // >>>>>>  glut_h.glBindRenderbuffer(glut_h.GL_RENDERBUFFER(), idRenderBuffer);
+ // >>>>>> glut_h.glRenderbufferStorage(glut_h.GL_RENDERBUFFER(), GL.GL_DEPTH_COMPONENT24, width, height);
 
     
     // -------------------------
     // Attach depth buffer to FBO
 
-    glut_h.glFramebufferRenderbuffer(glut_h.GL_FRAMEBUFFER(), glut_h.GL_DEPTH_ATTACHMENT(),
-        glut_h.GL_RENDERBUFFER(), idRenderBuffer);
+ // >>>>>> glut_h.glFramebufferRenderbuffer(glut_h.GL_FRAMEBUFFER(), glut_h.GL_DEPTH_ATTACHMENT(), glut_h.GL_RENDERBUFFER(), idRenderBuffer);
 
     // -------------------------
     // Does the GPU support current FBO configuration?
 
-    int status = glut_h.glCheckFramebufferStatus(glut_h.GL_FRAMEBUFFER());
+    int status = -1;// >>>>>> glut_h.glCheckFramebufferStatus(glut_h.GL_FRAMEBUFFER());
 
     if (status != glut_h.GL_FRAMEBUFFER_COMPLETE()) {
       throw new RuntimeException("Incomplete framebuffer, not supporting current FBO config : "
@@ -209,7 +208,7 @@ public class FBO_macOS implements FBO {
     // -------------------------
     // and now you can render to GL_TEXTURE_2D
 
-    glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
+ // >>>>>> glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
     gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     gl.glClearDepth(1.0f);
     gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
@@ -238,10 +237,10 @@ public class FBO_macOS implements FBO {
     // Delete resources
     gl.glDeleteTextures(1, textureBufferIds);
     
-    glut_h.glDeleteRenderbuffers(1, renderBufferIds);
+ // >>>>>> glut_h.glDeleteRenderbuffers(1, renderBufferIds);
     // Bind 0, which means render to back buffer, as a result, fb is unbound
-    glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), 0);
-    glut_h.glDeleteFramebuffers(1, frameBufferIds);
+ // >>>>>> glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), 0);
+ // >>>>>> glut_h.glDeleteFramebuffers(1, frameBufferIds);
 
     // FIXME : Not mapped exception is not relevant
     // FIXME : See if later versions of Panama do not throw exception
@@ -310,7 +309,7 @@ public class FBO_macOS implements FBO {
     
     
     // Bind 0, which means render to back buffer
-    glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), 0);
+    // >>>>>> glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), 0);
 
     
     //pixelsRead.unload();

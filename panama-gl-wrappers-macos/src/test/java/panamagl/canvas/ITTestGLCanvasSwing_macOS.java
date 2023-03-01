@@ -37,7 +37,7 @@ import opengl.macos.v10_15_7.glut_h;
 import panamagl.GLEventAdapter;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
-import panamagl.os.macos.SampleTriangle;
+import panamagl.platform.macos.SampleTriangle;
 import panamagl.utils.ImageUtils;
 
 /**

@@ -22,7 +22,7 @@ import java.io.File;
 import javax.imageio.ImageIO;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
-import panamagl.os.macos.FBO_macOS;
+import panamagl.platform.macos.FBO_macOS;
 
 /**
  * https://github.com/jzy3d/panama-gl/issues/5

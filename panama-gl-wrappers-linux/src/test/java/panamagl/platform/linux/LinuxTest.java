@@ -15,24 +15,24 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.macos;
+package panamagl.platform.linux;
 
-import panamagl.os.Platform;
+import panamagl.platform.Platform;
 
-public class MacOSTest {
+public class LinuxTest {
   /**
    * Indicate a message in console if not running on macos
    * @return
    */
   public boolean checkPlatform() {
     Platform os = new Platform();
-    boolean ismacos = os.isMac();
+    boolean isunix = os.isUnix();
 
-    if(!ismacos) {
-      System.err.println(" !! \n    Skip test since not on macOS : " + os + "\n !!");
+    if(!isunix) {
+      System.err.println(" !! \n    Skip test since not on Linux : " + os + "\n !!");
     }
     
-    return ismacos;
+    return isunix;
   }
   
 

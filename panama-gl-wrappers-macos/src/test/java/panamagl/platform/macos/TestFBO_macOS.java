@@ -15,11 +15,13 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.macos;
+package panamagl.platform.macos;
 
 import org.junit.Test;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
+import panamagl.platform.macos.CGLContext_macOS;
+import panamagl.platform.macos.GLUTContext_macOS;
 
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules
 // jdk.incubator.foreign

@@ -23,7 +23,7 @@ import panamagl.offscreen.FBO;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
-import panamagl.os.Platform;
+import panamagl.platform.Platform;
 
 public class TestPanamaGLFactory {
 

@@ -15,34 +15,37 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.macos;
+package panamagl.platform.macos;
 
-import org.junit.Assert;
 import org.junit.Test;
-import org.jzy3d.os.OperatingSystem;
-import panamagl.factory.PanamaGLFactory;
-import panamagl.platform.macos.x86.PanamaGLFactory_macOS_x86;
+import panamagl.GLProfile;
+import panamagl.opengl.GL;
+import panamagl.platform.macos.GLUTContext_macOS;
 
-public class TestPanamaGLFactory_macOS {
+// VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules
+// jdk.incubator.foreign
+// -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+public class TestGLProfile_macOS extends MacOSTest{
+
   @Test
-  public void test() {
-    if (!new OperatingSystem().isMac())
+  public void glProfile() {
+    if (!checkPlatform())
       return;
-  
-    PanamaGLFactory f = PanamaGLFactory.select();
-    
-    boolean matched = f instanceof PanamaGLFactory_macOS_x86;
-    
-    Assert.assertTrue(matched);
 
-    // Issue on context init
-    //Assert.assertNotNull(f.newGLContext());
+    // Given a GL caller
+    GL gl = new panamagl.platform.macos.x86.GL_macOS_x86();
 
-    Assert.assertNotNull(f.newGL());
-    Assert.assertNotNull(f.newOffscreenRenderer());
-    Assert.assertNotNull(f.newFBO(800, 600));
-    Assert.assertNotNull(f.newCanvasSwing());
+    // Given a GLUT context
+    GLUTContext_macOS glutContext = new GLUTContext_macOS();
+    glutContext.init(false);
 
-    ;
+
+    GLProfile p = new GLProfile(gl);
+    System.out.println(p);
   }
+
+  
+
+
+
 }

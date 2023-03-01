@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.linux;
+package panamagl.platform.linux;
 
 
 
@@ -27,7 +27,7 @@ import panamagl.offscreen.FBO;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
-import panamagl.os.Platform;
+import panamagl.platform.Platform;
 
 public abstract class APanamaGLFactory_linux extends APanamaGLFactory {
 protected boolean debug = Debug.check(APanamaGLFactory_linux.class);

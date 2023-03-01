@@ -13,7 +13,7 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.macos;
+package panamagl.platform.macos;
 
 import panamagl.Debug;
 import panamagl.GLCanvas;
@@ -23,7 +23,7 @@ import panamagl.offscreen.FBO;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
-import panamagl.os.Platform;
+import panamagl.platform.Platform;
 
 public abstract class APanamaGLFactory_macOS extends APanamaGLFactory {
   protected boolean debug = Debug.check(APanamaGLFactory_macOS.class, PanamaGLFactory.class);

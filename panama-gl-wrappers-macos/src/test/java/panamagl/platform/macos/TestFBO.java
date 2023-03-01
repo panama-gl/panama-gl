@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.os.macos;
+package panamagl.platform.macos;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -23,6 +23,7 @@ import javax.imageio.ImageIO;
 import org.junit.Assert;
 import org.jzy3d.maths.Array;
 import panamagl.opengl.GL;
+import panamagl.platform.macos.FBO_macOS;
 import panamagl.utils.ByteUtils;
 
 public class TestFBO {

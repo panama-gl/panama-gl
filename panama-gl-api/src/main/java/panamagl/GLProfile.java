@@ -20,7 +20,7 @@ package panamagl;
 import java.util.ArrayList;
 import java.util.List;
 import panamagl.opengl.GL;
-import panamagl.os.Platform;
+import panamagl.platform.Platform;
 
 public class GLProfile {
   protected String vendor;

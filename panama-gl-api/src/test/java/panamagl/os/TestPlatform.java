@@ -19,6 +19,7 @@ package panamagl.os;
 
 import org.junit.Assert;
 import org.junit.Test;
+import panamagl.platform.Platform;
 
 public class TestPlatform {
   @Test
