@@ -101,6 +101,8 @@ public class GenerateAPI {
     
     glInterfaceWriter.addExtension("GL_1");
     glInterfaceWriter.addExtension("GL_2");
+    //glInterfaceWriter.addExtension("GL_3");
+    //glInterfaceWriter.addExtension("GL_4");
     glInterfaceWriter.addExtension("GLU");
     glInterfaceWriter.addExtension("GLUT");
     

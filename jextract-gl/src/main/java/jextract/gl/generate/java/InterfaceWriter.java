@@ -79,7 +79,7 @@ public class InterfaceWriter extends JavaWriter{
     
     //method(sb, method.getName(), in, o, null, null);
         
-    String methodName = "public " + o.typeName + " " + method.getName() + "(";
+    String methodName = tab + "public " + o.typeName + " " + method.getName() + "(";
     //StringBuffer argBuffer = new StringBuffer();
 
     sb.append(methodName);
