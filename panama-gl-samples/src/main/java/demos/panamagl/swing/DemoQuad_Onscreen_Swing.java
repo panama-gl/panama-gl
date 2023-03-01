@@ -89,11 +89,11 @@ public class DemoQuad_Onscreen_Swing {
       private float rotateT = 0.0f;
 
       public void init(GL gl) {
-        gl.glShadeModel(gl.GL_SMOOTH());
+        gl.glShadeModel(GL.GL_SMOOTH);
         gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         gl.glClearDepth(1.0f);
-        gl.glEnable(gl.GL_DEPTH_TEST());
-        gl.glDepthFunc(gl.GL_LEQUAL());
+        gl.glEnable(GL.GL_DEPTH_TEST);
+        gl.glDepthFunc(GL.GL_LEQUAL);
         //gl.glHint(gl.GL_PERSPECTIVE_CORRECTION_HINT(), gl.GL_NICEST());
 
         // GLError.checkAndThrow(gl);
@@ -102,7 +102,7 @@ public class DemoQuad_Onscreen_Swing {
       public void reshape(GL gl, int x, int y, int width, int height) {
 
         final float aspect = (float) width / (float) height;
-        gl.glMatrixMode(gl.GL_PROJECTION());
+        gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glLoadIdentity();
         final float fh = 0.5f;
         final float fw = fh * aspect;
@@ -110,7 +110,7 @@ public class DemoQuad_Onscreen_Swing {
 
         gl.glViewport(x, y, width, height);
 
-        gl.glMatrixMode(gl.GL_MODELVIEW());
+        gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
 
       }
@@ -120,8 +120,8 @@ public class DemoQuad_Onscreen_Swing {
         gl.glClearDepth(1.0f);
 
 
-        gl.glClear(gl.GL_COLOR_BUFFER_BIT());
-        gl.glClear(gl.GL_DEPTH_BUFFER_BIT());
+        gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+        gl.glClear(GL.GL_DEPTH_BUFFER_BIT);
         gl.glLoadIdentity();
         gl.glTranslatef(0.0f, 0.0f, -5.0f);
 
@@ -131,7 +131,7 @@ public class DemoQuad_Onscreen_Swing {
         gl.glRotatef(rotateT, 0.0f, 0.0f, 1.0f);
 
         // Draw A Quad
-        gl.glBegin(gl.GL_QUADS());
+        gl.glBegin(GL.GL_QUADS);
         gl.glColor3f(0.0f, 1.0f, 1.0f); // set the color of the quad
         gl.glVertex3f(-1.0f, 1.0f, 0.0f); // Top Left
         gl.glVertex3f(1.0f, 1.0f, 0.0f); // Top Right

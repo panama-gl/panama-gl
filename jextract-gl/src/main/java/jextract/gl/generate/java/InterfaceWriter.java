@@ -1,16 +1,34 @@
+/*******************************************************************************
+ * Copyright (c) 2022, 2023 Martin Pernollet & contributors.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+ *******************************************************************************/
 package jextract.gl.generate.java;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 public class InterfaceWriter extends JavaWriter{
-  
+  String tab = "  ";
+  String tab2 = "    ";
+
   public InterfaceWriter(String classPackage, String className) {
     this.classPackage = classPackage;
     this.className = className;
   }
     
-  // --------------------------------------------------
-  
   @Override
   public void start(StringBuffer sb) {
     writePackage(sb);
@@ -24,75 +42,69 @@ public class InterfaceWriter extends JavaWriter{
     sb.append("}\n");
   }
 
-  // --------------------------------------------------
-  
-  
+  /** Generate an interface method declaration based on a base type definition. */
+  public void method(StringBuffer sb, String name, List<Arg> input, String outputType) {
+    StringBuffer argBuffer = new StringBuffer();
 
-  // --------------------------------------------------
-  
-  String tab = "  ";
-  String tab2 = "    ";
-  //StringBuffer sb = new StringBuffer();
-  
-  
+    
+    String methodDecl = "public " + outputType + " " + name + "(";
+    
+    argBuffer.append(methodDecl);
 
-  public void method(StringBuffer sb, String name, List<Code> body) {
-    method(sb, name, null, null, body, null);
+    // arguments
+    int k = 0;
+    for (Arg arg : input) {
+      String declare = arg.getTypeName() + " " + arg.getName();
+
+        if (k == 0) {
+          argBuffer.append(declare);
+        } else {
+          argBuffer.append(", " + declare);
+        }
+      k++;
+
+    }
+
+    argBuffer.append(");\n");
+
+    if (!sb.toString().contains(argBuffer.toString())) {
+      sb.append("  " + argBuffer.toString());
+    }
   }
-  public void method(StringBuffer sb, String name, List<Arg> in, Arg out, List<Code> body) {
-    method(sb, name, in, out, body, null);
-  }  
   
-  public void method(StringBuffer sb, String name, List<Arg> in, Arg out, List<Code> body, List<Exception> throwz) {
+  /** Generate an interface method declaration based on a Java method definition. */
+  public void method(StringBuffer sb, Method method) {
+    List<Arg> in = getInputArgs(method);
+    Arg o = getOutputArg(method);
     
-    // Visibility
-    sb.append(tab + "public ");
-    
-    // Output type
-    if(out==null) {
-      sb.append("void ");
-    }
-    else {
-      out.typeName(sb);
-    }
-    
-    // Input arguments
-    sb.append(name+"(");
-    
-    if(in != null) {
-      for (int i = 0; i < in.size(); i++) {
-        Arg arg = in.get(i);
+    //method(sb, method.getName(), in, o, null, null);
         
-        out.typeName(sb);
-        sb.append(arg.name);
-        if(i<in.size()-1)
-          sb.append(", ");
-      }
-    }
-    
-    sb.append(") ");
-    
-    // Exceptions
-    
-    if(throwz!=null && throwz.size()>0) {
-      sb.append("throws ");
-      for (int i = 0; i < throwz.size(); i++) {
-        sb.append(throwz.get(i));
-      }
-    }
-    
-    // Start body
-    sb.append("{\n");
+    String methodName = tab + "public " + o.typeName + " " + method.getName() + "(";
+    //StringBuffer argBuffer = new StringBuffer();
 
-    for(Code c: body) {
-      sb.append(tab2 + c.line + "\n");
-    }
-    
-  
-    // End body
-    sb.append(tab + "}\n\n");
+    sb.append(methodName);
 
+    int k = 0;
+    for (Arg arg : in) {
+      String typeName = arg.getTypeName();
+      int id = typeName.lastIndexOf(".");
+      
+      if(id!=-1) {
+        typeName = typeName.substring(id+1);
+      }
+      
+      String declare = typeName + " " + arg.getName();
+
+        if (k == 0) {
+          sb.append(declare);
+        } else {
+          sb.append(", " + declare);
+        }
+      k++;
+
+    }
+
+    sb.append(");\n");
   }
-  
 
 }

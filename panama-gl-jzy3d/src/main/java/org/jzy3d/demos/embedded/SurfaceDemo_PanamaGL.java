@@ -50,7 +50,7 @@ public class SurfaceDemo_PanamaGL {
   static final float ALPHA_FACTOR = 0.75f;// .61f;
 
   public static void main(String[] args) throws InterruptedException {
-Thread.sleep(5000);
+//Thread.sleep(5000);
     ChartFactory factory = new PanamaGLChartFactory();
 
     Quality q = Quality.Advanced().setAnimated(false);

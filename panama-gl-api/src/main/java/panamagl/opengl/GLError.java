@@ -59,11 +59,10 @@ public class GLError {
    */
   public static GLError get(GL gl) {
     
-    
     int code = gl.glGetError();
-    String message = gl.gluErrorString(code);
     
     if(code!=0) {
+      String message = gl.gluErrorString(code).getUtf8String(0);
       return new GLError(code, message);
     }
     else {

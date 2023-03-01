@@ -20,7 +20,7 @@ package panamagl;
 import java.util.ArrayList;
 import java.util.List;
 import panamagl.opengl.GL;
-import panamagl.os.Platform;
+import panamagl.platform.Platform;
 
 public class GLProfile {
   protected String vendor;
@@ -38,12 +38,12 @@ public class GLProfile {
   public void read(GL gl) {
     platform = new Platform();
     
-    vendor = gl.glGetString(gl.GL_VENDOR());
-    version = gl.glGetString(gl.GL_VERSION());
-    renderer = gl.glGetString(gl.GL_RENDERER());
+    vendor = gl.glGetString(GL.GL_VENDOR);
+    version = gl.glGetString(GL.GL_VERSION);
+    renderer = gl.glGetString(GL.GL_RENDERER);
 
     extensions = new ArrayList<>();
-    String ext = gl.glGetString(gl.GL_EXTENSIONS());
+    String ext = gl.glGetString(GL.GL_EXTENSIONS);
 
     if (ext != null) {
       for (String e : ext.split(" ")) {
@@ -58,7 +58,11 @@ public class GLProfile {
 
   public String getRenderer() {
     return renderer;
-  };
+  }
+
+  public String getVersion() {
+    return version;
+  }
 
   public List<String> getExtensions() {
     return extensions;

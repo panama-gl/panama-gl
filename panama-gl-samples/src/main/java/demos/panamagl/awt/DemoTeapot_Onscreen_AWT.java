@@ -32,7 +32,7 @@ import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
-import panamagl.os.macos.x86_64.PanamaGLFactory_macOS_x86_64;
+import panamagl.platform.macos.x86.PanamaGLFactory_macOS_x86;
 
 /**
  * VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
@@ -51,7 +51,7 @@ public class DemoTeapot_Onscreen_AWT {
     GLEventAdapter listener = TeapotGLEventListener();
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
-    PanamaGLFactory factory = new PanamaGLFactory_macOS_x86_64();
+    PanamaGLFactory factory = new PanamaGLFactory_macOS_x86();
     GLCanvasSwing panel = factory.newCanvasSwing();
     panel.setGLEventListener(listener);
 
@@ -110,21 +110,21 @@ public class DemoTeapot_Onscreen_AWT {
         gl.glClearColor(0f, 0f, 0f, 1f);
 
         // Setup Lighting
-        gl.glShadeModel(gl.GL_SMOOTH());
+        gl.glShadeModel(GL.GL_SMOOTH);
         
         var pos = allocator.allocateArray(glut_h.C_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
-        gl.glLightfv(gl.GL_LIGHT0(), gl.GL_POSITION(), pos);
+        gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, pos);
         
         var spec = allocator.allocateArray(glut_h.C_FLOAT, new float[] {1, 1, 1, 0});
-        gl.glLightfv(gl.GL_LIGHT0(), gl.GL_AMBIENT(), spec);
-        gl.glLightfv(gl.GL_LIGHT0(), gl.GL_DIFFUSE(), spec);
-        gl.glLightfv(gl.GL_LIGHT0(), gl.GL_SPECULAR(), spec);
+        gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, spec);
+        gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, spec);
+        gl.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, spec);
         
         var shini = allocator.allocate(glut_h.C_FLOAT, 113);
-        gl.glMaterialfv(gl.GL_FRONT(), gl.GL_SHININESS(), shini);
-        gl.glEnable(gl.GL_LIGHTING());
-        gl.glEnable(gl.GL_LIGHT0());
-        gl.glEnable(gl.GL_DEPTH_TEST());
+        gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, shini);
+        gl.glEnable(GL.GL_LIGHTING);
+        gl.glEnable(GL.GL_LIGHT0);
+        gl.glEnable(GL.GL_DEPTH_TEST);
 
         GLError.checkAndThrow(gl);
       }
@@ -132,7 +132,7 @@ public class DemoTeapot_Onscreen_AWT {
       public void display(GL gl) {
         gl.glClearColor(0f, 0f, 0f, 1f);
 
-        gl.glClear(gl.GL_COLOR_BUFFER_BIT() | gl.GL_DEPTH_BUFFER_BIT());
+        gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
         gl.glPushMatrix();
         gl.glRotatef(-20f, 1f, 1f, 0f);
         gl.glRotatef(rot, 0f, 1f, 0f);

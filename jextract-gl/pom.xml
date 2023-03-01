@@ -3,13 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<!-- Not child of panama GL on purpose (don't want to clean generated XML file when cleaning ALL) -->
 	<groupId>org.jzy3d</groupId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.1.0-SNAPSHOT</version>
 	<artifactId>jextract-gl</artifactId>
 	<name>JExtract for OpenGL</name>
 
 	<properties>
 		<version.jaxb>2.3.1</version.jaxb>
-		<version.panama>1.0.1-SNAPSHOT</version.panama>
+		<version.panama>1.1.0-SNAPSHOT</version.panama>
 	</properties>
 
 	<dependencies>
@@ -114,7 +114,7 @@
 
 					<!-- Configure Panama -->
 					<argLine>
-						--enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
+						--enable-native-access=ALL-UNNAMED --enable-preview
 					</argLine>
 
 				</configuration>
@@ -130,7 +130,7 @@
 					<target>19</target>
 					<encoding>UTF-8</encoding>
 					<compilerArgs>
-						<arg>--add-modules=jdk.incubator.foreign</arg>
+						<arg>--enable-preview</arg>
 					</compilerArgs>
 				</configuration>
 			</plugin>

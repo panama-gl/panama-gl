@@ -31,16 +31,11 @@ import org.jzy3d.plot3d.primitives.Shape;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 
 /**
- * Demo an surface chart made with Panama (JEP-412).
+ * Demo an surface chart made with JOGL.
  *
  * @author Martin Pernollet
  *
  */
-//VM ARGS :  --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-// DO NOT USE -XstartOnFirstThread!!
-
-// Making context current in MacOSXCGLContext line 1474 
-
 public class SurfaceDemo_JOGL {
   static final float ALPHA_FACTOR = 0.75f;// .61f;
 
@@ -51,7 +46,7 @@ public class SurfaceDemo_JOGL {
     Quality q = Quality.Advanced().setAnimated(false);
     Chart chart = factory.newChart(q);
     chart.add(surface());
-    chart.getView().setAxisDisplayed(false);
+    //chart.getView().setAxisDisplayed(false);
     
     Runnable open = new Runnable() {
       @Override

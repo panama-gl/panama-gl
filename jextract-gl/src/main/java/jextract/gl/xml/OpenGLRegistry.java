@@ -1,3 +1,20 @@
+/*******************************************************************************
+ * Copyright (c) 2022, 2023 Martin Pernollet & contributors.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+ *******************************************************************************/
 package jextract.gl.xml;
 
 import java.io.Serializable;
@@ -6,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.xml.bind.JAXBElement;
-import jextract.gl.xml.model.CommandWrap;
+import jextract.gl.xml.model.GLCommand;
 import jextractgl.Registry;
 import jextractgl.Registry.Commands.Command;
 import jextractgl.Registry.Commands.Command.Alias;
@@ -37,10 +54,10 @@ public class OpenGLRegistry {
   // ************************************************ //
 
   
-  public Map<String,CommandWrap> getCommandIndex() {
-    Map<String,CommandWrap> index = new HashMap<>();
+  public Map<String,GLCommand> getCommandIndex() {
+    Map<String,GLCommand> index = new HashMap<>();
     
-    for(CommandWrap com: getCommands()) {
+    for(GLCommand com: getCommands()) {
       index.put(com.getName(), com);
     }
     
@@ -48,13 +65,13 @@ public class OpenGLRegistry {
     
   }
   
-  public List<CommandWrap> getCommands() {
-    List<CommandWrap> out = new ArrayList<>();
+  public List<GLCommand> getCommands() {
+    List<GLCommand> out = new ArrayList<>();
 
     Registry.Commands commands = registry.getCommands();
 
     for (Command c : commands.getCommand()) {
-      CommandWrap cw = new CommandWrap(c);
+      GLCommand cw = new GLCommand(c);
       out.add(cw);
     }
 
