@@ -17,7 +17,6 @@
 package org.jzy3d.demos.embedded.interactives;
 
 import java.util.Random;
-import org.jzy3d.analysis.AbstractAnalysis;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.controllers.mouse.AWTDualModeMouseSelector;
 import org.jzy3d.chart.controllers.mouse.selection.AWTScatterMouseSelector;

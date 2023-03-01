@@ -24,7 +24,6 @@ import org.jzy3d.analysis.IAnalysis;
 import org.jzy3d.chart.controllers.mouse.picking.IMousePickingController;
 import org.jzy3d.chart.controllers.mouse.picking.IObjectPickedListener;
 import org.jzy3d.chart.controllers.mouse.picking.PickingSupport;
-import org.jzy3d.chart.factories.AWTChartFactory;
 import org.jzy3d.chart.factories.ChartFactory;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
 import org.jzy3d.colors.Color;
