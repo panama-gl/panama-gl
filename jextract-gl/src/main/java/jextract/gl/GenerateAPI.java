@@ -78,9 +78,10 @@ public class GenerateAPI {
     wrapperGen = new GenerateWrapperFromBindings();
   }
 
-  //enum Platform{ MACOS, LINUX}
-
-
+  /**
+   * 
+   * @throws Exception
+   */
   public void run() throws Exception {
     
     // ============================================================================
@@ -149,34 +150,7 @@ public class GenerateAPI {
       // Write and compile
       List<Method> extra = makeWrapper(javaInterfacesFiles, wrapper);
       
-      // Create GLU et GLUT interface
-      InterfaceWriter gluWriter = new InterfaceWriter(interf.packge, "GLU");
-      InterfaceWriter glutWriter = new InterfaceWriter(interf.packge, "GLUT");
-      
-      gluWriter.addImport("java.lang.foreign.*");
-      glutWriter.addImport("java.lang.foreign.*");
-      
-      String glutFile = interf.javaFolder + "/GLUT.java";
-      String gluFile = interf.javaFolder + "/GLU.java";
-
-      StringBuffer glutCode= new StringBuffer();
-      StringBuffer gluCode= new StringBuffer();   
-      
-      glutWriter.start(glutCode);
-      gluWriter.start(gluCode);
-      for(Method method: extra) {
-        if(method.getName().startsWith("glut") && ! method.getName().contains("$")) {
-          glutWriter.method(glutCode, method);
-        }
-        else if(method.getName().startsWith("glu") && ! method.getName().contains("$")) {
-          gluWriter.method(gluCode, method);
-        }
-      }
-      glutWriter.close(glutCode);
-      gluWriter.close(gluCode);
-      
-      glutWriter.writeTo(glutCode, glutFile);
-      gluWriter.writeTo(gluCode, gluFile);
+      makeGLUT(interf, extra);
       
       // Configure macOS factory
       factory = new PlatformFactory();
@@ -209,11 +183,10 @@ public class GenerateAPI {
       
       wrapper.addExtension(interf.packge + ".AGL");
 
-wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
-
 
       // Write and compile
-      List<Method> extra = makeWrapper(javaInterfacesFiles, wrapper);
+      wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
+      makeWrapper(javaInterfacesFiles, wrapper);
   
       // Configure Linux factory
       factory = new PlatformFactory();
@@ -233,6 +206,13 @@ wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
 
 
 
+  /**
+   * 
+   * @param javaInterfacesFiles
+   * @param wrapper
+   * @param factory
+   * @throws IOException
+   */
   protected void makeFactory(List<String> javaInterfacesFiles, Wrapper wrapper,
       PlatformFactory factory) throws IOException {
     ClassWriter factoryWriter = new ClassWriter(factory.packge, factory.name);
@@ -243,8 +223,8 @@ wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
     
     StringBuffer javaCode = new StringBuffer();
     factoryWriter.start(javaCode);
-    factoryWriter.method(javaCode, "newGL", null, new Arg(/*wrapper.packge +*/ "panamagl.opengl.GL", "out"), c);
-    //factoryWriter.method(javaCode, "newGL", null, new Arg("panamagl.opengl.GL", "out"), Code.throwNotImplemented());
+    factoryWriter.method(javaCode, "newGL", null, new Arg("panamagl.opengl.GL"), c);
+    //factoryWriter.method(javaCode, "newGL", null, new Arg("panamagl.opengl.GL"), Code.throwNotImplemented());
     factoryWriter.close(javaCode);
     factoryWriter.writeTo(javaCode, factory.javaFile);
     
@@ -252,6 +232,14 @@ wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
   }
 
 
+  /**
+   * 
+   * @param javaInterfacesFiles
+   * @param wrapper
+   * @return
+   * @throws IllegalAccessException
+   * @throws IOException
+   */
   protected List<Method> makeWrapper(List<String> javaInterfacesFiles, Wrapper wrapper)
       throws IllegalAccessException, IOException {
     List<String> cmp = new ArrayList<>(javaInterfacesFiles);
@@ -263,10 +251,45 @@ wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
     return wrapperGen.getAutoWrappedMethods();
   }
   
+  /**
+   * 
+   * @param interf
+   * @param extra
+   * @throws IOException
+   */
+  protected void makeGLUT(Interf interf, List<Method> extra) throws IOException {
+    // Create GLU et GLUT interface
+    InterfaceWriter gluWriter = new InterfaceWriter(interf.packge, "GLU");
+    InterfaceWriter glutWriter = new InterfaceWriter(interf.packge, "GLUT");
+    
+    gluWriter.addImport("java.lang.foreign.*");
+    glutWriter.addImport("java.lang.foreign.*");
+    
+    String glutFile = interf.javaFolder + "/GLUT.java";
+    String gluFile = interf.javaFolder + "/GLU.java";
+
+    StringBuffer glutCode= new StringBuffer();
+    StringBuffer gluCode= new StringBuffer();   
+    
+    glutWriter.start(glutCode);
+    gluWriter.start(gluCode);
+    for(Method method: extra) {
+      if(method.getName().startsWith("glut") && ! method.getName().contains("$")) {
+        glutWriter.method(glutCode, method);
+      }
+      else if(method.getName().startsWith("glu") && ! method.getName().contains("$")) {
+        gluWriter.method(gluCode, method);
+      }
+    }
+    glutWriter.close(glutCode);
+    gluWriter.close(gluCode);
+    
+    glutWriter.writeTo(glutCode, glutFile);
+    gluWriter.writeTo(gluCode, gluFile);
+  }
+  
   public void compile(List<String> javaFile) throws IOException {
     ClassCompiler c = new ClassCompiler();
     c.compile(javaFile);
   }
-
-
 }

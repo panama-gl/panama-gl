@@ -23,6 +23,12 @@ public class Arg {
   String typeName;
   String expand;
 
+  public Arg(String typeName) {
+    this.name = "";
+    this.type = Object.class;
+    this.typeName = typeName;
+  }
+
   public Arg(String typeName, String name) {
     this.name = name;
     this.type = Object.class;
