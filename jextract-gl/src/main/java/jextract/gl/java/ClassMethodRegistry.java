@@ -39,21 +39,21 @@ public class ClassMethodRegistry {
     }
   }
   
-  public ArrayListMultimap<Class, Method> selectClassMethods(String packageName, String classPattern,
+  public ArrayListMultimap<Class<?>, Method> selectClassMethods(String packageName, String classPattern,
       AcceptsMethod acceptsMethod)
       throws ClassNotFoundException, IOException, IllegalAccessException {
     System.out.println("Loading classes from classpath");
 
-    Class[] classes = getClasses(packageName);
+    Class<?>[] classes = getClasses(packageName);
 
     System.out.println("----------------------------------------------------------------");
     System.out.println("Browsing in " + packageName + " (" + classes.length + " classes)");
     System.out.println("----------------------------------------------------------------");
 
     
-    ArrayListMultimap<Class, Method> select = ArrayListMultimap.create();
+    ArrayListMultimap<Class<?>, Method> select = ArrayListMultimap.create();
     
-    for (Class clazz : classes) {
+    for (Class<?> clazz : classes) {
       // only check classes matching pattern
       if (Pattern.matches(classPattern, clazz.getSimpleName())) {
         System.out.println("Exploring " + clazz);
@@ -75,7 +75,7 @@ public class ClassMethodRegistry {
   }
 
 
-  public List<Method> selectMethods(Class clazz, AcceptsMethod acceptsMethod)
+  public List<Method> selectMethods(Class<?> clazz, AcceptsMethod acceptsMethod)
       throws IllegalAccessException {
     
     List<Method> selected = new ArrayList<>();
@@ -118,7 +118,7 @@ public class ClassMethodRegistry {
   //
   /////////////////////////////////////////////////////
 
-  protected Class[] getClasses(String packageName) throws ClassNotFoundException, IOException {
+  protected Class<?>[] getClasses(String packageName) throws ClassNotFoundException, IOException {
     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
     assert classLoader != null;
     String path = packageName.replace('.', '/');
@@ -128,7 +128,7 @@ public class ClassMethodRegistry {
       URL resource = resources.nextElement();
       dirs.add(new File(resource.getFile()));
     }
-    ArrayList<Class> classes = new ArrayList<Class>();
+    ArrayList<Class<?>> classes = new ArrayList<>();
     for (File directory : dirs) {
       classes.addAll(findClasses(directory, packageName));
     }
@@ -143,16 +143,19 @@ public class ClassMethodRegistry {
    * @return The classes
    * @throws ClassNotFoundException
    */
-  protected List<Class> findClasses(File directory, String packageName)
+  protected List<Class<?>> findClasses(File directory, String packageName)
       throws ClassNotFoundException {
     
     System.out.println("Search in " + directory);
     
-    List<Class> classes = new ArrayList<Class>();
+    List<Class<?>> classes = new ArrayList<>();
+    
     if (!directory.exists()) {
       return classes;
     }
+    
     File[] files = directory.listFiles();
+    
     for (File file : files) {
       if (file.isDirectory()) {
         assert !file.getName().contains(".");

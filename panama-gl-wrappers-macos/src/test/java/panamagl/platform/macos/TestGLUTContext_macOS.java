@@ -15,34 +15,35 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package jextract.gl.generate.java.asm;
+package panamagl.platform.macos;
 
-import java.lang.instrument.ClassFileTransformer;
-import java.lang.instrument.IllegalClassFormatException;
-import java.lang.instrument.Instrumentation;
-import java.security.ProtectionDomain;
+import org.junit.Assert;
+import org.junit.Test;
+import panamagl.GLProfile;
+import panamagl.platform.macos.x86.GL_macOS_x86;
 
-/**
- *
- * @author baeldung
- */
-public class Premain {
+//VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 
-    public static void premain(String agentArgs, Instrumentation inst) {
-        inst.addTransformer(new ClassFileTransformer() {
-
-            @Override
-            public byte[] transform(ClassLoader l, String name, Class c,
-                    ProtectionDomain d, byte[] b)
-                    throws IllegalClassFormatException {
-
-                if (name.equals("java/lang/Integer")) {
-                    CustomClassWriter cr = new CustomClassWriter(b);
-                    return cr.addField();
-                }
-                return b;
-            }
-        });
-    }
-
+public class TestGLUTContext_macOS extends MacOSTest{
+  @Test
+  public void createContext() {
+    if (!checkPlatform())
+      return;
+    
+    // Given
+    GLUTContext_macOS context = new GLUTContext_macOS();
+    
+    // When
+    context.init(false);
+    
+    
+    // Then
+    GLProfile p = new GLProfile(new GL_macOS_x86());
+    
+    Assert.assertNotNull(p.getVersion());
+    Assert.assertNotNull(p.getVendor());
+    
+    
+    context.destroy();
+  }
 }

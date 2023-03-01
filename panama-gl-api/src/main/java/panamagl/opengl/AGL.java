@@ -79,4 +79,25 @@ public abstract class AGL extends ForeignMemoryUtils implements GL {
 
     return out == 1;
   }
+
+  // TODO : generate me
+  public void glGetIntegerv(int pname, int[] data) {
+    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_INT, data.length);
+    glGetIntegerv(pname, segment);
+    copySegmentToArray(segment, data);
+  }
+
+  // TODO : generate me
+  public void glGetDoublev(int pname, double[] params) {
+    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_DOUBLE, params.length);
+    glGetDoublev(pname, segment);
+    copySegmentToArray(segment, params);
+  }
+
+  // TODO : generate me
+  public void glGetFloatv(int pname, float[] data) {
+    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_FLOAT, data.length);
+    glGetFloatv(pname, segment);
+    copySegmentToArray(segment, data);
+  }
 }

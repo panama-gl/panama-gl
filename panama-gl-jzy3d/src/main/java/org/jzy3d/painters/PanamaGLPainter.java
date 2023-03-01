@@ -131,8 +131,6 @@ public class PanamaGLPainter extends AbstractPainter {
     return dbl;
   }
 
-
-
   public String glGetString(int stringID) {
     return gl.glGetString(stringID);
   }
@@ -141,23 +139,17 @@ public class PanamaGLPainter extends AbstractPainter {
 
   @Override
   public void glGetIntegerv(int pname, int[] data, int data_offset) {
-    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_INT, data.length);
-    gl.glGetIntegerv(pname, segment);
-    ((ForeignMemoryUtils) gl).copySegmentToArray(segment, data);
+    ((AGL)gl).glGetIntegerv(pname, data);
   }
 
   @Override
   public void glGetDoublev(int pname, double[] params, int params_offset) {
-    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_DOUBLE, params.length);
-    gl.glGetDoublev(pname, segment);
-    ((ForeignMemoryUtils) gl).copySegmentToArray(segment, params);
+    ((AGL)gl).glGetDoublev(pname, params);
   }
 
   @Override
   public void glGetFloatv(int pname, float[] data, int data_offset) {
-    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_FLOAT, data.length);
-    gl.glGetFloatv(pname, segment);
-    ((ForeignMemoryUtils) gl).copySegmentToArray(segment, data);
+    ((AGL)gl).glGetFloatv(pname, data);
   }
 
   /*
@@ -966,10 +958,7 @@ public class PanamaGLPainter extends AbstractPainter {
 
   @Override
   public void glHint(int target, int mode) {
-    throw new NotImplementedException(
-        "not in jopengl.gl. https://www.khronos.org/registry/OpenGL-Refpages/gl2.1/xhtml/glHint.xml");
-    // opengl.gl.glHint(target, mode);
-
+    gl.glHint(target, mode);
   }
 
   // GL LIGHTS

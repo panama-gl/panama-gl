@@ -120,7 +120,7 @@ public class GenerateAPI {
     // GL IMPLEMENTATION
     
     boolean MACOS = true;
-    boolean LINUX = true;
+    boolean LINUX = false;
     
     wrapperGen.addUnimplementedMethodsUponMissingBinding = false;
     //wrapperGen.addUnimplementedMethodsFor = Sets.of("glDebugMessageCallback");
@@ -135,7 +135,7 @@ public class GenerateAPI {
     if(MACOS) {
       wrapper = new Wrapper();
       wrapper.platform = "macOS_x86";
-      wrapper.wrapped = Set.of(opengl.macos.v10_15_7.glut_h.class, glext.macos.v10_15_7.glext_h.class, cgl.macos.v10_15_7.cgl_h.class);
+      wrapper.wrapped = Set.of(opengl.macos.v10_15_7.glut_h.class/*, glext.macos.v10_15_7.glext_h.class, cgl.macos.v10_15_7.cgl_h.class*/);
       wrapper.accepts = new AcceptsGLMethod();
       wrapper.className = "GL_" + wrapper.platform;
       wrapper.packge = GL_PACKAGE_MACOS_x86;
@@ -171,7 +171,7 @@ public class GenerateAPI {
     if(LINUX) {
       wrapper = new Wrapper();
       wrapper.platform = "linux_x86";
-      wrapper.wrapped = Set.of(opengl.ubuntu.v20.glut_h.class, glext.ubuntu.v20.glext_h.class, glxext.ubuntu.v20.glxext_h.class);
+      wrapper.wrapped = Set.of(glext.ubuntu.v20.glext_h.class/*, opengl.ubuntu.v20.glut_h.class, glxext.ubuntu.v20.glxext_h.class*/);
       wrapper.accepts = new AcceptsGLMethod();
       wrapper.className = "GL_" + wrapper.platform;
       wrapper.packge = GL_PACKAGE_LINUX_x86;

@@ -23,7 +23,6 @@ import javax.imageio.ImageIO;
 import org.junit.Assert;
 import org.jzy3d.maths.Array;
 import panamagl.opengl.GL;
-import panamagl.platform.macos.FBO_macOS;
 import panamagl.utils.ByteUtils;
 
 public class TestFBO {

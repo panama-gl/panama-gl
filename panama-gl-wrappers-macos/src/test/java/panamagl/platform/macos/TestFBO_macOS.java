@@ -20,8 +20,6 @@ package panamagl.platform.macos;
 import org.junit.Test;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
-import panamagl.platform.macos.CGLContext_macOS;
-import panamagl.platform.macos.GLUTContext_macOS;
 
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules
 // jdk.incubator.foreign

@@ -64,7 +64,7 @@ public class Read_Registry_JExtract {
     String packageName = "opengl.ubuntu.v20";
     // String classPattern = "constants\\$(\\d+)";
     String classPattern = "glut_h";
-    ArrayListMultimap<Class, Method> cm = registry.selectClassMethods(packageName, classPattern, new AcceptsGLMethod());
+    ArrayListMultimap<Class<?>, Method> cm = registry.selectClassMethods(packageName, classPattern, new AcceptsGLMethod());
     System.out.println(cm.values().size() + " GL/GLU/GLUT methods");
     return registry;
   }

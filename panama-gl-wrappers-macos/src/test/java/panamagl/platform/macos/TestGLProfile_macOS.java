@@ -17,10 +17,10 @@
  *******************************************************************************/
 package panamagl.platform.macos;
 
+import org.junit.Assert;
 import org.junit.Test;
 import panamagl.GLProfile;
 import panamagl.opengl.GL;
-import panamagl.platform.macos.GLUTContext_macOS;
 
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules
 // jdk.incubator.foreign
@@ -41,7 +41,9 @@ public class TestGLProfile_macOS extends MacOSTest{
 
 
     GLProfile p = new GLProfile(gl);
-    System.out.println(p);
+
+    Assert.assertNotNull(p.getVersion());
+    Assert.assertNotNull(p.getVendor());
   }
 
   

@@ -58,7 +58,11 @@ public class GLProfile {
 
   public String getRenderer() {
     return renderer;
-  };
+  }
+
+  public String getVersion() {
+    return version;
+  }
 
   public List<String> getExtensions() {
     return extensions;

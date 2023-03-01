@@ -1,1600 +1,24 @@
 package panamagl.platform.macos.x86; 
 
-import cgl.macos.v10_15_7.cgl_h;
-import static cgl.macos.v10_15_7.cgl_h.*;
-import glext.macos.v10_15_7.glext_h;
-import static glext.macos.v10_15_7.glext_h.*;
 import opengl.macos.v10_15_7.glut_h;
 import static opengl.macos.v10_15_7.glut_h.*;
 import java.lang.foreign.*;
 
 public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
-  public void glActiveStencilFaceEXT(int face) {
-    glext_h.glActiveStencilFaceEXT(face);
-  }
-
-  public void glActiveTextureARB(int texture) {
-    glext_h.glActiveTextureARB(texture);
-  }
-
-  public void glAttachObjectARB(Addressable containerObj, Addressable obj) {
-    glext_h.glAttachObjectARB(containerObj, obj);
-  }
-
-  public void glBeginConditionalRenderNV(int id, int mode) {
-    glext_h.glBeginConditionalRenderNV(id, mode);
-  }
-
-  public void glBeginQueryARB(int target, int id) {
-    glext_h.glBeginQueryARB(target, id);
-  }
-
-  public void glBeginTransformFeedbackEXT(int primitiveMode) {
-    glext_h.glBeginTransformFeedbackEXT(primitiveMode);
-  }
-
-  public void glBindAttribLocationARB(Addressable programObj, int index, Addressable name) {
-    glext_h.glBindAttribLocationARB(programObj, index, name);
-  }
-
-  public void glBindBufferARB(int target, int buffer) {
-    glext_h.glBindBufferARB(target, buffer);
-  }
-
-  public void glBindBufferBaseEXT(int target, int index, int buffer) {
-    glext_h.glBindBufferBaseEXT(target, index, buffer);
-  }
-
-  public void glBindBufferOffsetEXT(int target, int index, int buffer, long offset) {
-    glext_h.glBindBufferOffsetEXT(target, index, buffer, offset);
-  }
-
-  public void glBindBufferRangeEXT(int target, int index, int buffer, long offset, long size) {
-    glext_h.glBindBufferRangeEXT(target, index, buffer, offset, size);
-  }
-
-  public void glBindFragDataLocationEXT(int program, int color, Addressable name) {
-    glext_h.glBindFragDataLocationEXT(program, color, name);
-  }
-
-  public void glBindFramebuffer(int target, int framebuffer) {
-    glext_h.glBindFramebuffer(target, framebuffer);
-  }
-
-  public void glBindFramebufferEXT(int target, int framebuffer) {
-    glext_h.glBindFramebufferEXT(target, framebuffer);
-  }
-
-  public void glBindProgramARB(int target, int program) {
-    glext_h.glBindProgramARB(target, program);
-  }
-
-  public void glBindRenderbuffer(int target, int renderbuffer) {
-    glext_h.glBindRenderbuffer(target, renderbuffer);
-  }
-
-  public void glBindRenderbufferEXT(int target, int renderbuffer) {
-    glext_h.glBindRenderbufferEXT(target, renderbuffer);
-  }
-
-  public void glBindVertexArrayAPPLE(int array) {
-    glext_h.glBindVertexArrayAPPLE(array);
-  }
-
-  public void glBlendColorEXT(float red, float green, float blue, float alpha) {
-    glext_h.glBlendColorEXT(red, green, blue, alpha);
-  }
-
-  public void glBlendEquationEXT(int mode) {
-    glext_h.glBlendEquationEXT(mode);
-  }
-
-  public void glBlendEquationSeparateEXT(int modeRGB, int modeAlpha) {
-    glext_h.glBlendEquationSeparateEXT(modeRGB, modeAlpha);
-  }
-
-  public void glBlendFuncSeparateEXT(int sfactorRGB, int dfactorRGB, int sfactorAlpha, int dfactorAlpha) {
-    glext_h.glBlendFuncSeparateEXT(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
-  }
-
-  public void glBlitFramebuffer(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, int mask, int filter) {
-    glext_h.glBlitFramebuffer(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
-  }
-
-  public void glBlitFramebufferEXT(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, int mask, int filter) {
-    glext_h.glBlitFramebufferEXT(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
-  }
-
-  public void glBufferDataARB(int target, long size, Addressable data, int usage) {
-    glext_h.glBufferDataARB(target, size, data, usage);
-  }
-
-  public void glBufferParameteriAPPLE(int target, int pname, int param) {
-    glext_h.glBufferParameteriAPPLE(target, pname, param);
-  }
-
-  public void glBufferSubDataARB(int target, long offset, long size, Addressable data) {
-    glext_h.glBufferSubDataARB(target, offset, size, data);
-  }
-
-  public int glCheckFramebufferStatus(int target) {
-    return glext_h.glCheckFramebufferStatus(target);
-  }
-
-  public int glCheckFramebufferStatusEXT(int target) {
-    return glext_h.glCheckFramebufferStatusEXT(target);
-  }
-
-  public void glClampColorARB(int target, int clamp) {
-    glext_h.glClampColorARB(target, clamp);
-  }
-
-  public void glClearColorIiEXT(int red, int green, int blue, int alpha) {
-    glext_h.glClearColorIiEXT(red, green, blue, alpha);
-  }
-
-  public void glClearColorIuiEXT(int red, int green, int blue, int alpha) {
-    glext_h.glClearColorIuiEXT(red, green, blue, alpha);
-  }
-
-  public void glClientActiveTextureARB(int texture) {
-    glext_h.glClientActiveTextureARB(texture);
-  }
-
-  public int glClientWaitSync(Addressable sync, int flags, long timeout) {
-    return glext_h.glClientWaitSync(sync, flags, timeout);
-  }
-
-  public void glColorMaskIndexedEXT(int index, byte r, byte g, byte b, byte a) {
-    glext_h.glColorMaskIndexedEXT(index, r, g, b, a);
-  }
-
-  public void glCompileShaderARB(Addressable shaderObj) {
-    glext_h.glCompileShaderARB(shaderObj);
-  }
-
-  public void glCompressedTexImage1DARB(int target, int level, int internalformat, int width, int border, int imageSize, Addressable data) {
-    glext_h.glCompressedTexImage1DARB(target, level, internalformat, width, border, imageSize, data);
-  }
-
-  public void glCompressedTexImage2DARB(int target, int level, int internalformat, int width, int height, int border, int imageSize, Addressable data) {
-    glext_h.glCompressedTexImage2DARB(target, level, internalformat, width, height, border, imageSize, data);
-  }
-
-  public void glCompressedTexImage3DARB(int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, Addressable data) {
-    glext_h.glCompressedTexImage3DARB(target, level, internalformat, width, height, depth, border, imageSize, data);
-  }
-
-  public void glCompressedTexSubImage1DARB(int target, int level, int xoffset, int width, int format, int imageSize, Addressable data) {
-    glext_h.glCompressedTexSubImage1DARB(target, level, xoffset, width, format, imageSize, data);
-  }
-
-  public void glCompressedTexSubImage2DARB(int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, Addressable data) {
-    glext_h.glCompressedTexSubImage2DARB(target, level, xoffset, yoffset, width, height, format, imageSize, data);
-  }
-
-  public void glCompressedTexSubImage3DARB(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, Addressable data) {
-    glext_h.glCompressedTexSubImage3DARB(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
-  }
-
-  public MemoryAddress glCreateProgramObjectARB() {
-    return glext_h.glCreateProgramObjectARB();
-  }
-
-  public MemoryAddress glCreateShaderObjectARB(int shaderType) {
-    return glext_h.glCreateShaderObjectARB(shaderType);
-  }
-
-  public void glDeleteBuffersARB(int n, Addressable buffers) {
-    glext_h.glDeleteBuffersARB(n, buffers);
-  }
-
-  public void glDeleteFencesAPPLE(int n, Addressable fences) {
-    glext_h.glDeleteFencesAPPLE(n, fences);
-  }
-
-  public void glDeleteFramebuffers(int n, Addressable framebuffers) {
-    glext_h.glDeleteFramebuffers(n, framebuffers);
-  }
-
-  public void glDeleteFramebuffersEXT(int n, Addressable framebuffers) {
-    glext_h.glDeleteFramebuffersEXT(n, framebuffers);
-  }
-
-  public void glDeleteObjectARB(Addressable obj) {
-    glext_h.glDeleteObjectARB(obj);
-  }
-
-  public void glDeleteProgramsARB(int n, Addressable programs) {
-    glext_h.glDeleteProgramsARB(n, programs);
-  }
-
-  public void glDeleteQueriesARB(int n, Addressable ids) {
-    glext_h.glDeleteQueriesARB(n, ids);
-  }
-
-  public void glDeleteRenderbuffers(int n, Addressable renderbuffers) {
-    glext_h.glDeleteRenderbuffers(n, renderbuffers);
-  }
-
-  public void glDeleteRenderbuffersEXT(int n, Addressable renderbuffers) {
-    glext_h.glDeleteRenderbuffersEXT(n, renderbuffers);
-  }
-
-  public void glDeleteSync(Addressable sync) {
-    glext_h.glDeleteSync(sync);
-  }
-
-  public void glDeleteVertexArraysAPPLE(int n, Addressable arrays) {
-    glext_h.glDeleteVertexArraysAPPLE(n, arrays);
-  }
-
-  public void glDepthBoundsEXT(double zmin, double zmax) {
-    glext_h.glDepthBoundsEXT(zmin, zmax);
-  }
-
-  public void glDetachObjectARB(Addressable containerObj, Addressable attachedObj) {
-    glext_h.glDetachObjectARB(containerObj, attachedObj);
-  }
-
-  public void glDisableIndexedEXT(int target, int index) {
-    glext_h.glDisableIndexedEXT(target, index);
-  }
-
-  public void glDisableVertexAttribAPPLE(int index, int pname) {
-    glext_h.glDisableVertexAttribAPPLE(index, pname);
-  }
-
-  public void glDisableVertexAttribArrayARB(int index) {
-    glext_h.glDisableVertexAttribArrayARB(index);
-  }
-
-  public void glDrawArraysInstancedARB(int mode, int first, int count, int primcount) {
-    glext_h.glDrawArraysInstancedARB(mode, first, count, primcount);
-  }
-
-  public void glDrawBuffersARB(int n, Addressable bufs) {
-    glext_h.glDrawBuffersARB(n, bufs);
-  }
-
-  public void glDrawElementArrayAPPLE(int mode, int first, int count) {
-    glext_h.glDrawElementArrayAPPLE(mode, first, count);
-  }
-
-  public void glDrawElementsBaseVertex(int mode, int count, int type, Addressable indices, int basevertex) {
-    glext_h.glDrawElementsBaseVertex(mode, count, type, indices, basevertex);
-  }
-
-  public void glDrawElementsInstancedARB(int mode, int count, int type, Addressable indices, int primcount) {
-    glext_h.glDrawElementsInstancedARB(mode, count, type, indices, primcount);
-  }
-
-  public void glDrawElementsInstancedBaseVertex(int mode, int count, int type, Addressable indices, int instancecount, int basevertex) {
-    glext_h.glDrawElementsInstancedBaseVertex(mode, count, type, indices, instancecount, basevertex);
-  }
-
-  public void glDrawRangeElementArrayAPPLE(int mode, int start, int end, int first, int count) {
-    glext_h.glDrawRangeElementArrayAPPLE(mode, start, end, first, count);
-  }
-
-  public void glDrawRangeElementsBaseVertex(int mode, int start, int end, int count, int type, Addressable indices, int basevertex) {
-    glext_h.glDrawRangeElementsBaseVertex(mode, start, end, count, type, indices, basevertex);
-  }
-
-  public void glDrawRangeElementsEXT(int mode, int start, int end, int count, int type, Addressable indices) {
-    glext_h.glDrawRangeElementsEXT(mode, start, end, count, type, indices);
-  }
-
-  public void glElementPointerAPPLE(int type, Addressable pointer) {
-    glext_h.glElementPointerAPPLE(type, pointer);
-  }
-
-  public void glEnableIndexedEXT(int target, int index) {
-    glext_h.glEnableIndexedEXT(target, index);
-  }
-
-  public void glEnableVertexAttribAPPLE(int index, int pname) {
-    glext_h.glEnableVertexAttribAPPLE(index, pname);
-  }
-
-  public void glEnableVertexAttribArrayARB(int index) {
-    glext_h.glEnableVertexAttribArrayARB(index);
-  }
-
-  public void glEndConditionalRenderNV() {
-    glext_h.glEndConditionalRenderNV();
-  }
-
-  public void glEndQueryARB(int target) {
-    glext_h.glEndQueryARB(target);
-  }
-
-  public void glEndTransformFeedbackEXT() {
-    glext_h.glEndTransformFeedbackEXT();
-  }
-
-  public MemoryAddress glFenceSync(int condition, int flags) {
-    return glext_h.glFenceSync(condition, flags);
-  }
-
-  public void glFinishFenceAPPLE(int fence) {
-    glext_h.glFinishFenceAPPLE(fence);
-  }
-
-  public void glFinishObjectAPPLE(int object, int name) {
-    glext_h.glFinishObjectAPPLE(object, name);
-  }
-
-  public void glFlushMappedBufferRangeAPPLE(int target, long offset, long size) {
-    glext_h.glFlushMappedBufferRangeAPPLE(target, offset, size);
-  }
-
-  public void glFlushVertexArrayRangeAPPLE(int length, Addressable pointer) {
-    glext_h.glFlushVertexArrayRangeAPPLE(length, pointer);
-  }
-
-  public void glFogCoordPointerEXT(int type, int stride, Addressable pointer) {
-    glext_h.glFogCoordPointerEXT(type, stride, pointer);
-  }
-
-  public void glFogCoorddEXT(double coord) {
-    glext_h.glFogCoorddEXT(coord);
-  }
-
-  public void glFogCoorddvEXT(Addressable coord) {
-    glext_h.glFogCoorddvEXT(coord);
-  }
-
-  public void glFogCoordfEXT(float coord) {
-    glext_h.glFogCoordfEXT(coord);
-  }
-
-  public void glFogCoordfvEXT(Addressable coord) {
-    glext_h.glFogCoordfvEXT(coord);
-  }
-
-  public void glFramebufferRenderbuffer(int target, int attachment, int renderbuffertarget, int renderbuffer) {
-    glext_h.glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer);
-  }
-
-  public void glFramebufferRenderbufferEXT(int target, int attachment, int renderbuffertarget, int renderbuffer) {
-    glext_h.glFramebufferRenderbufferEXT(target, attachment, renderbuffertarget, renderbuffer);
-  }
-
-  public void glFramebufferTexture1D(int target, int attachment, int textarget, int texture, int level) {
-    glext_h.glFramebufferTexture1D(target, attachment, textarget, texture, level);
-  }
-
-  public void glFramebufferTexture1DEXT(int target, int attachment, int textarget, int texture, int level) {
-    glext_h.glFramebufferTexture1DEXT(target, attachment, textarget, texture, level);
-  }
-
-  public void glFramebufferTexture2D(int target, int attachment, int textarget, int texture, int level) {
-    glext_h.glFramebufferTexture2D(target, attachment, textarget, texture, level);
-  }
-
-  public void glFramebufferTexture2DEXT(int target, int attachment, int textarget, int texture, int level) {
-    glext_h.glFramebufferTexture2DEXT(target, attachment, textarget, texture, level);
-  }
-
-  public void glFramebufferTexture3D(int target, int attachment, int textarget, int texture, int level, int zoffset) {
-    glext_h.glFramebufferTexture3D(target, attachment, textarget, texture, level, zoffset);
-  }
-
-  public void glFramebufferTexture3DEXT(int target, int attachment, int textarget, int texture, int level, int zoffset) {
-    glext_h.glFramebufferTexture3DEXT(target, attachment, textarget, texture, level, zoffset);
-  }
-
-  public void glFramebufferTextureEXT(int target, int attachment, int texture, int level) {
-    glext_h.glFramebufferTextureEXT(target, attachment, texture, level);
-  }
-
-  public void glFramebufferTextureFaceEXT(int target, int attachment, int texture, int level, int face) {
-    glext_h.glFramebufferTextureFaceEXT(target, attachment, texture, level, face);
-  }
-
-  public void glFramebufferTextureLayer(int target, int attachment, int texture, int level, int layer) {
-    glext_h.glFramebufferTextureLayer(target, attachment, texture, level, layer);
-  }
-
-  public void glFramebufferTextureLayerEXT(int target, int attachment, int texture, int level, int layer) {
-    glext_h.glFramebufferTextureLayerEXT(target, attachment, texture, level, layer);
-  }
-
-  public void glGenBuffersARB(int n, Addressable buffers) {
-    glext_h.glGenBuffersARB(n, buffers);
-  }
-
-  public void glGenFencesAPPLE(int n, Addressable fences) {
-    glext_h.glGenFencesAPPLE(n, fences);
-  }
-
-  public void glGenFramebuffers(int n, Addressable framebuffers) {
-    glext_h.glGenFramebuffers(n, framebuffers);
-  }
-
-  public void glGenFramebuffersEXT(int n, Addressable framebuffers) {
-    glext_h.glGenFramebuffersEXT(n, framebuffers);
-  }
-
-  public void glGenProgramsARB(int n, Addressable programs) {
-    glext_h.glGenProgramsARB(n, programs);
-  }
-
-  public void glGenQueriesARB(int n, Addressable ids) {
-    glext_h.glGenQueriesARB(n, ids);
-  }
-
-  public void glGenRenderbuffers(int n, Addressable renderbuffers) {
-    glext_h.glGenRenderbuffers(n, renderbuffers);
-  }
-
-  public void glGenRenderbuffersEXT(int n, Addressable renderbuffers) {
-    glext_h.glGenRenderbuffersEXT(n, renderbuffers);
-  }
-
-  public void glGenVertexArraysAPPLE(int n, Addressable arrays) {
-    glext_h.glGenVertexArraysAPPLE(n, arrays);
-  }
-
-  public void glGenerateMipmap(int target) {
-    glext_h.glGenerateMipmap(target);
-  }
-
-  public void glGenerateMipmapEXT(int target) {
-    glext_h.glGenerateMipmapEXT(target);
-  }
-
-  public void glGetActiveAttribARB(Addressable programObj, int index, int maxLength, Addressable length, Addressable size, Addressable type, Addressable name) {
-    glext_h.glGetActiveAttribARB(programObj, index, maxLength, length, size, type, name);
-  }
-
-  public void glGetActiveUniformARB(Addressable programObj, int index, int maxLength, Addressable length, Addressable size, Addressable type, Addressable name) {
-    glext_h.glGetActiveUniformARB(programObj, index, maxLength, length, size, type, name);
-  }
-
-  public void glGetAttachedObjectsARB(Addressable containerObj, int maxCount, Addressable count, Addressable obj) {
-    glext_h.glGetAttachedObjectsARB(containerObj, maxCount, count, obj);
-  }
-
-  public int glGetAttribLocationARB(Addressable programObj, Addressable name) {
-    return glext_h.glGetAttribLocationARB(programObj, name);
-  }
-
-  public void glGetBooleanIndexedvEXT(int target, int index, Addressable data) {
-    glext_h.glGetBooleanIndexedvEXT(target, index, data);
-  }
-
-  public void glGetBufferParameterivARB(int target, int pname, Addressable params) {
-    glext_h.glGetBufferParameterivARB(target, pname, params);
-  }
-
-  public void glGetBufferPointervARB(int target, int pname, Addressable params) {
-    glext_h.glGetBufferPointervARB(target, pname, params);
-  }
-
-  public void glGetBufferSubDataARB(int target, long offset, long size, Addressable data) {
-    glext_h.glGetBufferSubDataARB(target, offset, size, data);
-  }
-
-  public void glGetCompressedTexImageARB(int target, int level, Addressable img) {
-    glext_h.glGetCompressedTexImageARB(target, level, img);
-  }
-
-  public int glGetFragDataLocationEXT(int program, Addressable name) {
-    return glext_h.glGetFragDataLocationEXT(program, name);
-  }
-
-  public void glGetFramebufferAttachmentParameteriv(int target, int attachment, int pname, Addressable params) {
-    glext_h.glGetFramebufferAttachmentParameteriv(target, attachment, pname, params);
-  }
-
-  public void glGetFramebufferAttachmentParameterivEXT(int target, int attachment, int pname, Addressable params) {
-    glext_h.glGetFramebufferAttachmentParameterivEXT(target, attachment, pname, params);
-  }
-
-  public MemoryAddress glGetHandleARB(int pname) {
-    return glext_h.glGetHandleARB(pname);
-  }
-
-  public void glGetInfoLogARB(Addressable obj, int maxLength, Addressable length, Addressable infoLog) {
-    glext_h.glGetInfoLogARB(obj, maxLength, length, infoLog);
-  }
-
-  public void glGetInteger64v(int pname, Addressable data) {
-    glext_h.glGetInteger64v(pname, data);
-  }
-
-  public void glGetIntegerIndexedvEXT(int target, int index, Addressable data) {
-    glext_h.glGetIntegerIndexedvEXT(target, index, data);
-  }
-
-  public void glGetObjectLabelEXT(int type, int object, int bufSize, Addressable length, Addressable label) {
-    glext_h.glGetObjectLabelEXT(type, object, bufSize, length, label);
-  }
-
-  public void glGetObjectParameterfvARB(Addressable obj, int pname, Addressable params) {
-    glext_h.glGetObjectParameterfvARB(obj, pname, params);
-  }
-
-  public void glGetObjectParameterivAPPLE(int objectType, int name, int pname, Addressable params) {
-    glext_h.glGetObjectParameterivAPPLE(objectType, name, pname, params);
-  }
-
-  public void glGetObjectParameterivARB(Addressable obj, int pname, Addressable params) {
-    glext_h.glGetObjectParameterivARB(obj, pname, params);
-  }
-
-  public void glGetProgramEnvParameterdvARB(int target, int index, Addressable params) {
-    glext_h.glGetProgramEnvParameterdvARB(target, index, params);
-  }
-
-  public void glGetProgramEnvParameterfvARB(int target, int index, Addressable params) {
-    glext_h.glGetProgramEnvParameterfvARB(target, index, params);
-  }
-
-  public void glGetProgramLocalParameterdvARB(int target, int index, Addressable params) {
-    glext_h.glGetProgramLocalParameterdvARB(target, index, params);
-  }
-
-  public void glGetProgramLocalParameterfvARB(int target, int index, Addressable params) {
-    glext_h.glGetProgramLocalParameterfvARB(target, index, params);
-  }
-
-  public void glGetProgramStringARB(int target, int pname, Addressable string) {
-    glext_h.glGetProgramStringARB(target, pname, string);
-  }
-
-  public void glGetProgramivARB(int target, int pname, Addressable params) {
-    glext_h.glGetProgramivARB(target, pname, params);
-  }
-
-  public void glGetQueryObjecti64vEXT(int id, int pname, Addressable params) {
-    glext_h.glGetQueryObjecti64vEXT(id, pname, params);
-  }
-
-  public void glGetQueryObjectivARB(int id, int pname, Addressable params) {
-    glext_h.glGetQueryObjectivARB(id, pname, params);
-  }
-
-  public void glGetQueryObjectui64vEXT(int id, int pname, Addressable params) {
-    glext_h.glGetQueryObjectui64vEXT(id, pname, params);
-  }
-
-  public void glGetQueryObjectuivARB(int id, int pname, Addressable params) {
-    glext_h.glGetQueryObjectuivARB(id, pname, params);
-  }
-
-  public void glGetQueryivARB(int target, int pname, Addressable params) {
-    glext_h.glGetQueryivARB(target, pname, params);
-  }
-
-  public void glGetRenderbufferParameteriv(int target, int pname, Addressable params) {
-    glext_h.glGetRenderbufferParameteriv(target, pname, params);
-  }
-
-  public void glGetRenderbufferParameterivEXT(int target, int pname, Addressable params) {
-    glext_h.glGetRenderbufferParameterivEXT(target, pname, params);
-  }
-
-  public void glGetShaderSourceARB(Addressable obj, int maxLength, Addressable length, Addressable source) {
-    glext_h.glGetShaderSourceARB(obj, maxLength, length, source);
-  }
-
-  public void glGetSynciv(Addressable sync, int pname, int count, Addressable length, Addressable values) {
-    glext_h.glGetSynciv(sync, pname, count, length, values);
-  }
-
-  public void glGetTexParameterIivEXT(int target, int pname, Addressable params) {
-    glext_h.glGetTexParameterIivEXT(target, pname, params);
-  }
-
-  public void glGetTexParameterIuivEXT(int target, int pname, Addressable params) {
-    glext_h.glGetTexParameterIuivEXT(target, pname, params);
-  }
-
-  public void glGetTexParameterPointervAPPLE(int target, int pname, Addressable params) {
-    glext_h.glGetTexParameterPointervAPPLE(target, pname, params);
-  }
-
-  public void glGetTransformFeedbackVaryingEXT(int program, int index, int bufSize, Addressable length, Addressable size, Addressable type, Addressable name) {
-    glext_h.glGetTransformFeedbackVaryingEXT(program, index, bufSize, length, size, type, name);
-  }
-
-  public int glGetUniformBufferSizeEXT(int program, int location) {
-    return glext_h.glGetUniformBufferSizeEXT(program, location);
-  }
-
-  public int glGetUniformLocationARB(Addressable programObj, Addressable name) {
-    return glext_h.glGetUniformLocationARB(programObj, name);
-  }
-
-  public long glGetUniformOffsetEXT(int program, int location) {
-    return glext_h.glGetUniformOffsetEXT(program, location);
-  }
-
-  public void glGetUniformfvARB(Addressable programObj, int location, Addressable params) {
-    glext_h.glGetUniformfvARB(programObj, location, params);
-  }
-
-  public void glGetUniformivARB(Addressable programObj, int location, Addressable params) {
-    glext_h.glGetUniformivARB(programObj, location, params);
-  }
-
-  public void glGetUniformuivEXT(int program, int location, Addressable params) {
-    glext_h.glGetUniformuivEXT(program, location, params);
-  }
-
-  public void glGetVertexAttribIivEXT(int index, int pname, Addressable params) {
-    glext_h.glGetVertexAttribIivEXT(index, pname, params);
-  }
-
-  public void glGetVertexAttribIuivEXT(int index, int pname, Addressable params) {
-    glext_h.glGetVertexAttribIuivEXT(index, pname, params);
-  }
-
-  public void glGetVertexAttribPointervARB(int index, int pname, Addressable pointer) {
-    glext_h.glGetVertexAttribPointervARB(index, pname, pointer);
-  }
-
-  public void glGetVertexAttribdvARB(int index, int pname, Addressable params) {
-    glext_h.glGetVertexAttribdvARB(index, pname, params);
-  }
-
-  public void glGetVertexAttribfvARB(int index, int pname, Addressable params) {
-    glext_h.glGetVertexAttribfvARB(index, pname, params);
-  }
-
-  public void glGetVertexAttribivARB(int index, int pname, Addressable params) {
-    glext_h.glGetVertexAttribivARB(index, pname, params);
-  }
-
-  public void glInsertEventMarkerEXT(int length, Addressable marker) {
-    glext_h.glInsertEventMarkerEXT(length, marker);
-  }
-
-  public byte glIsBufferARB(int buffer) {
-    return glext_h.glIsBufferARB(buffer);
-  }
-
-  public byte glIsEnabledIndexedEXT(int target, int index) {
-    return glext_h.glIsEnabledIndexedEXT(target, index);
-  }
-
-  public byte glIsFenceAPPLE(int fence) {
-    return glext_h.glIsFenceAPPLE(fence);
-  }
-
-  public byte glIsFramebuffer(int framebuffer) {
-    return glext_h.glIsFramebuffer(framebuffer);
-  }
-
-  public byte glIsFramebufferEXT(int framebuffer) {
-    return glext_h.glIsFramebufferEXT(framebuffer);
-  }
-
-  public byte glIsProgramARB(int program) {
-    return glext_h.glIsProgramARB(program);
-  }
-
-  public byte glIsQueryARB(int id) {
-    return glext_h.glIsQueryARB(id);
-  }
-
-  public byte glIsRenderbuffer(int renderbuffer) {
-    return glext_h.glIsRenderbuffer(renderbuffer);
-  }
-
-  public byte glIsRenderbufferEXT(int renderbuffer) {
-    return glext_h.glIsRenderbufferEXT(renderbuffer);
-  }
-
-  public byte glIsSync(Addressable sync) {
-    return glext_h.glIsSync(sync);
-  }
-
-  public byte glIsVertexArrayAPPLE(int array) {
-    return glext_h.glIsVertexArrayAPPLE(array);
-  }
-
-  public byte glIsVertexAttribEnabledAPPLE(int index, int pname) {
-    return glext_h.glIsVertexAttribEnabledAPPLE(index, pname);
-  }
-
-  public void glLabelObjectEXT(int type, int object, int length, Addressable label) {
-    glext_h.glLabelObjectEXT(type, object, length, label);
-  }
-
-  public void glLinkProgramARB(Addressable programObj) {
-    glext_h.glLinkProgramARB(programObj);
-  }
-
-  public void glLoadTransposeMatrixdARB(Addressable m) {
-    glext_h.glLoadTransposeMatrixdARB(m);
-  }
-
-  public void glLoadTransposeMatrixfARB(Addressable m) {
-    glext_h.glLoadTransposeMatrixfARB(m);
-  }
-
-  public MemoryAddress glMapBufferARB(int target, int access) {
-    return glext_h.glMapBufferARB(target, access);
-  }
-
-  public void glMapVertexAttrib1dAPPLE(int index, int size, double u1, double u2, int stride, int order, Addressable points) {
-    glext_h.glMapVertexAttrib1dAPPLE(index, size, u1, u2, stride, order, points);
-  }
-
-  public void glMapVertexAttrib1fAPPLE(int index, int size, float u1, float u2, int stride, int order, Addressable points) {
-    glext_h.glMapVertexAttrib1fAPPLE(index, size, u1, u2, stride, order, points);
-  }
-
-  public void glMapVertexAttrib2dAPPLE(int index, int size, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, Addressable points) {
-    glext_h.glMapVertexAttrib2dAPPLE(index, size, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
-  }
-
-  public void glMapVertexAttrib2fAPPLE(int index, int size, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, Addressable points) {
-    glext_h.glMapVertexAttrib2fAPPLE(index, size, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
-  }
-
-  public void glMultTransposeMatrixdARB(Addressable m) {
-    glext_h.glMultTransposeMatrixdARB(m);
-  }
-
-  public void glMultTransposeMatrixfARB(Addressable m) {
-    glext_h.glMultTransposeMatrixfARB(m);
-  }
-
-  public void glMultiDrawArraysEXT(int mode, Addressable first, Addressable count, int primcount) {
-    glext_h.glMultiDrawArraysEXT(mode, first, count, primcount);
-  }
-
-  public void glMultiDrawElementArrayAPPLE(int mode, Addressable first, Addressable count, int primcount) {
-    glext_h.glMultiDrawElementArrayAPPLE(mode, first, count, primcount);
-  }
-
-  public void glMultiDrawElementsBaseVertex(int mode, Addressable count, int type, Addressable indices, int drawcount, Addressable basevertex) {
-    glext_h.glMultiDrawElementsBaseVertex(mode, count, type, indices, drawcount, basevertex);
-  }
-
-  public void glMultiDrawElementsEXT(int mode, Addressable count, int type, Addressable indices, int primcount) {
-    glext_h.glMultiDrawElementsEXT(mode, count, type, indices, primcount);
-  }
-
-  public void glMultiDrawRangeElementArrayAPPLE(int mode, int start, int end, Addressable first, Addressable count, int primcount) {
-    glext_h.glMultiDrawRangeElementArrayAPPLE(mode, start, end, first, count, primcount);
-  }
-
-  public void glMultiTexCoord1dARB(int target, double s) {
-    glext_h.glMultiTexCoord1dARB(target, s);
-  }
-
-  public void glMultiTexCoord1dvARB(int target, Addressable v) {
-    glext_h.glMultiTexCoord1dvARB(target, v);
-  }
-
-  public void glMultiTexCoord1fARB(int target, float s) {
-    glext_h.glMultiTexCoord1fARB(target, s);
-  }
-
-  public void glMultiTexCoord1fvARB(int target, Addressable v) {
-    glext_h.glMultiTexCoord1fvARB(target, v);
-  }
-
-  public void glMultiTexCoord1iARB(int target, int s) {
-    glext_h.glMultiTexCoord1iARB(target, s);
-  }
-
-  public void glMultiTexCoord1ivARB(int target, Addressable v) {
-    glext_h.glMultiTexCoord1ivARB(target, v);
-  }
-
-  public void glMultiTexCoord1sARB(int target, short s) {
-    glext_h.glMultiTexCoord1sARB(target, s);
-  }
-
-  public void glMultiTexCoord1svARB(int target, Addressable v) {
-    glext_h.glMultiTexCoord1svARB(target, v);
-  }
-
-  public void glMultiTexCoord2dARB(int target, double s, double t) {
-    glext_h.glMultiTexCoord2dARB(target, s, t);
-  }
-
-  public void glMultiTexCoord2dvARB(int target, Addressable v) {
-    glext_h.glMultiTexCoord2dvARB(target, v);
-  }
-
-  public void glMultiTexCoord2fARB(int target, float s, float t) {
-    glext_h.glMultiTexCoord2fARB(target, s, t);
-  }
-
-  public void glMultiTexCoord2fvARB(int target, Addressable v) {
-    glext_h.glMultiTexCoord2fvARB(target, v);
-  }
-
-  public void glMultiTexCoord2iARB(int target, int s, int t) {
-    glext_h.glMultiTexCoord2iARB(target, s, t);
-  }
-
-  public void glMultiTexCoord2ivARB(int target, Addressable v) {
-    glext_h.glMultiTexCoord2ivARB(target, v);
-  }
-
-  public void glMultiTexCoord2sARB(int target, short s, short t) {
-    glext_h.glMultiTexCoord2sARB(target, s, t);
-  }
-
-  public void glMultiTexCoord2svARB(int target, Addressable v) {
-    glext_h.glMultiTexCoord2svARB(target, v);
-  }
-
-  public void glMultiTexCoord3dARB(int target, double s, double t, double r) {
-    glext_h.glMultiTexCoord3dARB(target, s, t, r);
-  }
-
-  public void glMultiTexCoord3dvARB(int target, Addressable v) {
-    glext_h.glMultiTexCoord3dvARB(target, v);
-  }
-
-  public void glMultiTexCoord3fARB(int target, float s, float t, float r) {
-    glext_h.glMultiTexCoord3fARB(target, s, t, r);
-  }
-
-  public void glMultiTexCoord3fvARB(int target, Addressable v) {
-    glext_h.glMultiTexCoord3fvARB(target, v);
-  }
-
-  public void glMultiTexCoord3iARB(int target, int s, int t, int r) {
-    glext_h.glMultiTexCoord3iARB(target, s, t, r);
-  }
-
-  public void glMultiTexCoord3ivARB(int target, Addressable v) {
-    glext_h.glMultiTexCoord3ivARB(target, v);
-  }
-
-  public void glMultiTexCoord3sARB(int target, short s, short t, short r) {
-    glext_h.glMultiTexCoord3sARB(target, s, t, r);
-  }
-
-  public void glMultiTexCoord3svARB(int target, Addressable v) {
-    glext_h.glMultiTexCoord3svARB(target, v);
-  }
-
-  public void glMultiTexCoord4dARB(int target, double s, double t, double r, double q) {
-    glext_h.glMultiTexCoord4dARB(target, s, t, r, q);
-  }
-
-  public void glMultiTexCoord4dvARB(int target, Addressable v) {
-    glext_h.glMultiTexCoord4dvARB(target, v);
-  }
-
-  public void glMultiTexCoord4fARB(int target, float s, float t, float r, float q) {
-    glext_h.glMultiTexCoord4fARB(target, s, t, r, q);
-  }
-
-  public void glMultiTexCoord4fvARB(int target, Addressable v) {
-    glext_h.glMultiTexCoord4fvARB(target, v);
-  }
-
-  public void glMultiTexCoord4iARB(int target, int s, int t, int r, int q) {
-    glext_h.glMultiTexCoord4iARB(target, s, t, r, q);
-  }
-
-  public void glMultiTexCoord4ivARB(int target, Addressable v) {
-    glext_h.glMultiTexCoord4ivARB(target, v);
-  }
-
-  public void glMultiTexCoord4sARB(int target, short s, short t, short r, short q) {
-    glext_h.glMultiTexCoord4sARB(target, s, t, r, q);
-  }
-
-  public void glMultiTexCoord4svARB(int target, Addressable v) {
-    glext_h.glMultiTexCoord4svARB(target, v);
-  }
-
-  public int glObjectPurgeableAPPLE(int objectType, int name, int option) {
-    return glext_h.glObjectPurgeableAPPLE(objectType, name, option);
-  }
-
-  public int glObjectUnpurgeableAPPLE(int objectType, int name, int option) {
-    return glext_h.glObjectUnpurgeableAPPLE(objectType, name, option);
-  }
-
-  public void glPointParameterfARB(int pname, float param) {
-    glext_h.glPointParameterfARB(pname, param);
-  }
-
-  public void glPointParameterfvARB(int pname, Addressable params) {
-    glext_h.glPointParameterfvARB(pname, params);
-  }
-
-  public void glPointParameteriNV(int pname, int param) {
-    glext_h.glPointParameteriNV(pname, param);
-  }
-
-  public void glPointParameterivNV(int pname, Addressable params) {
-    glext_h.glPointParameterivNV(pname, params);
-  }
-
-  public void glPopGroupMarkerEXT() {
-    glext_h.glPopGroupMarkerEXT();
-  }
-
-  public void glProgramEnvParameter4dARB(int target, int index, double x, double y, double z, double w) {
-    glext_h.glProgramEnvParameter4dARB(target, index, x, y, z, w);
-  }
-
-  public void glProgramEnvParameter4dvARB(int target, int index, Addressable params) {
-    glext_h.glProgramEnvParameter4dvARB(target, index, params);
-  }
-
-  public void glProgramEnvParameter4fARB(int target, int index, float x, float y, float z, float w) {
-    glext_h.glProgramEnvParameter4fARB(target, index, x, y, z, w);
-  }
-
-  public void glProgramEnvParameter4fvARB(int target, int index, Addressable params) {
-    glext_h.glProgramEnvParameter4fvARB(target, index, params);
-  }
-
-  public void glProgramEnvParameters4fvEXT(int target, int index, int count, Addressable params) {
-    glext_h.glProgramEnvParameters4fvEXT(target, index, count, params);
-  }
-
-  public void glProgramLocalParameter4dARB(int target, int index, double x, double y, double z, double w) {
-    glext_h.glProgramLocalParameter4dARB(target, index, x, y, z, w);
-  }
-
-  public void glProgramLocalParameter4dvARB(int target, int index, Addressable params) {
-    glext_h.glProgramLocalParameter4dvARB(target, index, params);
-  }
-
-  public void glProgramLocalParameter4fARB(int target, int index, float x, float y, float z, float w) {
-    glext_h.glProgramLocalParameter4fARB(target, index, x, y, z, w);
-  }
-
-  public void glProgramLocalParameter4fvARB(int target, int index, Addressable params) {
-    glext_h.glProgramLocalParameter4fvARB(target, index, params);
-  }
-
-  public void glProgramLocalParameters4fvEXT(int target, int index, int count, Addressable params) {
-    glext_h.glProgramLocalParameters4fvEXT(target, index, count, params);
-  }
-
-  public void glProgramParameteriEXT(int program, int pname, int value) {
-    glext_h.glProgramParameteriEXT(program, pname, value);
-  }
-
-  public void glProgramStringARB(int target, int format, int len, Addressable string) {
-    glext_h.glProgramStringARB(target, format, len, string);
-  }
-
-  public void glProvokingVertex(int mode) {
-    glext_h.glProvokingVertex(mode);
-  }
-
-  public void glProvokingVertexEXT(int mode) {
-    glext_h.glProvokingVertexEXT(mode);
-  }
-
-  public void glPushGroupMarkerEXT(int length, Addressable marker) {
-    glext_h.glPushGroupMarkerEXT(length, marker);
-  }
-
-  public void glRenderbufferStorage(int target, int internalformat, int width, int height) {
-    glext_h.glRenderbufferStorage(target, internalformat, width, height);
-  }
-
-  public void glRenderbufferStorageEXT(int target, int internalformat, int width, int height) {
-    glext_h.glRenderbufferStorageEXT(target, internalformat, width, height);
-  }
-
-  public void glRenderbufferStorageMultisample(int target, int samples, int internalformat, int width, int height) {
-    glext_h.glRenderbufferStorageMultisample(target, samples, internalformat, width, height);
-  }
-
-  public void glRenderbufferStorageMultisampleEXT(int target, int samples, int internalformat, int width, int height) {
-    glext_h.glRenderbufferStorageMultisampleEXT(target, samples, internalformat, width, height);
-  }
-
-  public void glSampleCoverageARB(float value, byte invert) {
-    glext_h.glSampleCoverageARB(value, invert);
-  }
-
-  public void glSecondaryColor3bEXT(byte red, byte green, byte blue) {
-    glext_h.glSecondaryColor3bEXT(red, green, blue);
-  }
-
-  public void glSecondaryColor3bvEXT(Addressable v) {
-    glext_h.glSecondaryColor3bvEXT(v);
-  }
-
-  public void glSecondaryColor3dEXT(double red, double green, double blue) {
-    glext_h.glSecondaryColor3dEXT(red, green, blue);
-  }
-
-  public void glSecondaryColor3dvEXT(Addressable v) {
-    glext_h.glSecondaryColor3dvEXT(v);
-  }
-
-  public void glSecondaryColor3fEXT(float red, float green, float blue) {
-    glext_h.glSecondaryColor3fEXT(red, green, blue);
-  }
-
-  public void glSecondaryColor3fvEXT(Addressable v) {
-    glext_h.glSecondaryColor3fvEXT(v);
-  }
-
-  public void glSecondaryColor3iEXT(int red, int green, int blue) {
-    glext_h.glSecondaryColor3iEXT(red, green, blue);
-  }
-
-  public void glSecondaryColor3ivEXT(Addressable v) {
-    glext_h.glSecondaryColor3ivEXT(v);
-  }
-
-  public void glSecondaryColor3sEXT(short red, short green, short blue) {
-    glext_h.glSecondaryColor3sEXT(red, green, blue);
-  }
-
-  public void glSecondaryColor3svEXT(Addressable v) {
-    glext_h.glSecondaryColor3svEXT(v);
-  }
-
-  public void glSecondaryColor3ubEXT(byte red, byte green, byte blue) {
-    glext_h.glSecondaryColor3ubEXT(red, green, blue);
-  }
-
-  public void glSecondaryColor3ubvEXT(Addressable v) {
-    glext_h.glSecondaryColor3ubvEXT(v);
-  }
-
-  public void glSecondaryColor3uiEXT(int red, int green, int blue) {
-    glext_h.glSecondaryColor3uiEXT(red, green, blue);
-  }
-
-  public void glSecondaryColor3uivEXT(Addressable v) {
-    glext_h.glSecondaryColor3uivEXT(v);
-  }
-
-  public void glSecondaryColor3usEXT(short red, short green, short blue) {
-    glext_h.glSecondaryColor3usEXT(red, green, blue);
-  }
-
-  public void glSecondaryColor3usvEXT(Addressable v) {
-    glext_h.glSecondaryColor3usvEXT(v);
-  }
-
-  public void glSecondaryColorPointerEXT(int size, int type, int stride, Addressable pointer) {
-    glext_h.glSecondaryColorPointerEXT(size, type, stride, pointer);
-  }
-
-  public void glSetFenceAPPLE(int fence) {
-    glext_h.glSetFenceAPPLE(fence);
-  }
-
-  public void glShaderSourceARB(Addressable shaderObj, int count, Addressable string, Addressable length) {
-    glext_h.glShaderSourceARB(shaderObj, count, string, length);
-  }
-
-  public void glStencilFuncSeparateATI(int frontfunc, int backfunc, int ref, int mask) {
-    glext_h.glStencilFuncSeparateATI(frontfunc, backfunc, ref, mask);
-  }
-
-  public void glStencilOpSeparateATI(int face, int sfail, int dpfail, int dppass) {
-    glext_h.glStencilOpSeparateATI(face, sfail, dpfail, dppass);
-  }
-
-  public byte glTestFenceAPPLE(int fence) {
-    return glext_h.glTestFenceAPPLE(fence);
-  }
-
-  public byte glTestObjectAPPLE(int object, int name) {
-    return glext_h.glTestObjectAPPLE(object, name);
-  }
-
-  public void glTexParameterIivEXT(int target, int pname, Addressable params) {
-    glext_h.glTexParameterIivEXT(target, pname, params);
-  }
-
-  public void glTexParameterIuivEXT(int target, int pname, Addressable params) {
-    glext_h.glTexParameterIuivEXT(target, pname, params);
-  }
-
-  public void glTextureBarrierNV() {
-    glext_h.glTextureBarrierNV();
-  }
-
-  public void glTextureRangeAPPLE(int target, int length, Addressable pointer) {
-    glext_h.glTextureRangeAPPLE(target, length, pointer);
-  }
-
-  public void glTransformFeedbackVaryingsEXT(int program, int count, Addressable varyings, int bufferMode) {
-    glext_h.glTransformFeedbackVaryingsEXT(program, count, varyings, bufferMode);
-  }
-
-  public void glUniform1fARB(int location, float v0) {
-    glext_h.glUniform1fARB(location, v0);
-  }
-
-  public void glUniform1fvARB(int location, int count, Addressable value) {
-    glext_h.glUniform1fvARB(location, count, value);
-  }
-
-  public void glUniform1iARB(int location, int v0) {
-    glext_h.glUniform1iARB(location, v0);
-  }
-
-  public void glUniform1ivARB(int location, int count, Addressable value) {
-    glext_h.glUniform1ivARB(location, count, value);
-  }
-
-  public void glUniform1uiEXT(int location, int v0) {
-    glext_h.glUniform1uiEXT(location, v0);
-  }
-
-  public void glUniform1uivEXT(int location, int count, Addressable value) {
-    glext_h.glUniform1uivEXT(location, count, value);
-  }
-
-  public void glUniform2fARB(int location, float v0, float v1) {
-    glext_h.glUniform2fARB(location, v0, v1);
-  }
-
-  public void glUniform2fvARB(int location, int count, Addressable value) {
-    glext_h.glUniform2fvARB(location, count, value);
-  }
-
-  public void glUniform2iARB(int location, int v0, int v1) {
-    glext_h.glUniform2iARB(location, v0, v1);
-  }
-
-  public void glUniform2ivARB(int location, int count, Addressable value) {
-    glext_h.glUniform2ivARB(location, count, value);
-  }
-
-  public void glUniform2uiEXT(int location, int v0, int v1) {
-    glext_h.glUniform2uiEXT(location, v0, v1);
-  }
-
-  public void glUniform2uivEXT(int location, int count, Addressable value) {
-    glext_h.glUniform2uivEXT(location, count, value);
-  }
-
-  public void glUniform3fARB(int location, float v0, float v1, float v2) {
-    glext_h.glUniform3fARB(location, v0, v1, v2);
-  }
-
-  public void glUniform3fvARB(int location, int count, Addressable value) {
-    glext_h.glUniform3fvARB(location, count, value);
-  }
-
-  public void glUniform3iARB(int location, int v0, int v1, int v2) {
-    glext_h.glUniform3iARB(location, v0, v1, v2);
-  }
-
-  public void glUniform3ivARB(int location, int count, Addressable value) {
-    glext_h.glUniform3ivARB(location, count, value);
-  }
-
-  public void glUniform3uiEXT(int location, int v0, int v1, int v2) {
-    glext_h.glUniform3uiEXT(location, v0, v1, v2);
-  }
-
-  public void glUniform3uivEXT(int location, int count, Addressable value) {
-    glext_h.glUniform3uivEXT(location, count, value);
-  }
-
-  public void glUniform4fARB(int location, float v0, float v1, float v2, float v3) {
-    glext_h.glUniform4fARB(location, v0, v1, v2, v3);
-  }
-
-  public void glUniform4fvARB(int location, int count, Addressable value) {
-    glext_h.glUniform4fvARB(location, count, value);
-  }
-
-  public void glUniform4iARB(int location, int v0, int v1, int v2, int v3) {
-    glext_h.glUniform4iARB(location, v0, v1, v2, v3);
-  }
-
-  public void glUniform4ivARB(int location, int count, Addressable value) {
-    glext_h.glUniform4ivARB(location, count, value);
-  }
-
-  public void glUniform4uiEXT(int location, int v0, int v1, int v2, int v3) {
-    glext_h.glUniform4uiEXT(location, v0, v1, v2, v3);
-  }
-
-  public void glUniform4uivEXT(int location, int count, Addressable value) {
-    glext_h.glUniform4uivEXT(location, count, value);
-  }
-
-  public void glUniformBufferEXT(int program, int location, int buffer) {
-    glext_h.glUniformBufferEXT(program, location, buffer);
-  }
-
-  public void glUniformMatrix2fvARB(int location, int count, byte transpose, Addressable value) {
-    glext_h.glUniformMatrix2fvARB(location, count, transpose, value);
-  }
-
-  public void glUniformMatrix3fvARB(int location, int count, byte transpose, Addressable value) {
-    glext_h.glUniformMatrix3fvARB(location, count, transpose, value);
-  }
-
-  public void glUniformMatrix4fvARB(int location, int count, byte transpose, Addressable value) {
-    glext_h.glUniformMatrix4fvARB(location, count, transpose, value);
-  }
-
-  public byte glUnmapBufferARB(int target) {
-    return glext_h.glUnmapBufferARB(target);
-  }
-
-  public void glUseProgramObjectARB(Addressable programObj) {
-    glext_h.glUseProgramObjectARB(programObj);
-  }
-
-  public void glValidateProgramARB(Addressable programObj) {
-    glext_h.glValidateProgramARB(programObj);
-  }
-
-  public void glVertexArrayParameteriAPPLE(int pname, int param) {
-    glext_h.glVertexArrayParameteriAPPLE(pname, param);
-  }
-
-  public void glVertexArrayRangeAPPLE(int length, Addressable pointer) {
-    glext_h.glVertexArrayRangeAPPLE(length, pointer);
-  }
-
-  public void glVertexAttrib1dARB(int index, double x) {
-    glext_h.glVertexAttrib1dARB(index, x);
-  }
-
-  public void glVertexAttrib1dvARB(int index, Addressable v) {
-    glext_h.glVertexAttrib1dvARB(index, v);
-  }
-
-  public void glVertexAttrib1fARB(int index, float x) {
-    glext_h.glVertexAttrib1fARB(index, x);
-  }
-
-  public void glVertexAttrib1fvARB(int index, Addressable v) {
-    glext_h.glVertexAttrib1fvARB(index, v);
-  }
-
-  public void glVertexAttrib1sARB(int index, short x) {
-    glext_h.glVertexAttrib1sARB(index, x);
-  }
-
-  public void glVertexAttrib1svARB(int index, Addressable v) {
-    glext_h.glVertexAttrib1svARB(index, v);
-  }
-
-  public void glVertexAttrib2dARB(int index, double x, double y) {
-    glext_h.glVertexAttrib2dARB(index, x, y);
-  }
-
-  public void glVertexAttrib2dvARB(int index, Addressable v) {
-    glext_h.glVertexAttrib2dvARB(index, v);
-  }
-
-  public void glVertexAttrib2fARB(int index, float x, float y) {
-    glext_h.glVertexAttrib2fARB(index, x, y);
-  }
-
-  public void glVertexAttrib2fvARB(int index, Addressable v) {
-    glext_h.glVertexAttrib2fvARB(index, v);
-  }
-
-  public void glVertexAttrib2sARB(int index, short x, short y) {
-    glext_h.glVertexAttrib2sARB(index, x, y);
-  }
-
-  public void glVertexAttrib2svARB(int index, Addressable v) {
-    glext_h.glVertexAttrib2svARB(index, v);
-  }
-
-  public void glVertexAttrib3dARB(int index, double x, double y, double z) {
-    glext_h.glVertexAttrib3dARB(index, x, y, z);
-  }
-
-  public void glVertexAttrib3dvARB(int index, Addressable v) {
-    glext_h.glVertexAttrib3dvARB(index, v);
-  }
-
-  public void glVertexAttrib3fARB(int index, float x, float y, float z) {
-    glext_h.glVertexAttrib3fARB(index, x, y, z);
-  }
-
-  public void glVertexAttrib3fvARB(int index, Addressable v) {
-    glext_h.glVertexAttrib3fvARB(index, v);
-  }
-
-  public void glVertexAttrib3sARB(int index, short x, short y, short z) {
-    glext_h.glVertexAttrib3sARB(index, x, y, z);
-  }
-
-  public void glVertexAttrib3svARB(int index, Addressable v) {
-    glext_h.glVertexAttrib3svARB(index, v);
-  }
-
-  public void glVertexAttrib4NbvARB(int index, Addressable v) {
-    glext_h.glVertexAttrib4NbvARB(index, v);
-  }
-
-  public void glVertexAttrib4NivARB(int index, Addressable v) {
-    glext_h.glVertexAttrib4NivARB(index, v);
-  }
-
-  public void glVertexAttrib4NsvARB(int index, Addressable v) {
-    glext_h.glVertexAttrib4NsvARB(index, v);
-  }
-
-  public void glVertexAttrib4NubARB(int index, byte x, byte y, byte z, byte w) {
-    glext_h.glVertexAttrib4NubARB(index, x, y, z, w);
-  }
-
-  public void glVertexAttrib4NubvARB(int index, Addressable v) {
-    glext_h.glVertexAttrib4NubvARB(index, v);
-  }
-
-  public void glVertexAttrib4NuivARB(int index, Addressable v) {
-    glext_h.glVertexAttrib4NuivARB(index, v);
-  }
-
-  public void glVertexAttrib4NusvARB(int index, Addressable v) {
-    glext_h.glVertexAttrib4NusvARB(index, v);
-  }
-
-  public void glVertexAttrib4bvARB(int index, Addressable v) {
-    glext_h.glVertexAttrib4bvARB(index, v);
-  }
-
-  public void glVertexAttrib4dARB(int index, double x, double y, double z, double w) {
-    glext_h.glVertexAttrib4dARB(index, x, y, z, w);
-  }
-
-  public void glVertexAttrib4dvARB(int index, Addressable v) {
-    glext_h.glVertexAttrib4dvARB(index, v);
-  }
-
-  public void glVertexAttrib4fARB(int index, float x, float y, float z, float w) {
-    glext_h.glVertexAttrib4fARB(index, x, y, z, w);
-  }
-
-  public void glVertexAttrib4fvARB(int index, Addressable v) {
-    glext_h.glVertexAttrib4fvARB(index, v);
-  }
-
-  public void glVertexAttrib4ivARB(int index, Addressable v) {
-    glext_h.glVertexAttrib4ivARB(index, v);
-  }
-
-  public void glVertexAttrib4sARB(int index, short x, short y, short z, short w) {
-    glext_h.glVertexAttrib4sARB(index, x, y, z, w);
-  }
-
-  public void glVertexAttrib4svARB(int index, Addressable v) {
-    glext_h.glVertexAttrib4svARB(index, v);
-  }
-
-  public void glVertexAttrib4ubvARB(int index, Addressable v) {
-    glext_h.glVertexAttrib4ubvARB(index, v);
-  }
-
-  public void glVertexAttrib4uivARB(int index, Addressable v) {
-    glext_h.glVertexAttrib4uivARB(index, v);
-  }
-
-  public void glVertexAttrib4usvARB(int index, Addressable v) {
-    glext_h.glVertexAttrib4usvARB(index, v);
-  }
-
-  public void glVertexAttribDivisorARB(int index, int divisor) {
-    glext_h.glVertexAttribDivisorARB(index, divisor);
-  }
-
-  public void glVertexAttribI1iEXT(int index, int x) {
-    glext_h.glVertexAttribI1iEXT(index, x);
-  }
-
-  public void glVertexAttribI1ivEXT(int index, Addressable v) {
-    glext_h.glVertexAttribI1ivEXT(index, v);
-  }
-
-  public void glVertexAttribI1uiEXT(int index, int x) {
-    glext_h.glVertexAttribI1uiEXT(index, x);
-  }
-
-  public void glVertexAttribI1uivEXT(int index, Addressable v) {
-    glext_h.glVertexAttribI1uivEXT(index, v);
-  }
-
-  public void glVertexAttribI2iEXT(int index, int x, int y) {
-    glext_h.glVertexAttribI2iEXT(index, x, y);
-  }
-
-  public void glVertexAttribI2ivEXT(int index, Addressable v) {
-    glext_h.glVertexAttribI2ivEXT(index, v);
-  }
-
-  public void glVertexAttribI2uiEXT(int index, int x, int y) {
-    glext_h.glVertexAttribI2uiEXT(index, x, y);
-  }
-
-  public void glVertexAttribI2uivEXT(int index, Addressable v) {
-    glext_h.glVertexAttribI2uivEXT(index, v);
-  }
-
-  public void glVertexAttribI3iEXT(int index, int x, int y, int z) {
-    glext_h.glVertexAttribI3iEXT(index, x, y, z);
-  }
-
-  public void glVertexAttribI3ivEXT(int index, Addressable v) {
-    glext_h.glVertexAttribI3ivEXT(index, v);
-  }
-
-  public void glVertexAttribI3uiEXT(int index, int x, int y, int z) {
-    glext_h.glVertexAttribI3uiEXT(index, x, y, z);
-  }
-
-  public void glVertexAttribI3uivEXT(int index, Addressable v) {
-    glext_h.glVertexAttribI3uivEXT(index, v);
-  }
-
-  public void glVertexAttribI4bvEXT(int index, Addressable v) {
-    glext_h.glVertexAttribI4bvEXT(index, v);
-  }
-
-  public void glVertexAttribI4iEXT(int index, int x, int y, int z, int w) {
-    glext_h.glVertexAttribI4iEXT(index, x, y, z, w);
-  }
-
-  public void glVertexAttribI4ivEXT(int index, Addressable v) {
-    glext_h.glVertexAttribI4ivEXT(index, v);
-  }
-
-  public void glVertexAttribI4svEXT(int index, Addressable v) {
-    glext_h.glVertexAttribI4svEXT(index, v);
-  }
-
-  public void glVertexAttribI4ubvEXT(int index, Addressable v) {
-    glext_h.glVertexAttribI4ubvEXT(index, v);
-  }
-
-  public void glVertexAttribI4uiEXT(int index, int x, int y, int z, int w) {
-    glext_h.glVertexAttribI4uiEXT(index, x, y, z, w);
-  }
-
-  public void glVertexAttribI4uivEXT(int index, Addressable v) {
-    glext_h.glVertexAttribI4uivEXT(index, v);
-  }
-
-  public void glVertexAttribI4usvEXT(int index, Addressable v) {
-    glext_h.glVertexAttribI4usvEXT(index, v);
-  }
-
-  public void glVertexAttribIPointerEXT(int index, int size, int type, int stride, Addressable pointer) {
-    glext_h.glVertexAttribIPointerEXT(index, size, type, stride, pointer);
-  }
-
-  public void glVertexAttribPointerARB(int index, int size, int type, byte normalized, int stride, Addressable pointer) {
-    glext_h.glVertexAttribPointerARB(index, size, type, normalized, stride, pointer);
-  }
-
-  public void glVertexBlendARB(int count) {
-    glext_h.glVertexBlendARB(count);
-  }
-
-  public void glWaitSync(Addressable sync, int flags, long timeout) {
-    glext_h.glWaitSync(sync, flags, timeout);
-  }
-
-  public void glWeightPointerARB(int size, int type, int stride, Addressable pointer) {
-    glext_h.glWeightPointerARB(size, type, stride, pointer);
-  }
-
-  public void glWeightbvARB(int size, Addressable weights) {
-    glext_h.glWeightbvARB(size, weights);
-  }
-
-  public void glWeightdvARB(int size, Addressable weights) {
-    glext_h.glWeightdvARB(size, weights);
-  }
-
-  public void glWeightfvARB(int size, Addressable weights) {
-    glext_h.glWeightfvARB(size, weights);
-  }
-
-  public void glWeightivARB(int size, Addressable weights) {
-    glext_h.glWeightivARB(size, weights);
-  }
-
-  public void glWeightsvARB(int size, Addressable weights) {
-    glext_h.glWeightsvARB(size, weights);
-  }
-
-  public void glWeightubvARB(int size, Addressable weights) {
-    glext_h.glWeightubvARB(size, weights);
-  }
-
-  public void glWeightuivARB(int size, Addressable weights) {
-    glext_h.glWeightuivARB(size, weights);
-  }
-
-  public void glWeightusvARB(int size, Addressable weights) {
-    glext_h.glWeightusvARB(size, weights);
-  }
-
-  public void glWindowPos2dARB(double x, double y) {
-    glext_h.glWindowPos2dARB(x, y);
-  }
-
-  public void glWindowPos2dvARB(Addressable v) {
-    glext_h.glWindowPos2dvARB(v);
-  }
-
-  public void glWindowPos2fARB(float x, float y) {
-    glext_h.glWindowPos2fARB(x, y);
-  }
-
-  public void glWindowPos2fvARB(Addressable v) {
-    glext_h.glWindowPos2fvARB(v);
-  }
-
-  public void glWindowPos2iARB(int x, int y) {
-    glext_h.glWindowPos2iARB(x, y);
-  }
-
-  public void glWindowPos2ivARB(Addressable v) {
-    glext_h.glWindowPos2ivARB(v);
-  }
-
-  public void glWindowPos2sARB(short x, short y) {
-    glext_h.glWindowPos2sARB(x, y);
-  }
-
-  public void glWindowPos2svARB(Addressable v) {
-    glext_h.glWindowPos2svARB(v);
-  }
-
-  public void glWindowPos3dARB(double x, double y, double z) {
-    glext_h.glWindowPos3dARB(x, y, z);
-  }
-
-  public void glWindowPos3dvARB(Addressable v) {
-    glext_h.glWindowPos3dvARB(v);
-  }
-
-  public void glWindowPos3fARB(float x, float y, float z) {
-    glext_h.glWindowPos3fARB(x, y, z);
-  }
-
-  public void glWindowPos3fvARB(Addressable v) {
-    glext_h.glWindowPos3fvARB(v);
-  }
-
-  public void glWindowPos3iARB(int x, int y, int z) {
-    glext_h.glWindowPos3iARB(x, y, z);
-  }
-
-  public void glWindowPos3ivARB(Addressable v) {
-    glext_h.glWindowPos3ivARB(v);
-  }
-
-  public void glWindowPos3sARB(short x, short y, short z) {
-    glext_h.glWindowPos3sARB(x, y, z);
-  }
-
-  public void glWindowPos3svARB(Addressable v) {
-    glext_h.glWindowPos3svARB(v);
-  }
-
   public void glAccum(int op, float value) {
     glut_h.glAccum(op, value);
   }
 
+  public void glActiveStencilFaceEXT(int face) {
+    glut_h.glActiveStencilFaceEXT(face);
+  }
+
   public void glActiveTexture(int texture) {
     glut_h.glActiveTexture(texture);
+  }
+
+  public void glActiveTextureARB(int texture) {
+    glut_h.glActiveTextureARB(texture);
   }
 
   public void glAlphaFunc(int func, float ref) {
@@ -1609,6 +33,10 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glArrayElement(i);
   }
 
+  public void glAttachObjectARB(Addressable containerObj, Addressable obj) {
+    glut_h.glAttachObjectARB(containerObj, obj);
+  }
+
   public void glAttachShader(int program, int shader) {
     glut_h.glAttachShader(program, shader);
   }
@@ -1617,20 +45,80 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glBegin(mode);
   }
 
+  public void glBeginConditionalRenderNV(int id, int mode) {
+    glut_h.glBeginConditionalRenderNV(id, mode);
+  }
+
   public void glBeginQuery(int target, int id) {
     glut_h.glBeginQuery(target, id);
+  }
+
+  public void glBeginQueryARB(int target, int id) {
+    glut_h.glBeginQueryARB(target, id);
+  }
+
+  public void glBeginTransformFeedbackEXT(int primitiveMode) {
+    glut_h.glBeginTransformFeedbackEXT(primitiveMode);
   }
 
   public void glBindAttribLocation(int program, int index, Addressable name) {
     glut_h.glBindAttribLocation(program, index, name);
   }
 
+  public void glBindAttribLocationARB(Addressable programObj, int index, Addressable name) {
+    glut_h.glBindAttribLocationARB(programObj, index, name);
+  }
+
   public void glBindBuffer(int target, int buffer) {
     glut_h.glBindBuffer(target, buffer);
   }
 
+  public void glBindBufferARB(int target, int buffer) {
+    glut_h.glBindBufferARB(target, buffer);
+  }
+
+  public void glBindBufferBaseEXT(int target, int index, int buffer) {
+    glut_h.glBindBufferBaseEXT(target, index, buffer);
+  }
+
+  public void glBindBufferOffsetEXT(int target, int index, int buffer, long offset) {
+    glut_h.glBindBufferOffsetEXT(target, index, buffer, offset);
+  }
+
+  public void glBindBufferRangeEXT(int target, int index, int buffer, long offset, long size) {
+    glut_h.glBindBufferRangeEXT(target, index, buffer, offset, size);
+  }
+
+  public void glBindFragDataLocationEXT(int program, int color, Addressable name) {
+    glut_h.glBindFragDataLocationEXT(program, color, name);
+  }
+
+  public void glBindFramebuffer(int target, int framebuffer) {
+    glut_h.glBindFramebuffer(target, framebuffer);
+  }
+
+  public void glBindFramebufferEXT(int target, int framebuffer) {
+    glut_h.glBindFramebufferEXT(target, framebuffer);
+  }
+
+  public void glBindProgramARB(int target, int program) {
+    glut_h.glBindProgramARB(target, program);
+  }
+
+  public void glBindRenderbuffer(int target, int renderbuffer) {
+    glut_h.glBindRenderbuffer(target, renderbuffer);
+  }
+
+  public void glBindRenderbufferEXT(int target, int renderbuffer) {
+    glut_h.glBindRenderbufferEXT(target, renderbuffer);
+  }
+
   public void glBindTexture(int target, int texture) {
     glut_h.glBindTexture(target, texture);
+  }
+
+  public void glBindVertexArrayAPPLE(int array) {
+    glut_h.glBindVertexArrayAPPLE(array);
   }
 
   public void glBitmap(int width, int height, float xorig, float yorig, float xmove, float ymove, Addressable bitmap) {
@@ -1641,12 +129,24 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glBlendColor(red, green, blue, alpha);
   }
 
+  public void glBlendColorEXT(float red, float green, float blue, float alpha) {
+    glut_h.glBlendColorEXT(red, green, blue, alpha);
+  }
+
   public void glBlendEquation(int mode) {
     glut_h.glBlendEquation(mode);
   }
 
+  public void glBlendEquationEXT(int mode) {
+    glut_h.glBlendEquationEXT(mode);
+  }
+
   public void glBlendEquationSeparate(int modeRGB, int modeAlpha) {
     glut_h.glBlendEquationSeparate(modeRGB, modeAlpha);
+  }
+
+  public void glBlendEquationSeparateEXT(int modeRGB, int modeAlpha) {
+    glut_h.glBlendEquationSeparateEXT(modeRGB, modeAlpha);
   }
 
   public void glBlendFunc(int sfactor, int dfactor) {
@@ -1657,12 +157,36 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glBlendFuncSeparate(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
   }
 
+  public void glBlendFuncSeparateEXT(int sfactorRGB, int dfactorRGB, int sfactorAlpha, int dfactorAlpha) {
+    glut_h.glBlendFuncSeparateEXT(sfactorRGB, dfactorRGB, sfactorAlpha, dfactorAlpha);
+  }
+
+  public void glBlitFramebuffer(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, int mask, int filter) {
+    glut_h.glBlitFramebuffer(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+  }
+
+  public void glBlitFramebufferEXT(int srcX0, int srcY0, int srcX1, int srcY1, int dstX0, int dstY0, int dstX1, int dstY1, int mask, int filter) {
+    glut_h.glBlitFramebufferEXT(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+  }
+
   public void glBufferData(int target, long size, Addressable data, int usage) {
     glut_h.glBufferData(target, size, data, usage);
   }
 
+  public void glBufferDataARB(int target, long size, Addressable data, int usage) {
+    glut_h.glBufferDataARB(target, size, data, usage);
+  }
+
+  public void glBufferParameteriAPPLE(int target, int pname, int param) {
+    glut_h.glBufferParameteriAPPLE(target, pname, param);
+  }
+
   public void glBufferSubData(int target, long offset, long size, Addressable data) {
     glut_h.glBufferSubData(target, offset, size, data);
+  }
+
+  public void glBufferSubDataARB(int target, long offset, long size, Addressable data) {
+    glut_h.glBufferSubDataARB(target, offset, size, data);
   }
 
   public void glCallList(int list) {
@@ -1671,6 +195,18 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
 
   public void glCallLists(int n, int type, Addressable lists) {
     glut_h.glCallLists(n, type, lists);
+  }
+
+  public int glCheckFramebufferStatus(int target) {
+    return glut_h.glCheckFramebufferStatus(target);
+  }
+
+  public int glCheckFramebufferStatusEXT(int target) {
+    return glut_h.glCheckFramebufferStatusEXT(target);
+  }
+
+  public void glClampColorARB(int target, int clamp) {
+    glut_h.glClampColorARB(target, clamp);
   }
 
   public void glClear(int mask) {
@@ -1683,6 +219,14 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
 
   public void glClearColor(float red, float green, float blue, float alpha) {
     glut_h.glClearColor(red, green, blue, alpha);
+  }
+
+  public void glClearColorIiEXT(int red, int green, int blue, int alpha) {
+    glut_h.glClearColorIiEXT(red, green, blue, alpha);
+  }
+
+  public void glClearColorIuiEXT(int red, int green, int blue, int alpha) {
+    glut_h.glClearColorIuiEXT(red, green, blue, alpha);
   }
 
   public void glClearDepth(double depth) {
@@ -1699,6 +243,14 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
 
   public void glClientActiveTexture(int texture) {
     glut_h.glClientActiveTexture(texture);
+  }
+
+  public void glClientActiveTextureARB(int texture) {
+    glut_h.glClientActiveTextureARB(texture);
+  }
+
+  public int glClientWaitSync(Addressable sync, int flags, long timeout) {
+    return glut_h.glClientWaitSync(sync, flags, timeout);
   }
 
   public void glClipPlane(int plane, Addressable equation) {
@@ -1837,6 +389,10 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColorMask(red, green, blue, alpha);
   }
 
+  public void glColorMaskIndexedEXT(int index, byte r, byte g, byte b, byte a) {
+    glut_h.glColorMaskIndexedEXT(index, r, g, b, a);
+  }
+
   public void glColorMaterial(int face, int mode) {
     glut_h.glColorMaterial(face, mode);
   }
@@ -1865,28 +421,56 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glCompileShader(shader);
   }
 
+  public void glCompileShaderARB(Addressable shaderObj) {
+    glut_h.glCompileShaderARB(shaderObj);
+  }
+
   public void glCompressedTexImage1D(int target, int level, int internalformat, int width, int border, int imageSize, Addressable data) {
     glut_h.glCompressedTexImage1D(target, level, internalformat, width, border, imageSize, data);
+  }
+
+  public void glCompressedTexImage1DARB(int target, int level, int internalformat, int width, int border, int imageSize, Addressable data) {
+    glut_h.glCompressedTexImage1DARB(target, level, internalformat, width, border, imageSize, data);
   }
 
   public void glCompressedTexImage2D(int target, int level, int internalformat, int width, int height, int border, int imageSize, Addressable data) {
     glut_h.glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data);
   }
 
+  public void glCompressedTexImage2DARB(int target, int level, int internalformat, int width, int height, int border, int imageSize, Addressable data) {
+    glut_h.glCompressedTexImage2DARB(target, level, internalformat, width, height, border, imageSize, data);
+  }
+
   public void glCompressedTexImage3D(int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, Addressable data) {
     glut_h.glCompressedTexImage3D(target, level, internalformat, width, height, depth, border, imageSize, data);
+  }
+
+  public void glCompressedTexImage3DARB(int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, Addressable data) {
+    glut_h.glCompressedTexImage3DARB(target, level, internalformat, width, height, depth, border, imageSize, data);
   }
 
   public void glCompressedTexSubImage1D(int target, int level, int xoffset, int width, int format, int imageSize, Addressable data) {
     glut_h.glCompressedTexSubImage1D(target, level, xoffset, width, format, imageSize, data);
   }
 
+  public void glCompressedTexSubImage1DARB(int target, int level, int xoffset, int width, int format, int imageSize, Addressable data) {
+    glut_h.glCompressedTexSubImage1DARB(target, level, xoffset, width, format, imageSize, data);
+  }
+
   public void glCompressedTexSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, Addressable data) {
     glut_h.glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data);
   }
 
+  public void glCompressedTexSubImage2DARB(int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, Addressable data) {
+    glut_h.glCompressedTexSubImage2DARB(target, level, xoffset, yoffset, width, height, format, imageSize, data);
+  }
+
   public void glCompressedTexSubImage3D(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, Addressable data) {
     glut_h.glCompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
+  }
+
+  public void glCompressedTexSubImage3DARB(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, Addressable data) {
+    glut_h.glCompressedTexSubImage3DARB(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
   }
 
   public void glConvolutionFilter1D(int target, int internalformat, int width, int format, int type, Addressable image) {
@@ -1957,8 +541,16 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glCreateProgram();
   }
 
+  public MemoryAddress glCreateProgramObjectARB() {
+    return glut_h.glCreateProgramObjectARB();
+  }
+
   public int glCreateShader(int type) {
     return glut_h.glCreateShader(type);
+  }
+
+  public MemoryAddress glCreateShaderObjectARB(int shaderType) {
+    return glut_h.glCreateShaderObjectARB(shaderType);
   }
 
   public void glCullFace(int mode) {
@@ -1969,24 +561,72 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glDeleteBuffers(n, buffers);
   }
 
+  public void glDeleteBuffersARB(int n, Addressable buffers) {
+    glut_h.glDeleteBuffersARB(n, buffers);
+  }
+
+  public void glDeleteFencesAPPLE(int n, Addressable fences) {
+    glut_h.glDeleteFencesAPPLE(n, fences);
+  }
+
+  public void glDeleteFramebuffers(int n, Addressable framebuffers) {
+    glut_h.glDeleteFramebuffers(n, framebuffers);
+  }
+
+  public void glDeleteFramebuffersEXT(int n, Addressable framebuffers) {
+    glut_h.glDeleteFramebuffersEXT(n, framebuffers);
+  }
+
   public void glDeleteLists(int list, int range) {
     glut_h.glDeleteLists(list, range);
+  }
+
+  public void glDeleteObjectARB(Addressable obj) {
+    glut_h.glDeleteObjectARB(obj);
   }
 
   public void glDeleteProgram(int program) {
     glut_h.glDeleteProgram(program);
   }
 
+  public void glDeleteProgramsARB(int n, Addressable programs) {
+    glut_h.glDeleteProgramsARB(n, programs);
+  }
+
   public void glDeleteQueries(int n, Addressable ids) {
     glut_h.glDeleteQueries(n, ids);
+  }
+
+  public void glDeleteQueriesARB(int n, Addressable ids) {
+    glut_h.glDeleteQueriesARB(n, ids);
+  }
+
+  public void glDeleteRenderbuffers(int n, Addressable renderbuffers) {
+    glut_h.glDeleteRenderbuffers(n, renderbuffers);
+  }
+
+  public void glDeleteRenderbuffersEXT(int n, Addressable renderbuffers) {
+    glut_h.glDeleteRenderbuffersEXT(n, renderbuffers);
   }
 
   public void glDeleteShader(int shader) {
     glut_h.glDeleteShader(shader);
   }
 
+  public void glDeleteSync(Addressable sync) {
+    glut_h.glDeleteSync(sync);
+  }
+
   public void glDeleteTextures(int n, Addressable textures) {
     glut_h.glDeleteTextures(n, textures);
+  }
+
+  public void glDeleteVertexArraysAPPLE(int n, Addressable arrays) {
+    glut_h.glDeleteVertexArraysAPPLE(n, arrays);
+  }
+
+  public void glDepthBoundsEXT(double zmin, double zmax) {
+    glut_h.glDepthBoundsEXT(zmin, zmax);
   }
 
   public void glDepthFunc(int func) {
@@ -2001,6 +641,10 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glDepthRange(n, f);
   }
 
+  public void glDetachObjectARB(Addressable containerObj, Addressable attachedObj) {
+    glut_h.glDetachObjectARB(containerObj, attachedObj);
+  }
+
   public void glDetachShader(int program, int shader) {
     glut_h.glDetachShader(program, shader);
   }
@@ -2013,12 +657,28 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glDisableClientState(array);
   }
 
+  public void glDisableIndexedEXT(int target, int index) {
+    glut_h.glDisableIndexedEXT(target, index);
+  }
+
+  public void glDisableVertexAttribAPPLE(int index, int pname) {
+    glut_h.glDisableVertexAttribAPPLE(index, pname);
+  }
+
   public void glDisableVertexAttribArray(int index) {
     glut_h.glDisableVertexAttribArray(index);
   }
 
+  public void glDisableVertexAttribArrayARB(int index) {
+    glut_h.glDisableVertexAttribArrayARB(index);
+  }
+
   public void glDrawArrays(int mode, int first, int count) {
     glut_h.glDrawArrays(mode, first, count);
+  }
+
+  public void glDrawArraysInstancedARB(int mode, int first, int count, int primcount) {
+    glut_h.glDrawArraysInstancedARB(mode, first, count, primcount);
   }
 
   public void glDrawBuffer(int buf) {
@@ -2029,16 +689,48 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glDrawBuffers(n, bufs);
   }
 
+  public void glDrawBuffersARB(int n, Addressable bufs) {
+    glut_h.glDrawBuffersARB(n, bufs);
+  }
+
+  public void glDrawElementArrayAPPLE(int mode, int first, int count) {
+    glut_h.glDrawElementArrayAPPLE(mode, first, count);
+  }
+
   public void glDrawElements(int mode, int count, int type, Addressable indices) {
     glut_h.glDrawElements(mode, count, type, indices);
+  }
+
+  public void glDrawElementsBaseVertex(int mode, int count, int type, Addressable indices, int basevertex) {
+    glut_h.glDrawElementsBaseVertex(mode, count, type, indices, basevertex);
+  }
+
+  public void glDrawElementsInstancedARB(int mode, int count, int type, Addressable indices, int primcount) {
+    glut_h.glDrawElementsInstancedARB(mode, count, type, indices, primcount);
+  }
+
+  public void glDrawElementsInstancedBaseVertex(int mode, int count, int type, Addressable indices, int instancecount, int basevertex) {
+    glut_h.glDrawElementsInstancedBaseVertex(mode, count, type, indices, instancecount, basevertex);
   }
 
   public void glDrawPixels(int width, int height, int format, int type, Addressable pixels) {
     glut_h.glDrawPixels(width, height, format, type, pixels);
   }
 
+  public void glDrawRangeElementArrayAPPLE(int mode, int start, int end, int first, int count) {
+    glut_h.glDrawRangeElementArrayAPPLE(mode, start, end, first, count);
+  }
+
   public void glDrawRangeElements(int mode, int start, int end, int count, int type, Addressable indices) {
     glut_h.glDrawRangeElements(mode, start, end, count, type, indices);
+  }
+
+  public void glDrawRangeElementsBaseVertex(int mode, int start, int end, int count, int type, Addressable indices, int basevertex) {
+    glut_h.glDrawRangeElementsBaseVertex(mode, start, end, count, type, indices, basevertex);
+  }
+
+  public void glDrawRangeElementsEXT(int mode, int start, int end, int count, int type, Addressable indices) {
+    glut_h.glDrawRangeElementsEXT(mode, start, end, count, type, indices);
   }
 
   public void glEdgeFlag(byte flag) {
@@ -2053,6 +745,10 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glEdgeFlagv(flag);
   }
 
+  public void glElementPointerAPPLE(int type, Addressable pointer) {
+    glut_h.glElementPointerAPPLE(type, pointer);
+  }
+
   public void glEnable(int cap) {
     glut_h.glEnable(cap);
   }
@@ -2061,12 +757,28 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glEnableClientState(array);
   }
 
+  public void glEnableIndexedEXT(int target, int index) {
+    glut_h.glEnableIndexedEXT(target, index);
+  }
+
+  public void glEnableVertexAttribAPPLE(int index, int pname) {
+    glut_h.glEnableVertexAttribAPPLE(index, pname);
+  }
+
   public void glEnableVertexAttribArray(int index) {
     glut_h.glEnableVertexAttribArray(index);
   }
 
+  public void glEnableVertexAttribArrayARB(int index) {
+    glut_h.glEnableVertexAttribArrayARB(index);
+  }
+
   public void glEnd() {
     glut_h.glEnd();
+  }
+
+  public void glEndConditionalRenderNV() {
+    glut_h.glEndConditionalRenderNV();
   }
 
   public void glEndList() {
@@ -2075,6 +787,14 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
 
   public void glEndQuery(int target) {
     glut_h.glEndQuery(target);
+  }
+
+  public void glEndQueryARB(int target) {
+    glut_h.glEndQueryARB(target);
+  }
+
+  public void glEndTransformFeedbackEXT() {
+    glut_h.glEndTransformFeedbackEXT();
   }
 
   public void glEvalCoord1d(double u) {
@@ -2129,32 +849,72 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glFeedbackBuffer(size, type, buffer);
   }
 
+  public MemoryAddress glFenceSync(int condition, int flags) {
+    return glut_h.glFenceSync(condition, flags);
+  }
+
   public void glFinish() {
     glut_h.glFinish();
+  }
+
+  public void glFinishFenceAPPLE(int fence) {
+    glut_h.glFinishFenceAPPLE(fence);
+  }
+
+  public void glFinishObjectAPPLE(int object, int name) {
+    glut_h.glFinishObjectAPPLE(object, name);
   }
 
   public void glFlush() {
     glut_h.glFlush();
   }
 
+  public void glFlushMappedBufferRangeAPPLE(int target, long offset, long size) {
+    glut_h.glFlushMappedBufferRangeAPPLE(target, offset, size);
+  }
+
+  public void glFlushVertexArrayRangeAPPLE(int length, Addressable pointer) {
+    glut_h.glFlushVertexArrayRangeAPPLE(length, pointer);
+  }
+
   public void glFogCoordPointer(int type, int stride, Addressable pointer) {
     glut_h.glFogCoordPointer(type, stride, pointer);
+  }
+
+  public void glFogCoordPointerEXT(int type, int stride, Addressable pointer) {
+    glut_h.glFogCoordPointerEXT(type, stride, pointer);
   }
 
   public void glFogCoordd(double coord) {
     glut_h.glFogCoordd(coord);
   }
 
+  public void glFogCoorddEXT(double coord) {
+    glut_h.glFogCoorddEXT(coord);
+  }
+
   public void glFogCoorddv(Addressable coord) {
     glut_h.glFogCoorddv(coord);
+  }
+
+  public void glFogCoorddvEXT(Addressable coord) {
+    glut_h.glFogCoorddvEXT(coord);
   }
 
   public void glFogCoordf(float coord) {
     glut_h.glFogCoordf(coord);
   }
 
+  public void glFogCoordfEXT(float coord) {
+    glut_h.glFogCoordfEXT(coord);
+  }
+
   public void glFogCoordfv(Addressable coord) {
     glut_h.glFogCoordfv(coord);
+  }
+
+  public void glFogCoordfvEXT(Addressable coord) {
+    glut_h.glFogCoordfvEXT(coord);
   }
 
   public void glFogf(int pname, float param) {
@@ -2173,6 +933,54 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glFogiv(pname, params);
   }
 
+  public void glFramebufferRenderbuffer(int target, int attachment, int renderbuffertarget, int renderbuffer) {
+    glut_h.glFramebufferRenderbuffer(target, attachment, renderbuffertarget, renderbuffer);
+  }
+
+  public void glFramebufferRenderbufferEXT(int target, int attachment, int renderbuffertarget, int renderbuffer) {
+    glut_h.glFramebufferRenderbufferEXT(target, attachment, renderbuffertarget, renderbuffer);
+  }
+
+  public void glFramebufferTexture1D(int target, int attachment, int textarget, int texture, int level) {
+    glut_h.glFramebufferTexture1D(target, attachment, textarget, texture, level);
+  }
+
+  public void glFramebufferTexture1DEXT(int target, int attachment, int textarget, int texture, int level) {
+    glut_h.glFramebufferTexture1DEXT(target, attachment, textarget, texture, level);
+  }
+
+  public void glFramebufferTexture2D(int target, int attachment, int textarget, int texture, int level) {
+    glut_h.glFramebufferTexture2D(target, attachment, textarget, texture, level);
+  }
+
+  public void glFramebufferTexture2DEXT(int target, int attachment, int textarget, int texture, int level) {
+    glut_h.glFramebufferTexture2DEXT(target, attachment, textarget, texture, level);
+  }
+
+  public void glFramebufferTexture3D(int target, int attachment, int textarget, int texture, int level, int zoffset) {
+    glut_h.glFramebufferTexture3D(target, attachment, textarget, texture, level, zoffset);
+  }
+
+  public void glFramebufferTexture3DEXT(int target, int attachment, int textarget, int texture, int level, int zoffset) {
+    glut_h.glFramebufferTexture3DEXT(target, attachment, textarget, texture, level, zoffset);
+  }
+
+  public void glFramebufferTextureEXT(int target, int attachment, int texture, int level) {
+    glut_h.glFramebufferTextureEXT(target, attachment, texture, level);
+  }
+
+  public void glFramebufferTextureFaceEXT(int target, int attachment, int texture, int level, int face) {
+    glut_h.glFramebufferTextureFaceEXT(target, attachment, texture, level, face);
+  }
+
+  public void glFramebufferTextureLayer(int target, int attachment, int texture, int level, int layer) {
+    glut_h.glFramebufferTextureLayer(target, attachment, texture, level, layer);
+  }
+
+  public void glFramebufferTextureLayerEXT(int target, int attachment, int texture, int level, int layer) {
+    glut_h.glFramebufferTextureLayerEXT(target, attachment, texture, level, layer);
+  }
+
   public void glFrontFace(int mode) {
     glut_h.glFrontFace(mode);
   }
@@ -2185,24 +993,80 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glGenBuffers(n, buffers);
   }
 
+  public void glGenBuffersARB(int n, Addressable buffers) {
+    glut_h.glGenBuffersARB(n, buffers);
+  }
+
+  public void glGenFencesAPPLE(int n, Addressable fences) {
+    glut_h.glGenFencesAPPLE(n, fences);
+  }
+
+  public void glGenFramebuffers(int n, Addressable framebuffers) {
+    glut_h.glGenFramebuffers(n, framebuffers);
+  }
+
+  public void glGenFramebuffersEXT(int n, Addressable framebuffers) {
+    glut_h.glGenFramebuffersEXT(n, framebuffers);
+  }
+
   public int glGenLists(int range) {
     return glut_h.glGenLists(range);
+  }
+
+  public void glGenProgramsARB(int n, Addressable programs) {
+    glut_h.glGenProgramsARB(n, programs);
   }
 
   public void glGenQueries(int n, Addressable ids) {
     glut_h.glGenQueries(n, ids);
   }
 
+  public void glGenQueriesARB(int n, Addressable ids) {
+    glut_h.glGenQueriesARB(n, ids);
+  }
+
+  public void glGenRenderbuffers(int n, Addressable renderbuffers) {
+    glut_h.glGenRenderbuffers(n, renderbuffers);
+  }
+
+  public void glGenRenderbuffersEXT(int n, Addressable renderbuffers) {
+    glut_h.glGenRenderbuffersEXT(n, renderbuffers);
+  }
+
   public void glGenTextures(int n, Addressable textures) {
     glut_h.glGenTextures(n, textures);
+  }
+
+  public void glGenVertexArraysAPPLE(int n, Addressable arrays) {
+    glut_h.glGenVertexArraysAPPLE(n, arrays);
+  }
+
+  public void glGenerateMipmap(int target) {
+    glut_h.glGenerateMipmap(target);
+  }
+
+  public void glGenerateMipmapEXT(int target) {
+    glut_h.glGenerateMipmapEXT(target);
   }
 
   public void glGetActiveAttrib(int program, int index, int bufSize, Addressable length, Addressable size, Addressable type, Addressable name) {
     glut_h.glGetActiveAttrib(program, index, bufSize, length, size, type, name);
   }
 
+  public void glGetActiveAttribARB(Addressable programObj, int index, int maxLength, Addressable length, Addressable size, Addressable type, Addressable name) {
+    glut_h.glGetActiveAttribARB(programObj, index, maxLength, length, size, type, name);
+  }
+
   public void glGetActiveUniform(int program, int index, int bufSize, Addressable length, Addressable size, Addressable type, Addressable name) {
     glut_h.glGetActiveUniform(program, index, bufSize, length, size, type, name);
+  }
+
+  public void glGetActiveUniformARB(Addressable programObj, int index, int maxLength, Addressable length, Addressable size, Addressable type, Addressable name) {
+    glut_h.glGetActiveUniformARB(programObj, index, maxLength, length, size, type, name);
+  }
+
+  public void glGetAttachedObjectsARB(Addressable containerObj, int maxCount, Addressable count, Addressable obj) {
+    glut_h.glGetAttachedObjectsARB(containerObj, maxCount, count, obj);
   }
 
   public void glGetAttachedShaders(int program, int maxCount, Addressable count, Addressable shaders) {
@@ -2213,6 +1077,14 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glGetAttribLocation(program, name);
   }
 
+  public int glGetAttribLocationARB(Addressable programObj, Addressable name) {
+    return glut_h.glGetAttribLocationARB(programObj, name);
+  }
+
+  public void glGetBooleanIndexedvEXT(int target, int index, Addressable data) {
+    glut_h.glGetBooleanIndexedvEXT(target, index, data);
+  }
+
   public void glGetBooleanv(int pname, Addressable data) {
     glut_h.glGetBooleanv(pname, data);
   }
@@ -2221,12 +1093,24 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glGetBufferParameteriv(target, pname, params);
   }
 
+  public void glGetBufferParameterivARB(int target, int pname, Addressable params) {
+    glut_h.glGetBufferParameterivARB(target, pname, params);
+  }
+
   public void glGetBufferPointerv(int target, int pname, Addressable params) {
     glut_h.glGetBufferPointerv(target, pname, params);
   }
 
+  public void glGetBufferPointervARB(int target, int pname, Addressable params) {
+    glut_h.glGetBufferPointervARB(target, pname, params);
+  }
+
   public void glGetBufferSubData(int target, long offset, long size, Addressable data) {
     glut_h.glGetBufferSubData(target, offset, size, data);
+  }
+
+  public void glGetBufferSubDataARB(int target, long offset, long size, Addressable data) {
+    glut_h.glGetBufferSubDataARB(target, offset, size, data);
   }
 
   public void glGetClipPlane(int plane, Addressable equation) {
@@ -2247,6 +1131,10 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
 
   public void glGetCompressedTexImage(int target, int level, Addressable img) {
     glut_h.glGetCompressedTexImage(target, level, img);
+  }
+
+  public void glGetCompressedTexImageARB(int target, int level, Addressable img) {
+    glut_h.glGetCompressedTexImageARB(target, level, img);
   }
 
   public void glGetConvolutionFilter(int target, int format, int type, Addressable image) {
@@ -2273,6 +1161,22 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glGetFloatv(pname, data);
   }
 
+  public int glGetFragDataLocationEXT(int program, Addressable name) {
+    return glut_h.glGetFragDataLocationEXT(program, name);
+  }
+
+  public void glGetFramebufferAttachmentParameteriv(int target, int attachment, int pname, Addressable params) {
+    glut_h.glGetFramebufferAttachmentParameteriv(target, attachment, pname, params);
+  }
+
+  public void glGetFramebufferAttachmentParameterivEXT(int target, int attachment, int pname, Addressable params) {
+    glut_h.glGetFramebufferAttachmentParameterivEXT(target, attachment, pname, params);
+  }
+
+  public MemoryAddress glGetHandleARB(int pname) {
+    return glut_h.glGetHandleARB(pname);
+  }
+
   public void glGetHistogram(int target, byte reset, int format, int type, Addressable values) {
     glut_h.glGetHistogram(target, reset, format, type, values);
   }
@@ -2283,6 +1187,18 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
 
   public void glGetHistogramParameteriv(int target, int pname, Addressable params) {
     glut_h.glGetHistogramParameteriv(target, pname, params);
+  }
+
+  public void glGetInfoLogARB(Addressable obj, int maxLength, Addressable length, Addressable infoLog) {
+    glut_h.glGetInfoLogARB(obj, maxLength, length, infoLog);
+  }
+
+  public void glGetInteger64v(int pname, Addressable data) {
+    glut_h.glGetInteger64v(pname, data);
+  }
+
+  public void glGetIntegerIndexedvEXT(int target, int index, Addressable data) {
+    glut_h.glGetIntegerIndexedvEXT(target, index, data);
   }
 
   public void glGetIntegerv(int pname, Addressable data) {
@@ -2329,6 +1245,22 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glGetMinmaxParameteriv(target, pname, params);
   }
 
+  public void glGetObjectLabelEXT(int type, int object, int bufSize, Addressable length, Addressable label) {
+    glut_h.glGetObjectLabelEXT(type, object, bufSize, length, label);
+  }
+
+  public void glGetObjectParameterfvARB(Addressable obj, int pname, Addressable params) {
+    glut_h.glGetObjectParameterfvARB(obj, pname, params);
+  }
+
+  public void glGetObjectParameterivAPPLE(int objectType, int name, int pname, Addressable params) {
+    glut_h.glGetObjectParameterivAPPLE(objectType, name, pname, params);
+  }
+
+  public void glGetObjectParameterivARB(Addressable obj, int pname, Addressable params) {
+    glut_h.glGetObjectParameterivARB(obj, pname, params);
+  }
+
   public void glGetPixelMapfv(int map, Addressable values) {
     glut_h.glGetPixelMapfv(map, values);
   }
@@ -2349,24 +1281,76 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glGetPolygonStipple(mask);
   }
 
+  public void glGetProgramEnvParameterdvARB(int target, int index, Addressable params) {
+    glut_h.glGetProgramEnvParameterdvARB(target, index, params);
+  }
+
+  public void glGetProgramEnvParameterfvARB(int target, int index, Addressable params) {
+    glut_h.glGetProgramEnvParameterfvARB(target, index, params);
+  }
+
   public void glGetProgramInfoLog(int program, int bufSize, Addressable length, Addressable infoLog) {
     glut_h.glGetProgramInfoLog(program, bufSize, length, infoLog);
+  }
+
+  public void glGetProgramLocalParameterdvARB(int target, int index, Addressable params) {
+    glut_h.glGetProgramLocalParameterdvARB(target, index, params);
+  }
+
+  public void glGetProgramLocalParameterfvARB(int target, int index, Addressable params) {
+    glut_h.glGetProgramLocalParameterfvARB(target, index, params);
+  }
+
+  public void glGetProgramStringARB(int target, int pname, Addressable string) {
+    glut_h.glGetProgramStringARB(target, pname, string);
   }
 
   public void glGetProgramiv(int program, int pname, Addressable params) {
     glut_h.glGetProgramiv(program, pname, params);
   }
 
+  public void glGetProgramivARB(int target, int pname, Addressable params) {
+    glut_h.glGetProgramivARB(target, pname, params);
+  }
+
+  public void glGetQueryObjecti64vEXT(int id, int pname, Addressable params) {
+    glut_h.glGetQueryObjecti64vEXT(id, pname, params);
+  }
+
   public void glGetQueryObjectiv(int id, int pname, Addressable params) {
     glut_h.glGetQueryObjectiv(id, pname, params);
+  }
+
+  public void glGetQueryObjectivARB(int id, int pname, Addressable params) {
+    glut_h.glGetQueryObjectivARB(id, pname, params);
+  }
+
+  public void glGetQueryObjectui64vEXT(int id, int pname, Addressable params) {
+    glut_h.glGetQueryObjectui64vEXT(id, pname, params);
   }
 
   public void glGetQueryObjectuiv(int id, int pname, Addressable params) {
     glut_h.glGetQueryObjectuiv(id, pname, params);
   }
 
+  public void glGetQueryObjectuivARB(int id, int pname, Addressable params) {
+    glut_h.glGetQueryObjectuivARB(id, pname, params);
+  }
+
   public void glGetQueryiv(int target, int pname, Addressable params) {
     glut_h.glGetQueryiv(target, pname, params);
+  }
+
+  public void glGetQueryivARB(int target, int pname, Addressable params) {
+    glut_h.glGetQueryivARB(target, pname, params);
+  }
+
+  public void glGetRenderbufferParameteriv(int target, int pname, Addressable params) {
+    glut_h.glGetRenderbufferParameteriv(target, pname, params);
+  }
+
+  public void glGetRenderbufferParameterivEXT(int target, int pname, Addressable params) {
+    glut_h.glGetRenderbufferParameterivEXT(target, pname, params);
   }
 
   public void glGetSeparableFilter(int target, int format, int type, Addressable row, Addressable column, Addressable span) {
@@ -2381,12 +1365,20 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glGetShaderSource(shader, bufSize, length, source);
   }
 
+  public void glGetShaderSourceARB(Addressable obj, int maxLength, Addressable length, Addressable source) {
+    glut_h.glGetShaderSourceARB(obj, maxLength, length, source);
+  }
+
   public void glGetShaderiv(int shader, int pname, Addressable params) {
     glut_h.glGetShaderiv(shader, pname, params);
   }
 
   public String glGetString(int name) {
     return glut_h.glGetString(name).getUtf8String(0);
+  }
+
+  public void glGetSynciv(Addressable sync, int pname, int count, Addressable length, Addressable values) {
+    glut_h.glGetSynciv(sync, pname, count, length, values);
   }
 
   public void glGetTexEnvfv(int target, int pname, Addressable params) {
@@ -2421,6 +1413,18 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glGetTexLevelParameteriv(target, level, pname, params);
   }
 
+  public void glGetTexParameterIivEXT(int target, int pname, Addressable params) {
+    glut_h.glGetTexParameterIivEXT(target, pname, params);
+  }
+
+  public void glGetTexParameterIuivEXT(int target, int pname, Addressable params) {
+    glut_h.glGetTexParameterIuivEXT(target, pname, params);
+  }
+
+  public void glGetTexParameterPointervAPPLE(int target, int pname, Addressable params) {
+    glut_h.glGetTexParameterPointervAPPLE(target, pname, params);
+  }
+
   public void glGetTexParameterfv(int target, int pname, Addressable params) {
     glut_h.glGetTexParameterfv(target, pname, params);
   }
@@ -2429,32 +1433,84 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glGetTexParameteriv(target, pname, params);
   }
 
+  public void glGetTransformFeedbackVaryingEXT(int program, int index, int bufSize, Addressable length, Addressable size, Addressable type, Addressable name) {
+    glut_h.glGetTransformFeedbackVaryingEXT(program, index, bufSize, length, size, type, name);
+  }
+
+  public int glGetUniformBufferSizeEXT(int program, int location) {
+    return glut_h.glGetUniformBufferSizeEXT(program, location);
+  }
+
   public int glGetUniformLocation(int program, Addressable name) {
     return glut_h.glGetUniformLocation(program, name);
+  }
+
+  public int glGetUniformLocationARB(Addressable programObj, Addressable name) {
+    return glut_h.glGetUniformLocationARB(programObj, name);
+  }
+
+  public long glGetUniformOffsetEXT(int program, int location) {
+    return glut_h.glGetUniformOffsetEXT(program, location);
   }
 
   public void glGetUniformfv(int program, int location, Addressable params) {
     glut_h.glGetUniformfv(program, location, params);
   }
 
+  public void glGetUniformfvARB(Addressable programObj, int location, Addressable params) {
+    glut_h.glGetUniformfvARB(programObj, location, params);
+  }
+
   public void glGetUniformiv(int program, int location, Addressable params) {
     glut_h.glGetUniformiv(program, location, params);
+  }
+
+  public void glGetUniformivARB(Addressable programObj, int location, Addressable params) {
+    glut_h.glGetUniformivARB(programObj, location, params);
+  }
+
+  public void glGetUniformuivEXT(int program, int location, Addressable params) {
+    glut_h.glGetUniformuivEXT(program, location, params);
+  }
+
+  public void glGetVertexAttribIivEXT(int index, int pname, Addressable params) {
+    glut_h.glGetVertexAttribIivEXT(index, pname, params);
+  }
+
+  public void glGetVertexAttribIuivEXT(int index, int pname, Addressable params) {
+    glut_h.glGetVertexAttribIuivEXT(index, pname, params);
   }
 
   public void glGetVertexAttribPointerv(int index, int pname, Addressable pointer) {
     glut_h.glGetVertexAttribPointerv(index, pname, pointer);
   }
 
+  public void glGetVertexAttribPointervARB(int index, int pname, Addressable pointer) {
+    glut_h.glGetVertexAttribPointervARB(index, pname, pointer);
+  }
+
   public void glGetVertexAttribdv(int index, int pname, Addressable params) {
     glut_h.glGetVertexAttribdv(index, pname, params);
+  }
+
+  public void glGetVertexAttribdvARB(int index, int pname, Addressable params) {
+    glut_h.glGetVertexAttribdvARB(index, pname, params);
   }
 
   public void glGetVertexAttribfv(int index, int pname, Addressable params) {
     glut_h.glGetVertexAttribfv(index, pname, params);
   }
 
+  public void glGetVertexAttribfvARB(int index, int pname, Addressable params) {
+    glut_h.glGetVertexAttribfvARB(index, pname, params);
+  }
+
   public void glGetVertexAttribiv(int index, int pname, Addressable params) {
     glut_h.glGetVertexAttribiv(index, pname, params);
+  }
+
+  public void glGetVertexAttribivARB(int index, int pname, Addressable params) {
+    glut_h.glGetVertexAttribivARB(index, pname, params);
   }
 
   public void glHint(int target, int mode) {
@@ -2517,6 +1573,10 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glInitNames();
   }
 
+  public void glInsertEventMarkerEXT(int length, Addressable marker) {
+    glut_h.glInsertEventMarkerEXT(length, marker);
+  }
+
   public void glInterleavedArrays(int format, int stride, Addressable pointer) {
     glut_h.glInterleavedArrays(format, stride, pointer);
   }
@@ -2525,8 +1585,28 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glIsBuffer(buffer);
   }
 
+  public byte glIsBufferARB(int buffer) {
+    return glut_h.glIsBufferARB(buffer);
+  }
+
   public byte glIsEnabled(int cap) {
     return glut_h.glIsEnabled(cap);
+  }
+
+  public byte glIsEnabledIndexedEXT(int target, int index) {
+    return glut_h.glIsEnabledIndexedEXT(target, index);
+  }
+
+  public byte glIsFenceAPPLE(int fence) {
+    return glut_h.glIsFenceAPPLE(fence);
+  }
+
+  public byte glIsFramebuffer(int framebuffer) {
+    return glut_h.glIsFramebuffer(framebuffer);
+  }
+
+  public byte glIsFramebufferEXT(int framebuffer) {
+    return glut_h.glIsFramebufferEXT(framebuffer);
   }
 
   public byte glIsList(int list) {
@@ -2537,16 +1617,48 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glIsProgram(program);
   }
 
+  public byte glIsProgramARB(int program) {
+    return glut_h.glIsProgramARB(program);
+  }
+
   public byte glIsQuery(int id) {
     return glut_h.glIsQuery(id);
+  }
+
+  public byte glIsQueryARB(int id) {
+    return glut_h.glIsQueryARB(id);
+  }
+
+  public byte glIsRenderbuffer(int renderbuffer) {
+    return glut_h.glIsRenderbuffer(renderbuffer);
+  }
+
+  public byte glIsRenderbufferEXT(int renderbuffer) {
+    return glut_h.glIsRenderbufferEXT(renderbuffer);
   }
 
   public byte glIsShader(int shader) {
     return glut_h.glIsShader(shader);
   }
 
+  public byte glIsSync(Addressable sync) {
+    return glut_h.glIsSync(sync);
+  }
+
   public byte glIsTexture(int texture) {
     return glut_h.glIsTexture(texture);
+  }
+
+  public byte glIsVertexArrayAPPLE(int array) {
+    return glut_h.glIsVertexArrayAPPLE(array);
+  }
+
+  public byte glIsVertexAttribEnabledAPPLE(int index, int pname) {
+    return glut_h.glIsVertexAttribEnabledAPPLE(index, pname);
+  }
+
+  public void glLabelObjectEXT(int type, int object, int length, Addressable label) {
+    glut_h.glLabelObjectEXT(type, object, length, label);
   }
 
   public void glLightModelf(int pname, float param) {
@@ -2593,6 +1705,10 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glLinkProgram(program);
   }
 
+  public void glLinkProgramARB(Addressable programObj) {
+    glut_h.glLinkProgramARB(programObj);
+  }
+
   public void glListBase(int base) {
     glut_h.glListBase(base);
   }
@@ -2617,8 +1733,16 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glLoadTransposeMatrixd(m);
   }
 
+  public void glLoadTransposeMatrixdARB(Addressable m) {
+    glut_h.glLoadTransposeMatrixdARB(m);
+  }
+
   public void glLoadTransposeMatrixf(Addressable m) {
     glut_h.glLoadTransposeMatrixf(m);
+  }
+
+  public void glLoadTransposeMatrixfARB(Addressable m) {
+    glut_h.glLoadTransposeMatrixfARB(m);
   }
 
   public void glLogicOp(int opcode) {
@@ -2645,6 +1769,10 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glMapBuffer(target, access);
   }
 
+  public MemoryAddress glMapBufferARB(int target, int access) {
+    return glut_h.glMapBufferARB(target, access);
+  }
+
   public void glMapGrid1d(int un, double u1, double u2) {
     glut_h.glMapGrid1d(un, u1, u2);
   }
@@ -2659,6 +1787,22 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
 
   public void glMapGrid2f(int un, float u1, float u2, int vn, float v1, float v2) {
     glut_h.glMapGrid2f(un, u1, u2, vn, v1, v2);
+  }
+
+  public void glMapVertexAttrib1dAPPLE(int index, int size, double u1, double u2, int stride, int order, Addressable points) {
+    glut_h.glMapVertexAttrib1dAPPLE(index, size, u1, u2, stride, order, points);
+  }
+
+  public void glMapVertexAttrib1fAPPLE(int index, int size, float u1, float u2, int stride, int order, Addressable points) {
+    glut_h.glMapVertexAttrib1fAPPLE(index, size, u1, u2, stride, order, points);
+  }
+
+  public void glMapVertexAttrib2dAPPLE(int index, int size, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, Addressable points) {
+    glut_h.glMapVertexAttrib2dAPPLE(index, size, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
+  }
+
+  public void glMapVertexAttrib2fAPPLE(int index, int size, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, Addressable points) {
+    glut_h.glMapVertexAttrib2fAPPLE(index, size, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
   }
 
   public void glMaterialf(int face, int pname, float param) {
@@ -2697,144 +1841,300 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultTransposeMatrixd(m);
   }
 
+  public void glMultTransposeMatrixdARB(Addressable m) {
+    glut_h.glMultTransposeMatrixdARB(m);
+  }
+
   public void glMultTransposeMatrixf(Addressable m) {
     glut_h.glMultTransposeMatrixf(m);
+  }
+
+  public void glMultTransposeMatrixfARB(Addressable m) {
+    glut_h.glMultTransposeMatrixfARB(m);
   }
 
   public void glMultiDrawArrays(int mode, Addressable first, Addressable count, int drawcount) {
     glut_h.glMultiDrawArrays(mode, first, count, drawcount);
   }
 
+  public void glMultiDrawArraysEXT(int mode, Addressable first, Addressable count, int primcount) {
+    glut_h.glMultiDrawArraysEXT(mode, first, count, primcount);
+  }
+
+  public void glMultiDrawElementArrayAPPLE(int mode, Addressable first, Addressable count, int primcount) {
+    glut_h.glMultiDrawElementArrayAPPLE(mode, first, count, primcount);
+  }
+
   public void glMultiDrawElements(int mode, Addressable count, int type, Addressable indices, int drawcount) {
     glut_h.glMultiDrawElements(mode, count, type, indices, drawcount);
+  }
+
+  public void glMultiDrawElementsBaseVertex(int mode, Addressable count, int type, Addressable indices, int drawcount, Addressable basevertex) {
+    glut_h.glMultiDrawElementsBaseVertex(mode, count, type, indices, drawcount, basevertex);
+  }
+
+  public void glMultiDrawElementsEXT(int mode, Addressable count, int type, Addressable indices, int primcount) {
+    glut_h.glMultiDrawElementsEXT(mode, count, type, indices, primcount);
+  }
+
+  public void glMultiDrawRangeElementArrayAPPLE(int mode, int start, int end, Addressable first, Addressable count, int primcount) {
+    glut_h.glMultiDrawRangeElementArrayAPPLE(mode, start, end, first, count, primcount);
   }
 
   public void glMultiTexCoord1d(int target, double s) {
     glut_h.glMultiTexCoord1d(target, s);
   }
 
+  public void glMultiTexCoord1dARB(int target, double s) {
+    glut_h.glMultiTexCoord1dARB(target, s);
+  }
+
   public void glMultiTexCoord1dv(int target, Addressable v) {
     glut_h.glMultiTexCoord1dv(target, v);
+  }
+
+  public void glMultiTexCoord1dvARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord1dvARB(target, v);
   }
 
   public void glMultiTexCoord1f(int target, float s) {
     glut_h.glMultiTexCoord1f(target, s);
   }
 
+  public void glMultiTexCoord1fARB(int target, float s) {
+    glut_h.glMultiTexCoord1fARB(target, s);
+  }
+
   public void glMultiTexCoord1fv(int target, Addressable v) {
     glut_h.glMultiTexCoord1fv(target, v);
+  }
+
+  public void glMultiTexCoord1fvARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord1fvARB(target, v);
   }
 
   public void glMultiTexCoord1i(int target, int s) {
     glut_h.glMultiTexCoord1i(target, s);
   }
 
+  public void glMultiTexCoord1iARB(int target, int s) {
+    glut_h.glMultiTexCoord1iARB(target, s);
+  }
+
   public void glMultiTexCoord1iv(int target, Addressable v) {
     glut_h.glMultiTexCoord1iv(target, v);
+  }
+
+  public void glMultiTexCoord1ivARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord1ivARB(target, v);
   }
 
   public void glMultiTexCoord1s(int target, short s) {
     glut_h.glMultiTexCoord1s(target, s);
   }
 
+  public void glMultiTexCoord1sARB(int target, short s) {
+    glut_h.glMultiTexCoord1sARB(target, s);
+  }
+
   public void glMultiTexCoord1sv(int target, Addressable v) {
     glut_h.glMultiTexCoord1sv(target, v);
+  }
+
+  public void glMultiTexCoord1svARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord1svARB(target, v);
   }
 
   public void glMultiTexCoord2d(int target, double s, double t) {
     glut_h.glMultiTexCoord2d(target, s, t);
   }
 
+  public void glMultiTexCoord2dARB(int target, double s, double t) {
+    glut_h.glMultiTexCoord2dARB(target, s, t);
+  }
+
   public void glMultiTexCoord2dv(int target, Addressable v) {
     glut_h.glMultiTexCoord2dv(target, v);
+  }
+
+  public void glMultiTexCoord2dvARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord2dvARB(target, v);
   }
 
   public void glMultiTexCoord2f(int target, float s, float t) {
     glut_h.glMultiTexCoord2f(target, s, t);
   }
 
+  public void glMultiTexCoord2fARB(int target, float s, float t) {
+    glut_h.glMultiTexCoord2fARB(target, s, t);
+  }
+
   public void glMultiTexCoord2fv(int target, Addressable v) {
     glut_h.glMultiTexCoord2fv(target, v);
+  }
+
+  public void glMultiTexCoord2fvARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord2fvARB(target, v);
   }
 
   public void glMultiTexCoord2i(int target, int s, int t) {
     glut_h.glMultiTexCoord2i(target, s, t);
   }
 
+  public void glMultiTexCoord2iARB(int target, int s, int t) {
+    glut_h.glMultiTexCoord2iARB(target, s, t);
+  }
+
   public void glMultiTexCoord2iv(int target, Addressable v) {
     glut_h.glMultiTexCoord2iv(target, v);
+  }
+
+  public void glMultiTexCoord2ivARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord2ivARB(target, v);
   }
 
   public void glMultiTexCoord2s(int target, short s, short t) {
     glut_h.glMultiTexCoord2s(target, s, t);
   }
 
+  public void glMultiTexCoord2sARB(int target, short s, short t) {
+    glut_h.glMultiTexCoord2sARB(target, s, t);
+  }
+
   public void glMultiTexCoord2sv(int target, Addressable v) {
     glut_h.glMultiTexCoord2sv(target, v);
+  }
+
+  public void glMultiTexCoord2svARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord2svARB(target, v);
   }
 
   public void glMultiTexCoord3d(int target, double s, double t, double r) {
     glut_h.glMultiTexCoord3d(target, s, t, r);
   }
 
+  public void glMultiTexCoord3dARB(int target, double s, double t, double r) {
+    glut_h.glMultiTexCoord3dARB(target, s, t, r);
+  }
+
   public void glMultiTexCoord3dv(int target, Addressable v) {
     glut_h.glMultiTexCoord3dv(target, v);
+  }
+
+  public void glMultiTexCoord3dvARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord3dvARB(target, v);
   }
 
   public void glMultiTexCoord3f(int target, float s, float t, float r) {
     glut_h.glMultiTexCoord3f(target, s, t, r);
   }
 
+  public void glMultiTexCoord3fARB(int target, float s, float t, float r) {
+    glut_h.glMultiTexCoord3fARB(target, s, t, r);
+  }
+
   public void glMultiTexCoord3fv(int target, Addressable v) {
     glut_h.glMultiTexCoord3fv(target, v);
+  }
+
+  public void glMultiTexCoord3fvARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord3fvARB(target, v);
   }
 
   public void glMultiTexCoord3i(int target, int s, int t, int r) {
     glut_h.glMultiTexCoord3i(target, s, t, r);
   }
 
+  public void glMultiTexCoord3iARB(int target, int s, int t, int r) {
+    glut_h.glMultiTexCoord3iARB(target, s, t, r);
+  }
+
   public void glMultiTexCoord3iv(int target, Addressable v) {
     glut_h.glMultiTexCoord3iv(target, v);
+  }
+
+  public void glMultiTexCoord3ivARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord3ivARB(target, v);
   }
 
   public void glMultiTexCoord3s(int target, short s, short t, short r) {
     glut_h.glMultiTexCoord3s(target, s, t, r);
   }
 
+  public void glMultiTexCoord3sARB(int target, short s, short t, short r) {
+    glut_h.glMultiTexCoord3sARB(target, s, t, r);
+  }
+
   public void glMultiTexCoord3sv(int target, Addressable v) {
     glut_h.glMultiTexCoord3sv(target, v);
+  }
+
+  public void glMultiTexCoord3svARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord3svARB(target, v);
   }
 
   public void glMultiTexCoord4d(int target, double s, double t, double r, double q) {
     glut_h.glMultiTexCoord4d(target, s, t, r, q);
   }
 
+  public void glMultiTexCoord4dARB(int target, double s, double t, double r, double q) {
+    glut_h.glMultiTexCoord4dARB(target, s, t, r, q);
+  }
+
   public void glMultiTexCoord4dv(int target, Addressable v) {
     glut_h.glMultiTexCoord4dv(target, v);
+  }
+
+  public void glMultiTexCoord4dvARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord4dvARB(target, v);
   }
 
   public void glMultiTexCoord4f(int target, float s, float t, float r, float q) {
     glut_h.glMultiTexCoord4f(target, s, t, r, q);
   }
 
+  public void glMultiTexCoord4fARB(int target, float s, float t, float r, float q) {
+    glut_h.glMultiTexCoord4fARB(target, s, t, r, q);
+  }
+
   public void glMultiTexCoord4fv(int target, Addressable v) {
     glut_h.glMultiTexCoord4fv(target, v);
+  }
+
+  public void glMultiTexCoord4fvARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord4fvARB(target, v);
   }
 
   public void glMultiTexCoord4i(int target, int s, int t, int r, int q) {
     glut_h.glMultiTexCoord4i(target, s, t, r, q);
   }
 
+  public void glMultiTexCoord4iARB(int target, int s, int t, int r, int q) {
+    glut_h.glMultiTexCoord4iARB(target, s, t, r, q);
+  }
+
   public void glMultiTexCoord4iv(int target, Addressable v) {
     glut_h.glMultiTexCoord4iv(target, v);
+  }
+
+  public void glMultiTexCoord4ivARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord4ivARB(target, v);
   }
 
   public void glMultiTexCoord4s(int target, short s, short t, short r, short q) {
     glut_h.glMultiTexCoord4s(target, s, t, r, q);
   }
 
+  public void glMultiTexCoord4sARB(int target, short s, short t, short r, short q) {
+    glut_h.glMultiTexCoord4sARB(target, s, t, r, q);
+  }
+
   public void glMultiTexCoord4sv(int target, Addressable v) {
     glut_h.glMultiTexCoord4sv(target, v);
+  }
+
+  public void glMultiTexCoord4svARB(int target, Addressable v) {
+    glut_h.glMultiTexCoord4svARB(target, v);
   }
 
   public void glNewList(int list, int mode) {
@@ -2885,6 +2185,14 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glNormalPointer(type, stride, pointer);
   }
 
+  public int glObjectPurgeableAPPLE(int objectType, int name, int option) {
+    return glut_h.glObjectPurgeableAPPLE(objectType, name, option);
+  }
+
+  public int glObjectUnpurgeableAPPLE(int objectType, int name, int option) {
+    return glut_h.glObjectUnpurgeableAPPLE(objectType, name, option);
+  }
+
   public void glOrtho(double left, double right, double bottom, double top, double zNear, double zFar) {
     glut_h.glOrtho(left, right, bottom, top, zNear, zFar);
   }
@@ -2929,16 +2237,32 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glPointParameterf(pname, param);
   }
 
+  public void glPointParameterfARB(int pname, float param) {
+    glut_h.glPointParameterfARB(pname, param);
+  }
+
   public void glPointParameterfv(int pname, Addressable params) {
     glut_h.glPointParameterfv(pname, params);
+  }
+
+  public void glPointParameterfvARB(int pname, Addressable params) {
+    glut_h.glPointParameterfvARB(pname, params);
   }
 
   public void glPointParameteri(int pname, int param) {
     glut_h.glPointParameteri(pname, param);
   }
 
+  public void glPointParameteriNV(int pname, int param) {
+    glut_h.glPointParameteriNV(pname, param);
+  }
+
   public void glPointParameteriv(int pname, Addressable params) {
     glut_h.glPointParameteriv(pname, params);
+  }
+
+  public void glPointParameterivNV(int pname, Addressable params) {
+    glut_h.glPointParameterivNV(pname, params);
   }
 
   public void glPointSize(float size) {
@@ -2965,6 +2289,10 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glPopClientAttrib();
   }
 
+  public void glPopGroupMarkerEXT() {
+    glut_h.glPopGroupMarkerEXT();
+  }
+
   public void glPopMatrix() {
     glut_h.glPopMatrix();
   }
@@ -2977,12 +2305,72 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glPrioritizeTextures(n, textures, priorities);
   }
 
+  public void glProgramEnvParameter4dARB(int target, int index, double x, double y, double z, double w) {
+    glut_h.glProgramEnvParameter4dARB(target, index, x, y, z, w);
+  }
+
+  public void glProgramEnvParameter4dvARB(int target, int index, Addressable params) {
+    glut_h.glProgramEnvParameter4dvARB(target, index, params);
+  }
+
+  public void glProgramEnvParameter4fARB(int target, int index, float x, float y, float z, float w) {
+    glut_h.glProgramEnvParameter4fARB(target, index, x, y, z, w);
+  }
+
+  public void glProgramEnvParameter4fvARB(int target, int index, Addressable params) {
+    glut_h.glProgramEnvParameter4fvARB(target, index, params);
+  }
+
+  public void glProgramEnvParameters4fvEXT(int target, int index, int count, Addressable params) {
+    glut_h.glProgramEnvParameters4fvEXT(target, index, count, params);
+  }
+
+  public void glProgramLocalParameter4dARB(int target, int index, double x, double y, double z, double w) {
+    glut_h.glProgramLocalParameter4dARB(target, index, x, y, z, w);
+  }
+
+  public void glProgramLocalParameter4dvARB(int target, int index, Addressable params) {
+    glut_h.glProgramLocalParameter4dvARB(target, index, params);
+  }
+
+  public void glProgramLocalParameter4fARB(int target, int index, float x, float y, float z, float w) {
+    glut_h.glProgramLocalParameter4fARB(target, index, x, y, z, w);
+  }
+
+  public void glProgramLocalParameter4fvARB(int target, int index, Addressable params) {
+    glut_h.glProgramLocalParameter4fvARB(target, index, params);
+  }
+
+  public void glProgramLocalParameters4fvEXT(int target, int index, int count, Addressable params) {
+    glut_h.glProgramLocalParameters4fvEXT(target, index, count, params);
+  }
+
+  public void glProgramParameteriEXT(int program, int pname, int value) {
+    glut_h.glProgramParameteriEXT(program, pname, value);
+  }
+
+  public void glProgramStringARB(int target, int format, int len, Addressable string) {
+    glut_h.glProgramStringARB(target, format, len, string);
+  }
+
+  public void glProvokingVertex(int mode) {
+    glut_h.glProvokingVertex(mode);
+  }
+
+  public void glProvokingVertexEXT(int mode) {
+    glut_h.glProvokingVertexEXT(mode);
+  }
+
   public void glPushAttrib(int mask) {
     glut_h.glPushAttrib(mask);
   }
 
   public void glPushClientAttrib(int mask) {
     glut_h.glPushClientAttrib(mask);
+  }
+
+  public void glPushGroupMarkerEXT(int length, Addressable marker) {
+    glut_h.glPushGroupMarkerEXT(length, marker);
   }
 
   public void glPushMatrix() {
@@ -3133,6 +2521,22 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glRenderMode(mode);
   }
 
+  public void glRenderbufferStorage(int target, int internalformat, int width, int height) {
+    glut_h.glRenderbufferStorage(target, internalformat, width, height);
+  }
+
+  public void glRenderbufferStorageEXT(int target, int internalformat, int width, int height) {
+    glut_h.glRenderbufferStorageEXT(target, internalformat, width, height);
+  }
+
+  public void glRenderbufferStorageMultisample(int target, int samples, int internalformat, int width, int height) {
+    glut_h.glRenderbufferStorageMultisample(target, samples, internalformat, width, height);
+  }
+
+  public void glRenderbufferStorageMultisampleEXT(int target, int samples, int internalformat, int width, int height) {
+    glut_h.glRenderbufferStorageMultisampleEXT(target, samples, internalformat, width, height);
+  }
+
   public void glResetHistogram(int target) {
     glut_h.glResetHistogram(target);
   }
@@ -3153,6 +2557,10 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glSampleCoverage(value, invert);
   }
 
+  public void glSampleCoverageARB(float value, byte invert) {
+    glut_h.glSampleCoverageARB(value, invert);
+  }
+
   public void glScaled(double x, double y, double z) {
     glut_h.glScaled(x, y, z);
   }
@@ -3169,68 +2577,136 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glSecondaryColor3b(red, green, blue);
   }
 
+  public void glSecondaryColor3bEXT(byte red, byte green, byte blue) {
+    glut_h.glSecondaryColor3bEXT(red, green, blue);
+  }
+
   public void glSecondaryColor3bv(Addressable v) {
     glut_h.glSecondaryColor3bv(v);
+  }
+
+  public void glSecondaryColor3bvEXT(Addressable v) {
+    glut_h.glSecondaryColor3bvEXT(v);
   }
 
   public void glSecondaryColor3d(double red, double green, double blue) {
     glut_h.glSecondaryColor3d(red, green, blue);
   }
 
+  public void glSecondaryColor3dEXT(double red, double green, double blue) {
+    glut_h.glSecondaryColor3dEXT(red, green, blue);
+  }
+
   public void glSecondaryColor3dv(Addressable v) {
     glut_h.glSecondaryColor3dv(v);
+  }
+
+  public void glSecondaryColor3dvEXT(Addressable v) {
+    glut_h.glSecondaryColor3dvEXT(v);
   }
 
   public void glSecondaryColor3f(float red, float green, float blue) {
     glut_h.glSecondaryColor3f(red, green, blue);
   }
 
+  public void glSecondaryColor3fEXT(float red, float green, float blue) {
+    glut_h.glSecondaryColor3fEXT(red, green, blue);
+  }
+
   public void glSecondaryColor3fv(Addressable v) {
     glut_h.glSecondaryColor3fv(v);
+  }
+
+  public void glSecondaryColor3fvEXT(Addressable v) {
+    glut_h.glSecondaryColor3fvEXT(v);
   }
 
   public void glSecondaryColor3i(int red, int green, int blue) {
     glut_h.glSecondaryColor3i(red, green, blue);
   }
 
+  public void glSecondaryColor3iEXT(int red, int green, int blue) {
+    glut_h.glSecondaryColor3iEXT(red, green, blue);
+  }
+
   public void glSecondaryColor3iv(Addressable v) {
     glut_h.glSecondaryColor3iv(v);
+  }
+
+  public void glSecondaryColor3ivEXT(Addressable v) {
+    glut_h.glSecondaryColor3ivEXT(v);
   }
 
   public void glSecondaryColor3s(short red, short green, short blue) {
     glut_h.glSecondaryColor3s(red, green, blue);
   }
 
+  public void glSecondaryColor3sEXT(short red, short green, short blue) {
+    glut_h.glSecondaryColor3sEXT(red, green, blue);
+  }
+
   public void glSecondaryColor3sv(Addressable v) {
     glut_h.glSecondaryColor3sv(v);
+  }
+
+  public void glSecondaryColor3svEXT(Addressable v) {
+    glut_h.glSecondaryColor3svEXT(v);
   }
 
   public void glSecondaryColor3ub(byte red, byte green, byte blue) {
     glut_h.glSecondaryColor3ub(red, green, blue);
   }
 
+  public void glSecondaryColor3ubEXT(byte red, byte green, byte blue) {
+    glut_h.glSecondaryColor3ubEXT(red, green, blue);
+  }
+
   public void glSecondaryColor3ubv(Addressable v) {
     glut_h.glSecondaryColor3ubv(v);
+  }
+
+  public void glSecondaryColor3ubvEXT(Addressable v) {
+    glut_h.glSecondaryColor3ubvEXT(v);
   }
 
   public void glSecondaryColor3ui(int red, int green, int blue) {
     glut_h.glSecondaryColor3ui(red, green, blue);
   }
 
+  public void glSecondaryColor3uiEXT(int red, int green, int blue) {
+    glut_h.glSecondaryColor3uiEXT(red, green, blue);
+  }
+
   public void glSecondaryColor3uiv(Addressable v) {
     glut_h.glSecondaryColor3uiv(v);
+  }
+
+  public void glSecondaryColor3uivEXT(Addressable v) {
+    glut_h.glSecondaryColor3uivEXT(v);
   }
 
   public void glSecondaryColor3us(short red, short green, short blue) {
     glut_h.glSecondaryColor3us(red, green, blue);
   }
 
+  public void glSecondaryColor3usEXT(short red, short green, short blue) {
+    glut_h.glSecondaryColor3usEXT(red, green, blue);
+  }
+
   public void glSecondaryColor3usv(Addressable v) {
     glut_h.glSecondaryColor3usv(v);
   }
 
+  public void glSecondaryColor3usvEXT(Addressable v) {
+    glut_h.glSecondaryColor3usvEXT(v);
+  }
+
   public void glSecondaryColorPointer(int size, int type, int stride, Addressable pointer) {
     glut_h.glSecondaryColorPointer(size, type, stride, pointer);
+  }
+
+  public void glSecondaryColorPointerEXT(int size, int type, int stride, Addressable pointer) {
+    glut_h.glSecondaryColorPointerEXT(size, type, stride, pointer);
   }
 
   public void glSelectBuffer(int size, Addressable buffer) {
@@ -3241,6 +2717,10 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glSeparableFilter2D(target, internalformat, width, height, format, type, row, column);
   }
 
+  public void glSetFenceAPPLE(int fence) {
+    glut_h.glSetFenceAPPLE(fence);
+  }
+
   public void glShadeModel(int mode) {
     glut_h.glShadeModel(mode);
   }
@@ -3249,12 +2729,20 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glShaderSource(shader, count, string, length);
   }
 
+  public void glShaderSourceARB(Addressable shaderObj, int count, Addressable string, Addressable length) {
+    glut_h.glShaderSourceARB(shaderObj, count, string, length);
+  }
+
   public void glStencilFunc(int func, int ref, int mask) {
     glut_h.glStencilFunc(func, ref, mask);
   }
 
   public void glStencilFuncSeparate(int face, int func, int ref, int mask) {
     glut_h.glStencilFuncSeparate(face, func, ref, mask);
+  }
+
+  public void glStencilFuncSeparateATI(int frontfunc, int backfunc, int ref, int mask) {
+    glut_h.glStencilFuncSeparateATI(frontfunc, backfunc, ref, mask);
   }
 
   public void glStencilMask(int mask) {
@@ -3271,6 +2759,18 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
 
   public void glStencilOpSeparate(int face, int sfail, int dpfail, int dppass) {
     glut_h.glStencilOpSeparate(face, sfail, dpfail, dppass);
+  }
+
+  public void glStencilOpSeparateATI(int face, int sfail, int dpfail, int dppass) {
+    glut_h.glStencilOpSeparateATI(face, sfail, dpfail, dppass);
+  }
+
+  public byte glTestFenceAPPLE(int fence) {
+    return glut_h.glTestFenceAPPLE(fence);
+  }
+
+  public byte glTestObjectAPPLE(int object, int name) {
+    return glut_h.glTestObjectAPPLE(object, name);
   }
 
   public void glTexCoord1d(double s) {
@@ -3457,6 +2957,14 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels);
   }
 
+  public void glTexParameterIivEXT(int target, int pname, Addressable params) {
+    glut_h.glTexParameterIivEXT(target, pname, params);
+  }
+
+  public void glTexParameterIuivEXT(int target, int pname, Addressable params) {
+    glut_h.glTexParameterIuivEXT(target, pname, params);
+  }
+
   public void glTexParameterf(int target, int pname, float param) {
     glut_h.glTexParameterf(target, pname, param);
   }
@@ -3485,6 +2993,18 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
   }
 
+  public void glTextureBarrierNV() {
+    glut_h.glTextureBarrierNV();
+  }
+
+  public void glTextureRangeAPPLE(int target, int length, Addressable pointer) {
+    glut_h.glTextureRangeAPPLE(target, length, pointer);
+  }
+
+  public void glTransformFeedbackVaryingsEXT(int program, int count, Addressable varyings, int bufferMode) {
+    glut_h.glTransformFeedbackVaryingsEXT(program, count, varyings, bufferMode);
+  }
+
   public void glTranslated(double x, double y, double z) {
     glut_h.glTranslated(x, y, z);
   }
@@ -3497,68 +3017,172 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glUniform1f(location, v0);
   }
 
+  public void glUniform1fARB(int location, float v0) {
+    glut_h.glUniform1fARB(location, v0);
+  }
+
   public void glUniform1fv(int location, int count, Addressable value) {
     glut_h.glUniform1fv(location, count, value);
+  }
+
+  public void glUniform1fvARB(int location, int count, Addressable value) {
+    glut_h.glUniform1fvARB(location, count, value);
   }
 
   public void glUniform1i(int location, int v0) {
     glut_h.glUniform1i(location, v0);
   }
 
+  public void glUniform1iARB(int location, int v0) {
+    glut_h.glUniform1iARB(location, v0);
+  }
+
   public void glUniform1iv(int location, int count, Addressable value) {
     glut_h.glUniform1iv(location, count, value);
+  }
+
+  public void glUniform1ivARB(int location, int count, Addressable value) {
+    glut_h.glUniform1ivARB(location, count, value);
+  }
+
+  public void glUniform1uiEXT(int location, int v0) {
+    glut_h.glUniform1uiEXT(location, v0);
+  }
+
+  public void glUniform1uivEXT(int location, int count, Addressable value) {
+    glut_h.glUniform1uivEXT(location, count, value);
   }
 
   public void glUniform2f(int location, float v0, float v1) {
     glut_h.glUniform2f(location, v0, v1);
   }
 
+  public void glUniform2fARB(int location, float v0, float v1) {
+    glut_h.glUniform2fARB(location, v0, v1);
+  }
+
   public void glUniform2fv(int location, int count, Addressable value) {
     glut_h.glUniform2fv(location, count, value);
+  }
+
+  public void glUniform2fvARB(int location, int count, Addressable value) {
+    glut_h.glUniform2fvARB(location, count, value);
   }
 
   public void glUniform2i(int location, int v0, int v1) {
     glut_h.glUniform2i(location, v0, v1);
   }
 
+  public void glUniform2iARB(int location, int v0, int v1) {
+    glut_h.glUniform2iARB(location, v0, v1);
+  }
+
   public void glUniform2iv(int location, int count, Addressable value) {
     glut_h.glUniform2iv(location, count, value);
+  }
+
+  public void glUniform2ivARB(int location, int count, Addressable value) {
+    glut_h.glUniform2ivARB(location, count, value);
+  }
+
+  public void glUniform2uiEXT(int location, int v0, int v1) {
+    glut_h.glUniform2uiEXT(location, v0, v1);
+  }
+
+  public void glUniform2uivEXT(int location, int count, Addressable value) {
+    glut_h.glUniform2uivEXT(location, count, value);
   }
 
   public void glUniform3f(int location, float v0, float v1, float v2) {
     glut_h.glUniform3f(location, v0, v1, v2);
   }
 
+  public void glUniform3fARB(int location, float v0, float v1, float v2) {
+    glut_h.glUniform3fARB(location, v0, v1, v2);
+  }
+
   public void glUniform3fv(int location, int count, Addressable value) {
     glut_h.glUniform3fv(location, count, value);
+  }
+
+  public void glUniform3fvARB(int location, int count, Addressable value) {
+    glut_h.glUniform3fvARB(location, count, value);
   }
 
   public void glUniform3i(int location, int v0, int v1, int v2) {
     glut_h.glUniform3i(location, v0, v1, v2);
   }
 
+  public void glUniform3iARB(int location, int v0, int v1, int v2) {
+    glut_h.glUniform3iARB(location, v0, v1, v2);
+  }
+
   public void glUniform3iv(int location, int count, Addressable value) {
     glut_h.glUniform3iv(location, count, value);
+  }
+
+  public void glUniform3ivARB(int location, int count, Addressable value) {
+    glut_h.glUniform3ivARB(location, count, value);
+  }
+
+  public void glUniform3uiEXT(int location, int v0, int v1, int v2) {
+    glut_h.glUniform3uiEXT(location, v0, v1, v2);
+  }
+
+  public void glUniform3uivEXT(int location, int count, Addressable value) {
+    glut_h.glUniform3uivEXT(location, count, value);
   }
 
   public void glUniform4f(int location, float v0, float v1, float v2, float v3) {
     glut_h.glUniform4f(location, v0, v1, v2, v3);
   }
 
+  public void glUniform4fARB(int location, float v0, float v1, float v2, float v3) {
+    glut_h.glUniform4fARB(location, v0, v1, v2, v3);
+  }
+
   public void glUniform4fv(int location, int count, Addressable value) {
     glut_h.glUniform4fv(location, count, value);
+  }
+
+  public void glUniform4fvARB(int location, int count, Addressable value) {
+    glut_h.glUniform4fvARB(location, count, value);
   }
 
   public void glUniform4i(int location, int v0, int v1, int v2, int v3) {
     glut_h.glUniform4i(location, v0, v1, v2, v3);
   }
 
+  public void glUniform4iARB(int location, int v0, int v1, int v2, int v3) {
+    glut_h.glUniform4iARB(location, v0, v1, v2, v3);
+  }
+
   public void glUniform4iv(int location, int count, Addressable value) {
     glut_h.glUniform4iv(location, count, value);
   }
 
+  public void glUniform4ivARB(int location, int count, Addressable value) {
+    glut_h.glUniform4ivARB(location, count, value);
+  }
+
+  public void glUniform4uiEXT(int location, int v0, int v1, int v2, int v3) {
+    glut_h.glUniform4uiEXT(location, v0, v1, v2, v3);
+  }
+
+  public void glUniform4uivEXT(int location, int count, Addressable value) {
+    glut_h.glUniform4uivEXT(location, count, value);
+  }
+
+  public void glUniformBufferEXT(int program, int location, int buffer) {
+    glut_h.glUniformBufferEXT(program, location, buffer);
+  }
+
   public void glUniformMatrix2fv(int location, int count, byte transpose, Addressable value) {
     glut_h.glUniformMatrix2fv(location, count, transpose, value);
+  }
+
+  public void glUniformMatrix2fvARB(int location, int count, byte transpose, Addressable value) {
+    glut_h.glUniformMatrix2fvARB(location, count, transpose, value);
   }
 
   public void glUniformMatrix2x3fv(int location, int count, byte transpose, Addressable value) {
@@ -3573,6 +3197,10 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glUniformMatrix3fv(location, count, transpose, value);
   }
 
+  public void glUniformMatrix3fvARB(int location, int count, byte transpose, Addressable value) {
+    glut_h.glUniformMatrix3fvARB(location, count, transpose, value);
+  }
+
   public void glUniformMatrix3x2fv(int location, int count, byte transpose, Addressable value) {
     glut_h.glUniformMatrix3x2fv(location, count, transpose, value);
   }
@@ -3583,6 +3211,10 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
 
   public void glUniformMatrix4fv(int location, int count, byte transpose, Addressable value) {
     glut_h.glUniformMatrix4fv(location, count, transpose, value);
+  }
+
+  public void glUniformMatrix4fvARB(int location, int count, byte transpose, Addressable value) {
+    glut_h.glUniformMatrix4fvARB(location, count, transpose, value);
   }
 
   public void glUniformMatrix4x2fv(int location, int count, byte transpose, Addressable value) {
@@ -3597,12 +3229,24 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glUnmapBuffer(target);
   }
 
+  public byte glUnmapBufferARB(int target) {
+    return glut_h.glUnmapBufferARB(target);
+  }
+
   public void glUseProgram(int program) {
     glut_h.glUseProgram(program);
   }
 
+  public void glUseProgramObjectARB(Addressable programObj) {
+    glut_h.glUseProgramObjectARB(programObj);
+  }
+
   public void glValidateProgram(int program) {
     glut_h.glValidateProgram(program);
+  }
+
+  public void glValidateProgramARB(Addressable programObj) {
+    glut_h.glValidateProgramARB(programObj);
   }
 
   public void glVertex2d(double x, double y) {
@@ -3701,152 +3345,400 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertex4sv(v);
   }
 
+  public void glVertexArrayParameteriAPPLE(int pname, int param) {
+    glut_h.glVertexArrayParameteriAPPLE(pname, param);
+  }
+
+  public void glVertexArrayRangeAPPLE(int length, Addressable pointer) {
+    glut_h.glVertexArrayRangeAPPLE(length, pointer);
+  }
+
   public void glVertexAttrib1d(int index, double x) {
     glut_h.glVertexAttrib1d(index, x);
+  }
+
+  public void glVertexAttrib1dARB(int index, double x) {
+    glut_h.glVertexAttrib1dARB(index, x);
   }
 
   public void glVertexAttrib1dv(int index, Addressable v) {
     glut_h.glVertexAttrib1dv(index, v);
   }
 
+  public void glVertexAttrib1dvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib1dvARB(index, v);
+  }
+
   public void glVertexAttrib1f(int index, float x) {
     glut_h.glVertexAttrib1f(index, x);
+  }
+
+  public void glVertexAttrib1fARB(int index, float x) {
+    glut_h.glVertexAttrib1fARB(index, x);
   }
 
   public void glVertexAttrib1fv(int index, Addressable v) {
     glut_h.glVertexAttrib1fv(index, v);
   }
 
+  public void glVertexAttrib1fvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib1fvARB(index, v);
+  }
+
   public void glVertexAttrib1s(int index, short x) {
     glut_h.glVertexAttrib1s(index, x);
+  }
+
+  public void glVertexAttrib1sARB(int index, short x) {
+    glut_h.glVertexAttrib1sARB(index, x);
   }
 
   public void glVertexAttrib1sv(int index, Addressable v) {
     glut_h.glVertexAttrib1sv(index, v);
   }
 
+  public void glVertexAttrib1svARB(int index, Addressable v) {
+    glut_h.glVertexAttrib1svARB(index, v);
+  }
+
   public void glVertexAttrib2d(int index, double x, double y) {
     glut_h.glVertexAttrib2d(index, x, y);
+  }
+
+  public void glVertexAttrib2dARB(int index, double x, double y) {
+    glut_h.glVertexAttrib2dARB(index, x, y);
   }
 
   public void glVertexAttrib2dv(int index, Addressable v) {
     glut_h.glVertexAttrib2dv(index, v);
   }
 
+  public void glVertexAttrib2dvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib2dvARB(index, v);
+  }
+
   public void glVertexAttrib2f(int index, float x, float y) {
     glut_h.glVertexAttrib2f(index, x, y);
+  }
+
+  public void glVertexAttrib2fARB(int index, float x, float y) {
+    glut_h.glVertexAttrib2fARB(index, x, y);
   }
 
   public void glVertexAttrib2fv(int index, Addressable v) {
     glut_h.glVertexAttrib2fv(index, v);
   }
 
+  public void glVertexAttrib2fvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib2fvARB(index, v);
+  }
+
   public void glVertexAttrib2s(int index, short x, short y) {
     glut_h.glVertexAttrib2s(index, x, y);
+  }
+
+  public void glVertexAttrib2sARB(int index, short x, short y) {
+    glut_h.glVertexAttrib2sARB(index, x, y);
   }
 
   public void glVertexAttrib2sv(int index, Addressable v) {
     glut_h.glVertexAttrib2sv(index, v);
   }
 
+  public void glVertexAttrib2svARB(int index, Addressable v) {
+    glut_h.glVertexAttrib2svARB(index, v);
+  }
+
   public void glVertexAttrib3d(int index, double x, double y, double z) {
     glut_h.glVertexAttrib3d(index, x, y, z);
+  }
+
+  public void glVertexAttrib3dARB(int index, double x, double y, double z) {
+    glut_h.glVertexAttrib3dARB(index, x, y, z);
   }
 
   public void glVertexAttrib3dv(int index, Addressable v) {
     glut_h.glVertexAttrib3dv(index, v);
   }
 
+  public void glVertexAttrib3dvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib3dvARB(index, v);
+  }
+
   public void glVertexAttrib3f(int index, float x, float y, float z) {
     glut_h.glVertexAttrib3f(index, x, y, z);
+  }
+
+  public void glVertexAttrib3fARB(int index, float x, float y, float z) {
+    glut_h.glVertexAttrib3fARB(index, x, y, z);
   }
 
   public void glVertexAttrib3fv(int index, Addressable v) {
     glut_h.glVertexAttrib3fv(index, v);
   }
 
+  public void glVertexAttrib3fvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib3fvARB(index, v);
+  }
+
   public void glVertexAttrib3s(int index, short x, short y, short z) {
     glut_h.glVertexAttrib3s(index, x, y, z);
+  }
+
+  public void glVertexAttrib3sARB(int index, short x, short y, short z) {
+    glut_h.glVertexAttrib3sARB(index, x, y, z);
   }
 
   public void glVertexAttrib3sv(int index, Addressable v) {
     glut_h.glVertexAttrib3sv(index, v);
   }
 
+  public void glVertexAttrib3svARB(int index, Addressable v) {
+    glut_h.glVertexAttrib3svARB(index, v);
+  }
+
   public void glVertexAttrib4Nbv(int index, Addressable v) {
     glut_h.glVertexAttrib4Nbv(index, v);
+  }
+
+  public void glVertexAttrib4NbvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4NbvARB(index, v);
   }
 
   public void glVertexAttrib4Niv(int index, Addressable v) {
     glut_h.glVertexAttrib4Niv(index, v);
   }
 
+  public void glVertexAttrib4NivARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4NivARB(index, v);
+  }
+
   public void glVertexAttrib4Nsv(int index, Addressable v) {
     glut_h.glVertexAttrib4Nsv(index, v);
+  }
+
+  public void glVertexAttrib4NsvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4NsvARB(index, v);
   }
 
   public void glVertexAttrib4Nub(int index, byte x, byte y, byte z, byte w) {
     glut_h.glVertexAttrib4Nub(index, x, y, z, w);
   }
 
+  public void glVertexAttrib4NubARB(int index, byte x, byte y, byte z, byte w) {
+    glut_h.glVertexAttrib4NubARB(index, x, y, z, w);
+  }
+
   public void glVertexAttrib4Nubv(int index, Addressable v) {
     glut_h.glVertexAttrib4Nubv(index, v);
+  }
+
+  public void glVertexAttrib4NubvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4NubvARB(index, v);
   }
 
   public void glVertexAttrib4Nuiv(int index, Addressable v) {
     glut_h.glVertexAttrib4Nuiv(index, v);
   }
 
+  public void glVertexAttrib4NuivARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4NuivARB(index, v);
+  }
+
   public void glVertexAttrib4Nusv(int index, Addressable v) {
     glut_h.glVertexAttrib4Nusv(index, v);
+  }
+
+  public void glVertexAttrib4NusvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4NusvARB(index, v);
   }
 
   public void glVertexAttrib4bv(int index, Addressable v) {
     glut_h.glVertexAttrib4bv(index, v);
   }
 
+  public void glVertexAttrib4bvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4bvARB(index, v);
+  }
+
   public void glVertexAttrib4d(int index, double x, double y, double z, double w) {
     glut_h.glVertexAttrib4d(index, x, y, z, w);
+  }
+
+  public void glVertexAttrib4dARB(int index, double x, double y, double z, double w) {
+    glut_h.glVertexAttrib4dARB(index, x, y, z, w);
   }
 
   public void glVertexAttrib4dv(int index, Addressable v) {
     glut_h.glVertexAttrib4dv(index, v);
   }
 
+  public void glVertexAttrib4dvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4dvARB(index, v);
+  }
+
   public void glVertexAttrib4f(int index, float x, float y, float z, float w) {
     glut_h.glVertexAttrib4f(index, x, y, z, w);
+  }
+
+  public void glVertexAttrib4fARB(int index, float x, float y, float z, float w) {
+    glut_h.glVertexAttrib4fARB(index, x, y, z, w);
   }
 
   public void glVertexAttrib4fv(int index, Addressable v) {
     glut_h.glVertexAttrib4fv(index, v);
   }
 
+  public void glVertexAttrib4fvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4fvARB(index, v);
+  }
+
   public void glVertexAttrib4iv(int index, Addressable v) {
     glut_h.glVertexAttrib4iv(index, v);
+  }
+
+  public void glVertexAttrib4ivARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4ivARB(index, v);
   }
 
   public void glVertexAttrib4s(int index, short x, short y, short z, short w) {
     glut_h.glVertexAttrib4s(index, x, y, z, w);
   }
 
+  public void glVertexAttrib4sARB(int index, short x, short y, short z, short w) {
+    glut_h.glVertexAttrib4sARB(index, x, y, z, w);
+  }
+
   public void glVertexAttrib4sv(int index, Addressable v) {
     glut_h.glVertexAttrib4sv(index, v);
+  }
+
+  public void glVertexAttrib4svARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4svARB(index, v);
   }
 
   public void glVertexAttrib4ubv(int index, Addressable v) {
     glut_h.glVertexAttrib4ubv(index, v);
   }
 
+  public void glVertexAttrib4ubvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4ubvARB(index, v);
+  }
+
   public void glVertexAttrib4uiv(int index, Addressable v) {
     glut_h.glVertexAttrib4uiv(index, v);
+  }
+
+  public void glVertexAttrib4uivARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4uivARB(index, v);
   }
 
   public void glVertexAttrib4usv(int index, Addressable v) {
     glut_h.glVertexAttrib4usv(index, v);
   }
 
+  public void glVertexAttrib4usvARB(int index, Addressable v) {
+    glut_h.glVertexAttrib4usvARB(index, v);
+  }
+
+  public void glVertexAttribDivisorARB(int index, int divisor) {
+    glut_h.glVertexAttribDivisorARB(index, divisor);
+  }
+
+  public void glVertexAttribI1iEXT(int index, int x) {
+    glut_h.glVertexAttribI1iEXT(index, x);
+  }
+
+  public void glVertexAttribI1ivEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI1ivEXT(index, v);
+  }
+
+  public void glVertexAttribI1uiEXT(int index, int x) {
+    glut_h.glVertexAttribI1uiEXT(index, x);
+  }
+
+  public void glVertexAttribI1uivEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI1uivEXT(index, v);
+  }
+
+  public void glVertexAttribI2iEXT(int index, int x, int y) {
+    glut_h.glVertexAttribI2iEXT(index, x, y);
+  }
+
+  public void glVertexAttribI2ivEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI2ivEXT(index, v);
+  }
+
+  public void glVertexAttribI2uiEXT(int index, int x, int y) {
+    glut_h.glVertexAttribI2uiEXT(index, x, y);
+  }
+
+  public void glVertexAttribI2uivEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI2uivEXT(index, v);
+  }
+
+  public void glVertexAttribI3iEXT(int index, int x, int y, int z) {
+    glut_h.glVertexAttribI3iEXT(index, x, y, z);
+  }
+
+  public void glVertexAttribI3ivEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI3ivEXT(index, v);
+  }
+
+  public void glVertexAttribI3uiEXT(int index, int x, int y, int z) {
+    glut_h.glVertexAttribI3uiEXT(index, x, y, z);
+  }
+
+  public void glVertexAttribI3uivEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI3uivEXT(index, v);
+  }
+
+  public void glVertexAttribI4bvEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI4bvEXT(index, v);
+  }
+
+  public void glVertexAttribI4iEXT(int index, int x, int y, int z, int w) {
+    glut_h.glVertexAttribI4iEXT(index, x, y, z, w);
+  }
+
+  public void glVertexAttribI4ivEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI4ivEXT(index, v);
+  }
+
+  public void glVertexAttribI4svEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI4svEXT(index, v);
+  }
+
+  public void glVertexAttribI4ubvEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI4ubvEXT(index, v);
+  }
+
+  public void glVertexAttribI4uiEXT(int index, int x, int y, int z, int w) {
+    glut_h.glVertexAttribI4uiEXT(index, x, y, z, w);
+  }
+
+  public void glVertexAttribI4uivEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI4uivEXT(index, v);
+  }
+
+  public void glVertexAttribI4usvEXT(int index, Addressable v) {
+    glut_h.glVertexAttribI4usvEXT(index, v);
+  }
+
+  public void glVertexAttribIPointerEXT(int index, int size, int type, int stride, Addressable pointer) {
+    glut_h.glVertexAttribIPointerEXT(index, size, type, stride, pointer);
+  }
+
   public void glVertexAttribPointer(int index, int size, int type, byte normalized, int stride, Addressable pointer) {
     glut_h.glVertexAttribPointer(index, size, type, normalized, stride, pointer);
+  }
+
+  public void glVertexAttribPointerARB(int index, int size, int type, byte normalized, int stride, Addressable pointer) {
+    glut_h.glVertexAttribPointerARB(index, size, type, normalized, stride, pointer);
+  }
+
+  public void glVertexBlendARB(int count) {
+    glut_h.glVertexBlendARB(count);
   }
 
   public void glVertexPointer(int size, int type, int stride, Addressable pointer) {
@@ -3857,68 +3749,172 @@ public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glViewport(x, y, width, height);
   }
 
+  public void glWaitSync(Addressable sync, int flags, long timeout) {
+    glut_h.glWaitSync(sync, flags, timeout);
+  }
+
+  public void glWeightPointerARB(int size, int type, int stride, Addressable pointer) {
+    glut_h.glWeightPointerARB(size, type, stride, pointer);
+  }
+
+  public void glWeightbvARB(int size, Addressable weights) {
+    glut_h.glWeightbvARB(size, weights);
+  }
+
+  public void glWeightdvARB(int size, Addressable weights) {
+    glut_h.glWeightdvARB(size, weights);
+  }
+
+  public void glWeightfvARB(int size, Addressable weights) {
+    glut_h.glWeightfvARB(size, weights);
+  }
+
+  public void glWeightivARB(int size, Addressable weights) {
+    glut_h.glWeightivARB(size, weights);
+  }
+
+  public void glWeightsvARB(int size, Addressable weights) {
+    glut_h.glWeightsvARB(size, weights);
+  }
+
+  public void glWeightubvARB(int size, Addressable weights) {
+    glut_h.glWeightubvARB(size, weights);
+  }
+
+  public void glWeightuivARB(int size, Addressable weights) {
+    glut_h.glWeightuivARB(size, weights);
+  }
+
+  public void glWeightusvARB(int size, Addressable weights) {
+    glut_h.glWeightusvARB(size, weights);
+  }
+
   public void glWindowPos2d(double x, double y) {
     glut_h.glWindowPos2d(x, y);
+  }
+
+  public void glWindowPos2dARB(double x, double y) {
+    glut_h.glWindowPos2dARB(x, y);
   }
 
   public void glWindowPos2dv(Addressable v) {
     glut_h.glWindowPos2dv(v);
   }
 
+  public void glWindowPos2dvARB(Addressable v) {
+    glut_h.glWindowPos2dvARB(v);
+  }
+
   public void glWindowPos2f(float x, float y) {
     glut_h.glWindowPos2f(x, y);
+  }
+
+  public void glWindowPos2fARB(float x, float y) {
+    glut_h.glWindowPos2fARB(x, y);
   }
 
   public void glWindowPos2fv(Addressable v) {
     glut_h.glWindowPos2fv(v);
   }
 
+  public void glWindowPos2fvARB(Addressable v) {
+    glut_h.glWindowPos2fvARB(v);
+  }
+
   public void glWindowPos2i(int x, int y) {
     glut_h.glWindowPos2i(x, y);
+  }
+
+  public void glWindowPos2iARB(int x, int y) {
+    glut_h.glWindowPos2iARB(x, y);
   }
 
   public void glWindowPos2iv(Addressable v) {
     glut_h.glWindowPos2iv(v);
   }
 
+  public void glWindowPos2ivARB(Addressable v) {
+    glut_h.glWindowPos2ivARB(v);
+  }
+
   public void glWindowPos2s(short x, short y) {
     glut_h.glWindowPos2s(x, y);
+  }
+
+  public void glWindowPos2sARB(short x, short y) {
+    glut_h.glWindowPos2sARB(x, y);
   }
 
   public void glWindowPos2sv(Addressable v) {
     glut_h.glWindowPos2sv(v);
   }
 
+  public void glWindowPos2svARB(Addressable v) {
+    glut_h.glWindowPos2svARB(v);
+  }
+
   public void glWindowPos3d(double x, double y, double z) {
     glut_h.glWindowPos3d(x, y, z);
+  }
+
+  public void glWindowPos3dARB(double x, double y, double z) {
+    glut_h.glWindowPos3dARB(x, y, z);
   }
 
   public void glWindowPos3dv(Addressable v) {
     glut_h.glWindowPos3dv(v);
   }
 
+  public void glWindowPos3dvARB(Addressable v) {
+    glut_h.glWindowPos3dvARB(v);
+  }
+
   public void glWindowPos3f(float x, float y, float z) {
     glut_h.glWindowPos3f(x, y, z);
+  }
+
+  public void glWindowPos3fARB(float x, float y, float z) {
+    glut_h.glWindowPos3fARB(x, y, z);
   }
 
   public void glWindowPos3fv(Addressable v) {
     glut_h.glWindowPos3fv(v);
   }
 
+  public void glWindowPos3fvARB(Addressable v) {
+    glut_h.glWindowPos3fvARB(v);
+  }
+
   public void glWindowPos3i(int x, int y, int z) {
     glut_h.glWindowPos3i(x, y, z);
+  }
+
+  public void glWindowPos3iARB(int x, int y, int z) {
+    glut_h.glWindowPos3iARB(x, y, z);
   }
 
   public void glWindowPos3iv(Addressable v) {
     glut_h.glWindowPos3iv(v);
   }
 
+  public void glWindowPos3ivARB(Addressable v) {
+    glut_h.glWindowPos3ivARB(v);
+  }
+
   public void glWindowPos3s(short x, short y, short z) {
     glut_h.glWindowPos3s(x, y, z);
   }
 
+  public void glWindowPos3sARB(short x, short y, short z) {
+    glut_h.glWindowPos3sARB(x, y, z);
+  }
+
   public void glWindowPos3sv(Addressable v) {
     glut_h.glWindowPos3sv(v);
+  }
+
+  public void glWindowPos3svARB(Addressable v) {
+    glut_h.glWindowPos3svARB(v);
   }
 
   public void gluBeginCurve(Addressable arg0) {

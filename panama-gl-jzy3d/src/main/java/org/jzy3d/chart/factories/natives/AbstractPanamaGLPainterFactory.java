@@ -21,10 +21,13 @@ import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.IAnimator;
 import org.jzy3d.chart.PanamaGLAnimator;
 import org.jzy3d.chart.PanamaGLFrame;
+import org.jzy3d.chart.controllers.keyboard.camera.AWTCameraKeyController;
 import org.jzy3d.chart.controllers.keyboard.camera.ICameraKeyController;
+import org.jzy3d.chart.controllers.keyboard.screenshot.AWTScreenshotKeyController;
 import org.jzy3d.chart.controllers.keyboard.screenshot.IScreenshotKeyController;
 import org.jzy3d.chart.controllers.mouse.camera.AWTCameraMouseController;
 import org.jzy3d.chart.controllers.mouse.camera.ICameraMouseController;
+import org.jzy3d.chart.controllers.mouse.picking.AWTMousePickingController;
 import org.jzy3d.chart.controllers.mouse.picking.IMousePickingController;
 import org.jzy3d.chart.factories.IChartFactory;
 import org.jzy3d.chart.factories.IFrame;
@@ -84,20 +87,17 @@ public abstract class AbstractPanamaGLPainterFactory implements IPainterFactory 
 
     @Override
     public IMousePickingController newMousePickingController(Chart chart, int clickWidth) {
-        // TODO Auto-generated method stub
-        return null;
+      return new AWTMousePickingController(chart, clickWidth);
     }
 
     @Override
     public ICameraKeyController newKeyboardCameraController(Chart chart) {
-        // TODO Auto-generated method stub
-        return null;
+        return new AWTCameraKeyController(chart);
     }
 
     @Override
     public IScreenshotKeyController newKeyboardScreenshotController(Chart chart) {
-        // TODO Auto-generated method stub
-        return null;
+        return new AWTScreenshotKeyController(chart, "./target/");
     }
 
     @Override

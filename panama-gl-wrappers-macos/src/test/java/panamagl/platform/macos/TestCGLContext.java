@@ -20,7 +20,6 @@ package panamagl.platform.macos;
 import java.lang.foreign.ValueLayout;
 import org.junit.Test;
 import junit.framework.Assert;
-import panamagl.platform.macos.CGLContext_macOS;
 
 //VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 

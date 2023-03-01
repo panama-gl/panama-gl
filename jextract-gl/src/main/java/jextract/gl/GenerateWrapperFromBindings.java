@@ -253,6 +253,8 @@ public class GenerateWrapperFromBindings {
     nUnimplemented = 0;
 
     if (addUnimplementedMethodsUponMissingBinding) {
+      
+      // OpenGL : Create a method throwing "not implemented" exception
       for (GLCommand registryCommand : glRegistry.values()) {
         if (!wrappedCommands.contains(registryCommand)) {
 
@@ -266,6 +268,10 @@ public class GenerateWrapperFromBindings {
             System.out.println(registryCommand.getName() + "(..) \twrapped but not implemented!");
         }
       }
+      
+      // GLUT
+      
+      
     } /*else {
       for (String stubRequested : addUnimplementedMethodsFor) {
         CommandWrap registryCommand = glRegistry.get(stubRequested);
