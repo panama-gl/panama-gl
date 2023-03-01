@@ -920,8 +920,7 @@ public class PanamaGLPainter extends AbstractPainter {
   public boolean gluUnProject(float winX, float winY, float winZ, float[] model, int model_offset,
       float[] proj, int proj_offset, int[] view, int view_offset, float[] objPos,
       int objPos_offset) {
-    return ((AGL) gl).gluUnProject(winX, winY, winZ, model, model_offset, proj, proj_offset, view,
-        view_offset, objPos, objPos_offset);
+    return ((AGL) gl).gluUnProject(winX, winY, winZ, model, proj, view, objPos);
   }
 
   protected double[] dbl(float[] values) {
@@ -936,8 +935,7 @@ public class PanamaGLPainter extends AbstractPainter {
   public boolean gluProject(float objX, float objY, float objZ, float[] model, int model_offset,
       float[] proj, int proj_offset, int[] view, int view_offset, float[] winPos,
       int winPos_offset) {
-    return ((AGL) gl).gluProject(objX, objY, objZ, model, model_offset, proj, proj_offset, view,
-        view_offset, winPos, winPos_offset);
+    return ((AGL) gl).gluProject(objX, objY, objZ, model, proj, view, winPos);
   }
 
 
