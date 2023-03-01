@@ -36,13 +36,13 @@ import jextractgl.Registry;
 import jextractgl.Registry.Feature;
 import jextractgl.Registry.Feature.Require;
 
-public class GenerateInterfaceFromRegistry {
+public class GenerateAPI_GL_Interface {
   protected OpenGLRegistry registry;
   protected Map<String, Registry.Enums.Enum> enumIndex;
   protected Map<String, GLCommand> commandIndex;
 
   public static void main(String[] args) throws Exception {
-    GenerateInterfaceFromRegistry gen = new GenerateInterfaceFromRegistry();
+    GenerateAPI_GL_Interface gen = new GenerateAPI_GL_Interface();
     Interf interf = new Interf();
     interf.javaFolder = "target/";
     interf.packge = "panama.opengl";
@@ -52,7 +52,7 @@ public class GenerateInterfaceFromRegistry {
     gen.compile(javaFiles);
   }
 
-  public GenerateInterfaceFromRegistry() throws Exception {
+  public GenerateAPI_GL_Interface() throws Exception {
     registry = new OpenGLRegistry();
     enumIndex = registry.getEnumIndex();
     commandIndex = registry.getCommandIndex();

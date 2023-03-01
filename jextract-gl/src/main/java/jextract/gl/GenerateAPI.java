@@ -70,12 +70,12 @@ public class GenerateAPI {
     gen.run();
   }
 
-  GenerateInterfaceFromRegistry interfGen;
-  GenerateWrapperFromBindings wrapperGen;
+  GenerateAPI_GL_Interface interfGen;
+  GenerateAPI_GL_Wrapper wrapperGen;
 
   public GenerateAPI() throws Exception {
-    interfGen = new GenerateInterfaceFromRegistry();
-    wrapperGen = new GenerateWrapperFromBindings();
+    interfGen = new GenerateAPI_GL_Interface();
+    wrapperGen = new GenerateAPI_GL_Wrapper();
   }
 
   /**

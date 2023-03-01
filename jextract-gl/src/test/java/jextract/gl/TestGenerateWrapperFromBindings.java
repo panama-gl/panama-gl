@@ -68,7 +68,7 @@ public class TestGenerateWrapperFromBindings {
     ClassWriter classWriter = new ClassWriter("","");
     StringBuffer javaCode = new StringBuffer();
     
-    GenerateWrapperFromBindings g = new GenerateWrapperFromBindings();
+    GenerateAPI_GL_Wrapper g = new GenerateAPI_GL_Wrapper();
     g.wrapJavaBinding(classWriter, wrapper, glRegistry, bindingRegistry, javaCode);
     
     // Then the wrapping is successful
@@ -107,7 +107,7 @@ public class TestGenerateWrapperFromBindings {
     Set<String> autoWrappedMethodNames = new HashSet<>();
     StringBuffer javaCode = new StringBuffer();
     
-    GenerateWrapperFromBindings g = new GenerateWrapperFromBindings();
+    GenerateAPI_GL_Wrapper g = new GenerateAPI_GL_Wrapper();
     g.wrapUnspecifiedMethod(classWriter, wrapped, bindedMethod, autoWrappedMethodNames, javaCode);
 
     
@@ -140,7 +140,7 @@ public class TestGenerateWrapperFromBindings {
     
     // ---------------------------------------    
     // When initializing a generator
-    GenerateWrapperFromBindings g = new GenerateWrapperFromBindings();
+    GenerateAPI_GL_Wrapper g = new GenerateAPI_GL_Wrapper();
     
     // Then it has not work yet
     Assert.assertEquals(0, g.nUnimplemented);

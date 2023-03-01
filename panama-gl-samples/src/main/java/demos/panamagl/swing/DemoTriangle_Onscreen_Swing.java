@@ -81,7 +81,7 @@ public class DemoTriangle_Onscreen_Swing {
     // ---------------------------------------
     // Animate
 
-    Thread.sleep(5000);
+    //Thread.sleep(5000);
     System.out.println("Start loop");
 
     Animator a = new Animator(panel);

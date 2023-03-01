@@ -37,7 +37,7 @@ import jextract.gl.xml.model.GLCommand;
 /**
  * Run me with VM args : --enable-preview
  */
-public class GenerateWrapperFromBindings {
+public class GenerateAPI_GL_Wrapper {
   OpenGLRegistry registry;
 
   boolean addUnimplementedMethodsUponMissingBinding = true;
@@ -54,7 +54,7 @@ public class GenerateWrapperFromBindings {
   protected int nUnimplemented;
 
 
-  public GenerateWrapperFromBindings() throws Exception {
+  public GenerateAPI_GL_Wrapper() throws Exception {
     registry = new OpenGLRegistry();
   }
 
@@ -69,7 +69,7 @@ public class GenerateWrapperFromBindings {
 
 
     // Write class
-    GenerateWrapperFromBindings gen = new GenerateWrapperFromBindings();
+    GenerateAPI_GL_Wrapper gen = new GenerateAPI_GL_Wrapper();
     gen.generateWrapper(wrapper);
 
     // Compile class

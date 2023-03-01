@@ -31,7 +31,6 @@ import opengl.ubuntu.v20.glut_h;
  * Run me with VM args : --enable-preview
  *
  */
-@SuppressWarnings("rawtypes")
 public class Read_Registry_JExtract {
 
   public static void main(String[] args)
