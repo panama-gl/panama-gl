@@ -27,16 +27,11 @@ import org.jzy3d.plot3d.primitives.Scatter;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 
 /**
- * Demo an surface chart made with Panama (JEP-412).
+ * Demo an scatter chart with JOGL.
  *
  * @author Martin Pernollet
  *
  */
-//VM ARGS :  --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-// DO NOT USE -XstartOnFirstThread!!
-
-// Making context current in MacOSXCGLContext line 1474 
-
 public class ScatterDemo_JOGL {
   static final float ALPHA_FACTOR = 0.25f;// .61f;
 

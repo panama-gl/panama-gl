@@ -12,7 +12,7 @@ import org.jzy3d.plot3d.primitives.RandomGeom;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.view.HiDPI;
 
-public class SpinningCubesLightDemo {
+public class SpinningCubesDemo_PanamaGL {
   
   
   public static void main(String[] args) throws Exception {

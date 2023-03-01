@@ -21,6 +21,7 @@ import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
+import panamagl.utils.ArrayUtils;
 
 
 /**
@@ -59,6 +60,18 @@ public abstract class AGL implements GL {
 
   public MemorySegment alloc(String value) {
     return allocator.allocateUtf8String(value);
+  }
+
+  public int[] toInt(MemorySegment value) {
+    return value.toArray(ValueLayout.JAVA_INT);
+  }
+
+  public float[] toFloat(MemorySegment value) {
+    return value.toArray(ValueLayout.JAVA_FLOAT);
+  }
+
+  public double[] toDouble(MemorySegment value) {
+    return value.toArray(ValueLayout.JAVA_DOUBLE);
   }
 
   public MemorySegment alloc(double[] value) {
@@ -105,6 +118,10 @@ public abstract class AGL implements GL {
     MemorySegment sm = alloc(dbl(model));
     MemorySegment sp = alloc(dbl(proj));    
     MemorySegment sv = alloc(dbl(view));
+    
+    //ArrayUtils.print(toDouble(sm));
+    //ArrayUtils.print(toDouble(sp));
+    //ArrayUtils.print(toDouble(sm));
     
     int out = gluProject((double)objX, (double)objY, (double)objZ, sm, sp, sv, winX, winY, winZ);
 
