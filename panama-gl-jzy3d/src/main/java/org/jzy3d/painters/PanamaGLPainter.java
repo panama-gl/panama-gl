@@ -48,6 +48,7 @@ import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.renderers.text.BasicTextRenderer;
 import panamagl.renderers.text.TextRenderer;
+import panamagl.utils.ForeignMemoryUtils;
 
 public class PanamaGLPainter extends AbstractPainter {
   static Logger logger = Logger.getLogger(PanamaGLPainter.class);
@@ -121,6 +122,16 @@ public class PanamaGLPainter extends AbstractPainter {
   public MemorySegment alloc(String value) {
     return allocator.allocateUtf8String(value);
   }
+  
+  protected double[] dbl(float[] values) {
+    double[] dbl = new double[values.length];
+    for (int i = 0; i < values.length; i++) {
+      dbl[i] = values[i];
+    }
+    return dbl;
+  }
+
+
 
   public String glGetString(int stringID) {
     return gl.glGetString(stringID);
@@ -132,21 +143,21 @@ public class PanamaGLPainter extends AbstractPainter {
   public void glGetIntegerv(int pname, int[] data, int data_offset) {
     MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_INT, data.length);
     gl.glGetIntegerv(pname, segment);
-    ((AGL) gl).copySegmentToArray(segment, data);
+    ((ForeignMemoryUtils) gl).copySegmentToArray(segment, data);
   }
 
   @Override
   public void glGetDoublev(int pname, double[] params, int params_offset) {
     MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_DOUBLE, params.length);
     gl.glGetDoublev(pname, segment);
-    ((AGL) gl).copySegmentToArray(segment, params);
+    ((ForeignMemoryUtils) gl).copySegmentToArray(segment, params);
   }
 
   @Override
   public void glGetFloatv(int pname, float[] data, int data_offset) {
     MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_FLOAT, data.length);
     gl.glGetFloatv(pname, segment);
-    ((AGL) gl).copySegmentToArray(segment, data);
+    ((ForeignMemoryUtils) gl).copySegmentToArray(segment, data);
   }
 
   /*
@@ -476,7 +487,7 @@ public class PanamaGLPainter extends AbstractPainter {
   public void glDrawPixels(int width, int height, int format, int type, Buffer pixels) {
     logger.error("not implemented");
 
-    MemorySegment pixSegment = ((AGL) gl).alloc(((IntBuffer) pixels).array());
+    MemorySegment pixSegment = ((ForeignMemoryUtils) gl).alloc(((IntBuffer) pixels).array());
 
     gl.glDrawPixels(width, height, format, type, pixSegment);
 
@@ -921,14 +932,6 @@ public class PanamaGLPainter extends AbstractPainter {
       float[] proj, int proj_offset, int[] view, int view_offset, float[] objPos,
       int objPos_offset) {
     return ((AGL) gl).gluUnProject(winX, winY, winZ, model, proj, view, objPos);
-  }
-
-  protected double[] dbl(float[] values) {
-    double[] dbl = new double[values.length];
-    for (int i = 0; i < values.length; i++) {
-      dbl[i] = values[i];
-    }
-    return dbl;
   }
 
   @Override

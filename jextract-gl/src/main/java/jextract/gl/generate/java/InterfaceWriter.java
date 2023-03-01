@@ -80,7 +80,7 @@ public class InterfaceWriter extends JavaWriter{
     Arg o = getOutputArg(method);
     
     //method(sb, method.getName(), in, o, null, null);
-    
+        
     String methodName = "public " + o.typeName + " " + method.getName() + "(";
     //StringBuffer argBuffer = new StringBuffer();
 
@@ -88,7 +88,14 @@ public class InterfaceWriter extends JavaWriter{
 
     int k = 0;
     for (Arg arg : in) {
-      String declare = arg.getTypeName() + " " + arg.getName();
+      String typeName = arg.getTypeName();
+      int id = typeName.lastIndexOf(".");
+      
+      if(id!=-1) {
+        typeName = typeName.substring(id+1);
+      }
+      
+      String declare = typeName + " " + arg.getName();
 
         if (k == 0) {
           sb.append(declare);

@@ -31,8 +31,8 @@ import jextract.gl.generate.java.InterfaceWriter;
 import jextract.gl.generate.java.PlatformFactory;
 import jextract.gl.generate.java.Wrapper;
 import jextract.gl.java.AcceptsGLMethod;
-import panamagl.os.linux.APanamaGLFactory_linux;
-import panamagl.os.macos.APanamaGLFactory_macOS;
+import panamagl.platform.linux.APanamaGLFactory_linux;
+import panamagl.platform.macos.APanamaGLFactory_macOS;
 
 /**
  * Generate an OpenGL API with per-platform implementations wrapping the bindings made available by JExtract.
@@ -152,6 +152,10 @@ public class GenerateAPI {
       // Create GLU et GLUT interface
       InterfaceWriter gluWriter = new InterfaceWriter(interf.packge, "GLU");
       InterfaceWriter glutWriter = new InterfaceWriter(interf.packge, "GLUT");
+      
+      gluWriter.addImport("java.lang.foreign.*");
+      glutWriter.addImport("java.lang.foreign.*");
+      
       String glutFile = interf.javaFolder + "/GLUT.java";
       String gluFile = interf.javaFolder + "/GLU.java";
 

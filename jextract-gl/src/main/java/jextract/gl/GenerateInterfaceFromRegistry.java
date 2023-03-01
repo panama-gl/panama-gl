@@ -76,7 +76,7 @@ public class GenerateInterfaceFromRegistry {
       String name = registryFeatureToGLInterfaceName(feature);
 
       InterfaceWriter interfaceWriter = new InterfaceWriter(interf.packge, name);
-
+      interfaceWriter.addImport("java.lang.foreign.*");
       interfaceWriters.put(name, interfaceWriter);
     }
 
@@ -184,7 +184,7 @@ public class GenerateInterfaceFromRegistry {
       String javaFile = folder + name + ".java";
 
       InterfaceWriter interfaceWriter = interfaceWriters.get(name);
-      interfaceWriter.addImport("java.lang.foreign.*");
+      //interfaceWriter.addImport("java.lang.foreign.*");
       for(String dependency: dependencies.get(name)) {
         interfaceWriter.addExtension(dependency);
       }
