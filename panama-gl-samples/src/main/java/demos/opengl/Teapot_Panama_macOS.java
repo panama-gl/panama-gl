@@ -1,11 +1,10 @@
 package demos.opengl;
 
-//import opengl.macos.v10_15_7.*;
-import static opengl.macos.v10_15_7.glut_h.*;
+import static opengl.macos.x86.glut_h.*;
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
-import opengl.macos.v10_15_7.glutDisplayFunc$func;
-import opengl.macos.v10_15_7.glutIdleFunc$func;
+import opengl.macos.x86.glutDisplayFunc$func;
+import opengl.macos.x86.glutIdleFunc$func;
 
 
 /*

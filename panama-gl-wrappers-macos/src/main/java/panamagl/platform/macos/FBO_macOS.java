@@ -23,7 +23,7 @@ import java.lang.foreign.MemorySession;
 import java.lang.foreign.ValueLayout;
 import java.lang.foreign.ValueLayout.OfByte;
 import java.nio.ByteOrder;
-import opengl.macos.v10_15_7.glut_h;
+import opengl.macos.x86.glut_h;
 import panamagl.Debug;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;

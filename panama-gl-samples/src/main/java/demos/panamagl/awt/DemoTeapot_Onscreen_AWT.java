@@ -25,7 +25,7 @@ import java.awt.event.WindowEvent;
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
 import javax.swing.SwingUtilities;
-import opengl.macos.v10_15_7.glut_h;
+import opengl.macos.x86.glut_h;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasSwing;

@@ -33,7 +33,7 @@ import org.jzy3d.plot3d.builder.SurfaceBuilder;
 import org.jzy3d.plot3d.builder.concrete.OrthonormalGrid;
 import org.jzy3d.plot3d.primitives.Shape;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
-import opengl.macos.v10_15_7.glut_h;
+import opengl.macos.x86.glut_h;
 
 
 /**

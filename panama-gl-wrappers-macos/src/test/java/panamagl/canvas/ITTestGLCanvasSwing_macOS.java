@@ -33,7 +33,7 @@ import javax.swing.SwingUtilities;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import opengl.macos.v10_15_7.glut_h;
+import opengl.macos.x86.glut_h;
 import panamagl.GLEventAdapter;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;

@@ -137,7 +137,7 @@ public class GenerateAPI {
     if(MACOS) {
       wrapper = new Wrapper();
       wrapper.platform = "macOS_x86";
-      wrapper.wrapped = Set.of(opengl.macos.v10_15_7.glut_h.class/*, glext.macos.v10_15_7.glext_h.class, cgl.macos.v10_15_7.cgl_h.class*/);
+      wrapper.wrapped = Set.of(opengl.macos.x86.glut_h.class/*, glext.macos.v10_15_7.glext_h.class, cgl.macos.v10_15_7.cgl_h.class*/);
       wrapper.accepts = new AcceptsGLMethod();
       wrapper.className = "GL_" + wrapper.platform;
       wrapper.packge = GL_PACKAGE_MACOS_x86;

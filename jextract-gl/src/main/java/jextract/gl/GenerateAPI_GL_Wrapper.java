@@ -61,7 +61,7 @@ public class GenerateAPI_GL_Wrapper {
   public static void main(String[] args) throws Exception {
 
     Wrapper wrapper = new Wrapper();
-    wrapper.wrapped = Set.of(opengl.macos.v10_15_7.glut_h.class);
+    wrapper.wrapped = Set.of(opengl.macos.x86.glut_h.class);
 
     wrapper.accepts = new AcceptsGLMethod();
     wrapper.className = "GL_macOS";

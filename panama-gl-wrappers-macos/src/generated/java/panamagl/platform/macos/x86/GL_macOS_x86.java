@@ -1,8 +1,8 @@
 package panamagl.platform.macos.x86; 
 
-import opengl.macos.v10_15_7.glut_h;
-import static opengl.macos.v10_15_7.glut_h.*;
+import static opengl.macos.x86.glut_h.*;
 import java.lang.foreign.*;
+import opengl.macos.x86.glut_h;
 
 public class GL_macOS_x86 extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
   public void glAccum(int op, float value) {

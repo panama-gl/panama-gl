@@ -17,8 +17,8 @@
  *******************************************************************************/
 package demos.panamagl.offscreen;
 
-import static opengl.macos.v10_15_7.glut_h.*;
-import opengl.macos.v10_15_7.glut_h;
+import static opengl.macos.x86.glut_h.*;
+import opengl.macos.x86.glut_h;
 
 public class SampleTriangle {
     public static void rgbaTriangle2D(int width, int height) {

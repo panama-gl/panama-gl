@@ -56,12 +56,12 @@ import org.jzy3d.plot3d.rendering.canvas.natives.PanamaGLNativeCanvas;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
-import opengl.macos.v10_15_7.glutDisplayFunc$func;
-import opengl.macos.v10_15_7.glutIdleFunc$func;
-import opengl.macos.v10_15_7.glutMotionFunc$func;
-import opengl.macos.v10_15_7.glutMouseFunc$func;
-import opengl.macos.v10_15_7.glutReshapeFunc$func;
-import opengl.macos.v10_15_7.glut_h;
+import opengl.macos.x86.glutDisplayFunc$func;
+import opengl.macos.x86.glutIdleFunc$func;
+import opengl.macos.x86.glutMotionFunc$func;
+import opengl.macos.x86.glutMouseFunc$func;
+import opengl.macos.x86.glutReshapeFunc$func;
+import opengl.macos.x86.glut_h;
 
 public class PanamaGLPainter_MacOS_10_15_3 extends AbstractPainter implements PanamaGLNativePainter {
   static Logger logger = Logger.getLogger(PanamaGLPainter_MacOS_10_15_3.class);

@@ -29,7 +29,7 @@ import org.jzy3d.colors.Color;
 import org.jzy3d.maths.Coord3d;
 import org.jzy3d.plot3d.primitives.Scatter;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
-import opengl.macos.v10_15_7.glut_h;
+import opengl.macos.x86.glut_h;
 
 // -XstartOnFirstThread --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class ScatterDemoPanamaGL_macOS  {
