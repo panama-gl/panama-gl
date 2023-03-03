@@ -89,3 +89,5 @@ All PanamaGL modules as well as JExtractGL are licensed under the [GPLv3 license
 # Authors
 
 * Martin Pernollet
+
+* Maybe Manu
