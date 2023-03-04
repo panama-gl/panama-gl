@@ -15,11 +15,11 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.platform.macos;
+package panamagl.platform.macos.x86;
 
 import panamagl.platform.Platform;
 
-public class MacOSTest {
+public class MacOSx86Test {
   /**
    * Indicate a message in console if not running on macos
    * @return
@@ -29,7 +29,7 @@ public class MacOSTest {
     
     System.out.println(platform);
     
-    boolean isPlatform = platform.isMac();//new PlatformMatcher_macOS_x86().matches(os);
+    boolean isPlatform = new PlatformMatcher_macOS_x86().matches(platform);
 
     if(!isPlatform) {
       System.err.println(" !! \n    Skip test since not on appropriate platform : " + platform + "\n !!");

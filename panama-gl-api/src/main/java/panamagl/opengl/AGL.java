@@ -24,7 +24,7 @@ import panamagl.utils.ForeignMemoryUtils;
 /**
  * A base abstract class for Panama based OpenGL binding, implementing part of {@link GL}.
  * 
- * Mainly provides helpers for the Panama API by extendins {@link ForeignMemoryUtils}, hiding the
+ * Mainly provides helpers for the Panama API by using {@link ForeignMemoryUtils}, hiding the
  * API that will change in future Java version.
  * 
  * Also provides methods with base Java types instead of the usual {@link MemorySegment} and
@@ -33,9 +33,6 @@ import panamagl.utils.ForeignMemoryUtils;
  * @author Martin Pernollet
  */
 public abstract class AGL extends ForeignMemoryUtils implements GL {
-  public AGL() {
-    super();
-  }
 
   /** A float-based gluProject */
   public boolean gluProject(float objX, float objY, float objZ, float[] model, float[] proj,

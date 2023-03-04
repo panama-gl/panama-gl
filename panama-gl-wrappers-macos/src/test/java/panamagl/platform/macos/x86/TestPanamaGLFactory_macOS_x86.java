@@ -15,28 +15,32 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.platform.macos;
+package panamagl.platform.macos.x86;
 
-import panamagl.platform.Platform;
+import org.junit.Assert;
+import org.junit.Test;
+import panamagl.factory.PanamaGLFactory;
 
-public class MacOSTest {
-  /**
-   * Indicate a message in console if not running on macos
-   * @return
-   */
-  public boolean checkPlatform() {
-    Platform platform = new Platform();
-    
-    System.out.println(platform);
-    
-    boolean isPlatform = platform.isMac();//new PlatformMatcher_macOS_x86().matches(os);
-
-    if(!isPlatform) {
-      System.err.println(" !! \n    Skip test since not on appropriate platform : " + platform + "\n !!");
-    }
-    
-    return isPlatform;
-  }
+public class TestPanamaGLFactory_macOS_x86 extends MacOSx86Test{
+  @Test
+  public void test() {
+    if (!checkPlatform())
+      return;
   
+    PanamaGLFactory f = PanamaGLFactory.select();
+    
+    boolean matched = f instanceof PanamaGLFactory_macOS_x86;
+    
+    Assert.assertTrue(matched);
 
+    // Issue on context init
+    //Assert.assertNotNull(f.newGLContext());
+
+    Assert.assertNotNull(f.newGL());
+    Assert.assertNotNull(f.newOffscreenRenderer());
+    Assert.assertNotNull(f.newFBO(800, 600));
+    Assert.assertNotNull(f.newCanvasSwing());
+
+    ;
+  }
 }

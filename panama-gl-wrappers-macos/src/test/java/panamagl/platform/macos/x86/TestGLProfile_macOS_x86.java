@@ -15,28 +15,36 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.platform.macos;
+package panamagl.platform.macos.x86;
 
-import panamagl.platform.Platform;
+import org.junit.Assert;
+import org.junit.Test;
+import panamagl.GLProfile;
+import panamagl.opengl.GL;
+import panamagl.platform.macos.GLUTContext_macOS;
 
-public class MacOSTest {
-  /**
-   * Indicate a message in console if not running on macos
-   * @return
-   */
-  public boolean checkPlatform() {
-    Platform platform = new Platform();
-    
-    System.out.println(platform);
-    
-    boolean isPlatform = platform.isMac();//new PlatformMatcher_macOS_x86().matches(os);
+// VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules
+// jdk.incubator.foreign
+// -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+public class TestGLProfile_macOS_x86 extends MacOSx86Test{
 
-    if(!isPlatform) {
-      System.err.println(" !! \n    Skip test since not on appropriate platform : " + platform + "\n !!");
-    }
-    
-    return isPlatform;
+  @Test
+  public void glProfile() {
+    if (!checkPlatform())
+      return;
+
+    // Given a GL caller
+    GL gl = new panamagl.platform.macos.x86.GL_macOS_x86();
+
+    // Given a GLUT context
+    GLUTContext_macOS glutContext = new GLUTContext_macOS();
+    glutContext.init(false);
+
+
+    GLProfile p = new GLProfile(gl);
+
+    Assert.assertNotNull(p.getVersion());
+    Assert.assertNotNull(p.getVendor());
   }
-  
 
 }

@@ -6,4 +6,8 @@ public class PanamaGLFactory_macOS_x86 extends panamagl.platform.macos.APanamaGL
     return new panamagl.platform.macos.x86.GL_macOS_x86();
   }
 
+  public boolean matches(panamagl.platform.Platform platform) {
+    return new panamagl.platform.macos.x86.PlatformMatcher_macOS_x86().matches(platform);
+  }
+
 }

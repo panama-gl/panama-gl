@@ -22,6 +22,7 @@ public class PlatformFactory {
   public Class<?> base;
   public String javaFile;
   public String packge;
+  public Class<?> matcher;
   
   public void setFileIn(String folder) {
     javaFile = folder + packge.replace(".", "/") + "/" + name + ".java";
