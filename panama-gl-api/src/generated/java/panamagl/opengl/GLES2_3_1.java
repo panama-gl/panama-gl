@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.*;
+import java.lang.foreign.Addressable;
 
 public interface GLES2_3_1 extends GLES2_3_0 {
   public void glDispatchCompute(int num_groups_x, int num_groups_y, int num_groups_z);

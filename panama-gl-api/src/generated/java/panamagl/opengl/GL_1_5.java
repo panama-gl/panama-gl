@@ -1,6 +1,7 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.*;
+import java.lang.foreign.Addressable;
+import java.lang.foreign.MemoryAddress;
 
 public interface GL_1_5 extends GL_1_4 {
   public static final int GL_BUFFER_SIZE = 0x8764;

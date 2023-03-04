@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.*;
+import java.lang.foreign.Addressable;
 
 public interface GL_4_1 extends GL_4_0 {
   public static final int GL_FIXED = 0x140C;

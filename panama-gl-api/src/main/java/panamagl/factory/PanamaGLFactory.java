@@ -68,12 +68,9 @@ import panamagl.utils.ClassloaderUtils;
  */
 public interface PanamaGLFactory extends PlatformMatcher{
 
-  GLCanvas newCanvas(GLCanvasFactory factory);
-  //GLCanvasSwing newCanvasSwing();
-
   GL newGL();
   GLContext newGLContext();
-
+  GLCanvas newCanvas(GLCanvasFactory factory);
   FBO newFBO(int width, int height);
   OffscreenRenderer newOffscreenRenderer();
 

@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.*;
+import java.lang.foreign.Addressable;
 
 public interface GL_1_4 extends GL_1_3 {
   public static final int GL_BLEND_DST_RGB = 0x80C8;

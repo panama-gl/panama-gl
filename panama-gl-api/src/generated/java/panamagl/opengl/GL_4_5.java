@@ -1,6 +1,7 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.*;
+import java.lang.foreign.Addressable;
+import java.lang.foreign.MemoryAddress;
 
 public interface GL_4_5 extends GL_4_4 {
   public static final int GL_CONTEXT_LOST = 0x0507;

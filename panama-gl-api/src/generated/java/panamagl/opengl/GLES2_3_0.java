@@ -1,6 +1,7 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.*;
+import java.lang.foreign.Addressable;
+import java.lang.foreign.MemoryAddress;
 
 public interface GLES2_3_0  {
   public static final int GL_READ_BUFFER = 0x0C02;

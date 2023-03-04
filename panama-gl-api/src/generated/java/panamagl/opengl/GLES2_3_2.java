@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.*;
+import java.lang.foreign.Addressable;
 
 public interface GLES2_3_2 extends GLES2_3_1 {
   public static final int GL_MULTISAMPLE_LINE_WIDTH_RANGE = 0x9381;

@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.*;
+import java.lang.foreign.Addressable;
 
 public interface GL_2_1 extends GL_2_0 {
   public static final int GL_PIXEL_PACK_BUFFER = 0x88EB;

@@ -1,6 +1,7 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.*;
+import java.lang.foreign.Addressable;
+import java.lang.foreign.MemoryAddress;
 
 public interface GL_3_0  {
   public static final int GL_COMPARE_REF_TO_TEXTURE = 0x884E;

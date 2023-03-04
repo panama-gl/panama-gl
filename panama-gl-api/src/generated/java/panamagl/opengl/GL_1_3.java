@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.*;
+import java.lang.foreign.Addressable;
 
 public interface GL_1_3 extends GL_1_2 {
   public static final int GL_TEXTURE0 = 0x84C0;

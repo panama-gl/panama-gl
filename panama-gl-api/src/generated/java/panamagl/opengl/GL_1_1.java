@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.*;
+import java.lang.foreign.Addressable;
 
 public interface GL_1_1 extends GL_1_0 {
   public static final int GL_COLOR_LOGIC_OP = 0x0BF2;

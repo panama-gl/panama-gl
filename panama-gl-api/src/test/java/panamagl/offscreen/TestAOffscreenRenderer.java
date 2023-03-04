@@ -23,12 +23,8 @@ import static org.mockito.Mockito.when;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.Assert;
 import org.junit.Test;
-import panamagl.GLCanvas;
 import panamagl.GLEventAdapter;
-import panamagl.GLEventListener;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.offscreen.AOffscreenRenderer;
-import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 

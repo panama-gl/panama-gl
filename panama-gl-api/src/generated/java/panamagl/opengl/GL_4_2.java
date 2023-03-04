@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.*;
+import java.lang.foreign.Addressable;
 
 public interface GL_4_2 extends GL_4_1 {
   public static final int GL_COPY_READ_BUFFER_BINDING = 0x8F36;
