@@ -253,13 +253,18 @@ public class GenerateAPI {
     factoryWriter.addExtension(factory.base.getName());
     factoryWriter.addImplement(panamagl.factory.PanamaGLFactory.class.getName());
     
-    Code c = new Code("return new " + wrapper.packge + "." + wrapper.className + "();");
     
     StringBuffer javaCode = new StringBuffer();
     factoryWriter.start(javaCode);
-    factoryWriter.method(javaCode, "newGL", null, new Arg(panamagl.opengl.GL.class.getName()), c);
-    //factoryWriter.method(javaCode, "newGL", null, new Arg("panamagl.opengl.GL"), Code.throwNotImplemented());
+
+    // -------------------------------------------------------------------
+    // Create a method to instanciate the appropriate GL wrapper
     
+    Code c = new Code("return new " + wrapper.packge + "." + wrapper.className + "();");
+    factoryWriter.method(javaCode, "newGL", null, new Arg(panamagl.opengl.GL.class.getName()), c);
+    
+    // -------------------------------------------------------------------
+    // Create a method to instanciate the appropriate platform matcher
     
     if(factory.matcher!=null) {
       Arg input = new Arg(Platform.class.getName(), "platform");
