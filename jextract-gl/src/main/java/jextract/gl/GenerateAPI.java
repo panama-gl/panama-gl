@@ -31,8 +31,11 @@ import jextract.gl.generate.java.InterfaceWriter;
 import jextract.gl.generate.java.PlatformFactory;
 import jextract.gl.generate.java.Wrapper;
 import jextract.gl.java.AcceptsGLMethod;
+import panamagl.platform.Platform;
 import panamagl.platform.linux.APanamaGLFactory_linux;
 import panamagl.platform.macos.APanamaGLFactory_macOS;
+import panamagl.platform.macos.arm.PlatformMatcher_macOS_arm;
+import panamagl.platform.macos.x86.PlatformMatcher_macOS_x86;
 
 /**
  * Generate an OpenGL API with per-platform implementations wrapping the bindings made available by JExtract.
@@ -60,6 +63,7 @@ public class GenerateAPI {
   public static String GL_PACKAGE_WINDOWS = "panamagl.platform.windows";*/
 
   public static String GL_PACKAGE_MACOS_x86 = "panamagl.platform.macos.x86";
+  public static String GL_PACKAGE_MACOS_arm = "panamagl.platform.macos.arm";
   public static String GL_PACKAGE_LINUX_x86 = "panamagl.platform.linux.x86";
   public static String GL_PACKAGE_WINDOWS_x86 = "panamagl.platform.windows.x86";
   
@@ -91,8 +95,6 @@ public class GenerateAPI {
     interf.packge = GL_PACKAGE;
     interf.javaFolder = GL_INTERFACE_SOURCES + interf.packge.replace(".", "/") + "/";
     
-    
-    
     System.out.println("----------------------------------------------------------");
     System.out.println("[Interfaces]");
 
@@ -112,17 +114,15 @@ public class GenerateAPI {
     glInterfaceWriter.start(javaCode);
     glInterfaceWriter.close(javaCode);    
     glInterfaceWriter.writeTo(javaCode, javaFile);
-
-    
     
     List<String> javaInterfacesFiles = interfGen.generateInterfaces(interf);
-
     
     // ============================================================================
     // GL IMPLEMENTATION
     
-    boolean MACOS = true;
-    boolean LINUX = false;
+    boolean MACOS_x86 = true;
+    boolean MACOS_ARM = true;
+    boolean LINUX_x86 = false;
     
     wrapperGen.addUnimplementedMethodsUponMissingBinding = false;
     //wrapperGen.addUnimplementedMethodsFor = Sets.of("glDebugMessageCallback");
@@ -134,7 +134,7 @@ public class GenerateAPI {
     // ========================================================
     // Configure macOS wrapper
     
-    if(MACOS) {
+    if(MACOS_x86) {
       wrapper = new Wrapper();
       wrapper.platform = "macOS_x86";
       wrapper.wrapped = Set.of(opengl.macos.x86.glut_h.class/*, glext.macos.v10_15_7.glext_h.class, cgl.macos.v10_15_7.cgl_h.class*/);
@@ -158,7 +158,39 @@ public class GenerateAPI {
       factory = new PlatformFactory();
       factory.base = APanamaGLFactory_macOS.class;
       factory.name = "PanamaGLFactory_" + wrapper.platform;
-      factory.packge = GL_PACKAGE_MACOS_x86;
+      factory.packge = wrapper.packge;
+      factory.matcher = PlatformMatcher_macOS_x86.class;
+      factory.setFileIn(GL_MACOS_SOURCES);
+      
+      makeFactory(javaInterfacesFiles, wrapper, factory);
+    }
+    
+    if(MACOS_ARM) {
+      wrapper = new Wrapper();
+      wrapper.platform = "macOS_arm";
+      wrapper.wrapped = Set.of(opengl.macos.arm.glut_h.class);
+      wrapper.accepts = new AcceptsGLMethod();
+      wrapper.className = "GL_" + wrapper.platform;
+      wrapper.packge = GL_PACKAGE_MACOS_arm;
+      wrapper.setFileIn(GL_MACOS_SOURCES);
+  
+      wrapper.addImplement(interf.packge + "." + superGL);
+      wrapper.addImplement(interf.packge + ".GLU");
+      wrapper.addImplement(interf.packge + ".GLUT");
+      
+      wrapper.addExtension(interf.packge + ".AGL");
+      
+      // Write and compile
+      List<Method> extra = makeWrapper(javaInterfacesFiles, wrapper);
+      
+      makeGLUT(interf, extra);
+      
+      // Configure macOS factory
+      factory = new PlatformFactory();
+      factory.base = APanamaGLFactory_macOS.class;
+      factory.name = "PanamaGLFactory_" + wrapper.platform;
+      factory.packge = wrapper.packge;
+      factory.matcher = PlatformMatcher_macOS_arm.class;
       factory.setFileIn(GL_MACOS_SOURCES);
       
       makeFactory(javaInterfacesFiles, wrapper, factory);
@@ -170,7 +202,7 @@ public class GenerateAPI {
 
     // ========================================================
     // Configure Linux wrapper
-    if(LINUX) {
+    if(LINUX_x86) {
       wrapper = new Wrapper();
       wrapper.platform = "linux_x86";
       wrapper.wrapped = Set.of(glext.ubuntu.v20.glext_h.class/*, opengl.ubuntu.v20.glut_h.class, glxext.ubuntu.v20.glxext_h.class*/);
@@ -225,8 +257,17 @@ public class GenerateAPI {
     
     StringBuffer javaCode = new StringBuffer();
     factoryWriter.start(javaCode);
-    factoryWriter.method(javaCode, "newGL", null, new Arg("panamagl.opengl.GL"), c);
+    factoryWriter.method(javaCode, "newGL", null, new Arg(panamagl.opengl.GL.class.getName()), c);
     //factoryWriter.method(javaCode, "newGL", null, new Arg("panamagl.opengl.GL"), Code.throwNotImplemented());
+    
+    
+    if(factory.matcher!=null) {
+      Arg input = new Arg(Platform.class.getName(), "platform");
+      Code cn = new Code("return new " + factory.matcher.getName() + "().matches(platform);");
+      factoryWriter.method(javaCode, "matches", List.of(input), new Arg("boolean"), cn);
+    }
+    
+    
     factoryWriter.close(javaCode);
     factoryWriter.writeTo(javaCode, factory.javaFile);
     

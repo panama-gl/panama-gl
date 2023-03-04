@@ -31,6 +31,7 @@ import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.platform.Platform;
+import panamagl.platform.PlatformMatcher;
 import panamagl.utils.ClassloaderUtils;
 
 /**
@@ -66,7 +67,7 @@ import panamagl.utils.ClassloaderUtils;
  * @author Martin Pernollet
  *
  */
-public interface PanamaGLFactory {
+public interface PanamaGLFactory extends PlatformMatcher{
 
   GLCanvasAWT newCanvasAWT();
   GLCanvasSwing newCanvasSwing();
@@ -78,9 +79,6 @@ public interface PanamaGLFactory {
   OffscreenRenderer newOffscreenRenderer();
 
   void destroyContext();
-  
-  /** Indicates if this factory is compatible with the current {@link Platform}. */
-  boolean matches(Platform os);
   
   /////////////////////////////////////////////////////
   //

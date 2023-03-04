@@ -24,7 +24,7 @@ import panamagl.opengl.GLContext;
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules
 // jdk.incubator.foreign
 // -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class TestFBO_macOS extends MacOSTest{
+public class TestFBO_macOS extends MacOSx86Test{
 
   @Test
   public void given_CGLAndGLUTContext_whenRenderSomething_ThenGetBufferedImage() {

@@ -20,7 +20,7 @@ package panamagl.platform.macos;
 //import static org.mockito.Mockito.spy;
 import org.junit.Test;
 
-public class TestGL_macOS extends MacOSTest{
+public class TestGL_macOS extends MacOSx86Test{
     @Test
     public void whenInitDefault_ThenDoNotInvokeGlut(){
       if (!checkPlatform())

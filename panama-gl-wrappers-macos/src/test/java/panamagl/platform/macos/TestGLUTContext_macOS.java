@@ -24,7 +24,7 @@ import panamagl.platform.macos.x86.GL_macOS_x86;
 
 //VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 
-public class TestGLUTContext_macOS extends MacOSTest{
+public class TestGLUTContext_macOS extends MacOSx86Test{
   @Test
   public void createContext() {
     if (!checkPlatform())

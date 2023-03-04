@@ -17,32 +17,27 @@
  *******************************************************************************/
 package panamagl.platform.macos;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.jzy3d.os.OperatingSystem;
-import panamagl.factory.PanamaGLFactory;
-import panamagl.platform.macos.x86.PanamaGLFactory_macOS_x86;
+import panamagl.platform.Platform;
+import panamagl.platform.macos.x86.PlatformMatcher_macOS_x86;
 
-public class TestPanamaGLFactory_macOS {
-  @Test
-  public void test() {
-    if (!new OperatingSystem().isMac())
-      return;
-  
-    PanamaGLFactory f = PanamaGLFactory.select();
+public class MacOSx86Test {
+  /**
+   * Indicate a message in console if not running on macos
+   * @return
+   */
+  public boolean checkPlatform() {
+    Platform os = new Platform();
     
-    boolean matched = f instanceof PanamaGLFactory_macOS_x86;
+    System.out.println(os);
     
-    Assert.assertTrue(matched);
+    boolean isos = new PlatformMatcher_macOS_x86().matches(os);
 
-    // Issue on context init
-    //Assert.assertNotNull(f.newGLContext());
-
-    Assert.assertNotNull(f.newGL());
-    Assert.assertNotNull(f.newOffscreenRenderer());
-    Assert.assertNotNull(f.newFBO(800, 600));
-    Assert.assertNotNull(f.newCanvasSwing());
-
-    ;
+    if(!isos) {
+      System.err.println(" !! \n    Skip test since not on macOS : " + os + "\n !!");
+    }
+    
+    return isos;
   }
+  
+
 }
