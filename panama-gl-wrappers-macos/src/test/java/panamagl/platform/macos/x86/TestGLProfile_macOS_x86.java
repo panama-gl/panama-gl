@@ -22,7 +22,6 @@ import org.junit.Test;
 import panamagl.GLProfile;
 import panamagl.opengl.GL;
 import panamagl.platform.macos.GLUTContext_macOS;
-import panamagl.platform.macos.MacOSTest;
 
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules
 // jdk.incubator.foreign
