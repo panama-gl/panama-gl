@@ -24,8 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import panamagl.GLCanvas;
 import panamagl.GLEventListener;
-import panamagl.canvas.GLCanvasAWT;
-import panamagl.canvas.GLCanvasSwing;
+import panamagl.canvas.GLCanvasFactory;
 import panamagl.offscreen.FBO;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
@@ -69,8 +68,8 @@ import panamagl.utils.ClassloaderUtils;
  */
 public interface PanamaGLFactory extends PlatformMatcher{
 
-  GLCanvasAWT newCanvasAWT();
-  GLCanvasSwing newCanvasSwing();
+  GLCanvas newCanvas(GLCanvasFactory factory);
+  //GLCanvasSwing newCanvasSwing();
 
   GL newGL();
   GLContext newGLContext();

@@ -48,7 +48,7 @@ public class TestGLCanvasAWT_macOS {
     EventCounter event = new EventCounter();
     
     PanamaGLFactory factory = PanamaGLFactory.select();
-    GLCanvasAWT panel = factory.newCanvasAWT();
+    GLCanvasAWT panel = (GLCanvasAWT)factory.newCanvas(new AWTCanvasFactory());
     
     panel.setGLEventListener(new GLEventAdapter() {
       @Override
@@ -140,7 +140,8 @@ public class TestGLCanvasAWT_macOS {
 
     // Given an initialized panel
     PanamaGLFactory factory = PanamaGLFactory.select();
-    GLCanvasAWT panel = factory.newCanvasAWT();
+    GLCanvasAWT panel = (GLCanvasAWT)factory.newCanvas(new AWTCanvasFactory());
+
 
     
     Thread.sleep(1000);
@@ -222,7 +223,8 @@ public class TestGLCanvasAWT_macOS {
         };
       }
     };
-    GLCanvasAWT panel = factory.newCanvasAWT();
+    GLCanvasAWT panel = (GLCanvasAWT)factory.newCanvas(new AWTCanvasFactory());
+
 
     panel.setOffscreenRenderer(renderer);
 

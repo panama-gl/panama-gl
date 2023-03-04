@@ -8,7 +8,7 @@
 	</parent>
 
 	<artifactId>panama-gl-wrappers-windows</artifactId>
-	<name>Panama GL Windows</name>
+	<name>Panama GL Wrappers - Windows</name>
 
 	<dependencies>
 		<dependency>

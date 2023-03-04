@@ -8,7 +8,7 @@
 	</parent>
 
 	<artifactId>panama-gl-wrappers-linux</artifactId>
-	<name>Panama GL Linux</name>
+	<name>Panama GL Wrappers - Linux</name>
 
 	<dependencies>
 		<dependency>

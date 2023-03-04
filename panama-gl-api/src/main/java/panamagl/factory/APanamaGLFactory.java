@@ -17,17 +17,12 @@
  *******************************************************************************/
 package panamagl.factory;
 
-import panamagl.canvas.GLCanvasAWT;
-import panamagl.canvas.GLCanvasSwing;
+import panamagl.GLCanvas;
+import panamagl.canvas.GLCanvasFactory;
 
 public abstract class APanamaGLFactory implements PanamaGLFactory {
   @Override
-  public GLCanvasSwing newCanvasSwing() {
-    return new GLCanvasSwing(this);
+  public GLCanvas newCanvas(GLCanvasFactory factory) {
+    return factory.newCanvas(this);
   }
-  
-  @Override
-  public GLCanvasAWT newCanvasAWT() {
-    return new GLCanvasAWT(this);
-  }  
 }

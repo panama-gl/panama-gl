@@ -19,6 +19,7 @@ package panamagl.platform.macos.arm;
 
 import org.junit.Assert;
 import org.junit.Test;
+import panamagl.canvas.SwingCanvasFactory;
 import panamagl.factory.PanamaGLFactory;
 
 public class TestPanamaGLFactory_macOS_arm extends MacOSarmTest{
@@ -39,7 +40,7 @@ public class TestPanamaGLFactory_macOS_arm extends MacOSarmTest{
     Assert.assertNotNull(f.newGL());
     Assert.assertNotNull(f.newOffscreenRenderer());
     Assert.assertNotNull(f.newFBO(800, 600));
-    Assert.assertNotNull(f.newCanvasSwing());
+    Assert.assertNotNull(f.newCanvas(new SwingCanvasFactory()));
 
     ;
   }
