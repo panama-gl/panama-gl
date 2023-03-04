@@ -15,19 +15,18 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.platform.macos.x86;
+package panamagl.platform.macos.arm;
 
 import org.junit.Assert;
 import org.junit.Test;
 import panamagl.GLProfile;
 import panamagl.opengl.GL;
 import panamagl.platform.macos.GLUTContext_macOS;
-import panamagl.platform.macos.MacOSx86Test;
 
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules
 // jdk.incubator.foreign
 // -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class TestGLProfile_macOS extends MacOSx86Test{
+public class TestGLProfile_macOS_arm extends MacOSarmTest{
 
   @Test
   public void glProfile() {
@@ -35,7 +34,7 @@ public class TestGLProfile_macOS extends MacOSx86Test{
       return;
 
     // Given a GL caller
-    GL gl = new panamagl.platform.macos.x86.GL_macOS_x86();
+    GL gl = new panamagl.platform.macos.arm.GL_macOS_arm();
 
     // Given a GLUT context
     GLUTContext_macOS glutContext = new GLUTContext_macOS();

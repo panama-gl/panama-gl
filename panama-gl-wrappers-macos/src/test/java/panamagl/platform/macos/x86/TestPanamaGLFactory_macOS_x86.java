@@ -19,10 +19,7 @@ package panamagl.platform.macos.x86;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.jzy3d.os.OperatingSystem;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.platform.macos.MacOSx86Test;
-import panamagl.platform.macos.x86.PanamaGLFactory_macOS_x86;
 
 public class TestPanamaGLFactory_macOS_x86 extends MacOSx86Test{
   @Test

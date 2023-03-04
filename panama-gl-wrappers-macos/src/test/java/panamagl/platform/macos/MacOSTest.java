@@ -18,25 +18,24 @@
 package panamagl.platform.macos;
 
 import panamagl.platform.Platform;
-import panamagl.platform.macos.x86.PlatformMatcher_macOS_x86;
 
-public class MacOSx86Test {
+public class MacOSTest {
   /**
    * Indicate a message in console if not running on macos
    * @return
    */
   public boolean checkPlatform() {
-    Platform os = new Platform();
+    Platform platform = new Platform();
     
-    System.out.println(os);
+    System.out.println(platform);
     
-    boolean isos = new PlatformMatcher_macOS_x86().matches(os);
+    boolean isPlatform = platform.isMac();//new PlatformMatcher_macOS_x86().matches(os);
 
-    if(!isos) {
-      System.err.println(" !! \n    Skip test since not on macOS : " + os + "\n !!");
+    if(!isPlatform) {
+      System.err.println(" !! \n    Skip test since not on appropriate platform : " + platform + "\n !!");
     }
     
-    return isos;
+    return isPlatform;
   }
   
 

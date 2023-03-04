@@ -23,7 +23,7 @@ import junit.framework.Assert;
 
 //VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 
-public class TestCGLContext extends MacOSx86Test{
+public class TestCGLContext extends MacOSTest{
   @Test
   public void createCGLContext() {
     if (!checkPlatform())

@@ -15,19 +15,32 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.platform.macos;
+package panamagl.platform.macos.arm;
 
-//import static org.mockito.Mockito.spy;
+import org.junit.Assert;
 import org.junit.Test;
+import panamagl.factory.PanamaGLFactory;
 
-public class TestGL_macOS extends MacOSTest{
-    @Test
-    public void whenInitDefault_ThenDoNotInvokeGlut(){
-      if (!checkPlatform())
-        return;
+public class TestPanamaGLFactory_macOS_arm extends MacOSarmTest{
+  @Test
+  public void test() {
+    if (!checkPlatform())
+      return;
+  
+    PanamaGLFactory f = PanamaGLFactory.select();
+    
+    boolean matched = f instanceof PanamaGLFactory_macOS_arm;
+    
+    Assert.assertTrue(matched);
 
-       // GL_macOS_10_15_3 gl = spy(GL_macOS_10_15_3.class);
+    // Issue on context init
+    //Assert.assertNotNull(f.newGLContext());
 
+    Assert.assertNotNull(f.newGL());
+    Assert.assertNotNull(f.newOffscreenRenderer());
+    Assert.assertNotNull(f.newFBO(800, 600));
+    Assert.assertNotNull(f.newCanvasSwing());
 
-    }
+    ;
+  }
 }
