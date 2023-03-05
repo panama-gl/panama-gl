@@ -1,6 +1,5 @@
 package panamagl.utils;
 
-import java.awt.image.BufferedImage;
 import java.lang.foreign.MemorySegment;
 
 public interface ImageCopy<T> {

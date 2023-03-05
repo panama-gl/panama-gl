@@ -17,10 +17,9 @@
  *******************************************************************************/
 package panamagl.renderers.text;
 
-import java.awt.Color;
 import panamagl.opengl.GL;
 
 
-public interface TextRenderer<T> {
-  void draw(GL gl, T font, String text, float x, float y, float z, Color color, float rotation);
+public interface TextRenderer<FONT, COLOR> {
+  void draw(GL gl, FONT font, String text, float x, float y, float z, COLOR color, float rotation);
 }
