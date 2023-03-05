@@ -17,11 +17,12 @@
  *******************************************************************************/
 package demos.panamagl.offscreen;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import demos.panamagl.swing.DemoTeapot_Onscreen_Swing;
 import panamagl.GLEventListener;
+import panamagl.Image;
+import panamagl.canvas.AWTImage;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
@@ -56,7 +57,7 @@ public class DemoTeapot_Offscreen_macOS {
     
     //-------------------------
     // Get image
-    BufferedImage out = fbo.getImage(gl);
+    Image<?> out = fbo.getImage(gl);
 
     saveImage(out);
 
@@ -64,9 +65,9 @@ public class DemoTeapot_Offscreen_macOS {
 
   }
   
-  private static void saveImage(BufferedImage out) {
+  private static void saveImage(Image<?> out) {
     try {
-      ImageIO.write(out, "png", new File("target/teapot.png"));
+      ImageIO.write(((AWTImage)out).getImage(), "png", new File("target/teapot.png"));
 
     } catch (Exception e) {
       e.printStackTrace();

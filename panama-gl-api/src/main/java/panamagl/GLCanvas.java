@@ -17,7 +17,6 @@
  *******************************************************************************/
 package panamagl;
 
-import java.awt.image.BufferedImage;
 import javax.swing.JPanel;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
@@ -62,8 +61,8 @@ public interface GLCanvas {
   
   void repaint();
   
-  void setScreenshot(BufferedImage image);
-  BufferedImage getScreenshot();
+  void setScreenshot(Image<?> image);
+  Image<?> getScreenshot();
   
   OffscreenRenderer getOffscreenRenderer();
   void setOffscreenRenderer(OffscreenRenderer offscreen);

@@ -93,13 +93,13 @@ public class ITTestGLCanvasSwing_macOS {
     // Define a way to get following states
     panel.addComponentListener(new ComponentAdapter() {
       public void componentShown(ComponentEvent e) {
-        screenshotWhenShown = panel.getScreenshot();
+        screenshotWhenShown = (BufferedImage)panel.getScreenshot().getImage();
         System.err.println("GOT SCREENSHOT! SHOWN");
       }
       
       int k = 0;
       public void componentResized(ComponentEvent e) {
-        BufferedImage i = panel.getScreenshot();
+        BufferedImage i = (BufferedImage)panel.getScreenshot().getImage();
         
         //System.out.println(panel.getWidth());
         

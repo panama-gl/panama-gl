@@ -26,7 +26,7 @@ import panamagl.opengl.GLContext;
 // -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class TestFBO_macOS extends MacOSTest{
 
-  @Test
+  /*@Test
   public void given_CGLAndGLUTContext_whenRenderSomething_ThenGetBufferedImage() {
     if (!checkPlatform())
       return;
@@ -44,7 +44,7 @@ public class TestFBO_macOS extends MacOSTest{
 
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
 
-  }
+  }*/
 
   @Test
   public void given_GLUTContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {

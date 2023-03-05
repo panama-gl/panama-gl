@@ -17,14 +17,14 @@
  *******************************************************************************/
 package panamagl.offscreen;
 
-import java.awt.image.BufferedImage;
+import panamagl.Image;
 import panamagl.opengl.GL;
 
 
 public interface FBO {
   void prepare(GL gl);
   void release(GL gl);
-  BufferedImage getImage(GL gl);
+  Image<?> getImage(GL gl);
   void resize(int width, int height);
   int getWidth();
   int getHeight();

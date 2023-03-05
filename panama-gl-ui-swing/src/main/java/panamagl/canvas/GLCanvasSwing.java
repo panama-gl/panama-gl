@@ -27,6 +27,7 @@ import javax.swing.JPanel;
 import panamagl.Debug;
 import panamagl.GLCanvas;
 import panamagl.GLEventListener;
+import panamagl.Image;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.FBO;
 import panamagl.offscreen.OffscreenRenderer;
@@ -293,17 +294,18 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
   /* ===================================================== */
 
   @Override
-  public BufferedImage getScreenshot() {
+  public Image<?> getScreenshot() {
     if (out == null) {
       return null;
     }
-    return ImageUtils.copy(out);
+    return new AWTImage(ImageUtils.copy(out));
   }
 
   // should not be used by anything else than backend
   @Override
-  public void setScreenshot(BufferedImage image) {
-    out = image;
+  public void setScreenshot(Image<?> image) {
+    if(image!=null)
+      out = ((AWTImage)image).getImage();
   }
 
   /* ===================================================== */

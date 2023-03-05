@@ -23,6 +23,8 @@ import java.lang.foreign.MemorySession;
 import java.lang.foreign.ValueLayout;
 import opengl.ubuntu.v20.glut_h;
 import panamagl.Debug;
+import panamagl.Image;
+import panamagl.canvas.AWTImage;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
@@ -265,7 +267,7 @@ public class FBO_linux implements FBO {
 
   @SuppressWarnings("unchecked")
   @Override
-  public BufferedImage getImage(GL gl) {
+  public Image<?> getImage(GL gl) {
 
     // Initialize buffers if they are not ready or if their expected size changed
     if (!prepared)
@@ -319,7 +321,7 @@ public class FBO_linux implements FBO {
     //pixelsRead.
     //session.close();
     
-    return out;
+    return new AWTImage(out);
   }
 
   @Override

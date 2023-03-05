@@ -23,6 +23,8 @@ import java.lang.foreign.MemorySession;
 import java.lang.foreign.ValueLayout;
 import opengl.macos.x86.glut_h;
 import panamagl.Debug;
+import panamagl.Image;
+import panamagl.canvas.AWTImage;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
@@ -266,7 +268,7 @@ public class FBO_macOS implements FBO {
 
   @SuppressWarnings("unchecked")
   @Override
-  public BufferedImage getImage(GL gl) {
+  public Image<?> getImage(GL gl) {
 
     // Initialize buffers if they are not ready or if their expected size changed
     if (!prepared)
@@ -320,7 +322,7 @@ public class FBO_macOS implements FBO {
     //pixelsRead.
     //session.close();
     
-    return out;
+    return new AWTImage(out);
   }
 
 
