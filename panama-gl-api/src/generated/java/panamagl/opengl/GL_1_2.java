@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.Addressable;
+import java.lang.foreign.*;
 
 public interface GL_1_2 extends GL_1_1 {
   public static final int GL_UNSIGNED_BYTE_3_3_2 = 0x8032;

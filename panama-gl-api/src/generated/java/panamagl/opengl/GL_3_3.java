@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.Addressable;
+import java.lang.foreign.*;
 
 public interface GL_3_3 extends GL_3_2 {
   public static final int GL_VERTEX_ATTRIB_ARRAY_DIVISOR = 0x88FE;

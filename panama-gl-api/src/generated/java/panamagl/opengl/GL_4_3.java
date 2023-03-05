@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.Addressable;
+import java.lang.foreign.*;
 
 public interface GL_4_3 extends GL_4_2 {
   public static final int GL_NUM_SHADING_LANGUAGE_VERSIONS = 0x82E9;

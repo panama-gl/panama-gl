@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.Addressable;
+import java.lang.foreign.*;
 
 public interface GL_4_4 extends GL_4_3 {
   public static final int GL_MAX_VERTEX_ATTRIB_STRIDE = 0x82E5;

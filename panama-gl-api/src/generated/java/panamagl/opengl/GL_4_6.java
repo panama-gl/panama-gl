@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.Addressable;
+import java.lang.foreign.*;
 
 public interface GL_4_6 extends GL_4_5 {
   public static final int GL_CONTEXT_RELEASE_BEHAVIOR = 0x82FB;

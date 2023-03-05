@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.Addressable;
+import java.lang.foreign.*;
 
 public interface GL_3_1 extends GL_3_0 {
   public static final int GL_SAMPLER_2D_RECT = 0x8B63;

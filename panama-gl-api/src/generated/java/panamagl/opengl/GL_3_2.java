@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.Addressable;
+import java.lang.foreign.*;
 
 public interface GL_3_2 extends GL_3_1 {
   public static final int GL_CONTEXT_CORE_PROFILE_BIT = 0x00000001;

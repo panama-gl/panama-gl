@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.Addressable;
+import java.lang.foreign.*;
 
 public interface GL_1_0  {
   public static final int GL_DEPTH_BUFFER_BIT = 0x00000100;

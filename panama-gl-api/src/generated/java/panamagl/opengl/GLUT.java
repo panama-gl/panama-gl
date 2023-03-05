@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.Addressable;
+import java.lang.foreign.*;
 
 public interface GLUT  {
   public void glutAddMenuEntry(Addressable arg0, int arg1);

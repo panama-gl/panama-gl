@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.Addressable;
+import java.lang.foreign.*;
 
 public interface GL_2_0  {
   public static final int GL_BLEND_EQUATION_RGB = 0x8009;

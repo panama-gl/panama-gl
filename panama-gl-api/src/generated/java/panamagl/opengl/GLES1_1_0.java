@@ -1,6 +1,6 @@
 package panamagl.opengl; 
 
-import java.lang.foreign.Addressable;
+import java.lang.foreign.*;
 
 public interface GLES1_1_0  {
   public static final int GL_VERSION_ES_CL_1_0 = 1;
