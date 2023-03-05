@@ -20,7 +20,6 @@
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-ui-awt</artifactId>
 			<version>${project.version}</version>
-			<scope>tests</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jzy3d</groupId>

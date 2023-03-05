@@ -26,7 +26,7 @@ import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.opengl.GLError;
-import panamagl.utils.ImageUtils;
+//import panamagl.utils.ImageUtils;
 
 public class AOffscreenRenderer implements OffscreenRenderer {
 
@@ -198,9 +198,9 @@ public class AOffscreenRenderer implements OffscreenRenderer {
         });*/
       //}
 
-      if (debugFile != null) {
+      /*if (debugFile != null) {
         exec.execute(getTask_saveImage(out, debugFile + "-" + (k++) + ".png"));
-      }
+      }*/
     } else {
       System.err.println("FBO is null!");
     }
@@ -296,14 +296,14 @@ public class AOffscreenRenderer implements OffscreenRenderer {
     };
   }
 
-  protected Runnable getTask_saveImage(BufferedImage image, String file) {
+  /*protected Runnable getTask_saveImage(BufferedImage image, String file) {
     return new Runnable() {
       @Override
       public void run() {
         ImageUtils.save(image, file);
       }
     };
-  }
+  }*/
   
   
 
