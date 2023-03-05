@@ -69,7 +69,7 @@ public class DemoQuad_Offscreen_macOS {
   
   private static void saveImage(Image<?> out) {
     try {
-      ImageIO.write(((AWTImage)out).getImage(), "png", new File("target/rotatingStuff.png"));
+      out.save("target/rotatingStuff.png");
 
     } catch (Exception e) {
       e.printStackTrace();

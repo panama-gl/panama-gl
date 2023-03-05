@@ -18,6 +18,9 @@
 package panamagl.canvas;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import panamagl.Image;
 
 public class AWTImage implements Image<BufferedImage>{
@@ -30,5 +33,9 @@ public class AWTImage implements Image<BufferedImage>{
 
   public BufferedImage getImage() {
     return image;
+  }
+  
+  public void save(String file) throws IOException {
+    ImageIO.write(image, "png", new File(file));
   }
 }

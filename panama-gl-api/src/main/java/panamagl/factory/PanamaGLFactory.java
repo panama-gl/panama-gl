@@ -52,7 +52,7 @@ import panamagl.utils.ClassloaderUtils;
  * <code>
  * GLEventAdapter listener = TeapotGLEventListener();
  * PanamaGLFactory factory = PanamaGLFactory.select();
- * GLCanvasSwing panel = factory.newCanvasSwing();
+ * GLCanvasSwing panel = new GLCanvasSwing();
  * panel.setGLEventListener(listener);
  * frame.add(panel);
  * </code>

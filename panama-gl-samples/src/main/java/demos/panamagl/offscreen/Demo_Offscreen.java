@@ -53,7 +53,7 @@ public class Demo_Offscreen {
 
   private static void saveImage(Image<?> out) {
     try {
-      ImageIO.write(((AWTImage)out).getImage(), "png", new File("target/outFBO.png"));
+      out.save("target/outFBO.png");
 
     } catch (Exception e) {
       e.printStackTrace();

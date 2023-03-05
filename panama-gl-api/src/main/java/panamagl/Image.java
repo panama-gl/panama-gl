@@ -17,12 +17,15 @@
  *******************************************************************************/
 package panamagl;
 
+import java.io.IOException;
+
 public interface Image<T> {
   T getImage();
+  
+  void save(String file) throws IOException;
   
   // TODO
   // dispose()
   // getWidth/Height()
   // readFromBuffer(buffer, width, height, channels)
-  // save(file)
 }
