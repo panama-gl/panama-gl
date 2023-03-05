@@ -27,5 +27,7 @@ public interface Image<T> {
   // TODO
   // dispose()
   // getWidth/Height()
-  // readFromBuffer(buffer, width, height, channels)
+  
+  //void fromBGRABuffer(MemorySegment pixelsBuffer,int width, int height);
+  //void fromBGRABuffer(MemorySegment pixelsBuffer, int width, int height, int channels);
 }

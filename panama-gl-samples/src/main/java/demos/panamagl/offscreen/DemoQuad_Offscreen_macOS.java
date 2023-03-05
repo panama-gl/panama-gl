@@ -17,12 +17,9 @@
  *******************************************************************************/
 package demos.panamagl.offscreen;
 
-import java.io.File;
-import javax.imageio.ImageIO;
 import demos.panamagl.swing.DemoQuad_Onscreen_Swing;
 import panamagl.GLEventListener;
 import panamagl.Image;
-import panamagl.canvas.AWTImage;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
