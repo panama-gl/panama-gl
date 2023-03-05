@@ -29,7 +29,7 @@ import panamagl.renderers.image.ForeignImage;
  * 
  * Put labels in cache to avoid regenerating the same labels.
  */
-public class CachedTextRenderer extends BasicTextRenderer implements TextRenderer{
+public class CachedTextRenderer extends BasicTextRenderer implements TextRenderer<Font>{
   Map<String,ForeignImage> cache = new HashMap<>();
   
   

@@ -30,7 +30,7 @@ import panamagl.utils.GraphicsUtils;
 /**
  * Render text to image which can then be drawn at a given 3D position.
  */
-public class BasicTextRenderer extends BasicImageRenderer implements TextRenderer{
+public class BasicTextRenderer extends BasicImageRenderer implements TextRenderer<Font>{
   @Override
   public void draw(GL gl, Font font, String text, float x, float y, float z, Color color, float rotation) {
     ForeignImage fi = createForeignImage(font, text, color);
