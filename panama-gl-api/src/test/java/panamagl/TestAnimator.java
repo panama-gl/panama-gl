@@ -42,7 +42,7 @@ public class TestAnimator {
     
     // Verify number of image per second is relevant
     float expectedLoops = DURATION/Animator.RETINAL_PERSISTENCE;
-    float dist = Math.abs(expectedLoops-a.getLoops());
+    //float dist = Math.abs(expectedLoops-a.getLoops());
     //System.out.println(dist + " to " + expectedLoops);
     int margin = 5;
     Assert.assertTrue(a.getLoops() <= (expectedLoops+margin));

@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import panamagl.GLCanvas;
 import panamagl.GLEventListener;
-import panamagl.canvas.GLCanvasFactory;
 import panamagl.offscreen.FBO;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
