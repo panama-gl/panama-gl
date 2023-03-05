@@ -70,7 +70,6 @@ public interface PanamaGLFactory extends PlatformMatcher{
 
   GL newGL();
   GLContext newGLContext();
-  GLCanvas newCanvas(GLCanvasFactory factory);
   FBO newFBO(int width, int height);
   OffscreenRenderer newOffscreenRenderer();
 

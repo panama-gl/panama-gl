@@ -85,8 +85,7 @@ public class ITTestGLCanvasSwing_macOS {
     // Using a panel to ensure that GL get initialized in the main AWT thread.
     
     PanamaGLFactory factory = PanamaGLFactory.select();
-    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(new SwingCanvasFactory());
-
+    GLCanvasSwing panel = new GLCanvasSwing(factory);
     panel.setGLEventListener(listener);
     
     // --------------------------------------------
@@ -215,8 +214,7 @@ public class ITTestGLCanvasSwing_macOS {
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
     PanamaGLFactory factory = PanamaGLFactory.select();
-    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(new SwingCanvasFactory());
-
+    GLCanvasSwing panel = new GLCanvasSwing(factory);
     panel.setGLEventListener(listener);
     
     // Create frame

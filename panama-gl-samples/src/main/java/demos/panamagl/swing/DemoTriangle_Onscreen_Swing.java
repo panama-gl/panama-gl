@@ -24,7 +24,6 @@ import demos.panamagl.offscreen.SampleTriangle;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasSwing;
-import panamagl.canvas.SwingCanvasFactory;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 
@@ -49,7 +48,7 @@ public class DemoTriangle_Onscreen_Swing {
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
     PanamaGLFactory factory = PanamaGLFactory.select();
-    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(new SwingCanvasFactory());
+    GLCanvasSwing panel = new GLCanvasSwing(factory);
     panel.setGLEventListener(listener);
 
     // Create frame

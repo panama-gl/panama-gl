@@ -43,7 +43,7 @@ public class DurabilityTestGLCanvasSwing_macOS {
     EventCounter event = new EventCounter();
     
     PanamaGLFactory factory = PanamaGLFactory.select();
-    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(new SwingCanvasFactory());
+    GLCanvasSwing panel = new GLCanvasSwing(factory);
     
     panel.setGLEventListener(new GLEventAdapter() {
       @Override

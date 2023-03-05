@@ -26,7 +26,6 @@ import javax.swing.SwingUtilities;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasSwing;
-import panamagl.canvas.SwingCanvasFactory;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
@@ -53,7 +52,7 @@ public class DemoTeapot_Onscreen_Swing {
     // Using a panel to ensure that GL get initialized in the main AWT thread.
     PanamaGLFactory factory = PanamaGLFactory.select();
     //PanamaGLFactory factory = new PanamaGLFactory_macOS_x86(); 
-    GLCanvasSwing panel = (GLCanvasSwing)factory.newCanvas(new SwingCanvasFactory());
+    GLCanvasSwing panel = new GLCanvasSwing(factory);
     panel.setGLEventListener(listener);
 
     // Create frame

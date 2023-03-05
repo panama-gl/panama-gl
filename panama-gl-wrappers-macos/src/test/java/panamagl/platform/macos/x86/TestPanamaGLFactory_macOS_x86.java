@@ -19,7 +19,6 @@ package panamagl.platform.macos.x86;
 
 import org.junit.Assert;
 import org.junit.Test;
-import panamagl.canvas.SwingCanvasFactory;
 import panamagl.factory.PanamaGLFactory;
 
 public class TestPanamaGLFactory_macOS_x86 extends MacOSx86Test{
@@ -40,7 +39,6 @@ public class TestPanamaGLFactory_macOS_x86 extends MacOSx86Test{
     Assert.assertNotNull(f.newGL());
     Assert.assertNotNull(f.newOffscreenRenderer());
     Assert.assertNotNull(f.newFBO(800, 600));
-    Assert.assertNotNull(f.newCanvas(new SwingCanvasFactory()));
 
     ;
   }

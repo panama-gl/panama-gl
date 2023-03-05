@@ -17,12 +17,6 @@
  *******************************************************************************/
 package panamagl.factory;
 
-import panamagl.GLCanvas;
-import panamagl.canvas.GLCanvasFactory;
-
 public abstract class APanamaGLFactory implements PanamaGLFactory {
-  @Override
-  public GLCanvas newCanvas(GLCanvasFactory factory) {
-    return factory.newCanvas(this);
-  }
+  
 }

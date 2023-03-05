@@ -45,7 +45,6 @@ import org.jzy3d.plot3d.rendering.view.layout.IViewportLayout;
 import org.jzy3d.plot3d.rendering.view.layout.PanamaGLViewAndColorbarsLayout;
 import com.jogamp.opengl.GLException;
 import panamagl.canvas.GLCanvasSwing;
-import panamagl.canvas.SwingCanvasFactory;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GLContext;
 
@@ -78,9 +77,7 @@ public class PanamaGLPainterFactory implements IPainterFactory {
 
   @Override
   public ICanvas newCanvas(IChartFactory factory, Scene scene, Quality quality) {
-    //GLCanvasSwing glCanvas = panamaGLFactory.newCanvasSwing();
-    GLCanvasSwing glCanvas = (GLCanvasSwing)panamaGLFactory.newCanvas(new SwingCanvasFactory());
-
+    GLCanvasSwing glCanvas = new GLCanvasSwing(panamaGLFactory);
     GLContext context = glCanvas.getContext();
     
     
