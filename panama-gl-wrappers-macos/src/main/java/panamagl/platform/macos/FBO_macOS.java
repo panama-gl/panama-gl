@@ -256,6 +256,7 @@ public class FBO_macOS implements FBO {
       frameBufferIds.unload();
       pixelBuffer.unload();
     }
+    
     else {
       Debug.debug(debug, "FBO : Skip unload as it fails with 'not mapped segment' error");
     }
