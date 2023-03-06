@@ -47,7 +47,7 @@ public class TestGLCanvasSwing_macOS {
     EventCounter event = new EventCounter();
     
     PanamaGLFactory factory = PanamaGLFactory.select();
-    GLCanvasSwing panel = factory.newCanvasSwing();
+    GLCanvasSwing panel = new GLCanvasSwing(factory);
     
     panel.setGLEventListener(new GLEventAdapter() {
       @Override
@@ -139,7 +139,7 @@ public class TestGLCanvasSwing_macOS {
 
     // Given an initialized panel
     PanamaGLFactory factory = PanamaGLFactory.select();
-    GLCanvasSwing panel = factory.newCanvasSwing();
+    GLCanvasSwing panel = new GLCanvasSwing(factory);
     panel.addNotify();
     Assert.assertTrue(panel.isInitialized());
     
@@ -221,7 +221,7 @@ public class TestGLCanvasSwing_macOS {
     };
 
 
-    GLCanvasSwing panel = factory.newCanvasSwing();
+    GLCanvasSwing panel = new GLCanvasSwing(factory);
     panel.setOffscreenRenderer(renderer);
 
     // -------------------------------

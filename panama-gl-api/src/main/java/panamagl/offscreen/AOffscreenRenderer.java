@@ -15,18 +15,17 @@
  *******************************************************************************/
 package panamagl.offscreen;
 
-import java.awt.image.BufferedImage;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import panamagl.Debug;
 import panamagl.GLCanvas;
 import panamagl.GLEventListener;
 import panamagl.GLProfile;
+import panamagl.Image;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.opengl.GLError;
-import panamagl.utils.ImageUtils;
 
 public class AOffscreenRenderer implements OffscreenRenderer {
 
@@ -171,7 +170,7 @@ public class AOffscreenRenderer implements OffscreenRenderer {
 
     // FBO To image
     if (fbo != null) {
-      BufferedImage out = fbo.getImage(gl);
+      Image<?> out = fbo.getImage(gl);
       // System.gc();
 
       //if (out == null)
@@ -198,9 +197,9 @@ public class AOffscreenRenderer implements OffscreenRenderer {
         });*/
       //}
 
-      if (debugFile != null) {
+      /*if (debugFile != null) {
         exec.execute(getTask_saveImage(out, debugFile + "-" + (k++) + ".png"));
-      }
+      }*/
     } else {
       System.err.println("FBO is null!");
     }
@@ -296,14 +295,14 @@ public class AOffscreenRenderer implements OffscreenRenderer {
     };
   }
 
-  protected Runnable getTask_saveImage(BufferedImage image, String file) {
+  /*protected Runnable getTask_saveImage(BufferedImage image, String file) {
     return new Runnable() {
       @Override
       public void run() {
         ImageUtils.save(image, file);
       }
     };
-  }
+  }*/
   
   
 

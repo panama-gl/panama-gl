@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import panamagl.GLCanvas;
 import panamagl.GLEventListener;
-import panamagl.canvas.GLCanvasAWT;
-import panamagl.canvas.GLCanvasSwing;
 import panamagl.offscreen.FBO;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
@@ -54,7 +52,7 @@ import panamagl.utils.ClassloaderUtils;
  * <code>
  * GLEventAdapter listener = TeapotGLEventListener();
  * PanamaGLFactory factory = PanamaGLFactory.select();
- * GLCanvasSwing panel = factory.newCanvasSwing();
+ * GLCanvasSwing panel = new GLCanvasSwing();
  * panel.setGLEventListener(listener);
  * frame.add(panel);
  * </code>
@@ -69,12 +67,8 @@ import panamagl.utils.ClassloaderUtils;
  */
 public interface PanamaGLFactory extends PlatformMatcher{
 
-  GLCanvasAWT newCanvasAWT();
-  GLCanvasSwing newCanvasSwing();
-
   GL newGL();
   GLContext newGLContext();
-
   FBO newFBO(int width, int height);
   OffscreenRenderer newOffscreenRenderer();
 

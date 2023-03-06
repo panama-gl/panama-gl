@@ -125,6 +125,7 @@ public class ThreadUtils {
    * <li>TERMINATED: The thread has completed execution.
    * </ul>
    */
+  @SuppressWarnings("deprecation")
   public static void print() {
     //Runtime.getRuntime().
     

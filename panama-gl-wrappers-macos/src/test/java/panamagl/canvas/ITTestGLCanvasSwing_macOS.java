@@ -21,9 +21,6 @@ import java.awt.BorderLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
-import java.lang.foreign.MemorySession;
-import java.lang.foreign.SegmentAllocator;
-import java.lang.foreign.ValueLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -33,7 +30,6 @@ import javax.swing.SwingUtilities;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import opengl.macos.x86.glut_h;
 import panamagl.GLEventAdapter;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
@@ -85,8 +81,7 @@ public class ITTestGLCanvasSwing_macOS {
     // Using a panel to ensure that GL get initialized in the main AWT thread.
     
     PanamaGLFactory factory = PanamaGLFactory.select();
-    GLCanvasSwing panel = factory.newCanvasSwing();
-
+    GLCanvasSwing panel = new GLCanvasSwing(factory);
     panel.setGLEventListener(listener);
     
     // --------------------------------------------
@@ -98,13 +93,13 @@ public class ITTestGLCanvasSwing_macOS {
     // Define a way to get following states
     panel.addComponentListener(new ComponentAdapter() {
       public void componentShown(ComponentEvent e) {
-        screenshotWhenShown = panel.getScreenshot();
+        screenshotWhenShown = (BufferedImage)panel.getScreenshot().getImage();
         System.err.println("GOT SCREENSHOT! SHOWN");
       }
       
       int k = 0;
       public void componentResized(ComponentEvent e) {
-        BufferedImage i = panel.getScreenshot();
+        BufferedImage i = (BufferedImage)panel.getScreenshot().getImage();
         
         //System.out.println(panel.getWidth());
         
@@ -215,8 +210,7 @@ public class ITTestGLCanvasSwing_macOS {
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
     PanamaGLFactory factory = PanamaGLFactory.select();
-    GLCanvasSwing panel = factory.newCanvasSwing();
-
+    GLCanvasSwing panel = new GLCanvasSwing(factory);
     panel.setGLEventListener(listener);
     
     // Create frame

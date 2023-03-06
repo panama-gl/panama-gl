@@ -23,7 +23,8 @@ import java.awt.image.BufferedImage;
 import java.lang.foreign.MemorySegment;
 import panamagl.opengl.GL;
 
-public class BasicImageRenderer implements ImageRenderer{
+public class BasicImageRenderer implements ImageRenderer<BufferedImage>{
+  @Override
   public void draw(GL gl, BufferedImage image, MemorySegment foreign, float x, float y, float z, float rotation) {
     
     // Zoom and layout

@@ -17,11 +17,9 @@
  *******************************************************************************/
 package demos.panamagl.offscreen;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import javax.imageio.ImageIO;
 import demos.panamagl.swing.DemoQuad_Onscreen_Swing;
 import panamagl.GLEventListener;
+import panamagl.Image;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
@@ -58,7 +56,7 @@ public class DemoQuad_Offscreen_macOS {
     
     //-------------------------
     // Get image
-    BufferedImage out = fbo.getImage(gl);
+    Image<?> out = fbo.getImage(gl);
 
     saveImage(out);
 
@@ -66,9 +64,9 @@ public class DemoQuad_Offscreen_macOS {
 
   }
   
-  private static void saveImage(BufferedImage out) {
+  private static void saveImage(Image<?> out) {
     try {
-      ImageIO.write(out, "png", new File("target/rotatingStuff.png"));
+      out.save("target/rotatingStuff.png");
 
     } catch (Exception e) {
       e.printStackTrace();

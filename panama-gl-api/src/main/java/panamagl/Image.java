@@ -17,8 +17,17 @@
  *******************************************************************************/
 package panamagl;
 
-import java.awt.Graphics;
+import java.io.IOException;
 
-public interface Overlay {
-  void paint(Graphics graphics);
+public interface Image<T> {
+  T getImage();
+  
+  void save(String file) throws IOException;
+  
+  // TODO
+  // dispose()
+  // getWidth/Height()
+  
+  //void fromBGRABuffer(MemorySegment pixelsBuffer,int width, int height);
+  //void fromBGRABuffer(MemorySegment pixelsBuffer, int width, int height, int channels);
 }

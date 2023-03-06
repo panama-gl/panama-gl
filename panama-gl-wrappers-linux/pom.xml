@@ -8,7 +8,7 @@
 	</parent>
 
 	<artifactId>panama-gl-wrappers-linux</artifactId>
-	<name>Panama GL Linux</name>
+	<name>Panama GL Wrappers - Linux</name>
 
 	<dependencies>
 		<dependency>
@@ -21,6 +21,17 @@
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-bindings-linux</artifactId>
 			<version>${panamagl.bindings.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>panama-gl-ui-awt</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>panama-gl-ui-swing</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 
 	</dependencies>

@@ -20,10 +20,14 @@
 
 	<modules>
 		<module>panama-gl-api</module>
+
+		<module>panama-gl-ui-awt</module>
+		<module>panama-gl-ui-javafx</module>
+		<module>panama-gl-ui-swing</module>
+
 		<module>panama-gl-wrappers-linux</module>
 		<module>panama-gl-wrappers-macos</module>
 		<module>panama-gl-wrappers-windows</module>
-		<module>panama-gl-ui-javafx</module>
 
 		<module>panama-gl-samples</module>
 		<module>panama-gl-jzy3d</module>

@@ -8,7 +8,7 @@
 	</parent>
 
 	<artifactId>panama-gl-api</artifactId>
-	<name>Panama GL Core</name>
+	<name>Panama GL API</name>
 
 	<dependencies>
 	</dependencies>

@@ -17,9 +17,7 @@
  *******************************************************************************/
 package demos.panamagl.offscreen;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import javax.imageio.ImageIO;
+import panamagl.Image;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.platform.macos.FBO_macOS;
@@ -43,16 +41,16 @@ public class Demo_Offscreen {
 
     //-------------------------
     // Get image
-    BufferedImage out = fbo.getImage(gl);
+    Image<?> out = fbo.getImage(gl);
 
     saveImage(out);
 
     fbo.release(gl);
   }
 
-  private static void saveImage(BufferedImage out) {
+  private static void saveImage(Image<?> out) {
     try {
-      ImageIO.write(out, "png", new File("target/outFBO.png"));
+      out.save("target/outFBO.png");
 
     } catch (Exception e) {
       e.printStackTrace();

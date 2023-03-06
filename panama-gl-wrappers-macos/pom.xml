@@ -8,12 +8,22 @@
 	</parent>
 
 	<artifactId>panama-gl-wrappers-macos</artifactId>
-	<name>Panama GL MacOS</name>
+	<name>Panama GL Wrappers - MacOS</name>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>panama-gl-ui-awt</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>panama-gl-ui-swing</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 
@@ -23,7 +33,7 @@
 			<version>${panamagl.bindings.version}</version>
 		</dependency>
 
-		
+
 
 		<!-- PUBLIC JZY3D MODULES -->
 		<dependency>

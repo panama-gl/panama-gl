@@ -120,7 +120,7 @@ public class GenerateAPI {
     // ============================================================================
     // GL IMPLEMENTATION
     
-    boolean MACOS_x86 = true;
+    boolean MACOS_x86 = false;
     boolean MACOS_ARM = true;
     boolean LINUX_x86 = false;
     
@@ -168,7 +168,7 @@ public class GenerateAPI {
     if(MACOS_ARM) {
       wrapper = new Wrapper();
       wrapper.platform = "macOS_arm";
-      wrapper.wrapped = Set.of(opengl.macos.arm.glut_h.class);
+      wrapper.wrapped = Set.of(/*glext.macos.x86.glext_h.class, */opengl.macos.arm.glut_h.class);
       wrapper.accepts = new AcceptsGLMethod();
       wrapper.className = "GL_" + wrapper.platform;
       wrapper.packge = GL_PACKAGE_MACOS_arm;

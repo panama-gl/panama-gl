@@ -39,7 +39,6 @@ public class TestPanamaGLFactory_macOS_x86 extends MacOSx86Test{
     Assert.assertNotNull(f.newGL());
     Assert.assertNotNull(f.newOffscreenRenderer());
     Assert.assertNotNull(f.newFBO(800, 600));
-    Assert.assertNotNull(f.newCanvasSwing());
 
     ;
   }

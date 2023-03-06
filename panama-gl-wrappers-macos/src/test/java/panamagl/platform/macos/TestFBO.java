@@ -26,11 +26,13 @@ import panamagl.opengl.GL;
 import panamagl.utils.ByteUtils;
 
 public class TestFBO {
-  public static int[] RED = {255, 0, 0, 255};
-  public static int[] GREEN = {0, 255, 0, 255};
-  public static int[] BLUE = {0, 0, 255, 255};
 
   public static void givenFBO_whenRenderSomething_ThenGetBufferedImage(GL gl) {
+    int[] RED = {255, 0, 0, 255};
+    int[] GREEN = {0, 255, 0, 255};
+    int[] BLUE = {0, 0, 255, 255};
+
+    
     String file1 = "target/" + TestFBO.class.getSimpleName() + "-1.png";
     String file2 = "target/" + TestFBO.class.getSimpleName() + "-2.png";
 
@@ -70,7 +72,7 @@ public class TestFBO {
 
     SampleTriangle.rgbaTriangle2D(gl, width, height);
 
-    BufferedImage image = fbo.getImage(gl);
+    BufferedImage image = (BufferedImage)fbo.getImage(gl).getImage();
 
     saveImage(file1, image); // for review
 
@@ -139,7 +141,7 @@ public class TestFBO {
     SampleTriangle.rgbaTriangle2D(gl, width, height);
 
     // get a double sized image
-    image = fbo.getImage(gl);
+    image = (BufferedImage)fbo.getImage(gl).getImage();
 
     Assert.assertTrue(fbo.prepared); // now prepared to this size
     Assert.assertEquals(width, image.getWidth());

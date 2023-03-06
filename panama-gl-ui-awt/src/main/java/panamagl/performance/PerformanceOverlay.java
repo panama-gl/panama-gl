@@ -20,7 +20,7 @@ package panamagl.performance;
 import java.awt.Color;
 import java.awt.Graphics;
 import panamagl.GLCanvas;
-import panamagl.Overlay;
+import panamagl.canvas.Overlay;
 
 public class PerformanceOverlay implements Overlay{
   protected GLCanvas drawable;

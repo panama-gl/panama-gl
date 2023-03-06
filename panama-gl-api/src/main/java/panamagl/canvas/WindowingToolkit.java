@@ -18,7 +18,7 @@
 package panamagl.canvas;
 
 public enum WindowingToolkit {
-  AWT, Swing, SWT, Offscreen, UNKOWN;
+  AWT, Swing, SWT, Offscreen, UNKNOWN;
   
   public boolean isAWT() {
     return AWT.equals(this);

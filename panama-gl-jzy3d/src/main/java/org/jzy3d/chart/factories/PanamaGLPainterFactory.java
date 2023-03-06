@@ -77,8 +77,7 @@ public class PanamaGLPainterFactory implements IPainterFactory {
 
   @Override
   public ICanvas newCanvas(IChartFactory factory, Scene scene, Quality quality) {
-    GLCanvasSwing glCanvas = panamaGLFactory.newCanvasSwing();
-    
+    GLCanvasSwing glCanvas = new GLCanvasSwing(panamaGLFactory);
     GLContext context = glCanvas.getContext();
     
     

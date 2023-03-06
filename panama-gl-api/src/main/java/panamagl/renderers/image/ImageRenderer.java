@@ -17,10 +17,9 @@
  *******************************************************************************/
 package panamagl.renderers.image;
 
-import java.awt.image.BufferedImage;
 import java.lang.foreign.MemorySegment;
 import panamagl.opengl.GL;
 
-public interface ImageRenderer {
-  void draw(GL gl, BufferedImage image, MemorySegment foreign, float x, float y, float z, float rotation);
+public interface ImageRenderer<T> {
+  void draw(GL gl, T image, MemorySegment foreign, float x, float y, float z, float rotation);
 }

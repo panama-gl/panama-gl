@@ -48,7 +48,7 @@ public class DemoTriangle_Onscreen_Swing {
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
     PanamaGLFactory factory = PanamaGLFactory.select();
-    GLCanvasSwing panel = factory.newCanvasSwing();
+    GLCanvasSwing panel = new GLCanvasSwing(factory);
     panel.setGLEventListener(listener);
 
     // Create frame
