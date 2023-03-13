@@ -15,6 +15,8 @@
  *******************************************************************************/
 package panamagl.offscreen;
 
+import java.awt.EventQueue;
+import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import panamagl.Debug;
@@ -52,19 +54,40 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   @Override
   public void onInit(GLCanvas drawable, GLEventListener listener) {
     Runnable r = getTask_initContext(listener);
-    r.run();
+    
+    executeFromAWTMainThread(r);
   }
 
   @Override
   public void onDisplay(GLCanvas drawable, GLEventListener listener) {
     Runnable r = getTask_renderGLToImage(drawable, listener, drawable.getWidth(), drawable.getHeight());
-    r.run();
+    
+    executeFromAWTMainThread(r);
+  }
+
+  /** 
+   * Ensure the task is executed by the AWT Event Thread.
+   * OpenGL being single threaded, we need to always perform rendering queries from the same UI thread. */
+  protected void executeFromAWTMainThread(Runnable r) {
+    // If we are already in AWT thread, just run
+    if (EventQueue.isDispatchThread()) {
+        r.run();
+    }
+    // Otherwise, push the request to AWT
+    else {
+      try {
+        EventQueue.invokeAndWait(r);
+      } catch (InvocationTargetException | InterruptedException e) {
+        e.printStackTrace();
+      }      
+    }
   }
 
   @Override
   public void onResize(GLCanvas drawable, GLEventListener listener, int x, int y, int width, int height) {
     Runnable r = getTask_renderGLToImage(drawable, listener, drawable.getWidth(), drawable.getHeight());
-    r.run();
+    
+    executeFromAWTMainThread(r);
   }
   @Override
   public void onDestroy(GLCanvas drawable, GLEventListener glEventListener) {

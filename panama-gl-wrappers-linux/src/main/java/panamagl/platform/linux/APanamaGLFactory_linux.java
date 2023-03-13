@@ -34,7 +34,6 @@ protected boolean debug = Debug.check(APanamaGLFactory_linux.class);
   protected GLXContext_linux glxContext;
   protected GLUTContext_linux glutContext;
   protected boolean useGLUT = true;
-  protected boolean useCGL = false;
 
   public APanamaGLFactory_linux() {
     super();
@@ -69,30 +68,27 @@ protected boolean debug = Debug.check(APanamaGLFactory_linux.class);
   @Override
   public GLContext newGLContext() {
     
- // --------------------------------------
+    // --------------------------------------
+    // A GL Context with GLUT
+    
+    if (useGLUT) {
+      glutContext = new GLUTContext_linux();
+      glutContext.init(true); // Linux VM seams to WANT full init
+      Debug.debug(debug, "PanamaGLFactory_linux : initContext : GLUT done");
+      
+      return glutContext;
+    }
+    
+    // --------------------------------------
     // A GL Context with CGL
-    if (useCGL) {
+    
+    else {
       glxContext = new GLXContext_linux();
       glxContext.init();
       Debug.debug(debug, "PanamaGLFactory_linux : initContext : GLX done");
       
       return glxContext;
     }
-
-    // --------------------------------------
-    // A GL Context with GLUT
-    // - hanging while ONSCREEN
-    // - not generating FBO properly if omitted
-    if (useGLUT) {
-      glutContext = new GLUTContext_linux();
-      glutContext.init(true); // do not init GLUT a second time
-      Debug.debug(debug, "PanamaGLFactory_linux : initContext : GLUT done");
-      
-      return glutContext;
-    }
-
-    
-    return null;
   }
   
   @Override

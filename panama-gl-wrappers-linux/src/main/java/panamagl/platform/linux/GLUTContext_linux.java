@@ -67,7 +67,7 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
 
     glutInitWindowSize(initWidth, initHeight);
 
-    glut_h.glutInitWindowPosition(-initWidth, -initHeight);
+    glut_h.glutInitWindowPosition(-1, -1);
     glut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
 
     // This dummy stub registration is required to get macOS onscreen rendering working
