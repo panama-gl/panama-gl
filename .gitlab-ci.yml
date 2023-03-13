@@ -22,7 +22,7 @@ build:
     #- apt-get install mesa-utils
     #- glxinfo | grep "OpenGL version"
     #- locate libGL
-    - find / | grep libGL
+    #- find / | grep libGL
     - mvn $MAVEN_CLI_OPTS clean install
 
 deploy:
