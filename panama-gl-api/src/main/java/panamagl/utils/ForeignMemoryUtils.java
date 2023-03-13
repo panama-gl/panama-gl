@@ -31,6 +31,7 @@ public class ForeignMemoryUtils {
   }
 
   public ForeignMemoryUtils() {
+    this(Mode.IMPLICIT);
   }
   
   public ForeignMemoryUtils(Mode mode) {
