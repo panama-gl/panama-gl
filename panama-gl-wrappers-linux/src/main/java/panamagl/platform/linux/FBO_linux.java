@@ -121,7 +121,7 @@ public class FBO_linux extends AFBO implements FBO {
   }
   
   protected void init() {
-    ffm = new ForeignMemoryUtils(Mode.CONFINED);
+    ffm = new ForeignMemoryUtils(Mode.IMPLICIT);
     
     MemorySegment function;
     MemoryAddress address;
@@ -246,7 +246,7 @@ public class FBO_linux extends AFBO implements FBO {
     // Create a texture to write to
     int byteSize = width * height * channels;
     
-    pixelBuffer = MemorySegment.allocateNative(byteSize, MemorySession.openConfined());
+    pixelBuffer = MemorySegment.allocateNative(byteSize, MemorySession.openImplicit());
     gl.glTexImage2D(GL.GL_TEXTURE_2D, level, internalFormat, width, height, border, format,
         textureType, pixelBuffer);
     
@@ -255,7 +255,7 @@ public class FBO_linux extends AFBO implements FBO {
     // Generate FRAME buffer
     
     if (idFrameBuffer <= 0 || renewBuffers) {
-      frameBufferIds = MemorySegment.allocateNative(4, MemorySession.openConfined());
+      frameBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
       glGenFramebuffers.apply(1, frameBufferIds.address());
       // replace >> glut_h.glGenFramebuffers(1, frameBufferIds);
       
@@ -281,7 +281,7 @@ public class FBO_linux extends AFBO implements FBO {
     // Generate RENDER buffer
 
     if(idRenderBuffer<=0 || renewBuffers) {
-      renderBufferIds = MemorySegment.allocateNative(4, MemorySession.openConfined());
+      renderBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
       glGenRenderbuffers.apply(1, renderBufferIds.address());
       // replace >> glut_h.glGenRenderbuffers(1, renderBufferIds);
       idRenderBuffer = (int) renderBufferIds.get(ValueLayout.JAVA_INT, 0);

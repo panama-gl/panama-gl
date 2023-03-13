@@ -15,37 +15,33 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.platform.macos;
+package panamagl.platform.linux.x86;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
-import panamagl.GLProfile;
-import panamagl.platform.macos.x86.GL_macOS_x86;
+import panamagl.factory.PanamaGLFactory;
+import panamagl.platform.linux.LinuxTest;
 
-//VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-
-public class TestGLUTContext_macOS extends MacOSTest{
+//VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
+public class TestPanamaGLFactory_linux_x86 extends LinuxTest{
+//TODO
+@Ignore("Works from IDE but not from CLI yet")
   @Test
-  public void createContext() {
+  public void test() {
     if (!checkPlatform())
       return;
+  
     
-    // Given
-    GLUTContext_macOS context = new GLUTContext_macOS();
+    PanamaGLFactory f = PanamaGLFactory.select();
     
-    // When
-    context.init(false);
+    boolean matched = f instanceof PanamaGLFactory_linux_x86;
     
-    
-    // Then
-    GLProfile p = new GLProfile(new GL_macOS_x86());
-    
-    Assert.assertNotNull(p.getVersion());
-    Assert.assertNotNull(p.getVendor());
-    
-    System.out.println(TestGLUTContext_macOS.class.getSimpleName()
-        + " running with OpenGL version : " + p.getVersion() + "/" + p.getVendor());
-    
-    context.destroy();
+    Assert.assertTrue(matched);
+
+    Assert.assertNotNull(f.newGLContext());
+    Assert.assertNotNull(f.newGL());
+    Assert.assertNotNull(f.newOffscreenRenderer());
+    Assert.assertNotNull(f.newFBO(800, 600));
   }
 }

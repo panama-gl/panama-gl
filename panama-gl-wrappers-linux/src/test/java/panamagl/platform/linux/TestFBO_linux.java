@@ -18,6 +18,7 @@
 package panamagl.platform.linux;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import panamagl.offscreen.TestFBO;
 import panamagl.opengl.GL;
@@ -25,7 +26,8 @@ import panamagl.opengl.GLContext;
 
 // VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
 public class TestFBO_linux extends LinuxTest{
-
+  // TODO
+@Ignore("Works from IDE but not from CLI yet")
   @Test
   public void given_GLUTContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {
     if (!checkPlatform())
