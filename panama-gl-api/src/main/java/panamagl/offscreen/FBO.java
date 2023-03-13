@@ -30,4 +30,6 @@ public interface FBO {
   int getHeight();
   boolean isFlipY();
   void setFlipY(boolean flipY);
+  
+  boolean isPrepared();
 }

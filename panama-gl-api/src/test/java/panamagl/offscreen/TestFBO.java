@@ -15,19 +15,20 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.platform.macos;
+package panamagl.offscreen;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import org.junit.Assert;
-import org.jzy3d.maths.Array;
 import panamagl.opengl.GL;
+import panamagl.samples.SampleTriangle;
+import panamagl.utils.ArrayUtils;
 import panamagl.utils.ByteUtils;
 
 public class TestFBO {
 
-  public static void givenFBO_whenRenderSomething_ThenGetBufferedImage(GL gl) {
+  public static void givenFBO_whenRenderSomething_ThenGetBufferedImage(FBO fbo, GL gl) {
     int[] RED = {255, 0, 0, 255};
     int[] GREEN = {0, 255, 0, 255};
     int[] BLUE = {0, 0, 255, 255};
@@ -40,28 +41,23 @@ public class TestFBO {
     // ----------------------------------
     // Given a FBO prepared with this context
 
-    int width = 256;
-    int height = 256;
-    FBO_macOS fbo = new FBO_macOS(width, height);
+    int width = fbo.getWidth();
+    int height = fbo.getHeight();
 
-    // Ensure conforms to configuration
-    Assert.assertEquals(width, fbo.getWidth());
-    Assert.assertEquals(width, fbo.getWidth());
+
+    
 
     // Keep unflipped to avoid changing tests
     fbo.setFlipY(false);
 
-    // ensure does not leave this debug flag to false
-    Assert.assertTrue(fbo.arrayExport);
-
     // ensure is not considered prepared too early
-    Assert.assertFalse(fbo.prepared);
+    Assert.assertFalse(fbo.isPrepared());
 
     // ----------------------------------
     // When preparing buffers for these dimensions
 
     fbo.prepare(gl);
-    Assert.assertTrue(fbo.prepared);
+    Assert.assertTrue(fbo.isPrepared());
 
     // FIXME : this should return true, not an exception
     // Assert.assertTrue(fbo.frameBufferIds.isLoaded());
@@ -86,8 +82,8 @@ public class TestFBO {
 
     int[] Rgba = ByteUtils.IntARGBtoRGBAi(image.getRGB(pxR[0], pxR[1]));
 
-    Array.print("TestFBO:red:actual:", Rgba);
-    Array.print("TestFBO:red:expect:", RED);
+    ArrayUtils.print("TestFBO:red:actual:", Rgba);
+    ArrayUtils.print("TestFBO:red:expect:", RED);
 
     Assert.assertArrayEquals(RED, Rgba);
 
@@ -98,8 +94,8 @@ public class TestFBO {
     int[] rGba = ByteUtils.IntARGBtoRGBAi(image.getRGB(pxG[0], pxG[1]));
     // FIXME! Green is 254 instead of 255, why?
     GREEN[1] = GREEN[1] - 1; // a bit is missing!
-    Array.print("TestFBO:green:actual:", rGba);
-    Array.print("TestFBO:green:expect:", GREEN);
+    //Array.print("TestFBO:green:actual:", rGba);
+    ArrayUtils.print("TestFBO:green:expect:", GREEN);
 
     Assert.assertArrayEquals(GREEN, rGba);
 
@@ -108,8 +104,8 @@ public class TestFBO {
     // position with expected color
 
     int[] rgBa = ByteUtils.IntARGBtoRGBAi(image.getRGB(pxB[0], pxB[1]));
-    Array.print("TestFBO:blue:actual:", rgBa);
-    Array.print("TestFBO:blue:expect:", BLUE);
+    ArrayUtils.print("TestFBO:blue:actual:", rgBa);
+    ArrayUtils.print("TestFBO:blue:expect:", BLUE);
 
     Assert.assertArrayEquals(BLUE, rgBa);
 
@@ -119,7 +115,7 @@ public class TestFBO {
 
     // mark FBO for resize ON THE EXISTING CONFIG
     fbo.resize(width, height);
-    Assert.assertTrue(fbo.prepared); // still prepared
+    Assert.assertTrue(fbo.isPrepared()); // still prepared
 
 
     // ----------------------------------
@@ -130,7 +126,7 @@ public class TestFBO {
 
     // mark FBO for resize
     fbo.resize(width, height);
-    Assert.assertFalse(fbo.prepared); // not prepared anymore
+    Assert.assertFalse(fbo.isPrepared()); // not prepared anymore
     Assert.assertEquals(width, fbo.getWidth()); // but resized
     Assert.assertEquals(height, fbo.getHeight());
 
@@ -143,7 +139,7 @@ public class TestFBO {
     // get a double sized image
     image = (BufferedImage)fbo.getImage(gl).getImage();
 
-    Assert.assertTrue(fbo.prepared); // now prepared to this size
+    Assert.assertTrue(fbo.isPrepared()); // now prepared to this size
     Assert.assertEquals(width, image.getWidth());
     Assert.assertEquals(height, image.getHeight());
 
@@ -159,8 +155,8 @@ public class TestFBO {
 
     Rgba = ByteUtils.IntARGBtoRGBAi(image.getRGB(pxR2[0], pxR2[1]));
 
-    Array.print("TestFBO:red:actual:", Rgba);
-    Array.print("TestFBO:red:expect:", RED);
+    ArrayUtils.print("TestFBO:red:actual:", Rgba);
+    ArrayUtils.print("TestFBO:red:expect:", RED);
 
     Assert.assertArrayEquals(RED, Rgba);
 
@@ -171,8 +167,8 @@ public class TestFBO {
     rGba = ByteUtils.IntARGBtoRGBAi(image.getRGB(pxG2[0], pxG2[1]));
     GREEN[1] = GREEN[1] + 1; // a bit is NOT missing!
 
-    Array.print("TestFBO:green:actual:", rGba);
-    Array.print("TestFBO:green:expect:", GREEN);
+    ArrayUtils.print("TestFBO:green:actual:", rGba);
+    ArrayUtils.print("TestFBO:green:expect:", GREEN);
 
     Assert.assertArrayEquals(GREEN, rGba);
 
@@ -181,8 +177,8 @@ public class TestFBO {
     // position with expected color
 
     rgBa = ByteUtils.IntARGBtoRGBAi(image.getRGB(pxB2[0], pxB2[1]));
-    Array.print("TestFBO:blue:actual:", rgBa);
-    Array.print("TestFBO:blue:expect:", BLUE);
+    ArrayUtils.print("TestFBO:blue:actual:", rgBa);
+    ArrayUtils.print("TestFBO:blue:expect:", BLUE);
 
     Assert.assertArrayEquals(BLUE, rgBa);
 
@@ -193,7 +189,7 @@ public class TestFBO {
 
     // Then
 
-    Assert.assertFalse(fbo.prepared);
+    Assert.assertFalse(fbo.isPrepared());
   }
 
   public static void saveImage(String file, BufferedImage out) {

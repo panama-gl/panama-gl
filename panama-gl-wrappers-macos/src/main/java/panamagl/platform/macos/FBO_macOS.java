@@ -25,6 +25,7 @@ import opengl.macos.x86.glut_h;
 import panamagl.Debug;
 import panamagl.Image;
 import panamagl.canvas.AWTImage;
+import panamagl.offscreen.AFBO;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
@@ -46,44 +47,39 @@ import panamagl.utils.ImageUtils;
  *
  * @author Martin Pernollet
  */
-public class FBO_macOS implements FBO {
+public class FBO_macOS extends AFBO implements FBO {
   // default
-  int level = 0;
-  int width = 256;
-  int height = 256;
-  int border = 0;
-  int channels = 4; // RGBA
+  protected int level = 0;
+  protected int border = 0;
+  protected int channels = 4; // RGBA
 
-  boolean flipY = true;
 
   // undefined yes
-  int format = -1;
-  int internalFormat = -1;
-  int textureType = -1;
+  protected int format = -1;
+  protected int internalFormat = -1;
+  protected int textureType = -1;
 
-  boolean debug = Debug.check(FBO_macOS.class);
+  protected boolean debug = Debug.check(FBO_macOS.class);
 
   // supposed to copy to BufferedImage faster when true
   // using false allows to make copy by tweaking bytes
   // which is useful for debugging
-  boolean arrayExport = true;
+  protected boolean arrayExport = true;
 
-  int idTexture = -1;
-  int idFrameBuffer = -1;
-  int idRenderBuffer = -1;
+  protected int idTexture = -1;
+  protected int idFrameBuffer = -1;
+  protected int idRenderBuffer = -1;
   
   //MemorySession scope;
-  MemorySegment frameBufferIds;
-  MemorySegment renderBufferIds;
-  MemorySegment textureBufferIds;
-  MemorySegment pixelBuffer;
+  protected MemorySegment frameBufferIds;
+  protected MemorySegment renderBufferIds;
+  protected MemorySegment textureBufferIds;
+  protected MemorySegment pixelBuffer;
   
   @SuppressWarnings("rawtypes")
-  ImageCopy copy = new AWTImageCopy();
+  protected ImageCopy copy = new AWTImageCopy();
 
-  // indicates dimensions have changed
-  // and FBO must reprepared
-  boolean prepared = false;
+ 
 
 
   public FBO_macOS() {}
@@ -267,6 +263,7 @@ public class FBO_macOS implements FBO {
 
   }
 
+  // TODO : almost alll this is common to other FBO and could be moved to an abstract class (take care to awt however)
   @SuppressWarnings("unchecked")
   @Override
   public Image<?> getImage(GL gl) {
@@ -328,34 +325,5 @@ public class FBO_macOS implements FBO {
 
 
 
-  @Override
-  public void resize(int width, int height) {
-    if (this.width != width || this.height != height) {
-      this.width = width;
-      this.height = height;
 
-      this.prepared = false;
-
-    }
-  }
-
-  @Override
-  public int getWidth() {
-    return width;
-  }
-
-  @Override
-  public int getHeight() {
-    return height;
-  }
-
-  @Override
-  public boolean isFlipY() {
-    return flipY;
-  }
-
-  @Override
-  public void setFlipY(boolean flipY) {
-    this.flipY = flipY;
-  }
 }

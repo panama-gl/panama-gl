@@ -24,24 +24,26 @@ import java.lang.foreign.MemorySession;
 import java.lang.foreign.ValueLayout;
 import glext.ubuntu.v20.PFNGLBINDFRAMEBUFFEREXTPROC;
 import glx.ubuntu.v20.glx_h;
-import opengl.ubuntu.v20.PFNGLGENFRAMEBUFFERSEXTPROC;
 import opengl.ubuntu.v20.PFNGLBINDRENDERBUFFEREXTPROC;
 import opengl.ubuntu.v20.PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC;
 import opengl.ubuntu.v20.PFNGLDELETEFRAMEBUFFERSEXTPROC;
 import opengl.ubuntu.v20.PFNGLDELETERENDERBUFFERSEXTPROC;
 import opengl.ubuntu.v20.PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC;
 import opengl.ubuntu.v20.PFNGLFRAMEBUFFERTEXTURE2DEXTPROC;
+import opengl.ubuntu.v20.PFNGLGENFRAMEBUFFERSEXTPROC;
 import opengl.ubuntu.v20.PFNGLGENRENDERBUFFERSEXTPROC;
 import opengl.ubuntu.v20.PFNGLRENDERBUFFERSTORAGEEXTPROC;
 import opengl.ubuntu.v20.glut_h;
 import panamagl.Debug;
 import panamagl.Image;
 import panamagl.canvas.AWTImage;
+import panamagl.offscreen.AFBO;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
 import panamagl.utils.AWTImageCopy;
 import panamagl.utils.ForeignMemoryUtils;
+import panamagl.utils.ForeignMemoryUtils.Mode;
 import panamagl.utils.GraphicsUtils;
 import panamagl.utils.ImageCopy;
 import panamagl.utils.ImageUtils;
@@ -59,15 +61,11 @@ import panamagl.utils.ImageUtils;
  *
  * @author Martin Pernollet
  */
-public class FBO_linux implements FBO {
+public class FBO_linux extends AFBO implements FBO {
   // default
   int level = 0;
-  int width = 256;
-  int height = 256;
   int border = 0;
   int channels = 4; // RGBA
-
-  boolean flipY = true;
 
   // undefined yes
   int format = -1;
@@ -92,7 +90,8 @@ public class FBO_linux implements FBO {
   MemorySegment pixelBuffer;
   
   // dynamically loaded OpenGL functions
-  ForeignMemoryUtils ffm = new ForeignMemoryUtils();
+  ForeignMemoryUtils ffm;
+  
   PFNGLGENFRAMEBUFFERSEXTPROC glGenFramebuffers;
   PFNGLBINDFRAMEBUFFEREXTPROC glBindFramebuffer;
   PFNGLFRAMEBUFFERTEXTURE2DEXTPROC glFramebufferTexture2D;
@@ -110,12 +109,6 @@ public class FBO_linux implements FBO {
   @SuppressWarnings("rawtypes")
   ImageCopy copy = new AWTImageCopy();
 
-
-  // indicates dimensions have changed
-  // and FBO must reprepared
-  boolean prepared = false;
-
-
   public FBO_linux() {
     init();
   }
@@ -127,8 +120,9 @@ public class FBO_linux implements FBO {
     init();
   }
   
-  // TODO : use confined scope instead of implicit
   protected void init() {
+    ffm = new ForeignMemoryUtils(Mode.CONFINED);
+    
     MemorySegment function;
     MemoryAddress address;
     
@@ -184,7 +178,9 @@ public class FBO_linux implements FBO {
     
   }
   
-  boolean renewBuffers = false;
+  // could avoid renewing buffers, but keep the same behaviour
+  // than macOS for now
+  boolean renewBuffers = true;
 
   /** Prepare resources held by this FBO utility.*/
   @Override
@@ -193,8 +189,8 @@ public class FBO_linux implements FBO {
     
     // Check that this happens in AWT event queue, otherwise skip rendering
     // to avoid opengl exception.
-    if(!"AWT-EventQueue-0".equals(Thread.currentThread().getName()))
-      return;
+    //if(!"AWT-EventQueue-0".equals(Thread.currentThread().getName()))
+    //  return;
     
     if (prepared)
       release(gl);
@@ -250,7 +246,7 @@ public class FBO_linux implements FBO {
     // Create a texture to write to
     int byteSize = width * height * channels;
     
-    pixelBuffer = MemorySegment.allocateNative(byteSize, MemorySession.openImplicit());
+    pixelBuffer = MemorySegment.allocateNative(byteSize, MemorySession.openConfined());
     gl.glTexImage2D(GL.GL_TEXTURE_2D, level, internalFormat, width, height, border, format,
         textureType, pixelBuffer);
     
@@ -259,7 +255,7 @@ public class FBO_linux implements FBO {
     // Generate FRAME buffer
     
     if (idFrameBuffer <= 0 || renewBuffers) {
-      frameBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
+      frameBufferIds = MemorySegment.allocateNative(4, MemorySession.openConfined());
       glGenFramebuffers.apply(1, frameBufferIds.address());
       // replace >> glut_h.glGenFramebuffers(1, frameBufferIds);
       
@@ -285,7 +281,7 @@ public class FBO_linux implements FBO {
     // Generate RENDER buffer
 
     if(idRenderBuffer<=0 || renewBuffers) {
-      renderBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
+      renderBufferIds = MemorySegment.allocateNative(4, MemorySession.openConfined());
       glGenRenderbuffers.apply(1, renderBufferIds.address());
       // replace >> glut_h.glGenRenderbuffers(1, renderBufferIds);
       idRenderBuffer = (int) renderBufferIds.get(ValueLayout.JAVA_INT, 0);
@@ -343,7 +339,7 @@ public class FBO_linux implements FBO {
       e.throwRuntimeException();
     } else {
       System.err.println("FBO: " + item
-          + " handle=0 but get no OpenGL error. This may happen if the call was not issued from main thread on macOS");
+          + " handle=0 but get no OpenGL error. This may happen if the call was not issued from AWT thread on linux");
     }
     // https://stackoverflow.com/questions/2985034/glgentextures-keeps-returing-0s
   }
@@ -443,32 +439,4 @@ public class FBO_linux implements FBO {
     return new AWTImage(out);
   }
 
-  @Override
-  public void resize(int width, int height) {
-    if (this.width != width || this.height != height) {
-      this.width = width;
-      this.height = height;
-      this.prepared = false;
-    }
-  }
-
-  @Override
-  public int getWidth() {
-    return width;
-  }
-
-  @Override
-  public int getHeight() {
-    return height;
-  }
-
-  @Override
-  public boolean isFlipY() {
-    return flipY;
-  }
-
-  @Override
-  public void setFlipY(boolean flipY) {
-    this.flipY = flipY;
-  }
 }
