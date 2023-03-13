@@ -15,10 +15,12 @@ cache:
 build:
   stage: build
   script:
-    - apt-get install freeglut3 #freeglut3-dev libglew-dev
+    # Can't install freeglut
+    - add-apt-repository universe
+    - apt-get install freeglut3 freeglut3-dev libglew-dev
     - dpkg -L freeglut3
     - apt-get install mesa-utils
-    - ./gl-info.sh
+    - glxinfo | grep "OpenGL version"
     - mvn $MAVEN_CLI_OPTS clean install
 
 deploy:

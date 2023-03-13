@@ -68,7 +68,7 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
 
     glutInitWindowSize(initWidth, initHeight);
 
-    glut_h.glutInitWindowPosition(-initWidth, -initWidth);
+    glut_h.glutInitWindowPosition(0, 0);
     windowHandle = glut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
     
     // Hacky!! Use it while GLXContext is not working
