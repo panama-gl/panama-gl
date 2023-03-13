@@ -21,7 +21,8 @@ build:
     #- dpkg -L freeglut3
     #- apt-get install mesa-utils
     #- glxinfo | grep "OpenGL version"
-    - locate libGL
+    #- locate libGL
+    - find / | grep libGL
     - mvn $MAVEN_CLI_OPTS clean install
 
 deploy:
