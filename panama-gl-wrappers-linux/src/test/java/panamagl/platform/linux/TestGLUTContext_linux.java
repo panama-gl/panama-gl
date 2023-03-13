@@ -32,18 +32,25 @@ public class TestGLUTContext_linux extends LinuxTest {
 
     // When
     context.init();
+    
+    // Then 
+    Assert.assertTrue(context.isInitialized());
 
-    // Then
+    // When
     GL gl = new panamagl.platform.linux.x86.GL_linux_x86();
     GLProfile p = new GLProfile(gl);
 
+    // Then
     Assert.assertNotNull(p.getVersion());
     Assert.assertNotNull(p.getVendor());
 
     System.out.println(TestGLUTContext_linux.class.getSimpleName()
         + " running with OpenGL version : " + p.getVersion() + "/" + p.getVendor());
 
-
+    // When
     context.destroy();
+    
+    // Then
+    Assert.assertFalse(context.isInitialized());
   }
 }

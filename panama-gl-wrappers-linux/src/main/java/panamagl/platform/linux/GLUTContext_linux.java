@@ -43,10 +43,11 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
   protected SegmentAllocator allocator;
   protected String windowName = "InvisiblePanamaGLWindowForGLContext";
 
-  protected int initWidth = 100;
-  protected int initHeight = 100;
+  protected int initWidth = 1;
+  protected int initHeight = 1;
   protected boolean initialized = true;
 
+  protected int windowHandle = -1;
 
   /** Initialize GLUT and create a window */
   @Override
@@ -68,7 +69,7 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
     glutInitWindowSize(initWidth, initHeight);
 
     glut_h.glutInitWindowPosition(-initWidth, -initWidth);
-    glut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
+    windowHandle = glut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
     
     // Hacky!! Use it while GLXContext is not working
     glut_h.glutHideWindow();
@@ -102,6 +103,11 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
   
   @Override
   public void destroy() {
+    if(windowHandle>=0) {
+      glut_h.glutDestroyWindow(windowHandle);
+      windowHandle = -1;
+    }
+    
     // do not scope.close() as it is implicit
     initialized = false;
   }

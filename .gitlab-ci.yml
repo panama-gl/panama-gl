@@ -15,7 +15,7 @@ cache:
 build:
   stage: build
   script:
-    #- sudo apt-get install freeglut3 freeglut3-dev libglew-dev
+    - apt-get install freeglut3 #freeglut3-dev libglew-dev
     - dpkg -L freeglut3
     - apt-get install mesa-utils
     - ./gl-info.sh
