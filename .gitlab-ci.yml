@@ -15,6 +15,14 @@ cache:
 build:
   stage: build
   script:
+    # Can't install freeglut and mesa, hence no GL lib in path
+    #- add-apt-repository universe
+    #- apt-get install freeglut3 freeglut3-dev libglew-dev
+    #- dpkg -L freeglut3
+    #- apt-get install mesa-utils
+    #- glxinfo | grep "OpenGL version"
+    #- locate libGL
+    #- find / | grep libGL
     - mvn $MAVEN_CLI_OPTS clean install
 
 deploy:

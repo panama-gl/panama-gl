@@ -59,7 +59,10 @@ public class GLXContext_linux extends AGLContext implements GLContext{
     
     // https://man.archlinux.org/man/XOpenDisplay.3.en
     MemoryAddress display = glx_h.XOpenDisplay(allocator.allocateUtf8String(windowName));
-    int screen = glx_h.XDefaultScreen(display);
+    
+    //System.out.println("GLXContext_linux : display : " + display.getAtIndex(ValueLayout.JAVA_LONG, 0));
+    
+    int screen = 0;//glx_h.XDefaultScreen(display);
     System.out.println("GLXContext_linux : screen : " + screen);
 
     
@@ -69,20 +72,24 @@ public class GLXContext_linux extends AGLContext implements GLContext{
         glx_h.GLX_RED_SIZE(),    8,
         glx_h.GLX_GREEN_SIZE(),  8,
         glx_h.GLX_BLUE_SIZE(),   8,
-        glx_h.GLX_ALPHA_SIZE(),  8,
+        //glx_h.GLX_ALPHA_SIZE(),  8,
         //Ideally, the size would be 32 (or at least 24), but I have actually seen
         //  this size (on a modern OS even).
-        glx_h.GLX_DEPTH_SIZE(), 32,
-        glx_h.GLX_DOUBLEBUFFER()//, True,
-        //glx_h.None()
+        //glx_h.GLX_DEPTH_SIZE(), 32,
+        //glx_h.GLX_DOUBLEBUFFER(),//, True,
+        (int) glx_h.None() // Should always finish by NONE
     };
     
-    //attributes = new int[0];
+    //attributes = new int[1];
+    //attributes[0] = (int) glx_h.None();
 
     MemorySegment attrib = allocator.allocateArray(ValueLayout.JAVA_INT, attributes);
     
-    //XVisualInfo* 
+
+    // http://www.talisman.org/opengl-1.1/Reference/glXChooseVisual.html
     MemoryAddress visual_info = glx_h.glXChooseVisual(display, screen, attrib.address());
+    
+    System.out.println("Got visual info");
     
     /* ##### MAKE WINDOW ##### */
     
