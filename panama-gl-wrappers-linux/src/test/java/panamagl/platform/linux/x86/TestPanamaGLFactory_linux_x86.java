@@ -21,27 +21,40 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import panamagl.factory.PanamaGLFactory;
+import panamagl.opengl.GLContext;
 import panamagl.platform.linux.LinuxTest;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
 public class TestPanamaGLFactory_linux_x86 extends LinuxTest{
-//TODO
+//FIXME : https://gitlab.com/jzy3d/panama-gl/-/issues/27
 @Ignore("Works from IDE but not from CLI yet")
   @Test
   public void test() {
     if (!checkPlatform())
       return;
   
-    
+    // When seek a factory
     PanamaGLFactory f = PanamaGLFactory.select();
     
+    // Then expect to find the linux one
     boolean matched = f instanceof PanamaGLFactory_linux_x86;
     
     Assert.assertTrue(matched);
 
-    Assert.assertNotNull(f.newGLContext());
+    // ----------------------------
+    // When initializing the factory objects, then get not null
+    
+    GLContext context = f.newGLContext();
+    Assert.assertNotNull(context);
     Assert.assertNotNull(f.newGL());
     Assert.assertNotNull(f.newOffscreenRenderer());
     Assert.assertNotNull(f.newFBO(800, 600));
+    
+    // ----------------------------
+    // When
+    context.destroy();
+    
+    // Then
+    Assert.assertFalse(context.isInitialized());
   }
 }

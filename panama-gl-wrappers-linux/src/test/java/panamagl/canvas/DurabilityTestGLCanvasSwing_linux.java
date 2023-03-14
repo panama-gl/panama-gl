@@ -15,19 +15,28 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.platform.macos;
+package panamagl.canvas;
 
-//import static org.mockito.Mockito.spy;
 import org.junit.Test;
+import panamagl.factory.PanamaGLFactory;
+import panamagl.platform.Platform;
 
-public class TestGL_macOS extends MacOSTest{
-    @Test
-    public void whenInitDefault_ThenDoNotInvokeGlut(){
-      if (!checkPlatform())
-        return;
+/**
+ * This test is intentionnaly named DurabilityTest* to be ignored by maven
+ * while running tests (surefire config keeps Test* or *Test or ITTest*)
+ */
+// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
+//@Ignore("Will add to specific build profile later.")
+public class DurabilityTestGLCanvasSwing_linux {
+  public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
 
-       // GL_macOS_10_15_3 gl = spy(GL_macOS_10_15_3.class);
-
-
-    }
+  //@Test
+  public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
+    if (!new Platform().isUnix())
+     return;
+    
+    PanamaGLFactory factory = PanamaGLFactory.select();
+    
+    DurabilityTestGLCanvasSwing.whenPanelIsAdded_ThenGLEventListenerIsInvoked(factory);
+  }
 }

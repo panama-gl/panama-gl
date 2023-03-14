@@ -37,7 +37,8 @@ public class TestFBO_macOS extends MacOSTest{
     // Given a GL caller
     GL gl = new panamagl.platform.macos.x86.GL_macOS_x86();
 
-    // Given a FBO UNDER TEST
+    // ---------------------------------------
+    // When initialize a FBO UNDER TEST
     int width = 256;
     int height = 256;
     FBO_macOS fbo = new FBO_macOS(width, height);
@@ -52,6 +53,12 @@ public class TestFBO_macOS extends MacOSTest{
     // Execute validation scenario
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(fbo, gl);
 
+    // ---------------------------------------
+    // When Release context resources
+    glutContext.destroy();
+
+    // Then
+    Assert.assertFalse(glutContext.isInitialized());
   }
 
   @Test

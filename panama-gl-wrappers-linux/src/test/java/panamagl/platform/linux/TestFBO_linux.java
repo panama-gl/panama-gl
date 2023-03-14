@@ -26,21 +26,20 @@ import panamagl.opengl.GLContext;
 
 // VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
 public class TestFBO_linux extends LinuxTest{
-  // TODO
-@Ignore("Works from IDE but not from CLI yet")
   @Test
   public void given_GLUTContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {
     if (!checkPlatform())
       return;
 
     // Given a GLUT context
-    GLContext glutContext = new GLUTContext_linux();
-    glutContext.init();
+    GLUTContext_linux glutContext = new GLUTContext_linux();
+    glutContext.init(false);
 
     // Given a GL caller
     GL gl = new panamagl.platform.linux.x86.GL_linux_x86();
     
-    // Given a FBO UNDER TEST
+    // ---------------------------------------
+    // When initialize a FBO UNDER TEST
     int width = 256;
     int height = 256;
     FBO_linux fbo = new FBO_linux(width, height);
@@ -54,22 +53,12 @@ public class TestFBO_linux extends LinuxTest{
 
     // Execute validation scenario
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(fbo, gl);
+    
+    // ---------------------------------------
+    // When Release context resources
+    glutContext.destroy();
 
+    // Then
+    Assert.assertFalse(glutContext.isInitialized());
   }
-
-  /*@Test
-  public void given_CGLContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {
-    if (!checkPlatform())
-      return;
-
-    // Given a CGL context ONLY
-    GLContext context = new CGLContext_macOS();
-    context.init();
-
-    GL gl = new panamagl.platform.macos.x86.GL_macOS_x86();
-
-    TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(gl);
-
-  }*/
-
 }

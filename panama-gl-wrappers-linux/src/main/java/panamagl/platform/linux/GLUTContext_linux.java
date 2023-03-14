@@ -54,6 +54,8 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
   public void init() {
     init(true);
   }
+  
+  //static int glutInitDone = 0;
 
   /** Initialize GLUT if input arg is true, and create a window */
   public void init(boolean forceLoadGlut) {
@@ -62,14 +64,21 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
     if (forceLoadGlut) {
       var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
 
+      //glutInitDone++;
+      //System.out.println("GLUTContext_linux : init " + glutInitDone);
+      
       glut_h.glutInit(argc, argc);
+      
     }
+    
     glut_h.glutInitDisplayMode(glut_h.GLUT_DOUBLE() | glut_h.GLUT_RGBA() | glut_h.GLUT_DEPTH());
 
     glutInitWindowSize(initWidth, initHeight);
 
     glut_h.glutInitWindowPosition(0, 0);
     windowHandle = glut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
+    
+    //System.out.println("WINDOW HANDLE :  " + windowHandle);
     
     // Hacky!! Use it while GLXContext is not working
     glut_h.glutHideWindow();
@@ -90,6 +99,10 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
     return initialized;
   }
   
+  /*protected boolean glutHasInit() {
+    boolean glutInitialised = glut_h.glutGet(glut_h.GLUT_INIT_STATE()) == 1;
+  }*/
+  
   protected void initScope() {
     try {
       scope = MemorySession.openImplicit();
@@ -107,6 +120,8 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
       glut_h.glutDestroyWindow(windowHandle);
       windowHandle = -1;
     }
+    
+    
     
     // do not scope.close() as it is implicit
     initialized = false;
