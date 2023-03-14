@@ -53,13 +53,12 @@ public class FBO_macOS extends AFBO implements FBO {
   protected int border = 0;
   protected int channels = 4; // RGBA
 
-
-  // undefined yes
+  // formats
   protected int format = -1;
   protected int internalFormat = -1;
   protected int textureType = -1;
 
-  protected boolean debug = Debug.check(FBO_macOS.class);
+  protected boolean debug = Debug.check(FBO.class, FBO_macOS.class);
 
   // supposed to copy to BufferedImage faster when true
   // using false allows to make copy by tweaking bytes
@@ -70,7 +69,7 @@ public class FBO_macOS extends AFBO implements FBO {
   protected int idFrameBuffer = -1;
   protected int idRenderBuffer = -1;
   
-  //MemorySession scope;
+  protected MemorySession scope;
   protected MemorySegment frameBufferIds;
   protected MemorySegment renderBufferIds;
   protected MemorySegment textureBufferIds;
