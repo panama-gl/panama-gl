@@ -25,10 +25,24 @@ import java.lang.foreign.ValueLayout;
 public class ForeignMemoryUtils {
   protected MemorySession scope;
   protected SegmentAllocator allocator;
+  
+  public static enum Mode{
+    IMPLICIT, SHARED, CONFINED;
+  }
 
   public ForeignMemoryUtils() {
+    this(Mode.IMPLICIT);
+  }
+  
+  public ForeignMemoryUtils(Mode mode) {
     try {
-      scope = MemorySession.openImplicit();
+      if(Mode.IMPLICIT.equals(mode))
+        scope = MemorySession.openImplicit();
+      else if(Mode.SHARED.equals(mode))
+        scope = MemorySession.openShared();
+      else if(Mode.CONFINED.equals(mode))
+        scope = MemorySession.openConfined();
+      
       allocator = SegmentAllocator.newNativeArena(scope);
     } catch (Exception e) {
       e.printStackTrace();

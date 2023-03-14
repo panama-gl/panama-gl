@@ -20,6 +20,12 @@ package panamagl.platform.linux;
 
 import java.lang.foreign.Addressable;
 import java.lang.foreign.MemoryAddress;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.SegmentAllocator;
+import java.lang.foreign.ValueLayout;
+import glx.ubuntu.v20.PFNGLXCREATECONTEXTATTRIBSARBPROC;
+import glx.ubuntu.v20.PFNGLXMAKECONTEXTCURRENTPROC;
 import glx.ubuntu.v20.glx_h;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;
@@ -29,61 +35,152 @@ import panamagl.opengl.GLContext;
 // https://learnopengl.com/Advanced-OpenGL/Framebufferss
 // https://stackoverflow.com/questions/21851688/linux-rendering-offscreen-with-opengl-3-2-w-fbos
 public class GLXContext_linux extends AGLContext implements GLContext{
-  protected boolean initialized =false;
+  protected MemorySession scope;
+  protected SegmentAllocator allocator;
+  protected boolean initialized = false;
+
+  
+  protected MemoryAddress display;
+  protected MemoryAddress context;
+  
   public GLXContext_linux() {
+    super();
+    initScope();
     init();
   }
+  
+  protected void initScope() {
+    try {
+      scope = MemorySession.openImplicit();
+      allocator = SegmentAllocator.newNativeArena(scope);
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   public void init() {
-    /* ##### MAKE DISPLAY ##### */
-    MemoryAddress display = glx_h.XOpenDisplay(null);
     
+    // ----------------------------------------
+    // Make display and choose default screen
     
-    /* ##### MAKE VISUAL INFO. ##### */
-    int attributes[] = { //can't be const b/c X11 doesn't like it.  Not sure if that's intentional or just stupid.
-        glx_h.GLX_RGBA(), //apparently nothing comes after this?
+    display = glx_h.XOpenDisplay(glx_h.NULL());
+    
+    int screen = glx_h.XDefaultScreen(display);
+    System.out.println("GLXContext_linux : screen : " + screen);
+
+    
+    // ----------------------------------------
+    // Define visual info (rendering settings)
+    //
+    // Specifies the visual that defines the frame buffer resources available 
+    // to the rendering context. 
+    // It is a pointer to an XVisualInfo structure, not a visual ID or a pointer 
+    // to a Visual structure.
+
+    AttribMode mode = AttribMode.DEFAULT;
+    
+    int[] attributes = { 
+        glx_h.GLX_RGBA(), 
         glx_h.GLX_RED_SIZE(),    8,
         glx_h.GLX_GREEN_SIZE(),  8,
         glx_h.GLX_BLUE_SIZE(),   8,
         glx_h.GLX_ALPHA_SIZE(),  8,
-        //Ideally, the size would be 32 (or at least 24), but I have actually seen
-        //  this size (on a modern OS even).
-        glx_h.GLX_DEPTH_SIZE(), 16,
-        glx_h.GLX_DOUBLEBUFFER()//, True,
-        //glx_h.None()
+        glx_h.GLX_DEPTH_SIZE(), 24, //Ideally, the size would be 32 (or at least 24)
+        //glx_h.GLX_DOUBLEBUFFER(), True,
+        (int) glx_h.None() // Should always finish by NONE
     };
+    
+    MemorySegment attrib = allocator.allocateArray(ValueLayout.JAVA_INT, attributes);
 
+    MemoryAddress visual_info;
     
-    //XVisualInfo* 
-    //MemoryAddress visual_info = glx_h.glXChooseVisual(display, glx_h.DefaultScreen(display), attributes);
+    if(AttribMode.DEFAULT.equals(mode)) {
+      visual_info = glx_h.XDefaultVisual(display, screen);
+    }
+    else if(AttribMode.CHOSEN.equals(mode)){
+      
+      visual_info = glx_h.glXChooseVisual(display, screen, attrib);
+    }
+    else if(AttribMode.FRAMEBUFFER.equals(mode)){
+      
+      int[] fboC = {1};
+      MemorySegment fboCount = allocator.allocateArray(ValueLayout.JAVA_INT, fboC);
+      MemoryAddress frameBufferConfig = glx_h.glXChooseFBConfig(display, screen, attrib, fboCount);
+
+      visual_info = glx_h.glXGetVisualFromFBConfig(display, frameBufferConfig);
+    }
+    else {
+      throw new RuntimeException("Unsupported mode");
+    }
     
-    /* ##### MAKE WINDOW ##### */
+    System.out.println("Got visual info " + visual_info);
     
+    // ----------------------------------------
+    // Make context
     
-    // Specifies the connection to the X server.
-    Addressable dpy = null;
-    // Specifies the visual that defines the frame buffer resources available to the rendering context. 
-    // It is a pointer to an XVisualInfo structure, not a visual ID or a pointer to a Visual structure.
-    Addressable vis = null;
-    // Specifies the visual that defines the frame buffer resources available to the rendering context. 
-    // It is a pointer to an XVisualInfo structure, not a visual ID or a pointer to a Visual structure.
-    Addressable shareList = null;  
+    int[] shareListA = {0};
+    MemorySegment shareList = allocator.allocateArray(ValueLayout.JAVA_INT, shareListA);
+    
     // A value of True specifies that rendering be done through a direct connection to the graphics system 
     // if possible; a value of False specifies rendering through the X server.
-    int direct = 0;
-    glx_h.glXCreateContext(dpy, vis, shareList, direct);
+    int direct = glx_h.GL_TRUE();
     
+    
+    // https://www.ibm.com/docs/en/aix/7.1?topic=environment-glxcreatecontext-subroutine
+    context = glx_h.glXCreateContext(display, visual_info, shareList.address(), direct);
+    
+    System.out.println("Got context " + context);
+    
+    // https://opengl.developpez.com/docs/man/man/glXMakeCurrent
+    glx_h.glXMakeCurrent(display, 0, context);
+
+    System.out.println("Made current " + context);
+
+    
+    
+    /*PFNGLXCREATECONTEXTATTRIBSARBPROC glXCreateContextAttribsARB = 
+        (PFNGLXCREATECONTEXTATTRIBSARBPROC) glx_h.glXGetProcAddressARB(allocator.allocateUtf8String("glXCreateContextAttribsARB"));
+    PFNGLXMAKECONTEXTCURRENTPROC glXMakeContextCurrentARB = 
+        (PFNGLXMAKECONTEXTCURRENTPROC) glx_h.glXGetProcAddressARB(allocator.allocateUtf8String("glXMakeContextCurrent"));
+
+    
+    int context_attribs[] = {
+        glx_h.GLX_CONTEXT_MAJOR_VERSION_ARB() ,3,
+        glx_h.GLX_CONTEXT_MINOR_VERSION_ARB(), 2,
+        glx_h.GLX_CONTEXT_FLAGS_ARB(), glx_h.GLX_CONTEXT_DEBUG_BIT_ARB(),
+        glx_h.GLX_CONTEXT_PROFILE_MASK_ARB(), glx_h.GLX_CONTEXT_CORE_PROFILE_BIT_ARB(),
+        (int)glx_h.None()
+    };
+
+    MemorySegment contextAttrib = allocator.allocateArray(ValueLayout.JAVA_INT, context_attribs);
+    
+    Addressable contextARB = glXCreateContextAttribsARB.apply(display, visual_info, shareList.address(), direct, contextAttrib.address());
+    
+    glXMakeContextCurrentARB.apply(display, 0, 0, contextARB);*/
+    
+    
+    // ----------------------
     initialized = true;
+  }
+  
+  enum AttribMode{
+    DEFAULT, 
+    CHOSEN, 
+    FRAMEBUFFER
   }
   
   
   @Override
   public void destroy() {
-    // TODO Auto-generated method stub
+    glx_h.glXDestroyContext(display, context);
     
+    initialized = false;
   }
+  
+  
   @Override
   public boolean isInitialized() {
-    // TODO Auto-generated method stub
     return initialized;
   }
 }

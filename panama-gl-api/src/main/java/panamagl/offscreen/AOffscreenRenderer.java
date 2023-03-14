@@ -15,6 +15,8 @@
  *******************************************************************************/
 package panamagl.offscreen;
 
+import java.awt.EventQueue;
+import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import panamagl.Debug;
@@ -28,21 +30,23 @@ import panamagl.opengl.GLContext;
 import panamagl.opengl.GLError;
 
 public class AOffscreenRenderer implements OffscreenRenderer {
+  protected static final int INIT_FBO_WIDTH = 10;
+  protected static final int INIT_FBO_HEIGHT = 10;
 
   protected boolean debug = Debug.check(AOffscreenRenderer.class);
-  protected String debugFile = null;
-  /** Only used to export debug images if a debug file is given */
-  protected ExecutorService exec = Executors.newSingleThreadExecutor();
+  
   protected PanamaGLFactory factory;
   protected GL gl;
   protected GLContext context;
   protected FBO fbo;
+  
   protected boolean initialized = false;
-  protected static final int INIT_FBO_WIDTH = 10;
-  protected static final int INIT_FBO_HEIGHT = 10;
-  int k = 0;
+  
+  protected String debugFile = null;
+  /** Only used to export debug images if a debug file is given */
+  protected ExecutorService exec = Executors.newSingleThreadExecutor();
 
-
+  
   public AOffscreenRenderer(PanamaGLFactory factory) {
     this.factory = factory;
   }
@@ -52,20 +56,43 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   @Override
   public void onInit(GLCanvas drawable, GLEventListener listener) {
     Runnable r = getTask_initContext(listener);
-    r.run();
+    
+    executeFromAWTMainThread(r);
   }
 
   @Override
   public void onDisplay(GLCanvas drawable, GLEventListener listener) {
     Runnable r = getTask_renderGLToImage(drawable, listener, drawable.getWidth(), drawable.getHeight());
-    r.run();
+    
+    executeFromAWTMainThread(r);
   }
-
+  
   @Override
   public void onResize(GLCanvas drawable, GLEventListener listener, int x, int y, int width, int height) {
     Runnable r = getTask_renderGLToImage(drawable, listener, drawable.getWidth(), drawable.getHeight());
-    r.run();
+    
+    executeFromAWTMainThread(r);
   }
+  
+  /** 
+   * Ensure the task is executed by the AWT Event Thread.
+   * OpenGL being single threaded, we need to always perform rendering queries from the same UI thread.
+   */
+  protected void executeFromAWTMainThread(Runnable r) {
+    // If we are already in AWT thread, just run
+    if (EventQueue.isDispatchThread()) {
+        r.run();
+    }
+    // Otherwise, push the request to AWT
+    else {
+      try {
+        EventQueue.invokeAndWait(r);
+      } catch (InvocationTargetException | InterruptedException e) {
+        throw new RuntimeException(e);
+      }      
+    }
+  }
+  
   @Override
   public void onDestroy(GLCanvas drawable, GLEventListener glEventListener) {
     destroyContext();
@@ -89,17 +116,16 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   protected void initContext(GLEventListener listener) {
     Debug.debug(debug, "AOffscreenRenderer : initContext");
 
-    // counter = new RenderCounter();
-
+    // --------------------------------------
     // GL Context init
     context = factory.newGLContext();
 
     Debug.debug(debug, "AOffscreenRenderer : initContext : Got GLContext : " + context);
 
+    // --------------------------------------
     // OpenGL init
     this.gl = factory.newGL();
     GLError.checkAndThrow(gl);
-    
     
     GLProfile profile = new GLProfile(gl);
     context.setProfile(profile);
@@ -107,6 +133,7 @@ public class AOffscreenRenderer implements OffscreenRenderer {
 
     Debug.debug(debug, "AOffscreenRenderer : initContext : Got GL : " + gl);
 
+    // --------------------------------------
     // FBO init
     this.fbo = factory.newFBO(INIT_FBO_WIDTH, INIT_FBO_HEIGHT);
     this.fbo.prepare(gl);
@@ -171,35 +198,16 @@ public class AOffscreenRenderer implements OffscreenRenderer {
     // FBO To image
     if (fbo != null) {
       Image<?> out = fbo.getImage(gl);
-      // System.gc();
-
-      //if (out == null)
-      //  throw new RuntimeException("FBO returned a null image!");
 
       // Give back the image to the onscreen panel
       canvas.setScreenshot(out);
 
-
-      // The image has been rendered in macOS main thread,
+      // The image has been rendered in main thread,
       // now we want to notify the component that it is ready
       // for rendering in the AWT Thread
 
       canvas.repaint();
       
-      /*if (!SwingUtilities.isEventDispatchThread()) {
-        canvas.repaint();
-      } else {
-        SwingUtilities.invokeLater(new Runnable() {
-          @Override
-          public void run() {
-            canvas.repaint();
-          }
-        });*/
-      //}
-
-      /*if (debugFile != null) {
-        exec.execute(getTask_saveImage(out, debugFile + "-" + (k++) + ".png"));
-      }*/
     } else {
       System.err.println("FBO is null!");
     }

@@ -33,7 +33,7 @@ import org.junit.Test;
 import panamagl.GLEventAdapter;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
-import panamagl.platform.macos.SampleTriangle;
+import panamagl.samples.SampleTriangle;
 import panamagl.utils.ImageUtils;
 
 /**

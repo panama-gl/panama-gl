@@ -20,7 +20,12 @@ package panamagl.offscreen;
 import panamagl.Image;
 import panamagl.opengl.GL;
 
-
+/**
+ * A frame buffer object, or {@link FBO}, can render OpenGL into an offscreen buffer that can later
+ * be converted to an {@link Image}.
+ *
+ * @author Martin Pernollet
+ */
 public interface FBO {
   void prepare(GL gl);
   void release(GL gl);
@@ -30,4 +35,6 @@ public interface FBO {
   int getHeight();
   boolean isFlipY();
   void setFlipY(boolean flipY);
+  
+  boolean isPrepared();
 }

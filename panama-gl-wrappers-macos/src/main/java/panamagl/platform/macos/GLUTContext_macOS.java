@@ -47,6 +47,7 @@ public class GLUTContext_macOS extends AGLContext implements GLContext {
   protected int initWidth = 100;
   protected int initHeight = 100;
   protected boolean initialized = true;  
+  protected int windowHandle = -1;
 
   /** Initialize GLUT and create a window */
   @Override
@@ -68,7 +69,7 @@ public class GLUTContext_macOS extends AGLContext implements GLContext {
     glutInitWindowSize(initWidth, initHeight);
 
     glut_h.glutInitWindowPosition(-initWidth, -initHeight);
-    glut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
+    windowHandle = glut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
 
     // This dummy stub registration is required to get macOS onscreen rendering working
     // It will avoid error message
@@ -98,6 +99,11 @@ public class GLUTContext_macOS extends AGLContext implements GLContext {
   
   @Override
   public void destroy() {
+    if(windowHandle>=0) {
+      glut_h.glutDestroyWindow(windowHandle);
+      windowHandle = -1;
+    }
+    
     // do not scope.close() as it is implicit
     initialized = false;
   }

@@ -18,86 +18,179 @@
 package panamagl.platform.linux;
 
 import java.awt.image.BufferedImage;
+import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.ValueLayout;
+import glext.ubuntu.v20.PFNGLBINDFRAMEBUFFEREXTPROC;
+import glx.ubuntu.v20.glx_h;
+import opengl.ubuntu.v20.PFNGLBINDRENDERBUFFEREXTPROC;
+import opengl.ubuntu.v20.PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC;
+import opengl.ubuntu.v20.PFNGLDELETEFRAMEBUFFERSEXTPROC;
+import opengl.ubuntu.v20.PFNGLDELETERENDERBUFFERSEXTPROC;
+import opengl.ubuntu.v20.PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC;
+import opengl.ubuntu.v20.PFNGLFRAMEBUFFERTEXTURE2DEXTPROC;
+import opengl.ubuntu.v20.PFNGLGENFRAMEBUFFERSEXTPROC;
+import opengl.ubuntu.v20.PFNGLGENRENDERBUFFERSEXTPROC;
+import opengl.ubuntu.v20.PFNGLRENDERBUFFERSTORAGEEXTPROC;
 import opengl.ubuntu.v20.glut_h;
 import panamagl.Debug;
 import panamagl.Image;
 import panamagl.canvas.AWTImage;
+import panamagl.offscreen.AFBO;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
 import panamagl.utils.AWTImageCopy;
+import panamagl.utils.ForeignMemoryUtils;
+import panamagl.utils.ForeignMemoryUtils.Mode;
 import panamagl.utils.GraphicsUtils;
 import panamagl.utils.ImageCopy;
 import panamagl.utils.ImageUtils;
 
 /**
  * A frame buffer object, or {@link FBO_linux}, can render OpenGL into an offscreen buffer that can later
- * be converted to a {@link BufferedImage}.
+ * be converted to an {@link Image}.
  *
  * See : https://www.khronos.org/opengl/wiki/Framebuffer_Object
  * https://www.khronos.org/opengl/wiki/Common_Mistakes
  * https://www.khronos.org/opengl/wiki/Framebuffer_Object_Extension_Examples#Quick_example,_render_to_texture_(2D)
  *
  *
- * Hint : to debug this class, invoke a program using it with flag -Dopengl.fbo.FBO
+ * Hint : to debug this class, invoke a program using it with flag -Dpanamagl.offscreen.FBO
  *
  * @author Martin Pernollet
  */
-public class FBO_linux implements FBO {
+public class FBO_linux extends AFBO implements FBO {
   // default
-  int level = 0;
-  int width = 256;
-  int height = 256;
-  int border = 0;
-  int channels = 4; // RGBA
+  protected int level = 0;
+  protected int border = 0;
+  protected int channels = 4; // RGBA
 
-  boolean flipY = true;
+  // formats
+  protected int format = -1;
+  protected int internalFormat = -1;
+  protected int textureType = -1;
 
-  // undefined yes
-  int format = -1;
-  int internalFormat = -1;
-  int textureType = -1;
-
-  boolean debug = Debug.check(FBO_linux.class);
+  protected boolean debug = Debug.check(FBO.class, FBO_linux.class);
 
   // supposed to copy to BufferedImage faster when true
   // using false allows to make copy by tweaking bytes
   // which is useful for debugging
-  boolean arrayExport = true;
+  protected boolean arrayExport = true;
 
-  int idTexture = -1;
-  int idFrameBuffer = -1;
-  int idRenderBuffer = -1;
+  protected int idTexture = -1;
+  protected int idFrameBuffer = -1;
+  protected int idRenderBuffer = -1;
   
-  //MemorySession scope;
-  MemorySegment frameBufferIds;
-  MemorySegment renderBufferIds;
-  MemorySegment textureBufferIds;
-  MemorySegment pixelBuffer;
+  protected MemorySession scope;
+  protected MemorySegment frameBufferIds;
+  protected MemorySegment renderBufferIds;
+  protected MemorySegment textureBufferIds;
+  protected MemorySegment pixelBuffer;
   
+  // dynamically loaded OpenGL functions
+  protected ForeignMemoryUtils ffm;
+  
+  protected PFNGLGENFRAMEBUFFERSEXTPROC glGenFramebuffers;
+  protected PFNGLBINDFRAMEBUFFEREXTPROC glBindFramebuffer;
+  protected PFNGLFRAMEBUFFERTEXTURE2DEXTPROC glFramebufferTexture2D;
+
+  protected PFNGLGENRENDERBUFFERSEXTPROC glGenRenderbuffers;
+  protected PFNGLBINDRENDERBUFFEREXTPROC glBindRenderbuffer;
+  protected PFNGLRENDERBUFFERSTORAGEEXTPROC glRenderbufferStorage;
+  
+  protected PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC glFramebufferRenderbuffer;
+  protected PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC glCheckFramebufferStatus;
+  
+  protected PFNGLDELETERENDERBUFFERSEXTPROC glDeleteRenderbuffers;
+  protected PFNGLDELETEFRAMEBUFFERSEXTPROC glDeleteFramebuffers;
   
   @SuppressWarnings("rawtypes")
-  ImageCopy copy = new AWTImageCopy();
+  protected ImageCopy copy = new AWTImageCopy();
 
-
-  // indicates dimensions have changed
-  // and FBO must reprepared
-  boolean prepared = false;
-
-
-  public FBO_linux() {}
+  public FBO_linux() {
+    init();
+  }
 
   public FBO_linux(int width, int height) {
     this.width = width;
     this.height = height;
+    
+    init();
   }
+  
+  protected void init() {
+    ffm = new ForeignMemoryUtils(Mode.IMPLICIT);
+    
+    MemorySegment function;
+    MemoryAddress address;
+    
+    // glGenFramebuffers
+    function = ffm.alloc("glGenFramebuffersEXT");
+    address = glx_h.glXGetProcAddress(function);
+    glGenFramebuffers = PFNGLGENFRAMEBUFFERSEXTPROC.ofAddress(address, ffm.getScope());
+    
+    // glBindFramebuffer
+    function = ffm.alloc("glBindFramebufferEXT");
+    address = glx_h.glXGetProcAddress(function);
+    glBindFramebuffer = PFNGLBINDFRAMEBUFFEREXTPROC.ofAddress(address, ffm.getScope());
+    
+    // glFramebufferTexture2D
+    function = ffm.alloc("glFramebufferTexture2DEXT");
+    address = glx_h.glXGetProcAddress(function);
+    glFramebufferTexture2D = PFNGLFRAMEBUFFERTEXTURE2DEXTPROC.ofAddress(address, ffm.getScope());
+
+    // glGenRenderbuffers
+    function = ffm.alloc("glGenRenderbuffersEXT");
+    address = glx_h.glXGetProcAddress(function);
+    glGenRenderbuffers = PFNGLGENRENDERBUFFERSEXTPROC.ofAddress(address, ffm.getScope());
+    
+    // glBindRenderbuffer
+    function = ffm.alloc("glBindRenderbufferEXT");
+    address = glx_h.glXGetProcAddress(function);
+    glBindRenderbuffer = PFNGLBINDRENDERBUFFEREXTPROC.ofAddress(address, ffm.getScope());
+    
+    // glRenderbufferStorage
+    function = ffm.alloc("glRenderbufferStorageEXT");
+    address = glx_h.glXGetProcAddress(function);
+    glRenderbufferStorage = PFNGLRENDERBUFFERSTORAGEEXTPROC.ofAddress(address, ffm.getScope());
+    
+    // glFramebufferRenderbuffer
+    function = ffm.alloc("glFramebufferRenderbufferEXT");
+    address = glx_h.glXGetProcAddress(function);
+    glFramebufferRenderbuffer = PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC.ofAddress(address, ffm.getScope());
+    
+    // glCheckFramebufferStatus
+    function = ffm.alloc("glCheckFramebufferStatusEXT");
+    address = glx_h.glXGetProcAddress(function);
+    glCheckFramebufferStatus = PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC.ofAddress(address, ffm.getScope());
+   
+    // glDeleteRenderbuffers
+    function = ffm.alloc("glDeleteRenderbuffersEXT");
+    address = glx_h.glXGetProcAddress(function);
+    glDeleteRenderbuffers = PFNGLDELETERENDERBUFFERSEXTPROC.ofAddress(address, ffm.getScope());
+    
+    // glDeleteFramebuffers
+    function = ffm.alloc("glDeleteFramebuffersEXT");
+    address = glx_h.glXGetProcAddress(function);
+    glDeleteFramebuffers = PFNGLDELETEFRAMEBUFFERSEXTPROC.ofAddress(address, ffm.getScope());
+    
+  }
+  
+  // could avoid renewing buffers, but keep the same behaviour
+  // than macOS for now
+  boolean renewBuffers = true;
 
   /** Prepare resources held by this FBO utility.*/
   @Override
   public void prepare(GL gl) {
+    Debug.debug(debug, "FBO: from thread " + Thread.currentThread().getName());
+    
+    // Check that this happens in AWT event queue, otherwise skip rendering
+    // to avoid opengl exception.
+    //if(!"AWT-EventQueue-0".equals(Thread.currentThread().getName()))
+    //  return;
     
     if (prepared)
       release(gl);
@@ -120,7 +213,7 @@ public class FBO_linux implements FBO {
     // preferred format with glGetInternalFormativ(GL_TEXTURE_2D, GL_RGBA8, GL_TEXTURE_IMAGE_FORMAT,
     // 1, &preferred_format).
     format = GL.GL_BGRA;
-    internalFormat = GL.GL_RGBA8;// GL.GL_BGRA;
+    internalFormat = GL.GL_RGBA8;
     textureType = GL.GL_UNSIGNED_BYTE;
 
     Debug.debug(debug, "FBO.internalFormat : " + internalFormat + " (default GL.GL_RGBA8)");
@@ -129,18 +222,17 @@ public class FBO_linux implements FBO {
     // ------------------------
     // Generate TEXTURE buffer
 
-    textureBufferIds = MemorySegment.allocateNative(1 * 4 * 3, MemorySession.openImplicit());
-    gl.glGenTextures(1, textureBufferIds);
-    idTexture = (int) textureBufferIds.get(ValueLayout.JAVA_INT, 0);
-
+    if(idTexture<=0 || renewBuffers) {
+      textureBufferIds = MemorySegment.allocateNative(1 * 4 * 3, MemorySession.openImplicit());
+      gl.glGenTextures(1, textureBufferIds);
+      idTexture = (int) textureBufferIds.get(ValueLayout.JAVA_INT, 0);
+    }
     Debug.debug(debug, "FBO: Got texture ID : " + idTexture);
-
 
     // Check errors
     if (idTexture == 0) {
       diagnoseError(gl, "texture");
     }
-
 
     // Bind texture and set parameters
     gl.glBindTexture(GL.GL_TEXTURE_2D, idTexture);
@@ -159,10 +251,14 @@ public class FBO_linux implements FBO {
 
     // -------------------------
     // Generate FRAME buffer
-    frameBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
- // >>>>>> glut_h.glGenFramebuffers(1, frameBufferIds);
-    idFrameBuffer = (int) frameBufferIds.get(ValueLayout.JAVA_INT, 0);
-
+    
+    if (idFrameBuffer <= 0 || renewBuffers) {
+      frameBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
+      glGenFramebuffers.apply(1, frameBufferIds.address());
+      // replace >> glut_h.glGenFramebuffers(1, frameBufferIds);
+      
+      idFrameBuffer = (int) frameBufferIds.get(ValueLayout.JAVA_INT, 0);
+    }
     Debug.debug(debug, "FBO: Got FB ID : " + idFrameBuffer);
 
     // Check errors
@@ -170,49 +266,53 @@ public class FBO_linux implements FBO {
       diagnoseError(gl, "framebuffer");
     }
 
-
     // Bind frame buffer
- // >>>>>> glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
+    glBindFramebuffer.apply(glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
 
     // Attach 2D texture to this FBO
- // >>>>>> glut_h.glFramebufferTexture2D(glut_h.GL_FRAMEBUFFER(), glut_h.GL_COLOR_ATTACHMENT0(), GL.GL_TEXTURE_2D, idTexture, 0);
+    glFramebufferTexture2D.apply(glut_h.GL_FRAMEBUFFER_EXT(), glut_h.GL_COLOR_ATTACHMENT0_EXT(), GL.GL_TEXTURE_2D, idTexture, 0);
 
+    
     // -------------------------
     // Generate RENDER buffer
 
-    renderBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
- // >>>>>> glut_h.glGenRenderbuffers(1, renderBufferIds);
-    idRenderBuffer = (int) renderBufferIds.get(ValueLayout.JAVA_INT, 0);
-
+    if(idRenderBuffer<=0 || renewBuffers) {
+      renderBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
+      glGenRenderbuffers.apply(1, renderBufferIds.address());
+      idRenderBuffer = (int) renderBufferIds.get(ValueLayout.JAVA_INT, 0);
+    }
+    
     // Check for error after reading
     GLError.checkAndThrow(gl);
     
     Debug.debug(debug, "FBO: Got RenderBuffer ID : " + idRenderBuffer);
 
     // Bind render buffer
- // >>>>>>  glut_h.glBindRenderbuffer(glut_h.GL_RENDERBUFFER(), idRenderBuffer);
- // >>>>>> glut_h.glRenderbufferStorage(glut_h.GL_RENDERBUFFER(), GL.GL_DEPTH_COMPONENT24, width, height);
+    glBindRenderbuffer.apply(glut_h.GL_RENDERBUFFER_EXT(), idRenderBuffer);
+    glRenderbufferStorage.apply(glut_h.GL_RENDERBUFFER_EXT(), GL.GL_DEPTH_COMPONENT24, width, height);
 
     
     // -------------------------
     // Attach depth buffer to FBO
 
- // >>>>>> glut_h.glFramebufferRenderbuffer(glut_h.GL_FRAMEBUFFER(), glut_h.GL_DEPTH_ATTACHMENT(), glut_h.GL_RENDERBUFFER(), idRenderBuffer);
+    glFramebufferRenderbuffer.apply(glut_h.GL_FRAMEBUFFER_EXT(), glut_h.GL_DEPTH_ATTACHMENT_EXT(), glut_h.GL_RENDERBUFFER_EXT(), idRenderBuffer);
 
+    
     // -------------------------
     // Does the GPU support current FBO configuration?
 
-    int status = -1;// >>>>>> glut_h.glCheckFramebufferStatus(glut_h.GL_FRAMEBUFFER());
+    int status = glCheckFramebufferStatus.apply(glut_h.GL_FRAMEBUFFER_EXT());
 
-    if (status != glut_h.GL_FRAMEBUFFER_COMPLETE()) {
+    if (status != glut_h.GL_FRAMEBUFFER_COMPLETE_EXT()) {
       throw new RuntimeException("Incomplete framebuffer, not supporting current FBO config : "
-          + status + " != GL_FRAMEBUFFER_COMPLETE (" + glut_h.GL_FRAMEBUFFER_COMPLETE() + ")");
+          + status + " != GL_FRAMEBUFFER_COMPLETE (" + glut_h.GL_FRAMEBUFFER_COMPLETE_EXT() + ")");
     }
 
     // -------------------------
     // and now you can render to GL_TEXTURE_2D
-
- // >>>>>> glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
+    
+    glBindFramebuffer.apply(glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
+    
     gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     gl.glClearDepth(1.0f);
     gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
@@ -220,7 +320,7 @@ public class FBO_linux implements FBO {
     // Mark as prepared
     prepared = true;
 
-    Debug.debug(debug, "FBO: Prepared! ");
+    Debug.debug(debug, "FBO: Prepared!");
   }
 
   protected void diagnoseError(GL gl, String item) {
@@ -230,7 +330,7 @@ public class FBO_linux implements FBO {
       e.throwRuntimeException();
     } else {
       System.err.println("FBO: " + item
-          + " handle=0 but get no OpenGL error. This may happen if the call was not issued from main thread on macOS");
+          + " handle=0 but get no OpenGL error. This may happen if the call was not issued from AWT thread on linux");
     }
     // https://stackoverflow.com/questions/2985034/glgentextures-keeps-returing-0s
   }
@@ -238,16 +338,19 @@ public class FBO_linux implements FBO {
   /** Release resources held by this FBO utility.*/
   @Override
   public void release(GL gl) {
+    if(!renewBuffers)
+      return ;
+    
     // Delete resources
     gl.glDeleteTextures(1, textureBufferIds);
+    glDeleteRenderbuffers.apply(1, renderBufferIds.address());
     
- // >>>>>> glut_h.glDeleteRenderbuffers(1, renderBufferIds);
     // Bind 0, which means render to back buffer, as a result, fb is unbound
- // >>>>>> glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), 0);
- // >>>>>> glut_h.glDeleteFramebuffers(1, frameBufferIds);
+    glBindFramebuffer.apply(glut_h.GL_FRAMEBUFFER(), 0);
+ 
+    glDeleteFramebuffers.apply(1, frameBufferIds.address());
 
-    // FIXME : Not mapped exception is not relevant
-    // FIXME : See if later versions of Panama do not throw exception
+    // TODO : requires shared scope to support unload
     boolean unload = false;
     if(unload) {
       textureBufferIds.unload(); 
@@ -255,14 +358,10 @@ public class FBO_linux implements FBO {
       frameBufferIds.unload();
       pixelBuffer.unload();
     }
-    else {
-      Debug.debug(debug, "FBO : Skip unload as it fails with 'not mapped segment' error");
-    }
 
     prepared = false;
 
     Debug.debug(debug, "FBO: Resources released !");
-
   }
 
   @SuppressWarnings("unchecked")
@@ -309,47 +408,12 @@ public class FBO_linux implements FBO {
 
     // FIXME : Not mapped exception is not relevant
     // FIXME : See if later versions of Panama do not throw exception
-    //Debug.debug(debug, "FBO.pixelsRead state - loaded:" + pixelsRead.isLoaded() + " mapped:" + pixelsRead.isMapped() + " native:" + pixelsRead.isNative());
     Debug.debug(debug, "FBO.pixelsRead state - mapped:" + pixelsRead.isMapped() + " native:" + pixelsRead.isNative());
     
-    
     // Bind 0, which means render to back buffer
-    // >>>>>> glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), 0);
+    glBindFramebuffer.apply(glut_h.GL_FRAMEBUFFER(), 0);
 
-    
-    //pixelsRead.unload();
-    //pixelsRead.
-    //session.close();
-    
     return new AWTImage(out);
   }
 
-  @Override
-  public void resize(int width, int height) {
-    if (this.width != width || this.height != height) {
-      this.width = width;
-      this.height = height;
-      this.prepared = false;
-    }
-  }
-
-  @Override
-  public int getWidth() {
-    return width;
-  }
-
-  @Override
-  public int getHeight() {
-    return height;
-  }
-
-  @Override
-  public boolean isFlipY() {
-    return flipY;
-  }
-
-  @Override
-  public void setFlipY(boolean flipY) {
-    this.flipY = flipY;
-  }
 }

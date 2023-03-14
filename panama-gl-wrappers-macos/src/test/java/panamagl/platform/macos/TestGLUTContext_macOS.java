@@ -43,6 +43,8 @@ public class TestGLUTContext_macOS extends MacOSTest{
     Assert.assertNotNull(p.getVersion());
     Assert.assertNotNull(p.getVendor());
     
+    System.out.println(TestGLUTContext_macOS.class.getSimpleName()
+        + " running with OpenGL version : " + p.getVersion() + "/" + p.getVendor());
     
     context.destroy();
   }

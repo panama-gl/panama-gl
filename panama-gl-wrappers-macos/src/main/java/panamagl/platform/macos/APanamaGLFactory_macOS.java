@@ -31,7 +31,6 @@ public abstract class APanamaGLFactory_macOS extends APanamaGLFactory {
   protected CGLContext_macOS cglContext;
   protected GLUTContext_macOS glutContext;
   protected boolean useGLUT = true;
-  protected boolean useCGL = false;
   
   @Override
   public boolean matches(Platform os) {
@@ -58,19 +57,8 @@ public abstract class APanamaGLFactory_macOS extends APanamaGLFactory {
   public GLContext newGLContext() {
 
     // --------------------------------------
-    // A GL Context with CGL
-    if (useCGL) {
-      cglContext = new CGLContext_macOS();
-      cglContext.init();
-      Debug.debug(debug, "PanamaGLMacOSFactory : initContext : CGL done");
-
-      return cglContext;
-    }
-
-    // --------------------------------------
     // A GL Context with GLUT
-    // - hanging while ONSCREEN
-    // - not generating FBO properly if omitted
+    
     if (useGLUT) {
       glutContext = new GLUTContext_macOS();
       glutContext.init(false); // do not init GLUT a second time
@@ -78,9 +66,17 @@ public abstract class APanamaGLFactory_macOS extends APanamaGLFactory {
 
       return glutContext;
     }
+    
+    // --------------------------------------
+    // A GL Context with CGL
+    
+    else {
+      cglContext = new CGLContext_macOS();
+      cglContext.init();
+      Debug.debug(debug, "PanamaGLMacOSFactory : initContext : CGL done");
 
-
-    return null;
+      return cglContext;
+    }
   }
 
   @Override

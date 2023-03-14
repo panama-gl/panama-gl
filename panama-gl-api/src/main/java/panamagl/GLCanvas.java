@@ -29,7 +29,7 @@ import panamagl.performance.RenderCounter;
  * @author Martin Pernollet
  */
 public interface GLCanvas {
-  /** Trigger display. The component is responsible for rooting the request to the appropriate threads.*/
+  /** Trigger display. The component is responsible for routing the request to the appropriate threads.*/
   void display();
   
   /** Return true if a frame rendering has started and not yet finished. */

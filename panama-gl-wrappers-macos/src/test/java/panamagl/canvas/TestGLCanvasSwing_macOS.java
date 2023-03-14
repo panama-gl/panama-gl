@@ -20,7 +20,6 @@ package panamagl.canvas;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.jzy3d.os.OperatingSystem;
 import junit.framework.Assert;
 import panamagl.GLCanvas;
 import panamagl.GLEventAdapter;
@@ -28,6 +27,7 @@ import panamagl.GLEventListener;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
+import panamagl.platform.Platform;
 import panamagl.platform.macos.OffscreenRenderer_macOS;
 import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
@@ -38,7 +38,7 @@ public class TestGLCanvasSwing_macOS {
   
   @Test
   public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
-    if (!new OperatingSystem().isMac())
+    if (!new Platform().isMac())
       return;
     
     // ------------------------------------------------
@@ -131,7 +131,7 @@ public class TestGLCanvasSwing_macOS {
   
   @Test
   public void whenPanelIsResized_ThenFBOIsResized() throws InterruptedException {
-    if (!new OperatingSystem().isMac())
+    if (!new Platform().isMac())
       return;
     
     int WIDTH = 100;

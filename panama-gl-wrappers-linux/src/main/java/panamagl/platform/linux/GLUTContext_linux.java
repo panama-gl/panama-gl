@@ -43,16 +43,19 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
   protected SegmentAllocator allocator;
   protected String windowName = "InvisiblePanamaGLWindowForGLContext";
 
-  protected int initWidth = 100;
-  protected int initHeight = 100;
+  protected int initWidth = 1;
+  protected int initHeight = 1;
   protected boolean initialized = true;
 
+  protected int windowHandle = -1;
 
   /** Initialize GLUT and create a window */
   @Override
   public void init() {
     init(true);
   }
+  
+  //static int glutInitDone = 0;
 
   /** Initialize GLUT if input arg is true, and create a window */
   public void init(boolean forceLoadGlut) {
@@ -61,14 +64,25 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
     if (forceLoadGlut) {
       var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
 
+      //glutInitDone++;
+      //System.out.println("GLUTContext_linux : init " + glutInitDone);
+      
       glut_h.glutInit(argc, argc);
+      
     }
+    
     glut_h.glutInitDisplayMode(glut_h.GLUT_DOUBLE() | glut_h.GLUT_RGBA() | glut_h.GLUT_DEPTH());
 
     glutInitWindowSize(initWidth, initHeight);
 
-    glut_h.glutInitWindowPosition(-initWidth, -initHeight);
-    glut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
+    glut_h.glutInitWindowPosition(0, 0);
+    windowHandle = glut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
+    
+    //System.out.println("WINDOW HANDLE :  " + windowHandle);
+    
+    // Hacky!! Use it while GLXContext is not working
+    glut_h.glutHideWindow();
+    
 
     // This dummy stub registration is required to get macOS onscreen rendering working
     // It will avoid error message
@@ -85,6 +99,10 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
     return initialized;
   }
   
+  /*protected boolean glutHasInit() {
+    boolean glutInitialised = glut_h.glutGet(glut_h.GLUT_INIT_STATE()) == 1;
+  }*/
+  
   protected void initScope() {
     try {
       scope = MemorySession.openImplicit();
@@ -98,6 +116,13 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
   
   @Override
   public void destroy() {
+    if(windowHandle>=0) {
+      glut_h.glutDestroyWindow(windowHandle);
+      windowHandle = -1;
+    }
+    
+    
+    
     // do not scope.close() as it is implicit
     initialized = false;
   }
