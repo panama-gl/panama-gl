@@ -36,7 +36,6 @@ public class TestGLUTContext_macOS extends MacOSTest{
     // When
     context.init(false);
     
-    
     // Then
     GLProfile p = new GLProfile(new GL_macOS_x86());
     
@@ -47,5 +46,15 @@ public class TestGLUTContext_macOS extends MacOSTest{
         + " running with OpenGL version : " + p.getVersion() + "/" + p.getVendor());
     
     context.destroy();
+
+    /*OSXUtil.RunOnMainThread(false, true, new Runnable() {
+
+      @Override
+      public void run() {
+        
+      }
+      
+    });*/
+    
   }
 }

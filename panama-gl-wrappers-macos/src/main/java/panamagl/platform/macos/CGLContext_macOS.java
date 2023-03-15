@@ -16,6 +16,7 @@
 
 package panamagl.platform.macos;
 
+import java.lang.foreign.Addressable;
 import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;
@@ -74,6 +75,10 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
   protected MemorySegment pixelFormat; // output
   protected MemorySegment numberOfPixels; // output
 
+  protected int pixelFormatLength = 0;
+  protected int contextArraySize = 2; // seams to be 2
+
+
   // I/O data for CGLCreateContext
   protected MemorySegment context; // output
 
@@ -84,12 +89,11 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
 
   public CGLContext_macOS() {
     // Manually load CGL
-    // System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
     System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
 
     // The segments created in this function will be destroyed
     // one the below scope and allocator are collected by GC.
-    scope = MemorySession.openConfined();
+    scope = MemorySession.openImplicit();
     allocator = SegmentAllocator.newNativeArena(scope);
   }
 
@@ -99,23 +103,23 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
   @Override
   public void init() {
     choosePixelFormat();
+    
+    context = createContext();
 
-    createContext();
+    // int status = cgl_h.CGLDestroyPixelFormat(pixelFormat);
+    // throwExceptionUponError("CGLDestroyPixelFormat : ", status);
 
-    // makeCurrent();
 
     initialized = true;
   }
 
   @Override
-  public synchronized void destroy() {
-    cgl_h.CGLDestroyPixelFormat(pixelFormat);
-    cgl_h.CGLDestroyContext(context);
+  public void destroy() {
+    destroyContext(context, true);
 
     initialized = false;
 
-    Debug.debug(debug, "CGLContext destroyed");
-
+    Debug.debug(debug, "CGLContext : destroyed");
   }
 
   @Override
@@ -124,66 +128,39 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
   }
 
 
-  public synchronized void makeCurrent() {
-    lockContext();
-    setCurrentContext();
+  public void makeCurrent() {
+    /*
+     * CGLContextObj contextToLock = ...; // context handle to lock CGLContextObj currentContext =
+     * CGLGetCurrentContext(); // get the current context handle
+     * 
+     * if (contextToLock == NULL || currentContext == NULL) { // context handles are invalid //
+     * handle error accordingly } else if (contextToLock == currentContext) { // context is valid
+     * and can be locked CGLError error = CGLLockContext(contextToLock); if (error != kCGLNoError) {
+     * // handle locking error accordingly } } else { // context is not the current context //
+     * handle error accordingly }
+     */
+
+    // MemoryAddress currentContext = getCurrentContext();
+    // Debug.debug("Current context : " + currentContext);
+
+    // releaseContext(context);
+    // unlockContext(context);
+
+    lockContext(context);
+    setCurrentContext(context);
   }
 
-  public synchronized void release() {
-    setCurrentContextZero();
-    unlockContext();
+  public void release() {
+    //setCurrentContextZero();
+    releaseContext(context);
+    // unlockContext();
+
   }
 
-
-  /*
-   * In the CGL API, a CGL context must be locked before it can be used for rendering or other
-   * graphics operations. This is done using the CGLLockContext() function. If another thread or
-   * process has already locked the context, CGLLockContext() will return error 10004, indicating
-   * that the context is already locked and cannot be used (kCGLBadContext).
-   */
-  public void lockContext() {
-    int status = cgl_h.CGLLockContext(context);
-
-    throwExceptionUponError("CGLContext.lockContext : ", status);
-  }
-
-  public void unlockContext() {
-    final int status = cgl_h.CGLUnlockContext(context);
-
-    throwExceptionUponError("CGLContext.unlockContext : ", status);
-  }
-
-  /*
-   * CGLSetCurrentContext is a function in the CGL (Core Graphics Library) API that sets the current
-   * graphics context for the calling thread. It is used to specify the graphics context that should
-   * be used for rendering or other graphics operations in the current thread.
-   */
-  protected void setCurrentContext() {
-    int status = cgl_h.CGLSetCurrentContext(context);
-
-    throwExceptionUponError("CGLContext.setCurrentContext : ", status);
-  }
-
-  protected void setCurrentContextZero() {
-    MemorySegment zero = allocator.allocateArray(ValueLayout.JAVA_INT, new int[1]);
-
-    final int status = cgl_h.CGLSetCurrentContext(zero);
-
-    throwExceptionUponError("CGLContext.setCurrentContextZero : ", status);
-  }
-
-  protected MemoryAddress getCurrentContext() {
-    MemoryAddress currentContext = cgl_h.CGLGetCurrentContext();
-
-    Debug.debug(debug, "CGLContext : Current context = " + currentContext.toRawLongValue());
-
-    return currentContext;
-  }
-
-  // https://stackoverflow.com/questions/11383510/setting-up-an-opengl-context-with-cgl-on-mac-os-x
+  // -------------------------------------------------------------------------------------
 
   /**
-   * Create a context, assuming the pixel format
+   * Create a context, assuming the pixel format has already been defined.
    * 
    * <h2>Errors</h2>
    * 
@@ -211,51 +188,248 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
    * 
    * <h3>kCGLBadCodeModule</h3>
    * 
+   * The kCGLBadCodeModule error that you're getting when calling CGLCreateContext usually indicates
+   * that there's a problem with the graphics driver or framework that you're using. Here are some
+   * possible reasons why you might be seeing this error:
+   * <ul>
+   * <li>Incorrect graphics driver or framework installation: Make sure that you have the correct
+   * graphics driver and framework installed on your system. If you're using an external graphics
+   * card, make sure that the driver for that card is installed and up-to-date.</li>
+   * <li>Incompatible graphics driver or framework: Make sure that the graphics driver or framework
+   * you're using is compatible with your system and the version of macOS you're running.</li>
+   * <li>Corrupt graphics driver or framework: If the graphics driver or framework installation is
+   * corrupt, it can cause issues when creating an OpenGL context. Try reinstalling the graphics
+   * driver or framework to see if that resolves the issue.</li>
+   * <li>Conflicting third-party software: Some third-party software can interfere with the graphics
+   * driver or framework and cause issues when creating an OpenGL context. Try disabling any
+   * third-party software that might be causing conflicts.</li>
+   * </ul>
+   * 
+   * <h2>SUPPOSED DATA STRUCTURE</h2>
+   * 
+   * A CGLContext is a data structure in macOS's Core Graphics framework that represents an OpenGL
+   * rendering context. It is used to manage and execute OpenGL commands within a particular
+   * graphics context. The CGLContext data structure is defined in the CGLTypes.h header file and
+   * contains the following fields:
+   * <ul>
+   * <li>CGLError error: An error code that indicates whether any errors have occurred in the
+   * context.
+   * <li>CGLPixelFormatObj pixelFormat: A reference to a CGLPixelFormat object that describes the
+   * attributes of the pixel format for the context.
+   * <li>CGLShareGroupObj shareGroup: A reference to a CGLShareGroup object that provides a
+   * mechanism for sharing OpenGL objects and resources between contexts.
+   * <li>void* contextID: A platform-specific identifier for the context that is used by the
+   * underlying graphics system to manage and execute OpenGL commands.
+   * <li>CGLContextObj prev: A reference to the previous context in a linked list of contexts.
+   * <li>CGLContextObj next: A reference to the next context in the linked list.
+   * <li>void* reserved: A reserved field for future use.
+   * </ul>
+   * Overall, the CGLContext data structure provides a way to encapsulate and manage the state of an
+   * OpenGL rendering context, including the pixel format, sharing resources, and the context
+   * itself.
    */
-  protected void createContext() {
-    Debug.debug(debug, "CGLContext : CGLCreateContext input pixel format : "
-        + Arrays.toString(pixelFormat.toArray(ValueLayout.JAVA_INT)));
-    Debug.debug(debug, "CGLContext : CGLCreateContext input npix : "
-        + Arrays.toString(numberOfPixels.toArray(ValueLayout.JAVA_INT)));
+  protected MemorySegment createContext() {
 
+    // Inspect pixel format
+    boolean inspect = false;
+    if (inspect) {
+
+      // Log the pixel format configuration before creating context
+      Debug.debug(debug, "CGLContext : CGLCreateContext input pixel format : "
+          + Arrays.toString(pixelFormat.toArray(ValueLayout.JAVA_INT)));
+      Debug.debug(debug, "CGLContext : CGLCreateContext input npix : "
+          + Arrays.toString(numberOfPixels.toArray(ValueLayout.JAVA_INT)));
+
+
+      int v1 = describePixelFormat(attribs, cgl_h.kCGLPFAOpenGLProfile(), pixelFormatLength);
+      System.out.println("kCGLPFAOpenGLProfile : " + v1);
+      int v2 = describePixelFormat(attribs, cgl_h.kCGLPFAColorSize(), pixelFormatLength);
+      System.out.println("kCGLPFAColorSize : " + v2);
+    }
 
     MemoryAddress c_share = cgl_h.__DARWIN_NULL();
 
-    context = allocator.allocate(10000);
-    //allocator.allocate(cgl_h.CGLContextObj, ??);
+    // The CGL context seams to be described by an array of 2 ints
+    MemorySegment context = allocator.allocate(contextArraySize * 4);
+    // allocator.allocate(cgl_h.CGLContextObj, ??);
 
-    int status = cgl_h.CGLCreateContext(pixelFormat, c_share, context);
 
-    // Debug.debug(debug, "CGLContext : CGLCreateContext output : " + status);
+    // WARNING : most example online give pixelFormat as first argument, which always
+    // fail in our case. However, we experimentally noticed that attribs allow
+    // initializing a context with OK status, with a retrievable array with
+    // not only zero values.
+
+    int status = cgl_h.CGLCreateContext(attribs, c_share, context);
+
+
+    long[] contextArray = context.toArray(ValueLayout.JAVA_LONG);
+    Debug.debug(debug, "CGLContext : CGLCreateContext output : " + Arrays.toString(contextArray));
 
     throwExceptionUponError("CGLContext.createContext : ", status);
+
+
+    // Do we need to unreference the context value?
+    // MemorySegment tc = MemorySegment.ofAddress(context.get(ValueLayout.ADDRESS, 0), 4*4, scope);
+    // System.out.println(Arrays.toString(tc.toArray(ValueLayout.JAVA_INT)));
+    // context = tc;
+    
+    return context;
   }
 
   /**
+   * CGLDestroyContext is a function in macOS's Core Graphics framework that is used to destroy an
+   * OpenGL rendering context created with CGLCreateContext. When CGLDestroyContext returns a
+   * kCGLBadContext error code, it means that the context provided to CGLDestroyContext is not a
+   * valid OpenGL rendering context.
+   * 
+   * There are several possible reasons why CGLDestroyContext might return a kCGLBadContext error
+   * code. Some of the common ones are:
+   * <ul>
+   * <li>The context was not created with CGLCreateContext: CGLDestroyContext can only be called on
+   * a context that was created with CGLCreateContext. If the context was not created with
+   * CGLCreateContext, then CGLDestroyContext will return a kCGLBadContext error code.
+   * <li>The context has already been destroyed: If the context passed to CGLDestroyContext has
+   * already been destroyed, then CGLDestroyContext will return a kCGLBadContext error code.
+   * <li>The context is invalid: If the context passed to CGLDestroyContext is not a valid OpenGL
+   * rendering context, then CGLDestroyContext will return a kCGLBadContext error code.
+   * <li>The context was created on a different thread: If the context passed to CGLDestroyContext
+   * was created on a different thread than the current thread, then CGLDestroyContext will return a
+   * kCGLBadContext error code.
+   * <li>The OpenGL driver encountered an error: If the OpenGL driver encounters an error while
+   * trying to destroy the context, then CGLDestroyContext will return a kCGLBadContext error code.
+   * </ul>
+   * To diagnose the specific cause of the kCGLBadContext error code, you may need to consult the
+   * macOS system logs or use additional debugging tools.
+   */
+  protected void destroyContext(MemorySegment context, boolean verify) {
+    // int s = cgl_h.CGLDestroyPixelFormat(pixelFormat);
+
+    // throwExceptionUponError("CGLDestroyPixelFormat : ", s);
+
+    int s = cgl_h.CGLDestroyContext(context);
+
+    if(verify)
+      throwExceptionUponError("CGLDestroyContext : ", s);
+  }
+
+  // -------------------------------------------------------------------------------------
+
+  /**
+   * In the CGL API, a CGL context must be locked before it can be used for rendering or other
+   * graphics operations. This is done using the CGLLockContext() function. If another thread or
+   * process has already locked the context, CGLLockContext() will return error 10004, indicating
+   * that the context is already locked and cannot be used (kCGLBadContext).
+   * 
+   * The kCGLBadContext error can be generated by the CGLLockContext function in the following
+   * scenarios:
+   * <ul>
+   * <li>Invalid context handle: The CGLLockContext function requires a valid context handle to lock
+   * the context for rendering. If the handle is not valid or has been deallocated, the function
+   * returns the kCGLBadContext error.
+   * <li>Context not current: The function requires that the context specified by the context handle
+   * is the current context. If it is not the current context, then the function returns the
+   * kCGLBadContext error.
+   * <li>Context already locked: The function will return the kCGLBadContext error if the context
+   * has already been locked by a previous call to CGLLockContext.
+   * <li>Thread not owner: CGLLockContext can be called from any thread, but only the thread that
+   * locks the context can make GL calls to that context. If a thread other than the one that locked
+   * the context attempts to make a GL call, then the function returns the kCGLBadContext error.
+   * <li>Graphics hardware issue: A kCGLBadContext error can also be caused by a graphics hardware
+   * issue, such as a driver error or a failure to allocate memory on the GPU.
+   * </ul>
+   */
+  protected void lockContext(MemorySegment context) {
+    int status = cgl_h.CGLLockContext(context);
+
+    throwExceptionUponError("CGLContext.lockContext : ", status);
+  }
+
+  protected void unlockContext(MemorySegment context) {
+    final int status = cgl_h.CGLUnlockContext(context);
+
+    throwExceptionUponError("CGLContext.unlockContext : ", status);
+  }
+
+  // -------------------------------------------------------------------------------------
+
+  /*
+   * CGLSetCurrentContext is a function in the CGL (Core Graphics Library) API that sets the current
+   * graphics context for the calling thread. It is used to specify the graphics context that should
+   * be used for rendering or other graphics operations in the current thread.
+   */
+  protected void setCurrentContext(MemorySegment context) {
+    int status = cgl_h.CGLSetCurrentContext(context);
+
+    throwExceptionUponError("CGLContext.setCurrentContext : ", status);
+  }
+
+  protected void setCurrentContextZero() {
+    int status = cgl_h.CGLSetCurrentContext(cgl_h.__DARWIN_NULL());
+
+    throwExceptionUponError("CGLContext.setCurrentContextZero : ", status);
+  }
+
+  protected MemoryAddress getCurrentContext() {
+    MemoryAddress currentContext = cgl_h.CGLGetCurrentContext();
+
+    Debug.debug(debug, "CGLContext : Current context = " + currentContext.toRawLongValue());
+
+    return currentContext;
+  }
+
+  protected void releaseContext(MemorySegment context) {
+    cgl_h.CGLReleaseContext(context);
+  }
+  
+  // -------------------------------------------------------------------------------------
+
+  /**
    * Configure pixel format attributes and retrieve pixel format and max number of sample per pixel.
+   * 
+   * Signature of <code>CGLChoosePixelFormat</code> used in this implementation :
+   * 
+   * <ul>
+   * <li>attribs: A pointer to an array of integers representing the attributes that you want to
+   * specify for the pixel format. The array should be terminated with a value of 0 to indicate the
+   * end of the attribute list. You can find a full list of pixel format attributes in the
+   * CGLPixelFormat.h header file.
+   * <li>pix: A pointer to a CGLPixelFormatObj object where the chosen pixel format will be stored.
+   * If the function call is successful, this object will be a valid pixel format object that you
+   * can use to create an OpenGL context.
+   * <li>npix: A pointer to an integer where the number of matching pixel formats will be stored. If
+   * the function call is successful, this integer will be greater than 0, indicating the number of
+   * matching pixel formats that were found.
+   * </ul>
+   * Returns: A CGLError value indicating whether the function call was successful or not. If the
+   * function call was successful, it will return kCGLNoError. If there was an error, it will return
+   * a different error code indicating the nature of the error.
    */
   protected void choosePixelFormat() {
     int[] at = new int[4];
 
     // The kCGLPFAAccelerated parameter is used to specify whether the pixel format object should be
     // created using hardware acceleration, which can improve the performance of graphics rendering.
-    at[0] = cgl_h.kCGLPFAAcceleratedCompute();// cgl_h.kCGLPFAAccelerated();
+    at[0] = cgl_h.kCGLPFAAccelerated();// cgl_h.kCGLPFAAccelerated();
 
     // The kCGLPFAOpenGLProfile parameter is used to specify the OpenGL profile that the pixel
     // format object should support.
     at[1] = cgl_h.kCGLPFAOpenGLProfile();
     at[2] = cgl_h.kCGLOGLPVersion_GL4_Core();
 
+
+    System.out.println("Queried OpenGL version ID : " + at[2]);
+
     // Ending the attributes
     at[3] = 0;
 
-    
+
     // ANOTHER WAY
-//    at = new int[3];
-//    at[0] = cgl_h.kCGLPFAOpenGLProfile();
-//    at[1] = cgl_h.kCGLOGLPVersion_GL3_Core();
-//    at[2] = 0;
-    
+    /*
+     * at = new int[3]; at[0] = cgl_h.kCGLPFAOpenGLProfile(); at[1] =
+     * cgl_h.kCGLOGLPVersion_GL4_Core(); at[2] = 0;
+     * System.out.println("Queried OpenGL version ID : " + at[1]);
+     */
+
 
     // ANOTHER WAY OF CONFIGURING
     // at = new int[9];
@@ -292,6 +466,7 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
     // at[12] = 0;
 
 
+    pixelFormatLength = at.length;
 
     // Input : CGLPixelFormatAttribute
     attribs = allocator.allocateArray(ValueLayout.JAVA_INT, at);
@@ -317,18 +492,49 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
     throwExceptionUponError("CGLContext.choosePixelFormat : ", status);
   }
 
+  /**
+   * Retrieve a pixel format value for a given attribute.
+   * 
+   * Signature of <code>CGLDescribePixelFormat</code> used in this implementation :
+   * 
+   * <ul>
+   * <li>pix: A CGLPixelFormatObj object representing the pixel format that you want to describe.
+   * You can obtain a pixel format object by calling CGLChoosePixelFormat or CGLCreateContext.
+   * <li>attrib: An integer representing the attribute that you want to query. This can be one of
+   * many attributes, such as the number of color bits, the number of depth bits, or the number of
+   * stencil bits. You can find a full list of pixel format attributes in the CGLPixelFormat.h
+   * header file.
+   * <li>value: A pointer to an integer where the value of the queried attribute will be stored.
+   * </ul>
+   * Returns: A CGLError value indicating whether the function call was successful or not. If the
+   * function call was successful, it will return kCGLNoError. If there was an error, it will return
+   * a different error code indicating the nature of the error.
+   * 
+   * @param attribute the ID of the attribute we want to check
+   * @param length MAYBE!! The number of elements int pixel format array
+   * @return the attribute value
+   */
+  protected int describePixelFormat(Addressable pixelFormat, int attribute, int length) {
+    MemorySegment value = allocator.allocate(ValueLayout.JAVA_INT, 1);
 
+    int status = cgl_h.CGLDescribePixelFormat(pixelFormat, length, attribute, value);
+
+    throwExceptionUponError("CGLContext.describePixelFormat : ", status);
+
+    return value.getAtIndex(ValueLayout.JAVA_INT, 0);
+  }
+
+  // -------------------------------------------------------------------------------------
 
   /**
    * Check the status returned by CGL invocation and throw a runtime exception if not success
    */
   protected void throwExceptionUponError(String info, int status) {
     if (cgl_h.kCGLNoError() == status) {
-      Debug.debug(debug, info + status + " = OK");
+      Debug.debug(debug, info + " OK");
 
     } else if (cgl_h.kCGLBadAttribute() == status) {
-      throw new RuntimeException(
-          info + status + " = kCGLBadAttribute. The attributes are invalid.");
+      throw new RuntimeException(info + status + " = kCGLBadAttribute.");
 
     } else if (cgl_h.kCGLBadProperty() == status) {
       throw new RuntimeException(info + status + " = kCGLBadProperty.");
@@ -346,7 +552,7 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
       throw new RuntimeException(info + status + " = kCGLBadProperty.");
 
     } else if (cgl_h.kCGLBadContext() == status) {
-      throw new RuntimeException(info + status + " = kCGLBadContext. The context is invalid.");
+      throw new RuntimeException(info + status + " = kCGLBadContext. ");
 
     } else if (cgl_h.kCGLBadDrawable() == status) {
       throw new RuntimeException(info + status + " = kCGLBadDrawable.");

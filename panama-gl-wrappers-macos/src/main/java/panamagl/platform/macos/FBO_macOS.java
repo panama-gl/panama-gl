@@ -41,7 +41,7 @@ import panamagl.utils.ImageUtils;
  * See : https://www.khronos.org/opengl/wiki/Framebuffer_Object
  * https://www.khronos.org/opengl/wiki/Common_Mistakes
  * https://www.khronos.org/opengl/wiki/Framebuffer_Object_Extension_Examples#Quick_example,_render_to_texture_(2D)
- *
+ * https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/OpenGL-MacProgGuide/opengl_offscreen/opengl_offscreen.html
  *
  * Hint : to debug this class, invoke a program using it with flag -Dopengl.fbo.FBO
  *

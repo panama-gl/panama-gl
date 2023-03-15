@@ -24,10 +24,10 @@ import panamagl.GLProfile;
 import panamagl.opengl.GL;
 import panamagl.platform.macos.arm.GL_macOS_arm;
 
-//VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+//VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 
 public class TestCGLContext extends MacOSTest{
-  @Ignore("Not working yet")
+  @Ignore("Not able to detroy CGL context yet")
   @Test
   public void createCGLContext() {
     if (!checkPlatform())
@@ -48,23 +48,33 @@ public class TestCGLContext extends MacOSTest{
     // Then
     Assert.assertFalse(cgl.initialized);
   }
-  
-  //@Test
+ 
+@Ignore("Not able to make CGL context current yet")
+  @Test
   public void makeProfileFromCGLContext() {
     if (!checkPlatform())
       return;
+    
+    System.out.println("-----------");
     
     // Given
     GL gl = new GL_macOS_arm();
     CGLContext_macOS cgl = new CGLContext_macOS();
     cgl.init();
-    
+
+    System.out.println("DONE INIT CONTEXT");
+
     // When
     cgl.makeCurrent();
+
+    System.out.println("DONE MAKING CURRENT");
     
-    GLProfile profile = new GLProfile(gl);
+    gl.glClearColor(0,0,0,0);
+    gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+    //GLProfile profile = new GLProfile(gl);
+    //Assert.assertNotNull(profile.getVendor());
     
-    Assert.assertNotNull(profile.getVendor());
+    cgl.release();
     
     // When : Cleanup
     cgl.destroy();
