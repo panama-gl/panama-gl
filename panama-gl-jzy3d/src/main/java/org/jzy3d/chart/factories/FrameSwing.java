@@ -37,6 +37,7 @@ public class FrameSwing extends JFrame implements IFrame {
     s.pack();
     s.setSize(500, 500);
     s.setVisible(true);
+    s.pack();
   }
   // public constructor for easier construction by reflexion
   public FrameSwing() {}

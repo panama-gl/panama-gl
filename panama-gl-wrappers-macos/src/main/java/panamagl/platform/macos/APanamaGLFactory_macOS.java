@@ -46,6 +46,7 @@ public abstract class APanamaGLFactory_macOS extends APanamaGLFactory {
   @Override
   public OffscreenRenderer newOffscreenRenderer() {
     return new OffscreenRenderer_macOS(this);
+    //return new AOffscreenRenderer(this);
   }
 
   @Override
