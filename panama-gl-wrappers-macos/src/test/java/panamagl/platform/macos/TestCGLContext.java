@@ -27,7 +27,7 @@ import panamagl.platform.macos.arm.GL_macOS_arm;
 //VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 
 public class TestCGLContext extends MacOSTest{
-  @Ignore("Not able to detroy CGL context yet")
+@Ignore("Not able to detroy CGL context yet")
   @Test
   public void createCGLContext() {
     if (!checkPlatform())

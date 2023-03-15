@@ -160,7 +160,7 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
   // -------------------------------------------------------------------------------------
 
   /**
-   * Create a context, assuming the pixel format has already been defined.
+   * Create a context, assuming the pixel attributes and format have already been defined.
    * 
    * <h2>Errors</h2>
    * 
@@ -262,7 +262,8 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
     int status = cgl_h.CGLCreateContext(attribs, c_share, context);
 
 
-    long[] contextArray = context.toArray(ValueLayout.JAVA_LONG);
+    // TODO : should this be INT or LONG?
+    int[] contextArray = context.toArray(ValueLayout.JAVA_INT);
     Debug.debug(debug, "CGLContext : CGLCreateContext output : " + Arrays.toString(contextArray));
 
     throwExceptionUponError("CGLContext.createContext : ", status);
@@ -432,16 +433,16 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
 
 
     // ANOTHER WAY OF CONFIGURING
-    // at = new int[9];
-    // at[0] = cgl_h.kCGLPFAOpenGLProfile();
-    // at[1] = cgl_h.kCGLOGLPVersion_3_2_Core();
-    // at[2] = cgl_h.kCGLPFAColorSize();
-    // at[3] = 24;
-    // at[4] = cgl_h.kCGLPFAAlphaSize();
-    // at[5] = 8;
-    // at[6] = cgl_h.kCGLPFADoubleBuffer();
-    // at[7] = cgl_h.kCGLPFAAccelerated();
-    // at[8] = 0;
+     at = new int[9];
+     at[0] = cgl_h.kCGLPFAOpenGLProfile();
+     at[1] = cgl_h.kCGLOGLPVersion_3_2_Core();
+     at[2] = cgl_h.kCGLPFAColorSize();
+     at[3] = 24;
+     at[4] = cgl_h.kCGLPFAAlphaSize();
+     at[5] = 8;
+     at[6] = cgl_h.kCGLPFADoubleBuffer();
+     at[7] = cgl_h.kCGLPFAAccelerated();
+     at[8] = 0;
 
 
     // NO REQUIREMENT
