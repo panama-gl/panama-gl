@@ -26,7 +26,7 @@ import panamagl.platform.macos.arm.GL_macOS_arm;
 // -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 
 public class TestCGLContext extends MacOSTest {
-  @Ignore("Not able to detroy CGL context yet")
+ @Ignore("Not able to detroy CGL context yet")
   @Test
   public void createCGLContext() {
     if (!checkPlatform())
@@ -38,6 +38,9 @@ public class TestCGLContext extends MacOSTest {
     // When : init
     cgl.init();
 
+    cgl.makeCurrent();
+
+    
     // Then
     Assert.assertTrue(cgl.initialized);
 

@@ -108,9 +108,7 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
 
     context = createContext();
 
-    setCurrentContext(context);
-
-
+    // cgl_h.CGLCopyContext(context, attribs, contextArraySize)
 
     initialized = true;
   }
@@ -118,7 +116,7 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
   @Override
   public void destroy() {
     // setCurrentContextZero();
-    setCurrentContext(context);
+    setCurrentContextZero();
     destroyContext(context);
 
     initialized = false;
@@ -256,7 +254,7 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
 
     MemoryAddress c_share = cgl_h.__DARWIN_NULL();
 
-    // The CGL context seams to be described by an array of 2 ints
+    // The CGL context seams to be described by an array of 2 ints / 1 long
     MemorySegment context = allocator.allocate(contextArraySize * 4);
     // allocator.allocate(cgl_h.CGLContextObj, ??);
 
@@ -267,6 +265,7 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
     // not only zero values.
 
     int status = cgl_h.CGLCreateContext(attribs, c_share, context);
+    // int status = cgl_h.CGLCreateContext(pixelFormat, c_share, context);
 
     // TODO : should this be INT or LONG?
     int[] contextArray = context.toArray(ValueLayout.JAVA_INT);
@@ -278,11 +277,12 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
     status = cgl_h.CGLDestroyPixelFormat(pixelFormat);
     throwExceptionUponError("CGLDestroyPixelFormat : ", status);
 
-
+    // context.
 
 
     // Do we need to unreference the context value?
-    // MemorySegment tc = MemorySegment.ofAddress(context.get(ValueLayout.ADDRESS, 0), 4*4, scope);
+    // MemoryAddress a = context.get(ValueLayout.ADDRESS, 0);
+    // MemorySegment tc = MemorySegment.ofAddress(a, 8, scope);
     // System.out.println(Arrays.toString(tc.toArray(ValueLayout.JAVA_INT)));
     // context = tc;
 
@@ -300,21 +300,13 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
    * There are several possible reasons why CGLDestroyContext might return a kCGLBadContext error
    * code. Some of the common ones are:
    * <ul>
-   * <li>The context was not created with CGLCreateContext: CGLDestroyContext can only be called on
-   * a context that was created with CGLCreateContext. If the context was not created with
-   * CGLCreateContext, then CGLDestroyContext will return a kCGLBadContext error code.
-   * <li>The context has already been destroyed: If the context passed to CGLDestroyContext has
-   * already been destroyed, then CGLDestroyContext will return a kCGLBadContext error code.
-   * <li>The context is invalid: If the context passed to CGLDestroyContext is not a valid OpenGL
-   * rendering context, then CGLDestroyContext will return a kCGLBadContext error code.
-   * <li>The context was created on a different thread: If the context passed to CGLDestroyContext
-   * was created on a different thread than the current thread, then CGLDestroyContext will return a
-   * kCGLBadContext error code.
-   * <li>The OpenGL driver encountered an error: If the OpenGL driver encounters an error while
-   * trying to destroy the context, then CGLDestroyContext will return a kCGLBadContext error code.
+   * <li>The context was not created with CGLCreateContext.
+   * <li>The context has already been destroyed.
+   * <li>The context was created on a different thread.
+   * <li>The OpenGL driver encountered an error.
    * </ul>
    * To diagnose the specific cause of the kCGLBadContext error code, you may need to consult the
-   * macOS system logs or use additional debugging tools.
+   * macOS system logs (Console app).
    */
   protected void destroyContext(MemorySegment context) {
     int s = cgl_h.CGLDestroyContext(context);
@@ -337,10 +329,8 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
    * the context for rendering. If the handle is not valid or has been deallocated, the function
    * returns the kCGLBadContext error.
    * <li>Context not current: The function requires that the context specified by the context handle
-   * is the current context. If it is not the current context, then the function returns the
-   * kCGLBadContext error.
-   * <li>Context already locked: The function will return the kCGLBadContext error if the context
-   * has already been locked by a previous call to CGLLockContext.
+   * is the current context. 
+   * <li>Context already locked.
    * <li>Thread not owner: CGLLockContext can be called from any thread, but only the thread that
    * locks the context can make GL calls to that context. If a thread other than the one that locked
    * the context attempts to make a GL call, then the function returns the kCGLBadContext error.
@@ -349,6 +339,7 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
    * </ul>
    */
   protected void lockContext(MemorySegment context) {
+    System.out.println("CONTEXT : " + context.getAtIndex(ValueLayout.JAVA_INT, 0));
     int status = cgl_h.CGLLockContext(context);
 
     throwExceptionUponError("CGLContext.lockContext : ", status);
@@ -359,10 +350,6 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
 
     throwExceptionUponError("CGLContext.unlockContext : ", status);
   }
-
-  /*
-   * protected boolean isLocked(MemorySegment context) { cgl_h.CGLContext }
-   */
 
   // -------------------------------------------------------------------------------------
 
