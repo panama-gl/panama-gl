@@ -24,7 +24,7 @@ import panamagl.opengl.GL;
 import panamagl.platform.windows.FBO_windows;
 import panamagl.platform.windows.GLUTContext_windows;
 
-// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
+// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
 public class TestFBO_windows extends WindowsTest{
   @Test
   public void given_GLUTContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {

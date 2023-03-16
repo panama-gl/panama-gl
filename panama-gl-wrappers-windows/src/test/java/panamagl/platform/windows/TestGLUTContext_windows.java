@@ -20,7 +20,7 @@ import org.junit.Test;
 import panamagl.GLProfile;
 import panamagl.opengl.GL;
 
-// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
+// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
 public class TestGLUTContext_windows extends WindowsTest {
   @Test
   public void createContext() {
