@@ -60,11 +60,7 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
   
   /** Initialize GLUT if input arg is true, and create a window */
   public void init(boolean forceLoadGlut) {
-    System.loadLibrary("GL");
-    System.loadLibrary("glut");
-    System.loadLibrary("GLU");
-    System.loadLibrary("GLX");
-    
+    loadNativeLibraries();
     initScope();
     
     if (forceLoadGlut) {
@@ -83,7 +79,6 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
     
     // Hacky!! Use it while GLXContext is not working
     glut_h.glutHideWindow();
-    
 
     // This dummy stub registration is required to get macOS onscreen rendering working
     // It will avoid error message
@@ -93,16 +88,19 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
     initialized = true;
   }
 
+  protected void loadNativeLibraries() {
+    System.loadLibrary("GL");
+    System.loadLibrary("glut");
+    System.loadLibrary("GLU");
+    System.loadLibrary("GLX");
+  }
+
   private static void dummy() {}
 
   @Override
   public boolean isInitialized() {
     return initialized;
   }
-  
-  /*protected boolean glutHasInit() {
-    boolean glutInitialised = glut_h.glutGet(glut_h.GLUT_INIT_STATE()) == 1;
-  }*/
   
   protected void initScope() {
     try {
@@ -113,7 +111,6 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
       e.printStackTrace();
     }
   }
-
   
   @Override
   public void destroy() {
@@ -121,8 +118,6 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
       glut_h.glutDestroyWindow(windowHandle);
       windowHandle = -1;
     }
-    
-    
     
     // do not scope.close() as it is implicit
     initialized = false;
@@ -136,13 +131,5 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
   protected void glutIdleFunc(glutIdleFunc$callback fi) {
     MemorySegment idleStub = glutIdleFunc$callback.allocate(fi, scope);
     glut_h.glutIdleFunc(idleStub);
-
   }
-
-  protected void glutInitWindowSize(int width, int height) {
-    glut_h.glutInitWindowSize(width, height);
-  }
-
-
-
 }

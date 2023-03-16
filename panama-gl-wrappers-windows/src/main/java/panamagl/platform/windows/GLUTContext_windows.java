@@ -45,8 +45,8 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
 
   protected int initWidth = 1;
   protected int initHeight = 1;
-  protected int initX = 0;
-  protected int initY = 0;
+  protected int initX = Integer.MAX_VALUE;
+  protected int initY = Integer.MAX_VALUE;
   protected boolean initialized = true;
 
   protected int windowHandle = -1;
@@ -61,10 +61,7 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
 
   /** Initialize GLUT if input arg is true, and create a window */
   public void init(boolean forceLoadGlut) {
-    System.loadLibrary("opengl32");
-    System.loadLibrary("glu32");
-    System.loadLibrary("freeglut");
-
+    loadNativeLibraries();
     initScope();
     
     if (forceLoadGlut) {
@@ -81,7 +78,8 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
     
     // Hacky!! Use it while WGLContext is not working
     freeglut_h.glutHideWindow();   
-
+    //freeglut_h.glutIconifyWindow();
+    
     // This dummy stub registration is required to get macOS onscreen rendering working
     // It will avoid error message
     // "GLUT Fatal Error: redisplay needed for window 1, but no display callback."
@@ -90,16 +88,18 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
     initialized = true;
   }
 
+  protected void loadNativeLibraries() {
+    System.loadLibrary("opengl32");
+    System.loadLibrary("glu32");
+    System.loadLibrary("freeglut");
+  }
+
   private static void dummy() {}
 
   @Override
   public boolean isInitialized() {
     return initialized;
   }
-  
-  /*protected boolean glutHasInit() {
-    boolean glutInitialised = freeglut_h.glutGet(freeglut_h.GLUT_INIT_STATE()) == 1;
-  }*/
   
   protected void initScope() {
     try {
@@ -119,8 +119,6 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
       windowHandle = -1;
     }
     
-    
-    
     // do not scope.close() as it is implicit
     initialized = false;
   }
@@ -133,13 +131,5 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
   protected void glutIdleFunc(glutIdleFunc$callback fi) {
     MemorySegment idleStub = glutIdleFunc$callback.allocate(fi, scope);
     freeglut_h.glutIdleFunc(idleStub);
-
   }
-
-  protected void glutInitWindowSize(int width, int height) {
-    freeglut_h.glutInitWindowSize(width, height);
-  }
-
-
-
 }

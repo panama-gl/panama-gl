@@ -21,14 +21,11 @@ import panamagl.platform.Platform;
 
 public class MacOSarmTest {
   /**
-   * Indicate a message in console if not running on macos
+   * Print a message in console if not running on macos ARM
    * @return
    */
   public boolean checkPlatform() {
     Platform platform = new Platform();
-    
-    System.out.println(platform);
-    
     boolean isPlatform = new PlatformMatcher_macOS_arm().matches(platform);
 
     if(!isPlatform) {
