@@ -366,9 +366,11 @@
 								<parallel>classes</parallel> <useUnlimitedThreads>true</useUnlimitedThreads>
 								<forkCount>1</forkCount>-->
 
+								<forkCount>1</forkCount>
+								<reuseForks>false</reuseForks>
 							<!-- Configure Panama -->
 							<argLine>
-								--enable-native-access=ALL-UNNAMED --enable-preview  -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
+								--enable-native-access=ALL-UNNAMED --enable-preview  -Djava.library.path=C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64
 							</argLine>
 						</configuration>
 					</plugin>

@@ -28,13 +28,16 @@ import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 
 /**
- * VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
+ * VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview
  * -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
  * 
  * or
  * -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
  * 
- * @author Martin
+ * or
+ * -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
+ * 
+ * @author Martin Pernollet
  *
  */
 public class DemoTriangle_Onscreen_Swing {

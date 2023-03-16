@@ -45,6 +45,8 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
 
   protected int initWidth = 1;
   protected int initHeight = 1;
+  protected int initX = -100;
+  protected int initY = -100;
   protected boolean initialized = true;
 
   protected int windowHandle = -1;
@@ -67,22 +69,15 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
     
     if (forceLoadGlut) {
       var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
-
-      //glutInitDone++;
-      //System.out.println("GLUTContext_linux : init " + glutInitDone);
       
       freeglut_h.glutInit(argc, argc);
-      
     }
     
     freeglut_h.glutInitDisplayMode(freeglut_h.GLUT_DOUBLE() | freeglut_h.GLUT_RGBA() | freeglut_h.GLUT_DEPTH());
-
-    glutInitWindowSize(initWidth, initHeight);
-
-    freeglut_h.glutInitWindowPosition(0, 0);
-    windowHandle = freeglut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
+    freeglut_h.glutInitWindowSize(initWidth, initHeight);
+    freeglut_h.glutInitWindowPosition(initX, initY);
     
-    //System.out.println("WINDOW HANDLE :  " + windowHandle);
+    windowHandle = freeglut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
     
     // Hacky!! Use it while GLXContext is not working
     freeglut_h.glutHideWindow();

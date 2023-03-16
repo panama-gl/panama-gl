@@ -45,6 +45,9 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
 
   protected int initWidth = 1;
   protected int initHeight = 1;
+  protected int initX = 0;
+  protected int initY = 0;
+
   protected boolean initialized = true;
 
   protected int windowHandle = -1;
@@ -55,27 +58,25 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
     init(true);
   }
   
-  //static int glutInitDone = 0;
-
   /** Initialize GLUT if input arg is true, and create a window */
   public void init(boolean forceLoadGlut) {
+    System.loadLibrary("GL");
+    System.loadLibrary("glut");
+    System.loadLibrary("GLU");
+    System.loadLibrary("GLX");
+    
     initScope();
     
     if (forceLoadGlut) {
       var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
 
-      //glutInitDone++;
-      //System.out.println("GLUTContext_linux : init " + glutInitDone);
-      
       glut_h.glutInit(argc, argc);
-      
     }
     
     glut_h.glutInitDisplayMode(glut_h.GLUT_DOUBLE() | glut_h.GLUT_RGBA() | glut_h.GLUT_DEPTH());
-
-    glutInitWindowSize(initWidth, initHeight);
-
-    glut_h.glutInitWindowPosition(0, 0);
+    glut_h.glutInitWindowSize(initWidth, initHeight);
+    glut_h.glutInitWindowPosition(initX, initY);
+    
     windowHandle = glut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
     
     //System.out.println("WINDOW HANDLE :  " + windowHandle);

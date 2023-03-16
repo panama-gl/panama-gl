@@ -27,7 +27,7 @@ import panamagl.platform.windows.WindowsTest;
 //VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
 public class TestPanamaGLFactory_windows_x64 extends WindowsTest{
 //FIXME : https://gitlab.com/jzy3d/panama-gl/-/issues/27
-@Ignore("Works from IDE but not from CLI yet")
+//@Ignore("Works from IDE but not from CLI yet")
   @Test
   public void test() {
     if (!checkPlatform())

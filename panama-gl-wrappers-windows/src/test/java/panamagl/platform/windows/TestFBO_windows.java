@@ -33,7 +33,7 @@ public class TestFBO_windows extends WindowsTest{
 
     // Given a GLUT context
     GLUTContext_windows glutContext = new GLUTContext_windows();
-    glutContext.init(false);
+    glutContext.init();
 
     // Given a GL caller
     GL gl = new panamagl.platform.windows.x64.GL_windows_x64();
