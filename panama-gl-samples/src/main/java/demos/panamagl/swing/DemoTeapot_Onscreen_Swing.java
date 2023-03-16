@@ -51,7 +51,7 @@ public class DemoTeapot_Onscreen_Swing {
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
     PanamaGLFactory factory = PanamaGLFactory.select();
-    //PanamaGLFactory factory = new PanamaGLFactory_macOS_x86(); 
+    //PanamaGLFactory factory = new PanamaGLFactory_windows_x64(); 
     GLCanvasSwing panel = new GLCanvasSwing(factory);
     panel.setGLEventListener(listener);
 

@@ -72,11 +72,11 @@
 			<artifactId>panama-gl-wrappers-macos</artifactId>
 			<version>${version.panama}</version>
 		</dependency>
-		<!--<dependency>
+		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-wrappers-windows</artifactId>
 			<version>${version.panama}</version>
-		</dependency>-->
+		</dependency>
 
 
 		<!-- To test  -->

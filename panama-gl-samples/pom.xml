@@ -44,5 +44,10 @@
 			<artifactId>panama-gl-wrappers-linux</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>panama-gl-wrappers-windows</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 </project>

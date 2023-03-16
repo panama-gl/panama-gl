@@ -36,6 +36,7 @@ import panamagl.platform.linux.APanamaGLFactory_linux;
 import panamagl.platform.macos.APanamaGLFactory_macOS;
 import panamagl.platform.macos.arm.PlatformMatcher_macOS_arm;
 import panamagl.platform.macos.x86.PlatformMatcher_macOS_x86;
+import panamagl.platform.windows.APanamaGLFactory_windows;
 
 /**
  * Generate an OpenGL API with per-platform implementations wrapping the bindings made available by JExtract.
@@ -65,7 +66,7 @@ public class GenerateAPI {
   public static String GL_PACKAGE_MACOS_x86 = "panamagl.platform.macos.x86";
   public static String GL_PACKAGE_MACOS_arm = "panamagl.platform.macos.arm";
   public static String GL_PACKAGE_LINUX_x86 = "panamagl.platform.linux.x86";
-  public static String GL_PACKAGE_WINDOWS_x86 = "panamagl.platform.windows.x86";
+  public static String GL_PACKAGE_WINDOWS_x64 = "panamagl.platform.windows.x64";
   
   //public static String GL_IMPL = "GLImpl";
 
@@ -87,6 +88,11 @@ public class GenerateAPI {
    * @throws Exception
    */
   public void run() throws Exception {
+    
+    boolean MACOS_x86 = false;
+    boolean MACOS_ARM = false;
+    boolean LINUX_x86 = false;
+    boolean WINDOWS_x86 = true;
     
     // ============================================================================
     // GL SPECIFICATION
@@ -120,9 +126,7 @@ public class GenerateAPI {
     // ============================================================================
     // GL IMPLEMENTATION
     
-    boolean MACOS_x86 = false;
-    boolean MACOS_ARM = true;
-    boolean LINUX_x86 = false;
+
     
     wrapperGen.addUnimplementedMethodsUponMissingBinding = false;
     //wrapperGen.addUnimplementedMethodsFor = Sets.of("glDebugMessageCallback");
@@ -202,6 +206,7 @@ public class GenerateAPI {
 
     // ========================================================
     // Configure Linux wrapper
+    
     if(LINUX_x86) {
       wrapper = new Wrapper();
       wrapper.platform = "linux_x86";
@@ -231,7 +236,41 @@ public class GenerateAPI {
       
       makeFactory(javaInterfacesFiles, wrapper, factory);
 
-    }    
+    }   
+    
+    // ========================================================
+    // Configure Windows wrapper
+    
+    if(WINDOWS_x86) {
+      wrapper = new Wrapper();
+      wrapper.platform = "windows_x64";
+      wrapper.wrapped = Set.of(freeglut.windows.x86.freeglut_h.class);
+      wrapper.accepts = new AcceptsGLMethod();
+      wrapper.className = "GL_" + wrapper.platform;
+      wrapper.packge = GL_PACKAGE_WINDOWS_x64;
+      wrapper.setFileIn(GL_WINDOWS_SOURCES);
+      
+      wrapper.addImplement(interf.packge + "." + superGL);
+      wrapper.addImplement(interf.packge + ".GLU");
+      wrapper.addImplement(interf.packge + ".GLUT");
+      
+      wrapper.addExtension(interf.packge + ".AGL");
+
+
+      // Write and compile
+      wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
+      makeWrapper(javaInterfacesFiles, wrapper);
+  
+      // Configure Linux factory
+      factory = new PlatformFactory();
+      factory.base = APanamaGLFactory_windows.class;
+      factory.name = "PanamaGLFactory_" + wrapper.platform;
+      factory.packge = GL_PACKAGE_WINDOWS_x64;
+      factory.setFileIn(GL_WINDOWS_SOURCES);
+      
+      makeFactory(javaInterfacesFiles, wrapper, factory);
+
+    }   
     
     // Compile ALL
     compile(javaInterfacesFiles);

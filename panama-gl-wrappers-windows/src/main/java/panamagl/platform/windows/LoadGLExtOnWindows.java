@@ -14,7 +14,7 @@ import opengl.ubuntu.v20.PFNGLGENFRAMEBUFFERSEXTPROC;
 public class LoadGLExtOnWindows {
 
   public static void main(String[] args) {
-    //System.loadLibrary("opengl32");
+    System.loadLibrary("opengl32");
     
     
     ForeignMemoryUtils ffm = new ForeignMemoryUtils();
@@ -26,6 +26,8 @@ public class LoadGLExtOnWindows {
     // which should be named pfnWgl*
     PFNGLGENFRAMEBUFFERSEXTPROC glGenFramebuffers = PFNGLGENFRAMEBUFFERSEXTPROC.ofAddress(address, ffm.getScope());
 
+    
+    //glGenFramebuffers.apply(0, address);
     //glGenFramebuffers.apply();
   }
 
