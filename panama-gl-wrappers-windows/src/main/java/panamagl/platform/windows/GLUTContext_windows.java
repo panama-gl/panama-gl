@@ -45,8 +45,8 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
 
   protected int initWidth = 1;
   protected int initHeight = 1;
-  protected int initX = -100;
-  protected int initY = -100;
+  protected int initX = 0;
+  protected int initY = 0;
   protected boolean initialized = true;
 
   protected int windowHandle = -1;
@@ -79,9 +79,8 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
     
     windowHandle = freeglut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
     
-    // Hacky!! Use it while GLXContext is not working
-    freeglut_h.glutHideWindow();
-    
+    // Hacky!! Use it while WGLContext is not working
+    freeglut_h.glutHideWindow();   
 
     // This dummy stub registration is required to get macOS onscreen rendering working
     // It will avoid error message
