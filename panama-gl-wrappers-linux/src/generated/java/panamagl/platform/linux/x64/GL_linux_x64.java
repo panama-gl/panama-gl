@@ -1,10 +1,10 @@
-package panamagl.platform.linux.x86; 
+package panamagl.platform.linux.x64; 
 
 import glext.ubuntu.v20.glext_h;
 import static glext.ubuntu.v20.glext_h.*;
 import java.lang.foreign.*;
 
-public class GL_linux_x86 extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
+public class GL_linux_x64 extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
   public void glAccum(int op, float value) {
     glext_h.glAccum(op, value);
   }

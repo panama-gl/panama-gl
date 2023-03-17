@@ -35,7 +35,7 @@ import panamagl.platform.Platform;
 import panamagl.platform.linux.APanamaGLFactory_linux;
 import panamagl.platform.macos.APanamaGLFactory_macOS;
 import panamagl.platform.macos.arm.PlatformMatcher_macOS_arm;
-import panamagl.platform.macos.x86.PlatformMatcher_macOS_x86;
+import panamagl.platform.macos.x64.PlatformMatcher_macOS_x64;
 import panamagl.platform.windows.APanamaGLFactory_windows;
 
 /**
@@ -63,9 +63,9 @@ public class GenerateAPI {
   public static String GL_PACKAGE_LINUX = "panamagl.platform.linux";
   public static String GL_PACKAGE_WINDOWS = "panamagl.platform.windows";*/
 
-  public static String GL_PACKAGE_MACOS_x86 = "panamagl.platform.macos.x86";
+  public static String GL_PACKAGE_MACOS_x64 = "panamagl.platform.macos.x64";
   public static String GL_PACKAGE_MACOS_arm = "panamagl.platform.macos.arm";
-  public static String GL_PACKAGE_LINUX_x86 = "panamagl.platform.linux.x86";
+  public static String GL_PACKAGE_LINUX_x64 = "panamagl.platform.linux.x64";
   public static String GL_PACKAGE_WINDOWS_x64 = "panamagl.platform.windows.x64";
   
   //public static String GL_IMPL = "GLImpl";
@@ -89,10 +89,10 @@ public class GenerateAPI {
    */
   public void run() throws Exception {
     
-    boolean MACOS_x86 = false;
+    boolean MACOS_x64 = false;
     boolean MACOS_ARM = false;
-    boolean LINUX_x86 = false;
-    boolean WINDOWS_x86 = true;
+    boolean LINUX_x64 = false;
+    boolean WINDOWS_x64 = true;
     
     // ============================================================================
     // GL SPECIFICATION
@@ -138,13 +138,13 @@ public class GenerateAPI {
     // ========================================================
     // Configure macOS wrapper
     
-    if(MACOS_x86) {
+    if(MACOS_x64) {
       wrapper = new Wrapper();
       wrapper.platform = "macOS_x86";
       wrapper.wrapped = Set.of(opengl.macos.x86.glut_h.class/*, glext.macos.v10_15_7.glext_h.class, cgl.macos.v10_15_7.cgl_h.class*/);
       wrapper.accepts = new AcceptsGLMethod();
       wrapper.className = "GL_" + wrapper.platform;
-      wrapper.packge = GL_PACKAGE_MACOS_x86;
+      wrapper.packge = GL_PACKAGE_MACOS_x64;
       wrapper.setFileIn(GL_MACOS_SOURCES);
   
       wrapper.addImplement(interf.packge + "." + superGL);
@@ -163,7 +163,7 @@ public class GenerateAPI {
       factory.base = APanamaGLFactory_macOS.class;
       factory.name = "PanamaGLFactory_" + wrapper.platform;
       factory.packge = wrapper.packge;
-      factory.matcher = PlatformMatcher_macOS_x86.class;
+      factory.matcher = PlatformMatcher_macOS_x64.class;
       factory.setFileIn(GL_MACOS_SOURCES);
       
       makeFactory(javaInterfacesFiles, wrapper, factory);
@@ -207,13 +207,13 @@ public class GenerateAPI {
     // ========================================================
     // Configure Linux wrapper
     
-    if(LINUX_x86) {
+    if(LINUX_x64) {
       wrapper = new Wrapper();
       wrapper.platform = "linux_x86";
       wrapper.wrapped = Set.of(glext.ubuntu.v20.glext_h.class/*, opengl.ubuntu.v20.glut_h.class, glxext.ubuntu.v20.glxext_h.class*/);
       wrapper.accepts = new AcceptsGLMethod();
       wrapper.className = "GL_" + wrapper.platform;
-      wrapper.packge = GL_PACKAGE_LINUX_x86;
+      wrapper.packge = GL_PACKAGE_LINUX_x64;
       wrapper.setFileIn(GL_LINUX_SOURCES);
       
       wrapper.addImplement(interf.packge + "." + superGL);
@@ -231,7 +231,7 @@ public class GenerateAPI {
       factory = new PlatformFactory();
       factory.base = APanamaGLFactory_linux.class;
       factory.name = "PanamaGLFactory_" + wrapper.platform;
-      factory.packge = GL_PACKAGE_LINUX_x86;
+      factory.packge = GL_PACKAGE_LINUX_x64;
       factory.setFileIn(GL_LINUX_SOURCES);
       
       makeFactory(javaInterfacesFiles, wrapper, factory);
@@ -241,7 +241,7 @@ public class GenerateAPI {
     // ========================================================
     // Configure Windows wrapper
     
-    if(WINDOWS_x86) {
+    if(WINDOWS_x64) {
       wrapper = new Wrapper();
       wrapper.platform = "windows_x64";
       wrapper.wrapped = Set.of(freeglut.windows.x86.freeglut_h.class);

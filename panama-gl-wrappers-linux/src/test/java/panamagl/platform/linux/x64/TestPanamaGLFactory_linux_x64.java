@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.platform.linux.x86;
+package panamagl.platform.linux.x64;
 
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -23,9 +23,10 @@ import org.junit.Test;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GLContext;
 import panamagl.platform.linux.LinuxTest;
+import panamagl.platform.linux.x64.PanamaGLFactory_linux_x64;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
-public class TestPanamaGLFactory_linux_x86 extends LinuxTest{
+public class TestPanamaGLFactory_linux_x64 extends LinuxTest{
 //FIXME : https://gitlab.com/jzy3d/panama-gl/-/issues/27
 @Ignore("Works from IDE but not from CLI yet")
   @Test
@@ -37,7 +38,7 @@ public class TestPanamaGLFactory_linux_x86 extends LinuxTest{
     PanamaGLFactory f = PanamaGLFactory.select();
     
     // Then expect to find the linux one
-    boolean matched = f instanceof PanamaGLFactory_linux_x86;
+    boolean matched = f instanceof PanamaGLFactory_linux_x64;
     
     Assert.assertTrue(matched);
 

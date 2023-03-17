@@ -36,7 +36,7 @@ public class DemoQuad_Offscreen_macOS {
     GLContext context = new GLUTContext_macOS();
     context.init();
 
-    GL gl = new panamagl.platform.macos.x86.GL_macOS_x86();
+    GL gl = new panamagl.platform.macos.x64.GL_macOS_x64();
 
     //-------------------------
     // Prepare VBO

@@ -15,13 +15,14 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.platform.macos.x86;
+package panamagl.platform.macos.x64;
 
 import org.junit.Assert;
 import org.junit.Test;
 import panamagl.factory.PanamaGLFactory;
+import panamagl.platform.macos.x64.PanamaGLFactory_macOS_x64;
 
-public class TestPanamaGLFactory_macOS_x86 extends MacOSx86Test{
+public class TestPanamaGLFactory_macOS_x64 extends MacOSx86Test{
   @Test
   public void test() {
     if (!checkPlatform())
@@ -29,7 +30,7 @@ public class TestPanamaGLFactory_macOS_x86 extends MacOSx86Test{
   
     PanamaGLFactory f = PanamaGLFactory.select();
     
-    boolean matched = f instanceof PanamaGLFactory_macOS_x86;
+    boolean matched = f instanceof PanamaGLFactory_macOS_x64;
     
     Assert.assertTrue(matched);
 

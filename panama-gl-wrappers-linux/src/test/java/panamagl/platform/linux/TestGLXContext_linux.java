@@ -42,7 +42,7 @@ public class TestGLXContext_linux extends LinuxTest {
     
     context.makeCurrent();
 
-    GL gl = new panamagl.platform.linux.x86.GL_linux_x86();
+    GL gl = new panamagl.platform.linux.x64.GL_linux_x64();
     GLProfile p = new GLProfile(gl);
 
     // Then
