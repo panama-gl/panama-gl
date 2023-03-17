@@ -71,10 +71,16 @@ public class GLXContext_linux extends AGLContext implements GLContext{
 
   @Override
   public void init() {
+    init(true);
+  }
+  
+  public void init(boolean loadGlut) {
 
     // Init glut so that it can be used
-    var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
-    glut_h.glutInit(argc, argc);
+    if(loadGlut) {
+      var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
+      glut_h.glutInit(argc, argc);
+    }
     
     // Make display and choose default screen
     display = glx_h.XOpenDisplay(glx_h.NULL());
