@@ -21,18 +21,18 @@ import panamagl.platform.Platform;
 
 public class LinuxTest {
   /**
-   * Indicate a message in console if not running on macos
+   * Print a message in console if not running on linux
    * @return
    */
   public boolean checkPlatform() {
-    Platform os = new Platform();
-    boolean isunix = os.isUnix();
+    Platform platform = new Platform();
+    boolean isPlatform = platform.isUnix();
 
-    if(!isunix) {
-      System.err.println(" !! \n    Skip test since not on Linux : " + os + "\n !!");
+    if(!isPlatform) {
+      System.err.println(" !! \n    Skip test since not on Linux : " + platform + "\n !!");
     }
     
-    return isunix;
+    return isPlatform;
   }
   
 

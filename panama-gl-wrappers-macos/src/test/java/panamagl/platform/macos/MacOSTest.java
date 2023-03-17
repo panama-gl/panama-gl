@@ -21,15 +21,12 @@ import panamagl.platform.Platform;
 
 public class MacOSTest {
   /**
-   * Indicate a message in console if not running on macos
+   * Print a message in console if not running on macos
    * @return
    */
   public boolean checkPlatform() {
     Platform platform = new Platform();
-    
-    System.out.println(platform);
-    
-    boolean isPlatform = platform.isMac();//new PlatformMatcher_macOS_x86().matches(os);
+    boolean isPlatform = platform.isMac();
 
     if(!isPlatform) {
       System.err.println(" !! \n    Skip test since not on appropriate platform : " + platform + "\n !!");

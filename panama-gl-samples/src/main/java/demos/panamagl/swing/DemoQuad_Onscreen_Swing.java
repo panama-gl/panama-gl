@@ -33,7 +33,10 @@ import panamagl.opengl.GL;
  * or
  * -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
  * 
- * @author Martin
+ * or 
+ * -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
+ * 
+ * @author Martin Pernollet
  *
  */
 public class DemoQuad_Onscreen_Swing {

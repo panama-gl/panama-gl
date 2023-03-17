@@ -15,25 +15,15 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.platform.macos.arm;
+package panamagl.platform.windows;
 
-import panamagl.platform.Platform;
+import panamagl.factory.PanamaGLFactory;
+import panamagl.offscreen.AOffscreenRenderer;
+import panamagl.offscreen.OffscreenRenderer;
 
-public class MacOSarmTest {
-  /**
-   * Print a message in console if not running on macos ARM
-   * @return
-   */
-  public boolean checkPlatform() {
-    Platform platform = new Platform();
-    boolean isPlatform = new PlatformMatcher_macOS_arm().matches(platform);
-
-    if(!isPlatform) {
-      System.err.println(" !! \n    Skip test since not on appropriate platform : " + platform + "\n !!");
-    }
-    
-    return isPlatform;
+// Now does not do anything else more than the abstract class
+public class OffscreenRenderer_windows extends AOffscreenRenderer implements OffscreenRenderer{
+  public OffscreenRenderer_windows(PanamaGLFactory factory) {
+    super(factory);
   }
-  
-
 }

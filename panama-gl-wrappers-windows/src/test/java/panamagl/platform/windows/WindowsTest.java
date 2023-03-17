@@ -15,21 +15,21 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.platform.macos.arm;
+package panamagl.platform.windows;
 
 import panamagl.platform.Platform;
 
-public class MacOSarmTest {
+public class WindowsTest {
   /**
-   * Print a message in console if not running on macos ARM
+   * Indicate a message in console if not running on macos
    * @return
    */
   public boolean checkPlatform() {
     Platform platform = new Platform();
-    boolean isPlatform = new PlatformMatcher_macOS_arm().matches(platform);
+    boolean isPlatform = platform.isWindows();
 
     if(!isPlatform) {
-      System.err.println(" !! \n    Skip test since not on appropriate platform : " + platform + "\n !!");
+      System.err.println(" !! \n    Skip test since not on Windows : " + platform + "\n !!");
     }
     
     return isPlatform;

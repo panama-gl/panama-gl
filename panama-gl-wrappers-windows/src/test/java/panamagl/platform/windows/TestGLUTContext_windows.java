@@ -13,50 +13,44 @@
  * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301, USA
  *******************************************************************************/
-package panamagl.platform.linux;
+package panamagl.platform.windows;
 
 import org.junit.Assert;
 import org.junit.Test;
 import panamagl.GLProfile;
 import panamagl.opengl.GL;
 
-// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
-public class TestGLXContext_linux extends LinuxTest {
+// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
+public class TestGLUTContext_windows extends WindowsTest {
   @Test
   public void createContext() {
     if (!checkPlatform())
       return;
 
     // Given
-    GLXContext_linux context = new GLXContext_linux();
+    GLUTContext_windows context = new GLUTContext_windows();
 
-    // --------------------------
     // When
     context.init();
     
-    // Then
-    Assert.assertTrue(context.initialized);
+    // Then 
+    Assert.assertTrue(context.isInitialized());
 
-    // --------------------------
     // When
-    
-    context.makeCurrent();
-
-    GL gl = new panamagl.platform.linux.x86.GL_linux_x86();
+    GL gl = new panamagl.platform.windows.x64.GL_windows_x64();
     GLProfile p = new GLProfile(gl);
 
     // Then
     Assert.assertNotNull(p.getVersion());
     Assert.assertNotNull(p.getVendor());
 
-    System.out.println(TestGLXContext_linux.class.getSimpleName()
+    System.out.println(TestGLUTContext_windows.class.getSimpleName()
         + " running with OpenGL version : " + p.getVersion() + "/" + p.getVendor());
 
-    // --------------------------
     // When
     context.destroy();
     
     // Then
-    Assert.assertFalse(context.initialized);
+    Assert.assertFalse(context.isInitialized());
   }
 }

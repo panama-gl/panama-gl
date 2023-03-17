@@ -15,25 +15,27 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.platform.macos.arm;
+package panamagl.canvas;
 
+import panamagl.factory.PanamaGLFactory;
 import panamagl.platform.Platform;
+import panamagl.canvas.DurabilityTestGLCanvasSwing;
+/**
+ * This test is intentionnaly named DurabilityTest* to be ignored by maven
+ * while running tests (surefire config keeps Test* or *Test or ITTest*)
+ */
+// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
+//@Ignore("Will add to specific build profile later.")
+public class DurabilityTestGLCanvasSwing_linux {
+  public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
 
-public class MacOSarmTest {
-  /**
-   * Print a message in console if not running on macos ARM
-   * @return
-   */
-  public boolean checkPlatform() {
-    Platform platform = new Platform();
-    boolean isPlatform = new PlatformMatcher_macOS_arm().matches(platform);
-
-    if(!isPlatform) {
-      System.err.println(" !! \n    Skip test since not on appropriate platform : " + platform + "\n !!");
-    }
+  //@Test
+  public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
+    if (!new Platform().isUnix())
+     return;
     
-    return isPlatform;
+    PanamaGLFactory factory = PanamaGLFactory.select();
+    
+    DurabilityTestGLCanvasSwing.whenPanelIsAdded_ThenGLEventListenerIsInvoked(factory);
   }
-  
-
 }

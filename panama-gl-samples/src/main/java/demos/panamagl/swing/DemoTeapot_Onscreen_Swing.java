@@ -37,7 +37,10 @@ import panamagl.opengl.GLError;
  * or
  * -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
  * 
- * @author Martin
+ * or
+ * -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
+ * 
+ * @author Martin Pernollet
  *
  */
 public class DemoTeapot_Onscreen_Swing {
@@ -51,7 +54,7 @@ public class DemoTeapot_Onscreen_Swing {
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
     PanamaGLFactory factory = PanamaGLFactory.select();
-    //PanamaGLFactory factory = new PanamaGLFactory_macOS_x86(); 
+    //PanamaGLFactory factory = new PanamaGLFactory_windows_x64(); 
     GLCanvasSwing panel = new GLCanvasSwing(factory);
     panel.setGLEventListener(listener);
 

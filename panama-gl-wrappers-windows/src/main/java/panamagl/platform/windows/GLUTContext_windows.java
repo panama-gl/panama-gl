@@ -15,15 +15,15 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.platform.linux;
+package panamagl.platform.windows;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
-import opengl.ubuntu.v20.glutDisplayFunc$callback;
-import opengl.ubuntu.v20.glutIdleFunc$callback;
-import opengl.ubuntu.v20.glut_h;
+import freeglut.windows.x86.glutDisplayFunc$callback;
+import freeglut.windows.x86.glutIdleFunc$callback;
+import freeglut.windows.x86.freeglut_h;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
@@ -38,16 +38,15 @@ import panamagl.opengl.GLContext;
  * 
  * @author Martin Pernollet
  */
-public class GLUTContext_linux extends AGLContext implements GLContext {
+public class GLUTContext_windows extends AGLContext implements GLContext {
   protected MemorySession scope;
   protected SegmentAllocator allocator;
   protected String windowName = "InvisiblePanamaGLWindowForGLContext";
 
   protected int initWidth = 1;
   protected int initHeight = 1;
-  protected int initX = 0;
-  protected int initY = 0;
-
+  protected int initX = Integer.MAX_VALUE;
+  protected int initY = Integer.MAX_VALUE;
   protected boolean initialized = true;
 
   protected int windowHandle = -1;
@@ -58,6 +57,8 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
     init(true);
   }
   
+  //static int glutInitDone = 0;
+
   /** Initialize GLUT if input arg is true, and create a window */
   public void init(boolean forceLoadGlut) {
     loadNativeLibraries();
@@ -65,34 +66,32 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
     
     if (forceLoadGlut) {
       var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
-
-      glut_h.glutInit(argc, argc);
+      
+      freeglut_h.glutInit(argc, argc);
     }
     
-    glut_h.glutInitDisplayMode(glut_h.GLUT_DOUBLE() | glut_h.GLUT_RGBA() | glut_h.GLUT_DEPTH());
-    glut_h.glutInitWindowSize(initWidth, initHeight);
-    glut_h.glutInitWindowPosition(initX, initY);
+    freeglut_h.glutInitDisplayMode(freeglut_h.GLUT_DOUBLE() | freeglut_h.GLUT_RGBA() | freeglut_h.GLUT_DEPTH());
+    freeglut_h.glutInitWindowSize(initWidth, initHeight);
+    freeglut_h.glutInitWindowPosition(initX, initY);
     
-    windowHandle = glut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
+    windowHandle = freeglut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
     
-    //System.out.println("WINDOW HANDLE :  " + windowHandle);
+    // Hacky!! Use it while WGLContext is not working
+    freeglut_h.glutHideWindow();   
+    //freeglut_h.glutIconifyWindow();
     
-    // Hacky!! Use it while GLXContext is not working
-    glut_h.glutHideWindow();
-
     // This dummy stub registration is required to get macOS onscreen rendering working
     // It will avoid error message
     // "GLUT Fatal Error: redisplay needed for window 1, but no display callback."
-    glutDisplayFunc(GLUTContext_linux::dummy);
+    glutDisplayFunc(GLUTContext_windows::dummy);
 
     initialized = true;
   }
 
   protected void loadNativeLibraries() {
-    System.loadLibrary("GL");
-    System.loadLibrary("glut");
-    System.loadLibrary("GLU");
-    System.loadLibrary("GLX");
+    System.loadLibrary("opengl32");
+    System.loadLibrary("glu32");
+    System.loadLibrary("freeglut");
   }
 
   private static void dummy() {}
@@ -111,11 +110,12 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
       e.printStackTrace();
     }
   }
+
   
   @Override
   public void destroy() {
     if(windowHandle>=0) {
-      glut_h.glutDestroyWindow(windowHandle);
+      freeglut_h.glutDestroyWindow(windowHandle);
       windowHandle = -1;
     }
     
@@ -125,11 +125,11 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
 
   protected void glutDisplayFunc(glutDisplayFunc$callback fi) {
     MemorySegment displayStub = glutDisplayFunc$callback.allocate(fi, scope);
-    glut_h.glutDisplayFunc(displayStub);
+    freeglut_h.glutDisplayFunc(displayStub);
   }
 
   protected void glutIdleFunc(glutIdleFunc$callback fi) {
     MemorySegment idleStub = glutIdleFunc$callback.allocate(fi, scope);
-    glut_h.glutIdleFunc(idleStub);
+    freeglut_h.glutIdleFunc(idleStub);
   }
 }
