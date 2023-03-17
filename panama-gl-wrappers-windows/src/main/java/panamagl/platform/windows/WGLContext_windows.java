@@ -17,6 +17,7 @@ import wgl.windows.x86.wgl_h;
  * 
  * @see https://www.khronos.org/opengl/wiki/Creating_an_OpenGL_Context_(WGL)
  * @see https://learn.microsoft.com/en-us/windows/win32/opengl/wgl-and-windows-reference
+ * @see https://www.cprogramming.com/tutorial/wgl_wiggle_functions.html
  * 
  * @author Martin Pernollet
  */
@@ -25,8 +26,6 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   protected MemoryAddress context;
   
   protected boolean debug = Debug.check(GLContext.class, WGLContext_windows.class);
-  
-  //protected wgl_h.HDC hdc;
   
   protected PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB;
   protected PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB;
