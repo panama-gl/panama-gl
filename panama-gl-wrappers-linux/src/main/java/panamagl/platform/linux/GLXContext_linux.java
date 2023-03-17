@@ -27,6 +27,8 @@ import java.lang.foreign.ValueLayout;
 import glx.ubuntu.v20.PFNGLXCREATECONTEXTATTRIBSARBPROC;
 import glx.ubuntu.v20.PFNGLXMAKECONTEXTCURRENTPROC;
 import glx.ubuntu.v20.glx_h;
+import opengl.ubuntu.v20.glut_h;
+import panamagl.Debug;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;
 
@@ -38,16 +40,16 @@ public class GLXContext_linux extends AGLContext implements GLContext{
   protected MemorySession scope;
   protected SegmentAllocator allocator;
   protected boolean initialized = false;
-
   
   protected MemoryAddress display;
   protected MemoryAddress context;
+  
+  protected boolean debug = Debug.check(GLContext.class, GLXContext_linux.class);
   
   public GLXContext_linux() {
     super();
     loadNativeLibraries();
     initScope();
-    //init();
   }
   
   protected void loadNativeLibraries() {
@@ -67,30 +69,28 @@ public class GLXContext_linux extends AGLContext implements GLContext{
     }
   }
 
+  @Override
   public void init() {
+
+    // Init glut so that it can be used
+    var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
+    glut_h.glutInit(argc, argc);
     
-    // ----------------------------------------
     // Make display and choose default screen
-    
     display = glx_h.XOpenDisplay(glx_h.NULL());
-    
     int screen = glx_h.XDefaultScreen(display);
-    System.out.println("GLXContext_linux : screen : " + screen);
+    
+    Debug.debug(debug, "GLXContext : screen : " + screen);
 
     
-    // ----------------------------------------
     // Define visual info (rendering settings)
-    //
     MemoryAddress visualInfo = chooseVisual(screen);
     
-    // ----------------------------------------
     // Make context
-    
     createContext(visualInfo);
-    
-    
 
     
+    // This shows how to load an open gl version
     
     /*PFNGLXCREATECONTEXTATTRIBSARBPROC glXCreateContextAttribsARB = 
         (PFNGLXCREATECONTEXTATTRIBSARBPROC) glx_h.glXGetProcAddressARB(allocator.allocateUtf8String("glXCreateContextAttribsARB"));
@@ -112,8 +112,6 @@ public class GLXContext_linux extends AGLContext implements GLContext{
     
     glXMakeContextCurrentARB.apply(display, 0, 0, contextARB);*/
     
-    
-    // ----------------------
     initialized = true;
   }
   
@@ -173,43 +171,49 @@ public class GLXContext_linux extends AGLContext implements GLContext{
       throw new RuntimeException("Unsupported mode");
     }
     
-    System.out.println("Got visual info " + visualInfo);
+    Debug.debug(debug, "GLXContext : Got visual info " + visualInfo);
+    
     return visualInfo;
   }
 
+  /**
+   * 
+   * @param visualInfo
+   */
   protected void createContext(MemoryAddress visualInfo) {
     MemoryAddress shareList = glx_h.NULL();
     
-    // A value of True specifies that rendering be done through a direct connection to the graphics system 
-    // if possible; a value of False specifies rendering through the X server.
+    // A value of True specifies that rendering be done through a direct connection to the 
+    // graphics system if possible; a value of False specifies rendering through the X server.
     int direct = glx_h.GL_TRUE();
-    
     
     // https://www.ibm.com/docs/en/aix/7.1?topic=environment-glxcreatecontext-subroutine
     context = glx_h.glXCreateContext(display, visualInfo, shareList.address(), direct);
     
-    System.out.println("Got context " + context);
+    Debug.debug(debug, "GLXContext : Got context " + context);
   }
   
+  /**
+   * 
+   */
   public void makeCurrent() {
     // https://opengl.developpez.com/docs/man/man/glXMakeCurrent
     glx_h.glXMakeCurrent(display, 0, context);
 
-    System.out.println("Made current " + context);
+    Debug.debug(debug, "GLXContext : Made current " + context);
   }
 
-  public void release() {
-  }
+  /**
+   * 
+   */
+  /*public void release() {
+  }*/
   
   enum AttribMode{
     DEFAULT, 
     CHOSEN, 
     FRAMEBUFFER
   }
-  
-  
-  
-  
   
   @Override
   public boolean isInitialized() {

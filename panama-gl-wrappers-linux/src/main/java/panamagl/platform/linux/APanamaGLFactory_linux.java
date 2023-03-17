@@ -19,6 +19,8 @@ package panamagl.platform.linux;
 
 
 
+import java.lang.foreign.ValueLayout;
+import opengl.ubuntu.v20.glut_h;
 import panamagl.Debug;
 import panamagl.GLCanvas;
 import panamagl.factory.APanamaGLFactory;
@@ -33,7 +35,7 @@ protected boolean debug = Debug.check(APanamaGLFactory_linux.class);
   
   protected GLXContext_linux glxContext;
   protected GLUTContext_linux glutContext;
-  protected boolean useGLUT = true;
+  protected boolean useGLUT = false;
 
   public APanamaGLFactory_linux() {
     super();
@@ -83,8 +85,11 @@ protected boolean debug = Debug.check(APanamaGLFactory_linux.class);
     // A GL Context with CGL
     
     else {
+      
+      
       glxContext = new GLXContext_linux();
       glxContext.init();
+      glxContext.makeCurrent();
       Debug.debug(debug, "PanamaGLFactory_linux : initContext : GLX done");
       
       return glxContext;
