@@ -26,16 +26,12 @@ import panamagl.platform.windows.x64.GL_windows_x64;
 
 public class TestWGLContext_windows extends WindowsTest {
   @Test
-  public void createWGLContext() {
+  public void createWGLContext_simple() {
     if (!checkPlatform())
       return;
 
     // Given
-    WGLContext_windows wgl = new WGLContext_windows();
-
-    // Then functions are properly loaded
-    Assert.assertNotNull(wgl.wglChoosePixelFormatARB);
-    Assert.assertNotNull(wgl.wglCreateContextAttribsARB);
+    WGLContext_windows wgl = new WGLContext_windows(false);
     
     // When : init
     wgl.init();
@@ -55,7 +51,7 @@ public class TestWGLContext_windows extends WindowsTest {
     Assert.assertFalse(wgl.isInitialized());
   }
   
-@Ignore("Not working yet")
+@Ignore("Not working yet : can not invoke OpenGL after making context current, maybe because of the HDC being null")
   @Test
   public void getOpenGLVersion() {
     if (!checkPlatform())
@@ -63,10 +59,6 @@ public class TestWGLContext_windows extends WindowsTest {
 
     // Given
     WGLContext_windows wgl = new WGLContext_windows();
-
-    // Then functions are properly loaded
-    Assert.assertNotNull(wgl.wglChoosePixelFormatARB);
-    Assert.assertNotNull(wgl.wglCreateContextAttribsARB);
     
     // When : init
     wgl.init(false);
@@ -82,6 +74,37 @@ public class TestWGLContext_windows extends WindowsTest {
     
     String version = gl.glGetString(GL.GL_VERSION);
     System.out.println(version);
+
+    // When : Cleanup
+    wgl.destroy();
+
+    // Then
+    Assert.assertNull(wgl.context);
+    Assert.assertFalse(wgl.isInitialized());
+  }
+  
+@Ignore("Not working yet : can not choose pixel format, maybe because of the HDC being null")
+  @Test
+  public void createWGLContext_advanced() {
+    if (!checkPlatform())
+      return;
+
+    // Given
+    WGLContext_windows wgl = new WGLContext_windows(true);
+
+    // Then functions are properly loaded
+    Assert.assertNotNull(wgl.wglChoosePixelFormatARB);
+    Assert.assertNotNull(wgl.wglCreateContextAttribsARB);
+    
+    // When : init
+    wgl.init(false);
+
+    // Then
+    Assert.assertNotNull(wgl.context);
+    Assert.assertTrue(wgl.isInitialized());
+    
+    // When : makeCurrent
+    wgl.makeCurrent();
 
     // When : Cleanup
     wgl.destroy();

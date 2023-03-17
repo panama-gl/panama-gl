@@ -27,15 +27,24 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   
   protected boolean debug = Debug.check(GLContext.class, WGLContext_windows.class);
   
+  protected boolean advanced = false;
+  
   protected PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB;
   protected PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB;
-  protected PFNWGLGETPIXELFORMATATTRIBFVARBPROC wglGetPixelFormatAttribivARB;
-  
+  //protected PFNWGLGETPIXELFORMATATTRIBFVARBPROC wglGetPixelFormatAttribivARB;
+
   public WGLContext_windows() {
+    this(false);
+  }
+  
+  public WGLContext_windows(boolean advanced) {
     super();
+    this.advanced = advanced;
     loadNativeLibraries();
     initScope();
-    initFunctions();
+    
+    if(advanced)
+      initFunctions();
   }
   
   protected void loadNativeLibraries() {
@@ -74,9 +83,11 @@ public class WGLContext_windows extends AGLContext implements GLContext{
       glut_h.glutInit(argc, argc);
     }
 
-    initSimple();
-    //initAdvanced();
-    
+    if(advanced)
+      initAdvanced();
+    else
+      initSimple();
+
     initialized = true;
   }
 
@@ -98,11 +109,10 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   // ----------------------------------------------------------
   
   protected void initSimple() {
-    
+    // Get a Handle on Current Device Context
     hdc = wgl_h.wglGetCurrentDC();    
     
-    MemorySegment pixelFormat = PIXELFORMATDESCRIPTOR.allocate(allocator);
-    
+    //MemorySegment pixelFormat = PIXELFORMATDESCRIPTOR.allocate(allocator);
     //PIXELFORMATDESCRIPTOR.cAccumAlphaBits$set(descriptor, 0L, (byte)0x8);
     
     // WinGDI Functions : https://en.wikipedia.org/wiki/WinG
@@ -116,6 +126,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   }
 
   protected void initAdvanced() {
+    // Get a Handle on Current Device Context
     hdc = wgl_h.wglGetCurrentDC();
     
     // Pixel configuration
@@ -131,14 +142,18 @@ public class WGLContext_windows extends AGLContext implements GLContext{
           0, // End
       };
     
-    MemorySegment attribs = allocator.allocateArray(ValueLayout.JAVA_INT, attribList);
-    MemorySegment pixelFormat = allocator.allocateArray(ValueLayout.JAVA_INT, new int[10000]);
-    MemorySegment numberOfFormats = allocator.allocateArray(ValueLayout.JAVA_INT, new int[100]);
+    MemorySegment attribsInt = allocator.allocateArray(ValueLayout.JAVA_INT, attribList);
+    //MemoryAddress attribsFloat = wgl_h.NULL();
+    MemorySegment attribsFloat = allocator.allocateArray(ValueLayout.JAVA_FLOAT, new float[0]);
+    int nMaxFormats = 1;
+    MemorySegment pixelFormat = allocator.allocateArray(ValueLayout.JAVA_INT, new int[nMaxFormats]);
+    MemorySegment numberOfFormats = allocator.allocateArray(ValueLayout.JAVA_INT, new int[1]);
 
-    int status = wglChoosePixelFormatARB.apply(hdc, attribs.address(), wgl_h.NULL(), 1, pixelFormat.address(), numberOfFormats.address());
+    System.out.println(hdc);
+    int status = wglChoosePixelFormatARB.apply(hdc, attribsInt.address(), attribsFloat.address(), nMaxFormats, pixelFormat.address(), numberOfFormats.address());
     
     System.out.println(status); // either TRUE or FALSE
     
-    context = wglCreateContextAttribsARB.apply(hdc,  wgl_h.NULL(), attribs.address()).address();
+    context = wglCreateContextAttribsARB.apply(hdc,  wgl_h.NULL(), attribsInt.address()).address();
   }
 }
