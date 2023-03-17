@@ -18,8 +18,6 @@
 package panamagl.platform.linux;
 
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.MemorySession;
-import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
 import opengl.ubuntu.v20.glutDisplayFunc$callback;
 import opengl.ubuntu.v20.glutIdleFunc$callback;
@@ -39,16 +37,12 @@ import panamagl.opengl.GLContext;
  * @author Martin Pernollet
  */
 public class GLUTContext_linux extends AGLContext implements GLContext {
-  protected MemorySession scope;
-  protected SegmentAllocator allocator;
   protected String windowName = "InvisiblePanamaGLWindowForGLContext";
 
   protected int initWidth = 1;
   protected int initHeight = 1;
   protected int initX = 0;
   protected int initY = 0;
-
-  protected boolean initialized = true;
 
   protected int windowHandle = -1;
 
@@ -96,21 +90,6 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
   }
 
   private static void dummy() {}
-
-  @Override
-  public boolean isInitialized() {
-    return initialized;
-  }
-  
-  protected void initScope() {
-    try {
-      scope = MemorySession.openImplicit();
-      allocator = SegmentAllocator.newNativeArena(scope);
-      
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
   
   @Override
   public void destroy() {

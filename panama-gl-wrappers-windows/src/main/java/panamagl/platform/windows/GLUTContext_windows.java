@@ -39,15 +39,12 @@ import panamagl.opengl.GLContext;
  * @author Martin Pernollet
  */
 public class GLUTContext_windows extends AGLContext implements GLContext {
-  protected MemorySession scope;
-  protected SegmentAllocator allocator;
   protected String windowName = "InvisiblePanamaGLWindowForGLContext";
 
   protected int initWidth = 1;
   protected int initHeight = 1;
   protected int initX = Integer.MAX_VALUE;
   protected int initY = Integer.MAX_VALUE;
-  protected boolean initialized = true;
 
   protected int windowHandle = -1;
 
@@ -95,22 +92,6 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
   }
 
   private static void dummy() {}
-
-  @Override
-  public boolean isInitialized() {
-    return initialized;
-  }
-  
-  protected void initScope() {
-    try {
-      scope = MemorySession.openImplicit();
-      allocator = SegmentAllocator.newNativeArena(scope);
-      
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
   
   @Override
   public void destroy() {

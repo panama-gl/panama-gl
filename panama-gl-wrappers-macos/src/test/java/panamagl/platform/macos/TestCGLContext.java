@@ -41,13 +41,13 @@ public class TestCGLContext extends MacOSTest {
 
     
     // Then
-    Assert.assertTrue(cgl.initialized);
+    Assert.assertTrue(cgl.isInitialized());
 
     // When : Cleanup
     cgl.destroy();
 
     // Then
-    Assert.assertFalse(cgl.initialized);
+    Assert.assertFalse(cgl.isInitialized());
   }
 
   @Ignore("CRASHING")
@@ -64,7 +64,7 @@ public class TestCGLContext extends MacOSTest {
 
 
     // Then
-    Assert.assertTrue(cgl.initialized);
+    Assert.assertTrue(cgl.isInitialized());
 
     
     cgl.makeCurrent();
@@ -111,7 +111,7 @@ public class TestCGLContext extends MacOSTest {
     cgl.destroy();
 
     // Then
-    Assert.assertFalse(cgl.initialized);
+    Assert.assertFalse(cgl.isInitialized());
 
   }
 

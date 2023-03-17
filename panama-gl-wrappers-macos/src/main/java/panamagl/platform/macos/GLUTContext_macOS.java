@@ -39,14 +39,10 @@ import panamagl.opengl.GLContext;
  * @author Martin Pernollet
  */
 public class GLUTContext_macOS extends AGLContext implements GLContext {
-  
-  protected MemorySession scope;
-  protected SegmentAllocator allocator;
   protected String windowName = "InvisiblePanamaGLWindowForGLContext";
 
   protected int initWidth = 100;
   protected int initHeight = 100;
-  protected boolean initialized = true;  
   protected int windowHandle = -1;
 
   /** Initialize GLUT and create a window */
@@ -80,22 +76,6 @@ public class GLUTContext_macOS extends AGLContext implements GLContext {
   }
 
   private static void dummy() {}
-
-  @Override
-  public boolean isInitialized() {
-    return initialized;
-  }
-  
-  protected void initScope() {
-    try {
-      scope = MemorySession.openImplicit();
-      allocator = SegmentAllocator.newNativeArena(scope);
-      
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
   
   @Override
   public void destroy() {
@@ -116,13 +96,10 @@ public class GLUTContext_macOS extends AGLContext implements GLContext {
   protected void glutIdleFunc(glutIdleFunc$func fi) {
     MemorySegment idleStub = glutIdleFunc$func.allocate(fi, scope);
     glut_h.glutIdleFunc(idleStub);
-
   }
 
   protected void glutInitWindowSize(int width, int height) {
     glut_h.glutInitWindowSize(width, height);
   }
-
-
 
 }

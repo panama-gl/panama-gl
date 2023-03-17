@@ -17,10 +17,26 @@
  *******************************************************************************/
 package panamagl.opengl;
 
+import java.lang.foreign.MemorySession;
+import java.lang.foreign.SegmentAllocator;
 import panamagl.GLProfile;
 
 public abstract class AGLContext implements GLContext{
+  protected MemorySession scope;
+  protected SegmentAllocator allocator;
+
   protected GLProfile profile;
+  protected boolean initialized = false;
+  
+  protected void initScope() {
+    try {
+      scope = MemorySession.openImplicit();
+      allocator = SegmentAllocator.newNativeArena(scope);
+      
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
 
   @Override
   public GLProfile getProfile() {
@@ -30,5 +46,10 @@ public abstract class AGLContext implements GLContext{
   @Override
   public void setProfile(GLProfile profile) {
     this.profile = profile;
+  }
+  
+  @Override
+  public boolean isInitialized() {
+    return initialized;
   }
 }

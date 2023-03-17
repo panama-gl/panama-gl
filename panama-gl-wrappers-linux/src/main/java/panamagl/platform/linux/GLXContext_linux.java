@@ -18,14 +18,9 @@
 package panamagl.platform.linux;
 
 
-import java.lang.foreign.Addressable;
 import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.MemorySession;
-import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
-import glx.ubuntu.v20.PFNGLXCREATECONTEXTATTRIBSARBPROC;
-import glx.ubuntu.v20.PFNGLXMAKECONTEXTCURRENTPROC;
 import glx.ubuntu.v20.glx_h;
 import opengl.ubuntu.v20.glut_h;
 import panamagl.Debug;
@@ -37,10 +32,6 @@ import panamagl.opengl.GLContext;
 // https://learnopengl.com/Advanced-OpenGL/Framebufferss
 // https://stackoverflow.com/questions/21851688/linux-rendering-offscreen-with-opengl-3-2-w-fbos
 public class GLXContext_linux extends AGLContext implements GLContext{
-  protected MemorySession scope;
-  protected SegmentAllocator allocator;
-  protected boolean initialized = false;
-  
   protected MemoryAddress display;
   protected MemoryAddress context;
   
@@ -57,16 +48,6 @@ public class GLXContext_linux extends AGLContext implements GLContext{
     System.loadLibrary("glut");
     System.loadLibrary("GLU");
     System.loadLibrary("GLX");
-  }
-  
-  protected void initScope() {
-    try {
-      scope = MemorySession.openImplicit();
-      allocator = SegmentAllocator.newNativeArena(scope);
-      
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
   }
 
   @Override
@@ -219,10 +200,5 @@ public class GLXContext_linux extends AGLContext implements GLContext{
     DEFAULT, 
     CHOSEN, 
     FRAMEBUFFER
-  }
-  
-  @Override
-  public boolean isInitialized() {
-    return initialized;
   }
 }

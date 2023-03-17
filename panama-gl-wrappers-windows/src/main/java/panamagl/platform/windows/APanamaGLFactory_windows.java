@@ -31,7 +31,7 @@ import panamagl.platform.Platform;
 public abstract class APanamaGLFactory_windows extends APanamaGLFactory {
 protected boolean debug = Debug.check(APanamaGLFactory_windows.class);
   
-  //protected GLXContext_linux glxContext;
+  protected WGLContext_windows wglContext;
   protected GLUTContext_windows glutContext;
   protected boolean useGLUT = true;
 
@@ -74,7 +74,7 @@ protected boolean debug = Debug.check(APanamaGLFactory_windows.class);
     if (useGLUT) {
       glutContext = new GLUTContext_windows();
       glutContext.init(true); // Linux VM seams to WANT full init
-      Debug.debug(debug, "PanamaGLFactory_linux : initContext : GLUT done");
+      Debug.debug(debug, "PanamaGLFactory_windows : initContext : GLUT done");
       
       return glutContext;
     }
@@ -82,21 +82,21 @@ protected boolean debug = Debug.check(APanamaGLFactory_windows.class);
     // --------------------------------------
     // A GL Context with CGL
     
-    /*else {
-      glxContext = new GLXContext_linux();
-      glxContext.init();
-      Debug.debug(debug, "PanamaGLFactory_linux : initContext : GLX done");
+    else {
+      wglContext = new WGLContext_windows();
+      wglContext.init();
+      wglContext.makeCurrent();
+      Debug.debug(debug, "PanamaGLFactory_windows : initContext : WGL done");
       
-      return glxContext;
-    }*/
-    return null;
+      return wglContext;
+    }
   }
   
   @Override
   public void destroyContext() {
-    // Clean up CGL context
-    //if (glxContext != null)
-    //  glxContext.destroy();
+    // Clean up WGL context
+    if (wglContext != null)
+      wglContext.destroy();
 
     // Clean up GLUT context
     if (glutContext != null)

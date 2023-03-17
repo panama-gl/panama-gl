@@ -69,9 +69,6 @@ import panamagl.opengl.GLContext;
  * @author Martin Pernollet
  */
 public class CGLContext_macOS extends AGLContext implements GLContext {
-  protected MemorySession scope;
-  protected SegmentAllocator allocator;
-
   // I/O data for CGLChoosePixelFormat
   protected MemorySegment attribs; // input
   protected MemorySegment pixelFormat; // output
@@ -80,24 +77,22 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
   protected int pixelFormatLength = 0;
   protected int contextArraySize = 2; // seams to be 2
 
-
   // I/O data for CGLCreateContext
   protected MemorySegment context; // output
-
-  // status
-  protected boolean initialized = true;
 
   protected boolean debug = Debug.check(CGLContext_macOS.class);
 
   public CGLContext_macOS() {
+    initNativeLibraries();
+
+    initScope();
+  }
+
+  protected void initNativeLibraries() {
     // Manually load CGL
     System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
-
-    // The segments created in this function will be destroyed
-    // one the below scope and allocator are collected by GC.
-    scope = MemorySession.openImplicit();
-    allocator = SegmentAllocator.newNativeArena(scope);
   }
+
 
   // https://stackoverflow.com/questions/11383510/setting-up-an-opengl-context-with-cgl-on-mac-os-x
   // https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/OpenGL-MacProgGuide/opengl_offscreen/opengl_offscreen.html
@@ -122,12 +117,6 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
 
     Debug.debug(debug, "CGLContext : destroyed");
   }
-
-  @Override
-  public boolean isInitialized() {
-    return initialized;
-  }
-
 
   public void makeCurrent() {
     /*

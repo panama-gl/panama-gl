@@ -35,7 +35,7 @@ public class TestGLXContext_linux extends LinuxTest {
     context.init(false);
     
     // Then
-    Assert.assertTrue(context.initialized);
+    Assert.assertTrue(context.isInitialized());
 
     // --------------------------
     // When
@@ -57,6 +57,6 @@ public class TestGLXContext_linux extends LinuxTest {
     context.destroy();
     
     // Then
-    Assert.assertFalse(context.initialized);
+    Assert.assertFalse(context.isInitialized());
   }
 }
