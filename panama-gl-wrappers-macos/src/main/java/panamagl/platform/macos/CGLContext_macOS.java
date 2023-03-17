@@ -108,14 +108,13 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
 
     context = createContext();
 
-    // cgl_h.CGLCopyContext(context, attribs, contextArraySize)
-
     initialized = true;
+    
+    Debug.debug(debug, "CGLContext : initialized");
   }
 
   @Override
   public void destroy() {
-    // setCurrentContextZero();
     setCurrentContextZero();
     destroyContext(context);
 
@@ -145,18 +144,11 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
     // MemoryAddress currentContext = getCurrentContext();
     // Debug.debug("Current context : " + currentContext);
 
-    // releaseContext(context);
-    // unlockContext(context);
-
-    // lockContext(context);
     setCurrentContext(context);
   }
 
   public void release() {
-    // setCurrentContextZero();
     releaseContext(context);
-    // unlockContext();
-
   }
 
   // -------------------------------------------------------------------------------------
@@ -416,7 +408,7 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
     at[2] = cgl_h.kCGLOGLPVersion_GL4_Core();
 
 
-    System.out.println("Queried OpenGL version ID : " + at[2]);
+    //System.out.println("Queried OpenGL version ID : " + at[2]);
 
     // Ending the attributes
     at[3] = 0;

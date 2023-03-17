@@ -18,7 +18,6 @@ package panamagl.platform.macos;
 import org.junit.Ignore;
 import org.junit.Test;
 import junit.framework.Assert;
-import panamagl.GLProfile;
 import panamagl.opengl.GL;
 import panamagl.platform.macos.arm.GL_macOS_arm;
 
@@ -63,11 +62,15 @@ public class TestCGLContext extends MacOSTest {
     // When : init
     cgl.init();
 
+
     // Then
     Assert.assertTrue(cgl.initialized);
 
+    
+    cgl.makeCurrent();
+
     GL gl = new GL_macOS_arm();
-System.out.println("version" + gl.glGetString(GL.GL_VERSION));
+    System.out.println("version" + gl.glGetString(GL.GL_VERSION));
     
     
     // When : Cleanup
@@ -99,7 +102,7 @@ System.out.println("version" + gl.glGetString(GL.GL_VERSION));
 
     gl.glClearColor(0, 0, 0, 0);
     gl.glClear(GL.GL_COLOR_BUFFER_BIT);
-    GLProfile profile = new GLProfile(gl);
+    //GLProfile profile = new GLProfile(gl);
     // Assert.assertNotNull(profile.getVendor());
 
     cgl.release();
