@@ -140,7 +140,7 @@ public class GenerateAPI {
     
     if(MACOS_x64) {
       wrapper = new Wrapper();
-      wrapper.platform = "macOS_x86";
+      wrapper.platform = "macOS_x64";
       wrapper.wrapped = Set.of(opengl.macos.x86.glut_h.class/*, glext.macos.v10_15_7.glext_h.class, cgl.macos.v10_15_7.cgl_h.class*/);
       wrapper.accepts = new AcceptsGLMethod();
       wrapper.className = "GL_" + wrapper.platform;
@@ -209,7 +209,7 @@ public class GenerateAPI {
     
     if(LINUX_x64) {
       wrapper = new Wrapper();
-      wrapper.platform = "linux_x86";
+      wrapper.platform = "linux_x64";
       wrapper.wrapped = Set.of(glext.ubuntu.v20.glext_h.class/*, opengl.ubuntu.v20.glut_h.class, glxext.ubuntu.v20.glxext_h.class*/);
       wrapper.accepts = new AcceptsGLMethod();
       wrapper.className = "GL_" + wrapper.platform;
