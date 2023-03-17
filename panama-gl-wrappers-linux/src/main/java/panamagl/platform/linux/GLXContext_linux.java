@@ -45,8 +45,16 @@ public class GLXContext_linux extends AGLContext implements GLContext{
   
   public GLXContext_linux() {
     super();
+    loadNativeLibraries();
     initScope();
-    init();
+    //init();
+  }
+  
+  protected void loadNativeLibraries() {
+    System.loadLibrary("GL");
+    System.loadLibrary("glut");
+    System.loadLibrary("GLU");
+    System.loadLibrary("GLX");
   }
   
   protected void initScope() {
@@ -73,69 +81,14 @@ public class GLXContext_linux extends AGLContext implements GLContext{
     // ----------------------------------------
     // Define visual info (rendering settings)
     //
-    // Specifies the visual that defines the frame buffer resources available 
-    // to the rendering context. 
-    // It is a pointer to an XVisualInfo structure, not a visual ID or a pointer 
-    // to a Visual structure.
-
-    AttribMode mode = AttribMode.DEFAULT;
-    
-    int[] attributes = { 
-        glx_h.GLX_RGBA(), 
-        glx_h.GLX_RED_SIZE(),    8,
-        glx_h.GLX_GREEN_SIZE(),  8,
-        glx_h.GLX_BLUE_SIZE(),   8,
-        glx_h.GLX_ALPHA_SIZE(),  8,
-        glx_h.GLX_DEPTH_SIZE(), 24, //Ideally, the size would be 32 (or at least 24)
-        //glx_h.GLX_DOUBLEBUFFER(), True,
-        (int) glx_h.None() // Should always finish by NONE
-    };
-    
-    MemorySegment attrib = allocator.allocateArray(ValueLayout.JAVA_INT, attributes);
-
-    MemoryAddress visual_info;
-    
-    if(AttribMode.DEFAULT.equals(mode)) {
-      visual_info = glx_h.XDefaultVisual(display, screen);
-    }
-    else if(AttribMode.CHOSEN.equals(mode)){
-      
-      visual_info = glx_h.glXChooseVisual(display, screen, attrib);
-    }
-    else if(AttribMode.FRAMEBUFFER.equals(mode)){
-      
-      int[] fboC = {1};
-      MemorySegment fboCount = allocator.allocateArray(ValueLayout.JAVA_INT, fboC);
-      MemoryAddress frameBufferConfig = glx_h.glXChooseFBConfig(display, screen, attrib, fboCount);
-
-      visual_info = glx_h.glXGetVisualFromFBConfig(display, frameBufferConfig);
-    }
-    else {
-      throw new RuntimeException("Unsupported mode");
-    }
-    
-    System.out.println("Got visual info " + visual_info);
+    MemoryAddress visualInfo = chooseVisual(screen);
     
     // ----------------------------------------
     // Make context
     
-    int[] shareListA = {0};
-    MemorySegment shareList = allocator.allocateArray(ValueLayout.JAVA_INT, shareListA);
-    
-    // A value of True specifies that rendering be done through a direct connection to the graphics system 
-    // if possible; a value of False specifies rendering through the X server.
-    int direct = glx_h.GL_TRUE();
+    createContext(visualInfo);
     
     
-    // https://www.ibm.com/docs/en/aix/7.1?topic=environment-glxcreatecontext-subroutine
-    context = glx_h.glXCreateContext(display, visual_info, shareList.address(), direct);
-    
-    System.out.println("Got context " + context);
-    
-    // https://opengl.developpez.com/docs/man/man/glXMakeCurrent
-    glx_h.glXMakeCurrent(display, 0, context);
-
-    System.out.println("Made current " + context);
 
     
     
@@ -164,6 +117,90 @@ public class GLXContext_linux extends AGLContext implements GLContext{
     initialized = true;
   }
   
+  @Override
+  public void destroy() {
+    glx_h.glXDestroyContext(display, context);
+    
+    initialized = false;
+  }
+  
+  //-------------------------------------------------------------------------------------
+
+  /** Specifies the visual that defines the frame buffer resources available 
+   * to the rendering context. 
+   * It is a pointer to an XVisualInfo structure, not a visual ID or a pointer 
+   * to a Visual structure.
+   */
+  protected MemoryAddress chooseVisual(int screen) {
+    
+    int[] attributes = { 
+        glx_h.GLX_RGBA(), 
+        glx_h.GLX_RED_SIZE(),    8,
+        glx_h.GLX_GREEN_SIZE(),  8,
+        glx_h.GLX_BLUE_SIZE(),   8,
+        glx_h.GLX_ALPHA_SIZE(),  8,
+        glx_h.GLX_DEPTH_SIZE(), 24, //Ideally, the size would be 32 (or at least 24)
+        //glx_h.GLX_DOUBLEBUFFER(), True,
+        (int) glx_h.None() // Should always finish by NONE
+    };
+    
+    MemorySegment attrib = allocator.allocateArray(ValueLayout.JAVA_INT, attributes);
+
+    MemoryAddress visualInfo;
+    
+    AttribMode mode = AttribMode.CHOSEN;
+    
+    // This one WORK!!
+    if(AttribMode.CHOSEN.equals(mode)){
+      visualInfo = glx_h.glXChooseVisual(display, screen, attrib);
+    }
+    
+    // XXX This one actually do not work
+    else if(AttribMode.DEFAULT.equals(mode)) {
+      visualInfo = glx_h.XDefaultVisual(display, screen);
+    }
+    
+    // XXX This one actually do not work
+    else if(AttribMode.FRAMEBUFFER.equals(mode)){
+      
+      int[] fboC = {1};
+      MemorySegment fboCount = allocator.allocateArray(ValueLayout.JAVA_INT, fboC);
+      MemoryAddress frameBufferConfig = glx_h.glXChooseFBConfig(display, screen, attrib, fboCount);
+
+      visualInfo = glx_h.glXGetVisualFromFBConfig(display, frameBufferConfig);
+    }
+    else {
+      throw new RuntimeException("Unsupported mode");
+    }
+    
+    System.out.println("Got visual info " + visualInfo);
+    return visualInfo;
+  }
+
+  protected void createContext(MemoryAddress visualInfo) {
+    MemoryAddress shareList = glx_h.NULL();
+    
+    // A value of True specifies that rendering be done through a direct connection to the graphics system 
+    // if possible; a value of False specifies rendering through the X server.
+    int direct = glx_h.GL_TRUE();
+    
+    
+    // https://www.ibm.com/docs/en/aix/7.1?topic=environment-glxcreatecontext-subroutine
+    context = glx_h.glXCreateContext(display, visualInfo, shareList.address(), direct);
+    
+    System.out.println("Got context " + context);
+  }
+  
+  public void makeCurrent() {
+    // https://opengl.developpez.com/docs/man/man/glXMakeCurrent
+    glx_h.glXMakeCurrent(display, 0, context);
+
+    System.out.println("Made current " + context);
+  }
+
+  public void release() {
+  }
+  
   enum AttribMode{
     DEFAULT, 
     CHOSEN, 
@@ -171,12 +208,7 @@ public class GLXContext_linux extends AGLContext implements GLContext{
   }
   
   
-  @Override
-  public void destroy() {
-    glx_h.glXDestroyContext(display, context);
-    
-    initialized = false;
-  }
+  
   
   
   @Override
