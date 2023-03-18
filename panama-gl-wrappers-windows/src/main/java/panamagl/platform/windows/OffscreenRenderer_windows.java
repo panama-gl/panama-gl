@@ -17,13 +17,85 @@
  *******************************************************************************/
 package panamagl.platform.windows;
 
+import panamagl.Debug;
+import panamagl.GLCanvas;
+import panamagl.GLEventListener;
+import panamagl.GLProfile;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.AOffscreenRenderer;
 import panamagl.offscreen.OffscreenRenderer;
+import panamagl.opengl.GLError;
 
 // Now does not do anything else more than the abstract class
 public class OffscreenRenderer_windows extends AOffscreenRenderer implements OffscreenRenderer{
   public OffscreenRenderer_windows(PanamaGLFactory factory) {
     super(factory);
+  }
+  
+  boolean GET_HANDLE_FOR_WGL = true;
+  
+  protected void initContext(GLCanvas drawable, GLEventListener listener) {
+    if(!GET_HANDLE_FOR_WGL) {
+      super.initContext(drawable, listener);
+      return;
+    }
+    
+    /*Win32.loadLibrary("C:\\Users\\Martin\\Dev\\jzy3d\\public\\panama-gl-bindings\\panama-gl-native-windows-jawt\\src\\main\\resources\\Win32.dll");
+    int handle = Win32.getParentWindowHandle((Component)drawable);
+    System.out.println("Parent window handle : " + handle);*/
+    
+    
+    // ---------------
+    Debug.debug(debug, "AOffscreenRenderer : initContext");
+
+    // --------------------------------------
+    // GL Context init
+    //context = factory.newGLContext();
+
+    context = new WGLContext_windows(false);
+    
+    
+    if(context instanceof WGLContext_windows) {
+      WGLContext_windows wglContext = (WGLContext_windows)context;
+      //wglContext.setWindowHandle(handle);
+      wglContext.init();
+      wglContext.makeCurrent();
+    }
+    
+    
+    Debug.debug(debug, "PanamaGLFactory_windows : initContext : WGL done");
+    
+    Debug.debug(debug, "AOffscreenRenderer : initContext : Got GLContext : " + context);
+
+    // --------------------------------------
+    // OpenGL init
+    this.gl = factory.newGL();
+    GLError.checkAndThrow(gl);
+    
+    GLProfile profile = new GLProfile(gl);
+    context.setProfile(profile);
+    
+
+    Debug.debug(debug, "AOffscreenRenderer : initContext : Got GL : " + gl);
+
+    // --------------------------------------
+    // FBO init
+    this.fbo = factory.newFBO(INIT_FBO_WIDTH, INIT_FBO_HEIGHT);
+    this.fbo.prepare(gl);
+
+    Debug.debug(debug, "AOffscreenRenderer : initContext : Got FBO : " + fbo);
+
+    // --------------------------------------
+    // Invoke GLEventListener.init(..)
+    if (listener != null) {
+      listener.init(gl);
+
+      // Not needed, only needed if we use GLUT MAIN LOOP
+      // glutContext.glutDisplayFunc(this::invokeDisplay);
+    }
+
+    // Mark as ready for display
+    initialized = true;
+
   }
 }

@@ -63,6 +63,8 @@ public class DemoTeapot_Onscreen_Swing {
     frame.getContentPane().setLayout(new BorderLayout());
     frame.setBounds(0, 0, 800, 600);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
+    
 
     // Init action
     Runnable show = new Runnable() {

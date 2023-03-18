@@ -17,7 +17,9 @@
  *******************************************************************************/
 package panamagl.canvas;
 
+import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -122,8 +124,10 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
   @Override
   public void addNotify() {
     super.addNotify();
-
-    // Initialize GL context from main macOS thread
+    
+    // Initialize GL context from the appropriate thread
+    // Main OS thread for macOS
+    // AWT thread for Linux/Windows
     offscreen.onInit(this, listener);
   }
 

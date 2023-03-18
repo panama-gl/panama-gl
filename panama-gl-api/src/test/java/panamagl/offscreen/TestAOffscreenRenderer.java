@@ -23,6 +23,7 @@ import static org.mockito.Mockito.when;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.junit.Assert;
 import org.junit.Test;
+import panamagl.GLCanvas;
 import panamagl.GLEventAdapter;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
@@ -32,10 +33,11 @@ public class TestAOffscreenRenderer {
   @Test
   public void init() {
     PanamaGLFactory p = mock(PanamaGLFactory.class);
-    
+    GLCanvas canvas = mock(GLCanvas.class);
+
     // Given
     AOffscreenRenderer r = new AOffscreenRenderer(p);
-    
+
     // When
     when(p.newFBO(anyInt(), anyInt())).thenReturn(mock(FBO.class));
     when(p.newGL()).thenReturn(mock(GL.class));
@@ -49,7 +51,7 @@ public class TestAOffscreenRenderer {
       }
     };
     
-    r.initContext(listener);
+    r.initContext(canvas, listener);
     
     // Then
     Assert.assertNotNull(r.getGL());

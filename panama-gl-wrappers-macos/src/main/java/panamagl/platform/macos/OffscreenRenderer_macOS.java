@@ -40,7 +40,7 @@ public class OffscreenRenderer_macOS extends AOffscreenRenderer implements Offsc
   
   @Override
   public void onInit(GLCanvas drawable, GLEventListener listener) {
-    initContext_OnMainThread(listener);
+    initContext_OnMainThread(drawable, listener);
   }
 
   @Override
@@ -70,9 +70,9 @@ public class OffscreenRenderer_macOS extends AOffscreenRenderer implements Offsc
   /* ===================================================== */
   // BELOW FUNC ALLOW EXECUTING IN APPKIT MAIN THREAD
 
-  protected void initContext_OnMainThread(GLEventListener listener) {
+  protected void initContext_OnMainThread(GLCanvas drawable, GLEventListener listener) {
     GLProfile.initSingleton();
-    OSXUtil.RunOnMainThread(true, false, getTask_initContext(listener));
+    OSXUtil.RunOnMainThread(true, false, getTask_initContext(drawable, listener));
   }
 
   protected void renderGLToImage_OnMainThread(GLCanvas drawable, GLEventListener listener, boolean waitUntilDone, boolean kickNSApp) {

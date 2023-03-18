@@ -7,21 +7,29 @@ import opengl.ubuntu.v20.glut_h;
 import panamagl.Debug;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;
+import panamagl.opengl.GLError;
 import wgl.windows.x86.PFNWGLCHOOSEPIXELFORMATARBPROC;
 import wgl.windows.x86.PFNWGLCREATECONTEXTATTRIBSARBPROC;
-import wgl.windows.x86.PFNWGLGETPIXELFORMATATTRIBFVARBPROC;
 import wgl.windows.x86.PIXELFORMATDESCRIPTOR;
 import wgl.windows.x86.wgl_h;
 
 /**
+ * WIP Windows context
+ * 
  * 
  * @see https://www.khronos.org/opengl/wiki/Creating_an_OpenGL_Context_(WGL)
  * @see https://learn.microsoft.com/en-us/windows/win32/opengl/wgl-and-windows-reference
  * @see https://www.cprogramming.com/tutorial/wgl_wiggle_functions.html
+ * @see https://www.khronos.org/opengl/wiki/Tutorial:_OpenGL_3.1_The_First_Triangle_(C++/Win)#Rendering_Context_Creation
  * 
  * @author Martin Pernollet
  */
 public class WGLContext_windows extends AGLContext implements GLContext{
+  // A Handle to the Window
+  protected int[] windowHandle = new int[1];
+  protected MemorySegment hWnd;
+  
+  // A Handle to the DEVICE context
   protected MemoryAddress hdc;
   protected MemoryAddress context;
   
@@ -42,32 +50,22 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     this.advanced = advanced;
     loadNativeLibraries();
     initScope();
-    
-    if(advanced)
-      initFunctions();
   }
   
   protected void loadNativeLibraries() {
-    //System.loadLibrary("wingdib");
+    // to invoke getDC() on Windows
+    System.loadLibrary("User32"); 
+    
+    // to invoke ChoosePixelFormat()
+    System.loadLibrary("Gdi32");
+    
+    // to invoke GetLastError()
+    System.loadLibrary("Kernel32");
+    
+    // to use OpenGL and GLUT
     System.loadLibrary("opengl32");
     System.loadLibrary("glu32");
     System.loadLibrary("freeglut");
-  }
-  
-  protected void initFunctions() {
-    MemorySegment name;
-    MemoryAddress address;
-    
-    name = allocator.allocateUtf8String("wglChoosePixelFormatARB");
-    address = wgl_h.wglGetProcAddress(name);
-    wglChoosePixelFormatARB = PFNWGLCHOOSEPIXELFORMATARBPROC.ofAddress(address, scope);
-
-    name = allocator.allocateUtf8String("wglCreateContextAttribsARB");
-    address = wgl_h.wglGetProcAddress(name);
-    wglCreateContextAttribsARB = PFNWGLCREATECONTEXTATTRIBSARBPROC.ofAddress(address, scope);
-
-    name = null;
-    address = null;
   }
 
   @Override
@@ -90,7 +88,6 @@ public class WGLContext_windows extends AGLContext implements GLContext{
 
     initialized = true;
   }
-
   
   @Override
   public void destroy() {
@@ -103,31 +100,74 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   public void makeCurrent() {
     // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-wglmakecurrent
     wgl_h.wglMakeCurrent(hdc, context);
-    
+    System.out.println("WGL : MAKE CURRENT OK");
   }
   
   // ----------------------------------------------------------
   
+  /**
+   * Init context the simpl way
+   */
+  // https://chgi.developpez.com/windows/hdc/
   protected void initSimple() {
-    // Get a Handle on Current Device Context
-    hdc = wgl_h.wglGetCurrentDC();    
+    System.out.println("WGL : InitSimple");
+    initHDC();
     
-    //MemorySegment pixelFormat = PIXELFORMATDESCRIPTOR.allocate(allocator);
+    MemorySegment pixelFormat = PIXELFORMATDESCRIPTOR.allocate(allocator);
     //PIXELFORMATDESCRIPTOR.cAccumAlphaBits$set(descriptor, 0L, (byte)0x8);
-    
-    // WinGDI Functions : https://en.wikipedia.org/wiki/WinG
-    // Not available on my computer?
+
+    // ----------------------------
+    // Choose a pixel format
     // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-choosepixelformat
-    //wgl_h.ChoosePixelFormat(hdc, pixelFormat.address());
-    //wgl_h.SetPixelFormat();
+    int format = wgl_h.ChoosePixelFormat(hdc, pixelFormat);
     
+    if(format==0) {
+      throw new RuntimeException("Fail to choose pixel format");
+    }
+    else {
+      System.out.println("WGL : format " + format );      
+    }
+  
+    // ----------------------------
+    // Set a pixel format
+    // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-setpixelformat
+    int status = wgl_h.SetPixelFormat(hdc, format, pixelFormat);
+    
+    if(status==0) {
+      throw new RuntimeException("Fail to set pixel format");
+    }
+    else {
+      System.out.println("WGL : status " + status );      
+    }
+    
+    // ----------------------------
+    // Create the context
+
     //https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-wglcreatecontext
     context = wgl_h.wglCreateContext(hdc);
+    
+    if(context.address().equals(wgl_h.NULL())) {
+      GLError error = getWindowsLastError();
+      //error.throwRuntimeException();
+      System.err.println("Error getting context : " + error);
+      System.exit(0);
+    }
+    else {
+      System.out.println("WGL : context address : " + context);
+      //System.out.println("WGL : context value : " + context.get(ValueLayout.JAVA_INT, 0));      
+    }
   }
+  
+  // -------------------------------------------
 
+  /**
+   * Init context the advanced way
+   */
   protected void initAdvanced() {
-    // Get a Handle on Current Device Context
-    hdc = wgl_h.wglGetCurrentDC();
+    System.out.println("WGL : InitAdvanced");
+
+    initHDC();
+    initFunctions();
     
     // Pixel configuration
     int attribList[] =
@@ -149,11 +189,124 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     MemorySegment pixelFormat = allocator.allocateArray(ValueLayout.JAVA_INT, new int[nMaxFormats]);
     MemorySegment numberOfFormats = allocator.allocateArray(ValueLayout.JAVA_INT, new int[1]);
 
-    System.out.println(hdc);
-    int status = wglChoosePixelFormatARB.apply(hdc, attribsInt.address(), attribsFloat.address(), nMaxFormats, pixelFormat.address(), numberOfFormats.address());
+    System.out.println("WGL : HDC " + hdc);
+    int status = wglChoosePixelFormatARB.apply(hdc.address(), attribsInt.address(), attribsFloat.address(), nMaxFormats, pixelFormat.address(), numberOfFormats.address());
     
-    System.out.println(status); // either TRUE or FALSE
+    System.out.println("WGL : status " + status + " expect " + wgl_h.GL_TRUE() );
     
-    context = wglCreateContextAttribsARB.apply(hdc,  wgl_h.NULL(), attribsInt.address()).address();
+    context = wglCreateContextAttribsARB.apply(hdc.address(),  wgl_h.NULL(), attribsInt.address()).address();
+    
+    if(context.address().equals(wgl_h.NULL())) {
+      GLError error = getWindowsLastError();
+      //error.throwRuntimeException();
+      System.err.println("Error getting context : " + error);
+      System.exit(0);
+    }
+    else {
+      System.out.println("WGL : context " + context);
+      System.out.println("WGL : context " + context.get(ValueLayout.JAVA_INT, 0));      
+    }
+  }
+  
+  /**
+   * Function pointers for advanced context initialization.
+   */
+  protected void initFunctions() {
+    MemorySegment name;
+    MemoryAddress address;
+    
+    name = allocator.allocateUtf8String("wglChoosePixelFormatARB");
+    address = wgl_h.wglGetProcAddress(name);
+    wglChoosePixelFormatARB = PFNWGLCHOOSEPIXELFORMATARBPROC.ofAddress(address, scope);
+
+    name = allocator.allocateUtf8String("wglCreateContextAttribsARB");
+    address = wgl_h.wglGetProcAddress(name);
+    wglCreateContextAttribsARB = PFNWGLCREATECONTEXTATTRIBSARBPROC.ofAddress(address, scope);
+
+    name = null;
+    address = null;
+  }
+  
+  //----------------------------------------
+  
+  /**
+   * Retrieve a handle to the device context required for initializing the WGL context.
+   */
+  protected void initHDC() {
+    
+    // Get a Handle on the window
+    if(windowHandle[0]!=0) {
+      long[] wh = {windowHandle[0]};
+      //hWnd = allocator.allocateArray(ValueLayout.JAVA_LONG, wh);
+      hWnd = allocator.allocateArray(ValueLayout.JAVA_INT, windowHandle[0]);
+
+      System.out.println("WGL : HWND : " + windowHandle[0]);
+
+      // Get a Handle on Current Device Context
+      // https://learn.microsoft.com/fr-fr/windows/win32/api/winuser/nf-winuser-getdc
+      hdc = wgl_h.GetDC(hWnd);
+    }
+    else {
+      // If hWND is NULL, we get a DEVICE CONTEXT for the whole screen
+      // (and not for the window only)
+      hdc = wgl_h.GetDC(wgl_h.NULL());      
+    }
+    
+    System.out.println("WGL : HDC : " + hdc);
+    
+    //wgl_h.wglGetCurrentDC(); 
+  }
+  
+  /**
+   * Retrieve last error code while setting up the WGL context.
+   * 
+   * Different from GL error.
+   * 
+   */
+  protected GLError getWindowsLastError() {
+    //https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-getlasterror
+    int errorCode = wgl_h.GetLastError();
+    
+    System.out.println("Error getting context : " + errorCode);
+
+    //wgl_h.LPVOID.bitAlignment();
+    
+    int size = 1000;
+    MemorySegment mess = allocator.allocate(size);
+    
+    //wgl_h.MAKE
+    
+    //https://community.khronos.org/t/wglcreatecontext-failed/38840/23
+    wgl_h.FormatMessageW(
+        wgl_h.FORMAT_MESSAGE_ALLOCATE_BUFFER() |
+        wgl_h.FORMAT_MESSAGE_FROM_SYSTEM() |
+        //wgl_h.FORMAT_MESSAGE_FROM_STRING(),
+        wgl_h.FORMAT_MESSAGE_IGNORE_INSERTS(),
+        wgl_h.NULL(),
+        errorCode,
+        0,//wgl_h.MAKELANGID(wgl_h.LANG_NEUTRAL(), wgl_h.SUBLANG_DEFAULT()), // Default language
+        mess.address(),
+        size,
+        wgl_h.NULL()
+        );
+    
+    String e127 = "The specified procedure could not be found";
+    String e6 = "Invalid handle";
+    
+    //char[] c = mess.get(ValueLayout.JAVA_CHAR, size);
+    String m = new String(mess.toArray(ValueLayout.JAVA_BYTE));
+    System.err.println(m);
+    
+    GLError error = new GLError(errorCode, mess.getUtf8String(0));
+    return error;
+  }
+  //----------------------------------------
+
+  public int getWindowHandle() {
+    return windowHandle[0];
+  }
+
+  public void setWindowHandle(int handle) {
+    this.windowHandle[0] = handle;
   }
 }

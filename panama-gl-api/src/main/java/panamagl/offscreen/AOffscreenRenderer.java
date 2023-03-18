@@ -55,7 +55,7 @@ public class AOffscreenRenderer implements OffscreenRenderer {
 
   @Override
   public void onInit(GLCanvas drawable, GLEventListener listener) {
-    Runnable r = getTask_initContext(listener);
+    Runnable r = getTask_initContext(drawable, listener);
     
     executeFromAWTMainThread(r);
   }
@@ -113,7 +113,7 @@ public class AOffscreenRenderer implements OffscreenRenderer {
    * GLPanel+GLEventListener)
    * </ul>
    */
-  protected void initContext(GLEventListener listener) {
+  protected void initContext(GLCanvas drawable, GLEventListener listener) {
     Debug.debug(debug, "AOffscreenRenderer : initContext");
 
     // --------------------------------------
@@ -294,11 +294,11 @@ public class AOffscreenRenderer implements OffscreenRenderer {
     };
   }
 
-  protected Runnable getTask_initContext(GLEventListener listener) {
+  protected Runnable getTask_initContext(GLCanvas drawable, GLEventListener listener) {
     return new Runnable() {
       @Override
       public void run() {
-        initContext(listener);
+        initContext(drawable, listener);
       }
     };
   }
