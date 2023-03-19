@@ -34,7 +34,7 @@ public class TestWGLContext_windows extends WindowsTest {
     WGLContext_windows wgl = new WGLContext_windows(false);
     
     // When : init
-    wgl.init();
+    wgl.init(false);
 
     // Then
     Assert.assertNotNull(wgl.context);
@@ -51,7 +51,6 @@ public class TestWGLContext_windows extends WindowsTest {
     Assert.assertFalse(wgl.isInitialized());
   }
   
-@Ignore("Not working yet : can not invoke OpenGL after making context current, maybe because of the HDC being null")
   @Test
   public void getOpenGLVersion() {
     if (!checkPlatform())
@@ -70,10 +69,10 @@ public class TestWGLContext_windows extends WindowsTest {
     // When : makeCurrent
     wgl.makeCurrent();
     
+    // Then can invoke GL
     GL gl = new GL_windows_x64();
-    
     String version = gl.glGetString(GL.GL_VERSION);
-    System.out.println(version);
+    System.out.println("GL Version : " + version);
 
     // When : Cleanup
     wgl.destroy();

@@ -33,7 +33,7 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   protected static final int INIT_FBO_WIDTH = 10;
   protected static final int INIT_FBO_HEIGHT = 10;
 
-  protected boolean debug = Debug.check(AOffscreenRenderer.class);
+  protected boolean debug = Debug.check(OffscreenRenderer.class, AOffscreenRenderer.class);
   
   protected PanamaGLFactory factory;
   protected GL gl;

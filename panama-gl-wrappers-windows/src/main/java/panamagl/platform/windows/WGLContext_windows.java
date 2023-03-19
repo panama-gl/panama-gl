@@ -3,6 +3,7 @@ package panamagl.platform.windows;
 import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
+import freeglut.windows.x86.freeglut_h;
 import opengl.ubuntu.v20.glut_h;
 import panamagl.Debug;
 import panamagl.opengl.AGLContext;
@@ -53,6 +54,12 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   }
   
   protected void loadNativeLibraries() {
+    
+    // to use OpenGL and GLUT
+    System.loadLibrary("opengl32");
+    System.loadLibrary("glu32");
+    System.loadLibrary("freeglut");
+    
     // to invoke getDC() on Windows
     System.loadLibrary("User32"); 
     
@@ -61,11 +68,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     
     // to invoke GetLastError()
     System.loadLibrary("Kernel32");
-    
-    // to use OpenGL and GLUT
-    System.loadLibrary("opengl32");
-    System.loadLibrary("glu32");
-    System.loadLibrary("freeglut");
+
   }
 
   @Override
@@ -78,7 +81,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     // Init glut so that it can be used
     if(loadGlut) {
       var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
-      glut_h.glutInit(argc, argc);
+      freeglut_h.glutInit(argc, argc);
     }
 
     if(advanced)
@@ -100,7 +103,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   public void makeCurrent() {
     // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-wglmakecurrent
     wgl_h.wglMakeCurrent(hdc, context);
-    System.out.println("WGL : MAKE CURRENT OK");
+    System.out.println("WGL : make context current");
   }
   
   // ----------------------------------------------------------
@@ -109,13 +112,24 @@ public class WGLContext_windows extends AGLContext implements GLContext{
    * Init context the simpl way
    */
   // https://chgi.developpez.com/windows/hdc/
+  //EXCEPTION_ACCESS_VIOLATION (0xc0000005) = segmentation fault (accessing the memory segment of another application)
   protected void initSimple() {
     System.out.println("WGL : InitSimple");
     initHDC();
     
     MemorySegment pixelFormat = PIXELFORMATDESCRIPTOR.allocate(allocator);
-    //PIXELFORMATDESCRIPTOR.cAccumAlphaBits$set(descriptor, 0L, (byte)0x8);
-
+    PIXELFORMATDESCRIPTOR.cAccumAlphaBits$set(pixelFormat, (byte)24);
+    
+    int flags = //wgl_h.PFD_DRAW_TO_WINDOW() |   // support window  
+        wgl_h.PFD_SUPPORT_OPENGL() |   // support OpenGL  
+        wgl_h.PFD_DOUBLEBUFFER();
+    PIXELFORMATDESCRIPTOR.dwFlags$set(pixelFormat, flags);
+    PIXELFORMATDESCRIPTOR.iPixelType$set(pixelFormat, (byte)wgl_h.PFD_TYPE_RGBA());
+    PIXELFORMATDESCRIPTOR.cAlphaBits$set(pixelFormat, (byte)24);
+    PIXELFORMATDESCRIPTOR.cColorBits$set(pixelFormat, (byte)8);
+    PIXELFORMATDESCRIPTOR.cDepthBits$set(pixelFormat, (byte)32);
+    PIXELFORMATDESCRIPTOR.iLayerType$set(pixelFormat, (byte)wgl_h.PFD_MAIN_PLANE());
+    
     // ----------------------------
     // Choose a pixel format
     // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-choosepixelformat

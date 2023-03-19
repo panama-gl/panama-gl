@@ -32,7 +32,11 @@ public class OffscreenRenderer_windows extends AOffscreenRenderer implements Off
     super(factory);
   }
   
-  boolean GET_HANDLE_FOR_WGL = true;
+  /*Win32.loadLibrary("C:\\Users\\Martin\\Dev\\jzy3d\\public\\panama-gl-bindings\\panama-gl-native-windows-jawt\\src\\main\\resources\\Win32.dll");
+  int handle = Win32.getParentWindowHandle((Component)drawable);
+  System.out.println("Parent window handle : " + handle);*/
+
+  /*boolean GET_HANDLE_FOR_WGL = true;
   
   protected void initContext(GLCanvas drawable, GLEventListener listener) {
     if(!GET_HANDLE_FOR_WGL) {
@@ -40,9 +44,6 @@ public class OffscreenRenderer_windows extends AOffscreenRenderer implements Off
       return;
     }
     
-    /*Win32.loadLibrary("C:\\Users\\Martin\\Dev\\jzy3d\\public\\panama-gl-bindings\\panama-gl-native-windows-jawt\\src\\main\\resources\\Win32.dll");
-    int handle = Win32.getParentWindowHandle((Component)drawable);
-    System.out.println("Parent window handle : " + handle);*/
     
     
     // ---------------
@@ -58,7 +59,7 @@ public class OffscreenRenderer_windows extends AOffscreenRenderer implements Off
     if(context instanceof WGLContext_windows) {
       WGLContext_windows wglContext = (WGLContext_windows)context;
       //wglContext.setWindowHandle(handle);
-      wglContext.init();
+      wglContext.init(true);
       wglContext.makeCurrent();
     }
     
@@ -71,12 +72,15 @@ public class OffscreenRenderer_windows extends AOffscreenRenderer implements Off
     // OpenGL init
     this.gl = factory.newGL();
     GLError.checkAndThrow(gl);
-    
+
+    Debug.debug(debug, "AOffscreenRenderer : initContext : Got GL : " + gl);
+
     GLProfile profile = new GLProfile(gl);
     context.setProfile(profile);
     
+    Debug.debug(debug, "AOffscreenRenderer : initContext : Got Profile : " + profile);
+    
 
-    Debug.debug(debug, "AOffscreenRenderer : initContext : Got GL : " + gl);
 
     // --------------------------------------
     // FBO init
@@ -97,5 +101,5 @@ public class OffscreenRenderer_windows extends AOffscreenRenderer implements Off
     // Mark as ready for display
     initialized = true;
 
-  }
+  }*/
 }

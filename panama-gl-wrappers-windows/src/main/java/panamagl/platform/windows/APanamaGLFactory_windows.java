@@ -33,7 +33,7 @@ protected boolean debug = Debug.check(APanamaGLFactory_windows.class);
   
   protected WGLContext_windows wglContext;
   protected GLUTContext_windows glutContext;
-  protected boolean useGLUT = true;
+  protected boolean useGLUT = false;
 
   public APanamaGLFactory_windows() {
     super();
