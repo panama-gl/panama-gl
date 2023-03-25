@@ -20,6 +20,7 @@ package panamagl.renderers.text;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import panamagl.opengl.GL;
 import panamagl.renderers.image.BasicImageRenderer;
@@ -31,6 +32,8 @@ import panamagl.utils.GraphicsUtils;
  * Render text to image which can then be drawn at a given 3D position.
  */
 public class BasicTextRenderer extends BasicImageRenderer implements TextRenderer<Font, Color>{
+  boolean drawBorder = true;
+  
   @Override
   public void draw(GL gl, Font font, String text, float x, float y, float z, Color color, float rotation) {
     ForeignImage fi = createForeignImage(font, text, color);
@@ -40,26 +43,39 @@ public class BasicTextRenderer extends BasicImageRenderer implements TextRendere
   
   protected ForeignImage createForeignImage(Font font, String text, Color color) {
     ForeignImage fi;
-    int width = GraphicsUtils.stringWidth(text, font);
-    //int height = (int)(font.getSize()*1.25f);
-    int height =font.getSize();
+    Rectangle2D bounds = GraphicsUtils.stringBounds(text, font);
+    int width = (int)bounds.getWidth();//GraphicsUtils.stringWidth(text, font);
+    int height = (int)bounds.getHeight();//font.getSize();
+    
+    if(width<=0) {
+      throw new IllegalArgumentException("Width<=0 for \"" + text + "\" : " + width );
+    }
+    if(height<=0) {
+      throw new IllegalArgumentException("Height<=0 for \"" + text + "\" : " + height );
+    }
+    
+    //System.out.println(width + "," + height + " " + text);
     
     BufferedImage i = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
     
     Graphics2D g = i.createGraphics();
     
-    //g.setColor(Color.GRAY);
-    //g.drawRect(1, 1, width-2, height-2);
-
+    if(drawBorder) {
+      g.setColor(Color.GRAY);
+      g.drawRect(1, 1, width-2, height-2);
+    }
+    
     // Draw text
     g.setFont(font);
     g.setColor(color);
     
-    int y = height - (int)(height*0.25);
+    int y = height - (int)Math.round(height*0.25);
+    //int y = height;
     
     GraphicsUtils.drawString(g, font, false, text, 0, y);
     //GraphicsUtils.drawString(g, font, false, text, 0, 0);
     
+    g.dispose();
 
     fi = new ForeignImage();
     fi.image = i;

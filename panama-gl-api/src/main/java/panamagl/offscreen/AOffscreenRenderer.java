@@ -144,9 +144,6 @@ public class AOffscreenRenderer implements OffscreenRenderer {
     // Invoke GLEventListener.init(..)
     if (listener != null) {
       listener.init(gl);
-
-      // Not needed, only needed if we use GLUT MAIN LOOP
-      // glutContext.glutDisplayFunc(this::invokeDisplay);
     }
 
     // Mark as ready for display

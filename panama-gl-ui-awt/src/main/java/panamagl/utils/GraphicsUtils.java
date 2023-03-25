@@ -26,7 +26,9 @@ import java.awt.ImageCapabilities;
 import java.awt.Transparency;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import javax.swing.SwingUtilities;
 
 public class GraphicsUtils {
   /**
@@ -58,12 +60,30 @@ public class GraphicsUtils {
   public static int stringWidth(Graphics2D g2d, String string) {
     FontMetrics fm = g2d.getFontMetrics();
     if (fm != null) {
-      return fm.stringWidth(string);
+      return     SwingUtilities.computeStringWidth(fm, string);
+
+      //return fm.stringWidth(string);
     } else {
       return -1;
     }
   }
-  
+  public static Rectangle2D stringBounds(String string, Font font) {
+    Graphics2D g = i.createGraphics();
+    g.setFont(font);
+    return stringBounds(g, string);
+  }
+
+
+  public static Rectangle2D stringBounds(Graphics2D g2d, String string) {
+    FontMetrics fm = g2d.getFontMetrics();
+    if (fm != null) {
+      return fm.getStringBounds(string, g2d);
+    } else {
+      return null;
+    }
+  }
+
+
   public static BufferedImage createCompatibleImage(int width, int height) {
     GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
     GraphicsDevice device = env.getDefaultScreenDevice();

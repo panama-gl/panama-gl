@@ -17,16 +17,16 @@
  *******************************************************************************/
 package panamagl.platform.windows;
 
+import java.lang.foreign.Addressable;
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.MemorySession;
-import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
+import freeglut.windows.x86.freeglut_h;
 import freeglut.windows.x86.glutDisplayFunc$callback;
 import freeglut.windows.x86.glutIdleFunc$callback;
-import freeglut.windows.x86.freeglut_h;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
+import wgl.windows.x86.wgl_h;
 
 /**
  * This GLUT {@link GLContext} initialize a GLUT offscreen context allowing to then invoke
@@ -77,11 +77,10 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
     freeglut_h.glutHideWindow();   
     //freeglut_h.glutIconifyWindow();
     
-    // This dummy stub registration is required to get macOS onscreen rendering working
-    // It will avoid error message
-    // "GLUT Fatal Error: redisplay needed for window 1, but no display callback."
-    glutDisplayFunc(GLUTContext_windows::dummy);
-
+    //Addressable hnd = allocator.allocate(ValueLayout.JAVA_INT, windowHandle);
+    //https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-showwindow
+    //wgl_h.ShowWindow(hnd, 5);
+    
     initialized = true;
   }
 
@@ -89,9 +88,11 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
     System.loadLibrary("opengl32");
     System.loadLibrary("glu32");
     System.loadLibrary("freeglut");
-  }
+    
+    // To use ShowWindow()
+    //System.loadLibrary("User32");
 
-  private static void dummy() {}
+  }
   
   @Override
   public void destroy() {

@@ -58,7 +58,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     // to use OpenGL and GLUT
     System.loadLibrary("opengl32");
     System.loadLibrary("glu32");
-    System.loadLibrary("freeglut");
+    //System.loadLibrary("freeglut");
     
     // to invoke getDC() on Windows
     System.loadLibrary("User32"); 
@@ -73,7 +73,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
 
   @Override
   public void init() {
-    init(true);
+    init(false);
   }
   
   public void init(boolean loadGlut) {
@@ -83,6 +83,17 @@ public class WGLContext_windows extends AGLContext implements GLContext{
       var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
       freeglut_h.glutInit(argc, argc);
     }
+    
+    //freeglut_h.glutInitDisplayMode(freeglut_h.GLUT_DOUBLE() | freeglut_h.GLUT_RGBA() | freeglut_h.GLUT_DEPTH());
+    //freeglut_h.glutInitWindowSize(1, 1);
+    //freeglut_h.glutInitWindowPosition(1000000, 1000000);
+    
+    //int windowHandle = freeglut_h.glutCreateWindow(allocator.allocateUtf8String("...."));
+    
+    // Hacky!! Use it while WGLContext is not working
+    //freeglut_h.glutHideWindow();   
+    
+    //freeglut_h.glutDestroyWindow(windowHandle);
 
     if(advanced)
       initAdvanced();
@@ -117,6 +128,11 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     System.out.println("WGL : InitSimple");
     initHDC();
     
+    int status = 0; // used to get status
+    
+    // ----------------------------
+    // Choose a pixel format
+
     MemorySegment pixelFormat = PIXELFORMATDESCRIPTOR.allocate(allocator);
     PIXELFORMATDESCRIPTOR.cAccumAlphaBits$set(pixelFormat, (byte)24);
     
@@ -130,8 +146,6 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     PIXELFORMATDESCRIPTOR.cDepthBits$set(pixelFormat, (byte)32);
     PIXELFORMATDESCRIPTOR.iLayerType$set(pixelFormat, (byte)wgl_h.PFD_MAIN_PLANE());
     
-    // ----------------------------
-    // Choose a pixel format
     // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-choosepixelformat
     int format = wgl_h.ChoosePixelFormat(hdc, pixelFormat);
     
@@ -141,11 +155,34 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     else {
       System.out.println("WGL : format " + format );      
     }
-  
+
+    // ----------------------------
+    // Describe pixel format to check we properly set it
+    long nBytes = pixelFormat.byteSize();
+    
+    MemorySegment pixelFormatOut = PIXELFORMATDESCRIPTOR.allocate(allocator);
+    
+    status = wgl_h.DescribePixelFormat(hdc, format, (int)nBytes, pixelFormatOut);
+    
+    if(status==0) {
+      throw new RuntimeException("Fail to get pixel format description");
+    }
+    else {
+      System.out.println("WGL : PFD.flag " + PIXELFORMATDESCRIPTOR.dwFlags$get(pixelFormatOut));
+      System.out.println("WGL : PFD.iPixelType " + PIXELFORMATDESCRIPTOR.iPixelType$get(pixelFormatOut));
+      System.out.println("WGL : PFD.cAlphaBits " + PIXELFORMATDESCRIPTOR.cAlphaBits$get(pixelFormatOut));
+      System.out.println("WGL : PFD.cColorBits " + PIXELFORMATDESCRIPTOR.cColorBits$get(pixelFormatOut));
+      System.out.println("WGL : PFD.cDepthBits " + PIXELFORMATDESCRIPTOR.cDepthBits$get(pixelFormatOut));
+      System.out.println("WGL : PFD.iLayerType " + PIXELFORMATDESCRIPTOR.iLayerType$get(pixelFormatOut));
+      
+      //System.out.println("WGL : status " + status );      
+    }
+
+    
     // ----------------------------
     // Set a pixel format
     // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-setpixelformat
-    int status = wgl_h.SetPixelFormat(hdc, format, pixelFormat);
+    status = wgl_h.SetPixelFormat(hdc, format, pixelFormat);
     
     if(status==0) {
       throw new RuntimeException("Fail to set pixel format");
