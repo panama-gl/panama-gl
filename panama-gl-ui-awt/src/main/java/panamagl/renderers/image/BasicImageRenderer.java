@@ -60,6 +60,8 @@ public class BasicImageRenderer implements ImageRenderer<BufferedImage>{
 
     }*/
     
+    //System.out.println(image.getWidth() + "," + image.getHeight());
+    
     // Draw image
     gl.glPixelZoom(1, 1);
     gl.glRasterPos3f(x, y, z);

@@ -85,11 +85,15 @@ public class AOffscreenRenderer implements OffscreenRenderer {
     }
     // Otherwise, push the request to AWT
     else {
-      try {
+      // On Windows and Linux, we need to 
+      EventQueue.invokeLater(r);
+      
+      // macOS was fine with
+      /*try {
         EventQueue.invokeAndWait(r);
       } catch (InvocationTargetException | InterruptedException e) {
         throw new RuntimeException(e);
-      }      
+      } */     
     }
   }
   

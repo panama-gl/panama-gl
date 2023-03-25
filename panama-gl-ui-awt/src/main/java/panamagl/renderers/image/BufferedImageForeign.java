@@ -18,24 +18,13 @@
 package panamagl.renderers.image;
 
 
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Transparency;
-import java.awt.color.ColorSpace;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.awt.image.ComponentColorModel;
-import java.awt.image.DataBuffer;
-import java.awt.image.DataBufferByte;
 import java.awt.image.PixelGrabber;
-import java.awt.image.Raster;
-import java.awt.image.WritableRaster;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
 import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import panamagl.opengl.GL;
 
 /**
@@ -47,9 +36,6 @@ import panamagl.opengl.GL;
 public class BufferedImageForeign {
   static MemorySession scope = MemorySession.openImplicit();
   static SegmentAllocator allocator = SegmentAllocator.newNativeArena(scope);
-
-
-  protected static final int SIZE_BYTE = 1;
 
   public static MemorySegment toMemorySegment(Image image) {
     return toMemorySegment(image, image.getWidth(null), image.getHeight(null));
@@ -199,56 +185,5 @@ public class BufferedImageForeign {
    */
   public static MemorySegment allocBytes(byte[] byteArray) {
     return allocator.allocateArray(ValueLayout.JAVA_BYTE, byteArray);
-
-    /*
-     * ByteBuffer bb = ByteBuffer.allocateDirect(byteArray.length *
-     * SIZE_BYTE).order(ByteOrder.nativeOrder()); ((Buffer) bb.put(byteArray)).flip(); //formerly
-     * crashed with : bb.put(byteArray).flip(); return bb;
-     */
-  }
-
-
-  /**
-   * Return a {@link ByteBuffer} out of the image.
-   * 
-   * Not used in the framework. Look rather for {@link #toMemorySegment(Image, int, int)} that has
-   * same signature and more used implementation.
-   * 
-   * @param img
-   * @param width
-   * @param height
-   * @return
-   */
-  public static ByteBuffer getByteBuffer(Image img, int width, int height) {
-
-    // Create a raster with correct size,
-    // and a colorModel and finally a bufImg.
-    //
-    WritableRaster raster =
-        Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, width, height, 4, null);
-    ComponentColorModel colorModel =
-        new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[] {8, 8, 8, 8},
-            true, false, Transparency.TRANSLUCENT, DataBuffer.TYPE_BYTE);
-    BufferedImage bufImg = new BufferedImage(colorModel, // color model
-        raster, false, // isRasterPremultiplied
-        null); // properties
-
-    // Filter img into bufImg and perform
-    // Coordinate Transformations on the way.
-    //
-    Graphics2D g = bufImg.createGraphics();
-    AffineTransform gt = new AffineTransform();
-    gt.translate(0, height);
-    gt.scale(1, -1d);
-    g.transform(gt);
-    g.drawImage(img, null, null);
-    // Retrieve underlying byte array (imgBuf)
-    // from bufImg.
-    DataBufferByte imgBuf = (DataBufferByte) raster.getDataBuffer();
-    byte[] imgRGBA = imgBuf.getData();
-
-    ByteBuffer bb = ByteBuffer.allocateDirect(imgRGBA.length).order(ByteOrder.nativeOrder());
-    bb.put(imgRGBA).flip();
-    return bb;
   }
 }

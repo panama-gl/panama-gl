@@ -114,7 +114,8 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   public void makeCurrent() {
     // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-wglmakecurrent
     wgl_h.wglMakeCurrent(hdc, context);
-    System.out.println("WGL : make context current");
+    
+    Debug.debug(debug, "WGL : make context current");
   }
   
   // ----------------------------------------------------------
@@ -125,7 +126,8 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   // https://chgi.developpez.com/windows/hdc/
   //EXCEPTION_ACCESS_VIOLATION (0xc0000005) = segmentation fault (accessing the memory segment of another application)
   protected void initSimple() {
-    System.out.println("WGL : InitSimple");
+    Debug.debug(debug, "WGL : InitSimple");
+    
     initHDC();
     
     int status = 0; // used to get status
@@ -137,13 +139,13 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     PIXELFORMATDESCRIPTOR.cAccumAlphaBits$set(pixelFormat, (byte)24);
     
     int flags = //wgl_h.PFD_DRAW_TO_WINDOW() |   // support window  
-        wgl_h.PFD_SUPPORT_OPENGL() |   // support OpenGL  
-        wgl_h.PFD_DOUBLEBUFFER();
+        wgl_h.PFD_SUPPORT_OPENGL();// |   // support OpenGL  
+        //wgl_h.PFD_DOUBLEBUFFER();
     PIXELFORMATDESCRIPTOR.dwFlags$set(pixelFormat, flags);
     PIXELFORMATDESCRIPTOR.iPixelType$set(pixelFormat, (byte)wgl_h.PFD_TYPE_RGBA());
-    PIXELFORMATDESCRIPTOR.cAlphaBits$set(pixelFormat, (byte)24);
-    PIXELFORMATDESCRIPTOR.cColorBits$set(pixelFormat, (byte)8);
-    PIXELFORMATDESCRIPTOR.cDepthBits$set(pixelFormat, (byte)32);
+    PIXELFORMATDESCRIPTOR.cAlphaBits$set(pixelFormat, (byte)11);
+    PIXELFORMATDESCRIPTOR.cColorBits$set(pixelFormat, (byte)13);
+    PIXELFORMATDESCRIPTOR.cDepthBits$set(pixelFormat, (byte)15);
     PIXELFORMATDESCRIPTOR.iLayerType$set(pixelFormat, (byte)wgl_h.PFD_MAIN_PLANE());
     
     // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-choosepixelformat
@@ -153,9 +155,21 @@ public class WGLContext_windows extends AGLContext implements GLContext{
       throw new RuntimeException("Fail to choose pixel format");
     }
     else {
-      System.out.println("WGL : format " + format );      
+      Debug.debug(debug, "WGL : format " + format );      
     }
-
+    
+    // ----------------------------
+    // Set a pixel format
+    // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-setpixelformat
+    status = wgl_h.SetPixelFormat(hdc, format, pixelFormat);
+    
+    if(status==0) {
+      throw new RuntimeException("Fail to set pixel format");
+    }
+    else {
+      Debug.debug(debug, "WGL : status " + status );      
+    }
+    
     // ----------------------------
     // Describe pixel format to check we properly set it
     long nBytes = pixelFormat.byteSize();
@@ -168,28 +182,9 @@ public class WGLContext_windows extends AGLContext implements GLContext{
       throw new RuntimeException("Fail to get pixel format description");
     }
     else {
-      System.out.println("WGL : PFD.flag " + PIXELFORMATDESCRIPTOR.dwFlags$get(pixelFormatOut));
-      System.out.println("WGL : PFD.iPixelType " + PIXELFORMATDESCRIPTOR.iPixelType$get(pixelFormatOut));
-      System.out.println("WGL : PFD.cAlphaBits " + PIXELFORMATDESCRIPTOR.cAlphaBits$get(pixelFormatOut));
-      System.out.println("WGL : PFD.cColorBits " + PIXELFORMATDESCRIPTOR.cColorBits$get(pixelFormatOut));
-      System.out.println("WGL : PFD.cDepthBits " + PIXELFORMATDESCRIPTOR.cDepthBits$get(pixelFormatOut));
-      System.out.println("WGL : PFD.iLayerType " + PIXELFORMATDESCRIPTOR.iLayerType$get(pixelFormatOut));
-      
-      //System.out.println("WGL : status " + status );      
+      //printPixelFormat(pixelFormatOut);
     }
 
-    
-    // ----------------------------
-    // Set a pixel format
-    // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-setpixelformat
-    status = wgl_h.SetPixelFormat(hdc, format, pixelFormat);
-    
-    if(status==0) {
-      throw new RuntimeException("Fail to set pixel format");
-    }
-    else {
-      System.out.println("WGL : status " + status );      
-    }
     
     // ----------------------------
     // Create the context
@@ -199,14 +194,21 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     
     if(context.address().equals(wgl_h.NULL())) {
       GLError error = getWindowsLastError();
-      //error.throwRuntimeException();
-      System.err.println("Error getting context : " + error);
-      System.exit(0);
+      error.throwRuntimeException();
+      //System.exit(0);
     }
     else {
-      System.out.println("WGL : context address : " + context);
-      //System.out.println("WGL : context value : " + context.get(ValueLayout.JAVA_INT, 0));      
+      Debug.debug(debug, "WGL : context address : " + context);
     }
+  }
+
+  private void printPixelFormat(MemorySegment pixelFormatOut) {
+    System.out.println("WGL : PFD.flag " + PIXELFORMATDESCRIPTOR.dwFlags$get(pixelFormatOut));
+    System.out.println("WGL : PFD.iPixelType " + PIXELFORMATDESCRIPTOR.iPixelType$get(pixelFormatOut));
+    System.out.println("WGL : PFD.cAlphaBits " + PIXELFORMATDESCRIPTOR.cAlphaBits$get(pixelFormatOut));
+    System.out.println("WGL : PFD.cColorBits " + PIXELFORMATDESCRIPTOR.cColorBits$get(pixelFormatOut));
+    System.out.println("WGL : PFD.cDepthBits " + PIXELFORMATDESCRIPTOR.cDepthBits$get(pixelFormatOut));
+    System.out.println("WGL : PFD.iLayerType " + PIXELFORMATDESCRIPTOR.iLayerType$get(pixelFormatOut));
   }
   
   // -------------------------------------------
@@ -215,7 +217,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
    * Init context the advanced way
    */
   protected void initAdvanced() {
-    System.out.println("WGL : InitAdvanced");
+    Debug.debug(debug, "WGL : InitAdvanced");
 
     initHDC();
     initFunctions();
@@ -240,10 +242,10 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     MemorySegment pixelFormat = allocator.allocateArray(ValueLayout.JAVA_INT, new int[nMaxFormats]);
     MemorySegment numberOfFormats = allocator.allocateArray(ValueLayout.JAVA_INT, new int[1]);
 
-    System.out.println("WGL : HDC " + hdc);
+    Debug.debug(debug, "WGL : HDC " + hdc);
     int status = wglChoosePixelFormatARB.apply(hdc.address(), attribsInt.address(), attribsFloat.address(), nMaxFormats, pixelFormat.address(), numberOfFormats.address());
     
-    System.out.println("WGL : status " + status + " expect " + wgl_h.GL_TRUE() );
+    Debug.debug(debug, "WGL : status " + status + " expect " + wgl_h.GL_TRUE() );
     
     context = wglCreateContextAttribsARB.apply(hdc.address(),  wgl_h.NULL(), attribsInt.address()).address();
     
@@ -254,8 +256,8 @@ public class WGLContext_windows extends AGLContext implements GLContext{
       System.exit(0);
     }
     else {
-      System.out.println("WGL : context " + context);
-      System.out.println("WGL : context " + context.get(ValueLayout.JAVA_INT, 0));      
+      Debug.debug(debug, "WGL : context " + context);
+      Debug.debug(debug, "WGL : context " + context.get(ValueLayout.JAVA_INT, 0));      
     }
   }
   
@@ -291,7 +293,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
       //hWnd = allocator.allocateArray(ValueLayout.JAVA_LONG, wh);
       hWnd = allocator.allocateArray(ValueLayout.JAVA_INT, windowHandle[0]);
 
-      System.out.println("WGL : HWND : " + windowHandle[0]);
+      Debug.debug(debug, "WGL : HWND : " + windowHandle[0]);
 
       // Get a Handle on Current Device Context
       // https://learn.microsoft.com/fr-fr/windows/win32/api/winuser/nf-winuser-getdc
@@ -303,7 +305,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
       hdc = wgl_h.GetDC(wgl_h.NULL());      
     }
     
-    System.out.println("WGL : HDC : " + hdc);
+    Debug.debug(debug, "WGL : HDC : " + hdc);
     
     //wgl_h.wglGetCurrentDC(); 
   }
@@ -318,7 +320,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     //https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-getlasterror
     int errorCode = wgl_h.GetLastError();
     
-    System.out.println("Error getting context : " + errorCode);
+    Debug.debug(debug, "Error getting context : " + errorCode);
 
     //wgl_h.LPVOID.bitAlignment();
     

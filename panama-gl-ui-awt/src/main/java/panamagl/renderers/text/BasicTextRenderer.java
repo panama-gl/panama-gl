@@ -32,7 +32,7 @@ import panamagl.utils.GraphicsUtils;
  * Render text to image which can then be drawn at a given 3D position.
  */
 public class BasicTextRenderer extends BasicImageRenderer implements TextRenderer<Font, Color>{
-  boolean drawBorder = true;
+  boolean drawBorder = false;
   
   @Override
   public void draw(GL gl, Font font, String text, float x, float y, float z, Color color, float rotation) {
@@ -42,10 +42,10 @@ public class BasicTextRenderer extends BasicImageRenderer implements TextRendere
   }
   
   protected ForeignImage createForeignImage(Font font, String text, Color color) {
-    ForeignImage fi;
+    
     Rectangle2D bounds = GraphicsUtils.stringBounds(text, font);
-    int width = (int)bounds.getWidth();//GraphicsUtils.stringWidth(text, font);
-    int height = (int)bounds.getHeight();//font.getSize();
+    int width = (int)bounds.getWidth();
+    int height = (int)bounds.getHeight();
     
     if(width<=0) {
       throw new IllegalArgumentException("Width<=0 for \"" + text + "\" : " + width );
@@ -77,10 +77,17 @@ public class BasicTextRenderer extends BasicImageRenderer implements TextRendere
     
     g.dispose();
 
-    fi = new ForeignImage();
+    ForeignImage fi = new ForeignImage();
     fi.image = i;
     fi.segment = BufferedImageForeign.toMemorySegment(i);
     return fi;
   }
-  
+
+  public boolean isDrawBorder() {
+    return drawBorder;
+  }
+
+  public void setDrawBorder(boolean drawBorder) {
+    this.drawBorder = drawBorder;
+  }
 }

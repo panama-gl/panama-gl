@@ -32,5 +32,8 @@ public class TestBasicTextRenderer {
     
     Assert.assertNotNull(i.image);
     Assert.assertNotNull(i.segment);
+    
+    Assert.assertEquals(43, i.image.getWidth());
+    Assert.assertEquals(13, i.image.getHeight());
   }
 }
