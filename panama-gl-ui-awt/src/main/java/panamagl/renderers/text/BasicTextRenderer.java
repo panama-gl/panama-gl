@@ -20,6 +20,7 @@ package panamagl.renderers.text;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import panamagl.opengl.GL;
@@ -33,6 +34,8 @@ import panamagl.utils.GraphicsUtils;
  */
 public class BasicTextRenderer extends BasicImageRenderer implements TextRenderer<Font, Color>{
   boolean drawBorder = false;
+  
+  boolean antialiasing = true;
   
   @Override
   public void draw(GL gl, Font font, String text, float x, float y, float z, Color color, float rotation) {
@@ -54,11 +57,15 @@ public class BasicTextRenderer extends BasicImageRenderer implements TextRendere
       throw new IllegalArgumentException("Height<=0 for \"" + text + "\" : " + height );
     }
     
-    //System.out.println(width + "," + height + " " + text);
-    
     BufferedImage i = new BufferedImage(width, height, BufferedImage.TYPE_4BYTE_ABGR);
     
     Graphics2D g = i.createGraphics();
+    
+    if(antialiasing) {
+      g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+      g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+      g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+    }
     
     if(drawBorder) {
       g.setColor(Color.GRAY);
@@ -89,5 +96,13 @@ public class BasicTextRenderer extends BasicImageRenderer implements TextRendere
 
   public void setDrawBorder(boolean drawBorder) {
     this.drawBorder = drawBorder;
+  }
+
+  public boolean isAntialiasing() {
+    return antialiasing;
+  }
+
+  public void setAntialiasing(boolean antialiasing) {
+    this.antialiasing = antialiasing;
   }
 }

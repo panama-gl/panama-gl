@@ -117,8 +117,10 @@ public class FBO_windows extends AFBO implements FBO {
   }
 
   public FBO_windows(int width, int height) {
-    this.width = width;
-    this.height = height;
+    //this.width = width;
+    //this.height = height;
+    
+    resize(width, height);
     
     init();
   }

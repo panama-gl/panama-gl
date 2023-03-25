@@ -16,6 +16,7 @@
 package panamagl.utils;
 
 import java.awt.BufferCapabilities;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -26,6 +27,7 @@ import java.awt.ImageCapabilities;
 import java.awt.Transparency;
 import java.awt.font.FontRenderContext;
 import java.awt.font.GlyphVector;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import javax.swing.SwingUtilities;
@@ -60,13 +62,14 @@ public class GraphicsUtils {
   public static int stringWidth(Graphics2D g2d, String string) {
     FontMetrics fm = g2d.getFontMetrics();
     if (fm != null) {
-      return     SwingUtilities.computeStringWidth(fm, string);
+      return SwingUtilities.computeStringWidth(fm, string);
 
-      //return fm.stringWidth(string);
+      // return fm.stringWidth(string);
     } else {
       return -1;
     }
   }
+
   public static Rectangle2D stringBounds(String string, Font font) {
     Graphics2D g = i.createGraphics();
     g.setFont(font);
@@ -81,6 +84,28 @@ public class GraphicsUtils {
     } else {
       return null;
     }
+  }
+
+  public static double getPixelScaleX(Component component) {
+    return getPixelScaleX((Graphics2D) component.getGraphics());
+  }
+
+  public static double getPixelScaleX(Graphics2D g2d) {
+    if (g2d == null)
+      return 1;
+    AffineTransform globalTransform = g2d.getTransform();
+    return globalTransform.getScaleX();
+  }
+
+  public static double getPixelScaleY(Component component) {
+    return getPixelScaleY((Graphics2D) component.getGraphics());
+  }
+
+  public static double getPixelScaleY(Graphics2D g2d) {
+    if (g2d == null)
+      return 1;
+    AffineTransform globalTransform = g2d.getTransform();
+    return globalTransform.getScaleY();
   }
 
 

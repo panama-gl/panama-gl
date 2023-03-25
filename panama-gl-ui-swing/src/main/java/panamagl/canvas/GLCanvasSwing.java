@@ -21,6 +21,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
@@ -165,6 +167,8 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
     counter.onPaint();
     super.paint(g);
   }
+  
+  boolean antialiasing = false;
 
   /**
    * Render GL image and stop counting elapsed time for rendering (started at {@link #display()})
@@ -172,6 +176,18 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
   @Override
   public void paintComponent(Graphics g) {
     if (out != null) {
+      
+      if(antialiasing) {
+        Graphics2D g2d = (Graphics2D) out.getGraphics();
+  
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+            RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
+            RenderingHints.VALUE_RENDER_QUALITY);
+        g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
+            RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+      }
+      
       g.drawImage(out, 0, 0, null);
 
       counter.onPaintComponentBefore();

@@ -26,6 +26,7 @@ import org.jzy3d.colors.Color;
 import org.jzy3d.maths.Coord3d;
 import org.jzy3d.plot3d.primitives.Scatter;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
+import panamagl.utils.GraphicsUtils;
 
 /**
  * Demo an surface chart made with Panama (JEP-412).
@@ -51,6 +52,7 @@ public class ScatterDemo_PanamaGL {
     Chart chart = factory.newChart(q);
     chart.add(scatter());
     
+    
     Runnable open = new Runnable() {
       @Override
       public void run() {
@@ -58,13 +60,17 @@ public class ScatterDemo_PanamaGL {
         FrameSwing frame = (FrameSwing)chart.open(800,600);
         System.out.println("After open");
         frame.setSize(800, 600);
+        
+        System.out.println("pixel ratio: " + GraphicsUtils.getPixelScaleX(frame));
+
       }
     };
 
     // Lock at unsafe.park
     open.run();
     
-    chart.addMouse();    
+    chart.addMouse();  
+    
   }
 
   private static Scatter scatter() {
