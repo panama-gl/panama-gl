@@ -42,6 +42,7 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.lights.Attenuation;
 import org.jzy3d.plot3d.rendering.lights.LightModel;
 import org.jzy3d.plot3d.rendering.lights.MaterialProperty;
+import com.jogamp.opengl.GL2;
 import panamagl.GLCanvas;
 import panamagl.opengl.AGL;
 import panamagl.opengl.GL;

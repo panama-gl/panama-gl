@@ -12,6 +12,7 @@ public abstract class AFBO implements FBO{
   @Override
   public void resize(int width, int height) {
     if (this.width != width || this.height != height) {
+
       this.width = (int)Math.round(width * 1.25);
       this.height = (int)Math.round(height * 1.25);
 

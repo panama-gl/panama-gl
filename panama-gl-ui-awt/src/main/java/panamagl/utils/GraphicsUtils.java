@@ -40,6 +40,7 @@ public class GraphicsUtils {
    */
   public static void drawString(Graphics2D g2d, Font font, boolean useOSFontRendering,
       String string, int x, int y) {
+    
     if (useOSFontRendering) {
       g2d.setFont(font);
       g2d.drawString(string, x, y);
@@ -115,7 +116,6 @@ public class GraphicsUtils {
     GraphicsConfiguration config = device.getDefaultConfiguration();
     BufferedImage image = config.createCompatibleImage(width, height, Transparency.TRANSLUCENT);
     return image;
-    // Graphics g = buffy.getGraphics();
   }
 
   public static void printGraphicsEnvironment(String header) {

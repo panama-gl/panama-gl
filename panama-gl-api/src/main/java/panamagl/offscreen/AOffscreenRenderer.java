@@ -62,7 +62,10 @@ public class AOffscreenRenderer implements OffscreenRenderer {
 
   @Override
   public void onDisplay(GLCanvas drawable, GLEventListener listener) {
+    
+    // FIXME : should not resize, only render without changing size
     Runnable r = getTask_renderGLToImage(drawable, listener, drawable.getWidth(), drawable.getHeight());
+    //Runnable r = getTask_renderGLToImage(drawable, listener);
     
     executeFromAWTMainThread(r);
   }
@@ -88,7 +91,7 @@ public class AOffscreenRenderer implements OffscreenRenderer {
       // On Windows and Linux, we need to 
       EventQueue.invokeLater(r);
       
-      // macOS was fine with
+      // The below code can fail
       /*try {
         EventQueue.invokeAndWait(r);
       } catch (InvocationTargetException | InterruptedException e) {

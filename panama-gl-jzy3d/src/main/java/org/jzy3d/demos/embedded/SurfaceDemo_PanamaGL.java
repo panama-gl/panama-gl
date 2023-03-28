@@ -34,6 +34,7 @@ import org.jzy3d.plot3d.primitives.Shape;
 import org.jzy3d.plot3d.primitives.axis.layout.AxisLayout;
 import org.jzy3d.plot3d.primitives.axis.layout.fonts.HiDPIProportionalFontSizePolicy;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
+import panamagl.utils.GraphicsUtils;
 
 /**
  * Demo an surface chart made with Panama (JEP-412).
@@ -59,7 +60,7 @@ public class SurfaceDemo_PanamaGL {
 
     AxisLayout layout = chart.getAxisLayout();
     //layout.setFont(new Font("Apple Chancery", 20));
-    layout.setFont(new Font("Helvetica", 16));
+    layout.setFont(new Font("Courrier", 16));
     layout.setFontSizePolicy(new HiDPIProportionalFontSizePolicy(chart.getView()));
 
     /*layout.setXAxisLabel("My X axis label is a little long to draw");
@@ -82,6 +83,7 @@ public class SurfaceDemo_PanamaGL {
     FrameSwing frame = (FrameSwing)chart.open(800,600);
     System.out.println("After open");
     frame.setSize(800, 600);
+    System.out.println("pixel ratio: " + GraphicsUtils.getPixelScaleX(frame));
 
     chart.addMouse();    
     

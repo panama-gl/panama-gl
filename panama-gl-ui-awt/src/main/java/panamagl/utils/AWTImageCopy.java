@@ -17,6 +17,7 @@
  *******************************************************************************/
 package panamagl.utils;
 
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
@@ -34,6 +35,11 @@ public class AWTImageCopy implements ImageCopy<BufferedImage>{
   public void fromBGRABufferToImageArray(MemorySegment pixelsBuffer, BufferedImage out, int width, int height) {
     int[] px = pixelsBuffer.toArray(ValueLayout.JAVA_INT);
     out.setRGB(0, 0, width, height, px, 0, width);
+    
+    /*Graphics2D g2d = out.createGraphics();
+    System.out.println("AWTImageCopy scale : " + GraphicsUtils.getPixelScaleX(g2d));
+    g2d.dispose();*/
+
   }
 
   /**
@@ -47,6 +53,10 @@ public class AWTImageCopy implements ImageCopy<BufferedImage>{
     int nPixels = width * height;
     int k = 0;
 
+    /*Graphics2D g2d = out.createGraphics();
+    System.out.println("AWTImageCopy scale : " + GraphicsUtils.getPixelScaleX(g2d));
+    g2d.dispose();*/
+    
     OfByte byteHandle = ValueLayout.JAVA_BYTE.withOrder(ByteOrder.nativeOrder());
 
     for (int i = 0; i < nPixels * channels; i += channels) {

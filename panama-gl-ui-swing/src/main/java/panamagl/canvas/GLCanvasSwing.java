@@ -17,9 +17,7 @@
  *******************************************************************************/
 package panamagl.canvas;
 
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -188,8 +186,14 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
             RenderingHints.VALUE_INTERPOLATION_BICUBIC);
       }
       
-      g.drawImage(out, 0, 0, null);
+      //System.out.println("GLCanvasSwing : " + out.getWidth() + "," + out.getHeight() + " in " + getWidth() + "," + getHeight());
+      //float ratio = 1/1.25f;
+      //BufferedImage sout = ImageUtils.scale(out, ratio, ratio);
+      //g.drawImage(sout, 0, 0, null);
+      g.drawImage(out, 0, 0, getWidth(), getHeight(), this);
 
+      //System.out.println("GLCanvasSwing : " + sout.getWidth() + "," + sout.getHeight());
+      
       counter.onPaintComponentBefore();
 
       if (debugPerf)
