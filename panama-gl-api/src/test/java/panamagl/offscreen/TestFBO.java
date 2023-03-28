@@ -28,7 +28,7 @@ import panamagl.utils.ByteUtils;
 
 public class TestFBO {
 
-  public static void givenFBO_whenRenderSomething_ThenGetBufferedImage(FBO fbo, GL gl) {
+  public static void givenFBO_whenRenderSomething_ThenGetBufferedImage(FBO fbo,FBOReader reader, GL gl) {
     int[] RED = {255, 0, 0, 255};
     int[] GREEN = {0, 255, 0, 255};
     int[] BLUE = {0, 0, 255, 255};
@@ -48,7 +48,7 @@ public class TestFBO {
     
 
     // Keep unflipped to avoid changing tests
-    fbo.setFlipY(false);
+    reader.setFlipY(false);
 
     // ensure is not considered prepared too early
     Assert.assertFalse(fbo.isPrepared());
@@ -68,7 +68,7 @@ public class TestFBO {
 
     SampleTriangle.rgbaTriangle2D(gl, width, height);
 
-    BufferedImage image = (BufferedImage)fbo.getImage(gl).getImage();
+    BufferedImage image = (BufferedImage)reader.read(fbo, gl, null).getImage();
 
     saveImage(file1, image); // for review
 
@@ -137,7 +137,7 @@ public class TestFBO {
     SampleTriangle.rgbaTriangle2D(gl, width, height);
 
     // get a double sized image
-    image = (BufferedImage)fbo.getImage(gl).getImage();
+    image = (BufferedImage)reader.read(fbo, gl, null).getImage();
 
     Assert.assertTrue(fbo.isPrepared()); // now prepared to this size
     Assert.assertEquals(width, image.getWidth());

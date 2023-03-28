@@ -23,16 +23,10 @@ import java.lang.foreign.MemorySession;
 import java.lang.foreign.ValueLayout;
 import opengl.macos.x86.glut_h;
 import panamagl.Debug;
-import panamagl.Image;
-import panamagl.canvas.AWTImage;
 import panamagl.offscreen.AFBO;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
-import panamagl.utils.AWTImageCopy;
-import panamagl.utils.GraphicsUtils;
-import panamagl.utils.ImageCopy;
-import panamagl.utils.ImageUtils;
 
 /**
  * A frame buffer object, or {@link FBO_macOS}, can render OpenGL into an offscreen buffer that can later
@@ -60,10 +54,6 @@ public class FBO_macOS extends AFBO implements FBO {
 
   protected boolean debug = Debug.check(FBO.class, FBO_macOS.class);
 
-  // supposed to copy to BufferedImage faster when true
-  // using false allows to make copy by tweaking bytes
-  // which is useful for debugging
-  protected boolean arrayExport = true;
 
   protected int idTexture = -1;
   protected int idFrameBuffer = -1;
@@ -75,12 +65,6 @@ public class FBO_macOS extends AFBO implements FBO {
   protected MemorySegment textureBufferIds;
   protected MemorySegment pixelBuffer;
   
-  @SuppressWarnings("rawtypes")
-  protected ImageCopy copy = new AWTImageCopy();
-
- 
-
-
   public FBO_macOS() {}
 
   public FBO_macOS(int width, int height) {
@@ -261,8 +245,35 @@ public class FBO_macOS extends AFBO implements FBO {
     Debug.debug(debug, "FBO: Resources released !");
 
   }
+  
+  @Override
+  public MemorySegment readPixels(GL gl) {
+    // Initialize buffers if they are not ready or if their expected size changed
+    if (!prepared)
+      prepare(gl);
 
-  // TODO : almost alll this is common to other FBO and could be moved to an abstract class (take care to awt however)
+    // Reading pixels
+    int nBytes = width * height * channels;
+    
+    // The segments created in this function will be destroyed
+    // one the below scope and allocator are collected by GC.
+    MemorySession session = MemorySession.openImplicit();
+    MemorySegment pixels = MemorySegment.allocateNative(nBytes, session);
+    gl.glReadPixels(0, 0, width, height, format, textureType, pixels);
+    
+    // Check for error after reading
+    GLError.checkAndThrow(gl);
+
+    Debug.debug(debug, "FBO: PixelBuffer red !");
+    
+    // Bind 0, which means render to back buffer
+    glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), 0);
+    
+    return pixels;
+
+  }
+
+  /*// TODO : almost alll this is common to other FBO and could be moved to an abstract class (take care to awt however)
   @SuppressWarnings("unchecked")
   @Override
   public Image<?> getImage(GL gl) {
@@ -320,7 +331,7 @@ public class FBO_macOS extends AFBO implements FBO {
     //session.close();
     
     return new AWTImage(out);
-  }
+  }*/
 
 
 

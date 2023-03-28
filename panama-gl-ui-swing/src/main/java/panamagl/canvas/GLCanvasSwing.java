@@ -32,6 +32,7 @@ import panamagl.GLEventListener;
 import panamagl.Image;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.FBO;
+import panamagl.offscreen.FBOReader_AWT;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
@@ -93,7 +94,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
    * {@link GL} interface.
    */
   public GLCanvasSwing(PanamaGLFactory factory) {
-	this.offscreen = factory.newOffscreenRenderer();
+	this.offscreen = factory.newOffscreenRenderer(new FBOReader_AWT());
     this.overlay = new PerformanceOverlay(this);
     
     // Load OSXUtil native as soon as possible for macOS!
@@ -341,14 +342,14 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
    * @return
    */
   public boolean isFlipY() {
-    return offscreen.getFBO().isFlipY();
+    return offscreen.isFlipY();
   }
 
   /**
    * Sets if image will be flipped vertically while being painted.
    */
   public void setFlipY(boolean flipY) {
-    this.offscreen.getFBO().setFlipY(flipY);
+    this.offscreen.setFlipY(flipY);
   }
 
   public FBO getFBO() {

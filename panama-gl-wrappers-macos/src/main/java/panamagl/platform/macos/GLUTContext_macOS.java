@@ -18,8 +18,6 @@
 package panamagl.platform.macos;
 
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.MemorySession;
-import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
 import opengl.macos.x86.glutDisplayFunc$func;
 import opengl.macos.x86.glutIdleFunc$func;

@@ -17,6 +17,7 @@
  *******************************************************************************/
 package panamagl.canvas;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -27,6 +28,7 @@ import panamagl.GLEventAdapter;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.AOffscreenRenderer;
 import panamagl.offscreen.FBO;
+import panamagl.offscreen.FBOReader_AWT;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.platform.Platform;
@@ -47,7 +49,7 @@ public class TestGLCanvasAWT {
     EventCounter event = new EventCounter();
     
     PanamaGLFactory factory = mock(PanamaGLFactory.class);
-    when(factory.newOffscreenRenderer()).thenReturn(new AOffscreenRenderer(factory));
+    when(factory.newOffscreenRenderer(any())).thenReturn(new AOffscreenRenderer(factory, new FBOReader_AWT()));
     when(factory.newGL()).thenReturn(mock(GL.class));
     when(factory.newGLContext()).thenReturn(mock(GLContext.class));
     when(factory.newFBO(anyInt(),anyInt())).thenReturn(mock(FBO.class));

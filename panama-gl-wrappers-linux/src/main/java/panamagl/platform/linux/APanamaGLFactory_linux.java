@@ -19,12 +19,11 @@ package panamagl.platform.linux;
 
 
 
-import java.lang.foreign.ValueLayout;
-import opengl.ubuntu.v20.glut_h;
 import panamagl.Debug;
 import panamagl.GLCanvas;
 import panamagl.factory.APanamaGLFactory;
 import panamagl.offscreen.FBO;
+import panamagl.offscreen.FBOReader;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
@@ -58,8 +57,8 @@ protected boolean debug = Debug.check(APanamaGLFactory_linux.class);
    * instances through this factory.
    */
   @Override
-  public OffscreenRenderer newOffscreenRenderer() {
-    return new OffscreenRenderer_linux(this);
+  public OffscreenRenderer newOffscreenRenderer(FBOReader reader) {
+    return new OffscreenRenderer_linux(this, reader);
   }
   
   @Override

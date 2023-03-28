@@ -23,6 +23,7 @@ import panamagl.GLCanvas;
 import panamagl.GLEventListener;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.AOffscreenRenderer;
+import panamagl.offscreen.FBOReader;
 import panamagl.offscreen.OffscreenRenderer;
 
 /**
@@ -34,8 +35,8 @@ import panamagl.offscreen.OffscreenRenderer;
  * @author Martin Pernollet
  */
 public class OffscreenRenderer_macOS extends AOffscreenRenderer implements OffscreenRenderer{
-  public OffscreenRenderer_macOS(PanamaGLFactory factory) {
-    super(factory);
+  public OffscreenRenderer_macOS(PanamaGLFactory factory, FBOReader reader) {
+    super(factory, reader);
   }
   
   @Override

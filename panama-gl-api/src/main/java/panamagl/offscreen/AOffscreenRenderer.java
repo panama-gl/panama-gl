@@ -39,6 +39,7 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   protected GL gl;
   protected GLContext context;
   protected FBO fbo;
+  protected FBOReader reader;
   
   protected boolean initialized = false;
   
@@ -47,8 +48,9 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   protected ExecutorService exec = Executors.newSingleThreadExecutor();
 
   
-  public AOffscreenRenderer(PanamaGLFactory factory) {
+  public AOffscreenRenderer(PanamaGLFactory factory, FBOReader reader) {
     this.factory = factory;
+    this.reader = reader;
   }
 
   // -------------------------------------------------------------
@@ -201,7 +203,8 @@ public class AOffscreenRenderer implements OffscreenRenderer {
 
     // FBO To image
     if (fbo != null) {
-      Image<?> out = fbo.getImage(gl);
+      
+      Image<?> out = reader.read(fbo, gl, null);
 
       // Give back the image to the onscreen panel
       canvas.setScreenshot(out);
@@ -219,7 +222,7 @@ public class AOffscreenRenderer implements OffscreenRenderer {
 
   @Override
   public boolean isFlipY() {
-    return fbo.isFlipY();
+    return reader.isFlipY();
   }
 
   /**
@@ -227,7 +230,7 @@ public class AOffscreenRenderer implements OffscreenRenderer {
    */
   @Override
   public void setFlipY(boolean flipY) {
-    this.fbo.setFlipY(flipY);
+    this.reader.setFlipY(flipY);
   }
 
   @Override

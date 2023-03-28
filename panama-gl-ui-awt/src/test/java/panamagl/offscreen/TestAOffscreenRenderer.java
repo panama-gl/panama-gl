@@ -17,6 +17,7 @@
  *******************************************************************************/
 package panamagl.offscreen;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -36,13 +37,13 @@ public class TestAOffscreenRenderer {
     GLCanvas canvas = mock(GLCanvas.class);
 
     // Given
-    AOffscreenRenderer r = new AOffscreenRenderer(p);
+    AOffscreenRenderer r = new AOffscreenRenderer(p, new FBOReader_AWT());
 
     // When
     when(p.newFBO(anyInt(), anyInt())).thenReturn(mock(FBO.class));
     when(p.newGL()).thenReturn(mock(GL.class));
     when(p.newGLContext()).thenReturn(mock(GLContext.class));
-    when(p.newOffscreenRenderer()).thenReturn(r);
+    when(p.newOffscreenRenderer(any())).thenReturn(r);
     
     AtomicBoolean listenerInit = new AtomicBoolean(false);
     GLEventAdapter listener = new GLEventAdapter() {

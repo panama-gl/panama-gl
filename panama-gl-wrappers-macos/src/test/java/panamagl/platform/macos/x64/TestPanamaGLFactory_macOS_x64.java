@@ -20,7 +20,6 @@ package panamagl.platform.macos.x64;
 import org.junit.Assert;
 import org.junit.Test;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.platform.macos.x64.PanamaGLFactory_macOS_x64;
 
 public class TestPanamaGLFactory_macOS_x64 extends MacOSx86Test{
   @Test
@@ -38,7 +37,7 @@ public class TestPanamaGLFactory_macOS_x64 extends MacOSx86Test{
     //Assert.assertNotNull(f.newGLContext());
 
     Assert.assertNotNull(f.newGL());
-    Assert.assertNotNull(f.newOffscreenRenderer());
+    Assert.assertNotNull(f.newOffscreenRenderer(null));
     Assert.assertNotNull(f.newFBO(800, 600));
 
     ;

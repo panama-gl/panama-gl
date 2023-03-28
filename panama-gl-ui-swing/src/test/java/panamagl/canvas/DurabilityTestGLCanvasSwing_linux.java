@@ -17,7 +17,6 @@
  *******************************************************************************/
 package panamagl.canvas;
 
-import org.junit.Test;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.platform.Platform;
 

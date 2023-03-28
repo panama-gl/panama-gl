@@ -37,7 +37,7 @@ public class TestPanamaGLFactory_macOS_arm extends MacOSarmTest{
     //Assert.assertNotNull(f.newGLContext());
 
     Assert.assertNotNull(f.newGL());
-    Assert.assertNotNull(f.newOffscreenRenderer());
+    Assert.assertNotNull(f.newOffscreenRenderer(null));
     Assert.assertNotNull(f.newFBO(800, 600));
 
     ;

@@ -18,7 +18,6 @@
 package panamagl.platform.macos.x64;
 
 import panamagl.platform.Platform;
-import panamagl.platform.macos.x64.PlatformMatcher_macOS_x64;
 
 public class MacOSx86Test {
   /**

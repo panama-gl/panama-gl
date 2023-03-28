@@ -17,19 +17,15 @@
  *******************************************************************************/
 package panamagl.platform.windows;
 
-import panamagl.Debug;
-import panamagl.GLCanvas;
-import panamagl.GLEventListener;
-import panamagl.GLProfile;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.AOffscreenRenderer;
+import panamagl.offscreen.FBOReader;
 import panamagl.offscreen.OffscreenRenderer;
-import panamagl.opengl.GLError;
 
 // Now does not do anything else more than the abstract class
 public class OffscreenRenderer_windows extends AOffscreenRenderer implements OffscreenRenderer{
-  public OffscreenRenderer_windows(PanamaGLFactory factory) {
-    super(factory);
+  public OffscreenRenderer_windows(PanamaGLFactory factory, FBOReader reader) {
+    super(factory, reader);
   }
   
   /*Win32.loadLibrary("C:\\Users\\Martin\\Dev\\jzy3d\\public\\panama-gl-bindings\\panama-gl-native-windows-jawt\\src\\main\\resources\\Win32.dll");

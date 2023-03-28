@@ -17,7 +17,6 @@
  *******************************************************************************/
 package panamagl.platform.linux;
 
-import java.awt.image.BufferedImage;
 import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.MemorySession;
@@ -36,17 +35,12 @@ import opengl.ubuntu.v20.PFNGLRENDERBUFFERSTORAGEEXTPROC;
 import opengl.ubuntu.v20.glut_h;
 import panamagl.Debug;
 import panamagl.Image;
-import panamagl.canvas.AWTImage;
 import panamagl.offscreen.AFBO;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
-import panamagl.utils.AWTImageCopy;
 import panamagl.utils.ForeignMemoryUtils;
 import panamagl.utils.ForeignMemoryUtils.Mode;
-import panamagl.utils.GraphicsUtils;
-import panamagl.utils.ImageCopy;
-import panamagl.utils.ImageUtils;
 
 /**
  * A frame buffer object, or {@link FBO_linux}, can render OpenGL into an offscreen buffer that can later
@@ -106,8 +100,6 @@ public class FBO_linux extends AFBO implements FBO {
   protected PFNGLDELETERENDERBUFFERSEXTPROC glDeleteRenderbuffers;
   protected PFNGLDELETEFRAMEBUFFERSEXTPROC glDeleteFramebuffers;
   
-  @SuppressWarnings("rawtypes")
-  protected ImageCopy copy = new AWTImageCopy();
 
   public FBO_linux() {
     init();
@@ -363,8 +355,34 @@ public class FBO_linux extends AFBO implements FBO {
 
     Debug.debug(debug, "FBO: Resources released !");
   }
+  
+  @Override
+  public MemorySegment readPixels(GL gl) {
+    // Initialize buffers if they are not ready or if their expected size changed
+    if (!prepared)
+      prepare(gl);
 
-  @SuppressWarnings("unchecked")
+    // Reading pixels
+    int nBytes = width * height * channels;
+    
+    // The segments created in this function will be destroyed
+    // one the below scope and allocator are collected by GC.
+    MemorySession session = MemorySession.openImplicit();
+    MemorySegment pixels = MemorySegment.allocateNative(nBytes, session);
+    gl.glReadPixels(0, 0, width, height, format, textureType, pixels);
+    
+    // Check for error after reading
+    GLError.checkAndThrow(gl);
+
+    Debug.debug(debug, "FBO: PixelBuffer red !");
+    
+    // Bind 0, which means render to back buffer
+    glBindFramebuffer.apply(glut_h.GL_FRAMEBUFFER(), 0);
+    
+    return pixels;
+  }
+
+  /*@SuppressWarnings("unchecked")
   @Override
   public Image<?> getImage(GL gl) {
 
@@ -414,6 +432,6 @@ public class FBO_linux extends AFBO implements FBO {
     glBindFramebuffer.apply(glut_h.GL_FRAMEBUFFER(), 0);
 
     return new AWTImage(out);
-  }
+  }*/
 
 }

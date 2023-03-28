@@ -4,7 +4,6 @@ import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import freeglut.windows.x86.freeglut_h;
-import opengl.ubuntu.v20.glut_h;
 import panamagl.Debug;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;

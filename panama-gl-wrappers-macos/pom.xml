@@ -22,23 +22,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jzy3d</groupId>
-			<artifactId>panama-gl-ui-awt</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jzy3d</groupId>
-			<artifactId>panama-gl-ui-swing</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jzy3d</groupId>
-			<artifactId>panama-gl-ui-swing</artifactId>
-			<version>${project.version}</version>
-			<type>test-jar</type>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-bindings-macos</artifactId>
 			<version>${panamagl.bindings.version}</version>
 		</dependency>

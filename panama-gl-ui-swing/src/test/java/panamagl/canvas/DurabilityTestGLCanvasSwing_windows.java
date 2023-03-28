@@ -19,19 +19,18 @@ package panamagl.canvas;
 
 import panamagl.factory.PanamaGLFactory;
 import panamagl.platform.Platform;
-import panamagl.canvas.DurabilityTestGLCanvasSwing;
 /**
  * This test is intentionnaly named DurabilityTest* to be ignored by maven
  * while running tests (surefire config keeps Test* or *Test or ITTest*)
  */
 // VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
 //@Ignore("Will add to specific build profile later.")
-public class DurabilityTestGLCanvasSwing_linux {
+public class DurabilityTestGLCanvasSwing_windows {
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
 
   //@Test
   public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
-    if (!new Platform().isUnix())
+    if (!new Platform().isWindows())
      return;
     
     PanamaGLFactory factory = PanamaGLFactory.select();

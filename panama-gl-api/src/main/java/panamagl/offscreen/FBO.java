@@ -17,24 +17,24 @@
  *******************************************************************************/
 package panamagl.offscreen;
 
+import java.lang.foreign.MemorySegment;
 import panamagl.Image;
 import panamagl.opengl.GL;
 
 /**
  * A frame buffer object, or {@link FBO}, can render OpenGL into an offscreen buffer that can later
- * be converted to an {@link Image}.
+ * be read to an {@link Image} by a {@link FBOReader}.
  *
  * @author Martin Pernollet
  */
 public interface FBO {
   void prepare(GL gl);
   void release(GL gl);
-  Image<?> getImage(GL gl);
   void resize(int width, int height);
   int getWidth();
   int getHeight();
-  boolean isFlipY();
-  void setFlipY(boolean flipY);
   
   boolean isPrepared();
+  
+  public MemorySegment readPixels(GL gl);
 }

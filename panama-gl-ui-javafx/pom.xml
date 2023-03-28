@@ -37,10 +37,28 @@
             <version>${javafx.version}</version>
         </dependency>
 
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>panama-gl-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
         <dependency>
             <groupId>org.jzy3d</groupId>
             <artifactId>panama-gl-wrappers-macos</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jzy3d</groupId>
+            <artifactId>panama-gl-wrappers-windows</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jzy3d</groupId>
+            <artifactId>panama-gl-wrappers-linux</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
     </dependencies>

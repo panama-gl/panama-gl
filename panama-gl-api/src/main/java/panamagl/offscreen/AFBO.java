@@ -3,7 +3,6 @@ package panamagl.offscreen;
 public abstract class AFBO implements FBO{
   protected int width = 0;
   protected int height = 0;
-  protected boolean flipY = true;
   
   // indicates dimensions have changed
   // and FBO must reprepared
@@ -32,16 +31,6 @@ public abstract class AFBO implements FBO{
   @Override
   public int getHeight() {
     return height;
-  }
-
-  @Override
-  public boolean isFlipY() {
-    return flipY;
-  }
-
-  @Override
-  public void setFlipY(boolean flipY) {
-    this.flipY = flipY;
   }
   
   @Override

@@ -17,7 +17,6 @@
  *******************************************************************************/
 package panamagl.utils;
 
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;

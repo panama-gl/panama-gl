@@ -23,7 +23,6 @@ import org.junit.Test;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GLContext;
 import panamagl.platform.linux.LinuxTest;
-import panamagl.platform.linux.x64.PanamaGLFactory_linux_x64;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
 public class TestPanamaGLFactory_linux_x64 extends LinuxTest{
@@ -48,7 +47,7 @@ public class TestPanamaGLFactory_linux_x64 extends LinuxTest{
     GLContext context = f.newGLContext();
     Assert.assertNotNull(context);
     Assert.assertNotNull(f.newGL());
-    Assert.assertNotNull(f.newOffscreenRenderer());
+    Assert.assertNotNull(f.newOffscreenRenderer(null));
     Assert.assertNotNull(f.newFBO(800, 600));
     
     // ----------------------------

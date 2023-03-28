@@ -25,6 +25,7 @@ import java.util.List;
 import panamagl.GLCanvas;
 import panamagl.GLEventListener;
 import panamagl.offscreen.FBO;
+import panamagl.offscreen.FBOReader;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
@@ -70,7 +71,7 @@ public interface PanamaGLFactory extends PlatformMatcher{
   GL newGL();
   GLContext newGLContext();
   FBO newFBO(int width, int height);
-  OffscreenRenderer newOffscreenRenderer();
+  OffscreenRenderer newOffscreenRenderer(FBOReader reader);
 
   void destroyContext();
   

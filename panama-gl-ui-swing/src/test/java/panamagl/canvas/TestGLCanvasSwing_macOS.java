@@ -25,12 +25,14 @@ import panamagl.GLCanvas;
 import panamagl.GLEventAdapter;
 import panamagl.GLEventListener;
 import panamagl.factory.PanamaGLFactory;
+import panamagl.offscreen.FBOReader_AWT;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.platform.Platform;
 import panamagl.platform.macos.OffscreenRenderer_macOS;
 import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
+
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class TestGLCanvasSwing_macOS {
@@ -193,7 +195,7 @@ public class TestGLCanvasSwing_macOS {
     // Given an initialized panel with a test offscreen renderer
     // performing a long task
     
-    OffscreenRenderer renderer = new OffscreenRenderer_macOS(factory) {
+    OffscreenRenderer renderer = new OffscreenRenderer_macOS(factory, new FBOReader_AWT()) {
     
       // Customize rendering task so that it is very very long
       @Override

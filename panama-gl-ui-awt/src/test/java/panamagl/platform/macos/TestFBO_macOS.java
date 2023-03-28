@@ -20,6 +20,7 @@ package panamagl.platform.macos;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import panamagl.offscreen.FBOReader_AWT;
 import panamagl.offscreen.TestFBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
@@ -43,16 +44,17 @@ public class TestFBO_macOS extends MacOSTest{
     int width = 256;
     int height = 256;
     FBO_macOS fbo = new FBO_macOS(width, height);
-    
+    FBOReader_AWT reader = new FBOReader_AWT();
+
     // Ensure does not leave this debug flag to false
-    Assert.assertTrue(fbo.arrayExport);
+    Assert.assertTrue(reader.isArrayExport());
     
     // Ensure conforms to configuration
     Assert.assertEquals(width, fbo.getWidth());
     Assert.assertEquals(height, fbo.getHeight());
 
     // Execute validation scenario
-    TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(fbo, gl);
+    TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(fbo, reader, gl);
 
     // ---------------------------------------
     // When Release context resources
@@ -78,16 +80,17 @@ public class TestFBO_macOS extends MacOSTest{
     int width = 256;
     int height = 256;
     FBO_macOS fbo = new FBO_macOS(width, height);
+    FBOReader_AWT reader = new FBOReader_AWT();
     
     // Ensure does not leave this debug flag to false
-    Assert.assertTrue(fbo.arrayExport);
+    Assert.assertTrue(reader.isArrayExport());
     
     // Ensure conforms to configuration
     Assert.assertEquals(width, fbo.getWidth());
     Assert.assertEquals(height, fbo.getHeight());
 
     // Execute validation scenario
-    TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(fbo, gl);
+    TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(fbo, reader, gl);
 
   }
 

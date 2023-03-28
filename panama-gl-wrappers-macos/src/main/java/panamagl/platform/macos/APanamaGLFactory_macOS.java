@@ -20,6 +20,7 @@ import panamagl.GLCanvas;
 import panamagl.factory.APanamaGLFactory;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.FBO;
+import panamagl.offscreen.FBOReader;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
@@ -44,9 +45,8 @@ public abstract class APanamaGLFactory_macOS extends APanamaGLFactory {
    * through this factory.
    */
   @Override
-  public OffscreenRenderer newOffscreenRenderer() {
-    return new OffscreenRenderer_macOS(this);
-    //return new AOffscreenRenderer(this);
+  public OffscreenRenderer newOffscreenRenderer(FBOReader reader) {
+    return new OffscreenRenderer_macOS(this, reader);
   }
 
   @Override

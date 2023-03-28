@@ -19,8 +19,6 @@ package panamagl.platform.macos;
 import java.lang.foreign.Addressable;
 import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.MemorySession;
-import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
 import java.util.Arrays;
 import cgl.macos.x86.cgl_h;

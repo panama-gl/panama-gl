@@ -19,11 +19,12 @@ package panamagl.platform.linux;
 
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.AOffscreenRenderer;
+import panamagl.offscreen.FBOReader;
 import panamagl.offscreen.OffscreenRenderer;
 
 // Now does not do anything else more than the abstract class
 public class OffscreenRenderer_linux extends AOffscreenRenderer implements OffscreenRenderer{
-  public OffscreenRenderer_linux(PanamaGLFactory factory) {
-    super(factory);
+  public OffscreenRenderer_linux(PanamaGLFactory factory, FBOReader reader) {
+    super(factory, reader);
   }
 }

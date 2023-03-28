@@ -17,6 +17,7 @@
  *******************************************************************************/
 package org.jzy3d.plot3d.rendering.canvas;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -26,12 +27,11 @@ import static org.mockito.Mockito.when;
 import org.junit.Test;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
 import org.jzy3d.chart.factories.PanamaGLPainterFactory;
-import org.jzy3d.plot3d.rendering.canvas.PanamaGLCanvas;
-import org.jzy3d.plot3d.rendering.canvas.Quality;
 import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.AOffscreenRenderer;
 import panamagl.offscreen.FBO;
+import panamagl.offscreen.FBOReader_AWT;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 
@@ -41,7 +41,7 @@ public class TestPanamaGLCanvas {
     
     // Mock panamaGL factory
     PanamaGLFactory f = mock(PanamaGLFactory.class);
-    when(f.newOffscreenRenderer()).thenReturn(new AOffscreenRenderer(f));
+    when(f.newOffscreenRenderer(any())).thenReturn(new AOffscreenRenderer(f, new FBOReader_AWT()));
     when(f.newGL()).thenReturn(mock(GL.class));
     when(f.newGLContext()).thenReturn(mock(GLContext.class));
     when(f.newFBO(anyInt(),anyInt())).thenReturn(mock(FBO.class));
@@ -54,7 +54,7 @@ public class TestPanamaGLCanvas {
 
     // Spy the component on which we will perform tests
     GLCanvasSwing glCanvas = spy(GLCanvasSwing.class);
-    glCanvas.setOffscreenRenderer(f.newOffscreenRenderer());
+    glCanvas.setOffscreenRenderer(f.newOffscreenRenderer(new FBOReader_AWT()));
     
     // Given
     PanamaGLCanvas c = new PanamaGLCanvas(factory, factory.newScene(false), Quality.Advanced(), glCanvas);

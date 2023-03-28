@@ -20,6 +20,7 @@ package panamagl.factory;
 import org.junit.Assert;
 import org.junit.Test;
 import panamagl.offscreen.FBO;
+import panamagl.offscreen.FBOReader;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
@@ -64,7 +65,7 @@ public class TestPanamaGLFactory {
       return platform;
     }
     @Override
-    public OffscreenRenderer newOffscreenRenderer() {
+    public OffscreenRenderer newOffscreenRenderer(FBOReader reader) {
       // TODO Auto-generated method stub
       return null;
     }

@@ -19,6 +19,7 @@ package demos.panamagl.offscreen;
 
 import panamagl.Image;
 import panamagl.offscreen.FBO;
+import panamagl.offscreen.FBOReader_AWT;
 import panamagl.opengl.GL;
 import panamagl.platform.macos.FBO_macOS;
 
@@ -41,7 +42,9 @@ public class Demo_Offscreen {
 
     //-------------------------
     // Get image
-    Image<?> out = fbo.getImage(gl);
+
+    FBOReader_AWT reader = new FBOReader_AWT();
+    Image<?> out = reader.read(fbo, gl, null);
 
     saveImage(out);
 

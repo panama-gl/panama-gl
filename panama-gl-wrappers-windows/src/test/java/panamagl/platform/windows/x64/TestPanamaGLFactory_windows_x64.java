@@ -18,7 +18,6 @@
 package panamagl.platform.windows.x64;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GLContext;
@@ -45,7 +44,7 @@ public class TestPanamaGLFactory_windows_x64 extends WindowsTest{
     GLContext context = f.newGLContext();
     Assert.assertNotNull(context);
     Assert.assertNotNull(f.newGL());
-    Assert.assertNotNull(f.newOffscreenRenderer());
+    Assert.assertNotNull(f.newOffscreenRenderer(null));
     Assert.assertNotNull(f.newFBO(800, 600));
     
     // ----------------------------
