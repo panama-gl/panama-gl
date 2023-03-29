@@ -19,7 +19,7 @@ import panamagl.performance.RenderCounter;
 
 // https://docs.oracle.com/javafx/2/canvas/jfxpub-canvas.htm
 // https://github.com/openjdk/jdk/blob/master/src/java.desktop/share/classes/sun/java2d/opengl/OGLUtilities.java
-// How Sun draw image with 
+// How Sun draw image with
 // https://github.com/openjdk/jdk/blob/master/src/java.desktop/share/classes/sun/java2d/SunGraphics2D.java#L3358
 // using DrawImagePipe
 public class GLCanvasJFX implements GLCanvas {
@@ -30,24 +30,24 @@ public class GLCanvasJFX implements GLCanvas {
   JFXImage image;
 
   Canvas canvas;
-  
+
   protected PerformanceOverlay overlay;
   protected RenderCounter counter = new RenderCounter();
   protected boolean debugPerf = true;
-  
+
   protected AtomicBoolean rendering = new AtomicBoolean();
 
-  
+
   public GLCanvasJFX(PanamaGLFactory factory, Canvas canvas) {
     this.factory = factory;
     this.canvas = canvas;
     this.offscreen = factory.newOffscreenRenderer(new FBOReader_JFX());
-    
-    
+
+
     overlay = new PerformanceOverlay(this);
-    //Scene scene = canvas.getScene();
-    
-    
+    // Scene scene = canvas.getScene();
+
+
     ResizeHandler resize = new ResizeHandler();
     this.canvas.getScene().widthProperty().addListener(resize);
     this.canvas.getScene().heightProperty().addListener(resize);
@@ -62,59 +62,59 @@ public class GLCanvasJFX implements GLCanvas {
     }
 
     setRendering(true);
-    
+
     // Start monitoring
     getMonitoring().onDisplay();
 
     // Does the actual work of rendering
     offscreen.onDisplay(this, listener);
-    
+
     // setRendering(false) will be invoked when painting is done
   }
-  
+
 
   @Override
   public boolean isRendering() {
     return rendering.get();
-  }  
-  
+  }
+
   public void setRendering(boolean value) {
     rendering.set(value);
   }
-  
-  protected class ResizeHandler implements ChangeListener<Number>{
+
+  protected class ResizeHandler implements ChangeListener<Number> {
     @Override
     public void changed(ObservableValue<? extends Number> observable, Number oldValue,
         Number newValue) {
-        
-      System.out.println(canvas.getScene());
-        int w = (int)canvas.getScene().widthProperty().get();
-        int h = (int)canvas.getScene().heightProperty().get();
-        //int w = (int)canvas.widthProperty().get();
-        //int h = (int)canvas.heightProperty().get();
-        
-        
-        
-     // Skip rendering we are already in the middle of rendering
-        // the previous frame
-       /* if (isRendering()) {
-          return;
-        } */
-        
-        // Otherwise indicates that we start to render and do the 
-        // job required for resizing.
-        //else {
-          //setRendering(true);
+
+      //System.out.println(canvas.getScene());
+      //int w = (int) canvas.getScene().widthProperty().get();
+      //int h = (int) canvas.getScene().heightProperty().get();
+      int w = (int)canvas.widthProperty().get();
+      int h = (int)canvas.heightProperty().get();
+
+
+
+      // Skip rendering we are already in the middle of rendering
+      // the previous frame
+      if (isRendering()) {
+        return;
+      }
+
+      // Otherwise indicates that we start to render and do the
+      // job required for resizing.
+      else {
+        setRendering(true);
 
         getMonitoring().onStartRendering();
-        
-        System.out.println("GLCanvasJFX : " + w + " " + h);
 
-          offscreen.onResize(GLCanvasJFX.this, listener, 0, 0, w, h);
-       // }
+        //System.out.println("GLCanvasJFX : " + w + " " + h);
+
+        offscreen.onResize(GLCanvasJFX.this, listener, 0, 0, w, h);
+      }
     }
   }
-  
+
   @Override
   public boolean isVisible() {
     return canvas.isVisible();
@@ -122,14 +122,13 @@ public class GLCanvasJFX implements GLCanvas {
 
   @Override
   public int getWidth() {
-    return (int)canvas.getScene().widthProperty().get();
-    //return canvas.widthProperty().intValue();
+    return canvas.widthProperty().intValue();
   }
 
   @Override
   public int getHeight() {
-    return (int)canvas.getScene().heightProperty().get();
-    //return canvas.heightProperty().intValue();
+    return canvas.heightProperty().intValue();
+    //return canvas.getScene().heightProperty().intValue();
   }
 
   @Override
@@ -145,13 +144,15 @@ public class GLCanvasJFX implements GLCanvas {
   @Override
   public void setScreenshot(Image<?> image) {
     this.image = (JFXImage) image;
-    
+
+    // System.out.println(Thread.currentThread());
+
     getMonitoring().onPaint();
-    
+
     GraphicsContext gc = canvas.getGraphicsContext2D();
-    //gc.clearRect(0, 0, getWidth(), getHeight());
-    gc.drawImage(this.image.getImage(), 0,0);
-    
+    // gc.clearRect(0, 0, getWidth(), getHeight());
+    gc.drawImage(this.image.getImage(), 0, 0);
+
     getMonitoring().onPaintComponentBefore();
 
     if (debugPerf)
@@ -165,11 +166,11 @@ public class GLCanvasJFX implements GLCanvas {
   public Image<?> getScreenshot() {
     return image;
   }
-  
+
 
 
   // =========================================
-  
+
   @Override
   public OffscreenRenderer getOffscreenRenderer() {
     return offscreen;
@@ -179,7 +180,7 @@ public class GLCanvasJFX implements GLCanvas {
   public void setOffscreenRenderer(OffscreenRenderer offscreen) {
     this.offscreen = offscreen;
   }
-  
+
   @Override
   public boolean isInitialized() {
     return offscreen.isInitialized();
@@ -193,7 +194,7 @@ public class GLCanvasJFX implements GLCanvas {
   @Override
   public void setGLEventListener(GLEventListener listener) {
     this.listener = listener;
-    
+
     offscreen.onInit(this, listener);
   }
 

@@ -29,6 +29,7 @@ import javafx.stage.Stage;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasJFX;
+import panamagl.canvas.ResizableCanvas;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 
@@ -54,6 +55,8 @@ import panamagl.opengl.GL;
  * 
  * - Pourquoi ça saute quand on resize? Conflit de rendu car le flag isRendering n'est en réalité pas effectif?
  * 
+ * - https://stackoverflow.com/questions/24533556/how-to-make-canvas-resizable-in-javafx
+ * 
  * @author Martin
  *
  */
@@ -69,16 +72,20 @@ public class DemoQuad_Onscreen_JavaFX2 extends Application {
     PanamaGLFactory factory = new PanamaGLFactory_windows_JFX();
 
 
-    Canvas canvas = new Canvas();
+    Canvas canvas = new ResizableCanvas();
     canvas.setWidth(600);
     canvas.setHeight(500);
     
+    //canvas.setResi
 
     VBox vbox = new VBox(canvas);
     vbox.setFillWidth(true);
     
     Scene scene = new Scene(vbox);
+    
     stage.setScene(scene);
+    stage.setResizable(true);
+    
     stage.show();
 
     // MUST BE INIT AFTER UI POPS
@@ -86,7 +93,7 @@ public class DemoQuad_Onscreen_JavaFX2 extends Application {
     glcanvas.setGLEventListener(Quad());
 
     Animator anim = new Animator(glcanvas);
-    anim.setSleepTime(1000);
+    //anim.setSleepTime(1000);
     anim.start();
 
     System.out.println("started");
