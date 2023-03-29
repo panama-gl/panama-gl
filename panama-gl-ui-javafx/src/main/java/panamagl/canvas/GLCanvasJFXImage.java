@@ -2,7 +2,6 @@ package panamagl.canvas;
 
 import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
-import panamagl.GLCanvas;
 import panamagl.GLEventListener;
 import panamagl.Image;
 import panamagl.factory.PanamaGLFactory;

@@ -1,4 +1,4 @@
-package hellofx;
+package panamagl.factory;
 
 import panamagl.offscreen.FBOReader;
 import panamagl.offscreen.OffscreenRenderer;

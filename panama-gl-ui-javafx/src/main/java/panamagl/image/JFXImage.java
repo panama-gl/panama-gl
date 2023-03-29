@@ -2,7 +2,6 @@ package panamagl.image;
 
 import java.io.IOException;
 import javafx.scene.image.WritableImage;
-
 import panamagl.Image;
 
 public class JFXImage implements Image<WritableImage>{

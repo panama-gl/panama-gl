@@ -19,6 +19,7 @@ package panamagl;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import panamagl.canvas.GLCanvas;
 import panamagl.performance.RenderCounter;
 
 /**

@@ -25,7 +25,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.util.concurrent.atomic.AtomicBoolean;
 import panamagl.Debug;
-import panamagl.GLCanvas;
 import panamagl.GLEventListener;
 import panamagl.Image;
 import panamagl.factory.PanamaGLFactory;
@@ -35,7 +34,7 @@ import panamagl.offscreen.FBOReader_AWT;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
-import panamagl.performance.PerformanceOverlay;
+import panamagl.performance.PerformanceOverlay_AWT;
 import panamagl.performance.RenderCounter;
 import panamagl.utils.GraphicsUtils;
 import panamagl.utils.ImageUtils;
@@ -80,7 +79,7 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
 
   protected AtomicBoolean rendering = new AtomicBoolean();
   protected RenderCounter counter = new RenderCounter();
-  protected PerformanceOverlay overlay;
+  protected PerformanceOverlay_AWT overlay;
 
   protected boolean debug = Debug.check(GLCanvasAWT.class);
   protected boolean debugPerf = true;
@@ -92,7 +91,7 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
    */
   public GLCanvasAWT(PanamaGLFactory factory) {
 	this.offscreen = factory.newOffscreenRenderer(new FBOReader_AWT());
-    this.overlay = new PerformanceOverlay(this);
+    this.overlay = new PerformanceOverlay_AWT(this);
 
     // Load OSXUtil native as soon as possible for macOS!
     // GLProfile.initSingleton();

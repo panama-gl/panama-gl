@@ -21,8 +21,8 @@ import org.jzy3d.maths.TicToc;
 import org.jzy3d.painters.IPainter;
 import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.plot3d.rendering.view.View;
-import panamagl.GLCanvas;
 import panamagl.GLEventListener;
+import panamagl.canvas.GLCanvas;
 import panamagl.opengl.GL;
 
 public class Renderer3D implements GLEventListener{

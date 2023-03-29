@@ -17,6 +17,7 @@
  *******************************************************************************/
 package panamagl;
 
+import panamagl.canvas.GLCanvas;
 import panamagl.opengl.GL;
 
 /**

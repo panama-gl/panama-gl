@@ -17,8 +17,8 @@
  *******************************************************************************/
 package panamagl.offscreen;
 
-import panamagl.GLCanvas;
 import panamagl.GLEventListener;
+import panamagl.canvas.GLCanvas;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 

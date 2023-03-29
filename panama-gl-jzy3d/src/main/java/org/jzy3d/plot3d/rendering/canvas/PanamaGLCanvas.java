@@ -33,8 +33,8 @@ import org.jzy3d.maths.Coord2d;
 import org.jzy3d.maths.Dimension;
 import org.jzy3d.plot3d.rendering.scene.Scene;
 import org.jzy3d.plot3d.rendering.view.View;
-import panamagl.GLCanvas;
 import panamagl.GLEventListener;
+import panamagl.canvas.GLCanvas;
 import panamagl.canvas.GLCanvasSwing;
 
 public class PanamaGLCanvas extends JPanel implements IScreenCanvas{

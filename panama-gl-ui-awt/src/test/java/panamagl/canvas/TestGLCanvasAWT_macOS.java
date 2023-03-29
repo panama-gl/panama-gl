@@ -21,7 +21,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Ignore;
 import org.junit.Test;
 import junit.framework.Assert;
-import panamagl.GLCanvas;
 import panamagl.GLEventAdapter;
 import panamagl.GLEventListener;
 import panamagl.factory.PanamaGLFactory;

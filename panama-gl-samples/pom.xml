@@ -27,10 +27,10 @@
 			<artifactId>panama-gl-ui-swing</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!--<dependency>
+		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-ui-javafx</artifactId>
 			<version>${project.version}</version>
-		</dependency>-->
+		</dependency>
 	</dependencies>
 </project>

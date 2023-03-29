@@ -16,7 +16,7 @@
 package panamagl.platform.macos;
 
 import panamagl.Debug;
-import panamagl.GLCanvas;
+import panamagl.canvas.GLCanvas;
 import panamagl.factory.APanamaGLFactory;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.FBO;

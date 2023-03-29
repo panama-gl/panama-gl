@@ -19,8 +19,8 @@ package panamagl.platform.macos;
 
 import com.jogamp.opengl.GLProfile;
 import jogamp.nativewindow.macosx.OSXUtil;
-import panamagl.GLCanvas;
 import panamagl.GLEventListener;
+import panamagl.canvas.GLCanvas;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.AOffscreenRenderer;
 import panamagl.offscreen.FBOReader;

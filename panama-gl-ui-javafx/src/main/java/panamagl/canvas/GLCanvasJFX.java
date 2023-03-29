@@ -5,7 +5,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import panamagl.GLCanvas;
 import panamagl.GLEventListener;
 import panamagl.Image;
 import panamagl.factory.PanamaGLFactory;
@@ -14,7 +13,7 @@ import panamagl.offscreen.FBOReader_JFX;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
-import panamagl.performance.PerformanceOverlay;
+import panamagl.performance.PerformanceOverlay_JFX;
 import panamagl.performance.RenderCounter;
 
 // https://docs.oracle.com/javafx/2/canvas/jfxpub-canvas.htm
@@ -31,7 +30,7 @@ public class GLCanvasJFX implements GLCanvas {
 
   Canvas canvas;
 
-  protected PerformanceOverlay overlay;
+  protected PerformanceOverlay_JFX overlay;
   protected RenderCounter counter = new RenderCounter();
   protected boolean debugPerf = true;
 
@@ -44,7 +43,7 @@ public class GLCanvasJFX implements GLCanvas {
     this.offscreen = factory.newOffscreenRenderer(new FBOReader_JFX());
 
 
-    overlay = new PerformanceOverlay(this);
+    overlay = new PerformanceOverlay_JFX(this);
     // Scene scene = canvas.getScene();
 
 

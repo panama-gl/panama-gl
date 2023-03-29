@@ -20,7 +20,7 @@ package panamagl.platform.linux;
 
 
 import panamagl.Debug;
-import panamagl.GLCanvas;
+import panamagl.canvas.GLCanvas;
 import panamagl.factory.APanamaGLFactory;
 import panamagl.offscreen.FBO;
 import panamagl.offscreen.FBOReader;
