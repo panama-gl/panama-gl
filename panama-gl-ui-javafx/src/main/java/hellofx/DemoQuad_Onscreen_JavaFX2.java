@@ -22,59 +22,89 @@
 package hellofx;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
-import panamagl.canvas.GLCanvasJFXImage;
+import panamagl.canvas.GLCanvasJFX;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 
+/**
+ * TODO
+ * 
+ * - All FBO must keep spare readPixel buffer usage like on windows
+ * 
+ * - macOS OffscreenRenderer should use a ThreadRedirect implementation
+ * 
+ * - Provide a CanvasFactory or ToolkitFactory to init ThreadRedirect, Canvas and Image. Rename
+ * PanamaGLFactory to OpenGLFactory, then provide ToolkitFactory to OpenGLFactory.
+ * 
+ * - animator sleepTime is not considered!!
+ * 
+ * - JavaFX isRendering is not properly working
+ * 
+ * - Verifier que le resize marche encore sur Swing et macOS/linux. AOffscreenRenderer doit soit ne pas utiliser la taille du drawable, soit dégager les arguments
+ * 
+ * - Trouver une bonne manière de connaître la taille du canvas sans faire appel à la scene!! ET CORRIGER 
+ * 
+ * - Trouver la propriété pour permettre au canvas de grandir dans la scene
+ * 
+ * - Pourquoi ça saute quand on resize? Conflit de rendu car le flag isRendering n'est en réalité pas effectif?
+ * 
+ * @author Martin
+ *
+ */
 // --module-path "C:\Program Files\Java\javafx-sdk-17.0.6\lib" --add-modules javafx.controls
 // --add-exports=java.desktop/sun.awt=ALL-UNNAMED
-public class DemoQuad_Onscreen_JavaFX extends Application {
+public class DemoQuad_Onscreen_JavaFX2 extends Application {
 
   public void start(Stage stage) {
 
-    //PanamaGLFactory factory = PanamaGLFactory.select();
+
+    // PanamaGLFactory factory = PanamaGLFactory.select();
+
     PanamaGLFactory factory = new PanamaGLFactory_windows_JFX();
 
-    ImageView imageView = new ImageView();
-    imageView.setCache(true);
-    imageView.setSmooth(false);
+
+    Canvas canvas = new Canvas();
+    canvas.setWidth(600);
+    canvas.setHeight(500);
     
-    VBox root = new VBox(30, imageView);
-    root.setAlignment(Pos.CENTER);
 
-    Scene scene = new Scene(root, 640, 480);
-    scene.getStylesheets()
-        .add(DemoQuad_Onscreen_JavaFX.class.getResource("styles.css").toExternalForm());
-
+    VBox vbox = new VBox(canvas);
+    vbox.setFillWidth(true);
+    
+    Scene scene = new Scene(vbox);
     stage.setScene(scene);
     stage.show();
 
     // MUST BE INIT AFTER UI POPS
-    GLCanvasJFXImage canvas = new GLCanvasJFXImage(factory, imageView, scene);
-    canvas.setGLEventListener(Quad());
+    GLCanvasJFX glcanvas = new GLCanvasJFX(factory, canvas);
+    glcanvas.setGLEventListener(Quad());
 
-    Animator anim = new Animator(canvas);
+    Animator anim = new Animator(glcanvas);
+    anim.setSleepTime(1000);
     anim.start();
 
     System.out.println("started");
-    
-    /*Exception in thread "AWT-EventQueue-0" java.lang.OutOfMemoryError: Java heap space
-    at java.base/jdk.internal.foreign.AbstractMemorySegmentImpl.lambda$toArray$3(AbstractMemorySegmentImpl.java:317)
-    at java.base/jdk.internal.foreign.AbstractMemorySegmentImpl$$Lambda$306/0x000000080119e718.apply(Unknown Source)
-    at java.base/jdk.internal.foreign.AbstractMemorySegmentImpl.toArray(AbstractMemorySegmentImpl.java:337)
-    at java.base/jdk.internal.foreign.AbstractMemorySegmentImpl.toArray(AbstractMemorySegmentImpl.java:317)
-    at panamagl.utils.AWTImageCopy.fromBGRABufferToImageArray(AWTImageCopy.java:35)
-    at panamagl.offscreen.FBOReader_AWT.read(FBOReader_AWT.java:38)
-    at panamagl.offscreen.FBOReader_JFX.read(FBOReader_JFX.java:17)
-    at panamagl.offscreen.AOffscreenRenderer.renderGLToImage(AOffscreenRenderer.java:207)*/
+
+    /*
+     * Exception in thread "AWT-EventQueue-0" java.lang.OutOfMemoryError: Java heap space at
+     * java.base/jdk.internal.foreign.AbstractMemorySegmentImpl.lambda$toArray$3(
+     * AbstractMemorySegmentImpl.java:317) at
+     * java.base/jdk.internal.foreign.AbstractMemorySegmentImpl$$Lambda$306/0x000000080119e718.apply
+     * (Unknown Source) at
+     * java.base/jdk.internal.foreign.AbstractMemorySegmentImpl.toArray(AbstractMemorySegmentImpl.
+     * java:337) at
+     * java.base/jdk.internal.foreign.AbstractMemorySegmentImpl.toArray(AbstractMemorySegmentImpl.
+     * java:317) at panamagl.utils.AWTImageCopy.fromBGRABufferToImageArray(AWTImageCopy.java:35) at
+     * panamagl.offscreen.FBOReader_AWT.read(FBOReader_AWT.java:38) at
+     * panamagl.offscreen.FBOReader_JFX.read(FBOReader_JFX.java:17) at
+     * panamagl.offscreen.AOffscreenRenderer.renderGLToImage(AOffscreenRenderer.java:207)
+     */
   }
 
 

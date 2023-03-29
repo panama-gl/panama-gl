@@ -85,7 +85,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
   protected PerformanceOverlay overlay;
 
   protected boolean debug = Debug.check(GLCanvasSwing.class);
-  protected boolean debugPerf = false;
+  protected boolean debugPerf = true;
   
   // For mocking
   public GLCanvasSwing() {}
@@ -152,7 +152,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
    */
   @Override
   public void update(Graphics g) {
-    counter.onUpdate();
+    getMonitoring().onUpdate();
     super.update(g);
   }
 
@@ -164,7 +164,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
    */
   @Override
   public void paint(Graphics g) {
-    counter.onPaint();
+    getMonitoring().onPaint();
     super.paint(g);
   }
   
@@ -196,7 +196,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
       //System.out.println("GLCanvasSwing : " + sout.getWidth() + "," + sout.getHeight());
       
-      counter.onPaintComponentBefore();
+      getMonitoring().onPaintComponentBefore();
 
       if (debugPerf)
         overlayPerformance(g);
@@ -221,10 +221,12 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
     setRendering(true);
 
     // Start monitoring
-    counter.onDisplay();
+    getMonitoring().onDisplay();
 
     // Does the actual work of rendering
     offscreen.onDisplay(this, listener);
+    
+    // setRendering(false) will be invoked when painting is done
   }
 
   /**

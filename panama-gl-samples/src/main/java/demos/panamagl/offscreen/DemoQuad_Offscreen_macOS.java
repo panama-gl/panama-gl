@@ -59,7 +59,7 @@ public class DemoQuad_Offscreen_macOS {
     // Get image
 
     FBOReader_AWT reader = new FBOReader_AWT();
-    Image<?> out = reader.read(fbo, gl, null);
+    Image<?> out = reader.read(fbo, gl);
 
     saveImage(out);
 

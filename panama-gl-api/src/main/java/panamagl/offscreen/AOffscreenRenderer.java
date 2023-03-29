@@ -15,8 +15,6 @@
  *******************************************************************************/
 package panamagl.offscreen;
 
-import java.awt.EventQueue;
-import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import panamagl.Debug;
@@ -41,6 +39,8 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   protected FBO fbo;
   protected FBOReader reader;
   
+  protected ThreadRedirect threadRedirect = new AWTThreadRedirect();
+  
   protected boolean initialized = false;
   
   protected String debugFile = null;
@@ -59,7 +59,7 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   public void onInit(GLCanvas drawable, GLEventListener listener) {
     Runnable r = getTask_initContext(drawable, listener);
     
-    executeFromAWTMainThread(r);
+    threadRedirect.run(r);
   }
 
   @Override
@@ -69,38 +69,16 @@ public class AOffscreenRenderer implements OffscreenRenderer {
     Runnable r = getTask_renderGLToImage(drawable, listener, drawable.getWidth(), drawable.getHeight());
     //Runnable r = getTask_renderGLToImage(drawable, listener);
     
-    executeFromAWTMainThread(r);
+    threadRedirect.run(r);
   }
   
   @Override
   public void onResize(GLCanvas drawable, GLEventListener listener, int x, int y, int width, int height) {
     Runnable r = getTask_renderGLToImage(drawable, listener, drawable.getWidth(), drawable.getHeight());
     
-    executeFromAWTMainThread(r);
+    threadRedirect.run(r);
   }
   
-  /** 
-   * Ensure the task is executed by the AWT Event Thread.
-   * OpenGL being single threaded, we need to always perform rendering queries from the same UI thread.
-   */
-  protected void executeFromAWTMainThread(Runnable r) {
-    // If we are already in AWT thread, just run
-    if (EventQueue.isDispatchThread()) {
-        r.run();
-    }
-    // Otherwise, push the request to AWT
-    else {
-      // On Windows and Linux, we need to 
-      EventQueue.invokeLater(r);
-      
-      // The below code can fail
-      /*try {
-        EventQueue.invokeAndWait(r);
-      } catch (InvocationTargetException | InterruptedException e) {
-        throw new RuntimeException(e);
-      } */     
-    }
-  }
   
   @Override
   public void onDestroy(GLCanvas drawable, GLEventListener glEventListener) {
@@ -204,7 +182,7 @@ public class AOffscreenRenderer implements OffscreenRenderer {
     // FBO To image
     if (fbo != null) {
       
-      Image<?> out = reader.read(fbo, gl, null);
+      Image<?> out = reader.read(fbo, gl);
 
       // Give back the image to the onscreen panel
       canvas.setScreenshot(out);
@@ -263,6 +241,17 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   public GLContext getContext() {
     return context;
   }
+  
+  @Override
+  public ThreadRedirect getThreadRedirect() {
+    return threadRedirect;
+  }
+
+  @Override
+  public void setThreadRedirect(ThreadRedirect threadRedirect) {
+    this.threadRedirect = threadRedirect;
+  }
+
 
 
   /**
@@ -280,8 +269,11 @@ public class AOffscreenRenderer implements OffscreenRenderer {
     this.debugFile = debugFile;
   }
 
+  
+  
   // -------------------------------------------------------------
 
+  
   protected Runnable getTask_renderGLToImage(GLCanvas drawable, GLEventListener listener, int width,
       int height) {
     return new Runnable() {

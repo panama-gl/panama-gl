@@ -13,7 +13,13 @@ import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.performance.RenderCounter;
 
-public class GLCanvasJavaFX implements GLCanvas {
+// https://docs.oracle.com/javafx/2/canvas/jfxpub-canvas.htm
+// https://github.com/openjdk/jdk/blob/master/src/java.desktop/share/classes/sun/java2d/opengl/OGLUtilities.java
+// How Sun draw image with 
+// https://github.com/openjdk/jdk/blob/master/src/java.desktop/share/classes/sun/java2d/SunGraphics2D.java#L3358
+// using DrawImagePipe
+@Deprecated
+public class GLCanvasJFXImage implements GLCanvas {
   PanamaGLFactory factory;
   GLEventListener listener;
   OffscreenRenderer offscreen;
@@ -23,7 +29,7 @@ public class GLCanvasJavaFX implements GLCanvas {
   
   JFXImage image;
 
-  public GLCanvasJavaFX(PanamaGLFactory factory, ImageView target, Scene scene) {
+  public GLCanvasJFXImage(PanamaGLFactory factory, ImageView target, Scene scene) {
     this.factory = factory;
     this.offscreen = factory.newOffscreenRenderer(new FBOReader_JFX());
 
@@ -38,14 +44,20 @@ public class GLCanvasJavaFX implements GLCanvas {
       return;
     }
 
+    rendering = true;
+    
     // Does the actual work of rendering
     offscreen.onDisplay(this, listener);
+    
+    rendering = false;
 
   }
+  
+  boolean rendering = false;
 
   @Override
   public boolean isRendering() {
-    return false;
+    return rendering;
   }
 
 

@@ -68,7 +68,7 @@ public class TestFBO {
 
     SampleTriangle.rgbaTriangle2D(gl, width, height);
 
-    BufferedImage image = (BufferedImage)reader.read(fbo, gl, null).getImage();
+    BufferedImage image = (BufferedImage)reader.read(fbo, gl).getImage();
 
     saveImage(file1, image); // for review
 
@@ -137,7 +137,7 @@ public class TestFBO {
     SampleTriangle.rgbaTriangle2D(gl, width, height);
 
     // get a double sized image
-    image = (BufferedImage)reader.read(fbo, gl, null).getImage();
+    image = (BufferedImage)reader.read(fbo, gl).getImage();
 
     Assert.assertTrue(fbo.isPrepared()); // now prepared to this size
     Assert.assertEquals(width, image.getWidth());

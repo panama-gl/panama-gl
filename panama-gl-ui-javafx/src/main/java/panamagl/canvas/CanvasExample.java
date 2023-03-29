@@ -1,0 +1,52 @@
+package panamagl.canvas;
+
+import hellofx.HelloFX;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+
+/**
+ * Shows a simple JavaFX Canvas.
+ */
+public class CanvasExample extends Application {
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws InterruptedException {
+
+        Canvas canvas = new Canvas();
+        canvas.setHeight(512);
+        canvas.setWidth(512);
+
+        GraphicsContext graphicsContext2D = canvas.getGraphicsContext2D();
+
+        
+        graphicsContext2D.setFill(Color.valueOf("#ff0000"));
+        graphicsContext2D.fillRect(100, 100, 200, 200);
+
+        graphicsContext2D.setStroke(Color.valueOf("#0000ff"));
+        graphicsContext2D.strokeRect(200, 200, 200, 200);
+
+        VBox vbox = new VBox(canvas);
+        Scene scene = new Scene(vbox);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        
+        Thread.sleep(1000);
+        Image i = new Image(HelloFX.class.getResourceAsStream("/hellofx/openduke.png"));
+        
+        for (int j = 0; j < 1; j++) {
+          graphicsContext2D.drawImage(i, 0, 0);
+          System.out.println(j);
+        }
+    }
+
+}

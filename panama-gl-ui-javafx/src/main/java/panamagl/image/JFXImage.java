@@ -22,5 +22,9 @@ public class JFXImage implements Image<WritableImage>{
     // TODO Auto-generated method stub
     
   }
+  
+  public void setImage(WritableImage image) {
+    this.image = image;
+  }
 
 }

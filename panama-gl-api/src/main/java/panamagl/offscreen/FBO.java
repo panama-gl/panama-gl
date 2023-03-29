@@ -23,7 +23,7 @@ import panamagl.opengl.GL;
 
 /**
  * A frame buffer object, or {@link FBO}, can render OpenGL into an offscreen buffer that can later
- * be read to an {@link Image} by a {@link FBOReader}.
+ * be read to an {@link Image} by a {@link FBOReader} which will access the FBO content through {@link FBO#readPixels(GL)}.
  *
  * @author Martin Pernollet
  */
@@ -36,5 +36,5 @@ public interface FBO {
   
   boolean isPrepared();
   
-  public MemorySegment readPixels(GL gl);
+  MemorySegment readPixels(GL gl);
 }

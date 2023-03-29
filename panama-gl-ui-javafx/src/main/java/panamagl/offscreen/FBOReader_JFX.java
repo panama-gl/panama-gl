@@ -7,7 +7,6 @@ import java.nio.IntBuffer;
 import javafx.scene.image.PixelFormat;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import panamagl.GLCanvas;
 import panamagl.Image;
 import panamagl.image.JFXImage;
 import panamagl.opengl.GL;
@@ -20,13 +19,21 @@ public class FBOReader_JFX extends AFBOReader implements FBOReader{
   //AWTImage i = reader.read(fbo, gl, canvas);
   //WritableImage image = SwingFXUtils.toFXImage(i.getImage(), null);
 
+  WritableImage image;
+  JFXImage jfx = new JFXImage(null);
+  
   @Override
-  public Image<?> read(FBO fbo, GL gl, GLCanvas canvas) {
+  public Image<?> read(FBO fbo, GL gl) {
     int width = fbo.getWidth();
     int height = fbo.getHeight();    
     
     MemorySegment pixels = fbo.readPixels(gl);
-    WritableImage image = new WritableImage(width, height);
+    
+    if(image==null || image.getWidth()!=width || image.getHeight()!=height) {
+      image = new WritableImage(width, height);
+    }
+    
+    //WritableImage image = new WritableImage(width, height);
     PixelWriter writer = image.getPixelWriter();
     
     PixelFormat<ByteBuffer> formatB = PixelFormat.getByteBgraInstance();
@@ -37,7 +44,11 @@ public class FBOReader_JFX extends AFBOReader implements FBOReader{
     int[] iixels = pixels.toArray(ValueLayout.JAVA_INT);
     writer.setPixels(0, 0, width, height, formatI, iixels, 0, width*4);*/
     
-    return new JFXImage(image);
+    //pixels.unload();
+    
+    jfx.setImage(image);
+    
+    return jfx;//new JFXImage(image);
   }
 
 }

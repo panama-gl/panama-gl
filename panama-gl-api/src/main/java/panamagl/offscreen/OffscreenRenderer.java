@@ -46,6 +46,9 @@ public interface OffscreenRenderer {
   
   boolean isInitialized();
   
-  public void setDebugFile(String debugFile);
-  public String getDebugFile();
+  ThreadRedirect getThreadRedirect();
+  void setThreadRedirect(ThreadRedirect threadRedirect);
+  
+  void setDebugFile(String debugFile);
+  String getDebugFile();
 }

@@ -367,9 +367,16 @@ public class FBO_windows extends AFBO implements FBO {
     int nBytes = width * height * channels;
     
     // The segments created in this function will be destroyed
-    // one the below scope and allocator are collected by GC.
-    MemorySession session = MemorySession.openImplicit();
-    MemorySegment pixels = MemorySegment.allocateNative(nBytes, session);
+    // once the below scope and allocator are collected by GC.
+    //MemorySession session = MemorySession.openImplicit();
+    //MemorySegment pixels = MemorySegment.allocateNative(nBytes, session);
+    
+    if(pixels==null || pixels.byteSize()!=nBytes) {
+      pixels = MemorySegment.allocateNative(nBytes, session);
+    }
+    else {
+      //System.out.println("REUSE!!");
+    }
     gl.glReadPixels(0, 0, width, height, format, textureType, pixels);
     
     // Check for error after reading
@@ -382,58 +389,9 @@ public class FBO_windows extends AFBO implements FBO {
     
     return pixels;
   }
-
-
-  /*@SuppressWarnings("unchecked")
-  @Override
-  public Image<?> getImage(GL gl) {
-
-    // Initialize buffers if they are not ready or if their expected size changed
-    if (!prepared)
-      prepare(gl);
-
-    // Init output image with the buffer size and color encoding
-    //BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-    
-    // Try an image format derived from default screen/gpu to avoid conversion
-    BufferedImage out = GraphicsUtils.createCompatibleImage(width, height);
-    
-    // Reading pixels
-    int nBytes = width * height * channels;
-    
-    // The segments created in this function will be destroyed
-    // one the below scope and allocator are collected by GC.
-    MemorySession session = MemorySession.openImplicit();
-    MemorySegment pixelsRead = MemorySegment.allocateNative(nBytes, session);
-    gl.glReadPixels(0, 0, width, height, format, textureType, pixelsRead);
-    
-    // Check for error after reading
-    GLError.checkAndThrow(gl);
-    
-    Debug.debug(debug, "FBO: Will read " + nBytes + " bytes due to " + width + "x" + height + " pixels");
-
-
-    // Copy pixels to buffered image
-    if (arrayExport)
-      copy.fromBGRABufferToImageArray(pixelsRead, out, width, height);
-    else
-      copy.fromBGRABufferToImage(pixelsRead, out, width, height, channels);
-    
-    if(flipY)
-      out = ImageUtils.flipVertically(out);
-    
-
-    Debug.debug(debug, "FBO: Image created !");
-
-
-    // FIXME : Not mapped exception is not relevant
-    // FIXME : See if later versions of Panama do not throw exception
-    Debug.debug(debug, "FBO.pixelsRead state - mapped:" + pixelsRead.isMapped() + " native:" + pixelsRead.isNative());
-    
-    // Bind 0, which means render to back buffer
-    glBindFramebuffer.apply(glut_h.GL_FRAMEBUFFER(), 0);
-
-    return new AWTImage(out);
-  }*/
-
+  
+  MemorySession session = MemorySession.openImplicit();
+  
+  MemorySegment pixels;
+  
 }

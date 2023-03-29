@@ -111,6 +111,7 @@ public class Animator {
   }
 
   /** Query a drawable display if previous time or number of event is not diverging. */
+  @Deprecated
   protected void adaptiveDisplayWithDerivative() {
     // Is it worth trying to display?
     RenderCounter counter = canvas.getMonitoring();
