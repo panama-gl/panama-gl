@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.lang.foreign.MemorySegment;
 import panamagl.Debug;
 import panamagl.GLCanvas;
-import panamagl.canvas.AWTImage;
+import panamagl.image.AWTImage;
 import panamagl.opengl.GL;
 import panamagl.utils.AWTImageCopy;
 import panamagl.utils.GraphicsUtils;

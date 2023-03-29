@@ -201,6 +201,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     }
   }
 
+  @SuppressWarnings("unused")
   private void printPixelFormat(MemorySegment pixelFormatOut) {
     System.out.println("WGL : PFD.flag " + PIXELFORMATDESCRIPTOR.dwFlags$get(pixelFormatOut));
     System.out.println("WGL : PFD.iPixelType " + PIXELFORMATDESCRIPTOR.iPixelType$get(pixelFormatOut));

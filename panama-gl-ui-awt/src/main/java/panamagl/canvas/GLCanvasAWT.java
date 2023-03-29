@@ -29,6 +29,7 @@ import panamagl.GLCanvas;
 import panamagl.GLEventListener;
 import panamagl.Image;
 import panamagl.factory.PanamaGLFactory;
+import panamagl.image.AWTImage;
 import panamagl.offscreen.FBO;
 import panamagl.offscreen.FBOReader_AWT;
 import panamagl.offscreen.OffscreenRenderer;

@@ -46,7 +46,7 @@ public class DemoQuad_Onscreen_Swing {
         .println("SwingUtilities.isEventDispatchThread: " + SwingUtilities.isEventDispatchThread());
 
     // This is the GL Scene to render
-    GLEventAdapter listener = RotatingStuff();
+    GLEventAdapter listener = Quad();
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
     PanamaGLFactory factory = PanamaGLFactory.select();
@@ -86,8 +86,7 @@ public class DemoQuad_Onscreen_Swing {
     a.start();
   }
 
-  /** Draw a fullcanvas triangle. */
-  public static GLEventAdapter RotatingStuff() {
+  public static GLEventAdapter Quad() {
     return new GLEventAdapter() {
       private float rotateT = 0.0f;
 

@@ -49,7 +49,7 @@ public class DemoQuad_Offscreen_macOS {
     //-------------------------
     // Render something
 
-    GLEventListener glL = DemoQuad_Onscreen_Swing.RotatingStuff();
+    GLEventListener glL = DemoQuad_Onscreen_Swing.Quad();
     
     glL.init(null);
     glL.reshape(null, 0, 0, width, height);    
