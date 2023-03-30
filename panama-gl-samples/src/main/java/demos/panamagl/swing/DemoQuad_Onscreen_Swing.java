@@ -50,6 +50,9 @@ public class DemoQuad_Onscreen_Swing {
 
     // Using a panel to ensure that GL get initialized in the main AWT thread.
     PanamaGLFactory factory = PanamaGLFactory.select();
+    
+    System.out.println(PanamaGLFactory.findFactories());
+
     GLCanvasSwing panel = new GLCanvasSwing(factory);
     panel.setGLEventListener(listener);
 

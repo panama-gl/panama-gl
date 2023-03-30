@@ -18,6 +18,7 @@
 package panamagl.factory;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import panamagl.offscreen.FBO;
 import panamagl.offscreen.FBOReader;
@@ -26,8 +27,10 @@ import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.platform.Platform;
 
+// This verify the former factory loading mecanism. Kept for a while but useless now
 public class TestPanamaGLFactory {
 
+  @Ignore("Changed loading mecanism")
   @Test
   public void select() {
     MockFactory p1 = new MockFactoryMac();

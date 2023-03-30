@@ -61,6 +61,7 @@ import panamagl.opengl.GL;
  * @author Martin
  *
  */
+//--module-path "/Library/Java/JavaVirtualMachines/javafx-sdk-19.0.2.1/" --add-modules javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
 // --module-path "C:\Program Files\Java\javafx-sdk-17.0.6\lib" --add-modules javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
 public class DemoQuad_Onscreen_JavaFX extends Application {
 
@@ -70,6 +71,7 @@ public class DemoQuad_Onscreen_JavaFX extends Application {
     // PanamaGLFactory factory = PanamaGLFactory.select();
 
     PanamaGLFactory factory = new PanamaGLFactory_windows_JFX();
+    //PanamaGLFactory factory = new PanamaGLFactory_macOS_JFX();
 
 
     Canvas canvas = new ResizableCanvas();

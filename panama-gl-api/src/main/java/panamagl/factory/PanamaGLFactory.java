@@ -22,6 +22,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ServiceLoader;
 import panamagl.GLEventListener;
 import panamagl.canvas.GLCanvas;
 import panamagl.offscreen.FBO;
@@ -90,14 +91,18 @@ public interface PanamaGLFactory extends PlatformMatcher{
   }
   
   public static PanamaGLFactory selectFor(Platform os) {
-    List<PanamaGLFactory> factories = findFactories();
+    //List<PanamaGLFactory> factories = findFactories();
+    
+    ServiceLoader<PanamaGLFactory> factories = ServiceLoader.load(PanamaGLFactory.class, PanamaGLFactory.class.getClassLoader());
     
     for(PanamaGLFactory factory : factories) {
+      //System.out.println("FACTORY : " + factory);
       if(factory.matches(os)) {
         return factory;
       }
     }
-    return null;
+    throw new IllegalStateException("No factory found for "+os+" make sure a suitable native wrapper is on the classpath!");
+    //return null;
   }
   
   public static List<PanamaGLFactory> findFactories() {

@@ -25,12 +25,12 @@ import org.junit.Test;
 import junit.framework.Assert;
 import panamagl.GLEventAdapter;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.offscreen.AOffscreenRenderer;
 import panamagl.offscreen.FBO;
 import panamagl.offscreen.FBOReader_AWT;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.platform.Platform;
+import panamagl.platform.macos.OffscreenRenderer_macOS;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class TestGLCanvasSwing {
@@ -47,7 +47,7 @@ public class TestGLCanvasSwing {
     EventCounter event = new EventCounter();
     
     PanamaGLFactory factory = mock(PanamaGLFactory.class);
-    when(factory.newOffscreenRenderer(any())).thenReturn(new AOffscreenRenderer(factory, new FBOReader_AWT()));
+    when(factory.newOffscreenRenderer(any())).thenReturn(new OffscreenRenderer_macOS(factory, new FBOReader_AWT()));
     when(factory.newGL()).thenReturn(mock(GL.class));
     when(factory.newGLContext()).thenReturn(mock(GLContext.class));
     when(factory.newFBO(anyInt(),anyInt())).thenReturn(mock(FBO.class));
@@ -78,6 +78,7 @@ public class TestGLCanvasSwing {
     // When : GL initialization is triggered by panel addition
     // to its parent frame
     
+    //panel.setSize(10,10);
     panel.addNotify();
     
     // Then : should trigger glEventListener.init()

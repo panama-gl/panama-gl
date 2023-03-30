@@ -31,6 +31,18 @@ public class ClassloaderUtils {
   public static List<Class<?>> findFactoryClasses(String packge, Class<?> implem, Class<?> exclude) throws ClassNotFoundException, IOException {
     Class<?>[] classes = getClasses(packge);
     
+    if(debug) {
+
+      for (Class<?> clazz : classes) {
+        Debug.debug(debug, "ClassloaderUtils : found class " + clazz);
+      }
+      
+      Debug.debug(debug, "ClassloaderUtils : excludes " + exclude);
+      Debug.debug(debug, "ClassloaderUtils : implem " + implem);
+      
+
+    }
+    
 
     List<Class<?>> factories = new ArrayList<>();
 
@@ -56,7 +68,9 @@ public class ClassloaderUtils {
   /////////////////////////////////////////////////////
 
   public static  Class<?>[] getClasses(String packageName) throws ClassNotFoundException, IOException {
-    ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+    //ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+    ClassLoader classLoader = ClassloaderUtils.class.getClassLoader();
+    
     assert classLoader != null;
     String path = packageName.replace('.', '/');
     Enumeration<URL> resources = classLoader.getResources(path);
@@ -83,7 +97,7 @@ public class ClassloaderUtils {
   public static List<Class<?>> findClasses(File directory, String packageName)
       throws ClassNotFoundException {
 
-    Debug.debug(debug, "Search in " + directory);
+    Debug.debug(debug, "ClassloaderUtils : Search in " + directory);
 
     List<Class<?>> classes = new ArrayList<Class<?>>();
     if (!directory.exists()) {

@@ -29,6 +29,10 @@ public class FBOReader_AWT extends AFBOReader implements FBOReader{
     int width = fbo.getWidth();
     int height = fbo.getHeight();
     
+    if(width==0 || height==0) {
+      return null;
+    }
+    
     // Try an image format derived from default screen/gpu to avoid conversion
     BufferedImage out = GraphicsUtils.createCompatibleImage(width, height);
 

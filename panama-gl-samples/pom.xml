@@ -27,10 +27,13 @@
 			<artifactId>panama-gl-ui-swing</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<dependency>
+		
+		<!-- AS FOR SWT, MIXING AWT AND JAVAFX IN THE CLASSPATH LEAD TO HANGS OF SWING DEMOS ON MACOS -->
+		
+		<!--<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-ui-javafx</artifactId>
 			<version>${project.version}</version>
-		</dependency>
+		</dependency>-->
 	</dependencies>
 </project>
