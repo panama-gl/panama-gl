@@ -32,7 +32,7 @@ public class TestFBO_linux extends LinuxTest{
 
     // Given a GLUT context
     GLUTContext_linux glutContext = new GLUTContext_linux();
-    glutContext.init(true);
+    glutContext.init();
 
     // Given a GL caller
     GL gl = new panamagl.platform.linux.x64.GL_linux_x64();

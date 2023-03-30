@@ -28,7 +28,6 @@ import panamagl.opengl.GL;
  * while running tests (surefire config keeps Test* or *Test or ITTest*)
  */
 // VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
-
 public class DurabilityTestGLCanvasSwing {
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
   public static int WAIT_FOR_INIT_AND_DESTROY = 400;

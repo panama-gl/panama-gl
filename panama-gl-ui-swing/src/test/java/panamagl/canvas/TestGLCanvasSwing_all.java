@@ -48,7 +48,9 @@ public class TestGLCanvasSwing_all {
     EventCounter event = new EventCounter();
 
     PanamaGLFactory factory = PanamaGLFactory.select();
-
+    
+    System.out.println("FACTORY  " + factory);
+    
     GLCanvasSwing panel = new GLCanvasSwing(factory);
 
     panel.setGLEventListener(new GLEventAdapter() {
@@ -145,6 +147,8 @@ public class TestGLCanvasSwing_all {
 
     // Given an initialized panel
     PanamaGLFactory factory = PanamaGLFactory.select();
+    
+    System.out.println("FACTORY  " + factory);
     
     GLCanvasSwing panel = new GLCanvasSwing(factory);
 

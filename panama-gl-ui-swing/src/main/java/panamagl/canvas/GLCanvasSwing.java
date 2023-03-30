@@ -101,8 +101,8 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
     // GLProfile.initSingleton();
 
     // Show debug info
-    if (debug)
-      GraphicsUtils.printGraphicsEnvironment("GLCanvasSwing");
+    //if (debug)
+    //  GraphicsUtils.printGraphicsEnvironment("GLCanvasSwing");
 
     // This listener hold the most important part of the rendering flow
     addComponentListener(new ResizeHandler());

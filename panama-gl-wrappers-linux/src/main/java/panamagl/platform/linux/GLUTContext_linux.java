@@ -45,22 +45,23 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
   protected int initY = 0;
 
   protected int windowHandle = -1;
+  
+  // this is used to prevent multiple instance of
+  // GLUTContext to run glutInit more than one time
+  // in the life of a JVM. 
+  protected static boolean hasInit = false; 
 
   /** Initialize GLUT and create a window */
   @Override
   public void init() {
-    init(true);
-  }
-  
-  /** Initialize GLUT if input arg is true, and create a window */
-  public void init(boolean forceLoadGlut) {
+    
     loadNativeLibraries();
     initScope();
     
-    if (forceLoadGlut) {
+    if(!hasInit) {
       var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
-
       glut_h.glutInit(argc, argc);
+      hasInit = true;
     }
     
     glut_h.glutInitDisplayMode(glut_h.GLUT_DOUBLE() | glut_h.GLUT_RGBA() | glut_h.GLUT_DEPTH());

@@ -32,7 +32,7 @@ public class TestGLXContext_linux extends LinuxTest {
 
     // --------------------------
     // When
-    context.init(false);
+    context.init();
     
     // Then
     Assert.assertTrue(context.isInitialized());
