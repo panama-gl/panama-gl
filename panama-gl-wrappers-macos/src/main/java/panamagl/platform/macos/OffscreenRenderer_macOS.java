@@ -17,18 +17,14 @@
  *******************************************************************************/
 package panamagl.platform.macos;
 
-import com.jogamp.opengl.GLProfile;
-import jogamp.nativewindow.macosx.OSXUtil;
-import panamagl.GLEventListener;
-import panamagl.canvas.GLCanvas;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.AOffscreenRenderer;
 import panamagl.offscreen.FBOReader;
+import panamagl.offscreen.MacOSThreadRedirect;
 import panamagl.offscreen.OffscreenRenderer;
 
 /**
  * This offscreen renderer is able to ensure that OpenGL queries are performed inside the main macOS thread.
- * 
  * 
  * <img src="doc-files/threading-macOS.png"/>
  * 
@@ -37,51 +33,7 @@ import panamagl.offscreen.OffscreenRenderer;
 public class OffscreenRenderer_macOS extends AOffscreenRenderer implements OffscreenRenderer{
   public OffscreenRenderer_macOS(PanamaGLFactory factory, FBOReader reader) {
     super(factory, reader);
-  }
-  
-  @Override
-  public void onInit(GLCanvas drawable, GLEventListener listener) {
-    initContext_OnMainThread(drawable, listener);
-  }
-
-  @Override
-  public void onDisplay(GLCanvas drawable, GLEventListener listener) {
-    // FIXME : why does it work with this
-    renderGLToImage_OnMainThread(drawable, listener, drawable.getWidth(), drawable.getHeight(), false, true);
-    // FIXME : and not with this?
-    // renderGLToImage_OnMainThread(false, true);
-  }
-
-  @Override
-  public void onResize(GLCanvas drawable, GLEventListener listener, int x, int y, int width, int height) {
-    // wait=true causes deadlocks! So we do not wait
-    // and then ask the rendering to asynchronously notify
-    // this panel that a repaint should occur.
-    boolean wait = false;
-
-    renderGLToImage_OnMainThread(drawable, listener, width, height, wait, true);
-
-    // here we need a callback to invoke repaint, otherwise we are always one frame late!
-    // if resize too fast, we see that we display the previous image.
-    //
-    // Hence, following method is useless
-    // paintComponent(getGraphics());    
-  }
-  
-  /* ===================================================== */
-  // BELOW FUNC ALLOW EXECUTING IN APPKIT MAIN THREAD
-
-  protected void initContext_OnMainThread(GLCanvas drawable, GLEventListener listener) {
-    GLProfile.initSingleton();
-    OSXUtil.RunOnMainThread(true, false, getTask_initContext(drawable, listener));
-  }
-
-  protected void renderGLToImage_OnMainThread(GLCanvas drawable, GLEventListener listener, boolean waitUntilDone, boolean kickNSApp) {
-    OSXUtil.RunOnMainThread(waitUntilDone, kickNSApp, getTask_renderGLToImage(drawable, listener));
-  }
-
-  protected void renderGLToImage_OnMainThread(GLCanvas drawable, GLEventListener listener, int width, int height, boolean waitUntilDone,
-      boolean kickNSApp) {
-    OSXUtil.RunOnMainThread(waitUntilDone, kickNSApp, getTask_renderGLToImage(drawable, listener, width, height));
+    
+    threadRedirect = new MacOSThreadRedirect();
   }
 }
