@@ -39,7 +39,7 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   protected FBO fbo;
   protected FBOReader reader;
   
-  protected ThreadRedirect threadRedirect = new AWTThreadRedirect();
+  protected ThreadRedirect threadRedirect;
   
   protected boolean initialized = false;
   
@@ -51,6 +51,7 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   public AOffscreenRenderer(PanamaGLFactory factory, FBOReader reader) {
     this.factory = factory;
     this.reader = reader;
+    this.threadRedirect = new AWTThreadRedirect();
   }
 
   // -------------------------------------------------------------
@@ -82,7 +83,10 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   
   @Override
   public void onDestroy(GLCanvas drawable, GLEventListener glEventListener) {
-    destroyContext();
+    Runnable r = getTask_destroyContext();
+    
+    threadRedirect.run(r);
+    //destroyContext();
   }
 
   // -------------------------------------------------------------
@@ -298,6 +302,15 @@ public class AOffscreenRenderer implements OffscreenRenderer {
       @Override
       public void run() {
         initContext(drawable, listener);
+      }
+    };
+  }
+
+  protected Runnable getTask_destroyContext() {
+    return new Runnable() {
+      @Override
+      public void run() {
+        destroyContext();
       }
     };
   }
