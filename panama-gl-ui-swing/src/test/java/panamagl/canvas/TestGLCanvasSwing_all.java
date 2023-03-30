@@ -34,7 +34,10 @@ import panamagl.utils.TicToc;
 // VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview
 // -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class TestGLCanvasSwing_all {
-  public static int WAIT_FOR_INIT_AND_DESTROY = 400;
+  // the time needed to init/destroy a Swing canvas differ
+  // with OS. Windows needed 1s
+  // TODO : allow locking on the execution of addNotify
+  public static int WAIT_FOR_INIT_AND_DESTROY = 1000;
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
 
   @Test
