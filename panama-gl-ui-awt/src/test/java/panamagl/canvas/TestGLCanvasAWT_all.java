@@ -33,14 +33,12 @@ import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class TestGLCanvasAWT_macOS {
+public class TestGLCanvasAWT_all {
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
   
 @Ignore("Failing both from IDE and CLI : Cannot invoke \"sun.lwawt.LWWindowPeer.getPlatformWindow()\" because \"windowPeer\" is null")
   @Test
   public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
-    if (!new Platform().isMac())
-      return;
     
     // ------------------------------------------------
     // Given a panel with an event counter
@@ -132,8 +130,6 @@ public class TestGLCanvasAWT_macOS {
 @Ignore("Failing both from IDE and CLI : Cannot invoke \"sun.lwawt.LWWindowPeer.getPlatformWindow()\" because \"windowPeer\" is null")
   @Test
   public void whenPanelIsResized_ThenFBOIsResized() throws InterruptedException {
-    if (!new Platform().isMac())
-      return;
     
     int WIDTH = 100;
     int HEIGHT= 100;

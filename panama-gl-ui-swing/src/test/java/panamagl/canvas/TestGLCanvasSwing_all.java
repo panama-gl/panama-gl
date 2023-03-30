@@ -139,8 +139,6 @@ public class TestGLCanvasSwing_all {
 
   @Test
   public void whenPanelIsResized_ThenFBOIsResized() throws InterruptedException {
-    if (!new Platform().isMac())
-      return;
 
     int WIDTH = 100;
     int HEIGHT = 100;
