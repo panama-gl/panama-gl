@@ -40,8 +40,6 @@ public class TestGLCanvasAWT {
 @Ignore("Failing both from IDE and CLI : Cannot invoke \"sun.lwawt.LWWindowPeer.getPlatformWindow()\" because \"windowPeer\" is null")
   @Test
   public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
-    if (!new Platform().isMac())
-      return;
     
     // ------------------------------------------------
     // Given a panel with an event counter

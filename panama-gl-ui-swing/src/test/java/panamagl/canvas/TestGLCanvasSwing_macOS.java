@@ -35,6 +35,7 @@ import panamagl.utils.TicToc;
 // VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview
 // -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class TestGLCanvasSwing_macOS {
+  public static int WAIT_FOR_INIT_AND_DESTROY = 400;
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
 
   @Test
@@ -47,10 +48,10 @@ public class TestGLCanvasSwing_macOS {
 
     EventCounter event = new EventCounter();
 
-    //PanamaGLFactory factory = PanamaGLFactory.select();
-    PanamaGLFactory factory = new PanamaGLFactory_macOS_arm();
+    PanamaGLFactory factory = PanamaGLFactory.select();
+    //PanamaGLFactory factory = new PanamaGLFactory_macOS_arm();
     
-    System.out.println(PanamaGLFactory.findFactories());
+    //System.out.println(PanamaGLFactory.findFactories());
     
 
     GLCanvasSwing panel = new GLCanvasSwing(factory);
@@ -80,6 +81,9 @@ public class TestGLCanvasSwing_macOS {
     // to its parent frame
 
     panel.addNotify();
+    
+    // Let AWT or macOS main thread to perform initialization
+    Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
 
     // Then : should trigger glEventListener.init()
     Assert.assertEquals(1, event.initCounter);
@@ -120,6 +124,9 @@ public class TestGLCanvasSwing_macOS {
 
     panel.removeNotify();
 
+    // Let AWT or macOS main thread to perform initialization
+    Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
+
     // Then : all components are not initialized anymore
     Assert.assertFalse(panel.getContext().isInitialized());
     Assert.assertFalse(panel.isInitialized());
@@ -144,13 +151,17 @@ public class TestGLCanvasSwing_macOS {
     int HEIGHT = 100;
 
     // Given an initialized panel
-    //PanamaGLFactory factory = PanamaGLFactory.select();
-    PanamaGLFactory factory = new PanamaGLFactory_macOS_arm();
+    PanamaGLFactory factory = PanamaGLFactory.select();
     
-    System.out.println("FACTORY : " + factory);
-
     GLCanvasSwing panel = new GLCanvasSwing(factory);
+
+    // When panel is added
     panel.addNotify();
+    
+    // Let AWT or macOS main thread to perform initialization
+    Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
+
+    // Then it is initialized
     Assert.assertTrue(panel.isInitialized());
 
     // -------------------------------
