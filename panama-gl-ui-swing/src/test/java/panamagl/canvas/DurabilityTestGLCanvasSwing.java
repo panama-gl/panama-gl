@@ -17,16 +17,29 @@
  *******************************************************************************/
 package panamagl.canvas;
 
+import org.junit.Test;
 import junit.framework.Assert;
 import panamagl.GLEventAdapter;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 
 /**
- * Test scenario to share with all platform wrappers.
+ * This test is intentionnaly named DurabilityTest* to be ignored by maven
+ * while running tests (surefire config keeps Test* or *Test or ITTest*)
  */
+// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
+
 public class DurabilityTestGLCanvasSwing {
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
+  public static int WAIT_FOR_INIT_AND_DESTROY = 400;
+
+  @Test
+  public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
+    PanamaGLFactory factory = PanamaGLFactory.select();
+    
+    whenPanelIsAdded_ThenGLEventListenerIsInvoked(factory);
+  }
+
 
   public static void whenPanelIsAdded_ThenGLEventListenerIsInvoked(PanamaGLFactory factory) throws InterruptedException {
     
@@ -63,8 +76,9 @@ public class DurabilityTestGLCanvasSwing {
     
     panel.addNotify();
     
-    Thread.yield();
-    
+    // Let AWT or macOS main thread to perform initialization
+    Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
+
     // Then : should trigger glEventListener.init()
     Assert.assertEquals(1, event.initCounter);
     Assert.assertEquals(0, event.displayCounter);
@@ -116,6 +130,9 @@ public class DurabilityTestGLCanvasSwing {
     // When : remove from component hierarchy
 
     panel.removeNotify();
+    
+    // Let AWT or macOS main thread to perform initialization
+    Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
     
     // Then : all components are not initialized anymore
     Assert.assertFalse(panel.getContext().isInitialized());
