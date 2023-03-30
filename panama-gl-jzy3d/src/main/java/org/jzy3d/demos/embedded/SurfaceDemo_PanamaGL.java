@@ -44,7 +44,7 @@ import panamagl.utils.GraphicsUtils;
  */
 //VM ARGS :  --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 // DO NOT USE -XstartOnFirstThread!!
-
+// -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
 // Making context current in MacOSXCGLContext line 1474 
 
 public class SurfaceDemo_PanamaGL {
