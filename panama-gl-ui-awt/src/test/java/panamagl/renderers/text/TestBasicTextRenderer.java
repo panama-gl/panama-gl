@@ -21,6 +21,7 @@ import java.awt.Color;
 import java.awt.Font;
 import org.junit.Assert;
 import org.junit.Test;
+import panamagl.platform.Platform;
 import panamagl.renderers.image.ForeignImage;
 
 public class TestBasicTextRenderer {
@@ -33,7 +34,14 @@ public class TestBasicTextRenderer {
     Assert.assertNotNull(i.image);
     Assert.assertNotNull(i.segment);
     
-    Assert.assertEquals(43, i.image.getWidth());
-    Assert.assertEquals(13, i.image.getHeight());
+    Platform p = new Platform();
+    if(p.isWindows() || p.isMac()) {
+      Assert.assertEquals(43, i.image.getWidth());
+      Assert.assertEquals(13, i.image.getHeight());
+    }
+    else if(p.isUnix()) {
+      Assert.assertEquals(47, i.image.getWidth());
+      Assert.assertEquals(13, i.image.getHeight());
+    }
   }
 }
