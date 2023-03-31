@@ -1,24 +1,4 @@
-/**
- * Copyright (c) 2019, 2023 Gluon All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification, are permitted
- * provided that the following conditions are met: * Redistributions of source code must retain the
- * above copyright notice, this list of conditions and the following disclaimer. * Redistributions
- * in binary form must reproduce the above copyright notice, this list of conditions and the
- * following disclaimer in the documentation and/or other materials provided with the distribution.
- * * Neither the name of Gluon, any associated website, nor the names of its contributors may be
- * used to endorse or promote products derived from this software without specific prior written
- * permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL GLUON BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
- * BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
- * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
+
 package demos.panamagl.javafx;
 
 import java.lang.foreign.MemorySession;
@@ -36,44 +16,17 @@ import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasJFX;
 import panamagl.canvas.ResizableCanvas;
 import panamagl.factory.PanamaGLFactory;
+import panamagl.factory.PanamaGLFactory_linux_JFX;
 import panamagl.factory.PanamaGLFactory_macOS_JFX;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
 
-/**
- * TODO
- * 
- * - All FBO must keep spare readPixel buffer usage like on windows
- * 
- * - macOS OffscreenRenderer should use a ThreadRedirect implementation
- * 
- * - Provide a CanvasFactory or ToolkitFactory to init ThreadRedirect, Canvas and Image. Rename
- * PanamaGLFactory to OpenGLFactory, then provide ToolkitFactory to OpenGLFactory.
- * 
- * - animator sleepTime is not considered!!
- * 
- * - JavaFX isRendering is not properly working
- * 
- * - Verifier que le resize marche encore sur Swing et macOS/linux. AOffscreenRenderer doit soit ne
- * pas utiliser la taille du drawable, soit dégager les arguments
- * 
- * - Trouver une bonne manière de connaître la taille du canvas sans faire appel à la scene!! ET
- * CORRIGER
- * 
- * - Trouver la propriété pour permettre au canvas de grandir dans la scene
- * 
- * - Pourquoi ça saute quand on resize? Conflit de rendu car le flag isRendering n'est en réalité
- * pas effectif?
- * 
- * - https://stackoverflow.com/questions/24533556/how-to-make-canvas-resizable-in-javafx
- * 
- * @author Martin
- *
- */
-// --module-path "/Library/Java/JavaVirtualMachines/javafx-sdk-19.0.2.1/lib" --add-modules
-// javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
+
+// --module-path "/Library/Java/JavaVirtualMachines/javafx-sdk-19.0.2.1/lib" --add-modules javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
 // --module-path "C:\Program Files\Java\javafx-sdk-17.0.6\lib" --add-modules javafx.controls
 // --add-exports=java.desktop/sun.awt=ALL-UNNAMED
+//--module-path "/usr/lib/jvm/javafx-sdk-20/lib" --add-modules javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
+
 public class DemoTeapot_Onscreen_JavaFX extends Application {
 
   PanamaGLFactory factory;
@@ -92,12 +45,12 @@ public class DemoTeapot_Onscreen_JavaFX extends Application {
     vbox.setFillWidth(true);
 
     Scene scene = new Scene(vbox);
-    scene.getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
-
+    
     stage.setScene(scene);
     stage.setResizable(true);
     stage.show();
-    
+    stage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
+
 
     // -------------------------------------------------
     // MUST BE INIT AFTER UI POPS
@@ -106,6 +59,7 @@ public class DemoTeapot_Onscreen_JavaFX extends Application {
 
     // PanamaGLFactory factory = new PanamaGLFactory_windows_JFX();
     factory = new PanamaGLFactory_macOS_JFX();
+    factory = new PanamaGLFactory_linux_JFX();
 
     glcanvas = new GLCanvasJFX(factory, canvas);
     glcanvas.setGLEventListener(Teapot());
