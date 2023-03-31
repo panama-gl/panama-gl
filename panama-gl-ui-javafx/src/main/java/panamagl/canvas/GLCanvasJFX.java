@@ -26,10 +26,11 @@ public class GLCanvasJFX implements GLCanvas {
   protected GLEventListener listener;
   protected OffscreenRenderer offscreen;
 
-  JFXImage image;
+  protected JFXImage image;
+  protected Canvas canvas;
 
-  Canvas canvas;
-
+  protected Flip flip = Flip.VERTICAL;
+  
   protected PerformanceOverlay_JFX overlay;
   protected RenderCounter counter = new RenderCounter();
   protected boolean debugPerf = true;
@@ -149,11 +150,23 @@ public class GLCanvasJFX implements GLCanvas {
     getMonitoring().onPaint();
 
     GraphicsContext gc = canvas.getGraphicsContext2D();
-    // gc.clearRect(0, 0, getWidth(), getHeight());
-    gc.drawImage(this.image.getImage(), 0, 0);
-
+    
+    // Draw Image
+    if(flip==null || Flip.NONE.equals(flip)) {
+      gc.drawImage(this.image.getImage(), 0, 0, getWidth(), getHeight());
+    }
+    // vertical flip
+    else if(Flip.VERTICAL.equals(flip)) {
+      gc.drawImage(this.image.getImage(), 0, 0+getHeight(), getWidth(), -getHeight());
+    }
+    // horizontal flip
+    else if(Flip.HORIZONTAL.equals(flip)) {
+      gc.drawImage(this.image.getImage(), 0+getWidth(), 0, -getWidth(), getHeight());
+    }
+    
     getMonitoring().onPaintComponentBefore();
 
+    // Draw overlay
     if (debugPerf)
       overlay.paint(gc);
 
@@ -207,5 +220,16 @@ public class GLCanvasJFX implements GLCanvas {
     return offscreen.getGL();
   }
 
+  @Override
+  public Flip getFlip() {
+    return flip;
+  }
+
+  @Override
+  public void setFlip(Flip flip) {
+    this.flip = flip;
+  }
+
+  
 
 }

@@ -31,7 +31,7 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   protected static final int INIT_FBO_WIDTH = 10;
   protected static final int INIT_FBO_HEIGHT = 10;
 
-  protected boolean debug = true;//Debug.check(OffscreenRenderer.class, AOffscreenRenderer.class);
+  protected boolean debug = Debug.check(OffscreenRenderer.class, AOffscreenRenderer.class);
   
   protected PanamaGLFactory factory;
   protected GL gl;
@@ -202,18 +202,7 @@ public class AOffscreenRenderer implements OffscreenRenderer {
     }
   }
 
-  @Override
-  public boolean isFlipY() {
-    return reader.isFlipY();
-  }
-
-  /**
-   * Sets if image will be flipped vertically while being painted.
-   */
-  @Override
-  public void setFlipY(boolean flipY) {
-    this.reader.setFlipY(flipY);
-  }
+  
 
   @Override
   public FBO getFBO() {

@@ -31,7 +31,6 @@ import panamagl.offscreen.FBO;
 import panamagl.offscreen.FBOReader_AWT;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
-import panamagl.platform.Platform;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class TestGLCanvasAWT {

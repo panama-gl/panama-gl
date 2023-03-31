@@ -38,7 +38,6 @@ import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.performance.PerformanceOverlay_AWT;
 import panamagl.performance.RenderCounter;
-import panamagl.utils.GraphicsUtils;
 import panamagl.utils.ImageUtils;
 
 /**
@@ -85,6 +84,8 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
   protected boolean debug = Debug.check(GLCanvasSwing.class);
   protected boolean debugPerf = true;
+  
+  protected Flip flip = Flip.VERTICAL;
   
   // For mocking
   public GLCanvasSwing() {}
@@ -191,9 +192,21 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
       //float ratio = 1/1.25f;
       //BufferedImage sout = ImageUtils.scale(out, ratio, ratio);
       //g.drawImage(sout, 0, 0, null);
-      g.drawImage(out, 0, 0, getWidth(), getHeight(), this);
-
       //System.out.println("GLCanvasSwing : " + sout.getWidth() + "," + sout.getHeight());
+      
+      // Standard
+      if(flip==null || Flip.NONE.equals(flip)) {
+        g.drawImage(out, 0, 0, getWidth(), getHeight(), this);        
+      }
+      // vertical flip
+      else if(Flip.VERTICAL.equals(flip)) {
+        g.drawImage(out, 0, 0 + getHeight(), getWidth(), -getHeight(), this);
+      }
+      // horizontal flip
+      else if(Flip.HORIZONTAL.equals(flip)) {
+        g.drawImage(out, 0 + getWidth(), 0, -getWidth(), getHeight(), this);
+      }
+
       
       getMonitoring().onPaintComponentBefore();
 
@@ -203,6 +216,8 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
       rendering.set(false);
     }
   }
+  
+  
 
   /**
    * If the panel initialization has achieved, this triggers an offscreen rendering, maybe on a
@@ -337,23 +352,6 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
   /* ===================================================== */
 
-
-  /**
-   * Indicates if image will be flipped vertically while being painted.
-   * 
-   * @return
-   */
-  public boolean isFlipY() {
-    return offscreen.isFlipY();
-  }
-
-  /**
-   * Sets if image will be flipped vertically while being painted.
-   */
-  public void setFlipY(boolean flipY) {
-    this.offscreen.setFlipY(flipY);
-  }
-
   public FBO getFBO() {
     return offscreen.getFBO();
   }
@@ -380,6 +378,16 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
   @Override
   public void setOffscreenRenderer(OffscreenRenderer offscreen) {
     this.offscreen = offscreen;
+  }
+
+  @Override
+  public Flip getFlip() {
+    return flip;
+  }
+
+  @Override
+  public void setFlip(Flip flip) {
+    this.flip = flip;
   }
   
   

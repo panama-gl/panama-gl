@@ -69,4 +69,11 @@ public interface GLCanvas {
   OffscreenRenderer getOffscreenRenderer();
   void setOffscreenRenderer(OffscreenRenderer offscreen);
   
+  void setFlip(Flip flip);
+  Flip getFlip();
+  
+  enum Flip{
+    NONE, VERTICAL, HORIZONTAL;
+  }
+  
 }

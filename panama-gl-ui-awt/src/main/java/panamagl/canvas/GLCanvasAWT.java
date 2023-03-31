@@ -83,6 +83,8 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
 
   protected boolean debug = Debug.check(GLCanvasAWT.class);
   protected boolean debugPerf = true;
+  
+  protected Flip flip = Flip.HORIZONTAL;
 
 
   /**
@@ -167,7 +169,19 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
     counter.onPaint();
   
     if (out != null) {
-      g.drawImage(out, 0, 0, null);
+      // Standard
+      if(flip==null || Flip.NONE.equals(flip)) {
+        g.drawImage(out, 0, 0, getWidth(), getHeight(), this);        
+      }
+      // vertical flip
+      else if(Flip.VERTICAL.equals(flip)) {
+        g.drawImage(out, 0, 0 + getHeight(), getWidth(), -getHeight(), this);
+      }
+      // horizontal flip
+      else if(Flip.HORIZONTAL.equals(flip)) {
+        g.drawImage(out, 0 + getWidth(), 0, -getWidth(), getHeight(), this);
+      }
+
 
       counter.onPaintComponentBefore();
 
@@ -309,22 +323,6 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
   /* ===================================================== */
 
 
-  /**
-   * Indicates if image will be flipped vertically while being painted.
-   * 
-   * @return
-   */
-  public boolean isFlipY() {
-    return offscreen.isFlipY();
-  }
-
-  /**
-   * Sets if image will be flipped vertically while being painted.
-   */
-  public void setFlipY(boolean flipY) {
-    this.offscreen.setFlipY(flipY);
-  }
-
   public FBO getFBO() {
     return offscreen.getFBO();
   }
@@ -352,8 +350,15 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
   public void setOffscreenRenderer(OffscreenRenderer offscreen) {
     this.offscreen = offscreen;
   }
-  
-  
 
+  @Override
+  public void setFlip(Flip flip) {
+    this.flip = flip;
+  }
+
+  @Override
+  public Flip getFlip() {
+    return flip;
+  }
 
 }

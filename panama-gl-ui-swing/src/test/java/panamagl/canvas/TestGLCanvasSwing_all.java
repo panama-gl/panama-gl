@@ -25,7 +25,6 @@ import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.FBOReader_AWT;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
-import panamagl.platform.Platform;
 import panamagl.platform.macos.OffscreenRenderer_macOS;
 import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;

@@ -16,8 +16,4 @@ import panamagl.opengl.GL;
  */
 public interface FBOReader {
   Image<?> read(FBO fbo, GL gl);
-
-  boolean isFlipY();
-
-  void setFlipY(boolean flipY);
 }

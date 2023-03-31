@@ -25,10 +25,12 @@ import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasJFX;
@@ -52,61 +54,80 @@ import panamagl.opengl.GLError;
  * 
  * - JavaFX isRendering is not properly working
  * 
- * - Verifier que le resize marche encore sur Swing et macOS/linux. AOffscreenRenderer doit soit ne pas utiliser la taille du drawable, soit dégager les arguments
+ * - Verifier que le resize marche encore sur Swing et macOS/linux. AOffscreenRenderer doit soit ne
+ * pas utiliser la taille du drawable, soit dégager les arguments
  * 
- * - Trouver une bonne manière de connaître la taille du canvas sans faire appel à la scene!! ET CORRIGER 
+ * - Trouver une bonne manière de connaître la taille du canvas sans faire appel à la scene!! ET
+ * CORRIGER
  * 
  * - Trouver la propriété pour permettre au canvas de grandir dans la scene
  * 
- * - Pourquoi ça saute quand on resize? Conflit de rendu car le flag isRendering n'est en réalité pas effectif?
+ * - Pourquoi ça saute quand on resize? Conflit de rendu car le flag isRendering n'est en réalité
+ * pas effectif?
  * 
  * - https://stackoverflow.com/questions/24533556/how-to-make-canvas-resizable-in-javafx
  * 
  * @author Martin
  *
  */
-//--module-path "/Library/Java/JavaVirtualMachines/javafx-sdk-19.0.2.1/lib" --add-modules javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
-// --module-path "C:\Program Files\Java\javafx-sdk-17.0.6\lib" --add-modules javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
+// --module-path "/Library/Java/JavaVirtualMachines/javafx-sdk-19.0.2.1/lib" --add-modules
+// javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
+// --module-path "C:\Program Files\Java\javafx-sdk-17.0.6\lib" --add-modules javafx.controls
+// --add-exports=java.desktop/sun.awt=ALL-UNNAMED
 public class DemoTeapot_Onscreen_JavaFX extends Application {
 
+  PanamaGLFactory factory;
+  GLCanvasJFX glcanvas;
+  Animator anim;
+
   public void start(Stage stage) {
-
-
-
 
     Canvas canvas = new ResizableCanvas();
     canvas.setWidth(600);
     canvas.setHeight(500);
-    
-    //canvas.setResi
+
+    // canvas.setResi
 
     VBox vbox = new VBox(canvas);
     vbox.setFillWidth(true);
-    
+
     Scene scene = new Scene(vbox);
-    
+    scene.getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
+
     stage.setScene(scene);
     stage.setResizable(true);
-    
     stage.show();
-
-    // MUST BE INIT AFTER UI POPS
     
+
+    // -------------------------------------------------
+    // MUST BE INIT AFTER UI POPS
+
     // PanamaGLFactory factory = PanamaGLFactory.select();
 
-    //PanamaGLFactory factory = new PanamaGLFactory_windows_JFX();
-    PanamaGLFactory factory = new PanamaGLFactory_macOS_JFX();
+    // PanamaGLFactory factory = new PanamaGLFactory_windows_JFX();
+    factory = new PanamaGLFactory_macOS_JFX();
 
-    GLCanvasJFX glcanvas = new GLCanvasJFX(factory, canvas);
+    glcanvas = new GLCanvasJFX(factory, canvas);
     glcanvas.setGLEventListener(Teapot());
 
-    Animator anim = new Animator(glcanvas);
-    //anim.setSleepTime(1000);
+    anim = new Animator(glcanvas);
     anim.start();
+    // anim.setSleepTime(1000);
 
     System.out.println("started");
   }
+  
+  private void closeWindowEvent(WindowEvent event) {
+    System.out.println("Window close request ...");
+    anim.stop();
+    Platform.exit();
+  }
 
+  @Override
+  public void stop(){
+    System.out.println("stopped");
+    System.exit(0);
+  }
 
   public static void main(String[] args) {
     launch(args);
@@ -127,15 +148,16 @@ public class DemoTeapot_Onscreen_JavaFX extends Application {
 
         // Setup Lighting
         gl.glShadeModel(GL.GL_SMOOTH);
-        
-        var pos = allocator.allocateArray(ValueLayout.JAVA_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
+
+        var pos =
+            allocator.allocateArray(ValueLayout.JAVA_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, pos);
-        
+
         var spec = allocator.allocateArray(ValueLayout.JAVA_FLOAT, new float[] {1, 1, 1, 0});
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, spec);
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, spec);
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, spec);
-        
+
         var shini = allocator.allocate(ValueLayout.JAVA_FLOAT, 113);
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, shini);
         gl.glEnable(GL.GL_LIGHTING);
@@ -170,5 +192,5 @@ public class DemoTeapot_Onscreen_JavaFX extends Application {
       }
     };
   }
-  
+
 }

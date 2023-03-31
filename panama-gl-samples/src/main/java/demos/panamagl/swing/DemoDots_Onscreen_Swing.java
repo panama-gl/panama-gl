@@ -18,8 +18,6 @@
 package demos.panamagl.swing;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import panamagl.Animator;
@@ -28,8 +26,6 @@ import panamagl.canvas.GLCanvasSwing;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
-import panamagl.renderers.text.BasicTextRenderer;
-import panamagl.renderers.text.TextRenderer;
 
 /**
  * VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview

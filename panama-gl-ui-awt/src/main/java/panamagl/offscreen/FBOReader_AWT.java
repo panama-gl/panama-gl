@@ -10,9 +10,8 @@ import panamagl.image.AWTImage;
 import panamagl.opengl.GL;
 import panamagl.utils.ByteUtils;
 import panamagl.utils.GraphicsUtils;
-import panamagl.utils.ImageUtils;
 
-public class FBOReader_AWT extends AFBOReader implements FBOReader{
+public class FBOReader_AWT implements FBOReader{
 
   // supposed to copy to BufferedImage faster when true
   // using false allows to make copy by tweaking bytes
@@ -45,8 +44,8 @@ public class FBOReader_AWT extends AFBOReader implements FBOReader{
       fromBGRABufferToImage(pixels, out, width, height, channels);
     }
     
-    if(flipY)
-      out = ImageUtils.flipVertically(out);
+    //if(flipY)
+    //  out = ImageUtils.flipVertically(out);
     
 
     Debug.debug(debug, "FBOReader: Image created !");

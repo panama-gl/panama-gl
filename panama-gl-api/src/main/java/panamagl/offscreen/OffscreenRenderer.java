@@ -39,8 +39,8 @@ public interface OffscreenRenderer {
   GL getGL();
   GLContext getContext();
   
-  boolean isFlipY();
-  void setFlipY(boolean flipY);
+  //boolean isFlipY();
+  //void setFlipY(boolean flipY);
   void setFBO(FBO fbo);
   FBO getFBO();
   

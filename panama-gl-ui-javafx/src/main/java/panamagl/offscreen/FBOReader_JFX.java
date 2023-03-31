@@ -12,7 +12,7 @@ import panamagl.opengl.GL;
 
 // https://docs.oracle.com/javafx/2/image_ops/jfxpub-image_ops.htm
 // https://stackoverflow.com/questions/38095984/convert-javafx-image-object-to-byte-array
-public class FBOReader_JFX extends AFBOReader implements FBOReader{
+public class FBOReader_JFX implements FBOReader{
   FBOReader_AWT reader = new FBOReader_AWT();
 
   //AWTImage i = reader.read(fbo, gl, canvas);

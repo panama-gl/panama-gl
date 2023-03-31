@@ -44,12 +44,6 @@ public class TestFBO {
     int width = fbo.getWidth();
     int height = fbo.getHeight();
 
-
-    
-
-    // Keep unflipped to avoid changing tests
-    reader.setFlipY(false);
-
     // ensure is not considered prepared too early
     Assert.assertFalse(fbo.isPrepared());
 
