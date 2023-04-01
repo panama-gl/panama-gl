@@ -10,6 +10,7 @@ import panamagl.Image;
 import panamagl.canvas.overlay.PerformanceOverlay_JFX;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.image.JFXImage;
+import panamagl.offscreen.FBO;
 import panamagl.offscreen.FBOReader_JFX;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
@@ -43,15 +44,11 @@ public class GLCanvasJFX implements GLCanvas {
     this.canvas = canvas;
     this.offscreen = factory.newOffscreenRenderer(new FBOReader_JFX());
 
-
-    overlay = new PerformanceOverlay_JFX(this);
-    // Scene scene = canvas.getScene();
-
+    this.overlay = new PerformanceOverlay_JFX(this);
 
     ResizeHandler resize = new ResizeHandler();
-    this.canvas.getScene().widthProperty().addListener(resize);
-    this.canvas.getScene().heightProperty().addListener(resize);
-
+    this.canvas.widthProperty().addListener(resize);
+    this.canvas.heightProperty().addListener(resize);
   }
 
   @Override
@@ -230,6 +227,13 @@ public class GLCanvasJFX implements GLCanvas {
     this.flip = flip;
   }
 
-  
+  public FBO getFBO() {
+    return offscreen.getFBO();
+  }
+
+  public void setFBO(FBO fbo) {
+    this.offscreen.setFBO(fbo);
+  }
+
 
 }
