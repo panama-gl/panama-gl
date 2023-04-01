@@ -7,6 +7,8 @@
 	<name>Panama GL</name>
 	<packaging>pom</packaging>
 
+	<!-- mvn deploy -DskipTests -Denv.MAVEN_REPO_URL=ftp://ftp.cluster013.ovh.net/ -->
+
 	<scm>
 		<connection>scm:git:https://github.com/jzy3d/panama-gl</connection>
 		<tag>panama-gl-2.0.1</tag>
