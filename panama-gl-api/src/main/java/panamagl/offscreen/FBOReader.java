@@ -12,7 +12,6 @@ import panamagl.opengl.GL;
  * SWT)
  * 
  * @author Martin Pernollet
- *
  */
 public interface FBOReader {
   Image<?> read(FBO fbo, GL gl);

@@ -15,12 +15,12 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.performance;
+package panamagl.canvas.overlay;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import panamagl.canvas.GLCanvas;
-import panamagl.canvas.Overlay;
+import panamagl.performance.RenderCounter;
 
 public class PerformanceOverlay_JFX implements Overlay{
   protected GLCanvas drawable;

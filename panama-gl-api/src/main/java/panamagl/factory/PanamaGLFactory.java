@@ -1,55 +1,50 @@
 /*******************************************************************************
  * Copyright (c) 2022, 2023 Martin Pernollet & contributors.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA
  *******************************************************************************/
 package panamagl.factory;
 
-import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ServiceLoader;
+import panamagl.Debug;
 import panamagl.GLEventListener;
 import panamagl.canvas.GLCanvas;
 import panamagl.offscreen.FBO;
 import panamagl.offscreen.FBOReader;
 import panamagl.offscreen.OffscreenRenderer;
+import panamagl.offscreen.ThreadRedirect;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.platform.Platform;
 import panamagl.platform.PlatformMatcher;
-import panamagl.utils.ClassloaderUtils;
 
 /**
- * A {@link PanamaGLFactory} generates components for a given platform (CPU, OS) and
- * will ensure the appropriate bindings as well as OpenGL way of implementing a 
- * rendering technic are applied a target platform.
+ * A {@link PanamaGLFactory} generates components for a given platform (CPU, OS) and will ensure the
+ * appropriate bindings as well as OpenGL way of implementing a rendering technic are applied a
+ * target platform.
  * 
- * Platforms are resolved automatically through {@link PanamaGLFactory.select()} which 
- * picks the first {@link PanamaGLFactory} in classpath that {@link #matches(Platform)}
- * hence the executing computer.
+ * Platforms are resolved automatically through {@link PanamaGLFactory.select()} which picks the
+ * first {@link PanamaGLFactory} in classpath that {@link #matches(Platform)} hence the executing
+ * computer.
  * 
- * PanamaGL component initialization starts while initializing a new {@link GLCanvas}
- * for adding to an existing UI. The canvas will initialize all subsequent required 
- * components in order and will only require a {@link GLEventListener} to perform the
- * application OpenGL calls through the {@link GL} interface.
+ * PanamaGL component initialization starts while initializing a new {@link GLCanvas} for adding to
+ * an existing UI. The canvas will initialize all subsequent required components in order and will
+ * only require a {@link GLEventListener} to perform the application OpenGL calls through the
+ * {@link GL} interface.
  * 
  * 
  * The initialization hence looks like :
+ * 
  * <pre>
  * <code>
  * GLEventAdapter listener = TeapotGLEventListener();
@@ -67,98 +62,96 @@ import panamagl.utils.ClassloaderUtils;
  * @author Martin Pernollet
  *
  */
-public interface PanamaGLFactory extends PlatformMatcher{
-
+public interface PanamaGLFactory extends PlatformMatcher {
+  
+  /**
+   * Initialize a platform dependent {@link GL}
+   * 
+   * @return
+   */
   GL newGL();
+
+  /**
+   * Initialize a platform dependent {@link GLContext} later allowing to invoke OpenGL.
+   * 
+   * This method will both initialize the context and call its {@link GLContext#init()} method that
+   * load the related native libraries and OpenGL function pointers required to configure the
+   * context.
+   * 
+   * @return
+   */
   GLContext newGLContext();
+
+  /**
+   * Initialize an {@link FBO} that can be used by a {@link OffscreenRenderer} to initialize GPU
+   * buffers for rendering offscreen.
+   * 
+   * @param width
+   * @param height
+   * @return
+   */
   FBO newFBO(int width, int height);
+
+
+  /**
+   * Initialize an {@link OffscreenRenderer} that can be used by a {@link GLCanvas} to render
+   * OpenGL.
+   * 
+   * The offscreen renderer will initialize {@link GL}, {@link GLContext} and {@link FBO} instances
+   * with this factory.
+   * 
+   * If a {@link ThreadRedirect} has been set on this factory, it will be set to the offscreen
+   * renderer to customize the thread to which the opengl rendering is applied.
+   */
   OffscreenRenderer newOffscreenRenderer(FBOReader reader);
 
+  /**
+   * Destroy the {@link GLContext} that has been initialized (and cached) by this factory.
+   */
   void destroyContext();
-  
+
+  /**
+   * If a thread redirection is defined and non null, it will be applied to the
+   * {@link OffscreenRenderer} generated by this factory while calling
+   * {@link #newOffscreenRenderer(FBOReader)}. If it is null, the {@link OffscreenRenderer} will
+   * keep its default thread redirection.
+   */
+  void setThreadRedirect(ThreadRedirect threadRedirect);
+
+
+  ThreadRedirect getThreadRedirect();
+
   /////////////////////////////////////////////////////
   //
   // Factory auto select
   //
   /////////////////////////////////////////////////////
-  
-  /** Returns the first factory that is is compatible with the current {@link Platform}.*/
+
+  /** Returns the first factory that is is compatible with the current {@link Platform}. */
   public static PanamaGLFactory select() {
 
     Platform os = new Platform();
 
     return selectFor(os);
   }
-  
-  public static PanamaGLFactory selectFor(Platform os) {
-    //List<PanamaGLFactory> factories = findFactories();
+
+  public static PanamaGLFactory selectFor(Platform platform) {
+    ServiceLoader<PanamaGLFactory> factories =
+        ServiceLoader.load(PanamaGLFactory.class, PanamaGLFactory.class.getClassLoader());
+
+    boolean debug = Debug.check(PanamaGLFactory.class);
     
-    ServiceLoader<PanamaGLFactory> factories = ServiceLoader.load(PanamaGLFactory.class, PanamaGLFactory.class.getClassLoader());
-    
-    for(PanamaGLFactory factory : factories) {
-      //System.out.println("FACTORY : " + factory);
-      if(factory.matches(os)) {
+    for (PanamaGLFactory factory : factories) {
+      if (factory.matches(platform)) {
+        Debug.debug(debug, "PanamaGLFactory : " + factory.getClass().getName() + " matching " + platform);
         return factory;
       }
-    }
-    throw new IllegalStateException("No factory found for "+os+" make sure a suitable native wrapper is on the classpath!");
-    //return null;
-  }
-  
-  public static List<PanamaGLFactory> findFactories() {
-    Class<?> exclude = APanamaGLFactory.class;
-    Class<?> implem = PanamaGLFactory.class;
-    String packge = "panamagl";
-
-    return findFactories(exclude, implem, packge);
-  }
-  
-  public static List<PanamaGLFactory> findFactories(Class<?> exclude, Class<?> implem, String packge) {
-    List<PanamaGLFactory> factories = new ArrayList<>();
-
-    try {
-      
-      for (Class<?> c : ClassloaderUtils.findFactoryClasses(packge, implem, exclude)) {
-        try {
-          // Find the default constructor
-          Constructor<?> cons = findConstructor(c);
-
-          // Init the factory
-          PanamaGLFactory f = (PanamaGLFactory)cons.newInstance();
-          factories.add(f);
-          
-        } catch (IllegalArgumentException e) {
-          e.printStackTrace();
-        } catch (InvocationTargetException e) {
-          e.printStackTrace();
-        } catch (SecurityException e) {
-          e.printStackTrace();
-        } catch (InstantiationException e) {
-          e.printStackTrace();
-        } catch (IllegalAccessException e) {
-          e.printStackTrace();
-        }
-      }
-    } catch (ClassNotFoundException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    
-    return factories;
-  }
-  
-  public static Constructor<?> findConstructor(Class<?> c) {
-    Constructor<?> cons = null;
-    for(Constructor<?>  co: c.getConstructors()) {
-      if(co.getParameterCount()==0) {
-        cons = co;
+      else {
+        Debug.debug(debug, "PanamaGLFactory : " + factory.getClass().getName() + " not matching platform");
       }
     }
-    if(cons==null) {
-      throw new RuntimeException("No factory constructor with 0 argument for " + c.getName());
-    }
-    return cons;
+    throw new IllegalStateException(
+        "No factory found for " + platform + " make sure a suitable native wrapper is on the classpath!");
+    // return null;
   }
-
 }

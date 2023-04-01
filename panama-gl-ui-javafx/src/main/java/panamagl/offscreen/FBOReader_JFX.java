@@ -6,19 +6,16 @@ import java.nio.ByteBuffer;
 import javafx.scene.image.PixelFormat;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import panamagl.Debug;
 import panamagl.image.JFXImage;
 import panamagl.opengl.GL;
 
-// https://docs.oracle.com/javafx/2/image_ops/jfxpub-image_ops.htm
-// https://stackoverflow.com/questions/38095984/convert-javafx-image-object-to-byte-array
+
 public class FBOReader_JFX implements FBOReader{
-  FBOReader_AWT reader = new FBOReader_AWT();
+  protected boolean debug = Debug.check(FBOReader.class, FBOReader_JFX.class);
 
-  //AWTImage i = reader.read(fbo, gl, canvas);
-  //WritableImage image = SwingFXUtils.toFXImage(i.getImage(), null);
 
-  WritableImage image;
-  JFXImage jfx = new JFXImage(null);
+  protected WritableImage image;
   
   @Override
   public JFXImage read(FBO fbo, GL gl) {
@@ -44,9 +41,8 @@ public class FBOReader_JFX implements FBOReader{
     
     //pixels.unload();
     
-    jfx.setImage(image);
     
-    return jfx;//new JFXImage(image);
+    return new JFXImage(image);
   }
 
 }

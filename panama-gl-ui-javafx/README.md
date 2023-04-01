@@ -1,7 +1,7 @@
 
 https://stackoverflow.com/questions/16946030/how-to-use-opengl-in-javafx
 
-* TODO
+TODO
 - All FBO must keep spare readPixel buffer usage like on windows
 - Provide a CanvasFactory or ToolkitFactory to init ThreadRedirect, Canvas and Image. Rename
 PanamaGLFactory to OpenGLFactory, then provide ToolkitFactory to OpenGLFactory.

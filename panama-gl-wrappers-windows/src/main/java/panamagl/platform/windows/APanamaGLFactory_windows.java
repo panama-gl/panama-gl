@@ -20,7 +20,6 @@ package panamagl.platform.windows;
 
 
 import panamagl.Debug;
-import panamagl.canvas.GLCanvas;
 import panamagl.factory.APanamaGLFactory;
 import panamagl.offscreen.FBO;
 import panamagl.offscreen.FBOReader;
@@ -49,16 +48,13 @@ protected boolean debug = Debug.check(APanamaGLFactory_windows.class);
     return os.isWindows();
   }
 
-  /**
-   * Invoked by the {@link GLCanvas}, i.e. canvas that wishes to draw
-   * offscreen rendered image.
-   * 
-   * The offscreen renderer will initialize {@link GL}, {@link GLContext} and {@link FBO_macOS} 
-   * instances through this factory.
-   */
   @Override
   public OffscreenRenderer newOffscreenRenderer(FBOReader reader) {
-    return new OffscreenRenderer_windows(this, reader);
+    OffscreenRenderer_windows renderer = new OffscreenRenderer_windows(this, reader);
+    if (getThreadRedirect() != null) {
+      renderer.setThreadRedirect(getThreadRedirect());
+    }
+    return renderer;
   }
   
   @Override

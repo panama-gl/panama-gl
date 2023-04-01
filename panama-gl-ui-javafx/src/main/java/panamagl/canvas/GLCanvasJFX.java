@@ -7,13 +7,13 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import panamagl.GLEventListener;
 import panamagl.Image;
+import panamagl.canvas.overlay.PerformanceOverlay_JFX;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.image.JFXImage;
 import panamagl.offscreen.FBOReader_JFX;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
-import panamagl.performance.PerformanceOverlay_JFX;
 import panamagl.performance.RenderCounter;
 
 // https://docs.oracle.com/javafx/2/canvas/jfxpub-canvas.htm

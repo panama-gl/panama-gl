@@ -17,6 +17,18 @@
  *******************************************************************************/
 package panamagl.factory;
 
+import panamagl.offscreen.ThreadRedirect;
+
 public abstract class APanamaGLFactory implements PanamaGLFactory {
-  
+  ThreadRedirect threadRedirect = null;
+
+  @Override
+  public ThreadRedirect getThreadRedirect() {
+    return threadRedirect;
+  }
+
+  @Override
+  public void setThreadRedirect(ThreadRedirect threadRedirect) {
+    this.threadRedirect = threadRedirect;
+  }
 }

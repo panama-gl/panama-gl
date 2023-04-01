@@ -338,8 +338,7 @@ public class FBO_windows extends AFBO implements FBO {
     gl.glDeleteTextures(1, textureBufferIds);
     glDeleteRenderbuffers.apply(1, renderBufferIds.address());
     
-    // Bind 0, which means render to back buffer, as a result, fb is unbound
-    glBindFramebuffer.apply(glut_h.GL_FRAMEBUFFER(), 0);
+    unbindFramebuffer();
  
     glDeleteFramebuffers.apply(1, frameBufferIds.address());
 
@@ -368,14 +367,9 @@ public class FBO_windows extends AFBO implements FBO {
     
     // The segments created in this function will be destroyed
     // once the below scope and allocator are collected by GC.
-    //MemorySession session = MemorySession.openImplicit();
-    //MemorySegment pixels = MemorySegment.allocateNative(nBytes, session);
     
     if(pixels==null || pixels.byteSize()!=nBytes) {
       pixels = MemorySegment.allocateNative(nBytes, session);
-    }
-    else {
-      //System.out.println("REUSE!!");
     }
     gl.glReadPixels(0, 0, width, height, format, textureType, pixels);
     
@@ -384,14 +378,18 @@ public class FBO_windows extends AFBO implements FBO {
 
     Debug.debug(debug, "FBO: PixelBuffer red !");
     
-    // Bind 0, which means render to back buffer
-    glBindFramebuffer.apply(glut_h.GL_FRAMEBUFFER(), 0);
+    unbindFramebuffer();
     
     return pixels;
   }
+
+  protected void unbindFramebuffer() {
+    // Bind 0, which means render to back buffer
+    glBindFramebuffer.apply(glut_h.GL_FRAMEBUFFER(), 0);
+  }
   
-  MemorySession session = MemorySession.openImplicit();
+  protected MemorySession session = MemorySession.openImplicit();
   
-  MemorySegment pixels;
+  protected MemorySegment pixels;
   
 }

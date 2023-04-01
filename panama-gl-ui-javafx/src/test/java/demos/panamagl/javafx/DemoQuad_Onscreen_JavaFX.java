@@ -10,7 +10,7 @@ import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasJFX;
 import panamagl.canvas.ResizableCanvas;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.factory.PanamaGLFactory_macOS_JFX;
+import panamagl.offscreen.ThreadRedirect_JFX;
 import panamagl.opengl.GL;
 
 //--module-path "/Library/Java/JavaVirtualMachines/javafx-sdk-19.0.2.1/" --add-modules javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
@@ -40,10 +40,8 @@ public class DemoQuad_Onscreen_JavaFX extends Application {
 
     // MUST BE INIT AFTER UI POPS
     
-    // PanamaGLFactory factory = PanamaGLFactory.select();
-
-    //PanamaGLFactory factory = new PanamaGLFactory_windows_JFX();
-    PanamaGLFactory factory = new PanamaGLFactory_macOS_JFX();
+    PanamaGLFactory factory = PanamaGLFactory.select();
+    factory.setThreadRedirect(new ThreadRedirect_JFX());
 
     GLCanvasJFX glcanvas = new GLCanvasJFX(factory, canvas);
     glcanvas.setGLEventListener(Quad());

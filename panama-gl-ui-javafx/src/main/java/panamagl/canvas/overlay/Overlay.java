@@ -1,4 +1,4 @@
-package panamagl.canvas;
+package panamagl.canvas.overlay;
 
 import javafx.scene.canvas.GraphicsContext;
 

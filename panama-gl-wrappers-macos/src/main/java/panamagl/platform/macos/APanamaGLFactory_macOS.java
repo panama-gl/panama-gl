@@ -16,13 +16,11 @@
 package panamagl.platform.macos;
 
 import panamagl.Debug;
-import panamagl.canvas.GLCanvas;
 import panamagl.factory.APanamaGLFactory;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.FBO;
 import panamagl.offscreen.FBOReader;
 import panamagl.offscreen.OffscreenRenderer;
-import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.platform.Platform;
 
@@ -32,21 +30,19 @@ public abstract class APanamaGLFactory_macOS extends APanamaGLFactory {
   protected CGLContext_macOS cglContext;
   protected GLUTContext_macOS glutContext;
   protected boolean useGLUT = true;
-  
+
   @Override
   public boolean matches(Platform os) {
     return os.isMac();
   }
 
-  /**
-   * Invoked by the {@link GLCanvas}, i.e. canvas that wishes to draw offscreen rendered image.
-   * 
-   * The offscreen renderer will initialize {@link GL}, {@link GLContext} and {@link FBO} instances
-   * through this factory.
-   */
   @Override
   public OffscreenRenderer newOffscreenRenderer(FBOReader reader) {
-    return new OffscreenRenderer_macOS(this, reader);
+    OffscreenRenderer_macOS renderer = new OffscreenRenderer_macOS(this, reader);
+    if (getThreadRedirect() != null) {
+      renderer.setThreadRedirect(getThreadRedirect());
+    }
+    return renderer;
   }
 
   @Override
@@ -59,7 +55,7 @@ public abstract class APanamaGLFactory_macOS extends APanamaGLFactory {
 
     // --------------------------------------
     // A GL Context with GLUT
-    
+
     if (useGLUT) {
       glutContext = new GLUTContext_macOS();
       glutContext.init(false); // do not init GLUT a second time
@@ -67,10 +63,10 @@ public abstract class APanamaGLFactory_macOS extends APanamaGLFactory {
 
       return glutContext;
     }
-    
+
     // --------------------------------------
     // A GL Context with CGL
-    
+
     else {
       cglContext = new CGLContext_macOS();
       cglContext.init();

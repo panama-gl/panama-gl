@@ -16,7 +16,7 @@ import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasJFX;
 import panamagl.canvas.ResizableCanvas;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.factory.PanamaGLFactory_macOS_JFX;
+import panamagl.offscreen.ThreadRedirect_JFX;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
 
@@ -53,11 +53,8 @@ public class DemoTeapot_Onscreen_JavaFX extends Application {
     // -------------------------------------------------
     // MUST BE INIT AFTER UI POPS
 
-    // PanamaGLFactory factory = PanamaGLFactory.select();
-
-    // PanamaGLFactory factory = new PanamaGLFactory_windows_JFX();
-    factory = new PanamaGLFactory_macOS_JFX();
-    //factory = new PanamaGLFactory_linux_JFX();
+    PanamaGLFactory factory = PanamaGLFactory.select();
+    factory.setThreadRedirect(new ThreadRedirect_JFX());
 
     glcanvas = new GLCanvasJFX(factory, canvas);
     glcanvas.setGLEventListener(Teapot());

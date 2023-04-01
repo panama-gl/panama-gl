@@ -222,8 +222,7 @@ public class FBO_macOS extends AFBO implements FBO {
     gl.glDeleteTextures(1, textureBufferIds);
     
     glut_h.glDeleteRenderbuffers(1, renderBufferIds);
-    // Bind 0, which means render to back buffer, as a result, fb is unbound
-    glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), 0);
+    unbindFramebuffer();
     glut_h.glDeleteFramebuffers(1, frameBufferIds);
 
     // FIXME : Not mapped exception is not relevant
@@ -257,8 +256,10 @@ public class FBO_macOS extends AFBO implements FBO {
     
     // The segments created in this function will be destroyed
     // one the below scope and allocator are collected by GC.
-    MemorySession session = MemorySession.openImplicit();
-    MemorySegment pixels = MemorySegment.allocateNative(nBytes, session);
+
+    if(pixels==null || pixels.byteSize()!=nBytes) {
+      pixels = MemorySegment.allocateNative(nBytes, session);
+    }
     gl.glReadPixels(0, 0, width, height, format, textureType, pixels);
     
     // Check for error after reading
@@ -266,10 +267,18 @@ public class FBO_macOS extends AFBO implements FBO {
 
     Debug.debug(debug, "FBO: PixelBuffer red !");
     
-    // Bind 0, which means render to back buffer
-    glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), 0);
+    unbindFramebuffer();
     
     return pixels;
 
   }
+
+  protected void unbindFramebuffer() {
+    // Bind 0, which means render to back buffer
+    glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), 0);
+  }
+  
+  protected MemorySession session = MemorySession.openImplicit();
+  protected MemorySegment pixels;
+
 }

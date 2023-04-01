@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 import panamagl.Debug;
 import panamagl.GLEventListener;
 import panamagl.Image;
+import panamagl.canvas.overlay.PerformanceOverlay_AWT;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.image.AWTImage;
 import panamagl.offscreen.FBO;
@@ -36,7 +37,6 @@ import panamagl.offscreen.FBOReader_AWT;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
-import panamagl.performance.PerformanceOverlay_AWT;
 import panamagl.performance.RenderCounter;
 import panamagl.utils.ImageUtils;
 
