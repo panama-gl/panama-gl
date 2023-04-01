@@ -6,7 +6,6 @@ import java.nio.ByteBuffer;
 import javafx.scene.image.PixelFormat;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import panamagl.Image;
 import panamagl.image.JFXImage;
 import panamagl.opengl.GL;
 
@@ -22,7 +21,7 @@ public class FBOReader_JFX implements FBOReader{
   JFXImage jfx = new JFXImage(null);
   
   @Override
-  public Image<?> read(FBO fbo, GL gl) {
+  public JFXImage read(FBO fbo, GL gl) {
     int width = fbo.getWidth();
     int height = fbo.getHeight();    
     

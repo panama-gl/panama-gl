@@ -92,12 +92,12 @@ public class DemoTeapot_Onscreen_JavaFX extends Application {
     vbox.setFillWidth(true);
 
     Scene scene = new Scene(vbox);
-    scene.getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
 
     stage.setScene(scene);
     stage.setResizable(true);
     stage.show();
-    
+    stage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
+
 
     // -------------------------------------------------
     // MUST BE INIT AFTER UI POPS
