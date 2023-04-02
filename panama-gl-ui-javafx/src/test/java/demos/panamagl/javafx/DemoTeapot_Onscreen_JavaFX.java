@@ -6,8 +6,10 @@ import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -33,17 +35,19 @@ public class DemoTeapot_Onscreen_JavaFX extends Application {
   Animator anim;
 
   public void start(Stage stage) {
-
     Canvas canvas = new ResizableCanvas();
     canvas.setWidth(600);
     canvas.setHeight(500);
 
-    // canvas.setResi
-
     VBox vbox = new VBox(canvas);
     vbox.setFillWidth(true);
-
+    
+    for (Node child : vbox.getChildren()) {
+      VBox.setVgrow(child, Priority.ALWAYS);
+    }
+    
     Scene scene = new Scene(vbox);
+
     stage.setScene(scene);
     stage.setResizable(true);
     stage.show();
@@ -66,7 +70,6 @@ public class DemoTeapot_Onscreen_JavaFX extends Application {
   }
   
   private void closeWindowEvent(WindowEvent event) {
-    System.out.println("Window close request ...");
     anim.stop();
     Platform.exit();
   }
