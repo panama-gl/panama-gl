@@ -70,6 +70,11 @@ public class TestGLCanvasSwing_all {
       public void reshape(GL gl, int x, int y, int width, int height) {
         event.reshapeCounter++;
       }
+      
+      @Override
+      public void dispose(GL gl) {
+        event.disposeCounter++;
+      }
     });
 
     Assert.assertFalse(panel.isInitialized());
@@ -112,6 +117,7 @@ public class TestGLCanvasSwing_all {
     Assert.assertTrue(0 < event.initCounter);
     Assert.assertTrue(0 < event.displayCounter);
     Assert.assertTrue(0 < event.reshapeCounter);
+    Assert.assertTrue(0 == event.disposeCounter);
 
     // Then : the displayed image should be available as screenshot
     Assert.assertNotNull(panel.getScreenshot());
@@ -129,6 +135,7 @@ public class TestGLCanvasSwing_all {
     // Then : all components are not initialized anymore
     Assert.assertFalse(panel.getContext().isInitialized());
     Assert.assertFalse(panel.isInitialized());
+    Assert.assertTrue(0 < event.disposeCounter);
 
   }
 
@@ -137,6 +144,7 @@ public class TestGLCanvasSwing_all {
     int initCounter = 0;
     int displayCounter = 0;
     int reshapeCounter = 0;
+    int disposeCounter = 0;
   }
 
 
@@ -188,7 +196,6 @@ public class TestGLCanvasSwing_all {
     // Then FBO is resized as well
     Assert.assertEquals(3 * WIDTH, panel.getFBO().getWidth());
     Assert.assertEquals(2 * HEIGHT, panel.getFBO().getHeight());
-
 
   }
 

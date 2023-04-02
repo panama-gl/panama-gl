@@ -16,9 +16,14 @@
 package panamagl.canvas;
 
 import static org.mockito.Mockito.mock;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
 import javafx.scene.canvas.Canvas;
 import junit.framework.Assert;
 import panamagl.GLEventAdapter;
@@ -32,21 +37,33 @@ import panamagl.platform.macos.OffscreenRenderer_macOS;
 import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
 
-@Ignore("TO BE COMPLETED")
-// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview
-// -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class TestGLCanvasJFX_all {
-  // the time needed to init/destroy a Swing canvas differ
-  // with OS. Windows needed 1s
-  // TODO : allow locking on the execution of addNotify
-  public static int WAIT_FOR_INIT_AND_DESTROY = 1000;
+  public static int WAIT_FOR_INIT_AND_DESTROY = 500;
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
-
+  
+  @BeforeClass
+  public static void initJfxRuntime() {
+    System.out.println("init.1");
+    CountDownLatch latch = new CountDownLatch(1);
+    Platform.startup(() -> {
+      System.out.println("init.2");
+        latch.countDown();
+        System.out.println("init.3");
+    });
+    
+    System.out.println("init.4");
+    try {
+      latch.await(5, TimeUnit.SECONDS);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+    System.out.println("init.5");
+  }
+ 
   @Test
   public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
-    //if (!new Platform().isMac())
-    //  return;
-
+    System.out.println("go");
+    
     // ------------------------------------------------
     // Given a panel with an event counter
 
@@ -57,11 +74,13 @@ public class TestGLCanvasJFX_all {
 
     System.out.println("FACTORY  " + factory);
     
-    Canvas c = mock(Canvas.class);
+    Canvas canvas = new ResizableCanvas();
+    canvas.setWidth(600);
+    canvas.setHeight(500);
     
-    GLCanvasJFX panel = new GLCanvasJFX(factory, c);
+    GLCanvasJFX panel = new GLCanvasJFX(factory, canvas);
 
-    panel.setGLEventListener(new GLEventAdapter() {
+    GLEventListener listener = new GLEventAdapter() {
       @Override
       public void init(GL gl) {
         event.initCounter++;
@@ -76,19 +95,34 @@ public class TestGLCanvasJFX_all {
       public void reshape(GL gl, int x, int y, int width, int height) {
         event.reshapeCounter++;
       }
-    });
-
+      
+      @Override
+      public void dispose(GL gl) {
+        event.disposeCounter++;
+      }
+    };
+    
+    
     Assert.assertFalse(panel.isInitialized());
+    
+    // When add listener
+    panel.setGLEventListener(listener);
+    
+    Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
+
+
+    // Then immediately initialized
+    Assert.assertTrue(panel.isInitialized());
 
 
     // ------------------------------------------------
     // When : GL initialization is triggered by panel addition
     // to its parent frame
 
-    //panel.addNotify();
+ //panel.addNotify();
     
     // Let AWT or macOS main thread to perform initialization
-    Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
+ // Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
 
     // Then : should trigger glEventListener.init()
     Assert.assertEquals(1, event.initCounter);
@@ -106,7 +140,7 @@ public class TestGLCanvasJFX_all {
     // ------------------------------------------------
     // When : resize, and after a while
 
-    //panel.setSize(20, 20);
+    canvas.resize(20, 20);
 
     // FIXME : not needed from IDE but from CLI (?!)
     panel.display();
@@ -127,14 +161,16 @@ public class TestGLCanvasJFX_all {
     // ------------------------------------------------
     // When : remove from component hierarchy
 
-    //panel.removeNotify();
+// TODO : handle deletion
+//panel.removeNotify();
 
     // Let AWT or macOS main thread to perform initialization
     Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
 
     // Then : all components are not initialized anymore
-    Assert.assertFalse(panel.getContext().isInitialized());
-    Assert.assertFalse(panel.isInitialized());
+//  Assert.assertFalse(panel.getContext().isInitialized());
+//  Assert.assertFalse(panel.isInitialized());
+//  Assert.assertTrue(0 < event.disposeCounter);
 
   }
 
@@ -143,6 +179,8 @@ public class TestGLCanvasJFX_all {
     int initCounter = 0;
     int displayCounter = 0;
     int reshapeCounter = 0;
+    int disposeCounter = 0;
+
   }
 
 
@@ -159,12 +197,22 @@ public class TestGLCanvasJFX_all {
 
     System.out.println("FACTORY  " + factory);
     
-    Canvas c = mock(Canvas.class);
+    Canvas canvas = new ResizableCanvas();
+    canvas.setWidth(600);
+    canvas.setHeight(500);
     
-    GLCanvasJFX panel = new GLCanvasJFX(factory, c);
+    GLCanvasJFX panel = new GLCanvasJFX(factory, canvas);
 
+    
+    GLEventListener listener = new GLEventAdapter();
+    
+    Assert.assertFalse(panel.isInitialized());
+    
+    // When add listener
+    panel.setGLEventListener(listener);
+    
     // When panel is added
-    //panel.addNotify();
+//panel.addNotify();
     
     // Let AWT or macOS main thread to perform initialization
     Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
@@ -175,7 +223,8 @@ public class TestGLCanvasJFX_all {
     // -------------------------------
     // When panel is resized
 
-    //panel.setSize(WIDTH, HEIGHT);
+    canvas.resize(WIDTH, HEIGHT);
+
     panel.display();
 
     // Wait for the event to dispatch
@@ -188,7 +237,8 @@ public class TestGLCanvasJFX_all {
     // -------------------------------
     // When panel is resized again
 
-    //panel.setSize(3 * WIDTH, 2 * HEIGHT);
+    canvas.resize(3 * WIDTH, 2 * HEIGHT);
+
     panel.display();
 
     // Wait for the event to dispatch

@@ -2,7 +2,7 @@
 https://stackoverflow.com/questions/16946030/how-to-use-opengl-in-javafx
 
 TESTS
-- GLCanvasJFX
+- GLCanvasJFX + ResizableCanvas. Deal with addNotify and setSize 
 
 TODO
 - Provide a CanvasFactory or ToolkitFactory to init ThreadRedirect, Canvas and Image. Rename PanamaGLFactory to OpenGLFactory, then provide ToolkitFactory to OpenGLFactory.

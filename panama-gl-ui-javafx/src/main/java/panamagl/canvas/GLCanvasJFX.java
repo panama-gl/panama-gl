@@ -125,7 +125,6 @@ public class GLCanvasJFX implements GLCanvas {
   @Override
   public int getHeight() {
     return canvas.heightProperty().intValue();
-    //return canvas.getScene().heightProperty().intValue();
   }
 
   @Override

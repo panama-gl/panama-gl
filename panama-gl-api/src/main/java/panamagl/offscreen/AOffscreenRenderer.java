@@ -82,8 +82,8 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   
   
   @Override
-  public void onDestroy(GLCanvas drawable, GLEventListener glEventListener) {
-    Runnable r = getTask_destroyContext();
+  public void onDestroy(GLCanvas drawable, GLEventListener listener) {
+    Runnable r = getTask_destroyContext(drawable, listener);
     
     threadRedirect.run(r);
     //destroyContext();
@@ -141,7 +141,9 @@ public class AOffscreenRenderer implements OffscreenRenderer {
     initialized = true;
   }
 
-  protected void destroyContext() {
+  protected void destroyContext(GLCanvas drawable, GLEventListener listener) {
+    listener.dispose(gl);
+    
     factory.destroyContext();
 
     initialized = false;
@@ -295,11 +297,11 @@ public class AOffscreenRenderer implements OffscreenRenderer {
     };
   }
 
-  protected Runnable getTask_destroyContext() {
+  protected Runnable getTask_destroyContext(GLCanvas drawable, GLEventListener listener) {
     return new Runnable() {
       @Override
       public void run() {
-        destroyContext();
+        destroyContext(drawable, listener);
       }
     };
   }

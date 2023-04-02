@@ -10,18 +10,9 @@
 	<packaging>jar</packaging>
 	<name>Panama GL UI - JavaFX</name>
 	<properties>
-		<main.class>hellofx.HelloFX</main.class>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.release>19</maven.compiler.release>
 		<javafx.version>19</javafx.version>
-		<charm.version>6.2.2</charm.version>
-		<charm.cloudlink.version>6.0.7</charm.cloudlink.version>
-		<glisten.afterburner.version>2.1.0</glisten.afterburner.version>
-		<attach.version>4.0.16</attach.version>
-		<connect.version>2.0.1</connect.version>
-		<javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
-		<gluonfx.maven.plugin.version>1.0.16</gluonfx.maven.plugin.version>
-		<gluonfx.target>host</gluonfx.target>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -34,19 +25,25 @@
 			<artifactId>javafx-swing</artifactId>
 			<version>${javafx.version}</version>
 		</dependency>
+
+		
+		<dependency>
+    <groupId>org.testfx</groupId>
+    <artifactId>testfx-junit</artifactId>
+    <version>4.0.15-alpha</version>
+    <scope>test</scope>
+</dependency>
 		
 		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-ui-awt</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-wrappers-macos</artifactId>
@@ -75,40 +72,37 @@
 					<encoding>UTF-8</encoding>
 					<compilerArgs>
 						<arg>--enable-preview</arg>
+						<arg>--module-path="/Library/Java/JavaVirtualMachines/javafx-sdk-19.0.2.1/";"/Library/Java/JavaVirtualMachines/javafx-sdk-19.0.2.1/lib"</arg>
+						
 					</compilerArgs>
 				</configuration>
 			</plugin>
+			
+			
+						<!-- Exclude hanging test -->
 			<plugin>
-				<groupId>org.openjfx</groupId>
-				<artifactId>javafx-maven-plugin</artifactId>
-				<version>${javafx.maven.plugin.version}</version>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<mainClass>${main.class}</mainClass>
+					<!-- Ensure stack trace get displayed -->
+					<trimStackTrace>false</trimStackTrace>
+
+					<excludes>
+						<exclude>**TestGLCanvasJFX_all**</exclude>
+					</excludes>
+
 				</configuration>
 			</plugin>
+
+			
 			<plugin>
-				<groupId>com.gluonhq</groupId>
-				<artifactId>gluonfx-maven-plugin</artifactId>
-				<version>${gluonfx.maven.plugin.version}</version>
-				<configuration>
-					<target>${gluonfx.target}</target>
-					<mainClass>${main.class}</mainClass>
-				</configuration>
-			</plugin>
+    <groupId>org.openjfx</groupId>
+    <artifactId>javafx-maven-plugin</artifactId>
+    <version>0.0.8</version>
+    <configuration>
+        <mainClass>hellofx/org.openjfx.App</mainClass>
+    </configuration>
+</plugin>
 		</plugins>
 	</build>
-	<profiles>
-		<profile>
-			<id>ios</id>
-			<properties>
-				<gluonfx.target>ios</gluonfx.target>
-			</properties>
-		</profile>
-		<profile>
-			<id>android</id>
-			<properties>
-				<gluonfx.target>android</gluonfx.target>
-			</properties>
-		</profile>
-	</profiles>
 </project>
