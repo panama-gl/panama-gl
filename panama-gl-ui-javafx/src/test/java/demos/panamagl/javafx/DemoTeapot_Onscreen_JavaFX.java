@@ -18,7 +18,6 @@ import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasJFX;
 import panamagl.canvas.ResizableCanvas;
 import panamagl.factory.PanamaGLFactory;
-import panamagl.offscreen.ThreadRedirect_JFX;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
 
