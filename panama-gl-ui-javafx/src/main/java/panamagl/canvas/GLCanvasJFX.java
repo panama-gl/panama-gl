@@ -13,6 +13,7 @@ import panamagl.image.JFXImage;
 import panamagl.offscreen.FBO;
 import panamagl.offscreen.FBOReader_JFX;
 import panamagl.offscreen.OffscreenRenderer;
+import panamagl.offscreen.ThreadRedirect_JFX;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.performance.RenderCounter;
@@ -40,6 +41,8 @@ public class GLCanvasJFX implements GLCanvas {
 
 
   public GLCanvasJFX(PanamaGLFactory factory, Canvas canvas) {
+    factory.setThreadRedirect(new ThreadRedirect_JFX());
+
     this.factory = factory;
     this.canvas = canvas;
     this.offscreen = factory.newOffscreenRenderer(new FBOReader_JFX());

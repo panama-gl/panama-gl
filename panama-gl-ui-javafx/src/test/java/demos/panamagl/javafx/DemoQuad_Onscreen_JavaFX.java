@@ -13,7 +13,26 @@ import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.ThreadRedirect_JFX;
 import panamagl.opengl.GL;
 
-//--module-path "/Library/Java/JavaVirtualMachines/javafx-sdk-19.0.2.1/" --add-modules javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
+/**
+ * VM ARGS : 
+ * 
+ * MacOS
+ * 
+ * --module-path "/Library/Java/JavaVirtualMachines/javafx-sdk-19.0.2.1/" --add-modules javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
+ * 
+ * Linux
+ * 
+ * -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/ --module-path "/usr/lib/jvm/javafx-sdk-20/lib" --add-modules javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
+ * 
+ * Windows
+ * 
+ * --module-path "C:\Program Files\Java\javafx-sdk-17.0.6\lib" --add-modules javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
+ * 
+ * @author Martin Pernollet
+ *
+ */
+
+//
 // --module-path "C:\Program Files\Java\javafx-sdk-17.0.6\lib" --add-modules javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
 public class DemoQuad_Onscreen_JavaFX extends Application {
 
@@ -25,23 +44,22 @@ public class DemoQuad_Onscreen_JavaFX extends Application {
     Canvas canvas = new ResizableCanvas();
     canvas.setWidth(600);
     canvas.setHeight(500);
-    
     //canvas.setResi
 
     VBox vbox = new VBox(canvas);
     vbox.setFillWidth(true);
-    
+    vbox.maxHeightProperty().set(Double.MAX_VALUE);
+    vbox.setMaxHeight(Double.MAX_VALUE);
     Scene scene = new Scene(vbox);
     
     stage.setScene(scene);
     stage.setResizable(true);
-    
+    stage.setMaxHeight(Double.MAX_VALUE);
     stage.show();
 
     // MUST BE INIT AFTER UI POPS
     
     PanamaGLFactory factory = PanamaGLFactory.select();
-    factory.setThreadRedirect(new ThreadRedirect_JFX());
 
     GLCanvasJFX glcanvas = new GLCanvasJFX(factory, canvas);
     glcanvas.setGLEventListener(Quad());

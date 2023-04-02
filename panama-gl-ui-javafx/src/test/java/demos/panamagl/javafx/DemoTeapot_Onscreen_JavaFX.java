@@ -54,7 +54,6 @@ public class DemoTeapot_Onscreen_JavaFX extends Application {
     // MUST BE INIT AFTER UI POPS
 
     PanamaGLFactory factory = PanamaGLFactory.select();
-    factory.setThreadRedirect(new ThreadRedirect_JFX());
 
     glcanvas = new GLCanvasJFX(factory, canvas);
     glcanvas.setGLEventListener(Teapot());

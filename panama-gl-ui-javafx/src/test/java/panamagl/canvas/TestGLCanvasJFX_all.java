@@ -23,7 +23,6 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
 import javafx.scene.canvas.Canvas;
 import junit.framework.Assert;
 import panamagl.GLEventAdapter;
@@ -31,6 +30,7 @@ import panamagl.GLEventListener;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.FBOReader_AWT;
 import panamagl.offscreen.OffscreenRenderer;
+import panamagl.offscreen.ThreadRedirect;
 import panamagl.offscreen.ThreadRedirect_JFX;
 import panamagl.opengl.GL;
 import panamagl.platform.macos.OffscreenRenderer_macOS;
@@ -70,7 +70,6 @@ public class TestGLCanvasJFX_all {
     EventCounter event = new EventCounter();
 
     PanamaGLFactory factory = PanamaGLFactory.select();
-    factory.setThreadRedirect(new ThreadRedirect_JFX());
 
     System.out.println("FACTORY  " + factory);
     
@@ -78,8 +77,14 @@ public class TestGLCanvasJFX_all {
     canvas.setWidth(600);
     canvas.setHeight(500);
     
+    // When create a panel
     GLCanvasJFX panel = new GLCanvasJFX(factory, canvas);
 
+    // Then JFX thread redirection is enabled
+    ThreadRedirect redirect = panel.getOffscreenRenderer().getThreadRedirect();
+    Assert.assertTrue(redirect instanceof ThreadRedirect_JFX);
+    
+    // Given a listener to verify events count
     GLEventListener listener = new GLEventAdapter() {
       @Override
       public void init(GL gl) {
@@ -109,7 +114,6 @@ public class TestGLCanvasJFX_all {
     panel.setGLEventListener(listener);
     
     Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
-
 
     // Then immediately initialized
     Assert.assertTrue(panel.isInitialized());
@@ -201,9 +205,14 @@ public class TestGLCanvasJFX_all {
     canvas.setWidth(600);
     canvas.setHeight(500);
     
+    // When create a panel
     GLCanvasJFX panel = new GLCanvasJFX(factory, canvas);
 
+    // Then JFX thread redirection is enabled
+    ThreadRedirect redirect = panel.getOffscreenRenderer().getThreadRedirect();
+    Assert.assertTrue(redirect instanceof ThreadRedirect_JFX);
     
+    // Given a listener to verify events count
     GLEventListener listener = new GLEventAdapter();
     
     Assert.assertFalse(panel.isInitialized());
@@ -266,7 +275,6 @@ public class TestGLCanvasJFX_all {
     TicToc t = new TicToc();
 
     PanamaGLFactory factory = PanamaGLFactory.select();
-    factory.setThreadRedirect(new ThreadRedirect_JFX());
 
     System.out.println("FACTORY : " + factory);
 
@@ -276,7 +284,7 @@ public class TestGLCanvasJFX_all {
     // performing a long task
 
     OffscreenRenderer renderer = new OffscreenRenderer_macOS(factory, new FBOReader_AWT()) {
-
+      
       // Customize rendering task so that it is very very long
       @Override
       protected Runnable getTask_renderGLToImage(GLCanvas drawable, GLEventListener listener,
@@ -303,7 +311,7 @@ public class TestGLCanvasJFX_all {
         };
       }
     };
-
+    renderer.setThreadRedirect(new ThreadRedirect_JFX());
 
     Canvas c = mock(Canvas.class);
     
