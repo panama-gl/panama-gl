@@ -150,7 +150,7 @@
 						<configuration>
 							<schemaDirectory>src/main/resources/xsd/</schemaDirectory>
 							<!--<schemaFiles>gl.xsd</schemaFiles>-->
-							<packageName>jextractgl</packageName>
+							<packageName>jextract.gl.xml.parser</packageName>
 							<!--<staleFile>${project.build.directory}/jaxb2/gl.stale</staleFile>-->
 							<outputDirectory>src/generated/java</outputDirectory>
 						</configuration>

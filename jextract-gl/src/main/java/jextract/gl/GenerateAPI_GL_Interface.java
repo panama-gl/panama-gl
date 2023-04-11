@@ -32,9 +32,9 @@ import jextract.gl.generate.java.Interf;
 import jextract.gl.generate.java.InterfaceWriter;
 import jextract.gl.xml.OpenGLRegistry;
 import jextract.gl.xml.model.GLCommand;
-import jextractgl.Registry;
-import jextractgl.Registry.Feature;
-import jextractgl.Registry.Feature.Require;
+import jextract.gl.xml.parser.Registry;
+import jextract.gl.xml.parser.Registry.Feature;
+import jextract.gl.xml.parser.Registry.Feature.Require;
 
 public class GenerateAPI_GL_Interface {
   protected OpenGLRegistry registry;

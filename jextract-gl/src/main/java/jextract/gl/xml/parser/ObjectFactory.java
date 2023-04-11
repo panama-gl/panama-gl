@@ -23,7 +23,7 @@
 //
 
 
-package jextractgl;
+package jextract.gl.xml.parser;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;

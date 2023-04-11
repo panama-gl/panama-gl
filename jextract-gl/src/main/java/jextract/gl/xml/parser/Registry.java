@@ -23,7 +23,7 @@
 //
 
 
-package jextractgl;
+package jextract.gl.xml.parser;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -22,10 +22,10 @@ import java.util.List;
 import java.util.Objects;
 import javax.xml.bind.JAXBElement;
 import jextract.gl.generate.java.Arg;
-import jextractgl.Registry.Commands.Command;
-import jextractgl.Registry.Commands.Command.Alias;
-import jextractgl.Registry.Commands.Command.Param;
-import jextractgl.Registry.Commands.Command.Proto;
+import jextract.gl.xml.parser.Registry.Commands.Command;
+import jextract.gl.xml.parser.Registry.Commands.Command.Alias;
+import jextract.gl.xml.parser.Registry.Commands.Command.Param;
+import jextract.gl.xml.parser.Registry.Commands.Command.Proto;
 
 /**
  * A wrapper around the generated XML reader to help reading input/output parameters of a GL command.

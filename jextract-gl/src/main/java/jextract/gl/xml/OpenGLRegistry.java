@@ -24,27 +24,27 @@ import java.util.List;
 import java.util.Map;
 import javax.xml.bind.JAXBElement;
 import jextract.gl.xml.model.GLCommand;
-import jextractgl.Registry;
-import jextractgl.Registry.Commands.Command;
-import jextractgl.Registry.Commands.Command.Alias;
-import jextractgl.Registry.Commands.Command.Param;
-import jextractgl.Registry.Commands.Command.Proto;
-import jextractgl.Registry.Enums;
-import jextractgl.Registry.Feature;
-import jextractgl.Registry.Feature.Remove;
-import jextractgl.Registry.Feature.Require;
-import jextractgl.Registry.Types;
+import jextract.gl.xml.parser.Registry;
+import jextract.gl.xml.parser.Registry.Enums;
+import jextract.gl.xml.parser.Registry.Feature;
+import jextract.gl.xml.parser.Registry.Types;
+import jextract.gl.xml.parser.Registry.Commands.Command;
+import jextract.gl.xml.parser.Registry.Commands.Command.Alias;
+import jextract.gl.xml.parser.Registry.Commands.Command.Param;
+import jextract.gl.xml.parser.Registry.Commands.Command.Proto;
+import jextract.gl.xml.parser.Registry.Feature.Remove;
+import jextract.gl.xml.parser.Registry.Feature.Require;
 
 public class OpenGLRegistry {
   JAXBHandler h = new JAXBHandler("jextractgl");
-  jextractgl.Registry registry;
+  jextract.gl.xml.parser.Registry registry;
 
   public OpenGLRegistry() throws Exception {
     this("src/main/resources/gl-original.xml");
   }
 
   public OpenGLRegistry(String xml) throws Exception {
-    registry = (jextractgl.Registry) h.unmarshall(xml);
+    registry = (jextract.gl.xml.parser.Registry) h.unmarshall(xml);
   }
   
   public Registry getRegistry(){
