@@ -15,7 +15,7 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package jextract.gl;
+package jextract.gl.api.panamagl;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.junit.Test;
+import jextract.gl.Mocks;
+import jextract.gl.api.panamagl.GenerateAPI_GL_Wrapper;
 import jextract.gl.generate.java.Arg;
 import jextract.gl.generate.java.ClassWriter;
 import jextract.gl.generate.java.Wrapper;

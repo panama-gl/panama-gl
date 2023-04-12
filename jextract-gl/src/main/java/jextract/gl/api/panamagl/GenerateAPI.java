@@ -15,13 +15,17 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package jextract.gl;
+package jextract.gl.api.panamagl;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import jextract.gl.APILayout;
+import jextract.gl.APIPlatform;
+import jextract.gl.APIPlatform.CPU;
+import jextract.gl.APIPlatform.OS;
 import jextract.gl.generate.java.Arg;
 import jextract.gl.generate.java.ClassCompiler;
 import jextract.gl.generate.java.ClassWriter;
@@ -51,24 +55,7 @@ import panamagl.platform.windows.APanamaGLFactory_windows;
  *
  */
 public class GenerateAPI {
-  public static String ROOT = "../";
-  public static String GL_INTERFACE_SOURCES = ROOT+"panama-gl-api/src/generated/java/";
-  public static String GL_MACOS_SOURCES = ROOT+"panama-gl-wrappers-macos/src/generated/java/";
-  public static String GL_LINUX_SOURCES = ROOT+"panama-gl-wrappers-linux/src/generated/java/";
-  public static String GL_WINDOWS_SOURCES = ROOT+"panama-gl-wrappers-windows/src/generated/java/";
-  
   public static String GL_PACKAGE = "panamagl.opengl";
-  
-  /*public static String GL_PACKAGE_MACOS = "panamagl.platform.macos";
-  public static String GL_PACKAGE_LINUX = "panamagl.platform.linux";
-  public static String GL_PACKAGE_WINDOWS = "panamagl.platform.windows";*/
-
-  public static String GL_PACKAGE_MACOS_x64 = "panamagl.platform.macos.x64";
-  public static String GL_PACKAGE_MACOS_arm = "panamagl.platform.macos.arm";
-  public static String GL_PACKAGE_LINUX_x64 = "panamagl.platform.linux.x64";
-  public static String GL_PACKAGE_WINDOWS_x64 = "panamagl.platform.windows.x64";
-  
-  //public static String GL_IMPL = "GLImpl";
 
   public static void main(String[] args) throws Exception {
     GenerateAPI gen = new GenerateAPI();
@@ -89,6 +76,8 @@ public class GenerateAPI {
    */
   public void run() throws Exception {
     
+    APILayout layout = new PanamaGLLayout();
+    
     boolean MACOS_x64 = false;
     boolean MACOS_ARM = false;
     boolean LINUX_x64 = false;
@@ -99,7 +88,7 @@ public class GenerateAPI {
     
     Interf interf = new Interf();
     interf.packge = GL_PACKAGE;
-    interf.javaFolder = GL_INTERFACE_SOURCES + interf.packge.replace(".", "/") + "/";
+    interf.javaFolder = layout.getOutputFolder(null) + interf.packge.replace(".", "/") + "/";
     
     System.out.println("----------------------------------------------------------");
     System.out.println("[Interfaces]");
@@ -139,13 +128,15 @@ public class GenerateAPI {
     // Configure macOS wrapper
     
     if(MACOS_x64) {
+      APIPlatform apiPlatform = new APIPlatform(OS.macOS, CPU.x64);
+      
       wrapper = new Wrapper();
       wrapper.platform = "macOS_x64";
       wrapper.wrapped = Set.of(opengl.macos.x86.glut_h.class/*, glext.macos.v10_15_7.glext_h.class, cgl.macos.v10_15_7.cgl_h.class*/);
       wrapper.accepts = new AcceptsGLMethod();
       wrapper.className = "GL_" + wrapper.platform;
-      wrapper.packge = GL_PACKAGE_MACOS_x64;
-      wrapper.setFileIn(GL_MACOS_SOURCES);
+      wrapper.packge = layout.getPlatformPackage(apiPlatform);
+      wrapper.setFileIn(layout.getOutputFolder(apiPlatform));
   
       wrapper.addImplement(interf.packge + "." + superGL);
       wrapper.addImplement(interf.packge + ".GLU");
@@ -164,19 +155,21 @@ public class GenerateAPI {
       factory.name = "PanamaGLFactory_" + wrapper.platform;
       factory.packge = wrapper.packge;
       factory.matcher = PlatformMatcher_macOS_x64.class;
-      factory.setFileIn(GL_MACOS_SOURCES);
+      factory.setFileIn(layout.getOutputFolder(apiPlatform));
       
       makeFactory(javaInterfacesFiles, wrapper, factory);
     }
     
     if(MACOS_ARM) {
+      APIPlatform apiPlatform = new APIPlatform(OS.macOS, CPU.arm);
+
       wrapper = new Wrapper();
-      wrapper.platform = "macOS_arm";
       wrapper.wrapped = Set.of(/*glext.macos.x86.glext_h.class, */opengl.macos.arm.glut_h.class);
+      wrapper.platform = apiPlatform.getName();
       wrapper.accepts = new AcceptsGLMethod();
       wrapper.className = "GL_" + wrapper.platform;
-      wrapper.packge = GL_PACKAGE_MACOS_arm;
-      wrapper.setFileIn(GL_MACOS_SOURCES);
+      wrapper.packge = layout.getPlatformPackage(apiPlatform);
+      wrapper.setFileIn(layout.getOutputFolder(apiPlatform));
   
       wrapper.addImplement(interf.packge + "." + superGL);
       wrapper.addImplement(interf.packge + ".GLU");
@@ -195,7 +188,7 @@ public class GenerateAPI {
       factory.name = "PanamaGLFactory_" + wrapper.platform;
       factory.packge = wrapper.packge;
       factory.matcher = PlatformMatcher_macOS_arm.class;
-      factory.setFileIn(GL_MACOS_SOURCES);
+      factory.setFileIn(layout.getOutputFolder(apiPlatform));
       
       makeFactory(javaInterfacesFiles, wrapper, factory);
     }
@@ -208,13 +201,15 @@ public class GenerateAPI {
     // Configure Linux wrapper
     
     if(LINUX_x64) {
+      APIPlatform apiPlatform = new APIPlatform(OS.linux, CPU.x64);
+
       wrapper = new Wrapper();
-      wrapper.platform = "linux_x64";
       wrapper.wrapped = Set.of(glext.ubuntu.v20.glext_h.class/*, opengl.ubuntu.v20.glut_h.class, glxext.ubuntu.v20.glxext_h.class*/);
+      wrapper.platform = apiPlatform.getName();
       wrapper.accepts = new AcceptsGLMethod();
       wrapper.className = "GL_" + wrapper.platform;
-      wrapper.packge = GL_PACKAGE_LINUX_x64;
-      wrapper.setFileIn(GL_LINUX_SOURCES);
+      wrapper.packge = layout.getPlatformPackage(apiPlatform);
+      wrapper.setFileIn(layout.getOutputFolder(apiPlatform));
       
       wrapper.addImplement(interf.packge + "." + superGL);
       wrapper.addImplement(interf.packge + ".GLU");
@@ -231,8 +226,8 @@ public class GenerateAPI {
       factory = new PlatformFactory();
       factory.base = APanamaGLFactory_linux.class;
       factory.name = "PanamaGLFactory_" + wrapper.platform;
-      factory.packge = GL_PACKAGE_LINUX_x64;
-      factory.setFileIn(GL_LINUX_SOURCES);
+      factory.packge = layout.getPlatformPackage(apiPlatform);
+      factory.setFileIn(layout.getOutputFolder(apiPlatform));
       
       makeFactory(javaInterfacesFiles, wrapper, factory);
 
@@ -242,13 +237,15 @@ public class GenerateAPI {
     // Configure Windows wrapper
     
     if(WINDOWS_x64) {
+      APIPlatform apiPlatform = new APIPlatform(OS.windows, CPU.x64);
+
       wrapper = new Wrapper();
-      wrapper.platform = "windows_x64";
       wrapper.wrapped = Set.of(freeglut.windows.x86.freeglut_h.class);
+      wrapper.platform = apiPlatform.getName();
       wrapper.accepts = new AcceptsGLMethod();
       wrapper.className = "GL_" + wrapper.platform;
-      wrapper.packge = GL_PACKAGE_WINDOWS_x64;
-      wrapper.setFileIn(GL_WINDOWS_SOURCES);
+      wrapper.packge = layout.getPlatformPackage(apiPlatform);
+      wrapper.setFileIn(layout.getOutputFolder(apiPlatform));
       
       wrapper.addImplement(interf.packge + "." + superGL);
       wrapper.addImplement(interf.packge + ".GLU");
@@ -265,8 +262,8 @@ public class GenerateAPI {
       factory = new PlatformFactory();
       factory.base = APanamaGLFactory_windows.class;
       factory.name = "PanamaGLFactory_" + wrapper.platform;
-      factory.packge = GL_PACKAGE_WINDOWS_x64;
-      factory.setFileIn(GL_WINDOWS_SOURCES);
+      factory.packge = layout.getPlatformPackage(apiPlatform);
+      factory.setFileIn(layout.getOutputFolder(apiPlatform));
       
       makeFactory(javaInterfacesFiles, wrapper, factory);
 
