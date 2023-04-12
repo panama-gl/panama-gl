@@ -37,9 +37,13 @@ public abstract class JavaWriter {
 
   protected String tab = "  ";
   protected String tab2 = "    ";
+  
+  protected StringBuffer sb;
 
   public abstract void start(StringBuffer sb);
   public abstract void close(StringBuffer sb);
+  public abstract void start();
+  public abstract void close();
 
   public void writeTo(StringBuffer sb, String file) throws IOException {
     File f = new File(file);

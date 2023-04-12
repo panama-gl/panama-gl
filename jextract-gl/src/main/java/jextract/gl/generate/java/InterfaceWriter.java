@@ -28,6 +28,17 @@ public class InterfaceWriter extends JavaWriter{
     this.classPackage = classPackage;
     this.className = className;
   }
+  
+  @Override
+  public void start() {
+    sb = new StringBuffer();
+    start(sb);
+  }
+  
+  @Override
+  public void close() {
+    close(sb);
+  }
     
   @Override
   public void start(StringBuffer sb) {
@@ -41,6 +52,21 @@ public class InterfaceWriter extends JavaWriter{
   public void close(StringBuffer sb) {
     sb.append("}\n");
   }
+  
+  // ------------------
+  
+  /** Generate an interface method declaration based on a base type definition. */
+  public void method(String name, List<Arg> input, String outputType) {
+    method(sb, name, input, outputType);
+  }
+  
+  /** Generate an interface method declaration based on a Java method definition. */
+  public void method(Method method) {
+    method(sb, method);
+  }
+  
+  
+  // ------------------
 
   /** Generate an interface method declaration based on a base type definition. */
   public void method(StringBuffer sb, String name, List<Arg> input, String outputType) {

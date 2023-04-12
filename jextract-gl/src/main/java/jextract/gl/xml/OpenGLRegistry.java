@@ -36,7 +36,7 @@ import jextract.gl.xml.parser.Registry.Feature.Remove;
 import jextract.gl.xml.parser.Registry.Feature.Require;
 
 public class OpenGLRegistry {
-  JAXBHandler h = new JAXBHandler("jextractgl");
+  JAXBHandler h = new JAXBHandler("jextract.gl.xml.parser");
   jextract.gl.xml.parser.Registry registry;
 
   public OpenGLRegistry() throws Exception {

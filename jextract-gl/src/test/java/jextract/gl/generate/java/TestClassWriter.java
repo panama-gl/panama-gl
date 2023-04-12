@@ -31,8 +31,8 @@ public class TestClassWriter {
     
     ClassWriter c = new ClassWriter("panamagl.gen", "GL");
     c.addImport("java.util.List");
-    c.addImport("opengl.macos.v10_15_7.glut_h");
-    c.addImport("static opengl.macos.v10_15_7.glut_h.*");
+    c.addImport("opengl.macos.x86.glut_h");
+    c.addImport("static opengl.macos.x86.glut_h.*");
     c.start(sb);
     
     

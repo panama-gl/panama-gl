@@ -32,6 +32,18 @@ public class ClassWriter extends JavaWriter {
   }
 
   // --------------------------------------------------
+  
+  @Override
+  public void start() {
+    sb = new StringBuffer();
+    start(sb);
+  }
+  
+  @Override
+  public void close() {
+    close(sb);
+  }
+
 
   @Override
   public void start(StringBuffer sb) {
@@ -39,14 +51,22 @@ public class ClassWriter extends JavaWriter {
     writeImports(sb);
     writeClass(sb);
   }
+  
+  @Override
+  public void close(StringBuffer sb) {
+    sb.append("}\n");
+  }
 
-  private void writeClass(StringBuffer sb) {
+  
+  
+
+  protected void writeClass(StringBuffer sb) {
     sb.append("public class " + className + " " + writeExtends() );
     writeImplements(sb);
     sb.append(" {\n");
   }
 
-  private void writeImplements(StringBuffer sb) {
+  protected void writeImplements(StringBuffer sb) {
     if (implement != null && implement.size() > 0) {
       int k = 0;
       sb.append(" implements ");
@@ -60,11 +80,58 @@ public class ClassWriter extends JavaWriter {
     }
   }
 
-  @Override
-  public void close(StringBuffer sb) {
-    sb.append("}\n");
+  // --------------------------------------------------
+  public void method(String name, List<Code> body) {
+    method(sb, name, null, null, body, null);
   }
 
+  public void method(String name, List<Arg> in, Arg out, Code body) {
+    method(sb, name, in, out, List.of(body));
+  }
+  
+  public void method(String name, List<Arg> in, Arg out, List<Code> body) {
+    method(sb, name, in, out, body, null);
+  }
+
+  public void method(String name, List<Arg> in, Arg out, List<Code> body,
+      List<Exception> throwz) {
+    method(sb, name, in, out, body, throwz);
+  }
+  
+  public void wrapper(String name, String wrapped) {
+    wrapper(sb, name, null, null, wrapped, null);
+  }
+
+  public void wrapper(String name, List<Arg> in, String wrapped) {
+    wrapper(sb, name, in, null, wrapped, null);
+  }
+
+  public void wrapper(String name, List<Arg> in, Arg out, String wrapped) {
+    wrapper(sb, name, in, out, wrapped, null);
+  }
+
+  public void wrapper(String name, List<Arg> in, Arg out, String wrapped,
+      List<Exception> throwz) {
+    wrapper(sb, name, in, out, wrapped, throwz, null);
+  }
+  
+  public void wrapper(String name, List<Arg> in, Arg out, String wrapped,
+      List<Exception> throwz, Code code) {
+    wrapper(sb, name, in, out, wrapped, throwz, code);
+  }
+  
+  public void wrapper(Class<?> wrapped, Method wrappedMethod,
+      GLCommand specInterface) {
+    wrapper(sb, wrapped, wrappedMethod, specInterface) ;
+  }
+  
+  public void wrapperNotImplemented(GLCommand registryCommand) {
+    wrapperNotImplemented(sb, registryCommand);
+  }
+  
+  public void wrapperAuto(Class<?> wrapped, Method wrappedMethod) {
+    wrapperAuto(sb, wrapped, wrappedMethod);
+  }
 
   // --------------------------------------------------
 
@@ -368,7 +435,7 @@ public class ClassWriter extends JavaWriter {
   // ================================
 
 
-  public void print(String head, List<Arg> args) {
+  protected void print(String head, List<Arg> args) {
     System.out.print(head);
     for (Arg a : args) {
       System.out.print(a.getTypeName() + " " + a.getName() + ", ");
@@ -378,7 +445,7 @@ public class ClassWriter extends JavaWriter {
 
 
 
-  private Arg getArgOut(Method wrappedMethod) {
+  protected Arg getArgOut(Method wrappedMethod) {
     Arg argOut = null;
 
     Class<?> retType = wrappedMethod.getReturnType();
@@ -388,7 +455,7 @@ public class ClassWriter extends JavaWriter {
     return argOut;
   }
 
-  private List<Arg> getArgsIn(Method wrappedMethod) {
+  protected List<Arg> getArgsIn(Method wrappedMethod) {
     List<Arg> argsIn = new ArrayList<>();
     for (Parameter param : wrappedMethod.getParameters()) {
       Arg arg = new Arg(param.getType(), param.getName());

@@ -177,7 +177,7 @@ public class TestOpenGLRegistry {
     Assert.assertEquals("access", a3.getName());
     Assert.assertEquals(INT, a3.getTypeName());
 
-    Assert.assertEquals(ADDRESSABLE, command.getOutputType());
+    Assert.assertEquals(VOID, command.getOutputType());
 
   }
 
