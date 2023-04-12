@@ -68,10 +68,10 @@ public class TestGenerateWrapperFromBindings {
     // When generating binding
     
     ClassWriter classWriter = new ClassWriter("","");
-    StringBuffer javaCode = new StringBuffer();
+    classWriter.start();
     
     GenerateAPI_GL_Wrapper g = new GenerateAPI_GL_Wrapper();
-    g.wrapJavaBinding(classWriter, wrapper, glRegistry, bindingRegistry, javaCode);
+    g.wrapJavaBinding(classWriter, wrapper, glRegistry, bindingRegistry);
     
     // Then the wrapping is successful
     Assert.assertEquals(1, g.methodFound);
@@ -104,13 +104,13 @@ public class TestGenerateWrapperFromBindings {
     // When wrapping unspecified methods
 
     ClassWriter classWriter = new ClassWriter("", "");
+    classWriter.start();
     
     Method bindedMethod = m1; 
     Set<String> autoWrappedMethodNames = new HashSet<>();
-    StringBuffer javaCode = new StringBuffer();
     
     GenerateAPI_GL_Wrapper g = new GenerateAPI_GL_Wrapper();
-    g.wrapUnspecifiedMethod(classWriter, wrapped, bindedMethod, autoWrappedMethodNames, javaCode);
+    g.wrapUnspecifiedMethod(classWriter, wrapped, bindedMethod, autoWrappedMethodNames);
 
     
     // Then : the generated method name is available
@@ -121,7 +121,7 @@ public class TestGenerateWrapperFromBindings {
     
     Assert.assertTrue(methods.get(0).getName().contains(METHOD_NAME));
     Assert.assertEquals(1, methods.get(0).getParameters().length);
-    Assert.assertTrue(javaCode.toString().contains("public String "+METHOD_NAME+"(int anInteger)"));
+    Assert.assertTrue(classWriter.getCode().contains("public String "+METHOD_NAME+"(int anInteger)"));
     Assert.assertEquals(String.class, methods.get(0).getReturnType());
     
   }
@@ -151,16 +151,16 @@ public class TestGenerateWrapperFromBindings {
     // ---------------------------------------
     // When wrapping unavailable methods
     ClassWriter classWriter = new ClassWriter("", "");
-    StringBuffer javaCode = new StringBuffer();
+    classWriter.start();
     
-    g.wrapUnavailableMethods(classWriter, glRegistry, wrappedCommands, javaCode);
+    g.wrapUnavailableMethods(classWriter, glRegistry, wrappedCommands);
     
     // Then : counter increments
     Assert.assertEquals(1, g.nUnimplemented);
     
     // Then : code throwing exception is generated
-    Assert.assertTrue(javaCode.toString().contains("public void glBegin()"));
-    Assert.assertTrue(javaCode.toString().contains("throw new RuntimeException"));
+    Assert.assertTrue(classWriter.getCode().contains("public void glBegin()"));
+    Assert.assertTrue(classWriter.getCode().contains("throw new RuntimeException"));
     
     // Then : the list of wrapped command contains a reference to this newly generated 
     // wrapper

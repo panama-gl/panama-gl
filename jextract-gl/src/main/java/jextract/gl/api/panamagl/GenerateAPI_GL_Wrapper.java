@@ -1,19 +1,17 @@
 /*******************************************************************************
  * Copyright (c) 2022, 2023 Martin Pernollet & contributors.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA
  *******************************************************************************/
 package jextract.gl.api.panamagl;
 
@@ -44,7 +42,7 @@ public class GenerateAPI_GL_Wrapper {
   boolean skipAlreadyBindedMethodNAME = true;
   boolean debug = true;
 
-  //public Set<String> addUnimplementedMethodsFor = new HashSet<>();
+  // public Set<String> addUnimplementedMethodsFor = new HashSet<>();
 
   protected List<Method> autoWrappedMethods = new ArrayList<>();
 
@@ -96,7 +94,7 @@ public class GenerateAPI_GL_Wrapper {
    */
   public void generateWrapper(Wrapper wrapper) throws IllegalAccessException, IOException {
     autoWrappedMethods = new ArrayList<>();
-    //addUnimplementedMethodsFor = new HashSet<>();
+    // addUnimplementedMethodsFor = new HashSet<>();
 
     methodNotFound = 0;
     methodFound = 0;
@@ -121,9 +119,7 @@ public class GenerateAPI_GL_Wrapper {
     classWriter.addImplement(wrapper.implement);
     classWriter.addExtension(wrapper.extend);
 
-    StringBuffer javaCode = new StringBuffer();
-
-    classWriter.start(javaCode);
+    classWriter.start();
 
 
 
@@ -135,19 +131,19 @@ public class GenerateAPI_GL_Wrapper {
     // 2. All other are ignored and increase the methodNotFound counter
 
     List<GLCommand> wrappedCommands =
-        wrapJavaBinding(classWriter, wrapper, glRegistry, javaMethodRegistry, javaCode);
+        wrapJavaBinding(classWriter, wrapper, glRegistry, javaMethodRegistry);
 
     // ---------------------------------------------------------------------------
     // Create default implementation throwing NOT IMPL EXCEPT if the registry command has
     // not been implement already (and is part of the target GL versions)
 
-    wrapUnavailableMethods(classWriter, glRegistry, wrappedCommands, javaCode);
+    wrapUnavailableMethods(classWriter, glRegistry, wrappedCommands);
 
 
     // ---------------------------------------------------------------------------
     // Finish
 
-    classWriter.close(javaCode);
+    classWriter.close();
 
     System.out.println("------------------------------------------------------------------");
     System.out.println("Methods wrapped                                 : " + methodFound);
@@ -158,7 +154,7 @@ public class GenerateAPI_GL_Wrapper {
 
 
     // Write code to disk
-    classWriter.writeTo(javaCode, wrapper.javaFile);
+    classWriter.writeTo(wrapper.javaFile);
   }
 
   // --------------------------------------------------------------------
@@ -168,14 +164,13 @@ public class GenerateAPI_GL_Wrapper {
   // --------------------------------------------------------------------
 
   /**
-   * Create a wrapper for methods that are not declared in the GL specification. 
+   * Create a wrapper for methods that are not declared in the GL specification.
    * 
-   * Method names starting with GLU and GLUT are not in the GL spec but will be wrapped
-   * and added to the list of extra methods {@link #getAutoWrappedMethods()}.
+   * Method names starting with GLU and GLUT are not in the GL spec but will be wrapped and added to
+   * the list of extra methods {@link #getAutoWrappedMethods()}.
    */
   protected List<GLCommand> wrapJavaBinding(ClassWriter classWriter, Wrapper wrapper,
-      Map<String, GLCommand> glRegistry, Map<Class<?>, List<Method>> javaMethodRegistry,
-      StringBuffer javaCode) {
+      Map<String, GLCommand> glRegistry, Map<Class<?>, List<Method>> javaMethodRegistry) {
     List<GLCommand> wrappedCommands = new ArrayList<>();
 
     Set<String> autoWrappedMethodNames = new HashSet<>();
@@ -199,7 +194,7 @@ public class GenerateAPI_GL_Wrapper {
         if (registryCommand != null) {
           methodFound++;
 
-          classWriter.wrapper(javaCode, wrapped, bindedMethod, registryCommand);
+          classWriter.wrapper(wrapped, bindedMethod, registryCommand);
 
           wrappedCommands.add(registryCommand);
         } else {
@@ -207,8 +202,7 @@ public class GenerateAPI_GL_Wrapper {
 
           if (isGLUTorGLUMethod(bindedMethod)) {
 
-            wrapUnspecifiedMethod(classWriter, wrapped, bindedMethod, autoWrappedMethodNames,
-                javaCode);
+            wrapUnspecifiedMethod(classWriter, wrapped, bindedMethod, autoWrappedMethodNames);
 
 
           }
@@ -226,13 +220,13 @@ public class GenerateAPI_GL_Wrapper {
     }
     return wrappedCommands;
   }
-  
+
   /**
    * Create a wrapper for methods that are NOT declared in the specification. On can later fetch
    * unspecified wrapped methods by calling {@link #getAutoWrappedMethods()}.
    */
   protected void wrapUnspecifiedMethod(ClassWriter classWriter, Class<?> wrapped,
-      Method bindedMethod, Set<String> autoWrappedMethodNames, StringBuffer javaCode) {
+      Method bindedMethod, Set<String> autoWrappedMethodNames) {
     // check the method name and not the method itself, since the same
     // method may appear in multiple wrapped binding.
     if (!autoWrappedMethodNames.contains(bindedMethod.getName())) {
@@ -240,25 +234,25 @@ public class GenerateAPI_GL_Wrapper {
       autoWrappedMethods.add(bindedMethod);
       autoWrappedMethodNames.add(bindedMethod.getName());
 
-      classWriter.wrapperAuto(javaCode, wrapped, bindedMethod);
+      classWriter.wrapperAuto(wrapped, bindedMethod);
     }
   }
-  
+
   /**
-   * Create a wrapper for methods that are declared in the specification but not found in binding. 
+   * Create a wrapper for methods that are declared in the specification but not found in binding.
    * The method body simply throw an exception stating that no implementation is available.
    */
   protected int wrapUnavailableMethods(ClassWriter classWriter, Map<String, GLCommand> glRegistry,
-      List<GLCommand> wrappedCommands, StringBuffer javaCode) {
+      List<GLCommand> wrappedCommands) {
     nUnimplemented = 0;
 
     if (addUnimplementedMethodsUponMissingBinding) {
-      
+
       // OpenGL : Create a method throwing "not implemented" exception
       for (GLCommand registryCommand : glRegistry.values()) {
         if (!wrappedCommands.contains(registryCommand)) {
 
-          classWriter.wrapperNotImplemented(javaCode, registryCommand);
+          classWriter.wrapperNotImplemented(registryCommand);
 
           wrappedCommands.add(registryCommand);
 
@@ -268,18 +262,18 @@ public class GenerateAPI_GL_Wrapper {
             System.out.println(registryCommand.getName() + "(..) \twrapped but not implemented!");
         }
       }
-      
+
       // GLUT
-      
-      
-    } /*else {
-      for (String stubRequested : addUnimplementedMethodsFor) {
-        CommandWrap registryCommand = glRegistry.get(stubRequested);
 
-        classWriter.wrapperNotImplemented(javaCode, registryCommand);
 
-      }
-    }*/
+    } /*
+       * else { for (String stubRequested : addUnimplementedMethodsFor) { CommandWrap
+       * registryCommand = glRegistry.get(stubRequested);
+       * 
+       * classWriter.wrapperNotImplemented(javaCode, registryCommand);
+       * 
+       * } }
+       */
     return nUnimplemented;
   }
 
@@ -329,7 +323,7 @@ public class GenerateAPI_GL_Wrapper {
   }
 
   protected boolean isGLUTorGLUMethod(String name) {
-    return (name.startsWith("glu") || name.startsWith("glut")) && ! name.contains("$");
+    return (name.startsWith("glu") || name.startsWith("glut")) && !name.contains("$");
   }
 
   // --------------------------------------------------------------------

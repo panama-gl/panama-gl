@@ -9177,7 +9177,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public MemoryAddress glMapBuffer(int target, int access) {
+  public void glMapBuffer(int target, int access) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14243,72 +14243,6 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
 
   public int glBindMaterialParameterEXT(int face, int value) {
     throw new RuntimeException("This method is not available in the generated binding.");
-  }
-
-  @Override
-  public void glutCheckLoop() {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void glutSurfaceTexture(int arg0, int arg1, int arg2) {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public int gluBuild1DMipmapLevels(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5,
-      int arg6, int arg7, Addressable arg8) {
-    // TODO Auto-generated method stub
-    return 0;
-  }
-
-  @Override
-  public int gluBuild2DMipmapLevels(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5,
-      int arg6, int arg7, int arg8, Addressable arg9) {
-    // TODO Auto-generated method stub
-    return 0;
-  }
-
-  @Override
-  public int gluBuild3DMipmapLevels(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5,
-      int arg6, int arg7, int arg8, int arg9, Addressable arg10) {
-    // TODO Auto-generated method stub
-    return 0;
-  }
-
-  @Override
-  public int gluBuild3DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6,
-      Addressable arg7) {
-    // TODO Auto-generated method stub
-    return 0;
-  }
-
-  @Override
-  public byte gluCheckExtension(Addressable arg0, Addressable arg1) {
-    // TODO Auto-generated method stub
-    return 0;
-  }
-
-  @Override
-  public void gluNurbsCallbackData(Addressable arg0, Addressable arg1) {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void gluNurbsCallbackDataEXT(Addressable arg0, Addressable arg1) {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public int gluUnProject4(double arg0, double arg1, double arg2, double arg3, Addressable arg4,
-      Addressable arg5, Addressable arg6, double arg7, double arg8, Addressable arg9,
-      Addressable arg10, Addressable arg11, Addressable arg12) {
-    // TODO Auto-generated method stub
-    return 0;
   }
 
 }

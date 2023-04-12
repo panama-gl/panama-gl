@@ -86,9 +86,9 @@ public class GenerateAPI {
    * @throws Exception
    */
   public void run(APILayout layout) throws Exception {
-    boolean MACOS_x64 = false;
-    boolean MACOS_ARM = false;
-    boolean LINUX_x64 = false;
+    boolean MACOS_x64 = true;
+    boolean MACOS_ARM = true;
+    boolean LINUX_x64 = true;
     boolean WINDOWS_x64 = true;
 
     // ============================================================================
@@ -194,12 +194,10 @@ public class GenerateAPI {
     glInterfaceWriter.addExtension(CLASS_NAME_GLU);
     glInterfaceWriter.addExtension(CLASS_NAME_GLUT);
 
-    StringBuffer javaCode = new StringBuffer();
-
     String javaFile = interf.javaFolder + "/" + superGL + ".java";
-    glInterfaceWriter.start(javaCode);
-    glInterfaceWriter.close(javaCode);
-    glInterfaceWriter.writeTo(javaCode, javaFile);
+    glInterfaceWriter.start();
+    glInterfaceWriter.close();
+    glInterfaceWriter.writeTo(javaFile);
 
     List<String> interfaceFiles = interfGen.generateInterfaces(interf);
     return interfaceFiles;
@@ -240,6 +238,41 @@ public class GenerateAPI {
 
     makeFactory(javaInterfacesFiles, wrapper, factory);
   }
+  
+  /**
+   * 
+   * @param interf
+   * @param extra
+   * @throws IOException
+   */
+  protected void makeGLUT(Interf interf, List<Method> extra) throws IOException {
+    // Create GLU et GLUT interface
+    InterfaceWriter gluWriter = new InterfaceWriter(interf.packge, CLASS_NAME_GLU);
+    InterfaceWriter glutWriter = new InterfaceWriter(interf.packge, CLASS_NAME_GLUT);
+
+    gluWriter.addImport("java.lang.foreign.*");
+    glutWriter.addImport("java.lang.foreign.*");
+
+    String glutFile = interf.javaFolder + "/"+CLASS_NAME_GLUT+".java";
+    String gluFile = interf.javaFolder + "/"+CLASS_NAME_GLU+".java";
+
+    glutWriter.start();
+    gluWriter.start();
+
+    for (Method method : extra) {
+      if (method.getName().startsWith("glut") && !method.getName().contains("$")) {
+        glutWriter.method(method);
+      } else if (method.getName().startsWith("glu") && !method.getName().contains("$")) {
+        gluWriter.method(method);
+      }
+    }
+    glutWriter.close();
+    gluWriter.close();
+
+    glutWriter.writeTo(glutFile);
+    gluWriter.writeTo(gluFile);
+  }
+
 
 
 
@@ -257,14 +290,13 @@ public class GenerateAPI {
     factoryWriter.addImplement(panamagl.factory.PanamaGLFactory.class.getName());
 
 
-    StringBuffer javaCode = new StringBuffer();
-    factoryWriter.start(javaCode);
+    factoryWriter.start();
 
     // -------------------------------------------------------------------
     // Create a method to instanciate the appropriate GL wrapper
 
     Code c = new Code("return new " + wrapper.packge + "." + wrapper.className + "();");
-    factoryWriter.method(javaCode, "newGL", null, new Arg(panamagl.opengl.GL.class.getName()), c);
+    factoryWriter.method("newGL", null, new Arg(panamagl.opengl.GL.class.getName()), c);
 
     // -------------------------------------------------------------------
     // Create a method to instanciate the appropriate platform matcher
@@ -272,12 +304,12 @@ public class GenerateAPI {
     if (factory.matcher != null) {
       Arg input = new Arg(Platform.class.getName(), "platform");
       Code cn = new Code("return new " + factory.matcher.getName() + "().matches(platform);");
-      factoryWriter.method(javaCode, "matches", List.of(input), new Arg("boolean"), cn);
+      factoryWriter.method("matches", List.of(input), new Arg("boolean"), cn);
     }
 
 
-    factoryWriter.close(javaCode);
-    factoryWriter.writeTo(javaCode, factory.javaFile);
+    factoryWriter.close();
+    factoryWriter.writeTo(factory.javaFile);
 
     javaInterfacesFiles.add(factory.javaFile);
   }
@@ -302,41 +334,6 @@ public class GenerateAPI {
     return wrapperGen.getAutoWrappedMethods();
   }
 
-  /**
-   * 
-   * @param interf
-   * @param extra
-   * @throws IOException
-   */
-  protected void makeGLUT(Interf interf, List<Method> extra) throws IOException {
-    // Create GLU et GLUT interface
-    InterfaceWriter gluWriter = new InterfaceWriter(interf.packge, CLASS_NAME_GLU);
-    InterfaceWriter glutWriter = new InterfaceWriter(interf.packge, CLASS_NAME_GLUT);
-
-    gluWriter.addImport("java.lang.foreign.*");
-    glutWriter.addImport("java.lang.foreign.*");
-
-    String glutFile = interf.javaFolder + "/"+CLASS_NAME_GLUT+".java";
-    String gluFile = interf.javaFolder + "/"+CLASS_NAME_GLU+".java";
-
-    StringBuffer glutCode = new StringBuffer();
-    StringBuffer gluCode = new StringBuffer();
-
-    glutWriter.start(glutCode);
-    gluWriter.start(gluCode);
-    for (Method method : extra) {
-      if (method.getName().startsWith("glut") && !method.getName().contains("$")) {
-        glutWriter.method(glutCode, method);
-      } else if (method.getName().startsWith("glu") && !method.getName().contains("$")) {
-        gluWriter.method(gluCode, method);
-      }
-    }
-    glutWriter.close(glutCode);
-    gluWriter.close(gluCode);
-
-    glutWriter.writeTo(glutCode, glutFile);
-    gluWriter.writeTo(gluCode, gluFile);
-  }
 
   public void compile(List<String> javaFile) throws IOException {
     ClassCompiler c = new ClassCompiler();

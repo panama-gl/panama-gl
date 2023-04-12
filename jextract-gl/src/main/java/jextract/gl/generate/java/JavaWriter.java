@@ -44,6 +44,15 @@ public abstract class JavaWriter {
   public abstract void close(StringBuffer sb);
   public abstract void start();
   public abstract void close();
+  
+  public String getCode() {
+    return sb.toString();
+  }
+  
+  public void writeTo(String file) throws IOException {
+    writeTo(sb, file);
+  }
+
 
   public void writeTo(StringBuffer sb, String file) throws IOException {
     File f = new File(file);
