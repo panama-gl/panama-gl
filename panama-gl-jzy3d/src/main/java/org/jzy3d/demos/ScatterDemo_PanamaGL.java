@@ -15,46 +15,62 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package org.jzy3d.demos.natives;
+package org.jzy3d.demos;
 
-import java.lang.foreign.MemorySession;
-import java.lang.foreign.SegmentAllocator;
-import java.lang.foreign.ValueLayout;
 import java.util.Random;
 import org.jzy3d.chart.Chart;
-import org.jzy3d.chart.factories.IChartFactory;
+import org.jzy3d.chart.factories.ChartFactory;
+import org.jzy3d.chart.factories.FrameSwing;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
-import org.jzy3d.chart.factories.natives.PanamaGLPainterFactory_MacOS_10_15_3;
 import org.jzy3d.colors.Color;
 import org.jzy3d.maths.Coord3d;
 import org.jzy3d.plot3d.primitives.Scatter;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
-import opengl.macos.x86.glut_h;
+import panamagl.utils.GraphicsUtils;
 
-// -XstartOnFirstThread --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class ScatterDemoPanamaGL_macOS  {
+/**
+ * Demo an surface chart made with Panama (JEP-412).
+ *
+ * @author Martin Pernollet
+ *
+ */
+//VM ARGS :  --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+// DO NOT USE -XstartOnFirstThread!!
+
+// Making context current in MacOSXCGLContext line 1474 
+
+public class ScatterDemo_PanamaGL {
+  static final float ALPHA_FACTOR = 0.25f;
+
   public static void main(String[] args) {
-    
- // loading GL manually
-    System.loadLibrary("GL");
-    System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
 
-    // https://github.com/jzy3d/panama-gl/issues/16
-    var scope = MemorySession.openConfined();
-    var allocator = SegmentAllocator.newNativeArena(scope);
-    var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
-    glut_h.glutInit(argc, argc);
-    
-    
-    IChartFactory f = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
-    Chart chart = f.newChart(Quality.Advanced());
+    ChartFactory factory = new PanamaGLChartFactory();
+
+    //ChartFactory factory = new SwingChartFacto
+
+    Quality q = Quality.Advanced().setAnimated(false);
+    Chart chart = factory.newChart(q);
     chart.add(scatter());
+    
+    
+    Runnable open = new Runnable() {
+      @Override
+      public void run() {
+        System.out.println("Before open");
+        FrameSwing frame = (FrameSwing)chart.open(800,600);
+        System.out.println("After open");
+        frame.setSize(800, 600);
+        
+        System.out.println("pixel ratio: " + GraphicsUtils.getPixelScaleX(frame));
 
-    // Manual HiDPI setting
-    float[] pixelScale = {2f,2f};
-    chart.getCanvas().setPixelScale(pixelScale);
+      }
+    };
 
-    chart.open("Native window", 800,600);
+    // Lock at unsafe.park
+    open.run();
+    
+    chart.addMouse();  
+    
   }
 
   private static Scatter scatter() {
@@ -75,10 +91,11 @@ public class ScatterDemoPanamaGL_macOS  {
       y = r.nextFloat() - 0.5f;
       z = r.nextFloat() - 0.5f;
       points[i] = new Coord3d(x, y, z);
-      a = 0.25f;
+      a = ALPHA_FACTOR;
       colors[i] = new Color(x, y, z, a);
     }
 
     return new Scatter(points, colors);
   }
+
 }

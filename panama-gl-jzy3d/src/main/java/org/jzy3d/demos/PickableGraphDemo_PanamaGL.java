@@ -14,7 +14,7 @@
  * WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jzy3d.demos.embedded.interactives;
+package org.jzy3d.demos;
 
 
 import java.util.List;

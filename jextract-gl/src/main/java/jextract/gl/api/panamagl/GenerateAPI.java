@@ -55,6 +55,8 @@ import panamagl.platform.windows.APanamaGLFactory_windows;
  *
  */
 public class GenerateAPI {
+  private static final String CLASS_BASE_NAME_GL = "GL_";
+  public static final String CLASS_BASE_NAME_PANAMA_GL_FACTORY = "PanamaGLFactory_";
   public static String GL_PACKAGE = "panamagl.opengl";
 
   public static void main(String[] args) throws Exception {
@@ -130,10 +132,10 @@ public class GenerateAPI {
       APIPlatform apiPlatform = new APIPlatform(OS.macOS, CPU.x64);
       
       wrapper = new Wrapper();
-      wrapper.platform = "macOS_x64";
       wrapper.wrapped = Set.of(opengl.macos.x86.glut_h.class/*, glext.macos.v10_15_7.glext_h.class, cgl.macos.v10_15_7.cgl_h.class*/);
+      wrapper.platform = apiPlatform.getName();
       wrapper.accepts = new AcceptsGLMethod();
-      wrapper.className = "GL_" + wrapper.platform;
+      wrapper.className = CLASS_BASE_NAME_GL + wrapper.platform;
       wrapper.packge = layout.getPlatformPackage(apiPlatform);
       wrapper.setFileIn(layout.getOutputFolder(apiPlatform));
   
@@ -151,7 +153,7 @@ public class GenerateAPI {
       // Configure macOS factory
       factory = new PlatformFactory();
       factory.base = APanamaGLFactory_macOS.class;
-      factory.name = "PanamaGLFactory_" + wrapper.platform;
+      factory.name = CLASS_BASE_NAME_PANAMA_GL_FACTORY + wrapper.platform;
       factory.packge = wrapper.packge;
       factory.matcher = PlatformMatcher_macOS_x64.class;
       factory.setFileIn(layout.getOutputFolder(apiPlatform));
@@ -166,7 +168,7 @@ public class GenerateAPI {
       wrapper.wrapped = Set.of(/*glext.macos.x86.glext_h.class, */opengl.macos.arm.glut_h.class);
       wrapper.platform = apiPlatform.getName();
       wrapper.accepts = new AcceptsGLMethod();
-      wrapper.className = "GL_" + wrapper.platform;
+      wrapper.className = CLASS_BASE_NAME_GL + wrapper.platform;
       wrapper.packge = layout.getPlatformPackage(apiPlatform);
       wrapper.setFileIn(layout.getOutputFolder(apiPlatform));
   
@@ -184,7 +186,7 @@ public class GenerateAPI {
       // Configure macOS factory
       factory = new PlatformFactory();
       factory.base = APanamaGLFactory_macOS.class;
-      factory.name = "PanamaGLFactory_" + wrapper.platform;
+      factory.name = CLASS_BASE_NAME_PANAMA_GL_FACTORY + wrapper.platform;
       factory.packge = wrapper.packge;
       factory.matcher = PlatformMatcher_macOS_arm.class;
       factory.setFileIn(layout.getOutputFolder(apiPlatform));
@@ -206,7 +208,7 @@ public class GenerateAPI {
       wrapper.wrapped = Set.of(glext.ubuntu.v20.glext_h.class/*, opengl.ubuntu.v20.glut_h.class, glxext.ubuntu.v20.glxext_h.class*/);
       wrapper.platform = apiPlatform.getName();
       wrapper.accepts = new AcceptsGLMethod();
-      wrapper.className = "GL_" + wrapper.platform;
+      wrapper.className = CLASS_BASE_NAME_GL + wrapper.platform;
       wrapper.packge = layout.getPlatformPackage(apiPlatform);
       wrapper.setFileIn(layout.getOutputFolder(apiPlatform));
       
@@ -224,7 +226,7 @@ public class GenerateAPI {
       // Configure Linux factory
       factory = new PlatformFactory();
       factory.base = APanamaGLFactory_linux.class;
-      factory.name = "PanamaGLFactory_" + wrapper.platform;
+      factory.name = CLASS_BASE_NAME_PANAMA_GL_FACTORY + wrapper.platform;
       factory.packge = layout.getPlatformPackage(apiPlatform);
       factory.setFileIn(layout.getOutputFolder(apiPlatform));
       
@@ -242,7 +244,7 @@ public class GenerateAPI {
       wrapper.wrapped = Set.of(freeglut.windows.x86.freeglut_h.class);
       wrapper.platform = apiPlatform.getName();
       wrapper.accepts = new AcceptsGLMethod();
-      wrapper.className = "GL_" + wrapper.platform;
+      wrapper.className = CLASS_BASE_NAME_GL + wrapper.platform;
       wrapper.packge = layout.getPlatformPackage(apiPlatform);
       wrapper.setFileIn(layout.getOutputFolder(apiPlatform));
       
@@ -260,7 +262,7 @@ public class GenerateAPI {
       // Configure Linux factory
       factory = new PlatformFactory();
       factory.base = APanamaGLFactory_windows.class;
-      factory.name = "PanamaGLFactory_" + wrapper.platform;
+      factory.name = CLASS_BASE_NAME_PANAMA_GL_FACTORY + wrapper.platform;
       factory.packge = layout.getPlatformPackage(apiPlatform);
       factory.setFileIn(layout.getOutputFolder(apiPlatform));
       

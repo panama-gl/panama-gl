@@ -23,13 +23,16 @@ public class PanamaGLLayout implements APILayout {
   }
 
   public PanamaGLLayout(String root) {
+    reset(root);
+  }
+
+  public void reset(String root) {
     this.root = root;
 
     this.glSourcesAPI = root + "panama-gl-api/" + MAVEN_GENERATED_JAVA_FOLDER;
     this.glSourcesMacOS = root + "panama-gl-wrappers-macos/" + MAVEN_GENERATED_JAVA_FOLDER;
     this.glSourcesLinux = root + "panama-gl-wrappers-linux/" + MAVEN_GENERATED_JAVA_FOLDER;
     this.glSourcesWindows = root + "panama-gl-wrappers-windows/" + MAVEN_GENERATED_JAVA_FOLDER;
-
   }
 
 

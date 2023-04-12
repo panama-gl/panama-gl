@@ -15,26 +15,26 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package org.jzy3d.demos.natives;
+package org.jzy3d.demos;
 
-import java.lang.foreign.MemorySession;
-import java.lang.foreign.SegmentAllocator;
-import java.lang.foreign.ValueLayout;
 import org.jzy3d.chart.Chart;
 import org.jzy3d.chart.factories.ChartFactory;
+import org.jzy3d.chart.factories.FrameSwing;
 import org.jzy3d.chart.factories.PanamaGLChartFactory;
-import org.jzy3d.chart.factories.natives.PanamaGLPainterFactory_MacOS_10_15_3;
 import org.jzy3d.colors.Color;
 import org.jzy3d.colors.ColorMapper;
 import org.jzy3d.colors.colormaps.ColorMapRainbow;
 import org.jzy3d.maths.Range;
+import org.jzy3d.painters.Font;
+import org.jzy3d.painters.PanamaGLPainter;
 import org.jzy3d.plot3d.builder.Func3D;
 import org.jzy3d.plot3d.builder.SurfaceBuilder;
 import org.jzy3d.plot3d.builder.concrete.OrthonormalGrid;
 import org.jzy3d.plot3d.primitives.Shape;
+import org.jzy3d.plot3d.primitives.axis.layout.AxisLayout;
+import org.jzy3d.plot3d.primitives.axis.layout.fonts.HiDPIProportionalFontSizePolicy;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
-import opengl.macos.x86.glut_h;
-
+import panamagl.utils.GraphicsUtils;
 
 /**
  * Demo an surface chart made with Panama (JEP-412).
@@ -42,49 +42,56 @@ import opengl.macos.x86.glut_h;
  * @author Martin Pernollet
  *
  */
-//VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+//VM ARGS :  --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+// DO NOT USE -XstartOnFirstThread!!
+// -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
+// Making context current in MacOSXCGLContext line 1474 
 
-public class SurfaceDemoPanamaGL_macOS {
+public class SurfaceDemo_PanamaGL {
+  static final float ALPHA_FACTOR = 0.75f;// .61f;
 
-  static final float ALPHA_FACTOR = 0.55f;// .61f;
+  public static void main(String[] args) throws InterruptedException {
+//Thread.sleep(5000);
+    ChartFactory factory = new PanamaGLChartFactory();
 
-  public static void main(String[] args) {
-    // loading GL manually
-    System.loadLibrary("GL");
-    System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
-
-    // https://github.com/jzy3d/panama-gl/issues/16
-    var scope = MemorySession.openConfined();
-    var allocator = SegmentAllocator.newNativeArena(scope);
-    var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
-    glut_h.glutInit(argc, argc);
-    
-    // ------------------------
-
-    /**
-     * In case the below factory is not working, one can use CPU rendering fallback as follow
-     * <code>
-     * ChartFactory factory = new EmulGLChartFactory(); // use me as a reference
-     * </code>
-     *
-     * @see https://github.com/jzy3d/jzy3d-api/blob/master/jzy3d-tutorials/src/main/java/org/jzy3d/demos/surface/SurfaceDemoEmulGL.java
-     */
-    ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_10_15_3());
-    //ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_MacOS_11_4());
-    //ChartFactory factory = new PanamaGLChartFactory(new PanamaGLPainterFactory_Ubuntu_20_04());
-
-    Quality q = Quality.Advanced();
+    Quality q = Quality.Advanced().setAnimated(false);
     Chart chart = factory.newChart(q);
     chart.add(surface());
+
+    AxisLayout layout = chart.getAxisLayout();
+    //layout.setFont(new Font("Apple Chancery", 20));
+    layout.setFont(new Font("Courrier", 16));
+    layout.setFontSizePolicy(new HiDPIProportionalFontSizePolicy(chart.getView()));
+
+    /*layout.setXAxisLabel("My X axis label is a little long to draw");
+    layout.setYAxisLabel("My Y axis label is a little long to draw");
+    layout.setZAxisLabel("My Z axis label is a little long to draw");*/
+
+    /*layout.setZAxisSide(ZAxisSide.LEFT);
+    layout.setZAxisLabelOrientation(LabelOrientation.VERTICAL);
+    layout.setYAxisLabelOrientation(LabelOrientation.PARALLEL_TO_AXIS);
+    layout.setXAxisLabelOrientation(LabelOrientation.PARALLEL_TO_AXIS);*/
     
-    chart.getView().setAxisDisplayed(false);
+    //layout.setAxisLabelOffsetAuto(true);
+    //layout.setAxisLabelOffsetMargin(20);
+    
+    layout.setXTickColor(Color.RED);
+    layout.setYTickColor(Color.GREEN);
+    layout.setZTickColor(Color.BLUE);
+    
+    System.out.println("Before open");
+    FrameSwing frame = (FrameSwing)chart.open(800,600);
+    System.out.println("After open");
+    frame.setSize(800, 600);
+    System.out.println("pixel ratio: " + GraphicsUtils.getPixelScaleX(frame));
 
-    // Manual HiDPI setting
-    float[] pixelScale = {2f,2f};
-    //chart.getCanvas().setPixelScale(pixelScale);
-
-    chart.open("Displaying in native window (not java)", 800, 600);
-    // with GLUT, can't do anything after open until main loop ends
+    chart.addMouse();    
+    
+    PanamaGLPainter painter = (PanamaGLPainter)chart.getPainter();
+    
+    
+    System.out.println(painter.getContext().getProfile());
+    
   }
 
 
