@@ -8,7 +8,12 @@ public class APIPlatform {
     this.os = os;
     this.cpu = cpu;
   }
-  
+
+  public APIPlatform(OS os) {
+    this.os = os;
+    this.cpu = null;
+  }
+
   public String getName() {
     return os + "_" + cpu;
   }
@@ -18,6 +23,6 @@ public class APIPlatform {
   }
   
   public enum OS{
-    macOS, linux, windows;
+    api, macOS, linux, windows;
   }
 }

@@ -58,8 +58,10 @@ public class GenerateAPI {
   public static String GL_PACKAGE = "panamagl.opengl";
 
   public static void main(String[] args) throws Exception {
+    APILayout layout = new PanamaGLLayout();
+
     GenerateAPI gen = new GenerateAPI();
-    gen.run();
+    gen.run(layout);
   }
 
   GenerateAPI_GL_Interface interfGen;
@@ -74,10 +76,7 @@ public class GenerateAPI {
    * 
    * @throws Exception
    */
-  public void run() throws Exception {
-    
-    APILayout layout = new PanamaGLLayout();
-    
+  public void run(APILayout layout) throws Exception {
     boolean MACOS_x64 = false;
     boolean MACOS_ARM = false;
     boolean LINUX_x64 = false;
@@ -88,7 +87,7 @@ public class GenerateAPI {
     
     Interf interf = new Interf();
     interf.packge = GL_PACKAGE;
-    interf.javaFolder = layout.getOutputFolder(null) + interf.packge.replace(".", "/") + "/";
+    interf.javaFolder = layout.getOutputFolder(new APIPlatform(OS.api)) + interf.packge.replace(".", "/") + "/";
     
     System.out.println("----------------------------------------------------------");
     System.out.println("[Interfaces]");
