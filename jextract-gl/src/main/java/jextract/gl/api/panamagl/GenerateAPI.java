@@ -99,7 +99,7 @@ public class GenerateAPI {
     interf.javaFolder =
         layout.getOutputFolder(new APIPlatform(OS.api)) + interf.packge.replace(".", "/") + "/";
 
-    List<String> interfaceFiles = makeInterfaces();
+    List<String> interfaceFiles = makeGLInterfaces();
 
     // ============================================================================
     // GL IMPLEMENTATION
@@ -120,7 +120,7 @@ public class GenerateAPI {
       Class<?> factorymatcher = PlatformMatcher_macOS_x64.class;
       boolean genGlut = true;
 
-      makeWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
+      makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
           interfaceFiles);
     }
 
@@ -133,7 +133,7 @@ public class GenerateAPI {
       boolean genGlut = true;
 
 
-      makeWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
+      makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
           interfaceFiles);
     }
 
@@ -154,7 +154,7 @@ public class GenerateAPI {
       Class<?> factorymatcher = null;
       boolean genGlut = false;
 
-      makeWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
+      makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
           interfaceFiles);
 
     }
@@ -172,7 +172,7 @@ public class GenerateAPI {
       Class<?> factorymatcher = null;
       boolean genGlut = false;
 
-      makeWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
+      makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
           interfaceFiles);
 
     }
@@ -181,7 +181,7 @@ public class GenerateAPI {
     compile(interfaceFiles);
   }
 
-  protected List<String> makeInterfaces() throws IOException, Exception {
+  protected List<String> makeGLInterfaces() throws IOException, Exception {
     System.out.println("----------------------------------------------------------");
     System.out.println("[Interfaces]");
 
@@ -205,7 +205,7 @@ public class GenerateAPI {
     return interfaceFiles;
   }
 
-  protected void makeWrapperAndFactory(APILayout layout, APIPlatform platform,
+  protected void makeGLWrapperAndFactory(APILayout layout, APIPlatform platform,
       Set<Class<?>> wrapped, Class<?> factoryBase, Class<?> factorymatcher, boolean genGlut,
       List<String> javaInterfacesFiles) throws IllegalAccessException, IOException {
 
@@ -316,8 +316,8 @@ public class GenerateAPI {
     gluWriter.addImport("java.lang.foreign.*");
     glutWriter.addImport("java.lang.foreign.*");
 
-    String glutFile = interf.javaFolder + "/GLUT.java";
-    String gluFile = interf.javaFolder + "/GLU.java";
+    String glutFile = interf.javaFolder + "/"+CLASS_NAME_GLUT+".java";
+    String gluFile = interf.javaFolder + "/"+CLASS_NAME_GLU+".java";
 
     StringBuffer glutCode = new StringBuffer();
     StringBuffer gluCode = new StringBuffer();
