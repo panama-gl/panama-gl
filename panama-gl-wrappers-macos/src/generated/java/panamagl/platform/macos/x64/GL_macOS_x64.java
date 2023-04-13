@@ -1,7 +1,6 @@
 package panamagl.platform.macos.x64; 
 
 import opengl.macos.x86.glut_h;
-import static opengl.macos.x86.glut_h.*;
 import java.lang.foreign.*;
 
 public class GL_macOS_x64 extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {

@@ -1,7 +1,6 @@
 package panamagl.platform.macos.arm; 
 
 import opengl.macos.arm.glut_h;
-import static opengl.macos.arm.glut_h.*;
 import java.lang.foreign.*;
 
 public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
