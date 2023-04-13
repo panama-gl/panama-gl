@@ -79,7 +79,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
 
     // Init glut so that it can be used
     if(loadGlut) {
-      var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
+      MemorySegment argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
       freeglut_h.glutInit(argc, argc);
     }
     

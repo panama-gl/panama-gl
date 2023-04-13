@@ -55,7 +55,7 @@ public class GLXContext_linux extends AGLContext implements GLContext{
 
     // Init glut so that it can be used
     if(!GLUTContext_linux.hasInit) {
-      var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
+      MemorySegment argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
       glut_h.glutInit(argc, argc);
       GLUTContext_linux.hasInit = true;
     }

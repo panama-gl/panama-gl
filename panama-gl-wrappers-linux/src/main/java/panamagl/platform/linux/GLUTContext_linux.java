@@ -59,7 +59,7 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
     initScope();
     
     if(!hasInit) {
-      var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
+      MemorySegment argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
       glut_h.glutInit(argc, argc);
       hasInit = true;
     }

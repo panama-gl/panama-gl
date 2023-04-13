@@ -55,16 +55,16 @@ public class Performances_Panama_macOS {
   }
 
   public static void main(String [] args) {
-    var scope = MemorySession.openImplicit();
+    MemorySession scope = MemorySession.openImplicit();
     allocator = SegmentAllocator.newNativeArena(scope);
-    var argc = allocator.allocate(glut_h.C_INT, 0);
+    MemorySegment argc = allocator.allocate(glut_h.C_INT, 0);
     glut_h.glutInit(argc, argc);
     glut_h.glutInitDisplayMode(glut_h.GLUT_SINGLE() | glut_h.GLUT_RGB());
     glut_h.glutInitWindowSize(800, 800);
     glut_h.glutCreateWindow(allocator.allocateUtf8String("Panama frame"));
 
-    var displayStub = glutDisplayFunc$func.allocate(Performances_Panama_macOS::display, scope);
-    var idleStub = glutIdleFunc$func.allocate(Performances_Panama_macOS::onIdle, scope);
+    MemorySegment displayStub = glutDisplayFunc$func.allocate(Performances_Panama_macOS::display, scope);
+    MemorySegment idleStub = glutIdleFunc$func.allocate(Performances_Panama_macOS::onIdle, scope);
     glut_h.glutDisplayFunc(displayStub);
     glut_h.glutIdleFunc(idleStub);
     glut_h.glutMainLoop();

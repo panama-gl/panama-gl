@@ -60,7 +60,7 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
     initScope();
     
     if (forceLoadGlut) {
-      var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
+      MemorySegment argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
       
       freeglut_h.glutInit(argc, argc);
     }

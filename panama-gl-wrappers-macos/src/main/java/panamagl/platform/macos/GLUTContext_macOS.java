@@ -54,7 +54,7 @@ public class GLUTContext_macOS extends AGLContext implements GLContext {
     initScope();
     
     if (forceLoadGlut) {
-      var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
+      MemorySegment argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
 
       glut_h.glutInit(argc, argc);
     }

@@ -123,7 +123,7 @@
 				<configuration>
 					<source>19</source>
 					<target>19</target>
-					<encoding>UTF-8</encoding>
+					<!--<encoding>UTF-8</encoding>-->
 					<compilerArgs>
 						<arg>--enable-preview</arg>
 					</compilerArgs>
@@ -166,12 +166,13 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<configuration>
+					<release>19</release>
+					<additionalOptions>--enable-preview</additionalOptions>
 					<additionalparam>-Xdoclint:none</additionalparam>
 					<doclint>none</doclint>
 					<source>8</source>
 					<quiet>true</quiet> <!-- only show warnings/errors -->
 					<failOnError>false</failOnError>
-					<additionalJOption>--no-module-directories</additionalJOption>
 					<configuration>
 						<docfilessubdirs>true</docfilessubdirs>
 					</configuration>

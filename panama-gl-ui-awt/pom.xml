@@ -15,47 +15,40 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jzy3d</groupId>
+			<artifactId>panama-gl-wrappers-macos</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>panama-gl-wrappers-linux</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+		</dependency>
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>panama-gl-wrappers-windows</artifactId>
+			<type>test-jar</type>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-api</artifactId>
 			<version>${project.version}</version>
 			<type>test-jar</type>
 			<scope>test</scope>
-
 		</dependency>
 		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-wrappers-macos</artifactId>
 			<version>${project.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-wrappers-linux</artifactId>
 			<version>${project.version}</version>
-						<type>test-jar</type>
-
-		</dependency>
-		<dependency>
-			<groupId>org.jzy3d</groupId>
-			<artifactId>panama-gl-wrappers-windows</artifactId>
-						<type>test-jar</type>
-
-			<version>${project.version}</version>
-		</dependency>
-		
-				<dependency>
-			<groupId>org.jzy3d</groupId>
-			<artifactId>panama-gl-wrappers-macos</artifactId>
-			<version>${project.version}</version>
-						<type>test-jar</type>
-
-						<scope>test</scope>
-
-		</dependency>
-		<dependency>
-			<groupId>org.jzy3d</groupId>
-			<artifactId>panama-gl-wrappers-linux</artifactId>
-			<version>${project.version}</version>
-						<scope>test</scope>
-
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jzy3d</groupId>
@@ -63,6 +56,5 @@
 			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 </project>
