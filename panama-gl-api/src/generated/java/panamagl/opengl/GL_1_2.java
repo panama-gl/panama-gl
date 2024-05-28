@@ -44,8 +44,8 @@ public interface GL_1_2 extends GL_1_1 {
   public static final int GL_SINGLE_COLOR = 0x81F9;
   public static final int GL_SEPARATE_SPECULAR_COLOR = 0x81FA;
   public static final int GL_ALIASED_POINT_SIZE_RANGE = 0x846D;
-  public void glDrawRangeElements(int mode, int start, int end, int count, int type, Addressable indices);
-  public void glTexImage3D(int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, Addressable pixels);
-  public void glTexSubImage3D(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, Addressable pixels);
+  public void glDrawRangeElements(int mode, int start, int end, int count, int type, MemorySegment indices);
+  public void glTexImage3D(int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, MemorySegment pixels);
+  public void glTexSubImage3D(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, MemorySegment pixels);
   public void glCopyTexSubImage3D(int target, int level, int xoffset, int yoffset, int zoffset, int x, int y, int width, int height);
 }

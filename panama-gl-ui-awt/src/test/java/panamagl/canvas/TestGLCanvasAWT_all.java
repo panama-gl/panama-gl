@@ -31,7 +31,7 @@ import panamagl.platform.macos.OffscreenRenderer_macOS;
 import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
 
-//VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+//VM ARGS : --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class TestGLCanvasAWT_all {
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
   

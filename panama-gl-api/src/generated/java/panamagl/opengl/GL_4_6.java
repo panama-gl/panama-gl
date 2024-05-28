@@ -8,11 +8,11 @@ public interface GL_4_6 extends GL_4_5 {
   public static final int GL_CONTEXT_RELEASE_BEHAVIOR_FLUSH = 0x82FC;
   public static final int GL_SHADER_BINARY_FORMAT_SPIR_V = 0x9551;
   public static final int GL_SPIR_V_BINARY = 0x9552;
-  public void glSpecializeShader(int shader, Addressable pEntryPoint, int numSpecializationConstants, Addressable pConstantIndex, Addressable pConstantValue);
+  public void glSpecializeShader(int shader, MemorySegment pEntryPoint, int numSpecializationConstants, MemorySegment pConstantIndex, MemorySegment pConstantValue);
   public static final int GL_PARAMETER_BUFFER = 0x80EE;
   public static final int GL_PARAMETER_BUFFER_BINDING = 0x80EF;
-  public void glMultiDrawArraysIndirectCount(int mode, Addressable indirect, long drawcount, int maxdrawcount, int stride);
-  public void glMultiDrawElementsIndirectCount(int mode, int type, Addressable indirect, long drawcount, int maxdrawcount, int stride);
+  public void glMultiDrawArraysIndirectCount(int mode, MemorySegment indirect, long drawcount, int maxdrawcount, int stride);
+  public void glMultiDrawElementsIndirectCount(int mode, int type, MemorySegment indirect, long drawcount, int maxdrawcount, int stride);
   public static final int GL_CONTEXT_FLAG_NO_ERROR_BIT = 0x00000008;
   public static final int GL_VERTICES_SUBMITTED = 0x82EE;
   public static final int GL_PRIMITIVES_SUBMITTED = 0x82EF;

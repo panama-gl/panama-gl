@@ -20,9 +20,9 @@ package panamagl.platform.macos;
 import org.junit.Assert;
 import org.junit.Test;
 import panamagl.GLProfile;
-import panamagl.platform.macos.x64.GL_macOS_x64;
+import panamagl.platform.macos.arm.GL_macOS_arm;
 
-//VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+//VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 
 public class TestGLUTContext_macOS extends MacOSTest{
   @Test
@@ -37,7 +37,7 @@ public class TestGLUTContext_macOS extends MacOSTest{
     context.init(false);
     
     // Then
-    GLProfile p = new GLProfile(new GL_macOS_x64());
+    GLProfile p = new GLProfile(new GL_macOS_arm());
     
     Assert.assertNotNull(p.getVersion());
     Assert.assertNotNull(p.getVendor());

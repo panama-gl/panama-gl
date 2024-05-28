@@ -23,7 +23,7 @@ import panamagl.offscreen.FBOReader_AWT;
 import panamagl.offscreen.TestFBO;
 import panamagl.opengl.GL;
 
-// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
+// VM ARGS : --enable-native-access=ALL-UNNAMED -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
 public class TestFBO_windows extends WindowsTest{
   @Test
   public void given_GLUTContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {
@@ -42,16 +42,17 @@ public class TestFBO_windows extends WindowsTest{
     int width = 256;
     int height = 256;
     FBO_windows fbo = new FBO_windows(width, height);
-    FBOReader_AWT reader = new FBOReader_AWT();
-
+    
     // Ensure does not leave this debug flag to false
     Assert.assertTrue(fbo.arrayExport);
     
-    // Ensure conforms to configuration
+    // Then state conforms to configuration
+    Assert.assertFalse(fbo.isPrepared());
     Assert.assertEquals(width, fbo.getWidth());
     Assert.assertEquals(height, fbo.getHeight());
 
     // Execute validation scenario
+    FBOReader_AWT reader = new FBOReader_AWT();
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(fbo, reader, gl);
     
     // ---------------------------------------

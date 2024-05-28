@@ -1,22 +1,13 @@
 package panamagl.canvas;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.scene.canvas.Canvas;
 
+/**
+ * A utility for the demos and tests. 
+ */
 // https://stackoverflow.com/questions/24533556/how-to-make-canvas-resizable-in-javafx
 public class ResizableCanvas extends Canvas {
-
     public ResizableCanvas() {
-      /*addEventHandler(EventType., new EventHandler() {
-
-        @Override
-        public void handle(Event event) {
-          System.out.println(event);
-        }
-        
-      });*/
     }
   
     @Override

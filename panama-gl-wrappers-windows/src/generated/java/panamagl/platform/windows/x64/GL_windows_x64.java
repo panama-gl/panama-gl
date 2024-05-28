@@ -1,7 +1,7 @@
 package panamagl.platform.windows.x64; 
 
+import java.lang.foreign.MemorySegment;
 import freeglut.windows.x86.freeglut_h;
-import java.lang.foreign.*;
 
 public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
   public void glAccum(int op, float value) {
@@ -12,7 +12,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glAlphaFunc(func, ref);
   }
 
-  public byte glAreTexturesResident(int n, Addressable textures, Addressable residences) {
+  public byte glAreTexturesResident(int n, MemorySegment textures, MemorySegment residences) {
     return freeglut_h.glAreTexturesResident(n, textures, residences);
   }
 
@@ -28,7 +28,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glBindTexture(target, texture);
   }
 
-  public void glBitmap(int width, int height, float xorig, float yorig, float xmove, float ymove, Addressable bitmap) {
+  public void glBitmap(int width, int height, float xorig, float yorig, float xmove, float ymove, MemorySegment bitmap) {
     freeglut_h.glBitmap(width, height, xorig, yorig, xmove, ymove, bitmap);
   }
 
@@ -40,7 +40,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glCallList(list);
   }
 
-  public void glCallLists(int n, int type, Addressable lists) {
+  public void glCallLists(int n, int type, MemorySegment lists) {
     freeglut_h.glCallLists(n, type, lists);
   }
 
@@ -68,7 +68,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glClearStencil(s);
   }
 
-  public void glClipPlane(int plane, Addressable equation) {
+  public void glClipPlane(int plane, MemorySegment equation) {
     freeglut_h.glClipPlane(plane, equation);
   }
 
@@ -76,7 +76,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColor3b(red, green, blue);
   }
 
-  public void glColor3bv(Addressable v) {
+  public void glColor3bv(MemorySegment v) {
     freeglut_h.glColor3bv(v);
   }
 
@@ -84,7 +84,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColor3d(red, green, blue);
   }
 
-  public void glColor3dv(Addressable v) {
+  public void glColor3dv(MemorySegment v) {
     freeglut_h.glColor3dv(v);
   }
 
@@ -92,7 +92,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColor3f(red, green, blue);
   }
 
-  public void glColor3fv(Addressable v) {
+  public void glColor3fv(MemorySegment v) {
     freeglut_h.glColor3fv(v);
   }
 
@@ -100,7 +100,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColor3i(red, green, blue);
   }
 
-  public void glColor3iv(Addressable v) {
+  public void glColor3iv(MemorySegment v) {
     freeglut_h.glColor3iv(v);
   }
 
@@ -108,7 +108,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColor3s(red, green, blue);
   }
 
-  public void glColor3sv(Addressable v) {
+  public void glColor3sv(MemorySegment v) {
     freeglut_h.glColor3sv(v);
   }
 
@@ -116,7 +116,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColor3ub(red, green, blue);
   }
 
-  public void glColor3ubv(Addressable v) {
+  public void glColor3ubv(MemorySegment v) {
     freeglut_h.glColor3ubv(v);
   }
 
@@ -124,7 +124,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColor3ui(red, green, blue);
   }
 
-  public void glColor3uiv(Addressable v) {
+  public void glColor3uiv(MemorySegment v) {
     freeglut_h.glColor3uiv(v);
   }
 
@@ -132,7 +132,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColor3us(red, green, blue);
   }
 
-  public void glColor3usv(Addressable v) {
+  public void glColor3usv(MemorySegment v) {
     freeglut_h.glColor3usv(v);
   }
 
@@ -140,7 +140,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColor4b(red, green, blue, alpha);
   }
 
-  public void glColor4bv(Addressable v) {
+  public void glColor4bv(MemorySegment v) {
     freeglut_h.glColor4bv(v);
   }
 
@@ -148,7 +148,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColor4d(red, green, blue, alpha);
   }
 
-  public void glColor4dv(Addressable v) {
+  public void glColor4dv(MemorySegment v) {
     freeglut_h.glColor4dv(v);
   }
 
@@ -156,7 +156,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColor4f(red, green, blue, alpha);
   }
 
-  public void glColor4fv(Addressable v) {
+  public void glColor4fv(MemorySegment v) {
     freeglut_h.glColor4fv(v);
   }
 
@@ -164,7 +164,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColor4i(red, green, blue, alpha);
   }
 
-  public void glColor4iv(Addressable v) {
+  public void glColor4iv(MemorySegment v) {
     freeglut_h.glColor4iv(v);
   }
 
@@ -172,7 +172,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColor4s(red, green, blue, alpha);
   }
 
-  public void glColor4sv(Addressable v) {
+  public void glColor4sv(MemorySegment v) {
     freeglut_h.glColor4sv(v);
   }
 
@@ -180,7 +180,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColor4ub(red, green, blue, alpha);
   }
 
-  public void glColor4ubv(Addressable v) {
+  public void glColor4ubv(MemorySegment v) {
     freeglut_h.glColor4ubv(v);
   }
 
@@ -188,7 +188,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColor4ui(red, green, blue, alpha);
   }
 
-  public void glColor4uiv(Addressable v) {
+  public void glColor4uiv(MemorySegment v) {
     freeglut_h.glColor4uiv(v);
   }
 
@@ -196,7 +196,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColor4us(red, green, blue, alpha);
   }
 
-  public void glColor4usv(Addressable v) {
+  public void glColor4usv(MemorySegment v) {
     freeglut_h.glColor4usv(v);
   }
 
@@ -208,7 +208,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glColorMaterial(face, mode);
   }
 
-  public void glColorPointer(int size, int type, int stride, Addressable pointer) {
+  public void glColorPointer(int size, int type, int stride, MemorySegment pointer) {
     freeglut_h.glColorPointer(size, type, stride, pointer);
   }
 
@@ -240,7 +240,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glDeleteLists(list, range);
   }
 
-  public void glDeleteTextures(int n, Addressable textures) {
+  public void glDeleteTextures(int n, MemorySegment textures) {
     freeglut_h.glDeleteTextures(n, textures);
   }
 
@@ -272,11 +272,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glDrawBuffer(buf);
   }
 
-  public void glDrawElements(int mode, int count, int type, Addressable indices) {
+  public void glDrawElements(int mode, int count, int type, MemorySegment indices) {
     freeglut_h.glDrawElements(mode, count, type, indices);
   }
 
-  public void glDrawPixels(int width, int height, int format, int type, Addressable pixels) {
+  public void glDrawPixels(int width, int height, int format, int type, MemorySegment pixels) {
     freeglut_h.glDrawPixels(width, height, format, type, pixels);
   }
 
@@ -284,11 +284,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glEdgeFlag(flag);
   }
 
-  public void glEdgeFlagPointer(int stride, Addressable pointer) {
+  public void glEdgeFlagPointer(int stride, MemorySegment pointer) {
     freeglut_h.glEdgeFlagPointer(stride, pointer);
   }
 
-  public void glEdgeFlagv(Addressable flag) {
+  public void glEdgeFlagv(MemorySegment flag) {
     freeglut_h.glEdgeFlagv(flag);
   }
 
@@ -312,7 +312,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glEvalCoord1d(u);
   }
 
-  public void glEvalCoord1dv(Addressable u) {
+  public void glEvalCoord1dv(MemorySegment u) {
     freeglut_h.glEvalCoord1dv(u);
   }
 
@@ -320,7 +320,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glEvalCoord1f(u);
   }
 
-  public void glEvalCoord1fv(Addressable u) {
+  public void glEvalCoord1fv(MemorySegment u) {
     freeglut_h.glEvalCoord1fv(u);
   }
 
@@ -328,7 +328,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glEvalCoord2d(u, v);
   }
 
-  public void glEvalCoord2dv(Addressable u) {
+  public void glEvalCoord2dv(MemorySegment u) {
     freeglut_h.glEvalCoord2dv(u);
   }
 
@@ -336,7 +336,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glEvalCoord2f(u, v);
   }
 
-  public void glEvalCoord2fv(Addressable u) {
+  public void glEvalCoord2fv(MemorySegment u) {
     freeglut_h.glEvalCoord2fv(u);
   }
 
@@ -356,7 +356,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glEvalPoint2(i, j);
   }
 
-  public void glFeedbackBuffer(int size, int type, Addressable buffer) {
+  public void glFeedbackBuffer(int size, int type, MemorySegment buffer) {
     freeglut_h.glFeedbackBuffer(size, type, buffer);
   }
 
@@ -372,7 +372,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glFogf(pname, param);
   }
 
-  public void glFogfv(int pname, Addressable params) {
+  public void glFogfv(int pname, MemorySegment params) {
     freeglut_h.glFogfv(pname, params);
   }
 
@@ -380,7 +380,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glFogi(pname, param);
   }
 
-  public void glFogiv(int pname, Addressable params) {
+  public void glFogiv(int pname, MemorySegment params) {
     freeglut_h.glFogiv(pname, params);
   }
 
@@ -396,19 +396,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     return freeglut_h.glGenLists(range);
   }
 
-  public void glGenTextures(int n, Addressable textures) {
+  public void glGenTextures(int n, MemorySegment textures) {
     freeglut_h.glGenTextures(n, textures);
   }
 
-  public void glGetBooleanv(int pname, Addressable data) {
+  public void glGetBooleanv(int pname, MemorySegment data) {
     freeglut_h.glGetBooleanv(pname, data);
   }
 
-  public void glGetClipPlane(int plane, Addressable equation) {
+  public void glGetClipPlane(int plane, MemorySegment equation) {
     freeglut_h.glGetClipPlane(plane, equation);
   }
 
-  public void glGetDoublev(int pname, Addressable data) {
+  public void glGetDoublev(int pname, MemorySegment data) {
     freeglut_h.glGetDoublev(pname, data);
   }
 
@@ -416,103 +416,103 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     return freeglut_h.glGetError();
   }
 
-  public void glGetFloatv(int pname, Addressable data) {
+  public void glGetFloatv(int pname, MemorySegment data) {
     freeglut_h.glGetFloatv(pname, data);
   }
 
-  public void glGetIntegerv(int pname, Addressable data) {
+  public void glGetIntegerv(int pname, MemorySegment data) {
     freeglut_h.glGetIntegerv(pname, data);
   }
 
-  public void glGetLightfv(int light, int pname, Addressable params) {
+  public void glGetLightfv(int light, int pname, MemorySegment params) {
     freeglut_h.glGetLightfv(light, pname, params);
   }
 
-  public void glGetLightiv(int light, int pname, Addressable params) {
+  public void glGetLightiv(int light, int pname, MemorySegment params) {
     freeglut_h.glGetLightiv(light, pname, params);
   }
 
-  public void glGetMapdv(int target, int query, Addressable v) {
+  public void glGetMapdv(int target, int query, MemorySegment v) {
     freeglut_h.glGetMapdv(target, query, v);
   }
 
-  public void glGetMapfv(int target, int query, Addressable v) {
+  public void glGetMapfv(int target, int query, MemorySegment v) {
     freeglut_h.glGetMapfv(target, query, v);
   }
 
-  public void glGetMapiv(int target, int query, Addressable v) {
+  public void glGetMapiv(int target, int query, MemorySegment v) {
     freeglut_h.glGetMapiv(target, query, v);
   }
 
-  public void glGetMaterialfv(int face, int pname, Addressable params) {
+  public void glGetMaterialfv(int face, int pname, MemorySegment params) {
     freeglut_h.glGetMaterialfv(face, pname, params);
   }
 
-  public void glGetMaterialiv(int face, int pname, Addressable params) {
+  public void glGetMaterialiv(int face, int pname, MemorySegment params) {
     freeglut_h.glGetMaterialiv(face, pname, params);
   }
 
-  public void glGetPixelMapfv(int map, Addressable values) {
+  public void glGetPixelMapfv(int map, MemorySegment values) {
     freeglut_h.glGetPixelMapfv(map, values);
   }
 
-  public void glGetPixelMapuiv(int map, Addressable values) {
+  public void glGetPixelMapuiv(int map, MemorySegment values) {
     freeglut_h.glGetPixelMapuiv(map, values);
   }
 
-  public void glGetPixelMapusv(int map, Addressable values) {
+  public void glGetPixelMapusv(int map, MemorySegment values) {
     freeglut_h.glGetPixelMapusv(map, values);
   }
 
-  public void glGetPointerv(int pname, Addressable params) {
+  public void glGetPointerv(int pname, MemorySegment params) {
     freeglut_h.glGetPointerv(pname, params);
   }
 
-  public void glGetPolygonStipple(Addressable mask) {
+  public void glGetPolygonStipple(MemorySegment mask) {
     freeglut_h.glGetPolygonStipple(mask);
   }
 
-  public String glGetString(int name) {
-    return freeglut_h.glGetString(name).getUtf8String(0);
+  public MemorySegment glGetString(int name) {
+    return freeglut_h.glGetString(name);
   }
 
-  public void glGetTexEnvfv(int target, int pname, Addressable params) {
+  public void glGetTexEnvfv(int target, int pname, MemorySegment params) {
     freeglut_h.glGetTexEnvfv(target, pname, params);
   }
 
-  public void glGetTexEnviv(int target, int pname, Addressable params) {
+  public void glGetTexEnviv(int target, int pname, MemorySegment params) {
     freeglut_h.glGetTexEnviv(target, pname, params);
   }
 
-  public void glGetTexGendv(int coord, int pname, Addressable params) {
+  public void glGetTexGendv(int coord, int pname, MemorySegment params) {
     freeglut_h.glGetTexGendv(coord, pname, params);
   }
 
-  public void glGetTexGenfv(int coord, int pname, Addressable params) {
+  public void glGetTexGenfv(int coord, int pname, MemorySegment params) {
     freeglut_h.glGetTexGenfv(coord, pname, params);
   }
 
-  public void glGetTexGeniv(int coord, int pname, Addressable params) {
+  public void glGetTexGeniv(int coord, int pname, MemorySegment params) {
     freeglut_h.glGetTexGeniv(coord, pname, params);
   }
 
-  public void glGetTexImage(int target, int level, int format, int type, Addressable pixels) {
+  public void glGetTexImage(int target, int level, int format, int type, MemorySegment pixels) {
     freeglut_h.glGetTexImage(target, level, format, type, pixels);
   }
 
-  public void glGetTexLevelParameterfv(int target, int level, int pname, Addressable params) {
+  public void glGetTexLevelParameterfv(int target, int level, int pname, MemorySegment params) {
     freeglut_h.glGetTexLevelParameterfv(target, level, pname, params);
   }
 
-  public void glGetTexLevelParameteriv(int target, int level, int pname, Addressable params) {
+  public void glGetTexLevelParameteriv(int target, int level, int pname, MemorySegment params) {
     freeglut_h.glGetTexLevelParameteriv(target, level, pname, params);
   }
 
-  public void glGetTexParameterfv(int target, int pname, Addressable params) {
+  public void glGetTexParameterfv(int target, int pname, MemorySegment params) {
     freeglut_h.glGetTexParameterfv(target, pname, params);
   }
 
-  public void glGetTexParameteriv(int target, int pname, Addressable params) {
+  public void glGetTexParameteriv(int target, int pname, MemorySegment params) {
     freeglut_h.glGetTexParameteriv(target, pname, params);
   }
 
@@ -524,7 +524,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glIndexMask(mask);
   }
 
-  public void glIndexPointer(int type, int stride, Addressable pointer) {
+  public void glIndexPointer(int type, int stride, MemorySegment pointer) {
     freeglut_h.glIndexPointer(type, stride, pointer);
   }
 
@@ -532,7 +532,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glIndexd(c);
   }
 
-  public void glIndexdv(Addressable c) {
+  public void glIndexdv(MemorySegment c) {
     freeglut_h.glIndexdv(c);
   }
 
@@ -540,7 +540,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glIndexf(c);
   }
 
-  public void glIndexfv(Addressable c) {
+  public void glIndexfv(MemorySegment c) {
     freeglut_h.glIndexfv(c);
   }
 
@@ -548,7 +548,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glIndexi(c);
   }
 
-  public void glIndexiv(Addressable c) {
+  public void glIndexiv(MemorySegment c) {
     freeglut_h.glIndexiv(c);
   }
 
@@ -556,7 +556,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glIndexs(c);
   }
 
-  public void glIndexsv(Addressable c) {
+  public void glIndexsv(MemorySegment c) {
     freeglut_h.glIndexsv(c);
   }
 
@@ -564,7 +564,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glIndexub(c);
   }
 
-  public void glIndexubv(Addressable c) {
+  public void glIndexubv(MemorySegment c) {
     freeglut_h.glIndexubv(c);
   }
 
@@ -572,7 +572,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glInitNames();
   }
 
-  public void glInterleavedArrays(int format, int stride, Addressable pointer) {
+  public void glInterleavedArrays(int format, int stride, MemorySegment pointer) {
     freeglut_h.glInterleavedArrays(format, stride, pointer);
   }
 
@@ -592,7 +592,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glLightModelf(pname, param);
   }
 
-  public void glLightModelfv(int pname, Addressable params) {
+  public void glLightModelfv(int pname, MemorySegment params) {
     freeglut_h.glLightModelfv(pname, params);
   }
 
@@ -600,7 +600,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glLightModeli(pname, param);
   }
 
-  public void glLightModeliv(int pname, Addressable params) {
+  public void glLightModeliv(int pname, MemorySegment params) {
     freeglut_h.glLightModeliv(pname, params);
   }
 
@@ -608,7 +608,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glLightf(light, pname, param);
   }
 
-  public void glLightfv(int light, int pname, Addressable params) {
+  public void glLightfv(int light, int pname, MemorySegment params) {
     freeglut_h.glLightfv(light, pname, params);
   }
 
@@ -616,7 +616,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glLighti(light, pname, param);
   }
 
-  public void glLightiv(int light, int pname, Addressable params) {
+  public void glLightiv(int light, int pname, MemorySegment params) {
     freeglut_h.glLightiv(light, pname, params);
   }
 
@@ -636,11 +636,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glLoadIdentity();
   }
 
-  public void glLoadMatrixd(Addressable m) {
+  public void glLoadMatrixd(MemorySegment m) {
     freeglut_h.glLoadMatrixd(m);
   }
 
-  public void glLoadMatrixf(Addressable m) {
+  public void glLoadMatrixf(MemorySegment m) {
     freeglut_h.glLoadMatrixf(m);
   }
 
@@ -652,19 +652,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glLogicOp(opcode);
   }
 
-  public void glMap1d(int target, double u1, double u2, int stride, int order, Addressable points) {
+  public void glMap1d(int target, double u1, double u2, int stride, int order, MemorySegment points) {
     freeglut_h.glMap1d(target, u1, u2, stride, order, points);
   }
 
-  public void glMap1f(int target, float u1, float u2, int stride, int order, Addressable points) {
+  public void glMap1f(int target, float u1, float u2, int stride, int order, MemorySegment points) {
     freeglut_h.glMap1f(target, u1, u2, stride, order, points);
   }
 
-  public void glMap2d(int target, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, Addressable points) {
+  public void glMap2d(int target, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, MemorySegment points) {
     freeglut_h.glMap2d(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
   }
 
-  public void glMap2f(int target, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, Addressable points) {
+  public void glMap2f(int target, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, MemorySegment points) {
     freeglut_h.glMap2f(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
   }
 
@@ -688,7 +688,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glMaterialf(face, pname, param);
   }
 
-  public void glMaterialfv(int face, int pname, Addressable params) {
+  public void glMaterialfv(int face, int pname, MemorySegment params) {
     freeglut_h.glMaterialfv(face, pname, params);
   }
 
@@ -696,7 +696,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glMateriali(face, pname, param);
   }
 
-  public void glMaterialiv(int face, int pname, Addressable params) {
+  public void glMaterialiv(int face, int pname, MemorySegment params) {
     freeglut_h.glMaterialiv(face, pname, params);
   }
 
@@ -704,11 +704,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glMatrixMode(mode);
   }
 
-  public void glMultMatrixd(Addressable m) {
+  public void glMultMatrixd(MemorySegment m) {
     freeglut_h.glMultMatrixd(m);
   }
 
-  public void glMultMatrixf(Addressable m) {
+  public void glMultMatrixf(MemorySegment m) {
     freeglut_h.glMultMatrixf(m);
   }
 
@@ -720,7 +720,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glNormal3b(nx, ny, nz);
   }
 
-  public void glNormal3bv(Addressable v) {
+  public void glNormal3bv(MemorySegment v) {
     freeglut_h.glNormal3bv(v);
   }
 
@@ -728,7 +728,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glNormal3d(nx, ny, nz);
   }
 
-  public void glNormal3dv(Addressable v) {
+  public void glNormal3dv(MemorySegment v) {
     freeglut_h.glNormal3dv(v);
   }
 
@@ -736,7 +736,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glNormal3f(nx, ny, nz);
   }
 
-  public void glNormal3fv(Addressable v) {
+  public void glNormal3fv(MemorySegment v) {
     freeglut_h.glNormal3fv(v);
   }
 
@@ -744,7 +744,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glNormal3i(nx, ny, nz);
   }
 
-  public void glNormal3iv(Addressable v) {
+  public void glNormal3iv(MemorySegment v) {
     freeglut_h.glNormal3iv(v);
   }
 
@@ -752,11 +752,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glNormal3s(nx, ny, nz);
   }
 
-  public void glNormal3sv(Addressable v) {
+  public void glNormal3sv(MemorySegment v) {
     freeglut_h.glNormal3sv(v);
   }
 
-  public void glNormalPointer(int type, int stride, Addressable pointer) {
+  public void glNormalPointer(int type, int stride, MemorySegment pointer) {
     freeglut_h.glNormalPointer(type, stride, pointer);
   }
 
@@ -768,15 +768,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glPassThrough(token);
   }
 
-  public void glPixelMapfv(int map, int mapsize, Addressable values) {
+  public void glPixelMapfv(int map, int mapsize, MemorySegment values) {
     freeglut_h.glPixelMapfv(map, mapsize, values);
   }
 
-  public void glPixelMapuiv(int map, int mapsize, Addressable values) {
+  public void glPixelMapuiv(int map, int mapsize, MemorySegment values) {
     freeglut_h.glPixelMapuiv(map, mapsize, values);
   }
 
-  public void glPixelMapusv(int map, int mapsize, Addressable values) {
+  public void glPixelMapusv(int map, int mapsize, MemorySegment values) {
     freeglut_h.glPixelMapusv(map, mapsize, values);
   }
 
@@ -812,7 +812,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glPolygonOffset(factor, units);
   }
 
-  public void glPolygonStipple(Addressable mask) {
+  public void glPolygonStipple(MemorySegment mask) {
     freeglut_h.glPolygonStipple(mask);
   }
 
@@ -832,7 +832,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glPopName();
   }
 
-  public void glPrioritizeTextures(int n, Addressable textures, Addressable priorities) {
+  public void glPrioritizeTextures(int n, MemorySegment textures, MemorySegment priorities) {
     freeglut_h.glPrioritizeTextures(n, textures, priorities);
   }
 
@@ -856,7 +856,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glRasterPos2d(x, y);
   }
 
-  public void glRasterPos2dv(Addressable v) {
+  public void glRasterPos2dv(MemorySegment v) {
     freeglut_h.glRasterPos2dv(v);
   }
 
@@ -864,7 +864,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glRasterPos2f(x, y);
   }
 
-  public void glRasterPos2fv(Addressable v) {
+  public void glRasterPos2fv(MemorySegment v) {
     freeglut_h.glRasterPos2fv(v);
   }
 
@@ -872,7 +872,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glRasterPos2i(x, y);
   }
 
-  public void glRasterPos2iv(Addressable v) {
+  public void glRasterPos2iv(MemorySegment v) {
     freeglut_h.glRasterPos2iv(v);
   }
 
@@ -880,7 +880,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glRasterPos2s(x, y);
   }
 
-  public void glRasterPos2sv(Addressable v) {
+  public void glRasterPos2sv(MemorySegment v) {
     freeglut_h.glRasterPos2sv(v);
   }
 
@@ -888,7 +888,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glRasterPos3d(x, y, z);
   }
 
-  public void glRasterPos3dv(Addressable v) {
+  public void glRasterPos3dv(MemorySegment v) {
     freeglut_h.glRasterPos3dv(v);
   }
 
@@ -896,7 +896,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glRasterPos3f(x, y, z);
   }
 
-  public void glRasterPos3fv(Addressable v) {
+  public void glRasterPos3fv(MemorySegment v) {
     freeglut_h.glRasterPos3fv(v);
   }
 
@@ -904,7 +904,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glRasterPos3i(x, y, z);
   }
 
-  public void glRasterPos3iv(Addressable v) {
+  public void glRasterPos3iv(MemorySegment v) {
     freeglut_h.glRasterPos3iv(v);
   }
 
@@ -912,7 +912,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glRasterPos3s(x, y, z);
   }
 
-  public void glRasterPos3sv(Addressable v) {
+  public void glRasterPos3sv(MemorySegment v) {
     freeglut_h.glRasterPos3sv(v);
   }
 
@@ -920,7 +920,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glRasterPos4d(x, y, z, w);
   }
 
-  public void glRasterPos4dv(Addressable v) {
+  public void glRasterPos4dv(MemorySegment v) {
     freeglut_h.glRasterPos4dv(v);
   }
 
@@ -928,7 +928,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glRasterPos4f(x, y, z, w);
   }
 
-  public void glRasterPos4fv(Addressable v) {
+  public void glRasterPos4fv(MemorySegment v) {
     freeglut_h.glRasterPos4fv(v);
   }
 
@@ -936,7 +936,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glRasterPos4i(x, y, z, w);
   }
 
-  public void glRasterPos4iv(Addressable v) {
+  public void glRasterPos4iv(MemorySegment v) {
     freeglut_h.glRasterPos4iv(v);
   }
 
@@ -944,7 +944,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glRasterPos4s(x, y, z, w);
   }
 
-  public void glRasterPos4sv(Addressable v) {
+  public void glRasterPos4sv(MemorySegment v) {
     freeglut_h.glRasterPos4sv(v);
   }
 
@@ -952,7 +952,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glReadBuffer(src);
   }
 
-  public void glReadPixels(int x, int y, int width, int height, int format, int type, Addressable pixels) {
+  public void glReadPixels(int x, int y, int width, int height, int format, int type, MemorySegment pixels) {
     freeglut_h.glReadPixels(x, y, width, height, format, type, pixels);
   }
 
@@ -960,7 +960,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glRectd(x1, y1, x2, y2);
   }
 
-  public void glRectdv(Addressable v1, Addressable v2) {
+  public void glRectdv(MemorySegment v1, MemorySegment v2) {
     freeglut_h.glRectdv(v1, v2);
   }
 
@@ -968,7 +968,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glRectf(x1, y1, x2, y2);
   }
 
-  public void glRectfv(Addressable v1, Addressable v2) {
+  public void glRectfv(MemorySegment v1, MemorySegment v2) {
     freeglut_h.glRectfv(v1, v2);
   }
 
@@ -976,7 +976,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glRecti(x1, y1, x2, y2);
   }
 
-  public void glRectiv(Addressable v1, Addressable v2) {
+  public void glRectiv(MemorySegment v1, MemorySegment v2) {
     freeglut_h.glRectiv(v1, v2);
   }
 
@@ -984,7 +984,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glRects(x1, y1, x2, y2);
   }
 
-  public void glRectsv(Addressable v1, Addressable v2) {
+  public void glRectsv(MemorySegment v1, MemorySegment v2) {
     freeglut_h.glRectsv(v1, v2);
   }
 
@@ -1012,7 +1012,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glScissor(x, y, width, height);
   }
 
-  public void glSelectBuffer(int size, Addressable buffer) {
+  public void glSelectBuffer(int size, MemorySegment buffer) {
     freeglut_h.glSelectBuffer(size, buffer);
   }
 
@@ -1036,7 +1036,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexCoord1d(s);
   }
 
-  public void glTexCoord1dv(Addressable v) {
+  public void glTexCoord1dv(MemorySegment v) {
     freeglut_h.glTexCoord1dv(v);
   }
 
@@ -1044,7 +1044,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexCoord1f(s);
   }
 
-  public void glTexCoord1fv(Addressable v) {
+  public void glTexCoord1fv(MemorySegment v) {
     freeglut_h.glTexCoord1fv(v);
   }
 
@@ -1052,7 +1052,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexCoord1i(s);
   }
 
-  public void glTexCoord1iv(Addressable v) {
+  public void glTexCoord1iv(MemorySegment v) {
     freeglut_h.glTexCoord1iv(v);
   }
 
@@ -1060,7 +1060,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexCoord1s(s);
   }
 
-  public void glTexCoord1sv(Addressable v) {
+  public void glTexCoord1sv(MemorySegment v) {
     freeglut_h.glTexCoord1sv(v);
   }
 
@@ -1068,7 +1068,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexCoord2d(s, t);
   }
 
-  public void glTexCoord2dv(Addressable v) {
+  public void glTexCoord2dv(MemorySegment v) {
     freeglut_h.glTexCoord2dv(v);
   }
 
@@ -1076,7 +1076,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexCoord2f(s, t);
   }
 
-  public void glTexCoord2fv(Addressable v) {
+  public void glTexCoord2fv(MemorySegment v) {
     freeglut_h.glTexCoord2fv(v);
   }
 
@@ -1084,7 +1084,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexCoord2i(s, t);
   }
 
-  public void glTexCoord2iv(Addressable v) {
+  public void glTexCoord2iv(MemorySegment v) {
     freeglut_h.glTexCoord2iv(v);
   }
 
@@ -1092,7 +1092,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexCoord2s(s, t);
   }
 
-  public void glTexCoord2sv(Addressable v) {
+  public void glTexCoord2sv(MemorySegment v) {
     freeglut_h.glTexCoord2sv(v);
   }
 
@@ -1100,7 +1100,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexCoord3d(s, t, r);
   }
 
-  public void glTexCoord3dv(Addressable v) {
+  public void glTexCoord3dv(MemorySegment v) {
     freeglut_h.glTexCoord3dv(v);
   }
 
@@ -1108,7 +1108,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexCoord3f(s, t, r);
   }
 
-  public void glTexCoord3fv(Addressable v) {
+  public void glTexCoord3fv(MemorySegment v) {
     freeglut_h.glTexCoord3fv(v);
   }
 
@@ -1116,7 +1116,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexCoord3i(s, t, r);
   }
 
-  public void glTexCoord3iv(Addressable v) {
+  public void glTexCoord3iv(MemorySegment v) {
     freeglut_h.glTexCoord3iv(v);
   }
 
@@ -1124,7 +1124,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexCoord3s(s, t, r);
   }
 
-  public void glTexCoord3sv(Addressable v) {
+  public void glTexCoord3sv(MemorySegment v) {
     freeglut_h.glTexCoord3sv(v);
   }
 
@@ -1132,7 +1132,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexCoord4d(s, t, r, q);
   }
 
-  public void glTexCoord4dv(Addressable v) {
+  public void glTexCoord4dv(MemorySegment v) {
     freeglut_h.glTexCoord4dv(v);
   }
 
@@ -1140,7 +1140,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexCoord4f(s, t, r, q);
   }
 
-  public void glTexCoord4fv(Addressable v) {
+  public void glTexCoord4fv(MemorySegment v) {
     freeglut_h.glTexCoord4fv(v);
   }
 
@@ -1148,7 +1148,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexCoord4i(s, t, r, q);
   }
 
-  public void glTexCoord4iv(Addressable v) {
+  public void glTexCoord4iv(MemorySegment v) {
     freeglut_h.glTexCoord4iv(v);
   }
 
@@ -1156,11 +1156,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexCoord4s(s, t, r, q);
   }
 
-  public void glTexCoord4sv(Addressable v) {
+  public void glTexCoord4sv(MemorySegment v) {
     freeglut_h.glTexCoord4sv(v);
   }
 
-  public void glTexCoordPointer(int size, int type, int stride, Addressable pointer) {
+  public void glTexCoordPointer(int size, int type, int stride, MemorySegment pointer) {
     freeglut_h.glTexCoordPointer(size, type, stride, pointer);
   }
 
@@ -1168,7 +1168,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexEnvf(target, pname, param);
   }
 
-  public void glTexEnvfv(int target, int pname, Addressable params) {
+  public void glTexEnvfv(int target, int pname, MemorySegment params) {
     freeglut_h.glTexEnvfv(target, pname, params);
   }
 
@@ -1176,7 +1176,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexEnvi(target, pname, param);
   }
 
-  public void glTexEnviv(int target, int pname, Addressable params) {
+  public void glTexEnviv(int target, int pname, MemorySegment params) {
     freeglut_h.glTexEnviv(target, pname, params);
   }
 
@@ -1184,7 +1184,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexGend(coord, pname, param);
   }
 
-  public void glTexGendv(int coord, int pname, Addressable params) {
+  public void glTexGendv(int coord, int pname, MemorySegment params) {
     freeglut_h.glTexGendv(coord, pname, params);
   }
 
@@ -1192,7 +1192,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexGenf(coord, pname, param);
   }
 
-  public void glTexGenfv(int coord, int pname, Addressable params) {
+  public void glTexGenfv(int coord, int pname, MemorySegment params) {
     freeglut_h.glTexGenfv(coord, pname, params);
   }
 
@@ -1200,15 +1200,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexGeni(coord, pname, param);
   }
 
-  public void glTexGeniv(int coord, int pname, Addressable params) {
+  public void glTexGeniv(int coord, int pname, MemorySegment params) {
     freeglut_h.glTexGeniv(coord, pname, params);
   }
 
-  public void glTexImage1D(int target, int level, int internalformat, int width, int border, int format, int type, Addressable pixels) {
+  public void glTexImage1D(int target, int level, int internalformat, int width, int border, int format, int type, MemorySegment pixels) {
     freeglut_h.glTexImage1D(target, level, internalformat, width, border, format, type, pixels);
   }
 
-  public void glTexImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, Addressable pixels) {
+  public void glTexImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, MemorySegment pixels) {
     freeglut_h.glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
   }
 
@@ -1216,7 +1216,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexParameterf(target, pname, param);
   }
 
-  public void glTexParameterfv(int target, int pname, Addressable params) {
+  public void glTexParameterfv(int target, int pname, MemorySegment params) {
     freeglut_h.glTexParameterfv(target, pname, params);
   }
 
@@ -1224,15 +1224,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glTexParameteri(target, pname, param);
   }
 
-  public void glTexParameteriv(int target, int pname, Addressable params) {
+  public void glTexParameteriv(int target, int pname, MemorySegment params) {
     freeglut_h.glTexParameteriv(target, pname, params);
   }
 
-  public void glTexSubImage1D(int target, int level, int xoffset, int width, int format, int type, Addressable pixels) {
+  public void glTexSubImage1D(int target, int level, int xoffset, int width, int format, int type, MemorySegment pixels) {
     freeglut_h.glTexSubImage1D(target, level, xoffset, width, format, type, pixels);
   }
 
-  public void glTexSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, Addressable pixels) {
+  public void glTexSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, MemorySegment pixels) {
     freeglut_h.glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
   }
 
@@ -1248,7 +1248,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glVertex2d(x, y);
   }
 
-  public void glVertex2dv(Addressable v) {
+  public void glVertex2dv(MemorySegment v) {
     freeglut_h.glVertex2dv(v);
   }
 
@@ -1256,7 +1256,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glVertex2f(x, y);
   }
 
-  public void glVertex2fv(Addressable v) {
+  public void glVertex2fv(MemorySegment v) {
     freeglut_h.glVertex2fv(v);
   }
 
@@ -1264,7 +1264,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glVertex2i(x, y);
   }
 
-  public void glVertex2iv(Addressable v) {
+  public void glVertex2iv(MemorySegment v) {
     freeglut_h.glVertex2iv(v);
   }
 
@@ -1272,7 +1272,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glVertex2s(x, y);
   }
 
-  public void glVertex2sv(Addressable v) {
+  public void glVertex2sv(MemorySegment v) {
     freeglut_h.glVertex2sv(v);
   }
 
@@ -1280,7 +1280,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glVertex3d(x, y, z);
   }
 
-  public void glVertex3dv(Addressable v) {
+  public void glVertex3dv(MemorySegment v) {
     freeglut_h.glVertex3dv(v);
   }
 
@@ -1288,7 +1288,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glVertex3f(x, y, z);
   }
 
-  public void glVertex3fv(Addressable v) {
+  public void glVertex3fv(MemorySegment v) {
     freeglut_h.glVertex3fv(v);
   }
 
@@ -1296,7 +1296,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glVertex3i(x, y, z);
   }
 
-  public void glVertex3iv(Addressable v) {
+  public void glVertex3iv(MemorySegment v) {
     freeglut_h.glVertex3iv(v);
   }
 
@@ -1304,7 +1304,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glVertex3s(x, y, z);
   }
 
-  public void glVertex3sv(Addressable v) {
+  public void glVertex3sv(MemorySegment v) {
     freeglut_h.glVertex3sv(v);
   }
 
@@ -1312,7 +1312,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glVertex4d(x, y, z, w);
   }
 
-  public void glVertex4dv(Addressable v) {
+  public void glVertex4dv(MemorySegment v) {
     freeglut_h.glVertex4dv(v);
   }
 
@@ -1320,7 +1320,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glVertex4f(x, y, z, w);
   }
 
-  public void glVertex4fv(Addressable v) {
+  public void glVertex4fv(MemorySegment v) {
     freeglut_h.glVertex4fv(v);
   }
 
@@ -1328,7 +1328,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glVertex4i(x, y, z, w);
   }
 
-  public void glVertex4iv(Addressable v) {
+  public void glVertex4iv(MemorySegment v) {
     freeglut_h.glVertex4iv(v);
   }
 
@@ -1336,11 +1336,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glVertex4s(x, y, z, w);
   }
 
-  public void glVertex4sv(Addressable v) {
+  public void glVertex4sv(MemorySegment v) {
     freeglut_h.glVertex4sv(v);
   }
 
-  public void glVertexPointer(int size, int type, int stride, Addressable pointer) {
+  public void glVertexPointer(int size, int type, int stride, MemorySegment pointer) {
     freeglut_h.glVertexPointer(size, type, stride, pointer);
   }
 
@@ -1348,87 +1348,87 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glViewport(x, y, width, height);
   }
 
-  public void gluBeginCurve(Addressable arg0) {
+  public void gluBeginCurve(MemorySegment arg0) {
     freeglut_h.gluBeginCurve(arg0);
   }
 
-  public void gluBeginPolygon(Addressable arg0) {
+  public void gluBeginPolygon(MemorySegment arg0) {
     freeglut_h.gluBeginPolygon(arg0);
   }
 
-  public void gluBeginSurface(Addressable arg0) {
+  public void gluBeginSurface(MemorySegment arg0) {
     freeglut_h.gluBeginSurface(arg0);
   }
 
-  public void gluBeginTrim(Addressable arg0) {
+  public void gluBeginTrim(MemorySegment arg0) {
     freeglut_h.gluBeginTrim(arg0);
   }
 
-  public int gluBuild1DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, Addressable arg5) {
+  public int gluBuild1DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, MemorySegment arg5) {
     return freeglut_h.gluBuild1DMipmaps(arg0, arg1, arg2, arg3, arg4, arg5);
   }
 
-  public int gluBuild2DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, Addressable arg6) {
+  public int gluBuild2DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, MemorySegment arg6) {
     return freeglut_h.gluBuild2DMipmaps(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
   }
 
-  public void gluCylinder(Addressable arg0, double arg1, double arg2, double arg3, int arg4, int arg5) {
+  public void gluCylinder(MemorySegment arg0, double arg1, double arg2, double arg3, int arg4, int arg5) {
     freeglut_h.gluCylinder(arg0, arg1, arg2, arg3, arg4, arg5);
   }
 
-  public void gluDeleteNurbsRenderer(Addressable arg0) {
+  public void gluDeleteNurbsRenderer(MemorySegment arg0) {
     freeglut_h.gluDeleteNurbsRenderer(arg0);
   }
 
-  public void gluDeleteQuadric(Addressable arg0) {
+  public void gluDeleteQuadric(MemorySegment arg0) {
     freeglut_h.gluDeleteQuadric(arg0);
   }
 
-  public void gluDeleteTess(Addressable arg0) {
+  public void gluDeleteTess(MemorySegment arg0) {
     freeglut_h.gluDeleteTess(arg0);
   }
 
-  public void gluDisk(Addressable arg0, double arg1, double arg2, int arg3, int arg4) {
+  public void gluDisk(MemorySegment arg0, double arg1, double arg2, int arg3, int arg4) {
     freeglut_h.gluDisk(arg0, arg1, arg2, arg3, arg4);
   }
 
-  public void gluEndCurve(Addressable arg0) {
+  public void gluEndCurve(MemorySegment arg0) {
     freeglut_h.gluEndCurve(arg0);
   }
 
-  public void gluEndPolygon(Addressable arg0) {
+  public void gluEndPolygon(MemorySegment arg0) {
     freeglut_h.gluEndPolygon(arg0);
   }
 
-  public void gluEndSurface(Addressable arg0) {
+  public void gluEndSurface(MemorySegment arg0) {
     freeglut_h.gluEndSurface(arg0);
   }
 
-  public void gluEndTrim(Addressable arg0) {
+  public void gluEndTrim(MemorySegment arg0) {
     freeglut_h.gluEndTrim(arg0);
   }
 
-  public MemoryAddress gluErrorString(int arg0) {
+  public MemorySegment gluErrorString(int arg0) {
     return freeglut_h.gluErrorString(arg0);
   }
 
-  public MemoryAddress gluErrorUnicodeStringEXT(int arg0) {
+  public MemorySegment gluErrorUnicodeStringEXT(int arg0) {
     return freeglut_h.gluErrorUnicodeStringEXT(arg0);
   }
 
-  public void gluGetNurbsProperty(Addressable arg0, int arg1, Addressable arg2) {
+  public void gluGetNurbsProperty(MemorySegment arg0, int arg1, MemorySegment arg2) {
     freeglut_h.gluGetNurbsProperty(arg0, arg1, arg2);
   }
 
-  public MemoryAddress gluGetString(int arg0) {
+  public MemorySegment gluGetString(int arg0) {
     return freeglut_h.gluGetString(arg0);
   }
 
-  public void gluGetTessProperty(Addressable arg0, int arg1, Addressable arg2) {
+  public void gluGetTessProperty(MemorySegment arg0, int arg1, MemorySegment arg2) {
     freeglut_h.gluGetTessProperty(arg0, arg1, arg2);
   }
 
-  public void gluLoadSamplingMatrices(Addressable arg0, Addressable arg1, Addressable arg2, Addressable arg3) {
+  public void gluLoadSamplingMatrices(MemorySegment arg0, MemorySegment arg1, MemorySegment arg2, MemorySegment arg3) {
     freeglut_h.gluLoadSamplingMatrices(arg0, arg1, arg2, arg3);
   }
 
@@ -1436,35 +1436,35 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.gluLookAt(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
   }
 
-  public MemoryAddress gluNewNurbsRenderer() {
+  public MemorySegment gluNewNurbsRenderer() {
     return freeglut_h.gluNewNurbsRenderer();
   }
 
-  public MemoryAddress gluNewQuadric() {
+  public MemorySegment gluNewQuadric() {
     return freeglut_h.gluNewQuadric();
   }
 
-  public MemoryAddress gluNewTess() {
+  public MemorySegment gluNewTess() {
     return freeglut_h.gluNewTess();
   }
 
-  public void gluNextContour(Addressable arg0, int arg1) {
+  public void gluNextContour(MemorySegment arg0, int arg1) {
     freeglut_h.gluNextContour(arg0, arg1);
   }
 
-  public void gluNurbsCallback(Addressable arg0, int arg1, Addressable arg2) {
+  public void gluNurbsCallback(MemorySegment arg0, int arg1, MemorySegment arg2) {
     freeglut_h.gluNurbsCallback(arg0, arg1, arg2);
   }
 
-  public void gluNurbsCurve(Addressable arg0, int arg1, Addressable arg2, int arg3, Addressable arg4, int arg5, int arg6) {
+  public void gluNurbsCurve(MemorySegment arg0, int arg1, MemorySegment arg2, int arg3, MemorySegment arg4, int arg5, int arg6) {
     freeglut_h.gluNurbsCurve(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
   }
 
-  public void gluNurbsProperty(Addressable arg0, int arg1, float arg2) {
+  public void gluNurbsProperty(MemorySegment arg0, int arg1, float arg2) {
     freeglut_h.gluNurbsProperty(arg0, arg1, arg2);
   }
 
-  public void gluNurbsSurface(Addressable arg0, int arg1, Addressable arg2, int arg3, Addressable arg4, int arg5, int arg6, Addressable arg7, int arg8, int arg9, int arg10) {
+  public void gluNurbsSurface(MemorySegment arg0, int arg1, MemorySegment arg2, int arg3, MemorySegment arg4, int arg5, int arg6, MemorySegment arg7, int arg8, int arg9, int arg10) {
     freeglut_h.gluNurbsSurface(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
   }
 
@@ -1472,7 +1472,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.gluOrtho2D(arg0, arg1, arg2, arg3);
   }
 
-  public void gluPartialDisk(Addressable arg0, double arg1, double arg2, int arg3, int arg4, double arg5, double arg6) {
+  public void gluPartialDisk(MemorySegment arg0, double arg1, double arg2, int arg3, int arg4, double arg5, double arg6) {
     freeglut_h.gluPartialDisk(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
   }
 
@@ -1480,95 +1480,95 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.gluPerspective(arg0, arg1, arg2, arg3);
   }
 
-  public void gluPickMatrix(double arg0, double arg1, double arg2, double arg3, Addressable arg4) {
+  public void gluPickMatrix(double arg0, double arg1, double arg2, double arg3, MemorySegment arg4) {
     freeglut_h.gluPickMatrix(arg0, arg1, arg2, arg3, arg4);
   }
 
-  public int gluProject(double arg0, double arg1, double arg2, Addressable arg3, Addressable arg4, Addressable arg5, Addressable arg6, Addressable arg7, Addressable arg8) {
+  public int gluProject(double arg0, double arg1, double arg2, MemorySegment arg3, MemorySegment arg4, MemorySegment arg5, MemorySegment arg6, MemorySegment arg7, MemorySegment arg8) {
     return freeglut_h.gluProject(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
   }
 
-  public void gluPwlCurve(Addressable arg0, int arg1, Addressable arg2, int arg3, int arg4) {
+  public void gluPwlCurve(MemorySegment arg0, int arg1, MemorySegment arg2, int arg3, int arg4) {
     freeglut_h.gluPwlCurve(arg0, arg1, arg2, arg3, arg4);
   }
 
-  public void gluQuadricCallback(Addressable arg0, int arg1, Addressable arg2) {
+  public void gluQuadricCallback(MemorySegment arg0, int arg1, MemorySegment arg2) {
     freeglut_h.gluQuadricCallback(arg0, arg1, arg2);
   }
 
-  public void gluQuadricDrawStyle(Addressable arg0, int arg1) {
+  public void gluQuadricDrawStyle(MemorySegment arg0, int arg1) {
     freeglut_h.gluQuadricDrawStyle(arg0, arg1);
   }
 
-  public void gluQuadricNormals(Addressable arg0, int arg1) {
+  public void gluQuadricNormals(MemorySegment arg0, int arg1) {
     freeglut_h.gluQuadricNormals(arg0, arg1);
   }
 
-  public void gluQuadricOrientation(Addressable arg0, int arg1) {
+  public void gluQuadricOrientation(MemorySegment arg0, int arg1) {
     freeglut_h.gluQuadricOrientation(arg0, arg1);
   }
 
-  public void gluQuadricTexture(Addressable arg0, byte arg1) {
+  public void gluQuadricTexture(MemorySegment arg0, byte arg1) {
     freeglut_h.gluQuadricTexture(arg0, arg1);
   }
 
-  public int gluScaleImage(int arg0, int arg1, int arg2, int arg3, Addressable arg4, int arg5, int arg6, int arg7, Addressable arg8) {
+  public int gluScaleImage(int arg0, int arg1, int arg2, int arg3, MemorySegment arg4, int arg5, int arg6, int arg7, MemorySegment arg8) {
     return freeglut_h.gluScaleImage(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
   }
 
-  public void gluSphere(Addressable arg0, double arg1, int arg2, int arg3) {
+  public void gluSphere(MemorySegment arg0, double arg1, int arg2, int arg3) {
     freeglut_h.gluSphere(arg0, arg1, arg2, arg3);
   }
 
-  public void gluTessBeginContour(Addressable arg0) {
+  public void gluTessBeginContour(MemorySegment arg0) {
     freeglut_h.gluTessBeginContour(arg0);
   }
 
-  public void gluTessBeginPolygon(Addressable arg0, Addressable arg1) {
+  public void gluTessBeginPolygon(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.gluTessBeginPolygon(arg0, arg1);
   }
 
-  public void gluTessCallback(Addressable arg0, int arg1, Addressable arg2) {
+  public void gluTessCallback(MemorySegment arg0, int arg1, MemorySegment arg2) {
     freeglut_h.gluTessCallback(arg0, arg1, arg2);
   }
 
-  public void gluTessEndContour(Addressable arg0) {
+  public void gluTessEndContour(MemorySegment arg0) {
     freeglut_h.gluTessEndContour(arg0);
   }
 
-  public void gluTessEndPolygon(Addressable arg0) {
+  public void gluTessEndPolygon(MemorySegment arg0) {
     freeglut_h.gluTessEndPolygon(arg0);
   }
 
-  public void gluTessNormal(Addressable arg0, double arg1, double arg2, double arg3) {
+  public void gluTessNormal(MemorySegment arg0, double arg1, double arg2, double arg3) {
     freeglut_h.gluTessNormal(arg0, arg1, arg2, arg3);
   }
 
-  public void gluTessProperty(Addressable arg0, int arg1, double arg2) {
+  public void gluTessProperty(MemorySegment arg0, int arg1, double arg2) {
     freeglut_h.gluTessProperty(arg0, arg1, arg2);
   }
 
-  public void gluTessVertex(Addressable arg0, Addressable arg1, Addressable arg2) {
+  public void gluTessVertex(MemorySegment arg0, MemorySegment arg1, MemorySegment arg2) {
     freeglut_h.gluTessVertex(arg0, arg1, arg2);
   }
 
-  public int gluUnProject(double arg0, double arg1, double arg2, Addressable arg3, Addressable arg4, Addressable arg5, Addressable arg6, Addressable arg7, Addressable arg8) {
+  public int gluUnProject(double arg0, double arg1, double arg2, MemorySegment arg3, MemorySegment arg4, MemorySegment arg5, MemorySegment arg6, MemorySegment arg7, MemorySegment arg8) {
     return freeglut_h.gluUnProject(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
   }
 
-  public void glutAddMenuEntry(Addressable arg0, int arg1) {
+  public void glutAddMenuEntry(MemorySegment arg0, int arg1) {
     freeglut_h.glutAddMenuEntry(arg0, arg1);
   }
 
-  public void glutAddSubMenu(Addressable arg0, int arg1) {
+  public void glutAddSubMenu(MemorySegment arg0, int arg1) {
     freeglut_h.glutAddSubMenu(arg0, arg1);
   }
 
-  public void glutAppStatusFunc(Addressable arg0) {
+  public void glutAppStatusFunc(MemorySegment arg0) {
     freeglut_h.glutAppStatusFunc(arg0);
   }
 
-  public void glutAppStatusFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutAppStatusFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutAppStatusFuncUcall(arg0, arg1);
   }
 
@@ -1576,47 +1576,47 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutAttachMenu(arg0);
   }
 
-  public void glutBitmapCharacter(Addressable arg0, int arg1) {
+  public void glutBitmapCharacter(MemorySegment arg0, int arg1) {
     freeglut_h.glutBitmapCharacter(arg0, arg1);
   }
 
-  public int glutBitmapHeight(Addressable arg0) {
+  public int glutBitmapHeight(MemorySegment arg0) {
     return freeglut_h.glutBitmapHeight(arg0);
   }
 
-  public int glutBitmapLength(Addressable arg0, Addressable arg1) {
+  public int glutBitmapLength(MemorySegment arg0, MemorySegment arg1) {
     return freeglut_h.glutBitmapLength(arg0, arg1);
   }
 
-  public void glutBitmapString(Addressable arg0, Addressable arg1) {
+  public void glutBitmapString(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutBitmapString(arg0, arg1);
   }
 
-  public int glutBitmapWidth(Addressable arg0, int arg1) {
+  public int glutBitmapWidth(MemorySegment arg0, int arg1) {
     return freeglut_h.glutBitmapWidth(arg0, arg1);
   }
 
-  public void glutButtonBoxFunc(Addressable arg0) {
+  public void glutButtonBoxFunc(MemorySegment arg0) {
     freeglut_h.glutButtonBoxFunc(arg0);
   }
 
-  public void glutButtonBoxFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutButtonBoxFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutButtonBoxFuncUcall(arg0, arg1);
   }
 
-  public void glutChangeToMenuEntry(int arg0, Addressable arg1, int arg2) {
+  public void glutChangeToMenuEntry(int arg0, MemorySegment arg1, int arg2) {
     freeglut_h.glutChangeToMenuEntry(arg0, arg1, arg2);
   }
 
-  public void glutChangeToSubMenu(int arg0, Addressable arg1, int arg2) {
+  public void glutChangeToSubMenu(int arg0, MemorySegment arg1, int arg2) {
     freeglut_h.glutChangeToSubMenu(arg0, arg1, arg2);
   }
 
-  public void glutCloseFunc(Addressable arg0) {
+  public void glutCloseFunc(MemorySegment arg0) {
     freeglut_h.glutCloseFunc(arg0);
   }
 
-  public void glutCloseFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutCloseFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutCloseFuncUcall(arg0, arg1);
   }
 
@@ -1624,32 +1624,32 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutCopyColormap(arg0);
   }
 
-  public int glutCreateMenu(Addressable arg0) {
+  public int glutCreateMenu(MemorySegment arg0) {
     return freeglut_h.glutCreateMenu(arg0);
   }
 
-  public int glutCreateMenuUcall(Addressable arg0, Addressable arg1) {
+  public int glutCreateMenuUcall(MemorySegment arg0, MemorySegment arg1) {
     return freeglut_h.glutCreateMenuUcall(arg0, arg1);
   }
 
-  public int glutCreateMenuUcall_ATEXIT_HACK(Addressable arg0, Addressable arg1) {
+  /*public int glutCreateMenuUcall_ATEXIT_HACK(MemorySegment arg0, MemorySegment arg1) {
     return freeglut_h.glutCreateMenuUcall_ATEXIT_HACK(arg0, arg1);
   }
 
-  public int glutCreateMenu_ATEXIT_HACK(Addressable arg0) {
+  public int glutCreateMenu_ATEXIT_HACK(MemorySegment arg0) {
     return freeglut_h.glutCreateMenu_ATEXIT_HACK(arg0);
-  }
+  }*/
 
   public int glutCreateSubWindow(int arg0, int arg1, int arg2, int arg3, int arg4) {
     return freeglut_h.glutCreateSubWindow(arg0, arg1, arg2, arg3, arg4);
   }
 
-  public int glutCreateWindow(Addressable arg0) {
+  public int glutCreateWindow(MemorySegment arg0) {
     return freeglut_h.glutCreateWindow(arg0);
   }
 
-  public int glutCreateWindow_ATEXIT_HACK(Addressable arg0) {
-    return freeglut_h.glutCreateWindow_ATEXIT_HACK(arg0);
+  public int glutCreateWindow_ATEXIT_HACK(MemorySegment arg0) {
+    return -1;//freeglut_h.glutCreateWindow_ATEXIT_HACK(arg0);
   }
 
   public void glutDestroyMenu(int arg0) {
@@ -1668,19 +1668,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     return freeglut_h.glutDeviceGet(arg0);
   }
 
-  public void glutDialsFunc(Addressable arg0) {
+  public void glutDialsFunc(MemorySegment arg0) {
     freeglut_h.glutDialsFunc(arg0);
   }
 
-  public void glutDialsFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutDialsFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutDialsFuncUcall(arg0, arg1);
   }
 
-  public void glutDisplayFunc(Addressable arg0) {
+  public void glutDisplayFunc(MemorySegment arg0) {
     freeglut_h.glutDisplayFunc(arg0);
   }
 
-  public void glutDisplayFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutDisplayFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutDisplayFuncUcall(arg0, arg1);
   }
 
@@ -1688,11 +1688,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     return freeglut_h.glutEnterGameMode();
   }
 
-  public void glutEntryFunc(Addressable arg0) {
+  public void glutEntryFunc(MemorySegment arg0) {
     freeglut_h.glutEntryFunc(arg0);
   }
 
-  public void glutEntryFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutEntryFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutEntryFuncUcall(arg0, arg1);
   }
 
@@ -1704,7 +1704,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutExit();
   }
 
-  public int glutExtensionSupported(Addressable arg0) {
+  public int glutExtensionSupported(MemorySegment arg0) {
     return freeglut_h.glutExtensionSupported(arg0);
   }
 
@@ -1724,7 +1724,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     return freeglut_h.glutGameModeGet(arg0);
   }
 
-  public void glutGameModeString(Addressable arg0) {
+  public void glutGameModeString(MemorySegment arg0) {
     freeglut_h.glutGameModeString(arg0);
   }
 
@@ -1740,11 +1740,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     return freeglut_h.glutGetMenu();
   }
 
-  public MemoryAddress glutGetMenuData() {
+  public MemorySegment glutGetMenuData() {
     return freeglut_h.glutGetMenuData();
   }
 
-  public MemoryAddress glutGetModeValues(int arg0, Addressable arg1) {
+  public MemorySegment glutGetModeValues(int arg0, MemorySegment arg1) {
     return freeglut_h.glutGetModeValues(arg0, arg1);
   }
 
@@ -1752,7 +1752,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     return freeglut_h.glutGetModifiers();
   }
 
-  public MemoryAddress glutGetProcAddress(Addressable arg0) {
+  public MemorySegment glutGetProcAddress(MemorySegment arg0) {
     return freeglut_h.glutGetProcAddress(arg0);
   }
 
@@ -1760,7 +1760,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     return freeglut_h.glutGetWindow();
   }
 
-  public MemoryAddress glutGetWindowData() {
+  public MemorySegment glutGetWindowData() {
     return freeglut_h.glutGetWindowData();
   }
 
@@ -1776,11 +1776,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutIconifyWindow();
   }
 
-  public void glutIdleFunc(Addressable arg0) {
+  public void glutIdleFunc(MemorySegment arg0) {
     freeglut_h.glutIdleFunc(arg0);
   }
 
-  public void glutIdleFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutIdleFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutIdleFuncUcall(arg0, arg1);
   }
 
@@ -1788,7 +1788,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutIgnoreKeyRepeat(arg0);
   }
 
-  public void glutInit(Addressable arg0, Addressable arg1) {
+  public void glutInit(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutInit(arg0, arg1);
   }
 
@@ -1796,11 +1796,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutInitContextFlags(arg0);
   }
 
-  public void glutInitContextFunc(Addressable arg0) {
+  public void glutInitContextFunc(MemorySegment arg0) {
     freeglut_h.glutInitContextFunc(arg0);
   }
 
-  public void glutInitContextFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutInitContextFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutInitContextFuncUcall(arg0, arg1);
   }
 
@@ -1816,23 +1816,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutInitDisplayMode(arg0);
   }
 
-  public void glutInitDisplayString(Addressable arg0) {
+  public void glutInitDisplayString(MemorySegment arg0) {
     freeglut_h.glutInitDisplayString(arg0);
   }
 
-  public void glutInitErrorFunc(Addressable arg0) {
+  public void glutInitErrorFunc(MemorySegment arg0) {
     freeglut_h.glutInitErrorFunc(arg0);
   }
 
-  public void glutInitErrorFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutInitErrorFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutInitErrorFuncUcall(arg0, arg1);
   }
 
-  public void glutInitWarningFunc(Addressable arg0) {
+  public void glutInitWarningFunc(MemorySegment arg0) {
     freeglut_h.glutInitWarningFunc(arg0);
   }
 
-  public void glutInitWarningFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutInitWarningFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutInitWarningFuncUcall(arg0, arg1);
   }
 
@@ -1844,19 +1844,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutInitWindowSize(arg0, arg1);
   }
 
-  public void glutInit_ATEXIT_HACK(Addressable arg0, Addressable arg1) {
-    freeglut_h.glutInit_ATEXIT_HACK(arg0, arg1);
+  public void glutInit_ATEXIT_HACK(MemorySegment arg0, MemorySegment arg1) {
+    //freeglut_h.glutInit_ATEXIT_HACK(arg0, arg1);
   }
 
-  public void glutJoystickFunc(Addressable arg0, int arg1) {
+  public void glutJoystickFunc(MemorySegment arg0, int arg1) {
     freeglut_h.glutJoystickFunc(arg0, arg1);
   }
 
-  public void glutJoystickFuncUcall(Addressable arg0, int arg1, Addressable arg2) {
+  public void glutJoystickFuncUcall(MemorySegment arg0, int arg1, MemorySegment arg2) {
     freeglut_h.glutJoystickFuncUcall(arg0, arg1, arg2);
   }
 
-  public void glutJoystickGetCenter(int arg0, Addressable arg1) {
+  public void glutJoystickGetCenter(int arg0, MemorySegment arg1) {
     freeglut_h.glutJoystickGetCenter(arg0, arg1);
   }
 
@@ -1864,11 +1864,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     return freeglut_h.glutJoystickGetDeadBand(arg0, arg1);
   }
 
-  public void glutJoystickGetMaxRange(int arg0, Addressable arg1) {
+  public void glutJoystickGetMaxRange(int arg0, MemorySegment arg1) {
     freeglut_h.glutJoystickGetMaxRange(arg0, arg1);
   }
 
-  public void glutJoystickGetMinRange(int arg0, Addressable arg1) {
+  public void glutJoystickGetMinRange(int arg0, MemorySegment arg1) {
     freeglut_h.glutJoystickGetMinRange(arg0, arg1);
   }
 
@@ -1888,7 +1888,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     return freeglut_h.glutJoystickNotWorking(arg0);
   }
 
-  public void glutJoystickSetCenter(int arg0, Addressable arg1) {
+  public void glutJoystickSetCenter(int arg0, MemorySegment arg1) {
     freeglut_h.glutJoystickSetCenter(arg0, arg1);
   }
 
@@ -1896,11 +1896,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutJoystickSetDeadBand(arg0, arg1, arg2);
   }
 
-  public void glutJoystickSetMaxRange(int arg0, Addressable arg1) {
+  public void glutJoystickSetMaxRange(int arg0, MemorySegment arg1) {
     freeglut_h.glutJoystickSetMaxRange(arg0, arg1);
   }
 
-  public void glutJoystickSetMinRange(int arg0, Addressable arg1) {
+  public void glutJoystickSetMinRange(int arg0, MemorySegment arg1) {
     freeglut_h.glutJoystickSetMinRange(arg0, arg1);
   }
 
@@ -1908,19 +1908,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutJoystickSetSaturation(arg0, arg1, arg2);
   }
 
-  public void glutKeyboardFunc(Addressable arg0) {
+  public void glutKeyboardFunc(MemorySegment arg0) {
     freeglut_h.glutKeyboardFunc(arg0);
   }
 
-  public void glutKeyboardFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutKeyboardFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutKeyboardFuncUcall(arg0, arg1);
   }
 
-  public void glutKeyboardUpFunc(Addressable arg0) {
+  public void glutKeyboardUpFunc(MemorySegment arg0) {
     freeglut_h.glutKeyboardUpFunc(arg0);
   }
 
-  public void glutKeyboardUpFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutKeyboardUpFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutKeyboardUpFuncUcall(arg0, arg1);
   }
 
@@ -1948,95 +1948,95 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutMainLoopEvent();
   }
 
-  public void glutMenuDestroyFunc(Addressable arg0) {
+  public void glutMenuDestroyFunc(MemorySegment arg0) {
     freeglut_h.glutMenuDestroyFunc(arg0);
   }
 
-  public void glutMenuDestroyFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutMenuDestroyFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutMenuDestroyFuncUcall(arg0, arg1);
   }
 
-  public void glutMenuStateFunc(Addressable arg0) {
+  public void glutMenuStateFunc(MemorySegment arg0) {
     freeglut_h.glutMenuStateFunc(arg0);
   }
 
-  public void glutMenuStatusFunc(Addressable arg0) {
+  public void glutMenuStatusFunc(MemorySegment arg0) {
     freeglut_h.glutMenuStatusFunc(arg0);
   }
 
-  public void glutMenuStatusFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutMenuStatusFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutMenuStatusFuncUcall(arg0, arg1);
   }
 
-  public void glutMotionFunc(Addressable arg0) {
+  public void glutMotionFunc(MemorySegment arg0) {
     freeglut_h.glutMotionFunc(arg0);
   }
 
-  public void glutMotionFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutMotionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutMotionFuncUcall(arg0, arg1);
   }
 
-  public void glutMouseFunc(Addressable arg0) {
+  public void glutMouseFunc(MemorySegment arg0) {
     freeglut_h.glutMouseFunc(arg0);
   }
 
-  public void glutMouseFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutMouseFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutMouseFuncUcall(arg0, arg1);
   }
 
-  public void glutMouseWheelFunc(Addressable arg0) {
+  public void glutMouseWheelFunc(MemorySegment arg0) {
     freeglut_h.glutMouseWheelFunc(arg0);
   }
 
-  public void glutMouseWheelFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutMouseWheelFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutMouseWheelFuncUcall(arg0, arg1);
   }
 
-  public void glutMultiButtonFunc(Addressable arg0) {
+  public void glutMultiButtonFunc(MemorySegment arg0) {
     freeglut_h.glutMultiButtonFunc(arg0);
   }
 
-  public void glutMultiButtonFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutMultiButtonFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutMultiButtonFuncUcall(arg0, arg1);
   }
 
-  public void glutMultiEntryFunc(Addressable arg0) {
+  public void glutMultiEntryFunc(MemorySegment arg0) {
     freeglut_h.glutMultiEntryFunc(arg0);
   }
 
-  public void glutMultiEntryFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutMultiEntryFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutMultiEntryFuncUcall(arg0, arg1);
   }
 
-  public void glutMultiMotionFunc(Addressable arg0) {
+  public void glutMultiMotionFunc(MemorySegment arg0) {
     freeglut_h.glutMultiMotionFunc(arg0);
   }
 
-  public void glutMultiMotionFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutMultiMotionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutMultiMotionFuncUcall(arg0, arg1);
   }
 
-  public void glutMultiPassiveFunc(Addressable arg0) {
+  public void glutMultiPassiveFunc(MemorySegment arg0) {
     freeglut_h.glutMultiPassiveFunc(arg0);
   }
 
-  public void glutMultiPassiveFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutMultiPassiveFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutMultiPassiveFuncUcall(arg0, arg1);
   }
 
-  public void glutOverlayDisplayFunc(Addressable arg0) {
+  public void glutOverlayDisplayFunc(MemorySegment arg0) {
     freeglut_h.glutOverlayDisplayFunc(arg0);
   }
 
-  public void glutOverlayDisplayFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutOverlayDisplayFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutOverlayDisplayFuncUcall(arg0, arg1);
   }
 
-  public void glutPassiveMotionFunc(Addressable arg0) {
+  public void glutPassiveMotionFunc(MemorySegment arg0) {
     freeglut_h.glutPassiveMotionFunc(arg0);
   }
 
-  public void glutPassiveMotionFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutPassiveMotionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutPassiveMotionFuncUcall(arg0, arg1);
   }
 
@@ -2044,11 +2044,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutPopWindow();
   }
 
-  public void glutPositionFunc(Addressable arg0) {
+  public void glutPositionFunc(MemorySegment arg0) {
     freeglut_h.glutPositionFunc(arg0);
   }
 
-  public void glutPositionFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutPositionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutPositionFuncUcall(arg0, arg1);
   }
 
@@ -2088,11 +2088,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutReportErrors();
   }
 
-  public void glutReshapeFunc(Addressable arg0) {
+  public void glutReshapeFunc(MemorySegment arg0) {
     freeglut_h.glutReshapeFunc(arg0);
   }
 
-  public void glutReshapeFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutReshapeFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutReshapeFuncUcall(arg0, arg1);
   }
 
@@ -2108,7 +2108,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutSetCursor(arg0);
   }
 
-  public void glutSetIconTitle(Addressable arg0) {
+  public void glutSetIconTitle(MemorySegment arg0) {
     freeglut_h.glutSetIconTitle(arg0);
   }
 
@@ -2120,11 +2120,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutSetMenu(arg0);
   }
 
-  public void glutSetMenuData(Addressable arg0) {
+  public void glutSetMenuData(MemorySegment arg0) {
     freeglut_h.glutSetMenuData(arg0);
   }
 
-  public void glutSetMenuFont(int arg0, Addressable arg1) {
+  public void glutSetMenuFont(int arg0, MemorySegment arg1) {
     freeglut_h.glutSetMenuFont(arg0, arg1);
   }
 
@@ -2148,11 +2148,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutSetWindow(arg0);
   }
 
-  public void glutSetWindowData(Addressable arg0) {
+  public void glutSetWindowData(MemorySegment arg0) {
     freeglut_h.glutSetWindowData(arg0);
   }
 
-  public void glutSetWindowTitle(Addressable arg0) {
+  public void glutSetWindowTitle(MemorySegment arg0) {
     freeglut_h.glutSetWindowTitle(arg0);
   }
 
@@ -2196,7 +2196,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutSolidRhombicDodecahedron();
   }
 
-  public void glutSolidSierpinskiSponge(int arg0, Addressable arg1, double arg2) {
+  public void glutSolidSierpinskiSponge(int arg0, MemorySegment arg1, double arg2) {
     freeglut_h.glutSolidSierpinskiSponge(arg0, arg1, arg2);
   }
 
@@ -2224,43 +2224,43 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutSolidTorus(arg0, arg1, arg2, arg3);
   }
 
-  public void glutSpaceballButtonFunc(Addressable arg0) {
+  public void glutSpaceballButtonFunc(MemorySegment arg0) {
     freeglut_h.glutSpaceballButtonFunc(arg0);
   }
 
-  public void glutSpaceballButtonFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutSpaceballButtonFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutSpaceballButtonFuncUcall(arg0, arg1);
   }
 
-  public void glutSpaceballMotionFunc(Addressable arg0) {
+  public void glutSpaceballMotionFunc(MemorySegment arg0) {
     freeglut_h.glutSpaceballMotionFunc(arg0);
   }
 
-  public void glutSpaceballMotionFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutSpaceballMotionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutSpaceballMotionFuncUcall(arg0, arg1);
   }
 
-  public void glutSpaceballRotateFunc(Addressable arg0) {
+  public void glutSpaceballRotateFunc(MemorySegment arg0) {
     freeglut_h.glutSpaceballRotateFunc(arg0);
   }
 
-  public void glutSpaceballRotateFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutSpaceballRotateFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutSpaceballRotateFuncUcall(arg0, arg1);
   }
 
-  public void glutSpecialFunc(Addressable arg0) {
+  public void glutSpecialFunc(MemorySegment arg0) {
     freeglut_h.glutSpecialFunc(arg0);
   }
 
-  public void glutSpecialFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutSpecialFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutSpecialFuncUcall(arg0, arg1);
   }
 
-  public void glutSpecialUpFunc(Addressable arg0) {
+  public void glutSpecialUpFunc(MemorySegment arg0) {
     freeglut_h.glutSpecialUpFunc(arg0);
   }
 
-  public void glutSpecialUpFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutSpecialUpFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutSpecialUpFuncUcall(arg0, arg1);
   }
 
@@ -2268,31 +2268,31 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutStopVideoResizing();
   }
 
-  public void glutStrokeCharacter(Addressable arg0, int arg1) {
+  public void glutStrokeCharacter(MemorySegment arg0, int arg1) {
     freeglut_h.glutStrokeCharacter(arg0, arg1);
   }
 
-  public float glutStrokeHeight(Addressable arg0) {
+  public float glutStrokeHeight(MemorySegment arg0) {
     return freeglut_h.glutStrokeHeight(arg0);
   }
 
-  public int glutStrokeLength(Addressable arg0, Addressable arg1) {
+  public int glutStrokeLength(MemorySegment arg0, MemorySegment arg1) {
     return freeglut_h.glutStrokeLength(arg0, arg1);
   }
 
-  public float glutStrokeLengthf(Addressable arg0, Addressable arg1) {
+  public float glutStrokeLengthf(MemorySegment arg0, MemorySegment arg1) {
     return freeglut_h.glutStrokeLengthf(arg0, arg1);
   }
 
-  public void glutStrokeString(Addressable arg0, Addressable arg1) {
+  public void glutStrokeString(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutStrokeString(arg0, arg1);
   }
 
-  public int glutStrokeWidth(Addressable arg0, int arg1) {
+  public int glutStrokeWidth(MemorySegment arg0, int arg1) {
     return freeglut_h.glutStrokeWidth(arg0, arg1);
   }
 
-  public float glutStrokeWidthf(Addressable arg0, int arg1) {
+  public float glutStrokeWidthf(MemorySegment arg0, int arg1) {
     return freeglut_h.glutStrokeWidthf(arg0, arg1);
   }
 
@@ -2300,27 +2300,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutSwapBuffers();
   }
 
-  public void glutTabletButtonFunc(Addressable arg0) {
+  public void glutTabletButtonFunc(MemorySegment arg0) {
     freeglut_h.glutTabletButtonFunc(arg0);
   }
 
-  public void glutTabletButtonFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutTabletButtonFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutTabletButtonFuncUcall(arg0, arg1);
   }
 
-  public void glutTabletMotionFunc(Addressable arg0) {
+  public void glutTabletMotionFunc(MemorySegment arg0) {
     freeglut_h.glutTabletMotionFunc(arg0);
   }
 
-  public void glutTabletMotionFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutTabletMotionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutTabletMotionFuncUcall(arg0, arg1);
   }
 
-  public void glutTimerFunc(int arg0, Addressable arg1, int arg2) {
+  public void glutTimerFunc(int arg0, MemorySegment arg1, int arg2) {
     freeglut_h.glutTimerFunc(arg0, arg1, arg2);
   }
 
-  public void glutTimerFuncUcall(int arg0, Addressable arg1, int arg2, Addressable arg3) {
+  public void glutTimerFuncUcall(int arg0, MemorySegment arg1, int arg2, MemorySegment arg3) {
     freeglut_h.glutTimerFuncUcall(arg0, arg1, arg2, arg3);
   }
 
@@ -2340,19 +2340,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     return freeglut_h.glutVideoResizeGet(arg0);
   }
 
-  public void glutVisibilityFunc(Addressable arg0) {
+  public void glutVisibilityFunc(MemorySegment arg0) {
     freeglut_h.glutVisibilityFunc(arg0);
   }
 
-  public void glutVisibilityFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutVisibilityFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutVisibilityFuncUcall(arg0, arg1);
   }
 
-  public void glutWMCloseFunc(Addressable arg0) {
+  public void glutWMCloseFunc(MemorySegment arg0) {
     freeglut_h.glutWMCloseFunc(arg0);
   }
 
-  public void glutWMCloseFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutWMCloseFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutWMCloseFuncUcall(arg0, arg1);
   }
 
@@ -2360,11 +2360,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutWarpPointer(arg0, arg1);
   }
 
-  public void glutWindowStatusFunc(Addressable arg0) {
+  public void glutWindowStatusFunc(MemorySegment arg0) {
     freeglut_h.glutWindowStatusFunc(arg0);
   }
 
-  public void glutWindowStatusFuncUcall(Addressable arg0, Addressable arg1) {
+  public void glutWindowStatusFuncUcall(MemorySegment arg0, MemorySegment arg1) {
     freeglut_h.glutWindowStatusFuncUcall(arg0, arg1);
   }
 
@@ -2396,7 +2396,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutWireRhombicDodecahedron();
   }
 
-  public void glutWireSierpinskiSponge(int arg0, Addressable arg1, double arg2) {
+  public void glutWireSierpinskiSponge(int arg0, MemorySegment arg1, double arg2) {
     freeglut_h.glutWireSierpinskiSponge(arg0, arg1, arg2);
   }
 
@@ -2424,7 +2424,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     freeglut_h.glutWireTorus(arg0, arg1, arg2, arg3);
   }
 
-  public void glMultiTexImage3DEXT(int texunit, int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, Addressable pixels) {
+  public void glMultiTexImage3DEXT(int texunit, int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2440,7 +2440,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glInstrumentsBufferSGIX(int size, Addressable buffer) {
+  public void glInstrumentsBufferSGIX(int size, MemorySegment buffer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2448,7 +2448,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetInfoLogARB(Addressable obj, int maxLength, Addressable length, Addressable infoLog) {
+  public void glGetInfoLogARB(MemorySegment obj, int maxLength, MemorySegment length, MemorySegment infoLog) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2460,11 +2460,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClipPlanex(int plane, Addressable equation) {
+  public void glClipPlanex(int plane, MemorySegment equation) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBinormal3bvEXT(Addressable v) {
+  public void glBinormal3bvEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2472,7 +2472,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform1iv(int location, int count, Addressable value) {
+  public void glUniform1iv(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2484,15 +2484,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib1fvNV(int index, Addressable v) {
+  public void glVertexAttrib1fvNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnUniformuivARB(int program, int location, int bufSize, Addressable params) {
+  public void glGetnUniformuivARB(int program, int location, int bufSize, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedBufferData(int buffer, long size, Addressable data, int usage) {
+  public void glNamedBufferData(int buffer, long size, MemorySegment data, int usage) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2500,7 +2500,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFogCoorddv(Addressable coord) {
+  public void glFogCoorddv(MemorySegment coord) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2516,7 +2516,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramEnvParameterI4ivNV(int target, int index, Addressable params) {
+  public void glProgramEnvParameterI4ivNV(int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2524,11 +2524,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTextureLevelParameterivEXT(int texture, int target, int level, int pname, Addressable params) {
+  public void glGetTextureLevelParameterivEXT(int texture, int target, int level, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glRectxvOES(Addressable v1, Addressable v2) {
+  public void glRectxvOES(MemorySegment v1, MemorySegment v2) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2540,23 +2540,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform1ui64vARB(int location, int count, Addressable value) {
+  public void glUniform1ui64vARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib2hvNV(int index, Addressable v) {
+  public void glVertexAttrib2hvNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib2svNV(int index, Addressable v) {
+  public void glVertexAttrib2svNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetImageTransformParameterivHP(int target, int pname, Addressable params) {
+  public void glGetImageTransformParameterivHP(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReplacementCodeuiColor3fVertex3fvSUN(Addressable rc, Addressable c, Addressable v) {
+  public void glReplacementCodeuiColor3fVertex3fvSUN(MemorySegment rc, MemorySegment c, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2572,11 +2572,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexStream1svATI(int stream, Addressable coords) {
+  public void glVertexStream1svATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glImportSemaphoreWin32NameEXT(int semaphore, int handleType, Addressable name) {
+  public void glImportSemaphoreWin32NameEXT(int semaphore, int handleType, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2584,7 +2584,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL1ui64vARB(int index, Addressable v) {
+  public void glVertexAttribL1ui64vARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2592,7 +2592,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPixelTexGenParameterfvSGIS(int pname, Addressable params) {
+  public void glGetPixelTexGenParameterfvSGIS(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2600,19 +2600,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClipPlanef(int p, Addressable eqn) {
+  public void glClipPlanef(int p, MemorySegment eqn) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform2dvEXT(int program, int location, int count, Addressable value) {
+  public void glProgramUniform2dvEXT(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPathSpacingNV(int pathListMode, int numPaths, int pathNameType, Addressable paths, int pathBase, float advanceScale, float kerningScale, int transformType, Addressable returnedSpacing) {
+  public void glGetPathSpacingNV(int pathListMode, int numPaths, int pathNameType, MemorySegment paths, int pathBase, float advanceScale, float kerningScale, int transformType, MemorySegment returnedSpacing) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearNamedBufferDataEXT(int buffer, int internalformat, int format, int type, Addressable data) {
+  public void glClearNamedBufferDataEXT(int buffer, int internalformat, int format, int type, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2624,11 +2624,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glRequestResidentProgramsNV(int n, Addressable programs) {
+  public void glRequestResidentProgramsNV(int n, MemorySegment programs) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnMapfv(int target, int query, int bufSize, Addressable v) {
+  public void glGetnMapfv(int target, int query, int bufSize, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2636,15 +2636,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearPixelLocalStorageuiEXT(int offset, int n, Addressable values) {
+  public void glClearPixelLocalStorageuiEXT(int offset, int n, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearTexImageEXT(int texture, int level, int format, int type, Addressable data) {
+  public void glClearTexImageEXT(int texture, int level, int format, int type, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTextureParameterIivEXT(int texture, int target, int pname, Addressable params) {
+  public void glGetTextureParameterIivEXT(int texture, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2652,15 +2652,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMapParameterivNV(int target, int pname, Addressable params) {
+  public void glGetMapParameterivNV(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glImportMemoryWin32HandleEXT(int memory, long size, int handleType, Addressable handle) {
+  public void glImportMemoryWin32HandleEXT(int memory, long size, int handleType, MemorySegment handle) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetShaderSourceARB(Addressable obj, int maxLength, Addressable length, Addressable source) {
+  public void glGetShaderSourceARB(MemorySegment obj, int maxLength, MemorySegment length, MemorySegment source) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2668,11 +2668,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetVaryingLocationNV(int program, Addressable name) {
+  public int glGetVaryingLocationNV(int program, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawCommandsAddressNV(int primitiveMode, Addressable indirects, Addressable sizes, int count) {
+  public void glDrawCommandsAddressNV(int primitiveMode, MemorySegment indirects, MemorySegment sizes, int count) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2684,7 +2684,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform1dv(int location, int count, Addressable value) {
+  public void glUniform1dv(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2696,31 +2696,31 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI4bvEXT(int index, Addressable v) {
+  public void glVertexAttribI4bvEXT(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramResourceiv(int program, int programInterface, int index, int propCount, Addressable props, int count, Addressable length, Addressable params) {
+  public void glGetProgramResourceiv(int program, int programInterface, int index, int propCount, MemorySegment props, int count, MemorySegment length, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI1ivEXT(int index, Addressable v) {
+  public void glVertexAttribI1ivEXT(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMemoryObjectParameterivEXT(int memoryObject, int pname, Addressable params) {
+  public void glMemoryObjectParameterivEXT(int memoryObject, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetColorTableSGI(int target, int format, int type, Addressable table) {
+  public void glGetColorTableSGI(int target, int format, int type, MemorySegment table) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetObjectBufferivATI(int buffer, int pname, Addressable params) {
+  public void glGetObjectBufferivATI(int buffer, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord2bvOES(Addressable coords) {
+  public void glTexCoord2bvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2736,11 +2736,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnMapdv(int target, int query, int bufSize, Addressable v) {
+  public void glGetnMapdv(int target, int query, int bufSize, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glConvolutionFilter1DEXT(int target, int internalformat, int width, int format, int type, Addressable image) {
+  public void glConvolutionFilter1DEXT(int target, int internalformat, int width, int format, int type, MemorySegment image) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2748,23 +2748,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteVertexArrays(int n, Addressable arrays) {
+  public void glDeleteVertexArrays(int n, MemorySegment arrays) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetUniformSubroutineuiv(int shadertype, int location, Addressable params) {
+  public void glGetUniformSubroutineuiv(int shadertype, int location, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFogCoordfv(Addressable coord) {
+  public void glFogCoordfv(MemorySegment coord) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformHandleui64vARB(int program, int location, int count, Addressable values) {
+  public void glProgramUniformHandleui64vARB(int program, int location, int count, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTextureImage3DEXT(int texture, int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, Addressable bits) {
+  public void glCompressedTextureImage3DEXT(int texture, int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, MemorySegment bits) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2772,63 +2772,63 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteFramebuffers(int n, Addressable framebuffers) {
+  public void glDeleteFramebuffers(int n, MemorySegment framebuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform1fv(int location, int count, Addressable value) {
+  public void glUniform1fv(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL1i64vNV(int index, Addressable v) {
+  public void glVertexAttribL1i64vNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSamplerParameterIiv(int sampler, int pname, Addressable param) {
+  public void glSamplerParameterIiv(int sampler, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetShaderiv(int shader, int pname, Addressable params) {
+  public void glGetShaderiv(int shader, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVariantPointerEXT(int id, int type, int stride, Addressable addr) {
+  public void glVariantPointerEXT(int id, int type, int stride, MemorySegment addr) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVariantfvEXT(int id, Addressable addr) {
+  public void glVariantfvEXT(int id, MemorySegment addr) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBindFragDataLocation(int program, int color, Addressable name) {
+  public void glBindFragDataLocation(int program, int color, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix3x2fvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix3x2fvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib1dvARB(int index, Addressable v) {
+  public void glVertexAttrib1dvARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetIntegerui64vNV(int value, Addressable result) {
+  public void glGetIntegerui64vNV(int value, MemorySegment result) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord3hvNV(Addressable v) {
+  public void glTexCoord3hvNV(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWeightPathsNV(int resultPath, int numPaths, Addressable paths, Addressable weights) {
+  public void glWeightPathsNV(int resultPath, int numPaths, MemorySegment paths, MemorySegment weights) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawElementsIndirect(int mode, int type, Addressable indirect, int drawcount, int stride) {
+  public void glMultiDrawElementsIndirect(int mode, int type, MemorySegment indirect, int drawcount, int stride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBufferStorageEXT(int target, long size, Addressable data, int flags) {
+  public void glBufferStorageEXT(int target, long size, MemorySegment data, int flags) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2836,19 +2836,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetCompressedTexImage(int target, int level, Addressable img) {
+  public void glGetCompressedTexImage(int target, int level, MemorySegment img) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glPathGlyphIndexRangeNV(int fontTarget, Addressable fontName, int fontStyle, int pathParameterTemplate, float emScale, Addressable baseAndCount) {
+  public int glPathGlyphIndexRangeNV(int fontTarget, MemorySegment fontName, int fontStyle, int pathParameterTemplate, float emScale, MemorySegment baseAndCount) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramParameter4fvNV(int target, int index, Addressable v) {
+  public void glProgramParameter4fvNV(int target, int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform2uiv(int location, int count, Addressable value) {
+  public void glUniform2uiv(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2860,11 +2860,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord3sv(int target, Addressable v) {
+  public void glMultiTexCoord3sv(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib1fv(int index, Addressable v) {
+  public void glVertexAttrib1fv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2888,11 +2888,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFloati_v(int target, int index, Addressable data) {
+  public void glGetFloati_v(int target, int index, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4NbvARB(int index, Addressable v) {
+  public void glVertexAttrib4NbvARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2908,11 +2908,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetDebugMessageLog(int count, int bufSize, Addressable sources, Addressable types, Addressable ids, Addressable severities, Addressable lengths, Addressable messageLog) {
+  public int glGetDebugMessageLog(int count, int bufSize, MemorySegment sources, MemorySegment types, MemorySegment ids, MemorySegment severities, MemorySegment lengths, MemorySegment messageLog) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib1dv(int index, Addressable v) {
+  public void glVertexAttrib1dv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2920,11 +2920,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPointParameterxvOES(int pname, Addressable params) {
+  public void glPointParameterxvOES(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPixelTexGenParameterfvSGIS(int pname, Addressable params) {
+  public void glPixelTexGenParameterfvSGIS(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2932,11 +2932,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPathCoordsNV(int path, int numCoords, int coordType, Addressable coords) {
+  public void glPathCoordsNV(int path, int numCoords, int coordType, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetIntegerIndexedvEXT(int target, int index, Addressable data) {
+  public void glGetIntegerIndexedvEXT(int target, int index, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2944,7 +2944,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexEnvivEXT(int texunit, int target, int pname, Addressable params) {
+  public void glMultiTexEnvivEXT(int texunit, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2976,7 +2976,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMemoryObjectParameterivEXT(int memoryObject, int pname, Addressable params) {
+  public void glGetMemoryObjectParameterivEXT(int memoryObject, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -2992,19 +2992,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawElementsBaseVertexEXT(int mode, Addressable count, int type, Addressable indices, int drawcount, Addressable basevertex) {
+  public void glMultiDrawElementsBaseVertexEXT(int mode, MemorySegment count, int type, MemorySegment indices, int drawcount, MemorySegment basevertex) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnMapiv(int target, int query, int bufSize, Addressable v) {
+  public void glGetnMapiv(int target, int query, int bufSize, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform1uiv(int program, int location, int count, Addressable value) {
+  public void glProgramUniform1uiv(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix3dv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix3dv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3012,7 +3012,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteCommandListsNV(int n, Addressable lists) {
+  public void glDeleteCommandListsNV(int n, MemorySegment lists) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3020,7 +3020,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI1iv(int index, Addressable v) {
+  public void glVertexAttribI1iv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3040,7 +3040,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColorP3uiv(int type, Addressable color) {
+  public void glSecondaryColorP3uiv(int type, MemorySegment color) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3052,11 +3052,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramNamedParameterfvNV(int id, int len, Addressable name, Addressable params) {
+  public void glGetProgramNamedParameterfvNV(int id, int len, MemorySegment name, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedMultiTexSubImage3DEXT(int texunit, int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, Addressable bits) {
+  public void glCompressedMultiTexSubImage3DEXT(int texunit, int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, MemorySegment bits) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3072,11 +3072,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexSubImage1DEXT(int texunit, int target, int level, int xoffset, int width, int format, int type, Addressable pixels) {
+  public void glMultiTexSubImage1DEXT(int texunit, int target, int level, int xoffset, int width, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix3fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix3fv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3088,11 +3088,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetUniformIndices(int program, int uniformCount, Addressable uniformNames, Addressable uniformIndices) {
+  public void glGetUniformIndices(int program, int uniformCount, MemorySegment uniformNames, MemorySegment uniformIndices) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReplacementCodeuiTexCoord2fVertex3fvSUN(Addressable rc, Addressable tc, Addressable v) {
+  public void glReplacementCodeuiTexCoord2fVertex3fvSUN(MemorySegment rc, MemorySegment tc, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3100,7 +3100,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMapVertexAttrib1fAPPLE(int index, int size, float u1, float u2, int stride, int order, Addressable points) {
+  public void glMapVertexAttrib1fAPPLE(int index, int size, float u1, float u2, int stride, int order, MemorySegment points) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3108,15 +3108,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos3ivARB(Addressable v) {
+  public void glWindowPos3ivARB(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord1bvOES(int texture, Addressable coords) {
+  public void glMultiTexCoord1bvOES(int texture, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI2uivEXT(int index, Addressable v) {
+  public void glVertexAttribI2uivEXT(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3132,7 +3132,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenQueries(int n, Addressable ids) {
+  public void glGenQueries(int n, MemorySegment ids) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3140,7 +3140,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetProgramResourceLocationIndexEXT(int program, int programInterface, Addressable name) {
+  public int glGetProgramResourceLocationIndexEXT(int program, int programInterface, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3148,11 +3148,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetActiveSubroutineUniformiv(int program, int shadertype, int index, int pname, Addressable values) {
+  public void glGetActiveSubroutineUniformiv(int program, int shadertype, int index, int pname, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glPollAsyncSGIX(Addressable markerp) {
+  public int glPollAsyncSGIX(MemorySegment markerp) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3172,27 +3172,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord4fVertex4fvSUN(Addressable tc, Addressable v) {
+  public void glTexCoord4fVertex4fvSUN(MemorySegment tc, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFogCoorddvEXT(Addressable coord) {
+  public void glFogCoorddvEXT(MemorySegment coord) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4uivARB(int index, Addressable v) {
+  public void glVertexAttrib4uivARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTranslatedShaderSourceANGLE(int shader, int bufSize, Addressable length, Addressable source) {
+  public void glGetTranslatedShaderSourceANGLE(int shader, int bufSize, MemorySegment length, MemorySegment source) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTransformFeedbacki64_v(int xfb, int pname, int index, Addressable param) {
+  public void glGetTransformFeedbacki64_v(int xfb, int pname, int index, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawElementsBaseVertex(int mode, Addressable count, int type, Addressable indices, int drawcount, Addressable basevertex) {
+  public void glMultiDrawElementsBaseVertex(int mode, MemorySegment count, int type, MemorySegment indices, int drawcount, MemorySegment basevertex) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3200,7 +3200,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix3x2fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix3x2fv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3216,11 +3216,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glLightxv(int light, int pname, Addressable params) {
+  public void glLightxv(int light, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetColorTableParameteriv(int target, int pname, Addressable params) {
+  public void glGetColorTableParameteriv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3236,7 +3236,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetActiveUniformBlockiv(int program, int uniformBlockIndex, int pname, Addressable params) {
+  public void glGetActiveUniformBlockiv(int program, int uniformBlockIndex, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3244,7 +3244,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix2fv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix2fv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3256,7 +3256,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompileShaderIncludeARB(int shader, int count, Addressable path, Addressable length) {
+  public void glCompileShaderIncludeARB(int shader, int count, MemorySegment path, MemorySegment length) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3264,7 +3264,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPerfQueryInfoINTEL(int queryId, int queryNameLength, Addressable queryName, Addressable dataSize, Addressable noCounters, Addressable noInstances, Addressable capsMask) {
+  public void glGetPerfQueryInfoINTEL(int queryId, int queryNameLength, MemorySegment queryName, MemorySegment dataSize, MemorySegment noCounters, MemorySegment noInstances, MemorySegment capsMask) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3272,7 +3272,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord4svARB(int target, Addressable v) {
+  public void glMultiTexCoord4svARB(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3284,7 +3284,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColor4xvOES(Addressable components) {
+  public void glColor4xvOES(MemorySegment components) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3292,19 +3292,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4Nbv(int index, Addressable v) {
+  public void glVertexAttrib4Nbv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetInteger64vAPPLE(int pname, Addressable params) {
+  public void glGetInteger64vAPPLE(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteMemoryObjectsEXT(int n, Addressable memoryObjects) {
+  public void glDeleteMemoryObjectsEXT(int n, MemorySegment memoryObjects) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexParameterivEXT(int texunit, int target, int pname, Addressable params) {
+  public void glMultiTexParameterivEXT(int texunit, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3312,23 +3312,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBinormal3fvEXT(Addressable v) {
+  public void glBinormal3fvEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix2x3dvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix2x3dvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glLoadMatrixx(Addressable m) {
+  public void glLoadMatrixx(MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL2dv(int index, Addressable v) {
+  public void glVertexAttribL2dv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetCombinerOutputParameterfvNV(int stage, int portion, int pname, Addressable params) {
+  public void glGetCombinerOutputParameterfvNV(int stage, int portion, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3340,7 +3340,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix2dv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix2dv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3360,11 +3360,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix3x4dvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix3x4dvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteVertexArraysOES(int n, Addressable arrays) {
+  public void glDeleteVertexArraysOES(int n, MemorySegment arrays) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3376,15 +3376,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexFilterFuncSGIS(int target, int filter, Addressable weights) {
+  public void glGetTexFilterFuncSGIS(int target, int filter, MemorySegment weights) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramLocalParameter4fvARB(int target, int index, Addressable params) {
+  public void glProgramLocalParameter4fvARB(int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetLocalConstantBooleanvEXT(int id, int value, Addressable data) {
+  public void glGetLocalConstantBooleanvEXT(int id, int value, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3400,7 +3400,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform3i64vNV(int program, int location, int count, Addressable value) {
+  public void glProgramUniform3i64vNV(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3408,19 +3408,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawElementsInstancedBaseVertexBaseInstanceEXT(int mode, int count, int type, Addressable indices, int instancecount, int basevertex, int baseinstance) {
+  public void glDrawElementsInstancedBaseVertexBaseInstanceEXT(int mode, int count, int type, MemorySegment indices, int instancecount, int basevertex, int baseinstance) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetArrayObjectfvATI(int array, int pname, Addressable params) {
+  public void glGetArrayObjectfvATI(int array, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawElementsIndirectEXT(int mode, int type, Addressable indirect, int drawcount, int stride) {
+  public void glMultiDrawElementsIndirectEXT(int mode, int type, MemorySegment indirect, int drawcount, int stride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramParameters4fvNV(int target, int index, int count, Addressable v) {
+  public void glProgramParameters4fvNV(int target, int index, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3428,7 +3428,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4Nusv(int index, Addressable v) {
+  public void glVertexAttrib4Nusv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3436,7 +3436,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord1svARB(int target, Addressable v) {
+  public void glMultiTexCoord1svARB(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3452,23 +3452,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexParameterIivOES(int target, int pname, Addressable params) {
+  public void glGetTexParameterIivOES(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoordP3uiv(int texture, int type, Addressable coords) {
+  public void glMultiTexCoordP3uiv(int texture, int type, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearBufferuiv(int buffer, int drawbuffer, Addressable value) {
+  public void glClearBufferuiv(int buffer, int drawbuffer, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteQueryResourceTagNV(int n, Addressable tagIds) {
+  public void glDeleteQueryResourceTagNV(int n, MemorySegment tagIds) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetBufferPointervARB(int target, int pname, Addressable params) {
+  public void glGetBufferPointervARB(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3480,15 +3480,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDebugMessageInsertARB(int source, int type, int id, int severity, int length, Addressable buf) {
+  public void glDebugMessageInsertARB(int source, int type, int id, int severity, int length, MemorySegment buf) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexBumpParameterivATI(int pname, Addressable param) {
+  public void glGetTexBumpParameterivATI(int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDepthRangeArrayfvOES(int first, int count, Addressable v) {
+  public void glDepthRangeArrayfvOES(int first, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3496,7 +3496,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetDetailTexFuncSGIS(int target, Addressable points) {
+  public void glGetDetailTexFuncSGIS(int target, MemorySegment points) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3508,7 +3508,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPointervEXT(int pname, Addressable params) {
+  public void glGetPointervEXT(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3516,19 +3516,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord4sv(int target, Addressable v) {
+  public void glMultiTexCoord4sv(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4Niv(int index, Addressable v) {
+  public void glVertexAttrib4Niv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVideoCaptureStreamParameterdvNV(int video_capture_slot, int stream, int pname, Addressable params) {
+  public void glVideoCaptureStreamParameterdvNV(int video_capture_slot, int stream, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetSharpenTexFuncSGIS(int target, Addressable points) {
+  public void glGetSharpenTexFuncSGIS(int target, MemorySegment points) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3536,19 +3536,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPathDashArrayNV(int path, Addressable dashArray) {
+  public void glGetPathDashArrayNV(int path, MemorySegment dashArray) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPixelTransformParameterivEXT(int target, int pname, Addressable params) {
+  public void glPixelTransformParameterivEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetColorTableParameterfv(int target, int pname, Addressable params) {
+  public void glGetColorTableParameterfv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetBufferPointerv(int target, int pname, Addressable params) {
+  public void glGetBufferPointerv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3556,15 +3556,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSignalSemaphoreEXT(int semaphore, int numBufferBarriers, Addressable buffers, int numTextureBarriers, Addressable textures, Addressable dstLayouts) {
+  public void glSignalSemaphoreEXT(int semaphore, int numBufferBarriers, MemorySegment buffers, int numTextureBarriers, MemorySegment textures, MemorySegment dstLayouts) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexGenivOES(int coord, int pname, Addressable params) {
+  public void glGetTexGenivOES(int coord, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureParameterfvEXT(int texture, int target, int pname, Addressable params) {
+  public void glTextureParameterfvEXT(int texture, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3580,7 +3580,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord4dv(int target, Addressable v) {
+  public void glMultiTexCoord4dv(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3588,7 +3588,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMinmaxParameterivEXT(int target, int pname, Addressable params) {
+  public void glGetMinmaxParameterivEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3600,23 +3600,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCombinerParameterfvNV(int pname, Addressable params) {
+  public void glCombinerParameterfvNV(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultMatrixx(Addressable m) {
+  public void glMultMatrixx(MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPathSubCoordsNV(int path, int coordStart, int numCoords, int coordType, Addressable coords) {
+  public void glPathSubCoordsNV(int path, int coordStart, int numCoords, int coordType, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexStream3fvATI(int stream, Addressable coords) {
+  public void glVertexStream3fvATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReferencePlaneSGIX(Addressable equation) {
+  public void glReferencePlaneSGIX(MemorySegment equation) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3624,7 +3624,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPixelTransformParameterivEXT(int target, int pname, Addressable params) {
+  public void glGetPixelTransformParameterivEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3636,7 +3636,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDebugMessageControlKHR(int source, int type, int severity, int count, Addressable ids, byte enabled) {
+  public void glDebugMessageControlKHR(int source, int type, int severity, int count, MemorySegment ids, byte enabled) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3656,19 +3656,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord3ivARB(int target, Addressable v) {
+  public void glMultiTexCoord3ivARB(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform2ui64vARB(int program, int location, int count, Addressable value) {
+  public void glProgramUniform2ui64vARB(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord4fv(int target, Addressable v) {
+  public void glMultiTexCoord4fv(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetBufferParameteri64v(int target, int pname, Addressable params) {
+  public void glGetBufferParameteri64v(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3680,7 +3680,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetListParameterivSGIX(int list, int pname, Addressable params) {
+  public void glGetListParameterivSGIX(int list, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3692,7 +3692,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDebugMessageInsertAMD(int category, int severity, int id, int length, Addressable buf) {
+  public void glDebugMessageInsertAMD(int category, int severity, int id, int length, MemorySegment buf) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3700,15 +3700,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawArraysIndirectCount(int mode, Addressable indirect, long drawcount, int maxdrawcount, int stride) {
+  public void glMultiDrawArraysIndirectCount(int mode, MemorySegment indirect, long drawcount, int maxdrawcount, int stride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteRenderbuffers(int n, Addressable renderbuffers) {
+  public void glDeleteRenderbuffers(int n, MemorySegment renderbuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform3i64vARB(int program, int location, int count, Addressable value) {
+  public void glProgramUniform3i64vARB(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3728,11 +3728,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenRenderbuffersOES(int n, Addressable renderbuffers) {
+  public void glGenRenderbuffersOES(int n, MemorySegment renderbuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4Nuiv(int index, Addressable v) {
+  public void glVertexAttrib4Nuiv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3744,19 +3744,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnUniformivEXT(int program, int location, int bufSize, Addressable params) {
+  public void glGetnUniformivEXT(int program, int location, int bufSize, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertex4xvOES(Addressable coords) {
+  public void glVertex4xvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteFramebuffersOES(int n, Addressable framebuffers) {
+  public void glDeleteFramebuffersOES(int n, MemorySegment framebuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform4uiv(int program, int location, int count, Addressable value) {
+  public void glProgramUniform4uiv(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3764,7 +3764,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSpecializeShaderARB(int shader, Addressable pEntryPoint, int numSpecializationConstants, Addressable pConstantIndex, Addressable pConstantValue) {
+  public void glSpecializeShaderARB(int shader, MemorySegment pEntryPoint, int numSpecializationConstants, MemorySegment pConstantIndex, MemorySegment pConstantValue) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3772,7 +3772,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMulticastBufferSubDataNV(int gpuMask, int buffer, long offset, long size, Addressable data) {
+  public void glMulticastBufferSubDataNV(int gpuMask, int buffer, long offset, long size, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3780,39 +3780,39 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord4iv(int target, Addressable v) {
+  public void glMultiTexCoord4iv(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramStageiv(int program, int shadertype, int pname, Addressable values) {
+  public void glGetProgramStageiv(int program, int shadertype, int pname, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnCompressedTexImageARB(int target, int lod, int bufSize, Addressable img) {
+  public void glGetnCompressedTexImageARB(int target, int lod, int bufSize, MemorySegment img) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glLGPUNamedBufferSubDataNVX(int gpuMask, int buffer, long offset, long size, Addressable data) {
+  public void glLGPUNamedBufferSubDataNVX(int gpuMask, int buffer, long offset, long size, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform1uivEXT(int program, int location, int count, Addressable value) {
+  public void glProgramUniform1uivEXT(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetLocalConstantIntegervEXT(int id, int value, Addressable data) {
+  public void glGetLocalConstantIntegervEXT(int id, int value, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureSubImage3D(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, Addressable pixels) {
+  public void glTextureSubImage3D(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI3uiv(int index, Addressable v) {
+  public void glVertexAttribI3uiv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearTexImage(int texture, int level, int format, int type, Addressable data) {
+  public void glClearTexImage(int texture, int level, int format, int type, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3820,15 +3820,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib1sv(int index, Addressable v) {
+  public void glVertexAttrib1sv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glExtGetBuffersQCOM(Addressable buffers, int maxBuffers, Addressable numBuffers) {
+  public void glExtGetBuffersQCOM(MemorySegment buffers, int maxBuffers, MemorySegment numBuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMultiTexParameterivEXT(int texunit, int target, int pname, Addressable params) {
+  public void glGetMultiTexParameterivEXT(int texunit, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3840,27 +3840,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertex2hvNV(Addressable v) {
+  public void glVertex2hvNV(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawTexivOES(Addressable coords) {
+  public void glDrawTexivOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenFencesNV(int n, Addressable fences) {
+  public void glGenFencesNV(int n, MemorySegment fences) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMulticastScissorArrayvNVX(int gpu, int first, int count, Addressable v) {
+  public void glMulticastScissorArrayvNVX(int gpu, int first, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glViewportArrayvOES(int first, int count, Addressable v) {
+  public void glViewportArrayvOES(int first, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureSubImage2D(int texture, int level, int xoffset, int yoffset, int width, int height, int format, int type, Addressable pixels) {
+  public void glTextureSubImage2D(int texture, int level, int xoffset, int yoffset, int width, int height, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3868,11 +3868,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDebugMessageControl(int source, int type, int severity, int count, Addressable ids, byte enabled) {
+  public void glDebugMessageControl(int source, int type, int severity, int count, MemorySegment ids, byte enabled) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform3i64vARB(int location, int count, Addressable value) {
+  public void glUniform3i64vARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3884,11 +3884,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetActiveUniformBlockName(int program, int uniformBlockIndex, int bufSize, Addressable length, Addressable uniformBlockName) {
+  public void glGetActiveUniformBlockName(int program, int uniformBlockIndex, int bufSize, MemorySegment length, MemorySegment uniformBlockName) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetColorTable(int target, int format, int type, Addressable table) {
+  public void glGetColorTable(int target, int format, int type, MemorySegment table) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3904,7 +3904,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glAsyncCopyBufferSubDataNVX(int waitSemaphoreCount, Addressable waitSemaphoreArray, Addressable fenceValueArray, int readGpu, int writeGpuMask, int readBuffer, int writeBuffer, long readOffset, long writeOffset, long size, int signalSemaphoreCount, Addressable signalSemaphoreArray, Addressable signalValueArray) {
+  public int glAsyncCopyBufferSubDataNVX(int waitSemaphoreCount, MemorySegment waitSemaphoreArray, MemorySegment fenceValueArray, int readGpu, int writeGpuMask, int readBuffer, int writeBuffer, long readOffset, long writeOffset, long size, int signalSemaphoreCount, MemorySegment signalSemaphoreArray, MemorySegment signalValueArray) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3912,11 +3912,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexSubImage4DSGIS(int target, int level, int xoffset, int yoffset, int zoffset, int woffset, int width, int height, int depth, int size4d, int format, int type, Addressable pixels) {
+  public void glTexSubImage4DSGIS(int target, int level, int xoffset, int yoffset, int zoffset, int woffset, int width, int height, int depth, int size4d, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramivNV(int id, int pname, Addressable params) {
+  public void glGetProgramivNV(int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3924,7 +3924,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4dvNV(int index, Addressable v) {
+  public void glVertexAttrib4dvNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3932,35 +3932,35 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureSubImage1D(int texture, int level, int xoffset, int width, int format, int type, Addressable pixels) {
+  public void glTextureSubImage1D(int texture, int level, int xoffset, int width, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMultiTexGenfvEXT(int texunit, int coord, int pname, Addressable params) {
+  public void glGetMultiTexGenfvEXT(int texunit, int coord, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTexImage2DARB(int target, int level, int internalformat, int width, int height, int border, int imageSize, Addressable data) {
+  public void glCompressedTexImage2DARB(int target, int level, int internalformat, int width, int height, int border, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPathStringNV(int path, int format, int length, Addressable pathString) {
+  public void glPathStringNV(int path, int format, int length, MemorySegment pathString) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMapControlPointsNV(int target, int index, int type, int ustride, int vstride, byte packed, Addressable points) {
+  public void glGetMapControlPointsNV(int target, int index, int type, int ustride, int vstride, byte packed, MemorySegment points) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeformationMap3dSGIX(int target, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, double w1, double w2, int wstride, int worder, Addressable points) {
+  public void glDeformationMap3dSGIX(int target, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, double w1, double w2, int wstride, int worder, MemorySegment points) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPointerIndexedvEXT(int target, int index, Addressable data) {
+  public void glGetPointerIndexedvEXT(int target, int index, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribivNV(int index, int pname, Addressable params) {
+  public void glGetVertexAttribivNV(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3968,7 +3968,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSetLocalConstantEXT(int id, int type, Addressable addr) {
+  public void glSetLocalConstantEXT(int id, int type, MemorySegment addr) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -3984,15 +3984,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glVideoCaptureNV(int video_capture_slot, Addressable sequence_num, Addressable capture_time) {
+  public int glVideoCaptureNV(int video_capture_slot, MemorySegment sequence_num, MemorySegment capture_time) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnMinmax(int target, byte reset, int format, int type, int bufSize, Addressable values) {
+  public void glGetnMinmax(int target, byte reset, int format, int type, int bufSize, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public Addressable glFenceSync(int condition, int flags) {
+  public MemorySegment glFenceSync(int condition, int flags) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4004,35 +4004,35 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBindAttribLocation(int program, int index, Addressable name) {
+  public void glBindAttribLocation(int program, int index, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glListDrawCommandsStatesClientNV(int list, int segment, Addressable indirects, Addressable sizes, Addressable states, Addressable fbos, int count) {
+  public void glListDrawCommandsStatesClientNV(int list, int segment, MemorySegment indirects, MemorySegment sizes, MemorySegment states, MemorySegment fbos, int count) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramPipelineivEXT(int pipeline, int pname, Addressable params) {
+  public void glGetProgramPipelineivEXT(int pipeline, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glRasterPos2xvOES(Addressable coords) {
+  public void glRasterPos2xvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix3fvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix3fvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMaterialxv(int face, int pname, Addressable params) {
+  public void glGetMaterialxv(int face, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnUniformfvEXT(int program, int location, int bufSize, Addressable params) {
+  public void glGetnUniformfvEXT(int program, int location, int bufSize, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix4x2fvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix4x2fvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4044,11 +4044,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3dvEXT(Addressable v) {
+  public void glSecondaryColor3dvEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoordPointerListIBM(int size, int type, int stride, Addressable pointer, int ptrstride) {
+  public void glTexCoordPointerListIBM(int size, int type, int stride, MemorySegment pointer, int ptrstride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4064,23 +4064,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBindAttribLocationARB(Addressable programObj, int index, Addressable name) {
+  public void glBindAttribLocationARB(MemorySegment programObj, int index, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glLightxvOES(int light, int pname, Addressable params) {
+  public void glLightxvOES(int light, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetHistogramEXT(int target, byte reset, int format, int type, Addressable values) {
+  public void glGetHistogramEXT(int target, byte reset, int format, int type, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFramebufferSampleLocationsfvNV(int target, int start, int count, Addressable v) {
+  public void glFramebufferSampleLocationsfvNV(int target, int start, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedBufferStorageExternalEXT(int buffer, long offset, long size, Addressable clientBuffer, int flags) {
+  public void glNamedBufferStorageExternalEXT(int buffer, long offset, long size, MemorySegment clientBuffer, int flags) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4088,15 +4088,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribP4uiv(int index, int type, byte normalized, Addressable value) {
+  public void glVertexAttribP4uiv(int index, int type, byte normalized, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetQueryivARB(int target, int pname, Addressable params) {
+  public void glGetQueryivARB(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glInvalidateSubFramebuffer(int target, int numAttachments, Addressable attachments, int x, int y, int width, int height) {
+  public void glInvalidateSubFramebuffer(int target, int numAttachments, MemorySegment attachments, int x, int y, int width, int height) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4104,19 +4104,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord2fvARB(int target, Addressable v) {
+  public void glMultiTexCoord2fvARB(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord2fVertex3fvSUN(Addressable tc, Addressable v) {
+  public void glTexCoord2fVertex3fvSUN(MemorySegment tc, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos2fvMESA(Addressable v) {
+  public void glWindowPos2fvMESA(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWeightfvARB(int size, Addressable weights) {
+  public void glWeightfvARB(int size, MemorySegment weights) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4144,7 +4144,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFeedbackBufferxOES(int n, int type, Addressable buffer) {
+  public void glFeedbackBufferxOES(int n, int type, MemorySegment buffer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4156,19 +4156,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBufferDataARB(int target, long size, Addressable data, int usage) {
+  public void glBufferDataARB(int target, long size, MemorySegment data, int usage) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetLocalConstantFloatvEXT(int id, int value, Addressable data) {
+  public void glGetLocalConstantFloatvEXT(int id, int value, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWaitSemaphoreui64NVX(int waitGpu, int fenceObjectCount, Addressable semaphoreArray, Addressable fenceValueArray) {
+  public void glWaitSemaphoreui64NVX(int waitGpu, int fenceObjectCount, MemorySegment semaphoreArray, MemorySegment fenceValueArray) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteSyncAPPLE(Addressable sync) {
+  public void glDeleteSyncAPPLE(MemorySegment sync) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4180,11 +4180,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFramebufferAttachmentParameteriv(int target, int attachment, int pname, Addressable params) {
+  public void glGetFramebufferAttachmentParameteriv(int target, int attachment, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureImage3DEXT(int texture, int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, Addressable pixels) {
+  public void glTextureImage3DEXT(int texture, int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4200,7 +4200,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord2xvOES(Addressable coords) {
+  public void glTexCoord2xvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4208,15 +4208,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs4dvNV(int index, int count, Addressable v) {
+  public void glVertexAttribs4dvNV(int index, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawTexxvOES(Addressable coords) {
+  public void glDrawTexxvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureParameterIivEXT(int texture, int target, int pname, Addressable params) {
+  public void glTextureParameterIivEXT(int texture, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4244,7 +4244,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNextPerfQueryIdINTEL(int queryId, Addressable nextQueryId) {
+  public void glGetNextPerfQueryIdINTEL(int queryId, MemorySegment nextQueryId) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4260,7 +4260,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos3dvMESA(Addressable v) {
+  public void glWindowPos3dvMESA(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4276,7 +4276,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSamplerParameterIuivEXT(int sampler, int pname, Addressable param) {
+  public void glSamplerParameterIuivEXT(int sampler, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4304,15 +4304,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixMult3x3fNV(int matrixMode, Addressable m) {
+  public void glMatrixMult3x3fNV(int matrixMode, MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramResourceName(int program, int programInterface, int index, int bufSize, Addressable length, Addressable name) {
+  public void glGetProgramResourceName(int program, int programInterface, int index, int bufSize, MemorySegment length, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexGendvEXT(int texunit, int coord, int pname, Addressable params) {
+  public void glMultiTexGendvEXT(int texunit, int coord, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4320,7 +4320,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteOcclusionQueriesNV(int n, Addressable ids) {
+  public void glDeleteOcclusionQueriesNV(int n, MemorySegment ids) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4332,15 +4332,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix4dv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix4dv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColor3fVertex3fvSUN(Addressable c, Addressable v) {
+  public void glColor3fVertex3fvSUN(MemorySegment c, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetCombinerOutputParameterivNV(int stage, int portion, int pname, Addressable params) {
+  public void glGetCombinerOutputParameterivNV(int stage, int portion, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4352,23 +4352,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPrioritizeTexturesxOES(int n, Addressable textures, Addressable priorities) {
+  public void glPrioritizeTexturesxOES(int n, MemorySegment textures, MemorySegment priorities) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetSemaphoreParameterui64vEXT(int semaphore, int pname, Addressable params) {
+  public void glGetSemaphoreParameterui64vEXT(int semaphore, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexStream3ivATI(int stream, Addressable coords) {
+  public void glVertexStream3ivATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix2x3fvNV(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix2x3fvNV(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCreateBuffers(int n, Addressable buffers) {
+  public void glCreateBuffers(int n, MemorySegment buffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4388,7 +4388,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVideoi64vNV(int video_slot, int pname, Addressable params) {
+  public void glGetVideoi64vNV(int video_slot, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4396,11 +4396,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform3fvEXT(int program, int location, int count, Addressable value) {
+  public void glProgramUniform3fvEXT(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glScissorIndexedvNV(int index, Addressable v) {
+  public void glScissorIndexedvNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4408,19 +4408,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWeightusvARB(int size, Addressable weights) {
+  public void glWeightusvARB(int size, MemorySegment weights) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetDriverControlsQCOM(Addressable num, int size, Addressable driverControls) {
+  public void glGetDriverControlsQCOM(MemorySegment num, int size, MemorySegment driverControls) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexGenxvOES(int coord, int pname, Addressable params) {
+  public void glGetTexGenxvOES(int coord, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord2sv(int target, Addressable v) {
+  public void glMultiTexCoord2sv(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4428,7 +4428,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWaitSyncAPPLE(Addressable sync, int flags, long timeout) {
+  public void glWaitSyncAPPLE(MemorySegment sync, int flags, long timeout) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4436,11 +4436,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos4dvMESA(Addressable v) {
+  public void glWindowPos4dvMESA(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4NusvARB(int index, Addressable v) {
+  public void glVertexAttrib4NusvARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4448,7 +4448,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexArrayRangeNV(int length, Addressable pointer) {
+  public void glVertexArrayRangeNV(int length, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4460,7 +4460,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramInterfaceiv(int program, int programInterface, int pname, Addressable params) {
+  public void glGetProgramInterfaceiv(int program, int programInterface, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4472,7 +4472,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix4fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix4fv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4480,27 +4480,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord2xvOES(int texture, Addressable coords) {
+  public void glMultiTexCoord2xvOES(int texture, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPixelTexGenParameterivSGIS(int pname, Addressable params) {
+  public void glGetPixelTexGenParameterivSGIS(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSemaphoreParameterui64vEXT(int semaphore, int pname, Addressable params) {
+  public void glSemaphoreParameterui64vEXT(int semaphore, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glImportMemoryWin32NameEXT(int memory, long size, int handleType, Addressable name) {
+  public void glImportMemoryWin32NameEXT(int memory, long size, int handleType, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI4ivEXT(int index, Addressable v) {
+  public void glVertexAttribI4ivEXT(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDebugMessageCallbackARB(Addressable callback, Addressable userParam) {
+  public void glDebugMessageCallbackARB(MemorySegment callback, MemorySegment userParam) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4512,11 +4512,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoordP4uiv(int type, Addressable coords) {
+  public void glTexCoordP4uiv(int type, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glEvalCoord1xvOES(Addressable coords) {
+  public void glEvalCoord1xvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4528,15 +4528,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPathDashArrayNV(int path, int dashCount, Addressable dashArray) {
+  public void glPathDashArrayNV(int path, int dashCount, MemorySegment dashArray) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFragmentMaterialfvSGIX(int face, int pname, Addressable params) {
+  public void glGetFragmentMaterialfvSGIX(int face, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexBumpParameterfvATI(int pname, Addressable param) {
+  public void glGetTexBumpParameterfvATI(int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4544,19 +4544,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI3uivEXT(int index, Addressable v) {
+  public void glVertexAttribI3uivEXT(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexParameterxvOES(int target, int pname, Addressable params) {
+  public void glGetTexParameterxvOES(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetBooleanIndexedvEXT(int target, int index, Addressable data) {
+  public void glGetBooleanIndexedvEXT(int target, int index, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord3fvARB(int target, Addressable v) {
+  public void glMultiTexCoord3fvARB(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4564,7 +4564,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenPerfMonitorsAMD(int n, Addressable monitors) {
+  public void glGenPerfMonitorsAMD(int n, MemorySegment monitors) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4576,7 +4576,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReplacementCodeuiColor4fNormal3fVertex3fvSUN(Addressable rc, Addressable c, Addressable n, Addressable v) {
+  public void glReplacementCodeuiColor4fNormal3fVertex3fvSUN(MemorySegment rc, MemorySegment c, MemorySegment n, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4596,7 +4596,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteProgramPipelinesEXT(int n, Addressable pipelines) {
+  public void glDeleteProgramPipelinesEXT(int n, MemorySegment pipelines) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4604,7 +4604,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3uivEXT(Addressable v) {
+  public void glSecondaryColor3uivEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4612,7 +4612,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWeightPointerARB(int size, int type, int stride, Addressable pointer) {
+  public void glWeightPointerARB(int size, int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4624,11 +4624,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureRangeAPPLE(int target, int length, Addressable pointer) {
+  public void glTextureRangeAPPLE(int target, int length, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBinormal3ivEXT(Addressable v) {
+  public void glBinormal3ivEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4636,7 +4636,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNormalStream3fvATI(int stream, Addressable coords) {
+  public void glNormalStream3fvATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4660,23 +4660,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexStream2fvATI(int stream, Addressable coords) {
+  public void glVertexStream2fvATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramLocalParameterI4uivNV(int target, int index, Addressable params) {
+  public void glProgramLocalParameterI4uivNV(int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBufferSubDataARB(int target, long offset, long size, Addressable data) {
+  public void glBufferSubDataARB(int target, long offset, long size, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformui64vNV(int program, int location, int count, Addressable value) {
+  public void glProgramUniformui64vNV(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix2x4dv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix2x4dv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4684,11 +4684,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL1dv(int index, Addressable v) {
+  public void glVertexAttribL1dv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenOcclusionQueriesNV(int n, Addressable ids) {
+  public void glGenOcclusionQueriesNV(int n, MemorySegment ids) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4700,7 +4700,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetObjectLabelKHR(int identifier, int name, int bufSize, Addressable length, Addressable label) {
+  public void glGetObjectLabelKHR(int identifier, int name, int bufSize, MemorySegment length, MemorySegment label) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4708,7 +4708,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos3fvARB(Addressable v) {
+  public void glWindowPos3fvARB(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4716,15 +4716,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord2hvNV(int target, Addressable v) {
+  public void glMultiTexCoord2hvNV(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVariantbvEXT(int id, Addressable addr) {
+  public void glVariantbvEXT(int id, MemorySegment addr) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform2i64vARB(int program, int location, int count, Addressable value) {
+  public void glProgramUniform2i64vARB(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4732,11 +4732,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glVDPAURegisterVideoSurfaceNV(Addressable vdpSurface, int target, int numTextureNames, Addressable textureNames) {
+  public int glVDPAURegisterVideoSurfaceNV(MemorySegment vdpSurface, int target, int numTextureNames, MemorySegment textureNames) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribdvARB(int index, int pname, Addressable params) {
+  public void glGetVertexAttribdvARB(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4744,11 +4744,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix3x2dv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix3x2dv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnMapivARB(int target, int query, int bufSize, Addressable v) {
+  public void glGetnMapivARB(int target, int query, int bufSize, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4760,7 +4760,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform1i64vNV(int location, int count, Addressable value) {
+  public void glUniform1i64vNV(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4768,7 +4768,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPrioritizeTexturesEXT(int n, Addressable textures, Addressable priorities) {
+  public void glPrioritizeTexturesEXT(int n, MemorySegment textures, MemorySegment priorities) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4776,15 +4776,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformHandleui64vIMG(int program, int location, int count, Addressable values) {
+  public void glProgramUniformHandleui64vIMG(int program, int location, int count, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultTransposeMatrixdARB(Addressable m) {
+  public void glMultTransposeMatrixdARB(MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribIPointerEXT(int index, int size, int type, int stride, Addressable pointer) {
+  public void glVertexAttribIPointerEXT(int index, int size, int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4792,7 +4792,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix3fv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix3fv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4800,27 +4800,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform1ivEXT(int program, int location, int count, Addressable value) {
+  public void glProgramUniform1ivEXT(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs2svNV(int index, int count, Addressable v) {
+  public void glVertexAttribs2svNV(int index, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glShaderSourceARB(Addressable shaderObj, int count, Addressable string, Addressable length) {
+  public void glShaderSourceARB(MemorySegment shaderObj, int count, MemorySegment string, MemorySegment length) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTexSubImage2DARB(int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, Addressable data) {
+  public void glCompressedTexSubImage2DARB(int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedBufferParameteri64v(int buffer, int pname, Addressable params) {
+  public void glGetNamedBufferParameteri64v(int buffer, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetActiveUniformARB(Addressable programObj, int index, int maxLength, Addressable length, Addressable size, Addressable type, Addressable name) {
+  public void glGetActiveUniformARB(MemorySegment programObj, int index, int maxLength, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4832,19 +4832,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDebugMessageCallbackAMD(Addressable callback, Addressable userParam) {
+  public void glDebugMessageCallbackAMD(MemorySegment callback, MemorySegment userParam) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMulticastGetQueryObjecti64vNV(int gpu, int id, int pname, Addressable params) {
+  public void glMulticastGetQueryObjecti64vNV(int gpu, int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexParameterIuivEXT(int target, int pname, Addressable params) {
+  public void glTexParameterIuivEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteTransformFeedbacksNV(int n, Addressable ids) {
+  public void glDeleteTransformFeedbacksNV(int n, MemorySegment ids) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4872,31 +4872,31 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetQueryObjectivEXT(int id, int pname, Addressable params) {
+  public void glGetQueryObjectivEXT(int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPixelTexGenParameterivSGIS(int pname, Addressable params) {
+  public void glPixelTexGenParameterivSGIS(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribLui64vARB(int index, int pname, Addressable params) {
+  public void glGetVertexAttribLui64vARB(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnUniformdvARB(int program, int location, int bufSize, Addressable params) {
+  public void glGetnUniformdvARB(int program, int location, int bufSize, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix3dv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix3dv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetLightxv(int light, int pname, Addressable params) {
+  public void glGetLightxv(int light, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribIuivEXT(int index, int pname, Addressable params) {
+  public void glGetVertexAttribIuivEXT(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4908,23 +4908,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedProgramLocalParametersI4ivEXT(int program, int target, int index, int count, Addressable params) {
+  public void glNamedProgramLocalParametersI4ivEXT(int program, int target, int index, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenRenderbuffersEXT(int n, Addressable renderbuffers) {
+  public void glGenRenderbuffersEXT(int n, MemorySegment renderbuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureSubImage1DEXT(int texture, int target, int level, int xoffset, int width, int format, int type, Addressable pixels) {
+  public void glTextureSubImage1DEXT(int texture, int target, int level, int xoffset, int width, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTextureSubImage3DEXT(int texture, int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, Addressable bits) {
+  public void glCompressedTextureSubImage3DEXT(int texture, int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, MemorySegment bits) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs2hvNV(int index, int n, Addressable v) {
+  public void glVertexAttribs2hvNV(int index, int n, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4932,7 +4932,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawElementsInstancedBaseInstance(int mode, int count, int type, Addressable indices, int instancecount, int baseinstance) {
+  public void glDrawElementsInstancedBaseInstance(int mode, int count, int type, MemorySegment indices, int instancecount, int baseinstance) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4944,11 +4944,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedStringARB(int namelen, Addressable name, int bufSize, Addressable stringlen, Addressable string) {
+  public void glGetNamedStringARB(int namelen, MemorySegment name, int bufSize, MemorySegment stringlen, MemorySegment string) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteFramebuffersEXT(int n, Addressable framebuffers) {
+  public void glDeleteFramebuffersEXT(int n, MemorySegment framebuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4956,11 +4956,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix2x4fv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix2x4fv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUpdateObjectBufferATI(int buffer, int offset, int size, Addressable pointer, int preserve) {
+  public void glUpdateObjectBufferATI(int buffer, int offset, int size, MemorySegment pointer, int preserve) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4968,11 +4968,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWeightbvARB(int size, Addressable weights) {
+  public void glWeightbvARB(int size, MemorySegment weights) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawElementsInstancedARB(int mode, int count, int type, Addressable indices, int primcount) {
+  public void glDrawElementsInstancedARB(int mode, int count, int type, MemorySegment indices, int primcount) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -4980,11 +4980,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearNamedBufferSubData(int buffer, int internalformat, long offset, long size, int format, int type, Addressable data) {
+  public void glClearNamedBufferSubData(int buffer, int internalformat, long offset, long size, int format, int type, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs1fvNV(int index, int count, Addressable v) {
+  public void glVertexAttribs1fvNV(int index, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5004,7 +5004,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexParameterIuiv(int target, int pname, Addressable params) {
+  public void glGetTexParameterIuiv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5016,15 +5016,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSamplerParameterfv(int sampler, int pname, Addressable param) {
+  public void glSamplerParameterfv(int sampler, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoordP1uiv(int type, Addressable coords) {
+  public void glTexCoordP1uiv(int type, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenProgramPipelines(int n, Addressable pipelines) {
+  public void glGenProgramPipelines(int n, MemorySegment pipelines) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5036,23 +5036,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedBufferStorageEXT(int buffer, long size, Addressable data, int flags) {
+  public void glNamedBufferStorageEXT(int buffer, long size, MemorySegment data, int flags) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribP1uiv(int index, int type, byte normalized, Addressable value) {
+  public void glVertexAttribP1uiv(int index, int type, byte normalized, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexParameterIiv(int target, int pname, Addressable params) {
+  public void glTexParameterIiv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixLoadTransposedEXT(int mode, Addressable m) {
+  public void glMatrixLoadTransposedEXT(int mode, MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribLdvEXT(int index, int pname, Addressable params) {
+  public void glGetVertexAttribLdvEXT(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5060,15 +5060,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFirstPerfQueryIdINTEL(Addressable queryId) {
+  public void glGetFirstPerfQueryIdINTEL(MemorySegment queryId) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSamplerParameteriv(int sampler, int pname, Addressable param) {
+  public void glSamplerParameteriv(int sampler, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexEnvxv(int target, int pname, Addressable params) {
+  public void glTexEnvxv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5076,23 +5076,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glShadingRateSampleOrderCustomNV(int rate, int samples, Addressable locations) {
+  public void glShadingRateSampleOrderCustomNV(int rate, int samples, MemorySegment locations) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetAttachedShaders(int program, int maxCount, Addressable count, Addressable shaders) {
+  public void glGetAttachedShaders(int program, int maxCount, MemorySegment count, MemorySegment shaders) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVariantArrayObjectivATI(int id, int pname, Addressable params) {
+  public void glGetVariantArrayObjectivATI(int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib2fvARB(int index, Addressable v) {
+  public void glVertexAttrib2fvARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSemaphoreParameterivNV(int semaphore, int pname, Addressable params) {
+  public void glSemaphoreParameterivNV(int semaphore, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5100,11 +5100,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetConvolutionParameterivEXT(int target, int pname, Addressable params) {
+  public void glGetConvolutionParameterivEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetActiveUniformsiv(int program, int uniformCount, Addressable uniformIndices, int pname, Addressable params) {
+  public void glGetActiveUniformsiv(int program, int uniformCount, MemorySegment uniformIndices, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5112,11 +5112,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix3fvARB(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix3fvARB(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTransformPathNV(int resultPath, int srcPath, int transformType, Addressable transformValues) {
+  public void glTransformPathNV(int resultPath, int srcPath, int transformType, MemorySegment transformValues) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5128,19 +5128,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glExtGetProgramsQCOM(Addressable programs, int maxPrograms, Addressable numPrograms) {
+  public void glExtGetProgramsQCOM(MemorySegment programs, int maxPrograms, MemorySegment numPrograms) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform4i64vARB(int location, int count, Addressable value) {
+  public void glUniform4i64vARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord3dv(int target, Addressable v) {
+  public void glMultiTexCoord3dv(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBindSamplers(int first, int count, Addressable samplers) {
+  public void glBindSamplers(int first, int count, MemorySegment samplers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5152,7 +5152,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glViewportIndexedfvNV(int index, Addressable v) {
+  public void glViewportIndexedfvNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5160,15 +5160,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFramebufferParameterfvAMD(int target, int pname, int numsamples, int pixelindex, int size, Addressable values) {
+  public void glGetFramebufferParameterfvAMD(int target, int pname, int numsamples, int pixelindex, int size, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform1ui64vNV(int program, int location, int count, Addressable value) {
+  public void glProgramUniform1ui64vNV(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glExecuteProgramNV(int target, int id, Addressable params) {
+  public void glExecuteProgramNV(int target, int id, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5180,7 +5180,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReplacementCodePointerSUN(int type, int stride, Addressable pointer) {
+  public void glReplacementCodePointerSUN(int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5204,7 +5204,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord3fv(int target, Addressable v) {
+  public void glMultiTexCoord3fv(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5212,7 +5212,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedProgramLocalParametersI4uivEXT(int program, int target, int index, int count, Addressable params) {
+  public void glNamedProgramLocalParametersI4uivEXT(int program, int target, int index, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5220,23 +5220,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenNamesAMD(int identifier, int num, Addressable names) {
+  public void glGenNamesAMD(int identifier, int num, MemorySegment names) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetIntegeri_v(int target, int index, Addressable data) {
+  public void glGetIntegeri_v(int target, int index, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform4ivEXT(int program, int location, int count, Addressable value) {
+  public void glProgramUniform4ivEXT(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMultiTexParameterIivEXT(int texunit, int target, int pname, Addressable params) {
+  public void glGetMultiTexParameterIivEXT(int texunit, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glAttachObjectARB(Addressable containerObj, Addressable obj) {
+  public void glAttachObjectARB(MemorySegment containerObj, MemorySegment obj) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5244,7 +5244,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public Addressable glImportSyncEXT(int external_sync_type, long external_sync, int flags) {
+  public MemorySegment glImportSyncEXT(int external_sync_type, long external_sync, int flags) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5264,23 +5264,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixMultTransposedEXT(int mode, Addressable m) {
+  public void glMatrixMultTransposedEXT(int mode, MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetBufferParameteriv(int target, int pname, Addressable params) {
+  public void glGetBufferParameteriv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glExtGetFramebuffersQCOM(Addressable framebuffers, int maxFramebuffers, Addressable numFramebuffers) {
+  public void glExtGetFramebuffersQCOM(MemorySegment framebuffers, int maxFramebuffers, MemorySegment numFramebuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawBuffers(int n, Addressable bufs) {
+  public void glDrawBuffers(int n, MemorySegment bufs) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSharpenTexFuncSGIS(int target, int n, Addressable points) {
+  public void glSharpenTexFuncSGIS(int target, int n, MemorySegment points) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5288,19 +5288,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetInternalformatSampleivNV(int target, int internalformat, int samples, int pname, int count, Addressable params) {
+  public void glGetInternalformatSampleivNV(int target, int internalformat, int samples, int pname, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDebugMessageControlARB(int source, int type, int severity, int count, Addressable ids, byte enabled) {
+  public void glDebugMessageControlARB(int source, int type, int severity, int count, MemorySegment ids, byte enabled) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedProgramLocalParameterfvEXT(int program, int target, int index, Addressable params) {
+  public void glGetNamedProgramLocalParameterfvEXT(int program, int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetSemaphoreParameterivNV(int semaphore, int pname, Addressable params) {
+  public void glGetSemaphoreParameterivNV(int semaphore, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5308,19 +5308,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVideoui64vNV(int video_slot, int pname, Addressable params) {
+  public void glGetVideoui64vNV(int video_slot, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawElementsInstancedBaseVertexEXT(int mode, int count, int type, Addressable indices, int instancecount, int basevertex) {
+  public void glDrawElementsInstancedBaseVertexEXT(int mode, int count, int type, MemorySegment indices, int instancecount, int basevertex) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenQueriesARB(int n, Addressable ids) {
+  public void glGenQueriesARB(int n, MemorySegment ids) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetDoublei_v(int target, int index, Addressable data) {
+  public void glGetDoublei_v(int target, int index, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5328,7 +5328,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDetachObjectARB(Addressable containerObj, Addressable attachedObj) {
+  public void glDetachObjectARB(MemorySegment containerObj, MemorySegment attachedObj) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5336,7 +5336,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord3iv(int target, Addressable v) {
+  public void glMultiTexCoord3iv(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5344,7 +5344,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetColorTableParameterivEXT(int target, int pname, Addressable params) {
+  public void glGetColorTableParameterivEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5356,7 +5356,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribfvNV(int index, int pname, Addressable params) {
+  public void glGetVertexAttribfvNV(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5364,11 +5364,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform1ui64vARB(int program, int location, int count, Addressable value) {
+  public void glProgramUniform1ui64vARB(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedProgramStringEXT(int program, int target, int pname, Addressable string) {
+  public void glGetNamedProgramStringEXT(int program, int target, int pname, MemorySegment string) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5384,11 +5384,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMultiTexParameterfvEXT(int texunit, int target, int pname, Addressable params) {
+  public void glGetMultiTexParameterfvEXT(int texunit, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix2x4fvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix2x4fvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5400,11 +5400,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs4ubvNV(int index, int count, Addressable v) {
+  public void glVertexAttribs4ubvNV(int index, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetClipPlanexOES(int plane, Addressable equation) {
+  public void glGetClipPlanexOES(int plane, MemorySegment equation) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5412,27 +5412,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureParameterivEXT(int texture, int target, int pname, Addressable params) {
+  public void glTextureParameterivEXT(int texture, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform3uiv(int program, int location, int count, Addressable value) {
+  public void glProgramUniform3uiv(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix4x3fvNV(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix4x3fvNV(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib3sv(int index, Addressable v) {
+  public void glVertexAttrib3sv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColorSubTable(int target, int start, int count, int format, int type, Addressable data) {
+  public void glColorSubTable(int target, int start, int count, int format, int type, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public byte glAreTexturesResidentEXT(int n, Addressable textures, Addressable residences) {
+  public byte glAreTexturesResidentEXT(int n, MemorySegment textures, MemorySegment residences) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5440,7 +5440,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetConvolutionParameteriv(int target, int pname, Addressable params) {
+  public void glGetConvolutionParameteriv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5448,11 +5448,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexSubImage2DEXT(int texunit, int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, Addressable pixels) {
+  public void glMultiTexSubImage2DEXT(int texunit, int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetConvolutionParameterfv(int target, int pname, Addressable params) {
+  public void glGetConvolutionParameterfv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5460,7 +5460,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTextureImage2DEXT(int texture, int target, int level, int internalformat, int width, int height, int border, int imageSize, Addressable bits) {
+  public void glCompressedTextureImage2DEXT(int texture, int target, int level, int internalformat, int width, int height, int border, int imageSize, MemorySegment bits) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5468,7 +5468,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramStringARB(int target, int pname, Addressable string) {
+  public void glGetProgramStringARB(int target, int pname, MemorySegment string) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5476,7 +5476,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexPointerListIBM(int size, int type, int stride, Addressable pointer, int ptrstride) {
+  public void glVertexPointerListIBM(int size, int type, int stride, MemorySegment pointer, int ptrstride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5484,15 +5484,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramNamedParameterdvNV(int id, int len, Addressable name, Addressable params) {
+  public void glGetProgramNamedParameterdvNV(int id, int len, MemorySegment name, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform1iv(int program, int location, int count, Addressable value) {
+  public void glProgramUniform1iv(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSamplerParameterIuivOES(int sampler, int pname, Addressable param) {
+  public void glSamplerParameterIuivOES(int sampler, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5504,7 +5504,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMultiTexEnvfvEXT(int texunit, int target, int pname, Addressable params) {
+  public void glGetMultiTexEnvfvEXT(int texunit, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5516,27 +5516,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFixedv(int pname, Addressable params) {
+  public void glGetFixedv(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCreateFramebuffers(int n, Addressable framebuffers) {
+  public void glCreateFramebuffers(int n, MemorySegment framebuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetAttachedObjectsARB(Addressable containerObj, int maxCount, Addressable count, Addressable obj) {
+  public void glGetAttachedObjectsARB(MemorySegment containerObj, int maxCount, MemorySegment count, MemorySegment obj) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord2hvNV(Addressable v) {
+  public void glTexCoord2hvNV(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTangent3fvEXT(Addressable v) {
+  public void glTangent3fvEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glInsertEventMarkerEXT(int length, Addressable marker) {
+  public void glInsertEventMarkerEXT(int length, MemorySegment marker) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5544,15 +5544,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4NuivARB(int index, Addressable v) {
+  public void glVertexAttrib4NuivARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetCompressedTextureSubImage(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int bufSize, Addressable pixels) {
+  public void glGetCompressedTextureSubImage(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int bufSize, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetObjectPtrLabelKHR(Addressable ptr, int bufSize, Addressable length, Addressable label) {
+  public void glGetObjectPtrLabelKHR(MemorySegment ptr, int bufSize, MemorySegment length, MemorySegment label) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5564,11 +5564,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMulticastGetQueryObjectivNV(int gpu, int id, int pname, Addressable params) {
+  public void glMulticastGetQueryObjectivNV(int gpu, int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform1dvEXT(int program, int location, int count, Addressable value) {
+  public void glProgramUniform1dvEXT(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5576,7 +5576,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenVertexArraysOES(int n, Addressable arrays) {
+  public void glGenVertexArraysOES(int n, MemorySegment arrays) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5588,7 +5588,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord4ivARB(int target, Addressable v) {
+  public void glMultiTexCoord4ivARB(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5600,15 +5600,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTextureParameterIiv(int texture, int pname, Addressable params) {
+  public void glGetTextureParameterIiv(int texture, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribP3uiv(int index, int type, byte normalized, Addressable value) {
+  public void glVertexAttribP3uiv(int index, int type, byte normalized, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTransformFeedbackVaryingsEXT(int program, int count, Addressable varyings, int bufferMode) {
+  public void glTransformFeedbackVaryingsEXT(int program, int count, MemorySegment varyings, int bufferMode) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5616,11 +5616,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetFragDataLocation(int program, Addressable name) {
+  public int glGetFragDataLocation(int program, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3ubvEXT(Addressable v) {
+  public void glSecondaryColor3ubvEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5628,7 +5628,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexGenivEXT(int texunit, int coord, int pname, Addressable params) {
+  public void glMultiTexGenivEXT(int texunit, int coord, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5640,11 +5640,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib1hvNV(int index, Addressable v) {
+  public void glVertexAttrib1hvNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColor4ubVertex3fvSUN(Addressable c, Addressable v) {
+  public void glColor4ubVertex3fvSUN(MemorySegment c, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5664,7 +5664,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnUniformivKHR(int program, int location, int bufSize, Addressable params) {
+  public void glGetnUniformivKHR(int program, int location, int bufSize, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5676,7 +5676,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedProgramLocalParameterdvEXT(int program, int target, int index, Addressable params) {
+  public void glGetNamedProgramLocalParameterdvEXT(int program, int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5684,15 +5684,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteSemaphoresEXT(int n, Addressable semaphores) {
+  public void glDeleteSemaphoresEXT(int n, MemorySegment semaphores) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetBufferParameterivARB(int target, int pname, Addressable params) {
+  public void glGetBufferParameterivARB(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib1svNV(int index, Addressable v) {
+  public void glVertexAttrib1svNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5708,15 +5708,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReadnPixelsKHR(int x, int y, int width, int height, int format, int type, int bufSize, Addressable data) {
+  public void glReadnPixelsKHR(int x, int y, int width, int height, int format, int type, int bufSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI3iv(int index, Addressable v) {
+  public void glVertexAttribI3iv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix4x3dv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix4x3dv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5728,19 +5728,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNormalPointervINTEL(int type, Addressable pointer) {
+  public void glNormalPointervINTEL(int type, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix3x4fvNV(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix3x4fvNV(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPathParameterfvNV(int path, int pname, Addressable value) {
+  public void glGetPathParameterfvNV(int path, int pname, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public Addressable glFenceSyncAPPLE(int condition, int flags) {
+  public MemorySegment glFenceSyncAPPLE(int condition, int flags) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5768,15 +5768,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClipPlanexIMG(int p, Addressable eqn) {
+  public void glClipPlanexIMG(int p, MemorySegment eqn) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform4fvARB(int location, int count, Addressable value) {
+  public void glUniform4fvARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramParameterdvNV(int target, int index, int pname, Addressable params) {
+  public void glGetProgramParameterdvNV(int target, int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5784,27 +5784,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetInternalformati64v(int target, int internalformat, int pname, int count, Addressable params) {
+  public void glGetInternalformati64v(int target, int internalformat, int pname, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedBufferParameteriv(int buffer, int pname, Addressable params) {
+  public void glGetNamedBufferParameteriv(int buffer, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glPathGlyphIndexArrayNV(int firstPathName, int fontTarget, Addressable fontName, int fontStyle, int firstGlyphIndex, int numGlyphs, int pathParameterTemplate, float emScale) {
+  public int glPathGlyphIndexArrayNV(int firstPathName, int fontTarget, MemorySegment fontName, int fontStyle, int firstGlyphIndex, int numGlyphs, int pathParameterTemplate, float emScale) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVariantIntegervEXT(int id, int value, Addressable data) {
+  public void glGetVariantIntegervEXT(int id, int value, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform4ui64vNV(int location, int count, Addressable value) {
+  public void glUniform4ui64vNV(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3uiv(Addressable v) {
+  public void glSecondaryColor3uiv(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5812,11 +5812,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix4x3fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix4x3fv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glConvolutionFilter2DEXT(int target, int internalformat, int width, int height, int format, int type, Addressable image) {
+  public void glConvolutionFilter2DEXT(int target, int internalformat, int width, int height, int format, int type, MemorySegment image) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5824,7 +5824,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawBuffersARB(int n, Addressable bufs) {
+  public void glDrawBuffersARB(int n, MemorySegment bufs) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5832,15 +5832,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDebugMessageCallbackKHR(Addressable callback, Addressable userParam) {
+  public void glDebugMessageCallbackKHR(MemorySegment callback, MemorySegment userParam) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform4i64vNV(int program, int location, int count, Addressable value) {
+  public void glProgramUniform4i64vNV(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenTransformFeedbacks(int n, Addressable ids) {
+  public void glGenTransformFeedbacks(int n, MemorySegment ids) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5852,7 +5852,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSetFragmentShaderConstantATI(int dst, Addressable value) {
+  public void glSetFragmentShaderConstantATI(int dst, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5864,15 +5864,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib3fv(int index, Addressable v) {
+  public void glVertexAttrib3fv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPixelMapxv(int map, int size, Addressable values) {
+  public void glGetPixelMapxv(int map, int size, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI4usvEXT(int index, Addressable v) {
+  public void glVertexAttribI4usvEXT(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5888,11 +5888,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTextureLevelParameterfvEXT(int texture, int target, int level, int pname, Addressable params) {
+  public void glGetTextureLevelParameterfvEXT(int texture, int target, int level, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glImageTransformParameterivHP(int target, int pname, Addressable params) {
+  public void glImageTransformParameterivHP(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5900,7 +5900,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetUniformuiv(int program, int location, Addressable params) {
+  public void glGetUniformuiv(int program, int location, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5912,27 +5912,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord1sv(int target, Addressable v) {
+  public void glMultiTexCoord1sv(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTransformFeedbackVaryingsNV(int program, int count, Addressable locations, int bufferMode) {
+  public void glTransformFeedbackVaryingsNV(int program, int count, MemorySegment locations, int bufferMode) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3ubv(Addressable v) {
+  public void glSecondaryColor3ubv(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSeparableFilter2D(int target, int internalformat, int width, int height, int format, int type, Addressable row, Addressable column) {
+  public void glSeparableFilter2D(int target, int internalformat, int width, int height, int format, int type, MemorySegment row, MemorySegment column) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteVertexArraysAPPLE(int n, Addressable arrays) {
+  public void glDeleteVertexArraysAPPLE(int n, MemorySegment arrays) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPathMetricsNV(int metricQueryMask, int numPaths, int pathNameType, Addressable paths, int pathBase, int stride, Addressable metrics) {
+  public void glGetPathMetricsNV(int metricQueryMask, int numPaths, int pathNameType, MemorySegment paths, int pathBase, int stride, MemorySegment metrics) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5940,7 +5940,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix4x3fv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix4x3fv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5952,7 +5952,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMultiTexLevelParameterivEXT(int texunit, int target, int level, int pname, Addressable params) {
+  public void glGetMultiTexLevelParameterivEXT(int texunit, int target, int level, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5960,7 +5960,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPathGlyphsNV(int firstPathName, int fontTarget, Addressable fontName, int fontStyle, int numGlyphs, int type, Addressable charcodes, int handleMissingGlyphs, int pathParameterTemplate, float emScale) {
+  public void glPathGlyphsNV(int firstPathName, int fontTarget, MemorySegment fontName, int fontStyle, int numGlyphs, int type, MemorySegment charcodes, int handleMissingGlyphs, int pathParameterTemplate, float emScale) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5968,7 +5968,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedFramebufferDrawBuffers(int framebuffer, int n, Addressable bufs) {
+  public void glNamedFramebufferDrawBuffers(int framebuffer, int n, MemorySegment bufs) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5976,11 +5976,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawElementsIndirectBindlessCountNV(int mode, int type, Addressable indirect, int drawCount, int maxDrawCount, int stride, int vertexBufferCount) {
+  public void glMultiDrawElementsIndirectBindlessCountNV(int mode, int type, MemorySegment indirect, int drawCount, int maxDrawCount, int stride, int vertexBufferCount) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public Addressable glCreateProgramObjectARB() {
+  public MemorySegment glCreateProgramObjectARB() {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -5996,7 +5996,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib3dv(int index, Addressable v) {
+  public void glVertexAttrib3dv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6004,7 +6004,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawElementsBaseVertex(int mode, int count, int type, Addressable indices, int basevertex) {
+  public void glDrawElementsBaseVertex(int mode, int count, int type, MemorySegment indices, int basevertex) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6012,7 +6012,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL4dv(int index, Addressable v) {
+  public void glVertexAttribL4dv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6020,7 +6020,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos2ivMESA(Addressable v) {
+  public void glWindowPos2ivMESA(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6032,11 +6032,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnPixelMapfv(int map, int bufSize, Addressable values) {
+  public void glGetnPixelMapfv(int map, int bufSize, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFogFuncSGIS(Addressable points) {
+  public void glGetFogFuncSGIS(MemorySegment points) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6044,7 +6044,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform3ivARB(int location, int count, Addressable value) {
+  public void glUniform3ivARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6052,7 +6052,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDiscardFramebufferEXT(int target, int numAttachments, Addressable attachments) {
+  public void glDiscardFramebufferEXT(int target, int numAttachments, MemorySegment attachments) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6060,11 +6060,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix4x3dv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix4x3dv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertex3xvOES(Addressable coords) {
+  public void glVertex3xvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6072,7 +6072,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public Addressable glCreateShaderObjectARB(int shaderType) {
+  public MemorySegment glCreateShaderObjectARB(int shaderType) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6080,11 +6080,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMapVertexAttrib2fAPPLE(int index, int size, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, Addressable points) {
+  public void glMapVertexAttrib2fAPPLE(int index, int size, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, MemorySegment points) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCullParameterdvEXT(int pname, Addressable params) {
+  public void glCullParameterdvEXT(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6092,11 +6092,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4dv(int index, Addressable v) {
+  public void glVertexAttrib4dv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glListParameterivSGIX(int list, int pname, Addressable params) {
+  public void glListParameterivSGIX(int list, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6104,7 +6104,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetHistogramParameteriv(int target, int pname, Addressable params) {
+  public void glGetHistogramParameteriv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6112,11 +6112,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos4ivMESA(Addressable v) {
+  public void glWindowPos4ivMESA(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord2iv(int target, Addressable v) {
+  public void glMultiTexCoord2iv(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6124,7 +6124,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetListParameterfvSGIX(int list, int pname, Addressable params) {
+  public void glGetListParameterfvSGIX(int list, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6144,27 +6144,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetInvariantBooleanvEXT(int id, int value, Addressable data) {
+  public void glGetInvariantBooleanvEXT(int id, int value, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMultiTexParameterIuivEXT(int texunit, int target, int pname, Addressable params) {
+  public void glGetMultiTexParameterIuivEXT(int texunit, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetInteger64v(int pname, Addressable data) {
+  public void glGetInteger64v(int pname, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSamplerParameterIivOES(int sampler, int pname, Addressable param) {
+  public void glSamplerParameterIivOES(int sampler, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexParameterIuivEXT(int target, int pname, Addressable params) {
+  public void glGetTexParameterIuivEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos2fv(Addressable v) {
+  public void glWindowPos2fv(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6172,11 +6172,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glFinishAsyncSGIX(Addressable markerp) {
+  public int glFinishAsyncSGIX(MemorySegment markerp) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetSynciv(Addressable sync, int pname, int count, Addressable length, Addressable values) {
+  public void glGetSynciv(MemorySegment sync, int pname, int count, MemorySegment length, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6188,15 +6188,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4bv(int index, Addressable v) {
+  public void glVertexAttrib4bv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramParameter4dvNV(int target, int index, Addressable v) {
+  public void glProgramParameter4dvNV(int target, int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramNamedParameter4dNV(int id, int len, Addressable name, double x, double y, double z, double w) {
+  public void glProgramNamedParameter4dNV(int id, int len, MemorySegment name, double x, double y, double z, double w) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6220,7 +6220,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glExtGetProgramBinarySourceQCOM(int program, int shadertype, Addressable source, Addressable length) {
+  public void glExtGetProgramBinarySourceQCOM(int program, int shadertype, MemorySegment source, MemorySegment length) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6228,19 +6228,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetHistogramParameterfv(int target, int pname, Addressable params) {
+  public void glGetHistogramParameterfv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenBuffers(int n, Addressable buffers) {
+  public void glGenBuffers(int n, MemorySegment buffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawArraysIndirectBindlessNV(int mode, Addressable indirect, int drawCount, int stride, int vertexBufferCount) {
+  public void glMultiDrawArraysIndirectBindlessNV(int mode, MemorySegment indirect, int drawCount, int stride, int vertexBufferCount) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMulticastGetQueryObjectuivNV(int gpu, int id, int pname, Addressable params) {
+  public void glMulticastGetQueryObjectuivNV(int gpu, int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6252,11 +6252,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib3dvNV(int index, Addressable v) {
+  public void glVertexAttrib3dvNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos2dv(Addressable v) {
+  public void glWindowPos2dv(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6276,27 +6276,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord4xvOES(int texture, Addressable coords) {
+  public void glMultiTexCoord4xvOES(int texture, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glCreateShaderProgramv(int type, int count, Addressable strings) {
+  public int glCreateShaderProgramv(int type, int count, MemorySegment strings) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnSeparableFilterARB(int target, int format, int type, int rowBufSize, Addressable row, int columnBufSize, Addressable column, Addressable span) {
+  public void glGetnSeparableFilterARB(int target, int format, int type, int rowBufSize, MemorySegment row, int columnBufSize, MemorySegment column, MemorySegment span) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix4fv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix4fv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTransformFeedbackVarying(int program, int index, int bufSize, Addressable length, Addressable size, Addressable type, Addressable name) {
+  public void glGetTransformFeedbackVarying(int program, int index, int bufSize, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4fvNV(int index, Addressable v) {
+  public void glVertexAttrib4fvNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6304,11 +6304,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawBuffersATI(int n, Addressable bufs) {
+  public void glDrawBuffersATI(int n, MemorySegment bufs) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFogxv(int pname, Addressable param) {
+  public void glFogxv(int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6324,23 +6324,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetDebugMessageLogKHR(int count, int bufSize, Addressable sources, Addressable types, Addressable ids, Addressable severities, Addressable lengths, Addressable messageLog) {
+  public int glGetDebugMessageLogKHR(int count, int bufSize, MemorySegment sources, MemorySegment types, MemorySegment ids, MemorySegment severities, MemorySegment lengths, MemorySegment messageLog) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4dvARB(int index, Addressable v) {
+  public void glVertexAttrib4dvARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexImage4DSGIS(int target, int level, int internalformat, int width, int height, int depth, int size4d, int border, int format, int type, Addressable pixels) {
+  public void glTexImage4DSGIS(int target, int level, int internalformat, int width, int height, int depth, int size4d, int border, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix4dv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix4dv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteTexturesEXT(int n, Addressable textures) {
+  public void glDeleteTexturesEXT(int n, MemorySegment textures) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6348,19 +6348,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVideoCaptureivNV(int video_capture_slot, int pname, Addressable params) {
+  public void glGetVideoCaptureivNV(int video_capture_slot, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNormalStream3dvATI(int stream, Addressable coords) {
+  public void glNormalStream3dvATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTangent3bvEXT(Addressable v) {
+  public void glTangent3bvEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos2iv(Addressable v) {
+  public void glWindowPos2iv(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6368,11 +6368,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexSubImage1DEXT(int target, int level, int xoffset, int width, int format, int type, Addressable pixels) {
+  public void glTexSubImage1DEXT(int target, int level, int xoffset, int width, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramSubroutineParameteruivNV(int target, int index, Addressable param) {
+  public void glGetProgramSubroutineParameteruivNV(int target, int index, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6380,7 +6380,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawTexfvOES(Addressable coords) {
+  public void glDrawTexfvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6392,7 +6392,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMinmaxParameterfv(int target, int pname, Addressable params) {
+  public void glGetMinmaxParameterfv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6400,11 +6400,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos3fvMESA(Addressable v) {
+  public void glWindowPos3fvMESA(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMulticastGetQueryObjectui64vNV(int gpu, int id, int pname, Addressable params) {
+  public void glMulticastGetQueryObjectui64vNV(int gpu, int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6412,11 +6412,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramBinaryOES(int program, int binaryFormat, Addressable binary, int length) {
+  public void glProgramBinaryOES(int program, int binaryFormat, MemorySegment binary, int length) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetLightxOES(int light, int pname, Addressable params) {
+  public void glGetLightxOES(int light, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6428,19 +6428,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawElementsIndirectBindlessNV(int mode, int type, Addressable indirect, int drawCount, int stride, int vertexBufferCount) {
+  public void glMultiDrawElementsIndirectBindlessNV(int mode, int type, MemorySegment indirect, int drawCount, int stride, int vertexBufferCount) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteBuffersARB(int n, Addressable buffers) {
+  public void glDeleteBuffersARB(int n, MemorySegment buffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL3ui64vNV(int index, Addressable v) {
+  public void glVertexAttribL3ui64vNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetArrayObjectivATI(int array, int pname, Addressable params) {
+  public void glGetArrayObjectivATI(int array, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6448,7 +6448,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNormalStream3svATI(int stream, Addressable coords) {
+  public void glNormalStream3svATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6456,11 +6456,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMinmaxParameteriv(int target, int pname, Addressable params) {
+  public void glGetMinmaxParameteriv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVariantusvEXT(int id, Addressable addr) {
+  public void glVariantusvEXT(int id, MemorySegment addr) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6472,11 +6472,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform3uivEXT(int program, int location, int count, Addressable value) {
+  public void glProgramUniform3uivEXT(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexArrayPointervEXT(int vaobj, int pname, Addressable param) {
+  public void glGetVertexArrayPointervEXT(int vaobj, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6484,7 +6484,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompileShaderARB(Addressable shaderObj) {
+  public void glCompileShaderARB(MemorySegment shaderObj) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6496,19 +6496,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedMultiTexImage1DEXT(int texunit, int target, int level, int internalformat, int width, int border, int imageSize, Addressable bits) {
+  public void glCompressedMultiTexImage1DEXT(int texunit, int target, int level, int internalformat, int width, int border, int imageSize, MemorySegment bits) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearNamedBufferSubDataEXT(int buffer, int internalformat, long offset, long size, int format, int type, Addressable data) {
+  public void glClearNamedBufferSubDataEXT(int buffer, int internalformat, long offset, long size, int format, int type, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetInvariantIntegervEXT(int id, int value, Addressable data) {
+  public void glGetInvariantIntegervEXT(int id, int value, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCreateSemaphoresNV(int n, Addressable semaphores) {
+  public void glCreateSemaphoresNV(int n, MemorySegment semaphores) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6516,7 +6516,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glConvolutionParameterxvOES(int target, int pname, Addressable params) {
+  public void glConvolutionParameterxvOES(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6528,7 +6528,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNormal3fVertex3fvSUN(Addressable n, Addressable v) {
+  public void glNormal3fVertex3fvSUN(MemorySegment n, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6548,7 +6548,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glViewportIndexedfv(int index, Addressable v) {
+  public void glViewportIndexedfv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6556,7 +6556,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramParameters4dvNV(int target, int index, int count, Addressable v) {
+  public void glProgramParameters4dvNV(int target, int index, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6564,19 +6564,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedBufferSubData(int buffer, long offset, long size, Addressable data) {
+  public void glGetNamedBufferSubData(int buffer, long offset, long size, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTransformFeedbackStreamAttribsNV(int count, Addressable attribs, int nbuffers, Addressable bufstreams, int bufferMode) {
+  public void glTransformFeedbackStreamAttribsNV(int count, MemorySegment attribs, int nbuffers, MemorySegment bufstreams, int bufferMode) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix2fvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix2fvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPushGroupMarkerEXT(int length, Addressable marker) {
+  public void glPushGroupMarkerEXT(int length, MemorySegment marker) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6588,23 +6588,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramEnvParameter4dvARB(int target, int index, Addressable params) {
+  public void glProgramEnvParameter4dvARB(int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnMapdvARB(int target, int query, int bufSize, Addressable v) {
+  public void glGetnMapdvARB(int target, int query, int bufSize, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTangentPointerEXT(int type, int stride, Addressable pointer) {
+  public void glTangentPointerEXT(int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform1fv(int program, int location, int count, Addressable value) {
+  public void glProgramUniform1fv(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixMultdEXT(int mode, Addressable m) {
+  public void glMatrixMultdEXT(int mode, MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6612,23 +6612,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedProgramLocalParameter4dvEXT(int program, int target, int index, Addressable params) {
+  public void glNamedProgramLocalParameter4dvEXT(int program, int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTexImage3DARB(int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, Addressable data) {
+  public void glCompressedTexImage3DARB(int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord2dv(int target, Addressable v) {
+  public void glMultiTexCoord2dv(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glStencilStrokePathInstancedNV(int numPaths, int pathNameType, Addressable paths, int pathBase, int reference, int mask, int transformType, Addressable transformValues) {
+  public void glStencilStrokePathInstancedNV(int numPaths, int pathNameType, MemorySegment paths, int pathBase, int reference, int mask, int transformType, MemorySegment transformValues) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexArrayPointeri_vEXT(int vaobj, int index, int pname, Addressable param) {
+  public void glGetVertexArrayPointeri_vEXT(int vaobj, int index, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6640,19 +6640,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetProgramResourceLocation(int program, int programInterface, Addressable name) {
+  public int glGetProgramResourceLocation(int program, int programInterface, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord2dvARB(int target, Addressable v) {
+  public void glMultiTexCoord2dvARB(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos2ivARB(Addressable v) {
+  public void glWindowPos2ivARB(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetHistogram(int target, byte reset, int format, int type, Addressable values) {
+  public void glGetHistogram(int target, byte reset, int format, int type, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6664,7 +6664,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform1dv(int program, int location, int count, Addressable value) {
+  public void glProgramUniform1dv(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6676,11 +6676,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetHistogramParameterxvOES(int target, int pname, Addressable params) {
+  public void glGetHistogramParameterxvOES(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord2fv(int target, Addressable v) {
+  public void glMultiTexCoord2fv(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6696,7 +6696,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glEdgeFlagPointerEXT(int stride, int count, Addressable pointer) {
+  public void glEdgeFlagPointerEXT(int stride, int count, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6708,19 +6708,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribPointerARB(int index, int size, int type, byte normalized, int stride, Addressable pointer) {
+  public void glVertexAttribPointerARB(int index, int size, int type, byte normalized, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3svEXT(Addressable v) {
+  public void glSecondaryColor3svEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFogxvOES(int pname, Addressable param) {
+  public void glFogxvOES(int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawRangeElementsBaseVertex(int mode, int start, int end, int count, int type, Addressable indices, int basevertex) {
+  public void glDrawRangeElementsBaseVertex(int mode, int start, int end, int count, int type, MemorySegment indices, int basevertex) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6732,7 +6732,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glObjectPtrLabel(Addressable ptr, int length, Addressable label) {
+  public void glObjectPtrLabel(MemorySegment ptr, int length, MemorySegment label) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6740,7 +6740,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFinalCombinerInputParameterfvNV(int variable, int pname, Addressable params) {
+  public void glGetFinalCombinerInputParameterfvNV(int variable, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6748,7 +6748,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexParameterIiv(int target, int pname, Addressable params) {
+  public void glGetTexParameterIiv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6764,11 +6764,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramLocalParameterI4ivNV(int target, int index, Addressable params) {
+  public void glProgramLocalParameterI4ivNV(int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSetInvariantEXT(int id, int type, Addressable addr) {
+  public void glSetInvariantEXT(int id, int type, MemorySegment addr) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6776,19 +6776,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFogCoordPointerEXT(int type, int stride, Addressable pointer) {
+  public void glFogCoordPointerEXT(int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramBufferParametersfvNV(int target, int bindingIndex, int wordIndex, int count, Addressable params) {
+  public void glProgramBufferParametersfvNV(int target, int bindingIndex, int wordIndex, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCombinerParameterivNV(int pname, Addressable params) {
+  public void glCombinerParameterivNV(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnUniformfv(int program, int location, int bufSize, Addressable params) {
+  public void glGetnUniformfv(int program, int location, int bufSize, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6796,11 +6796,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4Nsv(int index, Addressable v) {
+  public void glVertexAttrib4Nsv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform4i64vARB(int program, int location, int count, Addressable value) {
+  public void glProgramUniform4i64vARB(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6808,11 +6808,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glInvalidateNamedFramebufferSubData(int framebuffer, int numAttachments, Addressable attachments, int x, int y, int width, int height) {
+  public void glInvalidateNamedFramebufferSubData(int framebuffer, int numAttachments, MemorySegment attachments, int x, int y, int width, int height) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColorPointerListIBM(int size, int type, int stride, Addressable pointer, int ptrstride) {
+  public void glColorPointerListIBM(int size, int type, int stride, MemorySegment pointer, int ptrstride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6824,15 +6824,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetColorTableParameterfvSGI(int target, int pname, Addressable params) {
+  public void glGetColorTableParameterfvSGI(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTransformFeedbacki_v(int xfb, int pname, int index, Addressable param) {
+  public void glGetTransformFeedbacki_v(int xfb, int pname, int index, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glScissorArrayv(int first, int count, Addressable v) {
+  public void glScissorArrayv(int first, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6840,15 +6840,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReplacementCodeubvSUN(Addressable code) {
+  public void glReplacementCodeubvSUN(MemorySegment code) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord2svARB(int target, Addressable v) {
+  public void glMultiTexCoord2svARB(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawElementsIndirectCount(int mode, int type, Addressable indirect, long drawcount, int maxdrawcount, int stride) {
+  public void glMultiDrawElementsIndirectCount(int mode, int type, MemorySegment indirect, long drawcount, int maxdrawcount, int stride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6856,7 +6856,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixIndexubvARB(int size, Addressable indices) {
+  public void glMatrixIndexubvARB(int size, MemorySegment indices) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6864,11 +6864,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDebugMessageEnableAMD(int category, int severity, int count, Addressable ids, byte enabled) {
+  public void glDebugMessageEnableAMD(int category, int severity, int count, MemorySegment ids, byte enabled) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPointParameterfvSGIS(int pname, Addressable params) {
+  public void glPointParameterfvSGIS(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6876,7 +6876,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetUniformLocation(int program, Addressable name) {
+  public int glGetUniformLocation(int program, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6892,7 +6892,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSpriteParameterfvSGIX(int pname, Addressable params) {
+  public void glSpriteParameterfvSGIX(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6904,7 +6904,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord3xvOES(int texture, Addressable coords) {
+  public void glMultiTexCoord3xvOES(int texture, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6912,7 +6912,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMultisamplefv(int pname, int index, Addressable val) {
+  public void glGetMultisamplefv(int pname, int index, MemorySegment val) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6920,15 +6920,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetInternalformativ(int target, int internalformat, int pname, int count, Addressable params) {
+  public void glGetInternalformativ(int target, int internalformat, int pname, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDepthRangeArrayfvNV(int first, int count, Addressable v) {
+  public void glDepthRangeArrayfvNV(int first, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBufferSubData(int target, long offset, long size, Addressable data) {
+  public void glBufferSubData(int target, long offset, long size, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6936,11 +6936,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetSyncivAPPLE(Addressable sync, int pname, int count, Addressable length, Addressable values) {
+  public void glGetSyncivAPPLE(MemorySegment sync, int pname, int count, MemorySegment length, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4ubvNV(int index, Addressable v) {
+  public void glVertexAttrib4ubvNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6948,7 +6948,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexWeightfvEXT(Addressable weight) {
+  public void glVertexWeightfvEXT(MemorySegment weight) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6956,7 +6956,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glCreateShaderProgramEXT(int type, Addressable string) {
+  public int glCreateShaderProgramEXT(int type, MemorySegment string) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6972,7 +6972,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetDoubleIndexedvEXT(int target, int index, Addressable data) {
+  public void glGetDoubleIndexedvEXT(int target, int index, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -6988,19 +6988,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedStringARB(int type, int namelen, Addressable name, int stringlen, Addressable string) {
+  public void glNamedStringARB(int type, int namelen, MemorySegment name, int stringlen, MemorySegment string) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord1xvOES(Addressable coords) {
+  public void glTexCoord1xvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetUniformfvARB(Addressable programObj, int location, Addressable params) {
+  public void glGetUniformfvARB(MemorySegment programObj, int location, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoordPointervINTEL(int size, int type, Addressable pointer) {
+  public void glTexCoordPointervINTEL(int size, int type, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7008,19 +7008,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord2fColor3fVertex3fvSUN(Addressable tc, Addressable c, Addressable v) {
+  public void glTexCoord2fColor3fVertex3fvSUN(MemorySegment tc, MemorySegment c, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVariantArrayObjectfvATI(int id, int pname, Addressable params) {
+  public void glGetVariantArrayObjectfvATI(int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform4fvEXT(int program, int location, int count, Addressable value) {
+  public void glProgramUniform4fvEXT(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform2i64vNV(int program, int location, int count, Addressable value) {
+  public void glProgramUniform2i64vNV(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7028,7 +7028,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnUniformdv(int program, int location, int bufSize, Addressable params) {
+  public void glGetnUniformdv(int program, int location, int bufSize, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7044,15 +7044,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteNamedStringARB(int namelen, Addressable name) {
+  public void glDeleteNamedStringARB(int namelen, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(Addressable rc, Addressable tc, Addressable n, Addressable v) {
+  public void glReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN(MemorySegment rc, MemorySegment tc, MemorySegment n, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBindTextures(int first, int count, Addressable textures) {
+  public void glBindTextures(int first, int count, MemorySegment textures) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7060,11 +7060,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedFramebufferSampleLocationsfvNV(int framebuffer, int start, int count, Addressable v) {
+  public void glNamedFramebufferSampleLocationsfvNV(int framebuffer, int start, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform1i64vARB(int program, int location, int count, Addressable value) {
+  public void glProgramUniform1i64vARB(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7072,19 +7072,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glStencilThenCoverFillPathInstancedNV(int numPaths, int pathNameType, Addressable paths, int pathBase, int fillMode, int mask, int coverMode, int transformType, Addressable transformValues) {
+  public void glStencilThenCoverFillPathInstancedNV(int numPaths, int pathNameType, MemorySegment paths, int pathBase, int fillMode, int mask, int coverMode, int transformType, MemorySegment transformValues) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformSubroutinesuiv(int shadertype, int count, Addressable indices) {
+  public void glUniformSubroutinesuiv(int shadertype, int count, MemorySegment indices) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glIndexPointerListIBM(int type, int stride, Addressable pointer, int ptrstride) {
+  public void glIndexPointerListIBM(int type, int stride, MemorySegment pointer, int ptrstride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexStream4dvATI(int stream, Addressable coords) {
+  public void glVertexStream4dvATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7096,7 +7096,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glValidateProgramARB(Addressable programObj) {
+  public void glValidateProgramARB(MemorySegment programObj) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7108,7 +7108,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnTexImageARB(int target, int level, int format, int type, int bufSize, Addressable img) {
+  public void glGetnTexImageARB(int target, int level, int format, int type, int bufSize, MemorySegment img) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7116,7 +7116,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetAttribLocationARB(Addressable programObj, Addressable name) {
+  public int glGetAttribLocationARB(MemorySegment programObj, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7124,7 +7124,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedBufferSubDataEXT(int buffer, long offset, long size, Addressable data) {
+  public void glGetNamedBufferSubDataEXT(int buffer, long offset, long size, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7132,15 +7132,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glScissorIndexedv(int index, Addressable v) {
+  public void glScissorIndexedv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos2fvARB(Addressable v) {
+  public void glWindowPos2fvARB(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCoverageModulationTableNV(int n, Addressable v) {
+  public void glCoverageModulationTableNV(int n, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7156,15 +7156,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos4svMESA(Addressable v) {
+  public void glWindowPos4svMESA(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoordP2uiv(int texture, int type, Addressable coords) {
+  public void glMultiTexCoordP2uiv(int texture, int type, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTextureSubImage2DEXT(int texture, int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, Addressable bits) {
+  public void glCompressedTextureSubImage2DEXT(int texture, int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, MemorySegment bits) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7176,7 +7176,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glShadingRateImagePaletteNV(int viewport, int first, int count, Addressable rates) {
+  public void glShadingRateImagePaletteNV(int viewport, int first, int count, MemorySegment rates) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7184,7 +7184,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glObjectPtrLabelKHR(Addressable ptr, int length, Addressable label) {
+  public void glObjectPtrLabelKHR(MemorySegment ptr, int length, MemorySegment label) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7196,15 +7196,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glLoadTransposeMatrixfARB(Addressable m) {
+  public void glLoadTransposeMatrixfARB(MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedBufferParameterivEXT(int buffer, int pname, Addressable params) {
+  public void glGetNamedBufferParameterivEXT(int buffer, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawArraysIndirectCountARB(int mode, Addressable indirect, long drawcount, int maxdrawcount, int stride) {
+  public void glMultiDrawArraysIndirectCountARB(int mode, MemorySegment indirect, long drawcount, int maxdrawcount, int stride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7216,19 +7216,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glScissorArrayvNV(int first, int count, Addressable v) {
+  public void glScissorArrayvNV(int first, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWeightivARB(int size, Addressable weights) {
+  public void glWeightivARB(int size, MemorySegment weights) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedBufferParameterui64vNV(int buffer, int pname, Addressable params) {
+  public void glGetNamedBufferParameterui64vNV(int buffer, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureImage2DEXT(int texture, int target, int level, int internalformat, int width, int height, int border, int format, int type, Addressable pixels) {
+  public void glTextureImage2DEXT(int texture, int target, int level, int internalformat, int width, int height, int border, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7256,7 +7256,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexArrayIndexediv(int vaobj, int index, int pname, Addressable param) {
+  public void glGetVertexArrayIndexediv(int vaobj, int index, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7264,27 +7264,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetUniformui64vNV(int program, int location, Addressable params) {
+  public void glGetUniformui64vNV(int program, int location, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPathParameterivNV(int path, int pname, Addressable value) {
+  public void glPathParameterivNV(int path, int pname, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix4x2dv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix4x2dv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPerfCounterInfoINTEL(int queryId, int counterId, int counterNameLength, Addressable counterName, int counterDescLength, Addressable counterDesc, Addressable counterOffset, Addressable counterDataSize, Addressable counterTypeEnum, Addressable counterDataTypeEnum, Addressable rawCounterMaxValue) {
+  public void glGetPerfCounterInfoINTEL(int queryId, int counterId, int counterNameLength, MemorySegment counterName, int counterDescLength, MemorySegment counterDesc, MemorySegment counterOffset, MemorySegment counterDataSize, MemorySegment counterTypeEnum, MemorySegment counterDataTypeEnum, MemorySegment rawCounterMaxValue) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public Addressable glGetHandleARB(int pname) {
+  public MemorySegment glGetHandleARB(int pname) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetSeparableFilterEXT(int target, int format, int type, Addressable row, Addressable column, Addressable span) {
+  public void glGetSeparableFilterEXT(int target, int format, int type, MemorySegment row, MemorySegment column, MemorySegment span) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7292,7 +7292,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramPathFragmentInputGenNV(int program, int location, int genMode, int components, Addressable coeffs) {
+  public void glProgramPathFragmentInputGenNV(int program, int location, int genMode, int components, MemorySegment coeffs) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7300,15 +7300,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoordP2uiv(int type, Addressable coords) {
+  public void glTexCoordP2uiv(int type, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawElementArrayAPPLE(int mode, Addressable first, Addressable count, int primcount) {
+  public void glMultiDrawElementArrayAPPLE(int mode, MemorySegment first, MemorySegment count, int primcount) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib2fv(int index, Addressable v) {
+  public void glVertexAttrib2fv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7316,11 +7316,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColorPointerEXT(int size, int type, int stride, Addressable pointer) {
+  public void glSecondaryColorPointerEXT(int size, int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4usvARB(int index, Addressable v) {
+  public void glVertexAttrib4usvARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7328,31 +7328,31 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSamplerParameterIivEXT(int sampler, int pname, Addressable param) {
+  public void glSamplerParameterIivEXT(int sampler, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramLocalParameterfvARB(int target, int index, Addressable params) {
+  public void glGetProgramLocalParameterfvARB(int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribivARB(int index, int pname, Addressable params) {
+  public void glGetVertexAttribivARB(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glExtGetRenderbuffersQCOM(Addressable renderbuffers, int maxRenderbuffers, Addressable numRenderbuffers) {
+  public void glExtGetRenderbuffersQCOM(MemorySegment renderbuffers, int maxRenderbuffers, MemorySegment numRenderbuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib2dv(int index, Addressable v) {
+  public void glVertexAttrib2dv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL3dv(int index, Addressable v) {
+  public void glVertexAttribL3dv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix4x2fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix4x2fv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7360,11 +7360,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetActiveVaryingNV(int program, int index, int bufSize, Addressable length, Addressable size, Addressable type, Addressable name) {
+  public void glGetActiveVaryingNV(int program, int index, int bufSize, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawArrays(int mode, Addressable first, Addressable count, int drawcount) {
+  public void glMultiDrawArrays(int mode, MemorySegment first, MemorySegment count, int drawcount) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7372,7 +7372,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetAttribLocation(int program, Addressable name) {
+  public int glGetAttribLocation(int program, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7380,11 +7380,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs1dvNV(int index, int count, Addressable v) {
+  public void glVertexAttribs1dvNV(int index, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos2sv(Addressable v) {
+  public void glWindowPos2sv(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7392,7 +7392,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix4x2dv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix4x2dv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7400,19 +7400,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexGenfvOES(int coord, int pname, Addressable params) {
+  public void glTexGenfvOES(int coord, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawArraysIndirect(int mode, Addressable indirect, int drawcount, int stride) {
+  public void glMultiDrawArraysIndirect(int mode, MemorySegment indirect, int drawcount, int stride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteProgramsARB(int n, Addressable programs) {
+  public void glDeleteProgramsARB(int n, MemorySegment programs) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixIndexPointerOES(int size, int type, int stride, Addressable pointer) {
+  public void glMatrixIndexPointerOES(int size, int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7420,11 +7420,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix2dv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix2dv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMapParameterfvNV(int target, int pname, Addressable params) {
+  public void glMapParameterfvNV(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7432,7 +7432,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultTransposeMatrixxOES(Addressable m) {
+  public void glMultTransposeMatrixxOES(MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7440,7 +7440,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI2iv(int index, Addressable v) {
+  public void glVertexAttribI2iv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7452,11 +7452,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedFramebufferParameteriv(int framebuffer, int pname, Addressable param) {
+  public void glGetNamedFramebufferParameteriv(int framebuffer, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawArraysIndirectAMD(int mode, Addressable indirect, int primcount, int stride) {
+  public void glMultiDrawArraysIndirectAMD(int mode, MemorySegment indirect, int primcount, int stride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7468,7 +7468,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTrackMatrixivNV(int target, int address, int pname, Addressable params) {
+  public void glGetTrackMatrixivNV(int target, int address, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7476,11 +7476,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetActiveAttrib(int program, int index, int bufSize, Addressable length, Addressable size, Addressable type, Addressable name) {
+  public void glGetActiveAttrib(int program, int index, int bufSize, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix4dvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix4dvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7508,7 +7508,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexParameterIuivOES(int target, int pname, Addressable params) {
+  public void glGetTexParameterIuivOES(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7516,11 +7516,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix2fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix2fv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord1dvARB(int target, Addressable v) {
+  public void glMultiTexCoord1dvARB(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7528,11 +7528,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColorTableSGI(int target, int internalformat, int width, int format, int type, Addressable table) {
+  public void glColorTableSGI(int target, int internalformat, int width, int format, int type, MemorySegment table) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribIiv(int index, int pname, Addressable params) {
+  public void glGetVertexAttribIiv(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7540,11 +7540,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColorPointerEXT(int size, int type, int stride, int count, Addressable pointer) {
+  public void glColorPointerEXT(int size, int type, int stride, int count, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPointParameterfvEXT(int pname, Addressable params) {
+  public void glPointParameterfvEXT(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7560,7 +7560,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glShaderSource(int shader, int count, Addressable string, Addressable length) {
+  public void glShaderSource(int shader, int count, MemorySegment string, MemorySegment length) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7568,7 +7568,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearNamedFramebufferfv(int framebuffer, int buffer, int drawbuffer, Addressable value) {
+  public void glClearNamedFramebufferfv(int framebuffer, int buffer, int drawbuffer, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7596,19 +7596,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTangent3ivEXT(Addressable v) {
+  public void glTangent3ivEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos3iv(Addressable v) {
+  public void glWindowPos3iv(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramStringNV(int id, int pname, Addressable program) {
+  public void glGetProgramStringNV(int id, int pname, MemorySegment program) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetQueryObjectuivEXT(int id, int pname, Addressable params) {
+  public void glGetQueryObjectuivEXT(int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7624,7 +7624,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribdv(int index, int pname, Addressable params) {
+  public void glGetVertexAttribdv(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7636,11 +7636,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPathParameterfvNV(int path, int pname, Addressable value) {
+  public void glPathParameterfvNV(int path, int pname, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBindFragDataLocationEXT(int program, int color, Addressable name) {
+  public void glBindFragDataLocationEXT(int program, int color, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7668,7 +7668,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexP3uiv(int type, Addressable value) {
+  public void glVertexP3uiv(int type, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7676,11 +7676,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform3fvARB(int location, int count, Addressable value) {
+  public void glUniform3fvARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord1iv(int target, Addressable v) {
+  public void glMultiTexCoord1iv(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7688,7 +7688,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramBufferParametersIivNV(int target, int bindingIndex, int wordIndex, int count, Addressable params) {
+  public void glProgramBufferParametersIivNV(int target, int bindingIndex, int wordIndex, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7700,11 +7700,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL4dvEXT(int index, Addressable v) {
+  public void glVertexAttribL4dvEXT(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDebugMessageInsertKHR(int source, int type, int id, int severity, int length, Addressable buf) {
+  public void glDebugMessageInsertKHR(int source, int type, int id, int severity, int length, MemorySegment buf) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7712,11 +7712,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSignalSemaphoreui64NVX(int signalGpu, int fenceObjectCount, Addressable semaphoreArray, Addressable fenceValueArray) {
+  public void glSignalSemaphoreui64NVX(int signalGpu, int fenceObjectCount, MemorySegment semaphoreArray, MemorySegment fenceValueArray) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetCompressedTexImageARB(int target, int level, Addressable img) {
+  public void glGetCompressedTexImageARB(int target, int level, MemorySegment img) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7728,7 +7728,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColor4ubVertex2fvSUN(Addressable c, Addressable v) {
+  public void glColor4ubVertex2fvSUN(MemorySegment c, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7736,11 +7736,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix4x2fv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix4x2fv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform4uivEXT(int location, int count, Addressable value) {
+  public void glUniform4uivEXT(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7752,11 +7752,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs2fvNV(int index, int count, Addressable v) {
+  public void glVertexAttribs2fvNV(int index, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos3fv(Addressable v) {
+  public void glWindowPos3fv(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7772,7 +7772,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexParameterIivEXT(int target, int pname, Addressable params) {
+  public void glGetTexParameterIivEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7780,7 +7780,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribfv(int index, int pname, Addressable params) {
+  public void glGetVertexAttribfv(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7796,7 +7796,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL4i64vNV(int index, Addressable v) {
+  public void glVertexAttribL4i64vNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7804,11 +7804,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMaterialxvOES(int face, int pname, Addressable param) {
+  public void glMaterialxvOES(int face, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFinalCombinerInputParameterivNV(int variable, int pname, Addressable params) {
+  public void glGetFinalCombinerInputParameterivNV(int variable, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7820,11 +7820,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDepthRangeArrayv(int first, int count, Addressable v) {
+  public void glDepthRangeArrayv(int first, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnConvolutionFilterARB(int target, int format, int type, int bufSize, Addressable image) {
+  public void glGetnConvolutionFilterARB(int target, int format, int type, int bufSize, MemorySegment image) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7832,11 +7832,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribIivEXT(int index, int pname, Addressable params) {
+  public void glGetVertexAttribIivEXT(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4svARB(int index, Addressable v) {
+  public void glVertexAttrib4svARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7848,11 +7848,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReadnPixelsARB(int x, int y, int width, int height, int format, int type, int bufSize, Addressable data) {
+  public void glReadnPixelsARB(int x, int y, int width, int height, int format, int type, int bufSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoordPointerEXT(int size, int type, int stride, int count, Addressable pointer) {
+  public void glTexCoordPointerEXT(int size, int type, int stride, int count, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7872,11 +7872,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWeightuivARB(int size, Addressable weights) {
+  public void glWeightuivARB(int size, MemorySegment weights) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glLightModelxv(int pname, Addressable param) {
+  public void glLightModelxv(int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7888,7 +7888,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs3hvNV(int index, int n, Addressable v) {
+  public void glVertexAttribs3hvNV(int index, int n, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7896,43 +7896,43 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribArrayObjectfvATI(int index, int pname, Addressable params) {
+  public void glGetVertexAttribArrayObjectfvATI(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform2i64vARB(int location, int count, Addressable value) {
+  public void glUniform2i64vARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetShaderSource(int shader, int bufSize, Addressable length, Addressable source) {
+  public void glGetShaderSource(int shader, int bufSize, MemorySegment length, MemorySegment source) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs3svNV(int index, int count, Addressable v) {
+  public void glVertexAttribs3svNV(int index, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribiv(int index, int pname, Addressable params) {
+  public void glGetVertexAttribiv(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL2i64vNV(int index, Addressable v) {
+  public void glVertexAttribL2i64vNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTexSubImage1DARB(int target, int level, int xoffset, int width, int format, int imageSize, Addressable data) {
+  public void glCompressedTexSubImage1DARB(int target, int level, int xoffset, int width, int format, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCoverStrokePathInstancedNV(int numPaths, int pathNameType, Addressable paths, int pathBase, int coverMode, int transformType, Addressable transformValues) {
+  public void glCoverStrokePathInstancedNV(int numPaths, int pathNameType, MemorySegment paths, int pathBase, int coverMode, int transformType, MemorySegment transformValues) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform2uivEXT(int location, int count, Addressable value) {
+  public void glUniform2uivEXT(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearNamedFramebufferiv(int framebuffer, int buffer, int drawbuffer, Addressable value) {
+  public void glClearNamedFramebufferiv(int framebuffer, int buffer, int drawbuffer, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7940,7 +7940,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramBinary(int program, int bufSize, Addressable length, Addressable binaryFormat, Addressable binary) {
+  public void glGetProgramBinary(int program, int bufSize, MemorySegment length, MemorySegment binaryFormat, MemorySegment binary) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7948,15 +7948,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos2svMESA(Addressable v) {
+  public void glWindowPos2svMESA(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glElementPointerAPPLE(int type, Addressable pointer) {
+  public void glElementPointerAPPLE(int type, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetQueryObjectiv(int id, int pname, Addressable params) {
+  public void glGetQueryObjectiv(int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7964,7 +7964,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColorP4uiv(int type, Addressable color) {
+  public void glColorP4uiv(int type, MemorySegment color) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7976,19 +7976,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPathParameterivNV(int path, int pname, Addressable value) {
+  public void glGetPathParameterivNV(int path, int pname, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenQueryResourceTagNV(int n, Addressable tagIds) {
+  public void glGenQueryResourceTagNV(int n, MemorySegment tagIds) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glObjectLabel(int identifier, int name, int length, Addressable label) {
+  public void glObjectLabel(int identifier, int name, int length, MemorySegment label) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVDPAUGetSurfaceivNV(int surface, int pname, int count, Addressable length, Addressable values) {
+  public void glVDPAUGetSurfaceivNV(int surface, int pname, int count, MemorySegment length, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -7996,19 +7996,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexStream1fvATI(int stream, Addressable coords) {
+  public void glVertexStream1fvATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetUniformLocationARB(Addressable programObj, Addressable name) {
+  public int glGetUniformLocationARB(MemorySegment programObj, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteFencesAPPLE(int n, Addressable fences) {
+  public void glDeleteFencesAPPLE(int n, MemorySegment fences) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTransformFeedbackiv(int xfb, int pname, Addressable param) {
+  public void glGetTransformFeedbackiv(int xfb, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8020,11 +8020,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetProgramResourceLocationIndex(int program, int programInterface, Addressable name) {
+  public int glGetProgramResourceLocationIndex(int program, int programInterface, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetImageTransformParameterfvHP(int target, int pname, Addressable params) {
+  public void glGetImageTransformParameterfvHP(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8036,7 +8036,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribLui64vNV(int index, int pname, Addressable params) {
+  public void glGetVertexAttribLui64vNV(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8052,15 +8052,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glLoadTransposeMatrixxOES(Addressable m) {
+  public void glLoadTransposeMatrixxOES(MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexStream4svATI(int stream, Addressable coords) {
+  public void glVertexStream4svATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexEnvxvOES(int target, int pname, Addressable params) {
+  public void glTexEnvxvOES(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8072,27 +8072,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetIntegeri_vEXT(int target, int index, Addressable data) {
+  public void glGetIntegeri_vEXT(int target, int index, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCreateRenderbuffers(int n, Addressable renderbuffers) {
+  public void glCreateRenderbuffers(int n, MemorySegment renderbuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFramebufferParameterivMESA(int target, int pname, Addressable params) {
+  public void glGetFramebufferParameterivMESA(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetConvolutionParameterfvEXT(int target, int pname, Addressable params) {
+  public void glGetConvolutionParameterfvEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord2fColor4fNormal3fVertex3fvSUN(Addressable tc, Addressable c, Addressable n, Addressable v) {
+  public void glTexCoord2fColor4fNormal3fVertex3fvSUN(MemorySegment tc, MemorySegment c, MemorySegment n, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReadnPixels(int x, int y, int width, int height, int format, int type, int bufSize, Addressable data) {
+  public void glReadnPixels(int x, int y, int width, int height, int format, int type, int bufSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8100,7 +8100,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glVDPAURegisterOutputSurfaceNV(Addressable vdpSurface, int target, int numTextureNames, Addressable textureNames) {
+  public int glVDPAURegisterOutputSurfaceNV(MemorySegment vdpSurface, int target, int numTextureNames, MemorySegment textureNames) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8112,7 +8112,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glPathMemoryGlyphIndexArrayNV(int firstPathName, int fontTarget, long fontSize, Addressable fontData, int faceIndex, int firstGlyphIndex, int numGlyphs, int pathParameterTemplate, float emScale) {
+  public int glPathMemoryGlyphIndexArrayNV(int firstPathName, int fontTarget, long fontSize, MemorySegment fontData, int faceIndex, int firstGlyphIndex, int numGlyphs, int pathParameterTemplate, float emScale) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8124,11 +8124,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glLinkProgramARB(Addressable programObj) {
+  public void glLinkProgramARB(MemorySegment programObj) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform4ivARB(int location, int count, Addressable value) {
+  public void glUniform4ivARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8136,11 +8136,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteQueriesEXT(int n, Addressable ids) {
+  public void glDeleteQueriesEXT(int n, MemorySegment ids) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultTransposeMatrixfARB(Addressable m) {
+  public void glMultTransposeMatrixfARB(MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8148,7 +8148,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnUniformuiv(int program, int location, int bufSize, Addressable params) {
+  public void glGetnUniformuiv(int program, int location, int bufSize, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8168,7 +8168,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexStream2ivATI(int stream, Addressable coords) {
+  public void glVertexStream2ivATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8180,15 +8180,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord3hvNV(int target, Addressable v) {
+  public void glMultiTexCoord3hvNV(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFramebufferDrawBuffersEXT(int framebuffer, int n, Addressable bufs) {
+  public void glFramebufferDrawBuffersEXT(int framebuffer, int n, MemorySegment bufs) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glNewObjectBufferATI(int size, Addressable pointer, int usage) {
+  public int glNewObjectBufferATI(int size, MemorySegment pointer, int usage) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8196,19 +8196,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos3dv(Addressable v) {
+  public void glWindowPos3dv(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3usv(Addressable v) {
+  public void glSecondaryColor3usv(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnUniformuivKHR(int program, int location, int bufSize, Addressable params) {
+  public void glGetnUniformuivKHR(int program, int location, int bufSize, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertex2xvOES(Addressable coords) {
+  public void glVertex2xvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8220,11 +8220,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord2bvOES(int texture, Addressable coords) {
+  public void glMultiTexCoord2bvOES(int texture, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramEnvParameterfvARB(int target, int index, Addressable params) {
+  public void glGetProgramEnvParameterfvARB(int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8232,15 +8232,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord1dv(int target, Addressable v) {
+  public void glMultiTexCoord1dv(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform1ui64vNV(int location, int count, Addressable value) {
+  public void glUniform1ui64vNV(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixLoadTransposefEXT(int mode, Addressable m) {
+  public void glMatrixLoadTransposefEXT(int mode, MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8252,7 +8252,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultTransposeMatrixf(Addressable m) {
+  public void glMultTransposeMatrixf(MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8260,7 +8260,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribLi64vNV(int index, int pname, Addressable params) {
+  public void glGetVertexAttribLi64vNV(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8280,11 +8280,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultTransposeMatrixd(Addressable m) {
+  public void glMultTransposeMatrixd(MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public byte glIsSync(Addressable sync) {
+  public byte glIsSync(MemorySegment sync) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8292,15 +8292,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord4fvARB(int target, Addressable v) {
+  public void glMultiTexCoord4fvARB(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib2sv(int index, Addressable v) {
+  public void glVertexAttrib2sv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawElementsEXT(int mode, Addressable count, int type, Addressable indices, int primcount) {
+  public void glMultiDrawElementsEXT(int mode, MemorySegment count, int type, MemorySegment indices, int primcount) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8312,7 +8312,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord1fv(int target, Addressable v) {
+  public void glMultiTexCoord1fv(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8336,7 +8336,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFixedvOES(int pname, Addressable params) {
+  public void glGetFixedvOES(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8348,7 +8348,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib1fvARB(int index, Addressable v) {
+  public void glVertexAttrib1fvARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8376,7 +8376,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedBufferDataEXT(int buffer, long size, Addressable data, int usage) {
+  public void glNamedBufferDataEXT(int buffer, long size, MemorySegment data, int usage) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8388,11 +8388,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramSubroutineParametersuivNV(int target, int count, Addressable params) {
+  public void glProgramSubroutineParametersuivNV(int target, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColorPointerListIBM(int size, int type, int stride, Addressable pointer, int ptrstride) {
+  public void glSecondaryColorPointerListIBM(int size, int type, int stride, MemorySegment pointer, int ptrstride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8408,7 +8408,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenProgramsNV(int n, Addressable programs) {
+  public void glGenProgramsNV(int n, MemorySegment programs) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8424,55 +8424,55 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFragmentLightivSGIX(int light, int pname, Addressable params) {
+  public void glFragmentLightivSGIX(int light, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix4fvARB(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix4fvARB(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord1hvNV(Addressable v) {
+  public void glTexCoord1hvNV(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVideoCaptureStreamfvNV(int video_capture_slot, int stream, int pname, Addressable params) {
+  public void glGetVideoCaptureStreamfvNV(int video_capture_slot, int stream, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixIndexuivARB(int size, Addressable indices) {
+  public void glMatrixIndexuivARB(int size, MemorySegment indices) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord3bvOES(int texture, Addressable coords) {
+  public void glMultiTexCoord3bvOES(int texture, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearNamedBufferData(int buffer, int internalformat, int format, int type, Addressable data) {
+  public void glClearNamedBufferData(int buffer, int internalformat, int format, int type, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFramebufferSamplePositionsfvAMD(int target, int numsamples, int pixelindex, Addressable values) {
+  public void glFramebufferSamplePositionsfvAMD(int target, int numsamples, int pixelindex, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCoverFillPathInstancedNV(int numPaths, int pathNameType, Addressable paths, int pathBase, int coverMode, int transformType, Addressable transformValues) {
+  public void glCoverFillPathInstancedNV(int numPaths, int pathNameType, MemorySegment paths, int pathBase, int coverMode, int transformType, MemorySegment transformValues) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureParameterIiv(int texture, int pname, Addressable params) {
+  public void glTextureParameterIiv(int texture, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetHistogramParameterfvEXT(int target, int pname, Addressable params) {
+  public void glGetHistogramParameterfvEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMultiTexLevelParameterfvEXT(int texunit, int target, int level, int pname, Addressable params) {
+  public void glGetMultiTexLevelParameterfvEXT(int texunit, int target, int level, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenSemaphoresEXT(int n, Addressable semaphores) {
+  public void glGenSemaphoresEXT(int n, MemorySegment semaphores) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8480,15 +8480,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix4x2fvNV(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix4x2fvNV(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFragmentShadingRatesEXT(int samples, int maxCount, Addressable count, Addressable shadingRates) {
+  public void glGetFragmentShadingRatesEXT(int samples, int maxCount, MemorySegment count, MemorySegment shadingRates) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVariantsvEXT(int id, Addressable addr) {
+  public void glVariantsvEXT(int id, MemorySegment addr) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8496,7 +8496,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedMultiTexImage2DEXT(int texunit, int target, int level, int internalformat, int width, int height, int border, int imageSize, Addressable bits) {
+  public void glCompressedMultiTexImage2DEXT(int texunit, int target, int level, int internalformat, int width, int height, int border, int imageSize, MemorySegment bits) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8504,35 +8504,35 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexSubImage3DEXT(int texunit, int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, Addressable pixels) {
+  public void glMultiTexSubImage3DEXT(int texunit, int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetFragDataIndexEXT(int program, Addressable name) {
+  public int glGetFragDataIndexEXT(int program, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReplacementCodeuivSUN(Addressable code) {
+  public void glReplacementCodeuivSUN(MemorySegment code) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMapParameterivNV(int target, int pname, Addressable params) {
+  public void glMapParameterivNV(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenVertexArrays(int n, Addressable arrays) {
+  public void glGenVertexArrays(int n, MemorySegment arrays) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetFragDataLocationEXT(int program, Addressable name) {
+  public int glGetFragDataLocationEXT(int program, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColor4fNormal3fVertex3fvSUN(Addressable c, Addressable n, Addressable v) {
+  public void glColor4fNormal3fVertex3fvSUN(MemorySegment c, MemorySegment n, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramLocalParametersI4uivNV(int target, int index, int count, Addressable params) {
+  public void glProgramLocalParametersI4uivNV(int target, int index, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8540,11 +8540,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glLoadTransposeMatrixd(Addressable m) {
+  public void glLoadTransposeMatrixd(MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glLoadTransposeMatrixf(Addressable m) {
+  public void glLoadTransposeMatrixf(MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8552,11 +8552,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenFramebuffers(int n, Addressable framebuffers) {
+  public void glGenFramebuffers(int n, MemorySegment framebuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBindFragDataLocationIndexedEXT(int program, int colorNumber, int index, Addressable name) {
+  public void glBindFragDataLocationIndexedEXT(int program, int colorNumber, int index, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8568,11 +8568,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexWeightPointerEXT(int size, int type, int stride, Addressable pointer) {
+  public void glVertexWeightPointerEXT(int size, int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexFilterFuncSGIS(int target, int filter, int n, Addressable weights) {
+  public void glTexFilterFuncSGIS(int target, int filter, int n, MemorySegment weights) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8592,7 +8592,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribIuiv(int index, int pname, Addressable params) {
+  public void glGetVertexAttribIuiv(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8600,27 +8600,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColorPointervINTEL(int size, int type, Addressable pointer) {
+  public void glColorPointervINTEL(int size, int type, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTexSubImage3DOES(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, Addressable data) {
+  public void glCompressedTexSubImage3DOES(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteStatesNV(int n, Addressable states) {
+  public void glDeleteStatesNV(int n, MemorySegment states) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClientWaitSemaphoreui64NVX(int fenceObjectCount, Addressable semaphoreArray, Addressable fenceValueArray) {
+  public void glClientWaitSemaphoreui64NVX(int fenceObjectCount, MemorySegment semaphoreArray, MemorySegment fenceValueArray) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramParameterfvNV(int target, int index, int pname, Addressable params) {
+  public void glGetProgramParameterfvNV(int target, int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSetMultisamplefvAMD(int pname, int index, Addressable val) {
+  public void glSetMultisamplefvAMD(int pname, int index, MemorySegment val) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8640,19 +8640,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTextureParameterivEXT(int texture, int target, int pname, Addressable params) {
+  public void glGetTextureParameterivEXT(int texture, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPerfMonitorGroupStringAMD(int group, int bufSize, Addressable length, Addressable groupString) {
+  public void glGetPerfMonitorGroupStringAMD(int group, int bufSize, MemorySegment length, MemorySegment groupString) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL1ui64vNV(int index, Addressable v) {
+  public void glVertexAttribL1ui64vNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetActiveUniform(int program, int index, int bufSize, Addressable length, Addressable size, Addressable type, Addressable name) {
+  public void glGetActiveUniform(int program, int index, int bufSize, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8664,7 +8664,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform3i64vNV(int location, int count, Addressable value) {
+  public void glUniform3i64vNV(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8672,7 +8672,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI4svEXT(int index, Addressable v) {
+  public void glVertexAttribI4svEXT(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8680,11 +8680,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetObjectPtrLabel(Addressable ptr, int bufSize, Addressable length, Addressable label) {
+  public void glGetObjectPtrLabel(MemorySegment ptr, int bufSize, MemorySegment length, MemorySegment label) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawArraysEXT(int mode, Addressable first, Addressable count, int primcount) {
+  public void glMultiDrawArraysEXT(int mode, MemorySegment first, MemorySegment count, int primcount) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8692,7 +8692,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexImage3DOES(int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, Addressable pixels) {
+  public void glTexImage3DOES(int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8708,19 +8708,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMultiTexImageEXT(int texunit, int target, int level, int format, int type, Addressable pixels) {
+  public void glGetMultiTexImageEXT(int texunit, int target, int level, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glLightModelxvOES(int pname, Addressable param) {
+  public void glLightModelxvOES(int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib3fvNV(int index, Addressable v) {
+  public void glVertexAttrib3fvNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteRenderbuffersOES(int n, Addressable renderbuffers) {
+  public void glDeleteRenderbuffersOES(int n, MemorySegment renderbuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8736,7 +8736,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoordP3uiv(int type, Addressable coords) {
+  public void glTexCoordP3uiv(int type, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8744,7 +8744,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnUniformfvKHR(int program, int location, int bufSize, Addressable params) {
+  public void glGetnUniformfvKHR(int program, int location, int bufSize, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8752,15 +8752,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWaitSync(Addressable sync, int flags, long timeout) {
+  public void glWaitSync(MemorySegment sync, int flags, long timeout) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4svNV(int index, Addressable v) {
+  public void glVertexAttrib4svNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenVertexArraysAPPLE(int n, Addressable arrays) {
+  public void glGenVertexArraysAPPLE(int n, MemorySegment arrays) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8768,7 +8768,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetIntegerui64i_vNV(int value, int index, Addressable result) {
+  public void glGetIntegerui64i_vNV(int value, int index, MemorySegment result) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8780,11 +8780,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glElementPointerATI(int type, Addressable pointer) {
+  public void glElementPointerATI(int type, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3hvNV(Addressable v) {
+  public void glSecondaryColor3hvNV(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8800,7 +8800,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenFramebuffersEXT(int n, Addressable framebuffers) {
+  public void glGenFramebuffersEXT(int n, MemorySegment framebuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8808,11 +8808,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4hvNV(int index, Addressable v) {
+  public void glVertexAttrib4hvNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix2x3fvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix2x3fvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8824,11 +8824,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawRangeElementsBaseVertexEXT(int mode, int start, int end, int count, int type, Addressable indices, int basevertex) {
+  public void glDrawRangeElementsBaseVertexEXT(int mode, int start, int end, int count, int type, MemorySegment indices, int basevertex) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetObjectLabelEXT(int type, int object, int bufSize, Addressable length, Addressable label) {
+  public void glGetObjectLabelEXT(int type, int object, int bufSize, MemorySegment length, MemorySegment label) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8840,7 +8840,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixMult3x2fNV(int matrixMode, Addressable m) {
+  public void glMatrixMult3x2fNV(int matrixMode, MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8848,7 +8848,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform4ui64vARB(int location, int count, Addressable value) {
+  public void glUniform4ui64vARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8860,7 +8860,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBinormal3svEXT(Addressable v) {
+  public void glBinormal3svEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8872,7 +8872,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawArraysIndirect(int mode, Addressable indirect) {
+  public void glDrawArraysIndirect(int mode, MemorySegment indirect) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8884,11 +8884,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFragmentLightModelfvSGIX(int pname, Addressable params) {
+  public void glFragmentLightModelfvSGIX(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedFramebufferParameterivEXT(int framebuffer, int pname, Addressable params) {
+  public void glGetNamedFramebufferParameterivEXT(int framebuffer, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8908,15 +8908,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetSamplerParameterIivEXT(int sampler, int pname, Addressable params) {
+  public void glGetSamplerParameterIivEXT(int sampler, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexGenxvOES(int coord, int pname, Addressable params) {
+  public void glTexGenxvOES(int coord, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureParameteriv(int texture, int pname, Addressable param) {
+  public void glTextureParameteriv(int texture, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8932,7 +8932,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWeightubvARB(int size, Addressable weights) {
+  public void glWeightubvARB(int size, MemorySegment weights) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8940,7 +8940,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawRangeElements(int mode, int start, int end, int count, int type, Addressable indices) {
+  public void glDrawRangeElements(int mode, int start, int end, int count, int type, MemorySegment indices) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8952,15 +8952,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramEnvParameterIuivNV(int target, int index, Addressable params) {
+  public void glGetProgramEnvParameterIuivNV(int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix3x2dvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix3x2dvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetSamplerParameterIuivOES(int sampler, int pname, Addressable params) {
+  public void glGetSamplerParameterIuivOES(int sampler, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8968,15 +8968,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos3sv(Addressable v) {
+  public void glWindowPos3sv(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexP2uiv(int type, Addressable value) {
+  public void glVertexP2uiv(int type, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix2x4fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix2x4fv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8984,7 +8984,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform3ui64vNV(int program, int location, int count, Addressable value) {
+  public void glProgramUniform3ui64vNV(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -8992,27 +8992,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos3ivMESA(Addressable v) {
+  public void glWindowPos3ivMESA(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedFramebufferSamplePositionsfvAMD(int framebuffer, int numsamples, int pixelindex, Addressable values) {
+  public void glNamedFramebufferSamplePositionsfvAMD(int framebuffer, int numsamples, int pixelindex, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetSamplerParameterIivOES(int sampler, int pname, Addressable params) {
+  public void glGetSamplerParameterIivOES(int sampler, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawElementsIndirectAMD(int mode, int type, Addressable indirect, int primcount, int stride) {
+  public void glMultiDrawElementsIndirectAMD(int mode, int type, MemorySegment indirect, int primcount, int stride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClipPlanefOES(int plane, Addressable equation) {
+  public void glClipPlanefOES(int plane, MemorySegment equation) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glInvalidateFramebuffer(int target, int numAttachments, Addressable attachments) {
+  public void glInvalidateFramebuffer(int target, int numAttachments, MemorySegment attachments) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9020,15 +9020,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexStream3dvATI(int stream, Addressable coords) {
+  public void glVertexStream3dvATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexGenfvEXT(int texunit, int coord, int pname, Addressable params) {
+  public void glMultiTexGenfvEXT(int texunit, int coord, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWaitSemaphoreEXT(int semaphore, int numBufferBarriers, Addressable buffers, int numTextureBarriers, Addressable textures, Addressable srcLayouts) {
+  public void glWaitSemaphoreEXT(int semaphore, int numBufferBarriers, MemorySegment buffers, int numTextureBarriers, MemorySegment textures, MemorySegment srcLayouts) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9036,11 +9036,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColorTableParameterivSGI(int target, int pname, Addressable params) {
+  public void glColorTableParameterivSGI(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMultiTexEnvivEXT(int texunit, int target, int pname, Addressable params) {
+  public void glGetMultiTexEnvivEXT(int texunit, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9048,11 +9048,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramLocalParametersI4ivNV(int target, int index, int count, Addressable params) {
+  public void glProgramLocalParametersI4ivNV(int target, int index, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMultiTexGendvEXT(int texunit, int coord, int pname, Addressable params) {
+  public void glGetMultiTexGendvEXT(int texunit, int coord, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9064,11 +9064,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureParameterIuiv(int texture, int pname, Addressable params) {
+  public void glTextureParameterIuiv(int texture, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnColorTable(int target, int format, int type, int bufSize, Addressable table) {
+  public void glGetnColorTable(int target, int format, int type, int bufSize, MemorySegment table) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9084,7 +9084,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexSubImage2DEXT(int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, Addressable pixels) {
+  public void glTexSubImage2DEXT(int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9100,7 +9100,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBufferStorage(int target, long size, Addressable data, int flags) {
+  public void glBufferStorage(int target, long size, MemorySegment data, int flags) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9116,11 +9116,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord4bvOES(Addressable coords) {
+  public void glTexCoord4bvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexImage3DEXT(int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, Addressable pixels) {
+  public void glTexImage3DEXT(int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9132,7 +9132,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4NsvARB(int index, Addressable v) {
+  public void glVertexAttrib4NsvARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9144,11 +9144,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVariantPointervEXT(int id, int value, Addressable data) {
+  public void glGetVariantPointervEXT(int id, int value, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI3ivEXT(int index, Addressable v) {
+  public void glVertexAttribI3ivEXT(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9156,15 +9156,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMapVertexAttrib1dAPPLE(int index, int size, double u1, double u2, int stride, int order, Addressable points) {
+  public void glMapVertexAttrib1dAPPLE(int index, int size, double u1, double u2, int stride, int order, MemorySegment points) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSelectPerfMonitorCountersAMD(int monitor, byte enable, int group, int numCounters, Addressable counterList) {
+  public void glSelectPerfMonitorCountersAMD(int monitor, byte enable, int group, int numCounters, MemorySegment counterList) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform4uivEXT(int program, int location, int count, Addressable value) {
+  public void glProgramUniform4uivEXT(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9172,19 +9172,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCreateCommandListsNV(int n, Addressable lists) {
+  public void glCreateCommandListsNV(int n, MemorySegment lists) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public MemoryAddress glMapBuffer(int target, int access) {
+  public MemorySegment glMapBuffer(int target, int access) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPathCommandsNV(int path, int numCommands, Addressable commands, int numCoords, int coordType, Addressable coords) {
+  public void glPathCommandsNV(int path, int numCommands, MemorySegment commands, int numCoords, int coordType, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glViewportArrayvNV(int first, int count, Addressable v) {
+  public void glViewportArrayvNV(int first, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9192,7 +9192,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib2dvNV(int index, Addressable v) {
+  public void glVertexAttrib2dvNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9212,7 +9212,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos4fvMESA(Addressable v) {
+  public void glWindowPos4fvMESA(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9224,7 +9224,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib3dvARB(int index, Addressable v) {
+  public void glVertexAttrib3dvARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9232,7 +9232,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetCompressedTextureImageEXT(int texture, int target, int lod, Addressable img) {
+  public void glGetCompressedTextureImageEXT(int texture, int target, int lod, MemorySegment img) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9240,7 +9240,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetInteger64vEXT(int pname, Addressable data) {
+  public void glGetInteger64vEXT(int pname, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9256,7 +9256,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertex4hvNV(Addressable v) {
+  public void glVertex4hvNV(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9264,7 +9264,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWeightPointerOES(int size, int type, int stride, Addressable pointer) {
+  public void glWeightPointerOES(int size, int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9276,7 +9276,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexImage1DEXT(int texunit, int target, int level, int internalformat, int width, int border, int format, int type, Addressable pixels) {
+  public void glMultiTexImage1DEXT(int texunit, int target, int level, int internalformat, int width, int border, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9292,11 +9292,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetCompressedTextureImage(int texture, int level, int bufSize, Addressable pixels) {
+  public void glGetCompressedTextureImage(int texture, int level, int bufSize, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform3fv(int program, int location, int count, Addressable value) {
+  public void glProgramUniform3fv(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9312,7 +9312,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramNamedParameter4fvNV(int id, int len, Addressable name, Addressable v) {
+  public void glProgramNamedParameter4fvNV(int id, int len, MemorySegment name, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9320,7 +9320,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDetailTexFuncSGIS(int target, int n, Addressable points) {
+  public void glDetailTexFuncSGIS(int target, int n, MemorySegment points) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9332,7 +9332,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFramebufferAttachmentParameterivOES(int target, int attachment, int pname, Addressable params) {
+  public void glGetFramebufferAttachmentParameterivOES(int target, int attachment, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9340,7 +9340,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformHandleui64vNV(int program, int location, int count, Addressable values) {
+  public void glProgramUniformHandleui64vNV(int program, int location, int count, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9348,7 +9348,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBinormal3dvEXT(Addressable v) {
+  public void glBinormal3dvEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9356,7 +9356,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFenceivNV(int fence, int pname, Addressable params) {
+  public void glGetFenceivNV(int fence, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9376,19 +9376,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVDPAUMapSurfacesNV(int numSurfaces, Addressable surfaces) {
+  public void glVDPAUMapSurfacesNV(int numSurfaces, MemorySegment surfaces) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetFragDataIndex(int program, Addressable name) {
+  public int glGetFragDataIndex(int program, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnUniformivARB(int program, int location, int bufSize, Addressable params) {
+  public void glGetnUniformivARB(int program, int location, int bufSize, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDebugMessageInsert(int source, int type, int id, int severity, int length, Addressable buf) {
+  public void glDebugMessageInsert(int source, int type, int id, int severity, int length, MemorySegment buf) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9396,7 +9396,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3bvEXT(Addressable v) {
+  public void glSecondaryColor3bvEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9404,7 +9404,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform3dv(int program, int location, int count, Addressable value) {
+  public void glProgramUniform3dv(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9412,7 +9412,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColorTableEXT(int target, int internalFormat, int width, int format, int type, Addressable table) {
+  public void glColorTableEXT(int target, int internalFormat, int width, int format, int type, MemorySegment table) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9424,19 +9424,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexGenivOES(int coord, int pname, Addressable params) {
+  public void glTexGenivOES(int coord, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramiv(int program, int pname, Addressable params) {
+  public void glGetProgramiv(int program, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glLabelObjectEXT(int type, int object, int length, Addressable label) {
+  public void glLabelObjectEXT(int type, int object, int length, MemorySegment label) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetShaderPrecisionFormat(int shadertype, int precisiontype, Addressable range, Addressable precision) {
+  public void glGetShaderPrecisionFormat(int shadertype, int precisiontype, MemorySegment range, MemorySegment precision) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9448,7 +9448,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib3svARB(int index, Addressable v) {
+  public void glVertexAttrib3svARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9464,15 +9464,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnUniformiv(int program, int location, int bufSize, Addressable params) {
+  public void glGetnUniformiv(int program, int location, int bufSize, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramLocalParameter4dvARB(int target, int index, Addressable params) {
+  public void glProgramLocalParameter4dvARB(int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform2fvEXT(int program, int location, int count, Addressable value) {
+  public void glProgramUniform2fvEXT(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9484,11 +9484,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord4xvOES(Addressable coords) {
+  public void glTexCoord4xvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetQueryObjectui64v(int id, int pname, Addressable params) {
+  public void glGetQueryObjectui64v(int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9508,15 +9508,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform2ivARB(int location, int count, Addressable value) {
+  public void glUniform2ivARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glListParameterfvSGIX(int list, int pname, Addressable params) {
+  public void glListParameterfvSGIX(int list, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteProgramPipelines(int n, Addressable pipelines) {
+  public void glDeleteProgramPipelines(int n, MemorySegment pipelines) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9536,7 +9536,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramNamedParameter4fNV(int id, int len, Addressable name, float x, float y, float z, float w) {
+  public void glProgramNamedParameter4fNV(int id, int len, MemorySegment name, float x, float y, float z, float w) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9548,11 +9548,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform3iv(int program, int location, int count, Addressable value) {
+  public void glProgramUniform3iv(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetUniformivARB(Addressable programObj, int location, Addressable params) {
+  public void glGetUniformivARB(MemorySegment programObj, int location, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9560,11 +9560,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetDoublei_vEXT(int pname, int index, Addressable params) {
+  public void glGetDoublei_vEXT(int pname, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformui64vNV(int location, int count, Addressable value) {
+  public void glUniformui64vNV(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9572,23 +9572,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramPipelineInfoLog(int pipeline, int bufSize, Addressable length, Addressable infoLog) {
+  public void glGetProgramPipelineInfoLog(int pipeline, int bufSize, MemorySegment length, MemorySegment infoLog) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glLoadMatrixxOES(Addressable m) {
+  public void glLoadMatrixxOES(MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPathTexGenfvNV(int texCoordSet, int pname, Addressable value) {
+  public void glGetPathTexGenfvNV(int texCoordSet, int pname, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPathCoordsNV(int path, Addressable coords) {
+  public void glGetPathCoordsNV(int path, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI4uivEXT(int index, Addressable v) {
+  public void glVertexAttribI4uivEXT(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9600,11 +9600,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL2ui64vNV(int index, Addressable v) {
+  public void glVertexAttribL2ui64vNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMapxvOES(int target, int query, Addressable v) {
+  public void glGetMapxvOES(int target, int query, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9628,15 +9628,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedBufferSubDataEXT(int buffer, long offset, long size, Addressable data) {
+  public void glNamedBufferSubDataEXT(int buffer, long offset, long size, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearBufferfv(int buffer, int drawbuffer, Addressable value) {
+  public void glClearBufferfv(int buffer, int drawbuffer, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetSamplerParameterfv(int sampler, int pname, Addressable params) {
+  public void glGetSamplerParameterfv(int sampler, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9644,7 +9644,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFragmentLightfvSGIX(int light, int pname, Addressable params) {
+  public void glGetFragmentLightfvSGIX(int light, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9652,15 +9652,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawRangeElementsBaseVertexOES(int mode, int start, int end, int count, int type, Addressable indices, int basevertex) {
+  public void glDrawRangeElementsBaseVertexOES(int mode, int start, int end, int count, int type, MemorySegment indices, int basevertex) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glAsyncCopyImageSubDataNVX(int waitSemaphoreCount, Addressable waitSemaphoreArray, Addressable waitValueArray, int srcGpu, int dstGpuMask, int srcName, int srcTarget, int srcLevel, int srcX, int srcY, int srcZ, int dstName, int dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth, int srcHeight, int srcDepth, int signalSemaphoreCount, Addressable signalSemaphoreArray, Addressable signalValueArray) {
+  public int glAsyncCopyImageSubDataNVX(int waitSemaphoreCount, MemorySegment waitSemaphoreArray, MemorySegment waitValueArray, int srcGpu, int dstGpuMask, int srcName, int srcTarget, int srcLevel, int srcX, int srcY, int srcZ, int dstName, int dstTarget, int dstLevel, int dstX, int dstY, int dstZ, int srcWidth, int srcHeight, int srcDepth, int signalSemaphoreCount, MemorySegment signalSemaphoreArray, MemorySegment signalValueArray) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearBufferiv(int buffer, int drawbuffer, Addressable value) {
+  public void glClearBufferiv(int buffer, int drawbuffer, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9672,15 +9672,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteTransformFeedbacks(int n, Addressable ids) {
+  public void glDeleteTransformFeedbacks(int n, MemorySegment ids) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramEnvParameterI4uivNV(int target, int index, Addressable params) {
+  public void glProgramEnvParameterI4uivNV(int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTexSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, Addressable data) {
+  public void glCompressedTexSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9700,7 +9700,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedStringivARB(int namelen, Addressable name, int pname, Addressable params) {
+  public void glGetNamedStringivARB(int namelen, MemorySegment name, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9708,39 +9708,39 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTextureParameterfv(int texture, int pname, Addressable params) {
+  public void glGetTextureParameterfv(int texture, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawElementsInstancedANGLE(int mode, int count, int type, Addressable indices, int primcount) {
+  public void glDrawElementsInstancedANGLE(int mode, int count, int type, MemorySegment indices, int primcount) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4sv(int index, Addressable v) {
+  public void glVertexAttrib4sv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBindVertexBuffers(int first, int count, Addressable buffers, Addressable offsets, Addressable strides) {
+  public void glBindVertexBuffers(int first, int count, MemorySegment buffers, MemorySegment offsets, MemorySegment strides) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI4bv(int index, Addressable v) {
+  public void glVertexAttribI4bv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeletePerfMonitorsAMD(int n, Addressable monitors) {
+  public void glDeletePerfMonitorsAMD(int n, MemorySegment monitors) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetSamplerParameteriv(int sampler, int pname, Addressable params) {
+  public void glGetSamplerParameteriv(int sampler, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTexSubImage1D(int target, int level, int xoffset, int width, int format, int imageSize, Addressable data) {
+  public void glCompressedTexSubImage1D(int target, int level, int xoffset, int width, int format, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord3dvARB(int target, Addressable v) {
+  public void glMultiTexCoord3dvARB(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9756,7 +9756,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glScissorIndexedvOES(int index, Addressable v) {
+  public void glScissorIndexedvOES(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9764,11 +9764,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetUniformi64vNV(int program, int location, Addressable params) {
+  public void glGetUniformi64vNV(int program, int location, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawElementsInstancedBaseVertex(int mode, int count, int type, Addressable indices, int instancecount, int basevertex) {
+  public void glDrawElementsInstancedBaseVertex(int mode, int count, int type, MemorySegment indices, int instancecount, int basevertex) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9776,15 +9776,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetInvariantFloatvEXT(int id, int value, Addressable data) {
+  public void glGetInvariantFloatvEXT(int id, int value, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCreateQueries(int target, int n, Addressable ids) {
+  public void glCreateQueries(int target, int n, MemorySegment ids) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCreateTransformFeedbacks(int n, Addressable ids) {
+  public void glCreateTransformFeedbacks(int n, MemorySegment ids) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9800,11 +9800,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glImageTransformParameterfvHP(int target, int pname, Addressable params) {
+  public void glImageTransformParameterfvHP(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearBufferData(int target, int internalformat, int format, int type, Addressable data) {
+  public void glClearBufferData(int target, int internalformat, int format, int type, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9812,11 +9812,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetActiveAttribARB(Addressable programObj, int index, int maxLength, Addressable length, Addressable size, Addressable type, Addressable name) {
+  public void glGetActiveAttribARB(MemorySegment programObj, int index, int maxLength, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform1fvARB(int location, int count, Addressable value) {
+  public void glUniform1fvARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9824,11 +9824,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFloati_vNV(int target, int index, Addressable data) {
+  public void glGetFloati_vNV(int target, int index, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTexSubImage3D(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, Addressable data) {
+  public void glCompressedTexSubImage3D(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9840,19 +9840,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixMultfEXT(int mode, Addressable m) {
+  public void glMatrixMultfEXT(int mode, MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform2ui64vNV(int location, int count, Addressable value) {
+  public void glUniform2ui64vNV(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform2uiv(int program, int location, int count, Addressable value) {
+  public void glProgramUniform2uiv(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix4x3dvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix4x3dvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9860,7 +9860,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTextureParameteriv(int texture, int pname, Addressable params) {
+  public void glGetTextureParameteriv(int texture, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9880,7 +9880,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform2fvARB(int location, int count, Addressable value) {
+  public void glUniform2fvARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9892,11 +9892,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetQueryObjectuiv(int id, int pname, Addressable params) {
+  public void glGetQueryObjectuiv(int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glExtGetTexLevelParameterivQCOM(int texture, int face, int level, int pname, Addressable params) {
+  public void glExtGetTexLevelParameterivQCOM(int texture, int face, int level, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9904,7 +9904,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixLoadfEXT(int mode, Addressable m) {
+  public void glMatrixLoadfEXT(int mode, MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9916,11 +9916,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribPointervNV(int index, int pname, Addressable pointer) {
+  public void glGetVertexAttribPointervNV(int index, int pname, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnPixelMapusvARB(int map, int bufSize, Addressable values) {
+  public void glGetnPixelMapusvARB(int map, int bufSize, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9928,7 +9928,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenRenderbuffers(int n, Addressable renderbuffers) {
+  public void glGenRenderbuffers(int n, MemorySegment renderbuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9936,7 +9936,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs3fvNV(int index, int count, Addressable v) {
+  public void glVertexAttribs3fvNV(int index, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9944,15 +9944,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexParameterxv(int target, int pname, Addressable params) {
+  public void glTexParameterxv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix3x4fvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix3x4fvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3fvEXT(Addressable v) {
+  public void glSecondaryColor3fvEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9964,7 +9964,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFlushVertexArrayRangeAPPLE(int length, Addressable pointer) {
+  public void glFlushVertexArrayRangeAPPLE(int length, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9980,7 +9980,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFloatIndexedvEXT(int target, int index, Addressable data) {
+  public void glGetFloatIndexedvEXT(int target, int index, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9988,7 +9988,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetSamplerParameterIuivEXT(int sampler, int pname, Addressable params) {
+  public void glGetSamplerParameterIuivEXT(int sampler, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -9996,15 +9996,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform4fv(int location, int count, Addressable value) {
+  public void glUniform4fv(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs2dvNV(int index, int count, Addressable v) {
+  public void glVertexAttribs2dvNV(int index, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBindBuffersRange(int target, int first, int count, Addressable buffers, Addressable offsets, Addressable sizes) {
+  public void glBindBuffersRange(int target, int first, int count, MemorySegment buffers, MemorySegment offsets, MemorySegment sizes) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10016,7 +10016,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs4svNV(int index, int count, Addressable v) {
+  public void glVertexAttribs4svNV(int index, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10028,23 +10028,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVideoCaptureStreamivNV(int video_capture_slot, int stream, int pname, Addressable params) {
+  public void glGetVideoCaptureStreamivNV(int video_capture_slot, int stream, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glStencilFillPathInstancedNV(int numPaths, int pathNameType, Addressable paths, int pathBase, int fillMode, int mask, int transformType, Addressable transformValues) {
+  public void glStencilFillPathInstancedNV(int numPaths, int pathNameType, MemorySegment paths, int pathBase, int fillMode, int mask, int transformType, MemorySegment transformValues) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform4iv(int location, int count, Addressable value) {
+  public void glUniform4iv(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI4iv(int index, Addressable v) {
+  public void glVertexAttribI4iv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix4x2dvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix4x2dvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10052,47 +10052,47 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramPipelineInfoLogEXT(int pipeline, int bufSize, Addressable length, Addressable infoLog) {
+  public void glGetProgramPipelineInfoLogEXT(int pipeline, int bufSize, MemorySegment length, MemorySegment infoLog) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos3svARB(Addressable v) {
+  public void glWindowPos3svARB(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetDebugMessageLogARB(int count, int bufSize, Addressable sources, Addressable types, Addressable ids, Addressable severities, Addressable lengths, Addressable messageLog) {
+  public int glGetDebugMessageLogARB(int count, int bufSize, MemorySegment sources, MemorySegment types, MemorySegment ids, MemorySegment severities, MemorySegment lengths, MemorySegment messageLog) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVDPAUInitNV(Addressable vdpDevice, Addressable getProcAddress) {
+  public void glVDPAUInitNV(MemorySegment vdpDevice, MemorySegment getProcAddress) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWeightsvARB(int size, Addressable weights) {
+  public void glWeightsvARB(int size, MemorySegment weights) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs4hvNV(int index, int n, Addressable v) {
+  public void glVertexAttribs4hvNV(int index, int n, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetUniformui64vARB(int program, int location, Addressable params) {
+  public void glGetUniformui64vARB(int program, int location, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoordPointerEXT(int texunit, int size, int type, int stride, Addressable pointer) {
+  public void glMultiTexCoordPointerEXT(int texunit, int size, int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearNamedFramebufferuiv(int framebuffer, int buffer, int drawbuffer, Addressable value) {
+  public void glClearNamedFramebufferuiv(int framebuffer, int buffer, int drawbuffer, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFragmentLightfvSGIX(int light, int pname, Addressable params) {
+  public void glFragmentLightfvSGIX(int light, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexSubImage3DOES(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, Addressable pixels) {
+  public void glTexSubImage3DOES(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10100,7 +10100,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenTexturesEXT(int n, Addressable textures) {
+  public void glGenTexturesEXT(int n, MemorySegment textures) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10108,7 +10108,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColor3hvNV(Addressable v) {
+  public void glColor3hvNV(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10128,15 +10128,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCreateSamplers(int n, Addressable samplers) {
+  public void glCreateSamplers(int n, MemorySegment samplers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4NubvARB(int index, Addressable v) {
+  public void glVertexAttrib4NubvARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteNamesAMD(int identifier, int num, Addressable names) {
+  public void glDeleteNamesAMD(int identifier, int num, MemorySegment names) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10144,11 +10144,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexPointerEXT(int size, int type, int stride, int count, Addressable pointer) {
+  public void glVertexPointerEXT(int size, int type, int stride, int count, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexStream1ivATI(int stream, Addressable coords) {
+  public void glVertexStream1ivATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10160,11 +10160,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribArrayObjectivATI(int index, int pname, Addressable params) {
+  public void glGetVertexAttribArrayObjectivATI(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetColorTableParameterivSGI(int target, int pname, Addressable params) {
+  public void glGetColorTableParameterivSGI(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10172,15 +10172,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix2x3fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix2x3fv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureImage1DEXT(int texture, int target, int level, int internalformat, int width, int border, int format, int type, Addressable pixels) {
+  public void glTextureImage1DEXT(int texture, int target, int level, int internalformat, int width, int border, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetDebugMessageLogAMD(int count, int bufSize, Addressable categories, Addressable severities, Addressable ids, Addressable lengths, Addressable message) {
+  public int glGetDebugMessageLogAMD(int count, int bufSize, MemorySegment categories, MemorySegment severities, MemorySegment ids, MemorySegment lengths, MemorySegment message) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10188,7 +10188,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glQueryResourceNV(int queryType, int tagId, int count, Addressable buffer) {
+  public int glQueryResourceNV(int queryType, int tagId, int count, MemorySegment buffer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10204,19 +10204,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform3uiv(int location, int count, Addressable value) {
+  public void glUniform3uiv(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColorTableParameterfvSGI(int target, int pname, Addressable params) {
+  public void glColorTableParameterfvSGI(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawCommandsStatesNV(int buffer, Addressable indirects, Addressable sizes, Addressable states, Addressable fbos, int count) {
+  public void glDrawCommandsStatesNV(int buffer, MemorySegment indirects, MemorySegment sizes, MemorySegment states, MemorySegment fbos, int count) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetQueryivEXT(int target, int pname, Addressable params) {
+  public void glGetQueryivEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10224,7 +10224,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4iv(int index, Addressable v) {
+  public void glVertexAttrib4iv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10232,15 +10232,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4fv(int index, Addressable v) {
+  public void glVertexAttrib4fv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexStream3svATI(int stream, Addressable coords) {
+  public void glVertexStream3svATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedBufferPointerv(int buffer, int pname, Addressable params) {
+  public void glGetNamedBufferPointerv(int buffer, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10252,27 +10252,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteObjectARB(Addressable obj) {
+  public void glDeleteObjectARB(MemorySegment obj) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiModeDrawArraysIBM(Addressable mode, Addressable first, Addressable count, int primcount, int modestride) {
+  public void glMultiModeDrawArraysIBM(MemorySegment mode, MemorySegment first, MemorySegment count, int primcount, int modestride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixLoad3x2fNV(int matrixMode, Addressable m) {
+  public void glMatrixLoad3x2fNV(int matrixMode, MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedMultiTexSubImage2DEXT(int texunit, int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, Addressable bits) {
+  public void glCompressedMultiTexSubImage2DEXT(int texunit, int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, MemorySegment bits) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMemoryObjectDetachedResourcesuivNV(int memory, int pname, int first, int count, Addressable params) {
+  public void glGetMemoryObjectDetachedResourcesuivNV(int memory, int pname, int first, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexSubImage3D(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, Addressable pixels) {
+  public void glTexSubImage3D(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10280,35 +10280,35 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCreateTextures(int target, int n, Addressable textures) {
+  public void glCreateTextures(int target, int n, MemorySegment textures) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawBuffersIndexedEXT(int n, Addressable location, Addressable indices) {
+  public void glDrawBuffersIndexedEXT(int n, MemorySegment location, MemorySegment indices) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform4i64vNV(int location, int count, Addressable value) {
+  public void glUniform4i64vNV(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glLoadTransposeMatrixdARB(Addressable m) {
+  public void glLoadTransposeMatrixdARB(MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL3dvEXT(int index, Addressable v) {
+  public void glVertexAttribL3dvEXT(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnUniformfvARB(int program, int location, int bufSize, Addressable params) {
+  public void glGetnUniformfvARB(int program, int location, int bufSize, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTextureSubImage1DEXT(int texture, int target, int level, int xoffset, int width, int format, int imageSize, Addressable bits) {
+  public void glCompressedTextureSubImage1DEXT(int texture, int target, int level, int xoffset, int width, int format, int imageSize, MemorySegment bits) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix2x3dv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix2x3dv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10316,7 +10316,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform4dv(int location, int count, Addressable value) {
+  public void glUniform4dv(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10328,11 +10328,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI4sv(int index, Addressable v) {
+  public void glVertexAttribI4sv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedRenderbufferParameteriv(int renderbuffer, int pname, Addressable params) {
+  public void glGetNamedRenderbufferParameteriv(int renderbuffer, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10368,7 +10368,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix3x2dv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix3x2dv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10388,7 +10388,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCreateMemoryObjectsEXT(int n, Addressable memoryObjects) {
+  public void glCreateMemoryObjectsEXT(int n, MemorySegment memoryObjects) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10396,11 +10396,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPerfMonitorCounterStringAMD(int group, int counter, int bufSize, Addressable length, Addressable counterString) {
+  public void glGetPerfMonitorCounterStringAMD(int group, int counter, int bufSize, MemorySegment length, MemorySegment counterString) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix2x4dv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix2x4dv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10408,7 +10408,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetColorTableEXT(int target, int format, int type, Addressable data) {
+  public void glGetColorTableEXT(int target, int format, int type, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10416,7 +10416,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTextureImageEXT(int texture, int target, int level, int format, int type, Addressable pixels) {
+  public void glGetTextureImageEXT(int texture, int target, int level, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10432,7 +10432,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTransformFeedbackVaryings(int program, int count, Addressable varyings, int bufferMode) {
+  public void glTransformFeedbackVaryings(int program, int count, MemorySegment varyings, int bufferMode) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10440,7 +10440,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform3ui64vNV(int location, int count, Addressable value) {
+  public void glUniform3ui64vNV(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10448,7 +10448,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMapAttribParameterfvNV(int target, int index, int pname, Addressable params) {
+  public void glGetMapAttribParameterfvNV(int target, int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10464,7 +10464,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoordP4uiv(int texture, int type, Addressable coords) {
+  public void glMultiTexCoordP4uiv(int texture, int type, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10472,11 +10472,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultMatrixxOES(Addressable m) {
+  public void glMultMatrixxOES(MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexParameterxvOES(int target, int pname, Addressable params) {
+  public void glTexParameterxvOES(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10484,11 +10484,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glQueryResourceTagNV(int tagId, Addressable tagString) {
+  public void glQueryResourceTagNV(int tagId, MemorySegment tagString) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertex2bvOES(Addressable coords) {
+  public void glVertex2bvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10496,11 +10496,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnUniformi64vARB(int program, int location, int bufSize, Addressable params) {
+  public void glGetnUniformi64vARB(int program, int location, int bufSize, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform3dvEXT(int program, int location, int count, Addressable value) {
+  public void glProgramUniform3dvEXT(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10512,15 +10512,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexParameterIuiv(int target, int pname, Addressable params) {
+  public void glTexParameterIuiv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteRenderbuffersEXT(int n, Addressable renderbuffers) {
+  public void glDeleteRenderbuffersEXT(int n, MemorySegment renderbuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetUnsignedBytevEXT(int pname, Addressable data) {
+  public void glGetUnsignedBytevEXT(int pname, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10556,7 +10556,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetOcclusionQueryivNV(int id, int pname, Addressable params) {
+  public void glGetOcclusionQueryivNV(int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10564,15 +10564,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFragmentLightModelivSGIX(int pname, Addressable params) {
+  public void glFragmentLightModelivSGIX(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFragmentMaterialivSGIX(int face, int pname, Addressable params) {
+  public void glGetFragmentMaterialivSGIX(int face, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawElementsInstancedEXT(int mode, int count, int type, Addressable indices, int primcount) {
+  public void glDrawElementsInstancedEXT(int mode, int count, int type, MemorySegment indices, int primcount) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10588,43 +10588,43 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCreatePerfQueryINTEL(int queryId, Addressable queryHandle) {
+  public void glCreatePerfQueryINTEL(int queryId, MemorySegment queryHandle) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glConvolutionFilter2D(int target, int internalformat, int width, int height, int format, int type, Addressable image) {
+  public void glConvolutionFilter2D(int target, int internalformat, int width, int height, int format, int type, MemorySegment image) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetQueryObjectivARB(int id, int pname, Addressable params) {
+  public void glGetQueryObjectivARB(int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform3ui64vARB(int location, int count, Addressable value) {
+  public void glUniform3ui64vARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetHistogramParameterivEXT(int target, int pname, Addressable params) {
+  public void glGetHistogramParameterivEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMapAttribParameterivNV(int target, int index, int pname, Addressable params) {
+  public void glGetMapAttribParameterivNV(int target, int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform4ui64vNV(int program, int location, int count, Addressable value) {
+  public void glProgramUniform4ui64vNV(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glViewportIndexedfvOES(int index, Addressable v) {
+  public void glViewportIndexedfvOES(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix3x2fv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix3x2fv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPathTexGenivNV(int texCoordSet, int pname, Addressable value) {
+  public void glGetPathTexGenivNV(int texCoordSet, int pname, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10640,7 +10640,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glConvolutionFilter1D(int target, int internalformat, int width, int format, int type, Addressable image) {
+  public void glConvolutionFilter1D(int target, int internalformat, int width, int format, int type, MemorySegment image) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10648,15 +10648,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glExtGetTexSubImageQCOM(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, Addressable texels) {
+  public void glExtGetTexSubImageQCOM(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, MemorySegment texels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenTransformFeedbacksNV(int n, Addressable ids) {
+  public void glGenTransformFeedbacksNV(int n, MemorySegment ids) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glImportSemaphoreWin32HandleEXT(int semaphore, int handleType, Addressable handle) {
+  public void glImportSemaphoreWin32HandleEXT(int semaphore, int handleType, MemorySegment handle) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10672,11 +10672,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColorSubTableEXT(int target, int start, int count, int format, int type, Addressable data) {
+  public void glColorSubTableEXT(int target, int start, int count, int format, int type, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexArrayIntegervEXT(int vaobj, int pname, Addressable param) {
+  public void glGetVertexArrayIntegervEXT(int vaobj, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10688,11 +10688,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform2dv(int program, int location, int count, Addressable value) {
+  public void glProgramUniform2dv(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPerfMonitorGroupsAMD(Addressable numGroups, int groupsSize, Addressable groups) {
+  public void glGetPerfMonitorGroupsAMD(MemorySegment numGroups, int groupsSize, MemorySegment groups) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10708,7 +10708,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVDPAUUnmapSurfacesNV(int numSurface, Addressable surfaces) {
+  public void glVDPAUUnmapSurfacesNV(int numSurface, MemorySegment surfaces) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10716,7 +10716,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix3dvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix3dvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10724,11 +10724,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPerfMonitorCounterInfoAMD(int group, int counter, int pname, Addressable data) {
+  public void glGetPerfMonitorCounterInfoAMD(int group, int counter, int pname, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribfvARB(int index, int pname, Addressable params) {
+  public void glGetVertexAttribfvARB(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10740,7 +10740,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetQueryObjecti64v(int id, int pname, Addressable params) {
+  public void glGetQueryObjecti64v(int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10748,7 +10748,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeformationMap3fSGIX(int target, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, float w1, float w2, int wstride, int worder, Addressable points) {
+  public void glDeformationMap3fSGIX(int target, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, float w1, float w2, int wstride, int worder, MemorySegment points) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10760,7 +10760,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetBufferSubDataARB(int target, long offset, long size, Addressable data) {
+  public void glGetBufferSubDataARB(int target, long offset, long size, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10776,7 +10776,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFramebufferFoveationConfigQCOM(int framebuffer, int numLayers, int focalPointsPerLayer, int requestedFeatures, Addressable providedFeatures) {
+  public void glFramebufferFoveationConfigQCOM(int framebuffer, int numLayers, int focalPointsPerLayer, int requestedFeatures, MemorySegment providedFeatures) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10804,7 +10804,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos3dvARB(Addressable v) {
+  public void glWindowPos3dvARB(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10812,23 +10812,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedBufferSubData(int buffer, long offset, long size, Addressable data) {
+  public void glNamedBufferSubData(int buffer, long offset, long size, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenQueriesEXT(int n, Addressable ids) {
+  public void glGenQueriesEXT(int n, MemorySegment ids) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord1ivARB(int target, Addressable v) {
+  public void glMultiTexCoord1ivARB(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord4hvNV(int target, Addressable v) {
+  public void glMultiTexCoord4hvNV(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glShaderBinary(int count, Addressable shaders, int binaryFormat, Addressable binary, int length) {
+  public void glShaderBinary(int count, MemorySegment shaders, int binaryFormat, MemorySegment binary, int length) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10848,7 +10848,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetUniformi64vARB(int program, int location, Addressable params) {
+  public void glGetUniformi64vARB(int program, int location, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10856,7 +10856,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiModeDrawElementsIBM(Addressable mode, Addressable count, int type, Addressable indices, int primcount, int modestride) {
+  public void glMultiModeDrawElementsIBM(MemorySegment mode, MemorySegment count, int type, MemorySegment indices, int primcount, int modestride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10872,7 +10872,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawElements(int mode, Addressable count, int type, Addressable indices, int drawcount) {
+  public void glMultiDrawElements(int mode, MemorySegment count, int type, MemorySegment indices, int drawcount) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10880,7 +10880,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexImage3D(int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, Addressable pixels) {
+  public void glTexImage3D(int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10892,7 +10892,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetSamplerParameterIuiv(int sampler, int pname, Addressable params) {
+  public void glGetSamplerParameterIuiv(int sampler, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10916,7 +10916,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedBufferStorage(int buffer, long size, Addressable data, int flags) {
+  public void glNamedBufferStorage(int buffer, long size, MemorySegment data, int flags) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10932,19 +10932,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawElementsIndirectCountARB(int mode, int type, Addressable indirect, long drawcount, int maxdrawcount, int stride) {
+  public void glMultiDrawElementsIndirectCountARB(int mode, int type, MemorySegment indirect, long drawcount, int maxdrawcount, int stride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBufferData(int target, long size, Addressable data, int usage) {
+  public void glBufferData(int target, long size, MemorySegment data, int usage) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMapControlPointsNV(int target, int index, int type, int ustride, int vstride, int uorder, int vorder, byte packed, Addressable points) {
+  public void glMapControlPointsNV(int target, int index, int type, int ustride, int vstride, int uorder, int vorder, byte packed, MemorySegment points) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureSubImage3DEXT(int texture, int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, Addressable pixels) {
+  public void glTextureSubImage3DEXT(int texture, int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10956,7 +10956,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPointeri_vEXT(int pname, int index, Addressable params) {
+  public void glGetPointeri_vEXT(int pname, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10964,7 +10964,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform2iv(int program, int location, int count, Addressable value) {
+  public void glProgramUniform2iv(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -10988,39 +10988,39 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramInfoLog(int program, int bufSize, Addressable length, Addressable infoLog) {
+  public void glGetProgramInfoLog(int program, int bufSize, MemorySegment length, MemorySegment infoLog) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixMultTranspose3x3fNV(int matrixMode, Addressable m) {
+  public void glMatrixMultTranspose3x3fNV(int matrixMode, MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFragmentMaterialivSGIX(int face, int pname, Addressable params) {
+  public void glFragmentMaterialivSGIX(int face, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixLoadTranspose3x3fNV(int matrixMode, Addressable m) {
+  public void glMatrixLoadTranspose3x3fNV(int matrixMode, MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public byte glPointAlongPathNV(int path, int startSegment, int numSegments, float distance, Addressable x, Addressable y, Addressable tangentX, Addressable tangentY) {
+  public byte glPointAlongPathNV(int path, int startSegment, int numSegments, float distance, MemorySegment x, MemorySegment y, MemorySegment tangentX, MemorySegment tangentY) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexArrayIndexed64iv(int vaobj, int index, int pname, Addressable param) {
+  public void glGetVertexArrayIndexed64iv(int vaobj, int index, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform2fv(int program, int location, int count, Addressable value) {
+  public void glProgramUniform2fv(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFramebufferAttachmentParameterivEXT(int target, int attachment, int pname, Addressable params) {
+  public void glGetFramebufferAttachmentParameterivEXT(int target, int attachment, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVariantdvEXT(int id, Addressable addr) {
+  public void glVariantdvEXT(int id, MemorySegment addr) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11028,7 +11028,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI2uiv(int index, Addressable v) {
+  public void glVertexAttribI2uiv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11040,11 +11040,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBufferStorageExternalEXT(int target, long offset, long size, Addressable clientBuffer, int flags) {
+  public void glBufferStorageExternalEXT(int target, long offset, long size, MemorySegment clientBuffer, int flags) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetBufferPointervOES(int target, int pname, Addressable params) {
+  public void glGetBufferPointervOES(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11052,11 +11052,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawBuffersNV(int n, Addressable bufs) {
+  public void glDrawBuffersNV(int n, MemorySegment bufs) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnColorTableARB(int target, int format, int type, int bufSize, Addressable table) {
+  public void glGetnColorTableARB(int target, int format, int type, int bufSize, MemorySegment table) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11072,11 +11072,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPathSubCommandsNV(int path, int commandStart, int commandsToDelete, int numCommands, Addressable commands, int numCoords, int coordType, Addressable coords) {
+  public void glPathSubCommandsNV(int path, int commandStart, int commandsToDelete, int numCommands, MemorySegment commands, int numCoords, int coordType, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexParameterIivEXT(int texunit, int target, int pname, Addressable params) {
+  public void glMultiTexParameterIivEXT(int texunit, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11084,11 +11084,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWeightdvARB(int size, Addressable weights) {
+  public void glWeightdvARB(int size, MemorySegment weights) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord3svARB(int target, Addressable v) {
+  public void glMultiTexCoord3svARB(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11100,7 +11100,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPointParameteriv(int pname, Addressable params) {
+  public void glPointParameteriv(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11108,27 +11108,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawElementsInstancedBaseInstanceEXT(int mode, int count, int type, Addressable indices, int instancecount, int baseinstance) {
+  public void glDrawElementsInstancedBaseInstanceEXT(int mode, int count, int type, MemorySegment indices, int instancecount, int baseinstance) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform3ui64vARB(int program, int location, int count, Addressable value) {
+  public void glProgramUniform3ui64vARB(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI4uiv(int index, Addressable v) {
+  public void glVertexAttribI4uiv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramLocalParameterIuivNV(int target, int index, Addressable params) {
+  public void glGetProgramLocalParameterIuivNV(int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib2dvARB(int index, Addressable v) {
+  public void glVertexAttrib2dvARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedMultiTexImage3DEXT(int texunit, int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, Addressable bits) {
+  public void glCompressedMultiTexImage3DEXT(int texunit, int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, MemorySegment bits) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11136,15 +11136,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPushDebugGroup(int source, int id, int length, Addressable message) {
+  public void glPushDebugGroup(int source, int id, int length, MemorySegment message) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawArraysIndirectBindlessCountNV(int mode, Addressable indirect, int drawCount, int maxDrawCount, int stride, int vertexBufferCount) {
+  public void glMultiDrawArraysIndirectBindlessCountNV(int mode, MemorySegment indirect, int drawCount, int maxDrawCount, int stride, int vertexBufferCount) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetObjectParameterivAPPLE(int objectType, int name, int pname, Addressable params) {
+  public void glGetObjectParameterivAPPLE(int objectType, int name, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11152,11 +11152,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribLPointerEXT(int index, int size, int type, int stride, Addressable pointer) {
+  public void glVertexAttribLPointerEXT(int index, int size, int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glVDPAURegisterVideoSurfaceWithPictureStructureNV(Addressable vdpSurface, int target, int numTextureNames, Addressable textureNames, byte isFrameStructure) {
+  public int glVDPAURegisterVideoSurfaceWithPictureStructureNV(MemorySegment vdpSurface, int target, int numTextureNames, MemorySegment textureNames, byte isFrameStructure) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11164,7 +11164,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetConvolutionParameterxvOES(int target, int pname, Addressable params) {
+  public void glGetConvolutionParameterxvOES(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11172,15 +11172,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformHandleui64vIMG(int location, int count, Addressable value) {
+  public void glUniformHandleui64vIMG(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetCoverageModulationTableNV(int bufSize, Addressable v) {
+  public void glGetCoverageModulationTableNV(int bufSize, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glInvalidateNamedFramebufferData(int framebuffer, int numAttachments, Addressable attachments) {
+  public void glInvalidateNamedFramebufferData(int framebuffer, int numAttachments, MemorySegment attachments) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11188,7 +11188,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribPointer(int index, int size, int type, byte normalized, int stride, Addressable pointer) {
+  public void glVertexAttribPointer(int index, int size, int type, byte normalized, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11208,7 +11208,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glConvolutionParameterivEXT(int target, int pname, Addressable params) {
+  public void glConvolutionParameterivEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11216,11 +11216,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetUnsignedBytei_vEXT(int target, int index, Addressable data) {
+  public void glGetUnsignedBytei_vEXT(int target, int index, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNormal3hvNV(Addressable v) {
+  public void glNormal3hvNV(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11240,19 +11240,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform4uiv(int location, int count, Addressable value) {
+  public void glUniform4uiv(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteQueriesARB(int n, Addressable ids) {
+  public void glDeleteQueriesARB(int n, MemorySegment ids) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNormalP3uiv(int type, Addressable coords) {
+  public void glNormalP3uiv(int type, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI4ubvEXT(int index, Addressable v) {
+  public void glVertexAttribI4ubvEXT(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11264,11 +11264,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPointParameterfv(int pname, Addressable params) {
+  public void glPointParameterfv(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawCommandsStatesAddressNV(Addressable indirects, Addressable sizes, Addressable states, Addressable fbos, int count) {
+  public void glDrawCommandsStatesAddressNV(MemorySegment indirects, MemorySegment sizes, MemorySegment states, MemorySegment fbos, int count) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11276,7 +11276,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBindImageTextures(int first, int count, Addressable textures) {
+  public void glBindImageTextures(int first, int count, MemorySegment textures) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11284,11 +11284,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexEnvfvEXT(int texunit, int target, int pname, Addressable params) {
+  public void glMultiTexEnvfvEXT(int texunit, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform3uivEXT(int location, int count, Addressable value) {
+  public void glUniform3uivEXT(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11296,7 +11296,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform3iv(int location, int count, Addressable value) {
+  public void glUniform3iv(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11304,7 +11304,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClipPlanefIMG(int p, Addressable eqn) {
+  public void glClipPlanefIMG(int p, MemorySegment eqn) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11320,27 +11320,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnMapfvARB(int target, int query, int bufSize, Addressable v) {
+  public void glGetnMapfvARB(int target, int query, int bufSize, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearBufferSubData(int target, int internalformat, long offset, long size, int format, int type, Addressable data) {
+  public void glClearBufferSubData(int target, int internalformat, long offset, long size, int format, int type, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTexImage3DOES(int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, Addressable data) {
+  public void glCompressedTexImage3DOES(int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnMinmaxARB(int target, byte reset, int format, int type, int bufSize, Addressable values) {
+  public void glGetnMinmaxARB(int target, byte reset, int format, int type, int bufSize, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetQueryObjectui64vEXT(int id, int pname, Addressable params) {
+  public void glGetQueryObjectui64vEXT(int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMultiTexGenivEXT(int texunit, int coord, int pname, Addressable params) {
+  public void glGetMultiTexGenivEXT(int texunit, int coord, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11348,7 +11348,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexLevelParameterxvOES(int target, int level, int pname, Addressable params) {
+  public void glGetTexLevelParameterxvOES(int target, int level, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11360,7 +11360,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedFramebufferParameterfvAMD(int framebuffer, int pname, int numsamples, int pixelindex, int size, Addressable values) {
+  public void glGetNamedFramebufferParameterfvAMD(int framebuffer, int pname, int numsamples, int pixelindex, int size, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11372,7 +11372,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVariantFloatvEXT(int id, int value, Addressable data) {
+  public void glGetVariantFloatvEXT(int id, int value, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11384,7 +11384,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFragmentMaterialfvSGIX(int face, int pname, Addressable params) {
+  public void glFragmentMaterialfvSGIX(int face, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11392,7 +11392,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCreateStatesNV(int n, Addressable states) {
+  public void glCreateStatesNV(int n, MemorySegment states) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11400,7 +11400,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixIndexPointerARB(int size, int type, int stride, Addressable pointer) {
+  public void glMatrixIndexPointerARB(int size, int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11408,11 +11408,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPixelMapx(int map, int size, Addressable values) {
+  public void glPixelMapx(int map, int size, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNormalPointerListIBM(int type, int stride, Addressable pointer, int ptrstride) {
+  public void glNormalPointerListIBM(int type, int stride, MemorySegment pointer, int ptrstride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11424,11 +11424,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVariantubvEXT(int id, Addressable addr) {
+  public void glVariantubvEXT(int id, MemorySegment addr) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glStringMarkerGREMEDY(int len, Addressable string) {
+  public void glStringMarkerGREMEDY(int len, MemorySegment string) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11444,11 +11444,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTextureLevelParameterfv(int texture, int level, int pname, Addressable params) {
+  public void glGetTextureLevelParameterfv(int texture, int level, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVideoCaptureStreamParameterivNV(int video_capture_slot, int stream, int pname, Addressable params) {
+  public void glVideoCaptureStreamParameterivNV(int video_capture_slot, int stream, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11456,7 +11456,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCullParameterfvEXT(int pname, Addressable params) {
+  public void glCullParameterfvEXT(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11476,7 +11476,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteProgramsNV(int n, Addressable programs) {
+  public void glDeleteProgramsNV(int n, MemorySegment programs) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11488,11 +11488,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnPixelMapfvARB(int map, int bufSize, Addressable values) {
+  public void glGetnPixelMapfvARB(int map, int bufSize, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetActiveUniformName(int program, int uniformIndex, int bufSize, Addressable length, Addressable uniformName) {
+  public void glGetActiveUniformName(int program, int uniformIndex, int bufSize, MemorySegment length, MemorySegment uniformName) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11500,7 +11500,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawElementsInstanced(int mode, int count, int type, Addressable indices, int instancecount) {
+  public void glDrawElementsInstanced(int mode, int count, int type, MemorySegment indices, int instancecount) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11512,7 +11512,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPathCommandsNV(int path, Addressable commands) {
+  public void glGetPathCommandsNV(int path, MemorySegment commands) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11520,7 +11520,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramResourcefvNV(int program, int programInterface, int index, int propCount, Addressable props, int count, Addressable length, Addressable params) {
+  public void glGetProgramResourcefvNV(int program, int programInterface, int index, int propCount, MemorySegment props, int count, MemorySegment length, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11528,7 +11528,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramBinaryOES(int program, int bufSize, Addressable length, Addressable binaryFormat, Addressable binary) {
+  public void glGetProgramBinaryOES(int program, int bufSize, MemorySegment length, MemorySegment binaryFormat, MemorySegment binary) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11548,7 +11548,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexPointervINTEL(int size, int type, Addressable pointer) {
+  public void glVertexPointervINTEL(int size, int type, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11556,11 +11556,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColor3xvOES(Addressable components) {
+  public void glColor3xvOES(MemorySegment components) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteQueries(int n, Addressable ids) {
+  public void glDeleteQueries(int n, MemorySegment ids) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11568,19 +11568,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexStream2dvATI(int stream, Addressable coords) {
+  public void glVertexStream2dvATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTransformFeedbackAttribsNV(int count, Addressable attribs, int bufferMode) {
+  public void glTransformFeedbackAttribsNV(int count, MemorySegment attribs, int bufferMode) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3usvEXT(Addressable v) {
+  public void glSecondaryColor3usvEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetUniformiv(int program, int location, Addressable params) {
+  public void glGetUniformiv(int program, int location, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11592,15 +11592,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform3dv(int location, int count, Addressable value) {
+  public void glUniform3dv(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColorTableParameteriv(int target, int pname, Addressable params) {
+  public void glColorTableParameteriv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetShaderInfoLog(int shader, int bufSize, Addressable length, Addressable infoLog) {
+  public void glGetShaderInfoLog(int shader, int bufSize, MemorySegment length, MemorySegment infoLog) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11608,15 +11608,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI4usv(int index, Addressable v) {
+  public void glVertexAttribI4usv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawBuffersEXT(int n, Addressable bufs) {
+  public void glDrawBuffersEXT(int n, MemorySegment bufs) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix2x4dvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix2x4dvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11624,7 +11624,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glCreateShaderProgramvEXT(int type, int count, Addressable strings) {
+  public int glCreateShaderProgramvEXT(int type, int count, MemorySegment strings) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11632,27 +11632,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedProgramLocalParameters4fvEXT(int program, int target, int index, int count, Addressable params) {
+  public void glNamedProgramLocalParameters4fvEXT(int program, int target, int index, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVideoivNV(int video_slot, int pname, Addressable params) {
+  public void glGetVideoivNV(int video_slot, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedRenderbufferParameterivEXT(int renderbuffer, int pname, Addressable params) {
+  public void glGetNamedRenderbufferParameterivEXT(int renderbuffer, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTextureSubImage3D(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, Addressable data) {
+  public void glCompressedTextureSubImage3D(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetClipPlanefOES(int plane, Addressable equation) {
+  public void glGetClipPlanefOES(int plane, MemorySegment equation) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMapVertexAttrib2dAPPLE(int index, int size, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, Addressable points) {
+  public void glMapVertexAttrib2dAPPLE(int index, int size, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, MemorySegment points) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11660,11 +11660,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib1dvNV(int index, Addressable v) {
+  public void glVertexAttrib1dvNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetRenderbufferParameterivOES(int target, int pname, Addressable params) {
+  public void glGetRenderbufferParameterivOES(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11676,11 +11676,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnUniformui64vARB(int program, int location, int bufSize, Addressable params) {
+  public void glGetnUniformui64vARB(int program, int location, int bufSize, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord1bvOES(Addressable coords) {
+  public void glTexCoord1bvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11688,7 +11688,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFogCoordPointerListIBM(int type, int stride, Addressable pointer, int ptrstride) {
+  public void glFogCoordPointerListIBM(int type, int stride, MemorySegment pointer, int ptrstride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11696,35 +11696,35 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReplacementCodeuiColor4ubVertex3fvSUN(Addressable rc, Addressable c, Addressable v) {
+  public void glReplacementCodeuiColor4ubVertex3fvSUN(MemorySegment rc, MemorySegment c, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform3fv(int location, int count, Addressable value) {
+  public void glUniform3fv(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPixelTransformParameterfvEXT(int target, int pname, Addressable params) {
+  public void glGetPixelTransformParameterfvEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixLoad3x3fNV(int matrixMode, Addressable m) {
+  public void glMatrixLoad3x3fNV(int matrixMode, MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramLocalParameters4fvEXT(int target, int index, int count, Addressable params) {
+  public void glProgramLocalParameters4fvEXT(int target, int index, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexArrayVertexBuffers(int vaobj, int first, int count, Addressable buffers, Addressable offsets, Addressable strides) {
+  public void glVertexArrayVertexBuffers(int vaobj, int first, int count, MemorySegment buffers, MemorySegment offsets, MemorySegment strides) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawElementsBaseVertexOES(int mode, int count, int type, Addressable indices, int basevertex) {
+  public void glDrawElementsBaseVertexOES(int mode, int count, int type, MemorySegment indices, int basevertex) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoordP1uiv(int texture, int type, Addressable coords) {
+  public void glMultiTexCoordP1uiv(int texture, int type, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11736,15 +11736,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColorTableParameterfv(int target, int pname, Addressable params) {
+  public void glColorTableParameterfv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetUniformdv(int program, int location, Addressable params) {
+  public void glGetUniformdv(int program, int location, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribPointerv(int index, int pname, Addressable pointer) {
+  public void glGetVertexAttribPointerv(int index, int pname, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11752,7 +11752,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib2fvNV(int index, Addressable v) {
+  public void glVertexAttrib2fvNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11760,11 +11760,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTextureSubImage1D(int texture, int level, int xoffset, int width, int format, int imageSize, Addressable data) {
+  public void glCompressedTextureSubImage1D(int texture, int level, int xoffset, int width, int format, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform1fvEXT(int program, int location, int count, Addressable value) {
+  public void glProgramUniform1fvEXT(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11780,11 +11780,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexBumpParameterivATI(int pname, Addressable param) {
+  public void glTexBumpParameterivATI(int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glExtGetShadersQCOM(Addressable shaders, int maxShaders, Addressable numShaders) {
+  public void glExtGetShadersQCOM(MemorySegment shaders, int maxShaders, MemorySegment numShaders) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11800,27 +11800,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCreateVertexArrays(int n, Addressable arrays) {
+  public void glCreateVertexArrays(int n, MemorySegment arrays) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glIndexPointerEXT(int type, int stride, int count, Addressable pointer) {
+  public void glIndexPointerEXT(int type, int stride, int count, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos2dvMESA(Addressable v) {
+  public void glWindowPos2dvMESA(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetBufferSubData(int target, long offset, long size, Addressable data) {
+  public void glGetBufferSubData(int target, long offset, long size, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform2i64vNV(int location, int count, Addressable value) {
+  public void glUniform2i64vNV(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTextureSubImage2D(int texture, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, Addressable data) {
+  public void glCompressedTextureSubImage2D(int texture, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11828,15 +11828,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord2fColor4ubVertex3fvSUN(Addressable tc, Addressable c, Addressable v) {
+  public void glTexCoord2fColor4ubVertex3fvSUN(MemorySegment tc, MemorySegment c, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFragmentLightivSGIX(int light, int pname, Addressable params) {
+  public void glGetFragmentLightivSGIX(int light, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTangent3dvEXT(Addressable v) {
+  public void glTangent3dvEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11844,19 +11844,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord4hvNV(Addressable v) {
+  public void glTexCoord4hvNV(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexSubImage3DEXT(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, Addressable pixels) {
+  public void glTexSubImage3DEXT(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnPixelMapusv(int map, int bufSize, Addressable values) {
+  public void glGetnPixelMapusv(int map, int bufSize, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetUniformfv(int program, int location, Addressable params) {
+  public void glGetUniformfv(int program, int location, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11872,11 +11872,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetSubroutineIndex(int program, int shadertype, Addressable name) {
+  public int glGetSubroutineIndex(int program, int shadertype, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBitmapxOES(int width, int height, int xorig, int yorig, int xmove, int ymove, Addressable bitmap) {
+  public void glBitmapxOES(int width, int height, int xorig, int yorig, int xmove, int ymove, MemorySegment bitmap) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11884,11 +11884,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramStringARB(int target, int format, int len, Addressable string) {
+  public void glProgramStringARB(int target, int format, int len, MemorySegment string) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib3svNV(int index, Addressable v) {
+  public void glVertexAttrib3svNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11896,15 +11896,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4bvARB(int index, Addressable v) {
+  public void glVertexAttrib4bvARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib2svARB(int index, Addressable v) {
+  public void glVertexAttrib2svARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord2ivARB(int target, Addressable v) {
+  public void glMultiTexCoord2ivARB(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11916,7 +11916,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFramebufferSampleLocationsfvARB(int target, int start, int count, Addressable v) {
+  public void glFramebufferSampleLocationsfvARB(int target, int start, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11936,15 +11936,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib3hvNV(int index, Addressable v) {
+  public void glVertexAttrib3hvNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI1uivEXT(int index, Addressable v) {
+  public void glVertexAttribI1uivEXT(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetSubroutineUniformLocation(int program, int shadertype, Addressable name) {
+  public int glGetSubroutineUniformLocation(int program, int shadertype, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11952,7 +11952,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix2dvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix2dvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11960,19 +11960,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVariantivEXT(int id, Addressable addr) {
+  public void glVariantivEXT(int id, MemorySegment addr) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetBooleani_v(int target, int index, Addressable data) {
+  public void glGetBooleani_v(int target, int index, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetQueryiv(int target, int pname, Addressable params) {
+  public void glGetQueryiv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVariantBooleanvEXT(int id, int value, Addressable data) {
+  public void glGetVariantBooleanvEXT(int id, int value, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11980,7 +11980,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexStream4ivATI(int stream, Addressable coords) {
+  public void glVertexStream4ivATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -11988,19 +11988,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnHistogram(int target, byte reset, int format, int type, int bufSize, Addressable values) {
+  public void glGetnHistogram(int target, byte reset, int format, int type, int bufSize, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUseProgramObjectARB(Addressable programObj) {
+  public void glUseProgramObjectARB(MemorySegment programObj) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetActiveAtomicCounterBufferiv(int program, int bufferIndex, int pname, Addressable params) {
+  public void glGetActiveAtomicCounterBufferiv(int program, int bufferIndex, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord4fColor4fNormal3fVertex4fvSUN(Addressable tc, Addressable c, Addressable n, Addressable v) {
+  public void glTexCoord4fColor4fNormal3fVertex4fvSUN(MemorySegment tc, MemorySegment c, MemorySegment n, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12008,7 +12008,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenProgramsARB(int n, Addressable programs) {
+  public void glGenProgramsARB(int n, MemorySegment programs) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12020,23 +12020,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramEnvParameter4fvARB(int target, int index, Addressable params) {
+  public void glProgramEnvParameter4fvARB(int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertex3hvNV(Addressable v) {
+  public void glVertex3hvNV(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVideouivNV(int video_slot, int pname, Addressable params) {
+  public void glGetVideouivNV(int video_slot, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPointParameterxv(int pname, Addressable params) {
+  public void glPointParameterxv(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnPixelMapuivARB(int map, int bufSize, Addressable values) {
+  public void glGetnPixelMapuivARB(int map, int bufSize, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12052,19 +12052,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform1i64vARB(int location, int count, Addressable value) {
+  public void glUniform1i64vARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetObjectBufferfvATI(int buffer, int pname, Addressable params) {
+  public void glGetObjectBufferfvATI(int buffer, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glPollInstrumentsSGIX(Addressable marker_p) {
+  public int glPollInstrumentsSGIX(MemorySegment marker_p) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetDriverControlStringQCOM(int driverControl, int bufSize, Addressable length, Addressable driverControlString) {
+  public void glGetDriverControlStringQCOM(int driverControl, int bufSize, MemorySegment length, MemorySegment driverControlString) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12072,15 +12072,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenFencesAPPLE(int n, Addressable fences) {
+  public void glGenFencesAPPLE(int n, MemorySegment fences) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glViewportArrayv(int first, int count, Addressable v) {
+  public void glViewportArrayv(int first, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetObjectParameterivARB(Addressable obj, int pname, Addressable params) {
+  public void glGetObjectParameterivARB(MemorySegment obj, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12088,7 +12088,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix2x3fv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix2x3fv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12096,7 +12096,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPerfMonitorCountersAMD(int group, Addressable numCounters, Addressable maxActiveCounters, int counterSize, Addressable counters) {
+  public void glGetPerfMonitorCountersAMD(int group, MemorySegment numCounters, MemorySegment maxActiveCounters, int counterSize, MemorySegment counters) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12112,7 +12112,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnPixelMapuiv(int map, int bufSize, Addressable values) {
+  public void glGetnPixelMapuiv(int map, int bufSize, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12120,11 +12120,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetLightxvOES(int light, int pname, Addressable params) {
+  public void glGetLightxvOES(int light, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord4bvOES(int texture, Addressable coords) {
+  public void glMultiTexCoord4bvOES(int texture, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12132,11 +12132,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedProgramLocalParameter4fvEXT(int program, int target, int index, Addressable params) {
+  public void glNamedProgramLocalParameter4fvEXT(int program, int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearTexSubImage(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, Addressable data) {
+  public void glClearTexSubImage(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12148,11 +12148,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribLdv(int index, int pname, Addressable params) {
+  public void glGetVertexAttribLdv(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexP4uiv(int type, Addressable value) {
+  public void glVertexP4uiv(int type, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12160,11 +12160,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexParameterxv(int target, int pname, Addressable params) {
+  public void glGetTexParameterxv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMulticastViewportArrayvNVX(int gpu, int first, int count, Addressable v) {
+  public void glMulticastViewportArrayvNVX(int gpu, int first, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12172,19 +12172,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReplacementCodeuiVertex3fvSUN(Addressable rc, Addressable v) {
+  public void glReplacementCodeuiVertex3fvSUN(MemorySegment rc, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteFencesNV(int n, Addressable fences) {
+  public void glDeleteFencesNV(int n, MemorySegment fences) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetSamplerParameterIiv(int sampler, int pname, Addressable params) {
+  public void glGetSamplerParameterIiv(int sampler, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribPointerNV(int index, int fsize, int type, int stride, Addressable pointer) {
+  public void glVertexAttribPointerNV(int index, int fsize, int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12192,7 +12192,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix2x3dv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix2x3dv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12208,19 +12208,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord3bvOES(Addressable coords) {
+  public void glTexCoord3bvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix3x2fvNV(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix3x2fvNV(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform1i64vNV(int program, int location, int count, Addressable value) {
+  public void glProgramUniform1i64vNV(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPathGlyphRangeNV(int firstPathName, int fontTarget, Addressable fontName, int fontStyle, int firstGlyph, int numGlyphs, int handleMissingGlyphs, int pathParameterTemplate, float emScale) {
+  public void glPathGlyphRangeNV(int firstPathName, int fontTarget, MemorySegment fontName, int fontStyle, int firstGlyph, int numGlyphs, int handleMissingGlyphs, int pathParameterTemplate, float emScale) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12232,11 +12232,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramBufferParametersIuivNV(int target, int bindingIndex, int wordIndex, int count, Addressable params) {
+  public void glProgramBufferParametersIuivNV(int target, int bindingIndex, int wordIndex, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBinormalPointerEXT(int type, int stride, Addressable pointer) {
+  public void glBinormalPointerEXT(int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12244,15 +12244,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReplacementCodeuiNormal3fVertex3fvSUN(Addressable rc, Addressable n, Addressable v) {
+  public void glReplacementCodeuiNormal3fVertex3fvSUN(MemorySegment rc, MemorySegment n, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform2ui64vARB(int location, int count, Addressable value) {
+  public void glUniform2ui64vARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawElementsInstancedBaseVertexOES(int mode, int count, int type, Addressable indices, int instancecount, int basevertex) {
+  public void glDrawElementsInstancedBaseVertexOES(int mode, int count, int type, MemorySegment indices, int instancecount, int basevertex) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12268,11 +12268,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4ivARB(int index, Addressable v) {
+  public void glVertexAttrib4ivARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedProgramLocalParameterI4uivEXT(int program, int target, int index, Addressable params) {
+  public void glNamedProgramLocalParameterI4uivEXT(int program, int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12280,7 +12280,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPointParameterivNV(int pname, Addressable params) {
+  public void glPointParameterivNV(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12292,11 +12292,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNormalPointerEXT(int type, int stride, int count, Addressable pointer) {
+  public void glNormalPointerEXT(int type, int stride, int count, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glRasterPos3xvOES(Addressable coords) {
+  public void glRasterPos3xvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12312,7 +12312,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPathColorGenivNV(int color, int pname, Addressable value) {
+  public void glGetPathColorGenivNV(int color, int pname, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12340,7 +12340,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexStream2svATI(int stream, Addressable coords) {
+  public void glVertexStream2svATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12348,15 +12348,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTextureImage(int texture, int level, int format, int type, int bufSize, Addressable pixels) {
+  public void glGetTextureImage(int texture, int level, int format, int type, int bufSize, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPixelTransformParameterfvEXT(int target, int pname, Addressable params) {
+  public void glPixelTransformParameterfvEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetVkProcAddrNV(Addressable name) {
+  public int glGetVkProcAddrNV(MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12368,7 +12368,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glClientWaitSyncAPPLE(Addressable sync, int flags, long timeout) {
+  public int glClientWaitSyncAPPLE(MemorySegment sync, int flags, long timeout) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12384,11 +12384,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColorP3uiv(int type, Addressable color) {
+  public void glColorP3uiv(int type, MemorySegment color) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glClientWaitSync(Addressable sync, int flags, long timeout) {
+  public int glClientWaitSync(MemorySegment sync, int flags, long timeout) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12396,19 +12396,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexArrayIntegeri_vEXT(int vaobj, int index, int pname, Addressable param) {
+  public void glGetVertexArrayIntegeri_vEXT(int vaobj, int index, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glScissorExclusiveArrayvNV(int first, int count, Addressable v) {
+  public void glScissorExclusiveArrayvNV(int first, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4fvARB(int index, Addressable v) {
+  public void glVertexAttrib4fvARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexParameterIivEXT(int target, int pname, Addressable params) {
+  public void glTexParameterIivEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12416,7 +12416,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTexImage1DARB(int target, int level, int internalformat, int width, int border, int imageSize, Addressable data) {
+  public void glCompressedTexImage1DARB(int target, int level, int internalformat, int width, int border, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12424,7 +12424,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI1uiv(int index, Addressable v) {
+  public void glVertexAttribI1uiv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12436,15 +12436,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform2uivEXT(int program, int location, int count, Addressable value) {
+  public void glProgramUniform2uivEXT(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexImage2DEXT(int texunit, int target, int level, int internalformat, int width, int height, int border, int format, int type, Addressable pixels) {
+  public void glMultiTexImage2DEXT(int texunit, int target, int level, int internalformat, int width, int height, int border, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetRenderbufferParameteriv(int target, int pname, Addressable params) {
+  public void glGetRenderbufferParameteriv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12456,7 +12456,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTangent3svEXT(Addressable v) {
+  public void glTangent3svEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12464,15 +12464,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedProgramLocalParameterIuivEXT(int program, int target, int index, Addressable params) {
+  public void glGetNamedProgramLocalParameterIuivEXT(int program, int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPatchParameterfv(int pname, Addressable values) {
+  public void glPatchParameterfv(int pname, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexParameterPointervAPPLE(int target, int pname, Addressable params) {
+  public void glGetTexParameterPointervAPPLE(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12484,7 +12484,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetSeparableFilter(int target, int format, int type, Addressable row, Addressable column, Addressable span) {
+  public void glGetSeparableFilter(int target, int format, int type, MemorySegment row, MemorySegment column, MemorySegment span) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12492,7 +12492,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNormalStream3bvATI(int stream, Addressable coords) {
+  public void glNormalStream3bvATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12500,7 +12500,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedProgramivEXT(int program, int target, int pname, Addressable params) {
+  public void glGetNamedProgramivEXT(int program, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12508,7 +12508,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL2dvEXT(int index, Addressable v) {
+  public void glVertexAttribL2dvEXT(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12516,19 +12516,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertex3bvOES(Addressable coords) {
+  public void glVertex3bvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTextureParameterfvEXT(int texture, int target, int pname, Addressable params) {
+  public void glGetTextureParameterfvEXT(int texture, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexParameterIuivOES(int target, int pname, Addressable params) {
+  public void glTexParameterIuivOES(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramNamedParameter4dvNV(int id, int len, Addressable name, Addressable v) {
+  public void glProgramNamedParameter4dvNV(int id, int len, MemorySegment name, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12536,15 +12536,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFramebufferParameteriv(int target, int pname, Addressable params) {
+  public void glGetFramebufferParameteriv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord1xvOES(int texture, Addressable coords) {
+  public void glMultiTexCoord1xvOES(int texture, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDepthRangeArraydvNV(int first, int count, Addressable v) {
+  public void glDepthRangeArraydvNV(int first, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12552,7 +12552,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSpecializeShader(int shader, Addressable pEntryPoint, int numSpecializationConstants, Addressable pConstantIndex, Addressable pConstantValue) {
+  public void glSpecializeShader(int shader, MemorySegment pEntryPoint, int numSpecializationConstants, MemorySegment pConstantIndex, MemorySegment pConstantValue) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12564,11 +12564,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glObjectLabelKHR(int identifier, int name, int length, Addressable label) {
+  public void glObjectLabelKHR(int identifier, int name, int length, MemorySegment label) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMultisamplefvNV(int pname, int index, Addressable val) {
+  public void glGetMultisamplefvNV(int pname, int index, MemorySegment val) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12592,7 +12592,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix4x3fvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix4x3fvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12604,15 +12604,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexParameterIivOES(int target, int pname, Addressable params) {
+  public void glTexParameterIivOES(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetRenderbufferParameterivEXT(int target, int pname, Addressable params) {
+  public void glGetRenderbufferParameterivEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetUniformuivEXT(int program, int location, Addressable params) {
+  public void glGetUniformuivEXT(int program, int location, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12620,11 +12620,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnHistogramARB(int target, byte reset, int format, int type, int bufSize, Addressable values) {
+  public void glGetnHistogramARB(int target, byte reset, int format, int type, int bufSize, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3iv(Addressable v) {
+  public void glSecondaryColor3iv(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12644,15 +12644,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFramebufferParameterivEXT(int framebuffer, int pname, Addressable params) {
+  public void glGetFramebufferParameterivEXT(int framebuffer, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramEnvParametersI4ivNV(int target, int index, int count, Addressable params) {
+  public void glProgramEnvParametersI4ivNV(int target, int index, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedFramebufferAttachmentParameteriv(int framebuffer, int attachment, int pname, Addressable params) {
+  public void glGetNamedFramebufferAttachmentParameteriv(int framebuffer, int attachment, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12660,7 +12660,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixLoaddEXT(int mode, Addressable m) {
+  public void glMatrixLoaddEXT(int mode, MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12668,15 +12668,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos2svARB(Addressable v) {
+  public void glWindowPos2svARB(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetOcclusionQueryuivNV(int id, int pname, Addressable params) {
+  public void glGetOcclusionQueryuivNV(int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTextureSubImage(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, int bufSize, Addressable pixels) {
+  public void glGetTextureSubImage(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, int bufSize, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12684,7 +12684,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTransformFeedbackVaryingEXT(int program, int index, int bufSize, Addressable length, Addressable size, Addressable type, Addressable name) {
+  public void glGetTransformFeedbackVaryingEXT(int program, int index, int bufSize, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12692,7 +12692,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform2ui64vNV(int program, int location, int count, Addressable value) {
+  public void glProgramUniform2ui64vNV(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12704,7 +12704,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glConvolutionParameteriv(int target, int pname, Addressable params) {
+  public void glConvolutionParameteriv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12712,7 +12712,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL3i64vNV(int index, Addressable v) {
+  public void glVertexAttribL3i64vNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12724,7 +12724,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetCombinerInputParameterfvNV(int stage, int portion, int variable, int pname, Addressable params) {
+  public void glGetCombinerInputParameterfvNV(int stage, int portion, int variable, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12736,19 +12736,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexArrayiv(int vaobj, int pname, Addressable param) {
+  public void glGetVertexArrayiv(int vaobj, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs3dvNV(int index, int count, Addressable v) {
+  public void glVertexAttribs3dvNV(int index, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformHandleui64vNV(int location, int count, Addressable value) {
+  public void glUniformHandleui64vNV(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4Nubv(int index, Addressable v) {
+  public void glVertexAttrib4Nubv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12760,19 +12760,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4ubv(int index, Addressable v) {
+  public void glVertexAttrib4ubv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMulticastFramebufferSampleLocationsfvNV(int gpu, int framebuffer, int start, int count, Addressable v) {
+  public void glMulticastFramebufferSampleLocationsfvNV(int gpu, int framebuffer, int start, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetProgramResourceIndex(int program, int programInterface, Addressable name) {
+  public int glGetProgramResourceIndex(int program, int programInterface, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramEnvParametersI4uivNV(int target, int index, int count, Addressable params) {
+  public void glProgramEnvParametersI4uivNV(int target, int index, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12780,7 +12780,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexParameterfvEXT(int texunit, int target, int pname, Addressable params) {
+  public void glMultiTexParameterfvEXT(int texunit, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12788,11 +12788,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTextureParameterIuiv(int texture, int pname, Addressable params) {
+  public void glGetTextureParameterIuiv(int texture, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glQueryMatrixxOES(Addressable mantissa, Addressable exponent) {
+  public int glQueryMatrixxOES(MemorySegment mantissa, MemorySegment exponent) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12800,7 +12800,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPathMetricRangeNV(int metricQueryMask, int firstPathName, int numPaths, int stride, Addressable metrics) {
+  public void glGetPathMetricRangeNV(int metricQueryMask, int firstPathName, int numPaths, int stride, MemorySegment metrics) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12808,7 +12808,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnPolygonStippleARB(int bufSize, Addressable pattern) {
+  public void glGetnPolygonStippleARB(int bufSize, MemorySegment pattern) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12836,11 +12836,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4ubvARB(int index, Addressable v) {
+  public void glVertexAttrib4ubvARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColor4hvNV(Addressable v) {
+  public void glColor4hvNV(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12848,7 +12848,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord1fvARB(int target, Addressable v) {
+  public void glMultiTexCoord1fvARB(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12860,11 +12860,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribPointervARB(int index, int pname, Addressable pointer) {
+  public void glGetVertexAttribPointervARB(int index, int pname, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMapTexture2DINTEL(int texture, int level, int access, Addressable stride, Addressable layout) {
+  public void glMapTexture2DINTEL(int texture, int level, int access, MemorySegment stride, MemorySegment layout) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12872,11 +12872,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenBuffersARB(int n, Addressable buffers) {
+  public void glGenBuffersARB(int n, MemorySegment buffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribP2uiv(int index, int type, byte normalized, Addressable value) {
+  public void glVertexAttribP2uiv(int index, int type, byte normalized, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12892,7 +12892,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform2fv(int location, int count, Addressable value) {
+  public void glUniform2fv(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12900,11 +12900,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3fv(Addressable v) {
+  public void glSecondaryColor3fv(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawElementsInstancedNV(int mode, int count, int type, Addressable indices, int primcount) {
+  public void glDrawElementsInstancedNV(int mode, int count, int type, MemorySegment indices, int primcount) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12916,7 +12916,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform3ivEXT(int program, int location, int count, Addressable value) {
+  public void glProgramUniform3ivEXT(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12928,11 +12928,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetQueryIndexediv(int target, int index, int pname, Addressable params) {
+  public void glGetQueryIndexediv(int target, int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos3svMESA(Addressable v) {
+  public void glWindowPos3svMESA(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12940,11 +12940,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetActiveSubroutineUniformName(int program, int shadertype, int index, int bufSize, Addressable length, Addressable name) {
+  public void glGetActiveSubroutineUniformName(int program, int shadertype, int index, int bufSize, MemorySegment length, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexBumpParameterfvATI(int pname, Addressable param) {
+  public void glTexBumpParameterfvATI(int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12952,23 +12952,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetObjectParameterfvARB(Addressable obj, int pname, Addressable params) {
+  public void glGetObjectParameterfvARB(MemorySegment obj, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform2iv(int location, int count, Addressable value) {
+  public void glUniform2iv(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBindFragDataLocationIndexed(int program, int colorNumber, int index, Addressable name) {
+  public void glBindFragDataLocationIndexed(int program, int colorNumber, int index, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform2ivEXT(int program, int location, int count, Addressable value) {
+  public void glProgramUniform2ivEXT(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexWeighthvNV(Addressable weight) {
+  public void glVertexWeighthvNV(MemorySegment weight) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12980,7 +12980,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClipPlanexOES(int plane, Addressable equation) {
+  public void glClipPlanexOES(int plane, MemorySegment equation) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -12992,7 +12992,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glStencilThenCoverStrokePathInstancedNV(int numPaths, int pathNameType, Addressable paths, int pathBase, int reference, int mask, int coverMode, int transformType, Addressable transformValues) {
+  public void glStencilThenCoverStrokePathInstancedNV(int numPaths, int pathNameType, MemorySegment paths, int pathBase, int reference, int mask, int coverMode, int transformType, MemorySegment transformValues) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13028,15 +13028,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glColorTable(int target, int internalformat, int width, int format, int type, Addressable table) {
+  public void glColorTable(int target, int internalformat, int width, int format, int type, MemorySegment table) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glBindBuffersBase(int target, int first, int count, Addressable buffers) {
+  public void glBindBuffersBase(int target, int first, int count, MemorySegment buffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glExtGetBufferPointervQCOM(int target, Addressable params) {
+  public void glExtGetBufferPointervQCOM(int target, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13044,7 +13044,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetCompressedMultiTexImageEXT(int texunit, int target, int lod, Addressable img) {
+  public void glGetCompressedMultiTexImageEXT(int texunit, int target, int lod, MemorySegment img) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13052,11 +13052,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnConvolutionFilter(int target, int format, int type, int bufSize, Addressable image) {
+  public void glGetnConvolutionFilter(int target, int format, int type, int bufSize, MemorySegment image) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixIndexusvARB(int size, Addressable indices) {
+  public void glMatrixIndexusvARB(int size, MemorySegment indices) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13072,23 +13072,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFloati_vEXT(int pname, int index, Addressable params) {
+  public void glGetFloati_vEXT(int pname, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetObjectLabel(int identifier, int name, int bufSize, Addressable length, Addressable label) {
+  public void glGetObjectLabel(int identifier, int name, int bufSize, MemorySegment length, MemorySegment label) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPerfQueryIdByNameINTEL(Addressable queryName, Addressable queryId) {
+  public void glGetPerfQueryIdByNameINTEL(MemorySegment queryName, MemorySegment queryId) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3bv(Addressable v) {
+  public void glSecondaryColor3bv(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawArraysIndirectEXT(int mode, Addressable indirect, int drawcount, int stride) {
+  public void glMultiDrawArraysIndirectEXT(int mode, MemorySegment indirect, int drawcount, int stride) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13100,11 +13100,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform1uiv(int location, int count, Addressable value) {
+  public void glUniform1uiv(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnPolygonStipple(int bufSize, Addressable pattern) {
+  public void glGetnPolygonStipple(int bufSize, MemorySegment pattern) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13120,11 +13120,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFogCoordhvNV(Addressable fog) {
+  public void glFogCoordhvNV(MemorySegment fog) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSamplerParameterIuiv(int sampler, int pname, Addressable param) {
+  public void glSamplerParameterIuiv(int sampler, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13136,11 +13136,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteSync(Addressable sync) {
+  public void glDeleteSync(MemorySegment sync) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public byte glIsNamedStringARB(int namelen, Addressable name) {
+  public byte glIsNamedStringARB(int namelen, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13152,19 +13152,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glActiveVaryingNV(int program, Addressable name) {
+  public void glActiveVaryingNV(int program, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform2dv(int location, int count, Addressable value) {
+  public void glUniform2dv(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedProgramLocalParameterI4ivEXT(int program, int target, int index, Addressable params) {
+  public void glNamedProgramLocalParameterI4ivEXT(int program, int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3dv(Addressable v) {
+  public void glSecondaryColor3dv(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13176,7 +13176,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform1ivARB(int location, int count, Addressable value) {
+  public void glUniform1ivARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13184,11 +13184,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedMultiTexSubImage1DEXT(int texunit, int target, int level, int xoffset, int width, int format, int imageSize, Addressable bits) {
+  public void glCompressedMultiTexSubImage1DEXT(int texunit, int target, int level, int xoffset, int width, int format, int imageSize, MemorySegment bits) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4uiv(int index, Addressable v) {
+  public void glVertexAttrib4uiv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13196,7 +13196,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPerfMonitorCounterDataAMD(int monitor, int pname, int dataSize, Addressable data, Addressable bytesWritten) {
+  public void glGetPerfMonitorCounterDataAMD(int monitor, int pname, int dataSize, MemorySegment data, MemorySegment bytesWritten) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13204,11 +13204,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteSamplers(int count, Addressable samplers) {
+  public void glDeleteSamplers(int count, MemorySegment samplers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramEnvParameterIivNV(int target, int index, Addressable params) {
+  public void glGetProgramEnvParameterIivNV(int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13216,23 +13216,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs4fvNV(int index, int count, Addressable v) {
+  public void glVertexAttribs4fvNV(int index, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix3x4dv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix3x4dv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformHandleui64vARB(int location, int count, Addressable value) {
+  public void glUniformHandleui64vARB(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVideoCaptureStreamParameterfvNV(int video_capture_slot, int stream, int pname, Addressable params) {
+  public void glVideoCaptureStreamParameterfvNV(int video_capture_slot, int stream, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPathTexGenNV(int texCoordSet, int genMode, int components, Addressable coeffs) {
+  public void glPathTexGenNV(int texCoordSet, int genMode, int components, MemorySegment coeffs) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13240,39 +13240,39 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNormal3xvOES(Addressable coords) {
+  public void glNormal3xvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform4dvEXT(int program, int location, int count, Addressable value) {
+  public void glProgramUniform4dvEXT(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexGenfvOES(int coord, int pname, Addressable params) {
+  public void glGetTexGenfvOES(int coord, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPixelDataRangeNV(int target, int length, Addressable pointer) {
+  public void glPixelDataRangeNV(int target, int length, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPointParameterfvARB(int pname, Addressable params) {
+  public void glPointParameterfvARB(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribLPointer(int index, int size, int type, int stride, Addressable pointer) {
+  public void glVertexAttribLPointer(int index, int size, int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPerfQueryDataINTEL(int queryHandle, int flags, int dataSize, Addressable data, Addressable bytesWritten) {
+  public void glGetPerfQueryDataINTEL(int queryHandle, int flags, int dataSize, MemorySegment data, MemorySegment bytesWritten) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMapParameterfvNV(int target, int pname, Addressable params) {
+  public void glGetMapParameterfvNV(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMinmaxParameterfvEXT(int target, int pname, Addressable params) {
+  public void glGetMinmaxParameterfvEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13288,19 +13288,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib3fvARB(int index, Addressable v) {
+  public void glVertexAttrib3fvARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform4ui64vARB(int program, int location, int count, Addressable value) {
+  public void glProgramUniform4ui64vARB(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramBinary(int program, int binaryFormat, Addressable binary, int length) {
+  public void glProgramBinary(int program, int binaryFormat, MemorySegment binary, int length) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix2fvARB(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix2fvARB(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13312,7 +13312,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexStream4fvATI(int stream, Addressable coords) {
+  public void glVertexStream4fvATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13324,7 +13324,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glConvolutionParameterfv(int target, int pname, Addressable params) {
+  public void glConvolutionParameterfv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13344,19 +13344,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertex4bvOES(Addressable coords) {
+  public void glVertex4bvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowPos2dvARB(Addressable v) {
+  public void glWindowPos2dvARB(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTexSubImage3DARB(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, Addressable data) {
+  public void glCompressedTexSubImage3DARB(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawElementsIndirect(int mode, int type, Addressable indirect) {
+  public void glDrawElementsIndirect(int mode, int type, MemorySegment indirect) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13364,7 +13364,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix2x4fvNV(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix2x4fvNV(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13372,15 +13372,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glExtGetTexturesQCOM(Addressable textures, int maxTextures, Addressable numTextures) {
+  public void glExtGetTexturesQCOM(MemorySegment textures, int maxTextures, MemorySegment numTextures) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glScissorArrayvOES(int first, int count, Addressable v) {
+  public void glScissorArrayvOES(int first, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glRasterPos4xvOES(Addressable coords) {
+  public void glRasterPos4xvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13388,11 +13388,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMinmaxEXT(int target, byte reset, int format, int type, Addressable values) {
+  public void glGetMinmaxEXT(int target, byte reset, int format, int type, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPathColorGenfvNV(int color, int pname, Addressable value) {
+  public void glGetPathColorGenfvNV(int color, int pname, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13400,7 +13400,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL4ui64vNV(int index, Addressable v) {
+  public void glVertexAttribL4ui64vNV(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13408,7 +13408,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCreateProgramPipelines(int n, Addressable pipelines) {
+  public void glCreateProgramPipelines(int n, MemorySegment pipelines) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13436,7 +13436,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetShadingRateImagePaletteNV(int viewport, int entry, Addressable rate) {
+  public void glGetShadingRateImagePaletteNV(int viewport, int entry, MemorySegment rate) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13444,7 +13444,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureSubImage2DEXT(int texture, int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, Addressable pixels) {
+  public void glTextureSubImage2DEXT(int texture, int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13464,15 +13464,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawElementsBaseVertexEXT(int mode, int count, int type, Addressable indices, int basevertex) {
+  public void glDrawElementsBaseVertexEXT(int mode, int count, int type, MemorySegment indices, int basevertex) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexArrayRangeAPPLE(int length, Addressable pointer) {
+  public void glVertexArrayRangeAPPLE(int length, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetColorTableParameterfvEXT(int target, int pname, Addressable params) {
+  public void glGetColorTableParameterfvEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13488,7 +13488,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVertexAttribdvNV(int index, int pname, Addressable params) {
+  public void glGetVertexAttribdvNV(int index, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13496,27 +13496,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramLocalParameterdvARB(int target, int index, Addressable params) {
+  public void glGetProgramLocalParameterdvARB(int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public byte glIsSyncAPPLE(Addressable sync) {
+  public byte glIsSyncAPPLE(MemorySegment sync) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4usv(int index, Addressable v) {
+  public void glVertexAttrib4usv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetQueryObjectuivARB(int id, int pname, Addressable params) {
+  public void glGetQueryObjectuivARB(int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFogFuncSGIS(int n, Addressable points) {
+  public void glFogFuncSGIS(int n, MemorySegment points) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix3x4fv(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix3x4fv(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13524,11 +13524,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureParameterfv(int texture, int pname, Addressable param) {
+  public void glTextureParameterfv(int texture, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMaterialxvOES(int face, int pname, Addressable params) {
+  public void glGetMaterialxvOES(int face, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13536,7 +13536,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public int glGetUniformBlockIndex(int program, Addressable uniformBlockName) {
+  public int glGetUniformBlockIndex(int program, MemorySegment uniformBlockName) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13552,7 +13552,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedFramebufferSampleLocationsfvARB(int framebuffer, int start, int count, Addressable v) {
+  public void glNamedFramebufferSampleLocationsfvARB(int framebuffer, int start, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13564,23 +13564,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedBufferPointervEXT(int buffer, int pname, Addressable params) {
+  public void glGetNamedBufferPointervEXT(int buffer, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix3x4fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix3x4fv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexEnvxv(int target, int pname, Addressable params) {
+  public void glGetTexEnvxv(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTexImage3D(int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, Addressable data) {
+  public void glCompressedTexImage3D(int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord1hvNV(int target, Addressable v) {
+  public void glMultiTexCoord1hvNV(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13592,23 +13592,23 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexParameterIuivEXT(int texunit, int target, int pname, Addressable params) {
+  public void glMultiTexParameterIuivEXT(int texunit, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord3xvOES(Addressable coords) {
+  public void glTexCoord3xvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnTexImage(int target, int level, int format, int type, int bufSize, Addressable pixels) {
+  public void glGetnTexImage(int target, int level, int format, int type, int bufSize, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReadnPixelsEXT(int x, int y, int width, int height, int format, int type, int bufSize, Addressable data) {
+  public void glReadnPixelsEXT(int x, int y, int width, int height, int format, int type, int bufSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribL1dvEXT(int index, Addressable v) {
+  public void glVertexAttribL1dvEXT(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13620,11 +13620,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform4dv(int program, int location, int count, Addressable value) {
+  public void glProgramUniform4dv(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetConvolutionFilter(int target, int format, int type, Addressable image) {
+  public void glGetConvolutionFilter(int target, int format, int type, MemorySegment image) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13636,7 +13636,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniformMatrix3x4dv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix3x4dv(int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13644,7 +13644,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetClipPlanex(int plane, Addressable equation) {
+  public void glGetClipPlanex(int plane, MemorySegment equation) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13652,15 +13652,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnCompressedTexImage(int target, int lod, int bufSize, Addressable pixels) {
+  public void glGetnCompressedTexImage(int target, int lod, int bufSize, MemorySegment pixels) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNormalStream3ivATI(int stream, Addressable coords) {
+  public void glNormalStream3ivATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenFramebuffersOES(int n, Addressable framebuffers) {
+  public void glGenFramebuffersOES(int n, MemorySegment framebuffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13672,19 +13672,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetActiveSubroutineName(int program, int shadertype, int index, int bufSize, Addressable length, Addressable name) {
+  public void glGetActiveSubroutineName(int program, int shadertype, int index, int bufSize, MemorySegment length, MemorySegment name) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetClipPlanef(int plane, Addressable equation) {
+  public void glGetClipPlanef(int plane, MemorySegment equation) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glNamedProgramStringEXT(int program, int target, int format, int len, Addressable string) {
+  public void glNamedProgramStringEXT(int program, int target, int format, int len, MemorySegment string) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniformMatrix4fvEXT(int program, int location, int count, byte transpose, Addressable value) {
+  public void glProgramUniformMatrix4fvEXT(int program, int location, int count, byte transpose, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13696,11 +13696,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTexImage1D(int target, int level, int internalformat, int width, int border, int imageSize, Addressable data) {
+  public void glCompressedTexImage1D(int target, int level, int internalformat, int width, int border, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTexEnvxvOES(int target, int pname, Addressable params) {
+  public void glGetTexEnvxvOES(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13720,19 +13720,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetFloati_vOES(int target, int index, Addressable data) {
+  public void glGetFloati_vOES(int target, int index, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramLocalParameterIivNV(int target, int index, Addressable params) {
+  public void glGetProgramLocalParameterIivNV(int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetMinmax(int target, byte reset, int format, int type, Addressable values) {
+  public void glGetMinmax(int target, byte reset, int format, int type, MemorySegment values) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFogCoordfvEXT(Addressable coord) {
+  public void glFogCoordfvEXT(MemorySegment coord) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13740,19 +13740,19 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI2ivEXT(int index, Addressable v) {
+  public void glVertexAttribI2ivEXT(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTexImage2D(int target, int level, int internalformat, int width, int height, int border, int imageSize, Addressable data) {
+  public void glCompressedTexImage2D(int target, int level, int internalformat, int width, int height, int border, int imageSize, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiTexCoord4dvARB(int target, Addressable v) {
+  public void glMultiTexCoord4dvARB(int target, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glLoadProgramNV(int target, int id, int len, Addressable program) {
+  public void glLoadProgramNV(int target, int id, int len, MemorySegment program) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13760,7 +13760,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTextureParameterIuivEXT(int texture, int target, int pname, Addressable params) {
+  public void glGetTextureParameterIuivEXT(int texture, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13768,15 +13768,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glConvolutionParameterfvEXT(int target, int pname, Addressable params) {
+  public void glConvolutionParameterfvEXT(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glUniform1uivEXT(int location, int count, Addressable value) {
+  public void glUniform1uivEXT(int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDeleteBuffers(int n, Addressable buffers) {
+  public void glDeleteBuffers(int n, MemorySegment buffers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13784,7 +13784,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glIndexxvOES(Addressable component) {
+  public void glIndexxvOES(MemorySegment component) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13796,7 +13796,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetnSeparableFilter(int target, int format, int type, int rowBufSize, Addressable row, int columnBufSize, Addressable column, Addressable span) {
+  public void glGetnSeparableFilter(int target, int format, int type, int rowBufSize, MemorySegment row, int columnBufSize, MemorySegment column, MemorySegment span) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13812,7 +13812,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib4NivARB(int index, Addressable v) {
+  public void glVertexAttrib4NivARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13824,11 +13824,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReplacementCodeusvSUN(Addressable code) {
+  public void glReplacementCodeusvSUN(MemorySegment code) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glIglooInterfaceSGIX(int pname, Addressable params) {
+  public void glIglooInterfaceSGIX(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13836,11 +13836,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetCombinerStageParameterfvNV(int stage, int pname, Addressable params) {
+  public void glGetCombinerStageParameterfvNV(int stage, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawElementsInstancedBaseVertexBaseInstance(int mode, int count, int type, Addressable indices, int instancecount, int basevertex, int baseinstance) {
+  public void glDrawElementsInstancedBaseVertexBaseInstance(int mode, int count, int type, MemorySegment indices, int instancecount, int basevertex, int baseinstance) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13852,15 +13852,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawRangeElementsEXT(int mode, int start, int end, int count, int type, Addressable indices) {
+  public void glDrawRangeElementsEXT(int mode, int start, int end, int count, int type, MemorySegment indices) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform4iv(int program, int location, int count, Addressable value) {
+  public void glProgramUniform4iv(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribI4ubv(int index, Addressable v) {
+  public void glVertexAttribI4ubv(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13868,7 +13868,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawTexsvOES(Addressable coords) {
+  public void glDrawTexsvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13876,11 +13876,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs1hvNV(int index, int n, Addressable v) {
+  public void glVertexAttribs1hvNV(int index, int n, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramEnvParameterdvARB(int target, int index, Addressable params) {
+  public void glGetProgramEnvParameterdvARB(int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13888,15 +13888,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetInteger64i_v(int target, int index, Addressable data) {
+  public void glGetInteger64i_v(int target, int index, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribs1svNV(int index, int count, Addressable v) {
+  public void glVertexAttribs1svNV(int index, int count, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glClearTexSubImageEXT(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, Addressable data) {
+  public void glClearTexSubImageEXT(int texture, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, MemorySegment data) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13904,7 +13904,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTextureLevelParameteriv(int texture, int level, int pname, Addressable params) {
+  public void glGetTextureLevelParameteriv(int texture, int level, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13912,7 +13912,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenProgramPipelinesEXT(int n, Addressable pipelines) {
+  public void glGenProgramPipelinesEXT(int n, MemorySegment pipelines) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13924,27 +13924,27 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramUniform4fv(int program, int location, int count, Addressable value) {
+  public void glProgramUniform4fv(int program, int location, int count, MemorySegment value) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3sv(Addressable v) {
+  public void glSecondaryColor3sv(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttrib1svARB(int index, Addressable v) {
+  public void glVertexAttrib1svARB(int index, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDrawCommandsNV(int primitiveMode, int buffer, Addressable indirects, Addressable sizes, int count) {
+  public void glDrawCommandsNV(int primitiveMode, int buffer, MemorySegment indirects, MemorySegment sizes, int count) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(Addressable rc, Addressable tc, Addressable c, Addressable n, Addressable v) {
+  public void glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN(MemorySegment rc, MemorySegment tc, MemorySegment c, MemorySegment n, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPathColorGenNV(int color, int genMode, int colorFormat, Addressable coeffs) {
+  public void glPathColorGenNV(int color, int genMode, int colorFormat, MemorySegment coeffs) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13956,7 +13956,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMatrixMultTransposefEXT(int mode, Addressable m) {
+  public void glMatrixMultTransposefEXT(int mode, MemorySegment m) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13964,7 +13964,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMultiDrawRangeElementArrayAPPLE(int mode, int start, int end, Addressable first, Addressable count, int primcount) {
+  public void glMultiDrawRangeElementArrayAPPLE(int mode, int start, int end, MemorySegment first, MemorySegment count, int primcount) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13976,7 +13976,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColor3ivEXT(Addressable v) {
+  public void glSecondaryColor3ivEXT(MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13984,7 +13984,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSpriteParameterivSGIX(int pname, Addressable params) {
+  public void glSpriteParameterivSGIX(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -13992,11 +13992,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetCombinerInputParameterivNV(int stage, int portion, int variable, int pname, Addressable params) {
+  public void glGetCombinerInputParameterivNV(int stage, int portion, int variable, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramPipelineiv(int pipeline, int pname, Addressable params) {
+  public void glGetProgramPipelineiv(int pipeline, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14004,7 +14004,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedFramebufferAttachmentParameterivEXT(int framebuffer, int attachment, int pname, Addressable params) {
+  public void glGetNamedFramebufferAttachmentParameterivEXT(int framebuffer, int attachment, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14016,11 +14016,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetProgramivARB(int target, int pname, Addressable params) {
+  public void glGetProgramivARB(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetPointervKHR(int pname, Addressable params) {
+  public void glGetPointervKHR(int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14032,11 +14032,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glEvalCoord2xvOES(Addressable coords) {
+  public void glEvalCoord2xvOES(MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTextureParameterIuivEXT(int texture, int target, int pname, Addressable params) {
+  public void glTextureParameterIuivEXT(int texture, int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14048,7 +14048,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPointSizePointerOES(int type, int stride, Addressable pointer) {
+  public void glPointSizePointerOES(int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14064,11 +14064,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glMaterialxv(int face, int pname, Addressable param) {
+  public void glMaterialxv(int face, int pname, MemorySegment param) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glWindowRectanglesEXT(int mode, int count, Addressable box) {
+  public void glWindowRectanglesEXT(int mode, int count, MemorySegment box) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14076,11 +14076,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetConvolutionFilterEXT(int target, int format, int type, Addressable image) {
+  public void glGetConvolutionFilterEXT(int target, int format, int type, MemorySegment image) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetNamedProgramLocalParameterIivEXT(int program, int target, int index, Addressable params) {
+  public void glGetNamedProgramLocalParameterIivEXT(int program, int target, int index, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14092,11 +14092,11 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetShadingRateSampleLocationivNV(int rate, int samples, int index, Addressable location) {
+  public void glGetShadingRateSampleLocationivNV(int rate, int samples, int index, MemorySegment location) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetBufferParameterui64vNV(int target, int pname, Addressable params) {
+  public void glGetBufferParameterui64vNV(int target, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14104,15 +14104,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetVideoCaptureStreamdvNV(int video_capture_slot, int stream, int pname, Addressable params) {
+  public void glGetVideoCaptureStreamdvNV(int video_capture_slot, int stream, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glProgramEnvParameters4fvEXT(int target, int index, int count, Addressable params) {
+  public void glProgramEnvParameters4fvEXT(int target, int index, int count, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGenSamplers(int count, Addressable samplers) {
+  public void glGenSamplers(int count, MemorySegment samplers) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14120,15 +14120,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public Addressable glCreateSyncFromCLeventARB(Addressable context, Addressable event, int flags) {
+  public MemorySegment glCreateSyncFromCLeventARB(MemorySegment context, MemorySegment event, int flags) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSeparableFilter2DEXT(int target, int internalformat, int width, int height, int format, int type, Addressable row, Addressable column) {
+  public void glSeparableFilter2DEXT(int target, int internalformat, int width, int height, int format, int type, MemorySegment row, MemorySegment column) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glDebugMessageCallback(Addressable callback, Addressable userParam) {
+  public void glDebugMessageCallback(MemorySegment callback, MemorySegment userParam) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14136,7 +14136,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glSecondaryColorPointer(int size, int type, int stride, Addressable pointer) {
+  public void glSecondaryColorPointer(int size, int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14152,15 +14152,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetQueryObjecti64vEXT(int id, int pname, Addressable params) {
+  public void glGetQueryObjecti64vEXT(int id, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCompressedTextureImage1DEXT(int texture, int target, int level, int internalformat, int width, int border, int imageSize, Addressable bits) {
+  public void glCompressedTextureImage1DEXT(int texture, int target, int level, int internalformat, int width, int border, int imageSize, MemorySegment bits) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glFogCoordPointer(int type, int stride, Addressable pointer) {
+  public void glFogCoordPointer(int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14172,7 +14172,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glTexCoord2fNormal3fVertex3fvSUN(Addressable tc, Addressable n, Addressable v) {
+  public void glTexCoord2fNormal3fVertex3fvSUN(MemorySegment tc, MemorySegment n, MemorySegment v) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14188,15 +14188,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glPushDebugGroupKHR(int source, int id, int length, Addressable message) {
+  public void glPushDebugGroupKHR(int source, int id, int length, MemorySegment message) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexAttribIPointer(int index, int size, int type, int stride, Addressable pointer) {
+  public void glVertexAttribIPointer(int index, int size, int type, int stride, MemorySegment pointer) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glGetTransformFeedbackVaryingNV(int program, int index, Addressable location) {
+  public void glGetTransformFeedbackVaryingNV(int program, int index, MemorySegment location) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14204,7 +14204,7 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVertexStream1dvATI(int stream, Addressable coords) {
+  public void glVertexStream1dvATI(int stream, MemorySegment coords) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14216,15 +14216,15 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glVariantuivEXT(int id, Addressable addr) {
+  public void glVariantuivEXT(int id, MemorySegment addr) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public void glCombinerStageParameterfvNV(int stage, int pname, Addressable params) {
+  public void glCombinerStageParameterfvNV(int stage, int pname, MemorySegment params) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
-  public byte glAreProgramsResidentNV(int n, Addressable programs, Addressable residences) {
+  public byte glAreProgramsResidentNV(int n, MemorySegment programs, MemorySegment residences) {
     throw new RuntimeException("This method is not available in the generated binding.");
   }
 
@@ -14258,56 +14258,110 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
 
   @Override
   public int gluBuild1DMipmapLevels(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5,
-      int arg6, int arg7, Addressable arg8) {
+      int arg6, int arg7, MemorySegment arg8) {
     // TODO Auto-generated method stub
     return 0;
   }
 
   @Override
   public int gluBuild2DMipmapLevels(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5,
-      int arg6, int arg7, int arg8, Addressable arg9) {
+      int arg6, int arg7, int arg8, MemorySegment arg9) {
     // TODO Auto-generated method stub
     return 0;
   }
 
   @Override
   public int gluBuild3DMipmapLevels(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5,
-      int arg6, int arg7, int arg8, int arg9, Addressable arg10) {
+      int arg6, int arg7, int arg8, int arg9, MemorySegment arg10) {
     // TODO Auto-generated method stub
     return 0;
   }
 
   @Override
   public int gluBuild3DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6,
-      Addressable arg7) {
+      MemorySegment arg7) {
     // TODO Auto-generated method stub
     return 0;
   }
 
   @Override
-  public byte gluCheckExtension(Addressable arg0, Addressable arg1) {
+  public byte gluCheckExtension(MemorySegment arg0, MemorySegment arg1) {
     // TODO Auto-generated method stub
     return 0;
   }
 
   @Override
-  public void gluNurbsCallbackData(Addressable arg0, Addressable arg1) {
+  public void gluNurbsCallbackData(MemorySegment arg0, MemorySegment arg1) {
     // TODO Auto-generated method stub
     
   }
 
   @Override
-  public void gluNurbsCallbackDataEXT(Addressable arg0, Addressable arg1) {
+  public void gluNurbsCallbackDataEXT(MemorySegment arg0, MemorySegment arg1) {
     // TODO Auto-generated method stub
     
   }
 
   @Override
-  public int gluUnProject4(double arg0, double arg1, double arg2, double arg3, Addressable arg4,
-      Addressable arg5, Addressable arg6, double arg7, double arg8, Addressable arg9,
-      Addressable arg10, Addressable arg11, Addressable arg12) {
+  public int gluUnProject4(double arg0, double arg1, double arg2, double arg3, MemorySegment arg4,
+      MemorySegment arg5, MemorySegment arg6, double arg7, double arg8, MemorySegment arg9,
+      MemorySegment arg10, MemorySegment arg11, MemorySegment arg12) {
     // TODO Auto-generated method stub
     return 0;
+  }
+
+  @Override
+  public void glutBitmap8By13(MemorySegment arg0) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public MemorySegment glutBitmap9By15() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public MemorySegment glutBitmapHelvetica10() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void glutBitmapHelvetica12(MemorySegment arg0) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public MemorySegment glutBitmapHelvetica18() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public MemorySegment glutBitmapTimesRoman10() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public MemorySegment glutBitmapTimesRoman24() {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public void glutStrokeMonoRoman(MemorySegment arg0) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void glutStrokeRoman(MemorySegment arg0) {
+    // TODO Auto-generated method stub
+    
   }
 
 }

@@ -1,8 +1,9 @@
 # Foreign Function & Memory Help
 
-* [Project Panama home page](https://openjdk.org/projects/panama/)
-* [OpenJDK JDK 19](https://jdk.java.net/19/) to use PanamaGL
 * [JExtract](https://jdk.java.net/jextract/) to generate PanamaGL bindings
+* [OpenJDK JDK 22](https://jdk.java.net/22/) to build PanamaGL
+* [JavaFX SDK](https://jdk.java.net/javafx22) to to build JavaFX canvas
+* [Project Panama home page](https://openjdk.org/projects/panama/)
 
 ## Documentation
 * [State of Foreign Function](https://github.com/openjdk/panama-foreign/blob/foreign-memaccess%2Babi/doc/panama_ffi.md)

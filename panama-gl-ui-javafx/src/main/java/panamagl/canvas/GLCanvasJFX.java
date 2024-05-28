@@ -97,13 +97,13 @@ public class GLCanvasJFX implements GLCanvas {
 
       // Skip rendering we are already in the middle of rendering
       // the previous frame
-      if (isRendering()) {
+      /*if (isRendering()) {
         return;
       }
 
       // Otherwise indicates that we start to render and do the
       // job required for resizing.
-      else {
+      else {*/
         setRendering(true);
 
         getMonitoring().onStartRendering();
@@ -111,7 +111,7 @@ public class GLCanvasJFX implements GLCanvas {
         //System.out.println("GLCanvasJFX : " + w + " " + h);
 
         offscreen.onResize(GLCanvasJFX.this, listener, 0, 0, w, h);
-      }
+      //}
     }
   }
 
@@ -170,7 +170,6 @@ public class GLCanvasJFX implements GLCanvas {
       overlay.paint(gc);
 
     rendering.set(false);
-
   }
 
   @Override

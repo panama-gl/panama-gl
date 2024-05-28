@@ -38,7 +38,6 @@ import panamagl.platform.linux.APanamaGLFactory_linux;
 import panamagl.platform.macos.APanamaGLFactory_macOS;
 import panamagl.platform.macos.arm.PlatformMatcher_macOS_arm;
 import panamagl.platform.macos.x64.PlatformMatcher_macOS_x64;
-import panamagl.platform.windows.APanamaGLFactory_windows;
 
 /**
  * Generate an OpenGL API with per-platform implementations wrapping the bindings made available by
@@ -86,10 +85,11 @@ public class GenerateAPI {
    * @throws Exception
    */
   public void run(APILayout layout) throws Exception {
-    boolean MACOS_x64 = true;
-    boolean MACOS_ARM = true;
+    //boolean GL_INTERF = false;
+	boolean MACOS_x64 = false;
+    boolean MACOS_ARM = false;
     boolean LINUX_x64 = true;
-    boolean WINDOWS_x64 = true;
+    boolean WINDOWS_x64 = false;
 
     // ============================================================================
     // GL SPECIFICATION
@@ -100,7 +100,7 @@ public class GenerateAPI {
         layout.getOutputFolder(new APIPlatform(OS.api)) + interf.packge.replace(".", "/") + "/";
 
     List<String> interfaceFiles = makeGLInterfaces();
-
+    
     // ============================================================================
     // GL IMPLEMENTATION
 
@@ -115,7 +115,9 @@ public class GenerateAPI {
     if (MACOS_x64) {
 
       APIPlatform platform = new APIPlatform(OS.macOS, CPU.x64);
-      Set<Class<?>> wrapped = Set.of(opengl.macos.x86.glut_h.class);
+      
+// TODO : fix this hack : should require x86 and not arm
+      Set<Class<?>> wrapped = Set.of(opengl.macos.arm.glut_h.class);
       Class<?> factoryBase = APanamaGLFactory_macOS.class;
       Class<?> factorymatcher = PlatformMatcher_macOS_x64.class;
       boolean genGlut = true;
@@ -149,7 +151,7 @@ public class GenerateAPI {
       wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
 
       APIPlatform platform = new APIPlatform(OS.linux, CPU.x64);
-      Set<Class<?>> wrapped = Set.of(glext.ubuntu.v20.glext_h.class);
+      Set<Class<?>> wrapped = Set.of(glext.linux.x86.glext_h.class);
       Class<?> factoryBase = APanamaGLFactory_linux.class;
       Class<?> factorymatcher = null;
       boolean genGlut = false;
@@ -162,7 +164,7 @@ public class GenerateAPI {
     // ========================================================
     // Configure Windows wrapper
 
-    if (WINDOWS_x64) {
+    /*if (WINDOWS_x64) {
 
       wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
 
@@ -175,7 +177,7 @@ public class GenerateAPI {
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
           interfaceFiles);
 
-    }
+    }*/
 
     // Compile ALL
     compile(interfaceFiles);

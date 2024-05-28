@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
-import opengl.ubuntu.v20.glut_h;
+import opengl.linux.x86.glut_h;
 
 // vm args : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
 public class TestClassMethodRegistry {

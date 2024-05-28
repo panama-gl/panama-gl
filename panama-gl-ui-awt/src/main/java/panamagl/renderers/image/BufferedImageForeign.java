@@ -21,10 +21,8 @@ package panamagl.renderers.image;
 import java.awt.Image;
 import java.awt.image.PixelGrabber;
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.MemorySession;
-import java.lang.foreign.SegmentAllocator;
+import java.lang.foreign.Arena;
 import java.lang.foreign.ValueLayout;
-import java.nio.ByteBuffer;
 import panamagl.opengl.GL;
 
 /**
@@ -34,8 +32,8 @@ import panamagl.opengl.GL;
  * @author Martin Pernollet
  */
 public class BufferedImageForeign {
-  static MemorySession scope = MemorySession.openImplicit();
-  static SegmentAllocator allocator = SegmentAllocator.newNativeArena(scope);
+  static Arena allocator = Arena.ofConfined();
+      
 
   public static MemorySegment toMemorySegment(Image image) {
     return toMemorySegment(image, image.getWidth(null), image.getHeight(null));
@@ -184,6 +182,6 @@ public class BufferedImageForeign {
    * @return ByteBuffer containing the contents of the byte array
    */
   public static MemorySegment allocBytes(byte[] byteArray) {
-    return allocator.allocateArray(ValueLayout.JAVA_BYTE, byteArray);
+    return allocator.allocateFrom(ValueLayout.JAVA_BYTE, byteArray);
   }
 }

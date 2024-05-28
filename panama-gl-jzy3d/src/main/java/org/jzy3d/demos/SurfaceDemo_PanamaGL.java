@@ -37,16 +37,22 @@ import org.jzy3d.plot3d.rendering.canvas.Quality;
 import panamagl.utils.GraphicsUtils;
 
 /**
- * Demo an surface chart made with Panama (JEP-412).
+ * Demo an surface chart made with PanamaGL.
+ *
+ * VM ARGS : --enable-native-access=ALL-UNNAMED 
+ * 
+ * -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+ * 
+ * or
+ * -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
+ * 
+ * or
+ * -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
  *
  * @author Martin Pernollet
- *
  */
-//VM ARGS :  --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 // DO NOT USE -XstartOnFirstThread!!
-// -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
 // Making context current in MacOSXCGLContext line 1474 
-
 public class SurfaceDemo_PanamaGL {
   static final float ALPHA_FACTOR = 0.75f;// .61f;
 

@@ -1,10 +1,9 @@
 # Install JDK with Panama
 
-Currently using JDK 19
-
-* [OpenJDK JDK 19](https://jdk.java.net/19/) to use PanamaGL
-* [JExtract](https://jdk.java.net/jextract/) to generate PanamaGL bindings
-* Get the most recent IDE version allowing to compile to class version 63.* (JDK 19). E.g. eclipse users should get 2022-12 so that it knows class versions for JDK19 (using JDK 19 for building is not enough).
+* [OpenJDK JDK 22](https://jdk.java.net/22/) to build PanamaGL
+* [JExtract 22](https://jdk.java.net/jextract/) to generate PanamaGL bindings
+* [JavaFX SDK 22](https://jdk.java.net/javafx22) to to build JavaFX canvas
+* Get the most recent IDE version allowing to compile to class version for JDK 22. E.g. eclipse users should get 2024-03 so that it knows class versions for JDK22.
 
 # Install platform specific tools
 

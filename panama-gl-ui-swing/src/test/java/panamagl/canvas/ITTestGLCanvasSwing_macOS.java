@@ -40,11 +40,10 @@ import panamagl.utils.ImageUtils;
  * Not working yet, threading issue. See demofbo_onscreen_macos
  * 
  * 
- * @author Martin
- *
+ * VM ARGS : --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+ * 
+ * @author Martin Pernollet
  */
-// VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-
 public class ITTestGLCanvasSwing_macOS {
   
   BufferedImage screenshotWhenShown = null;

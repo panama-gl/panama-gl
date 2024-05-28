@@ -30,11 +30,15 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 /**
+ * WARN : not verified after bumping to JDK 22
+ * 
+ * ----------------------------
+ * 
  * Allow verifying if all generated MethodHandle of the JExtract'ed libraries can be linked properly to native libraries.
  *
  * Run me with VM args :
  * <code>
- *     --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
+ *     --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
  * </code>
  *
  * To build this program, you need to change RuntimeHelper to public as well as its lookup method. If you can't, just set it to null
@@ -117,7 +121,7 @@ public class CheckLinkConsistency {
 
     public static void printLinkStatus(SymbolLookup lookup, Class clazz, Field field, String generatedMethod, Link linkStatus) throws IllegalAccessException {
         if(lookup!=null) {
-            Optional<MemorySegment> memAddress = lookup.lookup(generatedMethod);
+            Optional<MemorySegment> memAddress = lookup.find(generatedMethod);
 
             if (memAddress.isEmpty() && Link.MISSING.equals(linkStatus)) {
                 System.out.println(generatedMethod + ":\t (" + clazz.getSimpleName() + "." + field.getName()  + ") link is MISSING");
@@ -146,7 +150,7 @@ public class CheckLinkConsistency {
 
 
     public static void check(SymbolLookup lookup, String function){
-        System.out.println(function + ":" + lookup.lookup(function));
+        System.out.println(function + ":" + lookup.find(function));
     }
 
     /////////////////////////////////////////////////////

@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 /** 
  * Ensure the task is executed by the AWT Event Thread.
+ * 
  * OpenGL being single threaded, we need to always perform rendering queries from the same UI thread.
  */
 public class AWTThreadRedirect implements ThreadRedirect{

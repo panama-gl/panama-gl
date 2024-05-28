@@ -23,10 +23,12 @@ public interface Image<T> {
   T getImage();
   
   void save(String file) throws IOException;
-  
+
+  public int getWidth();
+  public int getHeight();
+
   // TODO
   // dispose()
-  // getWidth/Height()
   
   //void fromBGRABuffer(MemorySegment pixelsBuffer,int width, int height);
   //void fromBGRABuffer(MemorySegment pixelsBuffer, int width, int height, int channels);

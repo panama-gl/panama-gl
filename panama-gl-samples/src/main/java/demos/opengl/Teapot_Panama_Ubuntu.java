@@ -1,6 +1,7 @@
 package demos.opengl;
 
-import static opengl.ubuntu.v20.glut_h.*;
+import static opengl.linux.x86.glut_h.*;
+import java.lang.foreign.Arena;
 
 /*
  * Copyright (c) 2020, 2023, Oracle and/or its affiliates. All rights reserved.
@@ -33,35 +34,34 @@ import static opengl.ubuntu.v20.glut_h.*;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import java.lang.foreign.MemorySession;
-import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
-import opengl.ubuntu.v20.glutDisplayFunc$callback;
-import opengl.ubuntu.v20.glutIdleFunc$callback;
+import opengl.linux.NativeLibLoader;
+import opengl.linux.x86.glutDisplayFunc$callback;
+import opengl.linux.x86.glutIdleFunc$callback;
 
 /**
  * This is the original demonstration program provided at https://github.com/sundararajana/panama-jextract-samples/tree/master/opengl.
  *
  * Requires VM args for Ubuntu
  * <code>
- * --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
+ * --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
  * </code>
  */
 public class Teapot_Panama_Ubuntu {
   private float rot = 0;
 
-  Teapot_Panama_Ubuntu(SegmentAllocator allocator) {
+  Teapot_Panama_Ubuntu(Arena arena) {
     // Reset Background
     glClearColor(0f, 0f, 0f, 0f);
     // Setup Lighting
     glShadeModel(GL_SMOOTH());
-    var pos = allocator.allocateArray(C_FLOAT, new float[] { 0.0f, 15.0f, -15.0f, 0 });
+    var pos = arena.allocateFrom(C_FLOAT, new float[] { 0.0f, 15.0f, -15.0f, 0 });
     glLightfv(GL_LIGHT0(), GL_POSITION(), pos);
-    var spec = allocator.allocateArray(C_FLOAT, new float[] { 1, 1, 1, 0 });
+    var spec = arena.allocateFrom(C_FLOAT, new float[] { 1, 1, 1, 0 });
     glLightfv(GL_LIGHT0(), GL_AMBIENT(), spec);
     glLightfv(GL_LIGHT0(), GL_DIFFUSE(), spec);
     glLightfv(GL_LIGHT0(), GL_SPECULAR(), spec);
-    var shini = allocator.allocate(C_FLOAT, 113);
+    var shini = arena.allocate(C_FLOAT, 113);
     glMaterialfv(GL_FRONT(), GL_SHININESS(), shini);
     glEnable(GL_LIGHTING());
     glEnable(GL_LIGHT0());
@@ -82,20 +82,20 @@ public class Teapot_Panama_Ubuntu {
   void onIdle() {
     rot += 0.1;
     glutPostRedisplay();
-    //throw new IllegalArgumentException("Teapot does not support coffee");
   }
 
   public static void main(String[] args) {
-    try (var scope = MemorySession.openConfined()) {
-      var allocator = SegmentAllocator.newNativeArena(scope);
-      var argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
+    NativeLibLoader.load();
+    
+    try (var arena = Arena.ofConfined()) {
+      var argc = arena.allocateFrom(ValueLayout.JAVA_INT, 0);
       glutInit(argc, argc);
       glutInitDisplayMode(GLUT_DOUBLE() | GLUT_RGB() | GLUT_DEPTH());
       glutInitWindowSize(500, 500);
-      glutCreateWindow(allocator.allocateUtf8String("Hello Panama!"));
-      var teapot = new Teapot_Panama_Ubuntu(allocator);
-      var displayStub = glutDisplayFunc$callback.allocate(teapot::display, scope);
-      var idleStub = glutIdleFunc$callback.allocate(teapot::onIdle, scope);
+      glutCreateWindow(arena.allocateFrom("Hello Panama!"));
+      var teapot = new Teapot_Panama_Ubuntu(arena);
+      var displayStub = glutDisplayFunc$callback.allocate(teapot::display, arena);
+      var idleStub = glutIdleFunc$callback.allocate(teapot::onIdle, arena);
       glutDisplayFunc(displayStub);
       glutIdleFunc(idleStub);
       glutMainLoop();

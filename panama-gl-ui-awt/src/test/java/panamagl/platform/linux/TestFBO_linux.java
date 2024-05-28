@@ -23,7 +23,7 @@ import panamagl.offscreen.FBOReader_AWT;
 import panamagl.offscreen.TestFBO;
 import panamagl.opengl.GL;
 
-// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
+// VM ARGS : --enable-native-access=ALL-UNNAMED -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
 public class TestFBO_linux extends LinuxTest{
   @Test
   public void given_GLUTContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {

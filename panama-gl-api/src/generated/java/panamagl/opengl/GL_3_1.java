@@ -30,7 +30,7 @@ public interface GL_3_1 extends GL_3_0 {
   public static final int GL_PRIMITIVE_RESTART = 0x8F9D;
   public static final int GL_PRIMITIVE_RESTART_INDEX = 0x8F9E;
   public void glDrawArraysInstanced(int mode, int first, int count, int instancecount);
-  public void glDrawElementsInstanced(int mode, int count, int type, Addressable indices, int instancecount);
+  public void glDrawElementsInstanced(int mode, int count, int type, MemorySegment indices, int instancecount);
   public void glTexBuffer(int target, int internalformat, int buffer);
   public void glPrimitiveRestartIndex(int index);
   public static final int GL_COPY_READ_BUFFER = 0x8F36;
@@ -69,14 +69,14 @@ public interface GL_3_1 extends GL_3_0 {
   public static final int GL_UNIFORM_BLOCK_REFERENCED_BY_GEOMETRY_SHADER = 0x8A45;
   public static final int GL_UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER = 0x8A46;
   public static final int GL_INVALID_INDEX = 0xFFFFFFFF;
-  public void glGetUniformIndices(int program, int uniformCount, Addressable uniformNames, Addressable uniformIndices);
-  public void glGetActiveUniformsiv(int program, int uniformCount, Addressable uniformIndices, int pname, Addressable params);
-  public void glGetActiveUniformName(int program, int uniformIndex, int bufSize, Addressable length, Addressable uniformName);
-  public int glGetUniformBlockIndex(int program, Addressable uniformBlockName);
-  public void glGetActiveUniformBlockiv(int program, int uniformBlockIndex, int pname, Addressable params);
-  public void glGetActiveUniformBlockName(int program, int uniformBlockIndex, int bufSize, Addressable length, Addressable uniformBlockName);
+  public void glGetUniformIndices(int program, int uniformCount, MemorySegment uniformNames, MemorySegment uniformIndices);
+  public void glGetActiveUniformsiv(int program, int uniformCount, MemorySegment uniformIndices, int pname, MemorySegment params);
+  public void glGetActiveUniformName(int program, int uniformIndex, int bufSize, MemorySegment length, MemorySegment uniformName);
+  public int glGetUniformBlockIndex(int program, MemorySegment uniformBlockName);
+  public void glGetActiveUniformBlockiv(int program, int uniformBlockIndex, int pname, MemorySegment params);
+  public void glGetActiveUniformBlockName(int program, int uniformBlockIndex, int bufSize, MemorySegment length, MemorySegment uniformBlockName);
   public void glUniformBlockBinding(int program, int uniformBlockIndex, int uniformBlockBinding);
   public void glBindBufferRange(int target, int index, int buffer, long offset, long size);
   public void glBindBufferBase(int target, int index, int buffer);
-  public void glGetIntegeri_v(int target, int index, Addressable data);
+  public void glGetIntegeri_v(int target, int index, MemorySegment data);
 }

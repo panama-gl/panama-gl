@@ -17,30 +17,32 @@ import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 
 /**
- * VM ARGS :
+ * Requires VM arguments such as 
  * 
- * MacOS
- * 
- * --module-path "/Library/Java/JavaVirtualMachines/javafx-sdk-19.0.2.1/" --add-modules
- * javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
- * 
- * Linux
- * 
- * -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/ --module-path "/usr/lib/jvm/javafx-sdk-20/lib"
- * --add-modules javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
- * 
- * Windows
- * 
- * --module-path "C:\Program Files\Java\javafx-sdk-17.0.6\lib" --add-modules javafx.controls
+ * <h2>Linux</h2>
+ * <code>
+ * --module-path "/usr/lib/jvm/javafx-sdk-22.0.1/lib" 
+ * --add-modules javafx.controls 
  * --add-exports=java.desktop/sun.awt=ALL-UNNAMED
+ *  -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
+ * </code>
  * 
- * @author Martin Pernollet
- *
+ * <h2>macOS</h2>
+ * <code>
+ * --module-path "/Library/Java/JavaVirtualMachines/javafx-sdk-22.0.1/lib" 
+ * --add-modules javafx.controls 
+ * --add-exports=java.desktop/sun.awt=ALL-UNNAMED
+ * -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+ * </code>
+ * 
+ * <h2>Windows</h2>
+ * <code>
+ * --module-path "C:\Program Files\Java\javafx-sdk-22.0.1\lib" 
+ * --add-modules javafx.controls 
+ * --add-exports=java.desktop/sun.awt=ALL-UNNAMED
+ * -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
+ * </code>
  */
-
-//
-// --module-path "C:\Program Files\Java\javafx-sdk-17.0.6\lib" --add-modules javafx.controls
-// --add-exports=java.desktop/sun.awt=ALL-UNNAMED
 public class DemoQuad_Onscreen_JavaFX extends Application {
   Animator anim;
   

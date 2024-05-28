@@ -66,7 +66,7 @@ import panamagl.utils.ImageUtils;
  * 
  * <h2>Debugging</h2>
  * 
- * Hint : to debug this class, invoke a program using it with flag -Dpanamagl.GLPanel
+ * Hint : to debug this class, invoke a program using it with flag -Dpanamagl.canvas.GLCanvasSwing
  * 
  * @author Martin Pernollet
  *
@@ -98,9 +98,6 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 	this.offscreen = factory.newOffscreenRenderer(new FBOReader_AWT());
     this.overlay = new PerformanceOverlay_AWT(this);
     
-    // Load OSXUtil native as soon as possible for macOS!
-    // GLProfile.initSingleton();
-
     // Show debug info
     //if (debug)
     //  GraphicsUtils.printGraphicsEnvironment("GLCanvasSwing");
@@ -121,7 +118,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
    * 
    * Initialization may occur in other threads and not be completed when this method returns.
    * 
-   * To ensure the component is initialized, call {@link #ini
+   * To ensure the component is initialized, call {@link #isInitialized()}.
    */
   @Override
   public void addNotify() {
@@ -188,12 +185,6 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
             RenderingHints.VALUE_INTERPOLATION_BICUBIC);
       }
       
-      //System.out.println("GLCanvasSwing : " + out.getWidth() + "," + out.getHeight() + " in " + getWidth() + "," + getHeight());
-      //float ratio = 1/1.25f;
-      //BufferedImage sout = ImageUtils.scale(out, ratio, ratio);
-      //g.drawImage(sout, 0, 0, null);
-      //System.out.println("GLCanvasSwing : " + sout.getWidth() + "," + sout.getHeight());
-      
       // Standard
       if(flip==null || Flip.NONE.equals(flip)) {
         g.drawImage(out, 0, 0, getWidth(), getHeight(), this);        
@@ -206,7 +197,6 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
       else if(Flip.HORIZONTAL.equals(flip)) {
         g.drawImage(out, 0 + getWidth(), 0, -getWidth(), getHeight(), this);
       }
-
       
       getMonitoring().onPaintComponentBefore();
 
@@ -220,8 +210,8 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
   
 
   /**
-   * If the panel initialization has achieved, this triggers an offscreen rendering, maybe on a
-   * separated thread (macOS case), from which an asynchronous repaint will be triggered.
+   * If the panel initialization has achieved, triggers an offscreen rendering from the 
+   * AWT thread, hence happening asynchronously.
    */
   @Override
   public void display() {
@@ -278,16 +268,20 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
       Debug.debug(debug, this.getClass(), "resizing to " + w + "x" + h);
 
-
-      // Skip rendering we are already in the middle of rendering
+      // <<<<< keep this behaviour commented on purpose for a while >>>>>
+      
+      // Skip rendering if we are already in the middle of rendering
       // the previous frame
       if (isRendering()) {
-        return;
+    	//System.err.println("GLCanvasSwing : SKIP RENDER");
+        return; 
       } 
-      
       // Otherwise indicates that we start to render and do the 
       // job required for resizing.
       else {
+      
+      // <<<<< 
+      
         setRendering(true);
 
         getMonitoring().onStartRendering();
@@ -305,7 +299,8 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
    * Show performance in a 2D text overlay.
    */
   protected void overlayPerformance(Graphics g) {
-    overlay.paint(g);
+    if(overlay!=null)
+      overlay.paint(g);
   }
 
   /* ===================================================== */

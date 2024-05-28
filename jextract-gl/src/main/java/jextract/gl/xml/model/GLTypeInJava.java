@@ -18,7 +18,7 @@
 package jextract.gl.xml.model;
 
 public class GLTypeInJava {
-  public static final String ADDRESSABLE = "Addressable"; // java.lang.foreign.
+  public static final String ADDRESSABLE = "MemorySegment"; // java.lang.foreign.
 
   public static boolean isPointer(String innerType) {
     return " *".equals(innerType) 

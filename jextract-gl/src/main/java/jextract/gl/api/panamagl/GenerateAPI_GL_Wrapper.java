@@ -40,7 +40,7 @@ public class GenerateAPI_GL_Wrapper {
 
   boolean addUnimplementedMethodsUponMissingBinding = true;
   boolean skipAlreadyBindedMethodNAME = true;
-  boolean debug = true;
+  boolean debug = false;
 
   // public Set<String> addUnimplementedMethodsFor = new HashSet<>();
 
@@ -59,7 +59,7 @@ public class GenerateAPI_GL_Wrapper {
   public static void main(String[] args) throws Exception {
 
     Wrapper wrapper = new Wrapper();
-    wrapper.wrapped = Set.of(opengl.macos.x86.glut_h.class);
+    wrapper.wrapped = Set.of(opengl.macos.arm.glut_h.class);
 
     wrapper.accepts = new AcceptsGLMethod();
     wrapper.className = "GL_macOS";
@@ -110,8 +110,10 @@ public class GenerateAPI_GL_Wrapper {
 
     // ----------------------------------------------------
     // ANALYSE IMPOSSIBLE BINDINGS
+    
     computeMissingBindingsStats(glRegistry, javaMethodNameRegistry);
 
+    
     // ----------------------------------------------------
     // INIT CLASS WRITER
 
@@ -155,6 +157,9 @@ public class GenerateAPI_GL_Wrapper {
 
     // Write code to disk
     classWriter.writeTo(wrapper.javaFile);
+    
+    System.out.println("Created Java File : " + wrapper.javaFile);
+
   }
 
   // --------------------------------------------------------------------

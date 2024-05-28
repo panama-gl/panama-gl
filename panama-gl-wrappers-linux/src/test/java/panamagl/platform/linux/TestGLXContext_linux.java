@@ -27,6 +27,9 @@ public class TestGLXContext_linux extends LinuxTest {
     if (!checkPlatform())
       return;
 
+    // Ensure java believes native did not init yet
+    GLUTContext_linux.hasInit = false; 
+    
     // Given
     GLXContext_linux context = new GLXContext_linux();
 

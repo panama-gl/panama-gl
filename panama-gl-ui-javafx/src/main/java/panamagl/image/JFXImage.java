@@ -18,12 +18,22 @@ public class JFXImage implements Image<WritableImage>{
 
   @Override
   public void save(String file) throws IOException {
-    // TODO Auto-generated method stub
+    throw new RuntimeException("Not implemented yet");
     
   }
   
   public void setImage(WritableImage image) {
     this.image = image;
+  }
+  
+  @Override
+  public int getWidth() {
+    return (int)image.getWidth();
+  }
+  
+  @Override
+  public int getHeight() {
+    return (int)image.getHeight();
   }
 
 }

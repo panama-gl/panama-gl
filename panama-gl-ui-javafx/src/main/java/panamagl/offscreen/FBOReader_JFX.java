@@ -6,6 +6,7 @@ import java.nio.ByteBuffer;
 import javafx.scene.image.PixelFormat;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.scene.image.WritablePixelFormat;
 import panamagl.Debug;
 import panamagl.image.JFXImage;
 import panamagl.opengl.GL;
@@ -31,7 +32,9 @@ public class FBOReader_JFX implements FBOReader{
     //WritableImage image = new WritableImage(width, height);
     PixelWriter writer = image.getPixelWriter();
     
+    
     PixelFormat<ByteBuffer> formatB = PixelFormat.getByteBgraInstance();
+    //WritablePixelFormat<ByteBuffer> formatB = PixelFormat.getByteBgraInstance();
     byte[] bixels = pixels.toArray(ValueLayout.JAVA_BYTE);
     writer.setPixels(0, 0, width, height, formatB, bixels, 0, width*4);
 

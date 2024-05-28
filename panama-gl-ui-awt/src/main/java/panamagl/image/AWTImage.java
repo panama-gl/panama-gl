@@ -41,6 +41,15 @@ public class AWTImage implements Image<BufferedImage>{
     ImageIO.write(image, "png", new File(file));
   }
   
+  @Override
+  public int getWidth() {
+    return image.getWidth();
+  }
+  
+  @Override
+  public int getHeight() {
+    return image.getHeight();
+  }
   
   /*@Override
   public void fromBGRABuffer(MemorySegment pixelsBuffer,int width, int height) {

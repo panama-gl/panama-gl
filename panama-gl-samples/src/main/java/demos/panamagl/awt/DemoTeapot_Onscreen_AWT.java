@@ -22,10 +22,9 @@ import java.awt.BorderLayout;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.lang.foreign.MemorySession;
-import java.lang.foreign.SegmentAllocator;
+import java.lang.foreign.Arena;
 import javax.swing.SwingUtilities;
-import opengl.macos.x86.glut_h;
+import opengl.macos.arm.glut_h;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasAWT;
@@ -104,8 +103,7 @@ public class DemoTeapot_Onscreen_AWT {
     return new GLEventAdapter() {
 
       public void init(GL gl) {
-        MemorySession scope = MemorySession.openConfined();
-        SegmentAllocator allocator = SegmentAllocator.newNativeArena(scope);
+        Arena arena = Arena.ofConfined();
         
         // Reset Background
         gl.glClearColor(0f, 0f, 0f, 1f);
@@ -113,15 +111,15 @@ public class DemoTeapot_Onscreen_AWT {
         // Setup Lighting
         gl.glShadeModel(GL.GL_SMOOTH);
         
-        var pos = allocator.allocateArray(glut_h.C_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
+        var pos = arena.allocateFrom(glut_h.C_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, pos);
         
-        var spec = allocator.allocateArray(glut_h.C_FLOAT, new float[] {1, 1, 1, 0});
+        var spec = arena.allocateFrom(glut_h.C_FLOAT, new float[] {1, 1, 1, 0});
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, spec);
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, spec);
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, spec);
         
-        var shini = allocator.allocate(glut_h.C_FLOAT, 113);
+        var shini = arena.allocateFrom(glut_h.C_FLOAT, 113);
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, shini);
         gl.glEnable(GL.GL_LIGHTING);
         gl.glEnable(GL.GL_LIGHT0);

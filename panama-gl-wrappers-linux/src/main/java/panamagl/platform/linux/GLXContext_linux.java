@@ -18,11 +18,11 @@
 package panamagl.platform.linux;
 
 
-import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-import glx.ubuntu.v20.glx_h;
-import opengl.ubuntu.v20.glut_h;
+import glx.linux.x86.glx_h;
+import opengl.linux.NativeLibLoader;
+import opengl.linux.x86.glut_h;
 import panamagl.Debug;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;
@@ -32,30 +32,28 @@ import panamagl.opengl.GLContext;
 // https://learnopengl.com/Advanced-OpenGL/Framebufferss
 // https://stackoverflow.com/questions/21851688/linux-rendering-offscreen-with-opengl-3-2-w-fbos
 public class GLXContext_linux extends AGLContext implements GLContext{
-  protected MemoryAddress display;
-  protected MemoryAddress context;
+  protected MemorySegment display;
+  protected MemorySegment context;
   
   protected boolean debug = Debug.check(GLContext.class, GLXContext_linux.class);
   
   public GLXContext_linux() {
     super();
-    loadNativeLibraries();
-    initScope();
+    
+    NativeLibLoader.load();
+    
+    initArena();
   }
   
-  protected void loadNativeLibraries() {
-    System.loadLibrary("GL");
-    System.loadLibrary("glut");
-    System.loadLibrary("GLU");
-    System.loadLibrary("GLX");
-  }
-
   @Override
   public void init() {
-
+    Debug.debug(debug, "GLXContext : from thread " + Thread.currentThread().getName());
+    
     // Init glut so that it can be used
     if(!GLUTContext_linux.hasInit) {
-      MemorySegment argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
+      Debug.debug(debug, "GLXContext : will glutInit");
+
+      MemorySegment argc = arena.allocate(ValueLayout.JAVA_INT, 1);
       glut_h.glutInit(argc, argc);
       GLUTContext_linux.hasInit = true;
     }
@@ -68,7 +66,7 @@ public class GLXContext_linux extends AGLContext implements GLContext{
 
     
     // Define visual info (rendering settings)
-    MemoryAddress visualInfo = chooseVisual(screen);
+    MemorySegment visualInfo = chooseVisual(screen);
     
     // Make context
     createContext(visualInfo);
@@ -113,7 +111,7 @@ public class GLXContext_linux extends AGLContext implements GLContext{
    * It is a pointer to an XVisualInfo structure, not a visual ID or a pointer 
    * to a Visual structure.
    */
-  protected MemoryAddress chooseVisual(int screen) {
+  protected MemorySegment chooseVisual(int screen) {
     
     int[] attributes = { 
         glx_h.GLX_RGBA(), 
@@ -126,9 +124,9 @@ public class GLXContext_linux extends AGLContext implements GLContext{
         (int) glx_h.None() // Should always finish by NONE
     };
     
-    MemorySegment attrib = allocator.allocateArray(ValueLayout.JAVA_INT, attributes);
+    MemorySegment attrib = arena.allocateFrom(ValueLayout.JAVA_INT, attributes);
 
-    MemoryAddress visualInfo;
+    MemorySegment visualInfo;
     
     AttribMode mode = AttribMode.CHOSEN;
     
@@ -146,8 +144,8 @@ public class GLXContext_linux extends AGLContext implements GLContext{
     else if(AttribMode.FRAMEBUFFER.equals(mode)){
       
       int[] fboC = {1};
-      MemorySegment fboCount = allocator.allocateArray(ValueLayout.JAVA_INT, fboC);
-      MemoryAddress frameBufferConfig = glx_h.glXChooseFBConfig(display, screen, attrib, fboCount);
+      MemorySegment fboCount = arena.allocateFrom(ValueLayout.JAVA_INT, fboC);
+      MemorySegment frameBufferConfig = glx_h.glXChooseFBConfig(display, screen, attrib, fboCount);
 
       visualInfo = glx_h.glXGetVisualFromFBConfig(display, frameBufferConfig);
     }
@@ -164,15 +162,15 @@ public class GLXContext_linux extends AGLContext implements GLContext{
    * 
    * @param visualInfo
    */
-  protected void createContext(MemoryAddress visualInfo) {
-    MemoryAddress shareList = glx_h.NULL();
+  protected void createContext(MemorySegment visualInfo) {
+    MemorySegment shareList = glx_h.NULL();
     
     // A value of True specifies that rendering be done through a direct connection to the 
     // graphics system if possible; a value of False specifies rendering through the X server.
     int direct = glx_h.GL_TRUE();
     
     // https://www.ibm.com/docs/en/aix/7.1?topic=environment-glxcreatecontext-subroutine
-    context = glx_h.glXCreateContext(display, visualInfo, shareList.address(), direct);
+    context = glx_h.glXCreateContext(display, visualInfo, shareList, direct);
     
     Debug.debug(debug, "GLXContext : Got context " + context);
   }

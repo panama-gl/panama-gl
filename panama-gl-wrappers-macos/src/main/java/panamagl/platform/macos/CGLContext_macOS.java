@@ -16,12 +16,12 @@
 
 package panamagl.platform.macos;
 
-import java.lang.foreign.Addressable;
-import java.lang.foreign.MemoryAddress;
+
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.util.Arrays;
-import cgl.macos.x86.cgl_h;
+import cgl.macos.arm.cgl_h;
+import opengl.macos.NativeLibLoader;
 import panamagl.Debug;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;
@@ -81,16 +81,10 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
   protected boolean debug = Debug.check(CGLContext_macOS.class);
 
   public CGLContext_macOS() {
-    initNativeLibraries();
+    NativeLibLoader.load();
 
-    initScope();
+    initArena();
   }
-
-  protected void initNativeLibraries() {
-    // Manually load CGL
-    System.load("/System/Library/Frameworks/GLUT.framework/Versions/Current/GLUT");
-  }
-
 
   // https://stackoverflow.com/questions/11383510/setting-up-an-opengl-context-with-cgl-on-mac-os-x
   // https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/OpenGL-MacProgGuide/opengl_offscreen/opengl_offscreen.html
@@ -231,10 +225,10 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
       System.out.println("kCGLPFAColorSize : " + v2);
     }
 
-    MemoryAddress c_share = cgl_h.__DARWIN_NULL();
+    MemorySegment c_share = cgl_h.__DARWIN_NULL();
 
     // The CGL context seams to be described by an array of 2 ints / 1 long
-    MemorySegment context = allocator.allocate(contextArraySize * 4);
+    MemorySegment context = arena.allocate(contextArraySize * 4);
     // allocator.allocate(cgl_h.CGLContextObj, ??);
 
 
@@ -337,7 +331,7 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
    * graphics context for the calling thread. It is used to specify the graphics context that should
    * be used for rendering or other graphics operations in the current thread.
    */
-  protected void setCurrentContext(Addressable context) {
+  protected void setCurrentContext(MemorySegment context) {
     int status = cgl_h.CGLSetCurrentContext(context);
 
     throwExceptionUponError("CGLContext.setCurrentContext : " + context, status);
@@ -347,10 +341,10 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
     setCurrentContext(cgl_h.__DARWIN_NULL());
   }
 
-  protected MemoryAddress getCurrentContext() {
-    MemoryAddress currentContext = cgl_h.CGLGetCurrentContext();
+  protected MemorySegment getCurrentContext() {
+	MemorySegment currentContext = cgl_h.CGLGetCurrentContext();
 
-    Debug.debug(debug, "CGLContext : Current context = " + currentContext.toRawLongValue());
+    Debug.debug(debug, "CGLContext : Current context = " + currentContext.toString());
 
     return currentContext;
   }
@@ -447,13 +441,14 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
     pixelFormatLength = at.length;
 
     // Input : CGLPixelFormatAttribute
-    attribs = allocator.allocateArray(ValueLayout.JAVA_INT, at);
+    attribs = arena.allocateFrom(ValueLayout.JAVA_INT, at);
 
+    
     // Output : CGLPixelFormatObj
-    pixelFormat = allocator.allocateArray(ValueLayout.JAVA_INT, new int[1]);
+    pixelFormat = arena.allocateFrom(ValueLayout.JAVA_INT, new int[1]);
 
     // Output : GLint
-    numberOfPixels = allocator.allocateArray(ValueLayout.JAVA_INT, new int[1]);
+    numberOfPixels = arena.allocateFrom(ValueLayout.JAVA_INT, new int[1]);
 
     // Invocation
     int status = cgl_h.CGLChoosePixelFormat(attribs, pixelFormat, numberOfPixels);
@@ -492,8 +487,8 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
    * @param length MAYBE!! The number of elements int pixel format array
    * @return the attribute value
    */
-  protected int describePixelFormat(Addressable pixelFormat, int attribute, int length) {
-    MemorySegment value = allocator.allocate(ValueLayout.JAVA_INT, 1);
+  protected int describePixelFormat(MemorySegment pixelFormat, int attribute, int length) {
+    MemorySegment value = arena.allocate(ValueLayout.JAVA_INT, 1);
 
     int status = cgl_h.CGLDescribePixelFormat(pixelFormat, length, attribute, value);
 

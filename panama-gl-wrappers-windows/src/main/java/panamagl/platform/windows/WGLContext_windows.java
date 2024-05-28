@@ -1,9 +1,9 @@
 package panamagl.platform.windows;
 
-import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import freeglut.windows.x86.freeglut_h;
+import opengl.windows.NativeLibLoader;
 import panamagl.Debug;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;
@@ -30,16 +30,16 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   protected MemorySegment hWnd;
   
   // A Handle to the DEVICE context
-  protected MemoryAddress hdc;
-  protected MemoryAddress context;
+  protected MemorySegment hdc;
+  protected MemorySegment context;
   
   protected boolean debug = Debug.check(GLContext.class, WGLContext_windows.class);
   
   protected boolean advanced = false;
   
-  protected PFNWGLCHOOSEPIXELFORMATARBPROC wglChoosePixelFormatARB;
-  protected PFNWGLCREATECONTEXTATTRIBSARBPROC wglCreateContextAttribsARB;
-  //protected PFNWGLGETPIXELFORMATATTRIBFVARBPROC wglGetPixelFormatAttribivARB;
+  protected MemorySegment wglChoosePixelFormatARB;
+  protected MemorySegment wglCreateContextAttribsARB;
+ 
 
   public WGLContext_windows() {
     this(false);
@@ -48,46 +48,32 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   public WGLContext_windows(boolean advanced) {
     super();
     this.advanced = advanced;
-    loadNativeLibraries();
-    initScope();
+    
+    NativeLibLoader.load();
+    NativeLibLoader.loadWindowsDLL();
+    
+    initArena();
   }
   
-  protected void loadNativeLibraries() {
-    
-    // to use OpenGL and GLUT
-    System.loadLibrary("opengl32");
-    System.loadLibrary("glu32");
-    //System.loadLibrary("freeglut");
-    
-    // to invoke getDC() on Windows
-    System.loadLibrary("User32"); 
-    
-    // to invoke ChoosePixelFormat()
-    System.loadLibrary("Gdi32");
-    
-    // to invoke GetLastError()
-    System.loadLibrary("Kernel32");
-
-  }
-
   @Override
   public void init() {
-    init(false);
-  }
-  
-  public void init(boolean loadGlut) {
-
+    Debug.debug(debug, "WGLContext : from thread " + Thread.currentThread().getName());
+    
     // Init glut so that it can be used
-    if(loadGlut) {
-      MemorySegment argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
-      freeglut_h.glutInit(argc, argc);
+    if(!GLUTContext_windows.hasInit) {
+      Debug.debug(debug, "WGLContext : will glutInit");
+
+      MemorySegment argc = arena.allocateFrom(ValueLayout.JAVA_INT, 0);
+      MemorySegment argv = arena.allocateFrom("");
+      freeglut_h.glutInit(argc, argv);
+      GLUTContext_windows.hasInit = true;
     }
     
     //freeglut_h.glutInitDisplayMode(freeglut_h.GLUT_DOUBLE() | freeglut_h.GLUT_RGBA() | freeglut_h.GLUT_DEPTH());
     //freeglut_h.glutInitWindowSize(1, 1);
     //freeglut_h.glutInitWindowPosition(1000000, 1000000);
     
-    //int windowHandle = freeglut_h.glutCreateWindow(allocator.allocateUtf8String("...."));
+    //int windowHandle = freeglut_h.glutCreateWindow(arena.allocateFrom("...."));
     
     // Hacky!! Use it while WGLContext is not working
     //freeglut_h.glutHideWindow();   
@@ -134,18 +120,18 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     // ----------------------------
     // Choose a pixel format
 
-    MemorySegment pixelFormat = PIXELFORMATDESCRIPTOR.allocate(allocator);
-    PIXELFORMATDESCRIPTOR.cAccumAlphaBits$set(pixelFormat, (byte)24);
+    MemorySegment pixelFormat = PIXELFORMATDESCRIPTOR.allocate(arena);
+    PIXELFORMATDESCRIPTOR.cAccumAlphaBits(pixelFormat, (byte)24);
     
     int flags = //wgl_h.PFD_DRAW_TO_WINDOW() |   // support window  
         wgl_h.PFD_SUPPORT_OPENGL();// |   // support OpenGL  
         //wgl_h.PFD_DOUBLEBUFFER();
-    PIXELFORMATDESCRIPTOR.dwFlags$set(pixelFormat, flags);
-    PIXELFORMATDESCRIPTOR.iPixelType$set(pixelFormat, (byte)wgl_h.PFD_TYPE_RGBA());
-    PIXELFORMATDESCRIPTOR.cAlphaBits$set(pixelFormat, (byte)11);
-    PIXELFORMATDESCRIPTOR.cColorBits$set(pixelFormat, (byte)13);
-    PIXELFORMATDESCRIPTOR.cDepthBits$set(pixelFormat, (byte)15);
-    PIXELFORMATDESCRIPTOR.iLayerType$set(pixelFormat, (byte)wgl_h.PFD_MAIN_PLANE());
+    PIXELFORMATDESCRIPTOR.dwFlags(pixelFormat, flags);
+    PIXELFORMATDESCRIPTOR.iPixelType(pixelFormat, (byte)wgl_h.PFD_TYPE_RGBA());
+    PIXELFORMATDESCRIPTOR.cAlphaBits(pixelFormat, (byte)11);
+    PIXELFORMATDESCRIPTOR.cColorBits(pixelFormat, (byte)13);
+    PIXELFORMATDESCRIPTOR.cDepthBits(pixelFormat, (byte)15);
+    PIXELFORMATDESCRIPTOR.iLayerType(pixelFormat, (byte)wgl_h.PFD_MAIN_PLANE());
     
     // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-choosepixelformat
     int format = wgl_h.ChoosePixelFormat(hdc, pixelFormat);
@@ -173,7 +159,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     // Describe pixel format to check we properly set it
     long nBytes = pixelFormat.byteSize();
     
-    MemorySegment pixelFormatOut = PIXELFORMATDESCRIPTOR.allocate(allocator);
+    MemorySegment pixelFormatOut = PIXELFORMATDESCRIPTOR.allocate(arena);
     
     status = wgl_h.DescribePixelFormat(hdc, format, (int)nBytes, pixelFormatOut);
     
@@ -191,7 +177,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     //https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-wglcreatecontext
     context = wgl_h.wglCreateContext(hdc);
     
-    if(context.address().equals(wgl_h.NULL())) {
+    if(context.equals(wgl_h.NULL())) {
       GLError error = getWindowsLastError();
       error.throwRuntimeException();
       //System.exit(0);
@@ -203,12 +189,12 @@ public class WGLContext_windows extends AGLContext implements GLContext{
 
   @SuppressWarnings("unused")
   private void printPixelFormat(MemorySegment pixelFormatOut) {
-    System.out.println("WGL : PFD.flag " + PIXELFORMATDESCRIPTOR.dwFlags$get(pixelFormatOut));
-    System.out.println("WGL : PFD.iPixelType " + PIXELFORMATDESCRIPTOR.iPixelType$get(pixelFormatOut));
-    System.out.println("WGL : PFD.cAlphaBits " + PIXELFORMATDESCRIPTOR.cAlphaBits$get(pixelFormatOut));
-    System.out.println("WGL : PFD.cColorBits " + PIXELFORMATDESCRIPTOR.cColorBits$get(pixelFormatOut));
-    System.out.println("WGL : PFD.cDepthBits " + PIXELFORMATDESCRIPTOR.cDepthBits$get(pixelFormatOut));
-    System.out.println("WGL : PFD.iLayerType " + PIXELFORMATDESCRIPTOR.iLayerType$get(pixelFormatOut));
+    System.out.println("WGL : PFD.flag " + PIXELFORMATDESCRIPTOR.dwFlags(pixelFormatOut));
+    System.out.println("WGL : PFD.iPixelType " + PIXELFORMATDESCRIPTOR.iPixelType(pixelFormatOut));
+    System.out.println("WGL : PFD.cAlphaBits " + PIXELFORMATDESCRIPTOR.cAlphaBits(pixelFormatOut));
+    System.out.println("WGL : PFD.cColorBits " + PIXELFORMATDESCRIPTOR.cColorBits(pixelFormatOut));
+    System.out.println("WGL : PFD.cDepthBits " + PIXELFORMATDESCRIPTOR.cDepthBits(pixelFormatOut));
+    System.out.println("WGL : PFD.iLayerType " + PIXELFORMATDESCRIPTOR.iLayerType(pixelFormatOut));
   }
   
   // -------------------------------------------
@@ -235,21 +221,21 @@ public class WGLContext_windows extends AGLContext implements GLContext{
           0, // End
       };
     
-    MemorySegment attribsInt = allocator.allocateArray(ValueLayout.JAVA_INT, attribList);
+    MemorySegment attribsInt = arena.allocateFrom(ValueLayout.JAVA_INT, attribList);
     //MemoryAddress attribsFloat = wgl_h.NULL();
-    MemorySegment attribsFloat = allocator.allocateArray(ValueLayout.JAVA_FLOAT, new float[0]);
+    MemorySegment attribsFloat = arena.allocateFrom(ValueLayout.JAVA_FLOAT, new float[0]);
     int nMaxFormats = 1;
-    MemorySegment pixelFormat = allocator.allocateArray(ValueLayout.JAVA_INT, new int[nMaxFormats]);
-    MemorySegment numberOfFormats = allocator.allocateArray(ValueLayout.JAVA_INT, new int[1]);
+    MemorySegment pixelFormat = arena.allocateFrom(ValueLayout.JAVA_INT, new int[nMaxFormats]);
+    MemorySegment numberOfFormats = arena.allocateFrom(ValueLayout.JAVA_INT, new int[1]);
 
     Debug.debug(debug, "WGL : HDC " + hdc);
-    int status = wglChoosePixelFormatARB.apply(hdc.address(), attribsInt.address(), attribsFloat.address(), nMaxFormats, pixelFormat.address(), numberOfFormats.address());
+    int status = PFNWGLCHOOSEPIXELFORMATARBPROC.invoke(wglChoosePixelFormatARB, hdc, attribsInt, attribsFloat, nMaxFormats, pixelFormat, numberOfFormats);
     
     Debug.debug(debug, "WGL : status " + status + " expect " + wgl_h.GL_TRUE() );
     
-    context = wglCreateContextAttribsARB.apply(hdc.address(),  wgl_h.NULL(), attribsInt.address()).address();
+    context = PFNWGLCREATECONTEXTATTRIBSARBPROC.invoke(wglCreateContextAttribsARB, hdc,  wgl_h.NULL(), attribsInt);
     
-    if(context.address().equals(wgl_h.NULL())) {
+    if(context.equals(wgl_h.NULL())) {
       GLError error = getWindowsLastError();
       //error.throwRuntimeException();
       System.err.println("Error getting context : " + error);
@@ -266,15 +252,15 @@ public class WGLContext_windows extends AGLContext implements GLContext{
    */
   protected void initFunctions() {
     MemorySegment name;
-    MemoryAddress address;
+    MemorySegment address;
     
-    name = allocator.allocateUtf8String("wglChoosePixelFormatARB");
-    address = wgl_h.wglGetProcAddress(name);
-    wglChoosePixelFormatARB = PFNWGLCHOOSEPIXELFORMATARBPROC.ofAddress(address, scope);
+    name = arena.allocateFrom("wglChoosePixelFormatARB");
+    wglChoosePixelFormatARB = wgl_h.wglGetProcAddress(name);
+    //wglChoosePixelFormatARB = PFNWGLCHOOSEPIXELFORMATARBPROC.ofAddress(address, arena);
 
-    name = allocator.allocateUtf8String("wglCreateContextAttribsARB");
-    address = wgl_h.wglGetProcAddress(name);
-    wglCreateContextAttribsARB = PFNWGLCREATECONTEXTATTRIBSARBPROC.ofAddress(address, scope);
+    name = arena.allocateFrom("wglCreateContextAttribsARB");
+    wglCreateContextAttribsARB = wgl_h.wglGetProcAddress(name);
+   // wglCreateContextAttribsARB = PFNWGLCREATECONTEXTATTRIBSARBPROC.ofAddress(address, arena);
 
     name = null;
     address = null;
@@ -290,8 +276,8 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     // Get a Handle on the window
     if(windowHandle[0]!=0) {
       long[] wh = {windowHandle[0]};
-      //hWnd = allocator.allocateArray(ValueLayout.JAVA_LONG, wh);
-      hWnd = allocator.allocateArray(ValueLayout.JAVA_INT, windowHandle[0]);
+      //hWnd = arena.allocateFrom(ValueLayout.JAVA_LONG, wh);
+      hWnd = arena.allocateFrom(ValueLayout.JAVA_INT, windowHandle[0]);
 
       Debug.debug(debug, "WGL : HWND : " + windowHandle[0]);
 
@@ -325,7 +311,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     //wgl_h.LPVOID.bitAlignment();
     
     int size = 1000;
-    MemorySegment mess = allocator.allocate(size);
+    MemorySegment mess = arena.allocate(size);
     
     //wgl_h.MAKE
     
@@ -338,7 +324,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
         wgl_h.NULL(),
         errorCode,
         0,//wgl_h.MAKELANGID(wgl_h.LANG_NEUTRAL(), wgl_h.SUBLANG_DEFAULT()), // Default language
-        mess.address(),
+        mess,
         size,
         wgl_h.NULL()
         );
@@ -350,7 +336,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     String m = new String(mess.toArray(ValueLayout.JAVA_BYTE));
     System.err.println(m);
     
-    GLError error = new GLError(errorCode, mess.getUtf8String(0));
+    GLError error = new GLError(errorCode, mess.getString(0));
     return error;
   }
   //----------------------------------------

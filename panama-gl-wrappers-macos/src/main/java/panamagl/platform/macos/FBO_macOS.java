@@ -19,9 +19,8 @@ package panamagl.platform.macos;
 
 import java.awt.image.BufferedImage;
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.MemorySession;
 import java.lang.foreign.ValueLayout;
-import opengl.macos.x86.glut_h;
+import opengl.macos.arm.glut_h;
 import panamagl.Debug;
 import panamagl.offscreen.AFBO;
 import panamagl.offscreen.FBO;
@@ -46,67 +45,44 @@ public class FBO_macOS extends AFBO implements FBO {
   protected int level = 0;
   protected int border = 0;
   protected int channels = 4; // RGBA
-
-  // formats
-  protected int format = -1;
-  protected int internalFormat = -1;
-  protected int textureType = -1;
-
-  protected boolean debug = Debug.check(FBO.class, FBO_macOS.class);
-
-
-  protected int idTexture = -1;
-  protected int idFrameBuffer = -1;
-  protected int idRenderBuffer = -1;
   
-  protected MemorySession scope;
-  protected MemorySegment frameBufferIds;
-  protected MemorySegment renderBufferIds;
-  protected MemorySegment textureBufferIds;
-  protected MemorySegment pixelBuffer;
-  
-  public FBO_macOS() {}
+  public FBO_macOS() {
+    this(0, 0);
+  }
 
   public FBO_macOS(int width, int height) {
     this.width = width;
     this.height = height;
+    this.debug = Debug.check(FBO.class, FBO_macOS.class);
+    
+    init();
   }
-
+  
+  /** 
+   * Initialize pointers to OpenGL extensions allowing to perform offscreen rendering
+   */
+  protected void init() {
+    //classArena = Arena.ofShared();
+  }
+  
   /** Prepare resources held by this FBO utility.*/
   @Override
   public void prepare(GL gl) {
     
     if (prepared)
       release(gl);
+    
+    prepareRenderArena();
 
-    // ---------------------------
-    // Transfert pixel Format
-    // ---------------------------
-    // Most GPU support BGRA
-    // If you supply GL_RGBA, then the driver may have to do the swapping for you which is slow.
-    // If you do use GL_BGRA, the call to pixel transfer will be much faster.
-    // Note that GL_BGRA pixel transfer format is only preferred when uploading to GL_RGBA8 images.
-    // When dealing with other formats, like GL_RGBA16, GL_RGBA8UI or even GL_RGBA8_SNORM, then the
-    // regular GL_RGBA
-    // ordering may be preferred.
-    //
-    // On which platforms is GL_BGRA preferred? Making a list would be too long but one example is
-    // Microsoft Windows.
-    // Note that with GL 4.3 or ARB_internalformat_query2, you can simply ask the implementation
-    // what is the
-    // preferred format with glGetInternalFormativ(GL_TEXTURE_2D, GL_RGBA8, GL_TEXTURE_IMAGE_FORMAT,
-    // 1, &preferred_format).
-    format = GL.GL_BGRA;
-    internalFormat = GL.GL_RGBA8;// GL.GL_BGRA;
-    textureType = GL.GL_UNSIGNED_BYTE;
 
+    // transfert pixel Format
     Debug.debug(debug, "FBO.internalFormat : " + internalFormat + " (default GL.GL_RGBA8)");
     Debug.debug(debug, "FBO.format         : " + format + " (default GL.GL_BGRA)");
 
     // ------------------------
     // Generate TEXTURE buffer
-
-    textureBufferIds = MemorySegment.allocateNative(1 * 4 * 3, MemorySession.openImplicit());
+    
+    textureBufferIds = renderArena.allocate(1 * 4 * 3);
     gl.glGenTextures(1, textureBufferIds);
     idTexture = (int) textureBufferIds.get(ValueLayout.JAVA_INT, 0);
 
@@ -129,7 +105,7 @@ public class FBO_macOS extends AFBO implements FBO {
     // Create a texture to write to
     int byteSize = width * height * channels;
     
-    pixelBuffer = MemorySegment.allocateNative(byteSize, MemorySession.openImplicit());
+    pixelBuffer = renderArena.allocate(byteSize);
     gl.glTexImage2D(GL.GL_TEXTURE_2D, level, internalFormat, width, height, border, format,
         textureType, pixelBuffer);
     
@@ -137,7 +113,7 @@ public class FBO_macOS extends AFBO implements FBO {
     // -------------------------
     // Generate FRAME buffer
 
-    frameBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
+    frameBufferIds = renderArena.allocate(4);
     glut_h.glGenFramebuffers(1, frameBufferIds);
     idFrameBuffer = (int) frameBufferIds.get(ValueLayout.JAVA_INT, 0);
 
@@ -159,7 +135,7 @@ public class FBO_macOS extends AFBO implements FBO {
     // -------------------------
     // Generate RENDER buffer
 
-    renderBufferIds = MemorySegment.allocateNative(4, MemorySession.openImplicit());
+    renderBufferIds = renderArena.allocate(4);
     glut_h.glGenRenderbuffers(1, renderBufferIds);
     idRenderBuffer = (int) renderBufferIds.get(ValueLayout.JAVA_INT, 0);
 
@@ -203,18 +179,6 @@ public class FBO_macOS extends AFBO implements FBO {
     Debug.debug(debug, "FBO: Prepared! ");
   }
 
-  protected void diagnoseError(GL gl, String item) {
-    GLError e = GLError.get(gl);
-
-    if (e != null) {
-      e.throwRuntimeException();
-    } else {
-      System.err.println("FBO: " + item
-          + " handle=0 but get no OpenGL error. This may happen if the call was not issued from main thread on macOS");
-    }
-    // https://stackoverflow.com/questions/2985034/glgentextures-keeps-returing-0s
-  }
-
   /** Release resources held by this FBO utility.*/
   @Override
   public void release(GL gl) {
@@ -225,19 +189,9 @@ public class FBO_macOS extends AFBO implements FBO {
     unbindFramebuffer();
     glut_h.glDeleteFramebuffers(1, frameBufferIds);
 
-    // FIXME : Not mapped exception is not relevant
-    // FIXME : See if later versions of Panama do not throw exception
-    boolean unload = false;
-    if(unload) {
-      textureBufferIds.unload(); 
-      renderBufferIds.unload(); 
-      frameBufferIds.unload();
-      pixelBuffer.unload();
-    }
-    
-    else {
-      Debug.debug(debug, "FBO : Skip unload as it fails with 'not mapped segment' error");
-    }
+    // Free memory
+    releaseRenderArena();
+
 
     prepared = false;
 
@@ -245,6 +199,7 @@ public class FBO_macOS extends AFBO implements FBO {
 
   }
   
+  /** Return all pixels. Their lifetime is bounded to the {@link #renderArena}. */
   @Override
   public MemorySegment readPixels(GL gl) {
     // Initialize buffers if they are not ready or if their expected size changed
@@ -258,7 +213,7 @@ public class FBO_macOS extends AFBO implements FBO {
     // one the below scope and allocator are collected by GC.
 
     if(pixels==null || pixels.byteSize()!=nBytes) {
-      pixels = MemorySegment.allocateNative(nBytes, session);
+      pixels = renderArena.allocate(nBytes);
     }
     gl.glReadPixels(0, 0, width, height, format, textureType, pixels);
     
@@ -277,8 +232,4 @@ public class FBO_macOS extends AFBO implements FBO {
     // Bind 0, which means render to back buffer
     glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), 0);
   }
-  
-  protected MemorySession session = MemorySession.openImplicit();
-  protected MemorySegment pixels;
-
 }

@@ -32,6 +32,7 @@ import jextract.gl.generate.java.Interf;
 import jextract.gl.generate.java.InterfaceWriter;
 import jextract.gl.xml.OpenGLRegistry;
 import jextract.gl.xml.model.GLCommand;
+import jextract.gl.xml.model.GLTypeInJava;
 import jextract.gl.xml.parser.Registry;
 import jextract.gl.xml.parser.Registry.Feature;
 import jextract.gl.xml.parser.Registry.Feature.Require;
@@ -45,7 +46,7 @@ public class GenerateAPI_GL_Interface {
     GenerateAPI_GL_Interface gen = new GenerateAPI_GL_Interface();
     Interf interf = new Interf();
     interf.javaFolder = "target/";
-    interf.packge = "panama.opengl";
+    interf.packge = "panamagl.opengl";
     
     List<String> javaFiles = gen.generateInterfaces(interf);
 
@@ -283,9 +284,11 @@ public class GenerateAPI_GL_Interface {
     if("glMapBuffer".equals(command.getName())
      || "glMapBufferRange".equals(command.getName())
      || "glMapNamedBuffer".equals(command.getName())
-     || "glMapNamedBufferRange".equals(command.getName())){
-      outputType = "MemoryAddress";
-    }
+     || "glMapNamedBufferRange".equals(command.getName())
+     || "glGetString".equals(command.getName()) 
+     ){
+      outputType = GLTypeInJava.ADDRESSABLE;
+    }    
     
     String methodName = command.getName();
     List<Arg> input = command.getArgs();

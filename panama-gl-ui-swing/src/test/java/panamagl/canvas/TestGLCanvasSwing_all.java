@@ -15,11 +15,11 @@
  *******************************************************************************/
 package panamagl.canvas;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Ignore;
 import org.junit.Test;
 import junit.framework.Assert;
-import panamagl.GLEventAdapter;
 import panamagl.GLEventListener;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.FBOReader_AWT;
@@ -30,52 +30,127 @@ import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
 
 
-// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview
+// VM ARGS : --enable-native-access=ALL-UNNAMED 
+//
 // -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+//
+// or
+// -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
+//
+// or
+// -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
 public class TestGLCanvasSwing_all {
   // the time needed to init/destroy a Swing canvas differ
   // with OS. Windows needed 1s
   // TODO : allow locking on the execution of addNotify
   public static int WAIT_FOR_INIT_AND_DESTROY = 1000;
-  public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
+  public static int WAIT_FOR_RENDER_DISPATCHED_MS = 1000;
 
+  /*@Test
+  public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
+    System.err.println("!!\n\tFLAKKY TEST WARNING : may fail because of race condition before asserts");
+
+    // ------------------------------------------------
+    // Given a panel 
+
+    PanamaGLFactory factory = PanamaGLFactory.select();
+    
+    GLCanvasSwing panel = new GLCanvasSwing(factory);
+
+    GLEventListener listener = mock(GLEventListener.class);
+    panel.setGLEventListener(listener);
+
+    Assert.assertFalse(panel.isInitialized());
+    
+    verify(listener, times(0)).init(any());
+    verify(listener, times(0)).display(any());
+    verify(listener, times(0)).reshape(any(), anyInt(), anyInt(), anyInt(), anyInt());
+    verify(listener, times(0)).dispose(any());
+
+
+    // ------------------------------------------------
+    // When : GL initialization is triggered by panel addition
+    // to its parent frame
+
+    panel.addNotify();
+    
+    // Let AWT or macOS main thread to perform initialization
+    Thread.yield();
+    Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
+
+    verify(listener, times(1)).init(any());
+    
+    // Then context is initialized
+    Assert.assertTrue(panel.getContext().isInitialized());
+
+    // Then panel is initialized
+    Assert.assertTrue(panel.isInitialized());
+
+
+
+    // ------------------------------------------------
+    // When : resize, and after a while
+
+    panel.setSize(20, 20);
+    //panel.display(); // used to be required from maven
+
+    // Wait for the event to dispatch
+    Thread.sleep(WAIT_FOR_RENDER_DISPATCHED_MS);
+
+    // Then : should trigger glEventListener.display() and reshape()
+    verify(listener, times(1)).init(any());
+    verify(listener, times(1)).display(any());
+    verify(listener, times(1)).reshape(any(), anyInt(), anyInt(), anyInt(), anyInt());
+    verify(listener, times(0)).dispose(any());
+
+    // Then : the displayed image should be available as screenshot
+    Assert.assertNotNull(panel.getScreenshot());
+
+
+
+    // ------------------------------------------------
+    // When : remove from component hierarchy
+
+    panel.removeNotify();
+
+    // Let AWT or macOS main thread to perform initialization
+    Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
+
+    // Then : all components are not initialized anymore
+    Assert.assertFalse(panel.getContext().isInitialized());
+    Assert.assertFalse(panel.isInitialized());
+    
+    verify(listener, times(1)).init(any());
+    verify(listener, times(1)).display(any());
+    verify(listener, times(1)).reshape(any(), anyInt(), anyInt(), anyInt(), anyInt());
+    verify(listener, times(1)).dispose(any());
+
+  }*/
+
+  /**
+   * Verify that event listener get invoked when panel is added.
+   * 
+   * This check the whole chain panel->listener->offscreen_renderer->fbo.
+   * 
+   * Having multiple tests here is important to detect issue related to multiple calls to 
+   * <code>glutInit(...)</code>. Please keep them here.
+   */
   @Test
   public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
-    //if (!new Platform().isMac())
-    //  return;
 
+    BlockingGLListener glGate = new BlockingGLListener();
+    
     // ------------------------------------------------
     // Given a panel with an event counter
 
-    EventCounter event = new EventCounter();
 
     PanamaGLFactory factory = PanamaGLFactory.select();
     
     System.out.println("FACTORY  " + factory);
     
     GLCanvasSwing panel = new GLCanvasSwing(factory);
+    panel.setGLEventListener(glGate);
 
-    panel.setGLEventListener(new GLEventAdapter() {
-      @Override
-      public void init(GL gl) {
-        event.initCounter++;
-      }
-
-      @Override
-      public void display(GL gl) {
-        event.displayCounter++;
-      }
-
-      @Override
-      public void reshape(GL gl, int x, int y, int width, int height) {
-        event.reshapeCounter++;
-      }
-      
-      @Override
-      public void dispose(GL gl) {
-        event.disposeCounter++;
-      }
-    });
 
     Assert.assertFalse(panel.isInitialized());
 
@@ -87,12 +162,12 @@ public class TestGLCanvasSwing_all {
     panel.addNotify();
     
     // Let AWT or macOS main thread to perform initialization
-    Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
+    glGate.awaitInit();
 
     // Then : should trigger glEventListener.init()
-    Assert.assertEquals(1, event.initCounter);
-    Assert.assertEquals(0, event.displayCounter);
-    Assert.assertEquals(0, event.reshapeCounter);
+    Assert.assertEquals(1, glGate.getCounter().init);
+    Assert.assertEquals(0, glGate.getCounter().display);
+    Assert.assertEquals(0, glGate.getCounter().reshape);
 
     // Then context is initialized
     Assert.assertTrue(panel.getContext().isInitialized());
@@ -111,14 +186,17 @@ public class TestGLCanvasSwing_all {
     panel.display();
 
     // Wait for the event to dispatch
-    Thread.sleep(WAIT_FOR_RENDER_DISPATCHED_MS);
-
+    glGate.awaitDisplay();
+    
     // Then : should trigger glEventListener.display() and reshape()
-    Assert.assertTrue(0 < event.initCounter);
-    Assert.assertTrue(0 < event.displayCounter);
-    Assert.assertTrue(0 < event.reshapeCounter);
-    Assert.assertTrue(0 == event.disposeCounter);
+    Assert.assertTrue(0 < glGate.getCounter().init);
+    Assert.assertTrue(0 < glGate.getCounter().display);
+    Assert.assertTrue(0 < glGate.getCounter().reshape);
+    Assert.assertTrue(0 == glGate.getCounter().dispose);
 
+    // Wait for the image to be transfered to panel
+    Thread.sleep(200);
+    
     // Then : the displayed image should be available as screenshot
     Assert.assertNotNull(panel.getScreenshot());
 
@@ -129,29 +207,37 @@ public class TestGLCanvasSwing_all {
 
     panel.removeNotify();
 
-    // Let AWT or macOS main thread to perform initialization
-    Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
-
+    // Let AWT or macOS main thread to perform dispose
+    glGate.awaitDispose();
+    
     // Then : all components are not initialized anymore
     Assert.assertFalse(panel.getContext().isInitialized());
     Assert.assertFalse(panel.isInitialized());
-    Assert.assertTrue(0 < event.disposeCounter);
+    Assert.assertTrue(0 < glGate.getCounter().dispose);
 
   }
 
 
-  protected class EventCounter {
-    int initCounter = 0;
-    int displayCounter = 0;
-    int reshapeCounter = 0;
-    int disposeCounter = 0;
-  }
 
 
 
+
+  /**
+   * Verify that FBO is resized when Panel is resized.
+   * 
+   * This check the whole chain panel->listener->offscreen_renderer->fbo.
+   * 
+   * Having multiple tests here is important to detect issue related to multiple calls to 
+   * <code>glutInit(...)</code>. Please keep them here.
+   */
   @Test
   public void whenPanelIsResized_ThenFBOIsResized() throws InterruptedException {
-
+    //System.err.println("!!\n\tFLAKKY TEST WARNING : may fail because of race condition before asserts");
+    
+    BlockingGLListener glGate = new BlockingGLListener();
+    
+    
+    
     int WIDTH = 100;
     int HEIGHT = 100;
 
@@ -161,24 +247,25 @@ public class TestGLCanvasSwing_all {
     System.out.println("FACTORY  " + factory);
     
     GLCanvasSwing panel = new GLCanvasSwing(factory);
+    panel.setGLEventListener(glGate);
 
     // When panel is added
     panel.addNotify();
     
     // Let AWT or macOS main thread to perform initialization
-    Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
-
+    glGate.awaitInit();
+    
     // Then it is initialized
     Assert.assertTrue(panel.isInitialized());
 
     // -------------------------------
     // When panel is resized
-
+    
     panel.setSize(WIDTH, HEIGHT);
     panel.display();
 
     // Wait for the event to dispatch
-    Thread.sleep(WAIT_FOR_RENDER_DISPATCHED_MS);
+    glGate.awaitDisplay();
 
     // Then FBO is resized as well
     Assert.assertEquals(WIDTH, panel.getFBO().getWidth());
@@ -186,25 +273,105 @@ public class TestGLCanvasSwing_all {
 
     // -------------------------------
     // When panel is resized again
-
+    glGate.resetLatches();
+    
     panel.setSize(3 * WIDTH, 2 * HEIGHT);
     panel.display();
 
     // Wait for the event to dispatch
-    Thread.sleep(WAIT_FOR_RENDER_DISPATCHED_MS);
+    glGate.awaitDisplay();
 
     // Then FBO is resized as well
     Assert.assertEquals(3 * WIDTH, panel.getFBO().getWidth());
     Assert.assertEquals(2 * HEIGHT, panel.getFBO().getHeight());
 
   }
+  
+  /**
+   * This listener is used for tests where the unit test threads invokes
+   * a GUI component methods that triggers init(), display(), resize(), dispose() 
+   * that happens in the AWT thread, hence in a different thread than the calling thread. 
+   */
+  class BlockingGLListener implements GLEventListener{
+    CountDownLatch initLatch = new CountDownLatch(1);
+    CountDownLatch displayLatch = new CountDownLatch(1);
+    CountDownLatch disposeLatch = new CountDownLatch(1);
+    
+    EventCounter counter = new EventCounter();
 
-  @Ignore("Not working in CLI yet (hanging, despite using surefire unlimited threads)")
+
+    public void resetLatches() {
+      
+      if(initLatch!=null)
+        initLatch.countDown();
+      initLatch = new CountDownLatch(1);
+
+      if(displayLatch!=null)
+        displayLatch.countDown();
+      displayLatch = new CountDownLatch(1);
+      
+      if(disposeLatch!=null)
+        disposeLatch.countDown();
+      disposeLatch = new CountDownLatch(1);
+
+    }
+    
+    public void awaitInit() throws InterruptedException {
+      initLatch.await();
+    }
+
+    public void awaitDisplay() throws InterruptedException {
+      displayLatch.await();
+    }
+
+    public void awaitDispose() throws InterruptedException {
+      disposeLatch.await();
+    }
+
+    public EventCounter getCounter() {
+      return counter;
+    }
+
+    @Override
+    public void init(GL gl) {
+      initLatch.countDown();
+      counter.init++;
+    }
+
+    @Override
+    public void display(GL gl) {
+      displayLatch.countDown();
+      counter.display++;
+    }
+
+    @Override
+    public void reshape(GL gl, int x, int y, int width, int height) {
+      counter.reshape++;
+    }
+
+    @Override
+    public void dispose(GL gl) {
+      disposeLatch.countDown();
+      counter.dispose++;
+    }
+  }
+  
+  protected class EventCounter {
+    int init = 0;
+    int display = 0;
+    int reshape = 0;
+    int dispose = 0;
+  }
+
+    
+  
+
+ @Ignore("Not working in CLI yet (hanging, despite using surefire unlimited threads)")
   @Test
   public void whenPanelIsRendering_DisplayWillDoNothing() throws InterruptedException {
     // ThreadUtils.print();
 
-    AtomicInteger countRenderQueries = new AtomicInteger();
+    AtomicInteger renderCounter = new AtomicInteger();
 
     // Duration of freezing task
     int FREEZE_TASK_MS = 5000;
@@ -232,10 +399,10 @@ public class TestGLCanvasSwing_all {
           @Override
           public void run() {
 
-            countRenderQueries.incrementAndGet();
+            renderCounter.incrementAndGet();
 
             System.out
-                .println("Start freezing render for test - count = " + countRenderQueries.get());
+                .println("Start freezing render for test - count = " + renderCounter.get());
             try {
               Thread.sleep(FREEZE_TASK_MS);
             } catch (InterruptedException e) {
@@ -244,7 +411,7 @@ public class TestGLCanvasSwing_all {
 
             System.out.println("Done freezing render for test");
 
-            t.tocShow("Elasped for counter " + countRenderQueries.get());
+            t.tocShow("Elasped for counter " + renderCounter.get());
 
           }
         };
@@ -263,7 +430,7 @@ public class TestGLCanvasSwing_all {
     // rendered yet
     Assert.assertTrue(panel.isInitialized());
     Assert.assertFalse(panel.isRendering());
-    Assert.assertTrue(countRenderQueries.get() == 0);
+    Assert.assertTrue(renderCounter.get() == 0);
 
     t.tic();
 
@@ -279,7 +446,7 @@ public class TestGLCanvasSwing_all {
     System.out.println("Waited " + WAIT_FOR_DISPLAY_DISPATCH_MS + " ms");
 
     // the freezing task has started and increments its counter
-    Assert.assertTrue(countRenderQueries.get() == 1);
+    Assert.assertTrue(renderCounter.get() == 1);
 
     ThreadUtils.print();
 
@@ -299,7 +466,7 @@ public class TestGLCanvasSwing_all {
 
 
     // Then : did not trigger any new display
-    Assert.assertTrue(countRenderQueries.get() == 1);
+    Assert.assertTrue(renderCounter.get() == 1);
 
     System.out.println("Finished test");
 

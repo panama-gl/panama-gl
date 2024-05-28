@@ -18,8 +18,7 @@
 package demos.panamagl.swing;
 
 import java.awt.BorderLayout;
-import java.lang.foreign.MemorySession;
-import java.lang.foreign.SegmentAllocator;
+import java.lang.foreign.Arena;
 import java.lang.foreign.ValueLayout;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -31,7 +30,8 @@ import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
 
 /**
- * VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview
+ * VM ARGS : --enable-native-access=ALL-UNNAMED 
+ * 
  * -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
  * 
  * or
@@ -41,7 +41,6 @@ import panamagl.opengl.GLError;
  * -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
  * 
  * @author Martin Pernollet
- *
  */
 public class DemoTeapot_Onscreen_Swing {
 
@@ -102,10 +101,7 @@ public class DemoTeapot_Onscreen_Swing {
     return new GLEventAdapter() {
 
       public void init(GL gl) {
-        // The segments created in this function will be destroyed
-        // one the below scope and allocator are collected by GC.
-        MemorySession scope = MemorySession.openConfined();
-        SegmentAllocator allocator = SegmentAllocator.newNativeArena(scope);
+        Arena arena = Arena.ofConfined();
 
         // Reset Background
         gl.glClearColor(1f, 1f, 1f, 1f);
@@ -113,15 +109,15 @@ public class DemoTeapot_Onscreen_Swing {
         // Setup Lighting
         gl.glShadeModel(GL.GL_SMOOTH);
         
-        var pos = allocator.allocateArray(ValueLayout.JAVA_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
+        var pos = arena.allocateFrom(ValueLayout.JAVA_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, pos);
         
-        var spec = allocator.allocateArray(ValueLayout.JAVA_FLOAT, new float[] {1, 1, 1, 0});
+        var spec = arena.allocateFrom(ValueLayout.JAVA_FLOAT, new float[] {1, 1, 1, 0});
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, spec);
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, spec);
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, spec);
         
-        var shini = allocator.allocate(ValueLayout.JAVA_FLOAT, 113);
+        var shini = arena.allocateFrom(ValueLayout.JAVA_FLOAT, 113);
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, shini);
         gl.glEnable(GL.GL_LIGHTING);
         gl.glEnable(GL.GL_LIGHT0);

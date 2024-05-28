@@ -187,5 +187,9 @@ public class Debug {
     System.out.print(info);
     print(input);
   }
+  
+  public static void javaLibraryPath() {
+    debug("java.library.path : " + System.getProperty("java.library.path"));
+  }
 
 }

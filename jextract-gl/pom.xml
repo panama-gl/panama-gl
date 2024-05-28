@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="https://maven.apache.org/POM/4.0.0" 
+		xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
 	<!-- Not child of panama GL on purpose (don't want to clean generated XML file when cleaning ALL) -->
@@ -9,7 +11,9 @@
 
 	<properties>
 		<version.jaxb>2.3.1</version.jaxb>
-		<version.panama>1.1.0-SNAPSHOT</version.panama>
+		<version.panama>1.2.0-SNAPSHOT</version.panama>
+		<version.jdk>22</version.jdk>
+
 	</properties>
 
 	<dependencies>
@@ -64,19 +68,20 @@
 
 		<dependency>
 			<groupId>org.jzy3d</groupId>
-			<artifactId>panama-gl-wrappers-linux</artifactId>
-			<version>${version.panama}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-wrappers-macos</artifactId>
 			<version>${version.panama}</version>
 		</dependency>
+
 		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>panama-gl-wrappers-linux</artifactId>
+			<version>${version.panama}</version>
+		</dependency>
+		<!--<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-wrappers-windows</artifactId>
 			<version>${version.panama}</version>
-		</dependency>
+		</dependency>-->
 
 
 		<!-- To test  -->
@@ -114,7 +119,7 @@
 
 					<!-- Configure Panama -->
 					<argLine>
-						--enable-native-access=ALL-UNNAMED --enable-preview
+						--enable-native-access=ALL-UNNAMED
 					</argLine>
 
 				</configuration>
@@ -126,17 +131,14 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<source>19</source>
-					<target>19</target>
+					<source>${version.jdk}</source>
+					<target>${version.jdk}</target>
 					<encoding>UTF-8</encoding>
-					<compilerArgs>
-						<arg>--enable-preview</arg>
-					</compilerArgs>
 				</configuration>
 			</plugin>
 
-
-			<plugin>
+			<!-- To generate XML parser --> 
+			<!--<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>jaxb2-maven-plugin</artifactId>
 				<version>1.5</version>
@@ -149,15 +151,13 @@
 						</goals>
 						<configuration>
 							<schemaDirectory>src/main/resources/xsd/</schemaDirectory>
-							<!--<schemaFiles>gl.xsd</schemaFiles>-->
 							<packageName>jextract.gl.xml.parser</packageName>
-							<!--<staleFile>${project.build.directory}/jaxb2/gl.stale</staleFile>-->
 							<outputDirectory>src/generated/java</outputDirectory>
 						</configuration>
 					</execution>
 
 				</executions>
-			</plugin>
+			</plugin>-->
 
 
 		</plugins>

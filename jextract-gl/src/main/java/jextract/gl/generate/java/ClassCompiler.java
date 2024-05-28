@@ -26,7 +26,7 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.ToolProvider;
 
 public class ClassCompiler {
-  protected List<String> options = Arrays.asList("--enable-preview", "--release", "19");
+  protected List<String> options = Arrays.asList("--release", "22");
 
   public List<String> getOptions() {
     return options;

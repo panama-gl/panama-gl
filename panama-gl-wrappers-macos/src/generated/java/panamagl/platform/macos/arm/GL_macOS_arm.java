@@ -1,7 +1,7 @@
 package panamagl.platform.macos.arm; 
 
+import java.lang.foreign.MemorySegment;
 import opengl.macos.arm.glut_h;
-import java.lang.foreign.*;
 
 public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
   public void glAccum(int op, float value) {
@@ -24,7 +24,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glAlphaFunc(func, ref);
   }
 
-  public byte glAreTexturesResident(int n, Addressable textures, Addressable residences) {
+  public byte glAreTexturesResident(int n, MemorySegment textures, MemorySegment residences) {
     return glut_h.glAreTexturesResident(n, textures, residences);
   }
 
@@ -32,7 +32,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glArrayElement(i);
   }
 
-  public void glAttachObjectARB(Addressable containerObj, Addressable obj) {
+  public void glAttachObjectARB(MemorySegment containerObj, MemorySegment obj) {
     glut_h.glAttachObjectARB(containerObj, obj);
   }
 
@@ -60,11 +60,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glBeginTransformFeedbackEXT(primitiveMode);
   }
 
-  public void glBindAttribLocation(int program, int index, Addressable name) {
+  public void glBindAttribLocation(int program, int index, MemorySegment name) {
     glut_h.glBindAttribLocation(program, index, name);
   }
 
-  public void glBindAttribLocationARB(Addressable programObj, int index, Addressable name) {
+  public void glBindAttribLocationARB(MemorySegment programObj, int index, MemorySegment name) {
     glut_h.glBindAttribLocationARB(programObj, index, name);
   }
 
@@ -88,7 +88,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glBindBufferRangeEXT(target, index, buffer, offset, size);
   }
 
-  public void glBindFragDataLocationEXT(int program, int color, Addressable name) {
+  public void glBindFragDataLocationEXT(int program, int color, MemorySegment name) {
     glut_h.glBindFragDataLocationEXT(program, color, name);
   }
 
@@ -120,7 +120,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glBindVertexArrayAPPLE(array);
   }
 
-  public void glBitmap(int width, int height, float xorig, float yorig, float xmove, float ymove, Addressable bitmap) {
+  public void glBitmap(int width, int height, float xorig, float yorig, float xmove, float ymove, MemorySegment bitmap) {
     glut_h.glBitmap(width, height, xorig, yorig, xmove, ymove, bitmap);
   }
 
@@ -168,11 +168,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glBlitFramebufferEXT(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
   }
 
-  public void glBufferData(int target, long size, Addressable data, int usage) {
+  public void glBufferData(int target, long size, MemorySegment data, int usage) {
     glut_h.glBufferData(target, size, data, usage);
   }
 
-  public void glBufferDataARB(int target, long size, Addressable data, int usage) {
+  public void glBufferDataARB(int target, long size, MemorySegment data, int usage) {
     glut_h.glBufferDataARB(target, size, data, usage);
   }
 
@@ -180,11 +180,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glBufferParameteriAPPLE(target, pname, param);
   }
 
-  public void glBufferSubData(int target, long offset, long size, Addressable data) {
+  public void glBufferSubData(int target, long offset, long size, MemorySegment data) {
     glut_h.glBufferSubData(target, offset, size, data);
   }
 
-  public void glBufferSubDataARB(int target, long offset, long size, Addressable data) {
+  public void glBufferSubDataARB(int target, long offset, long size, MemorySegment data) {
     glut_h.glBufferSubDataARB(target, offset, size, data);
   }
 
@@ -192,7 +192,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glCallList(list);
   }
 
-  public void glCallLists(int n, int type, Addressable lists) {
+  public void glCallLists(int n, int type, MemorySegment lists) {
     glut_h.glCallLists(n, type, lists);
   }
 
@@ -248,11 +248,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glClientActiveTextureARB(texture);
   }
 
-  public int glClientWaitSync(Addressable sync, int flags, long timeout) {
+  public int glClientWaitSync(MemorySegment sync, int flags, long timeout) {
     return glut_h.glClientWaitSync(sync, flags, timeout);
   }
 
-  public void glClipPlane(int plane, Addressable equation) {
+  public void glClipPlane(int plane, MemorySegment equation) {
     glut_h.glClipPlane(plane, equation);
   }
 
@@ -260,7 +260,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColor3b(red, green, blue);
   }
 
-  public void glColor3bv(Addressable v) {
+  public void glColor3bv(MemorySegment v) {
     glut_h.glColor3bv(v);
   }
 
@@ -268,7 +268,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColor3d(red, green, blue);
   }
 
-  public void glColor3dv(Addressable v) {
+  public void glColor3dv(MemorySegment v) {
     glut_h.glColor3dv(v);
   }
 
@@ -276,7 +276,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColor3f(red, green, blue);
   }
 
-  public void glColor3fv(Addressable v) {
+  public void glColor3fv(MemorySegment v) {
     glut_h.glColor3fv(v);
   }
 
@@ -284,7 +284,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColor3i(red, green, blue);
   }
 
-  public void glColor3iv(Addressable v) {
+  public void glColor3iv(MemorySegment v) {
     glut_h.glColor3iv(v);
   }
 
@@ -292,7 +292,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColor3s(red, green, blue);
   }
 
-  public void glColor3sv(Addressable v) {
+  public void glColor3sv(MemorySegment v) {
     glut_h.glColor3sv(v);
   }
 
@@ -300,7 +300,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColor3ub(red, green, blue);
   }
 
-  public void glColor3ubv(Addressable v) {
+  public void glColor3ubv(MemorySegment v) {
     glut_h.glColor3ubv(v);
   }
 
@@ -308,7 +308,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColor3ui(red, green, blue);
   }
 
-  public void glColor3uiv(Addressable v) {
+  public void glColor3uiv(MemorySegment v) {
     glut_h.glColor3uiv(v);
   }
 
@@ -316,7 +316,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColor3us(red, green, blue);
   }
 
-  public void glColor3usv(Addressable v) {
+  public void glColor3usv(MemorySegment v) {
     glut_h.glColor3usv(v);
   }
 
@@ -324,7 +324,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColor4b(red, green, blue, alpha);
   }
 
-  public void glColor4bv(Addressable v) {
+  public void glColor4bv(MemorySegment v) {
     glut_h.glColor4bv(v);
   }
 
@@ -332,7 +332,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColor4d(red, green, blue, alpha);
   }
 
-  public void glColor4dv(Addressable v) {
+  public void glColor4dv(MemorySegment v) {
     glut_h.glColor4dv(v);
   }
 
@@ -340,7 +340,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColor4f(red, green, blue, alpha);
   }
 
-  public void glColor4fv(Addressable v) {
+  public void glColor4fv(MemorySegment v) {
     glut_h.glColor4fv(v);
   }
 
@@ -348,7 +348,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColor4i(red, green, blue, alpha);
   }
 
-  public void glColor4iv(Addressable v) {
+  public void glColor4iv(MemorySegment v) {
     glut_h.glColor4iv(v);
   }
 
@@ -356,7 +356,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColor4s(red, green, blue, alpha);
   }
 
-  public void glColor4sv(Addressable v) {
+  public void glColor4sv(MemorySegment v) {
     glut_h.glColor4sv(v);
   }
 
@@ -364,7 +364,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColor4ub(red, green, blue, alpha);
   }
 
-  public void glColor4ubv(Addressable v) {
+  public void glColor4ubv(MemorySegment v) {
     glut_h.glColor4ubv(v);
   }
 
@@ -372,7 +372,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColor4ui(red, green, blue, alpha);
   }
 
-  public void glColor4uiv(Addressable v) {
+  public void glColor4uiv(MemorySegment v) {
     glut_h.glColor4uiv(v);
   }
 
@@ -380,7 +380,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColor4us(red, green, blue, alpha);
   }
 
-  public void glColor4usv(Addressable v) {
+  public void glColor4usv(MemorySegment v) {
     glut_h.glColor4usv(v);
   }
 
@@ -396,23 +396,23 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glColorMaterial(face, mode);
   }
 
-  public void glColorPointer(int size, int type, int stride, Addressable pointer) {
+  public void glColorPointer(int size, int type, int stride, MemorySegment pointer) {
     glut_h.glColorPointer(size, type, stride, pointer);
   }
 
-  public void glColorSubTable(int target, int start, int count, int format, int type, Addressable data) {
+  public void glColorSubTable(int target, int start, int count, int format, int type, MemorySegment data) {
     glut_h.glColorSubTable(target, start, count, format, type, data);
   }
 
-  public void glColorTable(int target, int internalformat, int width, int format, int type, Addressable table) {
+  public void glColorTable(int target, int internalformat, int width, int format, int type, MemorySegment table) {
     glut_h.glColorTable(target, internalformat, width, format, type, table);
   }
 
-  public void glColorTableParameterfv(int target, int pname, Addressable params) {
+  public void glColorTableParameterfv(int target, int pname, MemorySegment params) {
     glut_h.glColorTableParameterfv(target, pname, params);
   }
 
-  public void glColorTableParameteriv(int target, int pname, Addressable params) {
+  public void glColorTableParameteriv(int target, int pname, MemorySegment params) {
     glut_h.glColorTableParameteriv(target, pname, params);
   }
 
@@ -420,63 +420,63 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glCompileShader(shader);
   }
 
-  public void glCompileShaderARB(Addressable shaderObj) {
+  public void glCompileShaderARB(MemorySegment shaderObj) {
     glut_h.glCompileShaderARB(shaderObj);
   }
 
-  public void glCompressedTexImage1D(int target, int level, int internalformat, int width, int border, int imageSize, Addressable data) {
+  public void glCompressedTexImage1D(int target, int level, int internalformat, int width, int border, int imageSize, MemorySegment data) {
     glut_h.glCompressedTexImage1D(target, level, internalformat, width, border, imageSize, data);
   }
 
-  public void glCompressedTexImage1DARB(int target, int level, int internalformat, int width, int border, int imageSize, Addressable data) {
+  public void glCompressedTexImage1DARB(int target, int level, int internalformat, int width, int border, int imageSize, MemorySegment data) {
     glut_h.glCompressedTexImage1DARB(target, level, internalformat, width, border, imageSize, data);
   }
 
-  public void glCompressedTexImage2D(int target, int level, int internalformat, int width, int height, int border, int imageSize, Addressable data) {
+  public void glCompressedTexImage2D(int target, int level, int internalformat, int width, int height, int border, int imageSize, MemorySegment data) {
     glut_h.glCompressedTexImage2D(target, level, internalformat, width, height, border, imageSize, data);
   }
 
-  public void glCompressedTexImage2DARB(int target, int level, int internalformat, int width, int height, int border, int imageSize, Addressable data) {
+  public void glCompressedTexImage2DARB(int target, int level, int internalformat, int width, int height, int border, int imageSize, MemorySegment data) {
     glut_h.glCompressedTexImage2DARB(target, level, internalformat, width, height, border, imageSize, data);
   }
 
-  public void glCompressedTexImage3D(int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, Addressable data) {
+  public void glCompressedTexImage3D(int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, MemorySegment data) {
     glut_h.glCompressedTexImage3D(target, level, internalformat, width, height, depth, border, imageSize, data);
   }
 
-  public void glCompressedTexImage3DARB(int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, Addressable data) {
+  public void glCompressedTexImage3DARB(int target, int level, int internalformat, int width, int height, int depth, int border, int imageSize, MemorySegment data) {
     glut_h.glCompressedTexImage3DARB(target, level, internalformat, width, height, depth, border, imageSize, data);
   }
 
-  public void glCompressedTexSubImage1D(int target, int level, int xoffset, int width, int format, int imageSize, Addressable data) {
+  public void glCompressedTexSubImage1D(int target, int level, int xoffset, int width, int format, int imageSize, MemorySegment data) {
     glut_h.glCompressedTexSubImage1D(target, level, xoffset, width, format, imageSize, data);
   }
 
-  public void glCompressedTexSubImage1DARB(int target, int level, int xoffset, int width, int format, int imageSize, Addressable data) {
+  public void glCompressedTexSubImage1DARB(int target, int level, int xoffset, int width, int format, int imageSize, MemorySegment data) {
     glut_h.glCompressedTexSubImage1DARB(target, level, xoffset, width, format, imageSize, data);
   }
 
-  public void glCompressedTexSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, Addressable data) {
+  public void glCompressedTexSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, MemorySegment data) {
     glut_h.glCompressedTexSubImage2D(target, level, xoffset, yoffset, width, height, format, imageSize, data);
   }
 
-  public void glCompressedTexSubImage2DARB(int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, Addressable data) {
+  public void glCompressedTexSubImage2DARB(int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, MemorySegment data) {
     glut_h.glCompressedTexSubImage2DARB(target, level, xoffset, yoffset, width, height, format, imageSize, data);
   }
 
-  public void glCompressedTexSubImage3D(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, Addressable data) {
+  public void glCompressedTexSubImage3D(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, MemorySegment data) {
     glut_h.glCompressedTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
   }
 
-  public void glCompressedTexSubImage3DARB(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, Addressable data) {
+  public void glCompressedTexSubImage3DARB(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int imageSize, MemorySegment data) {
     glut_h.glCompressedTexSubImage3DARB(target, level, xoffset, yoffset, zoffset, width, height, depth, format, imageSize, data);
   }
 
-  public void glConvolutionFilter1D(int target, int internalformat, int width, int format, int type, Addressable image) {
+  public void glConvolutionFilter1D(int target, int internalformat, int width, int format, int type, MemorySegment image) {
     glut_h.glConvolutionFilter1D(target, internalformat, width, format, type, image);
   }
 
-  public void glConvolutionFilter2D(int target, int internalformat, int width, int height, int format, int type, Addressable image) {
+  public void glConvolutionFilter2D(int target, int internalformat, int width, int height, int format, int type, MemorySegment image) {
     glut_h.glConvolutionFilter2D(target, internalformat, width, height, format, type, image);
   }
 
@@ -484,7 +484,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glConvolutionParameterf(target, pname, params);
   }
 
-  public void glConvolutionParameterfv(int target, int pname, Addressable params) {
+  public void glConvolutionParameterfv(int target, int pname, MemorySegment params) {
     glut_h.glConvolutionParameterfv(target, pname, params);
   }
 
@@ -492,7 +492,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glConvolutionParameteri(target, pname, params);
   }
 
-  public void glConvolutionParameteriv(int target, int pname, Addressable params) {
+  public void glConvolutionParameteriv(int target, int pname, MemorySegment params) {
     glut_h.glConvolutionParameteriv(target, pname, params);
   }
 
@@ -540,7 +540,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glCreateProgram();
   }
 
-  public MemoryAddress glCreateProgramObjectARB() {
+  public MemorySegment glCreateProgramObjectARB() {
     return glut_h.glCreateProgramObjectARB();
   }
 
@@ -548,7 +548,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glCreateShader(type);
   }
 
-  public MemoryAddress glCreateShaderObjectARB(int shaderType) {
+  public MemorySegment glCreateShaderObjectARB(int shaderType) {
     return glut_h.glCreateShaderObjectARB(shaderType);
   }
 
@@ -556,23 +556,23 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glCullFace(mode);
   }
 
-  public void glDeleteBuffers(int n, Addressable buffers) {
+  public void glDeleteBuffers(int n, MemorySegment buffers) {
     glut_h.glDeleteBuffers(n, buffers);
   }
 
-  public void glDeleteBuffersARB(int n, Addressable buffers) {
+  public void glDeleteBuffersARB(int n, MemorySegment buffers) {
     glut_h.glDeleteBuffersARB(n, buffers);
   }
 
-  public void glDeleteFencesAPPLE(int n, Addressable fences) {
+  public void glDeleteFencesAPPLE(int n, MemorySegment fences) {
     glut_h.glDeleteFencesAPPLE(n, fences);
   }
 
-  public void glDeleteFramebuffers(int n, Addressable framebuffers) {
+  public void glDeleteFramebuffers(int n, MemorySegment framebuffers) {
     glut_h.glDeleteFramebuffers(n, framebuffers);
   }
 
-  public void glDeleteFramebuffersEXT(int n, Addressable framebuffers) {
+  public void glDeleteFramebuffersEXT(int n, MemorySegment framebuffers) {
     glut_h.glDeleteFramebuffersEXT(n, framebuffers);
   }
 
@@ -580,7 +580,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glDeleteLists(list, range);
   }
 
-  public void glDeleteObjectARB(Addressable obj) {
+  public void glDeleteObjectARB(MemorySegment obj) {
     glut_h.glDeleteObjectARB(obj);
   }
 
@@ -588,23 +588,23 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glDeleteProgram(program);
   }
 
-  public void glDeleteProgramsARB(int n, Addressable programs) {
+  public void glDeleteProgramsARB(int n, MemorySegment programs) {
     glut_h.glDeleteProgramsARB(n, programs);
   }
 
-  public void glDeleteQueries(int n, Addressable ids) {
+  public void glDeleteQueries(int n, MemorySegment ids) {
     glut_h.glDeleteQueries(n, ids);
   }
 
-  public void glDeleteQueriesARB(int n, Addressable ids) {
+  public void glDeleteQueriesARB(int n, MemorySegment ids) {
     glut_h.glDeleteQueriesARB(n, ids);
   }
 
-  public void glDeleteRenderbuffers(int n, Addressable renderbuffers) {
+  public void glDeleteRenderbuffers(int n, MemorySegment renderbuffers) {
     glut_h.glDeleteRenderbuffers(n, renderbuffers);
   }
 
-  public void glDeleteRenderbuffersEXT(int n, Addressable renderbuffers) {
+  public void glDeleteRenderbuffersEXT(int n, MemorySegment renderbuffers) {
     glut_h.glDeleteRenderbuffersEXT(n, renderbuffers);
   }
 
@@ -612,15 +612,15 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glDeleteShader(shader);
   }
 
-  public void glDeleteSync(Addressable sync) {
+  public void glDeleteSync(MemorySegment sync) {
     glut_h.glDeleteSync(sync);
   }
 
-  public void glDeleteTextures(int n, Addressable textures) {
+  public void glDeleteTextures(int n, MemorySegment textures) {
     glut_h.glDeleteTextures(n, textures);
   }
 
-  public void glDeleteVertexArraysAPPLE(int n, Addressable arrays) {
+  public void glDeleteVertexArraysAPPLE(int n, MemorySegment arrays) {
     glut_h.glDeleteVertexArraysAPPLE(n, arrays);
   }
 
@@ -640,7 +640,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glDepthRange(n, f);
   }
 
-  public void glDetachObjectARB(Addressable containerObj, Addressable attachedObj) {
+  public void glDetachObjectARB(MemorySegment containerObj, MemorySegment attachedObj) {
     glut_h.glDetachObjectARB(containerObj, attachedObj);
   }
 
@@ -684,11 +684,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glDrawBuffer(buf);
   }
 
-  public void glDrawBuffers(int n, Addressable bufs) {
+  public void glDrawBuffers(int n, MemorySegment bufs) {
     glut_h.glDrawBuffers(n, bufs);
   }
 
-  public void glDrawBuffersARB(int n, Addressable bufs) {
+  public void glDrawBuffersARB(int n, MemorySegment bufs) {
     glut_h.glDrawBuffersARB(n, bufs);
   }
 
@@ -696,23 +696,23 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glDrawElementArrayAPPLE(mode, first, count);
   }
 
-  public void glDrawElements(int mode, int count, int type, Addressable indices) {
+  public void glDrawElements(int mode, int count, int type, MemorySegment indices) {
     glut_h.glDrawElements(mode, count, type, indices);
   }
 
-  public void glDrawElementsBaseVertex(int mode, int count, int type, Addressable indices, int basevertex) {
+  public void glDrawElementsBaseVertex(int mode, int count, int type, MemorySegment indices, int basevertex) {
     glut_h.glDrawElementsBaseVertex(mode, count, type, indices, basevertex);
   }
 
-  public void glDrawElementsInstancedARB(int mode, int count, int type, Addressable indices, int primcount) {
+  public void glDrawElementsInstancedARB(int mode, int count, int type, MemorySegment indices, int primcount) {
     glut_h.glDrawElementsInstancedARB(mode, count, type, indices, primcount);
   }
 
-  public void glDrawElementsInstancedBaseVertex(int mode, int count, int type, Addressable indices, int instancecount, int basevertex) {
+  public void glDrawElementsInstancedBaseVertex(int mode, int count, int type, MemorySegment indices, int instancecount, int basevertex) {
     glut_h.glDrawElementsInstancedBaseVertex(mode, count, type, indices, instancecount, basevertex);
   }
 
-  public void glDrawPixels(int width, int height, int format, int type, Addressable pixels) {
+  public void glDrawPixels(int width, int height, int format, int type, MemorySegment pixels) {
     glut_h.glDrawPixels(width, height, format, type, pixels);
   }
 
@@ -720,15 +720,15 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glDrawRangeElementArrayAPPLE(mode, start, end, first, count);
   }
 
-  public void glDrawRangeElements(int mode, int start, int end, int count, int type, Addressable indices) {
+  public void glDrawRangeElements(int mode, int start, int end, int count, int type, MemorySegment indices) {
     glut_h.glDrawRangeElements(mode, start, end, count, type, indices);
   }
 
-  public void glDrawRangeElementsBaseVertex(int mode, int start, int end, int count, int type, Addressable indices, int basevertex) {
+  public void glDrawRangeElementsBaseVertex(int mode, int start, int end, int count, int type, MemorySegment indices, int basevertex) {
     glut_h.glDrawRangeElementsBaseVertex(mode, start, end, count, type, indices, basevertex);
   }
 
-  public void glDrawRangeElementsEXT(int mode, int start, int end, int count, int type, Addressable indices) {
+  public void glDrawRangeElementsEXT(int mode, int start, int end, int count, int type, MemorySegment indices) {
     glut_h.glDrawRangeElementsEXT(mode, start, end, count, type, indices);
   }
 
@@ -736,15 +736,15 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glEdgeFlag(flag);
   }
 
-  public void glEdgeFlagPointer(int stride, Addressable pointer) {
+  public void glEdgeFlagPointer(int stride, MemorySegment pointer) {
     glut_h.glEdgeFlagPointer(stride, pointer);
   }
 
-  public void glEdgeFlagv(Addressable flag) {
+  public void glEdgeFlagv(MemorySegment flag) {
     glut_h.glEdgeFlagv(flag);
   }
 
-  public void glElementPointerAPPLE(int type, Addressable pointer) {
+  public void glElementPointerAPPLE(int type, MemorySegment pointer) {
     glut_h.glElementPointerAPPLE(type, pointer);
   }
 
@@ -800,7 +800,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glEvalCoord1d(u);
   }
 
-  public void glEvalCoord1dv(Addressable u) {
+  public void glEvalCoord1dv(MemorySegment u) {
     glut_h.glEvalCoord1dv(u);
   }
 
@@ -808,7 +808,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glEvalCoord1f(u);
   }
 
-  public void glEvalCoord1fv(Addressable u) {
+  public void glEvalCoord1fv(MemorySegment u) {
     glut_h.glEvalCoord1fv(u);
   }
 
@@ -816,7 +816,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glEvalCoord2d(u, v);
   }
 
-  public void glEvalCoord2dv(Addressable u) {
+  public void glEvalCoord2dv(MemorySegment u) {
     glut_h.glEvalCoord2dv(u);
   }
 
@@ -824,7 +824,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glEvalCoord2f(u, v);
   }
 
-  public void glEvalCoord2fv(Addressable u) {
+  public void glEvalCoord2fv(MemorySegment u) {
     glut_h.glEvalCoord2fv(u);
   }
 
@@ -844,11 +844,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glEvalPoint2(i, j);
   }
 
-  public void glFeedbackBuffer(int size, int type, Addressable buffer) {
+  public void glFeedbackBuffer(int size, int type, MemorySegment buffer) {
     glut_h.glFeedbackBuffer(size, type, buffer);
   }
 
-  public MemoryAddress glFenceSync(int condition, int flags) {
+  public MemorySegment glFenceSync(int condition, int flags) {
     return glut_h.glFenceSync(condition, flags);
   }
 
@@ -872,15 +872,15 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glFlushMappedBufferRangeAPPLE(target, offset, size);
   }
 
-  public void glFlushVertexArrayRangeAPPLE(int length, Addressable pointer) {
+  public void glFlushVertexArrayRangeAPPLE(int length, MemorySegment pointer) {
     glut_h.glFlushVertexArrayRangeAPPLE(length, pointer);
   }
 
-  public void glFogCoordPointer(int type, int stride, Addressable pointer) {
+  public void glFogCoordPointer(int type, int stride, MemorySegment pointer) {
     glut_h.glFogCoordPointer(type, stride, pointer);
   }
 
-  public void glFogCoordPointerEXT(int type, int stride, Addressable pointer) {
+  public void glFogCoordPointerEXT(int type, int stride, MemorySegment pointer) {
     glut_h.glFogCoordPointerEXT(type, stride, pointer);
   }
 
@@ -892,11 +892,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glFogCoorddEXT(coord);
   }
 
-  public void glFogCoorddv(Addressable coord) {
+  public void glFogCoorddv(MemorySegment coord) {
     glut_h.glFogCoorddv(coord);
   }
 
-  public void glFogCoorddvEXT(Addressable coord) {
+  public void glFogCoorddvEXT(MemorySegment coord) {
     glut_h.glFogCoorddvEXT(coord);
   }
 
@@ -908,11 +908,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glFogCoordfEXT(coord);
   }
 
-  public void glFogCoordfv(Addressable coord) {
+  public void glFogCoordfv(MemorySegment coord) {
     glut_h.glFogCoordfv(coord);
   }
 
-  public void glFogCoordfvEXT(Addressable coord) {
+  public void glFogCoordfvEXT(MemorySegment coord) {
     glut_h.glFogCoordfvEXT(coord);
   }
 
@@ -920,7 +920,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glFogf(pname, param);
   }
 
-  public void glFogfv(int pname, Addressable params) {
+  public void glFogfv(int pname, MemorySegment params) {
     glut_h.glFogfv(pname, params);
   }
 
@@ -928,7 +928,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glFogi(pname, param);
   }
 
-  public void glFogiv(int pname, Addressable params) {
+  public void glFogiv(int pname, MemorySegment params) {
     glut_h.glFogiv(pname, params);
   }
 
@@ -988,23 +988,23 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glFrustum(left, right, bottom, top, zNear, zFar);
   }
 
-  public void glGenBuffers(int n, Addressable buffers) {
+  public void glGenBuffers(int n, MemorySegment buffers) {
     glut_h.glGenBuffers(n, buffers);
   }
 
-  public void glGenBuffersARB(int n, Addressable buffers) {
+  public void glGenBuffersARB(int n, MemorySegment buffers) {
     glut_h.glGenBuffersARB(n, buffers);
   }
 
-  public void glGenFencesAPPLE(int n, Addressable fences) {
+  public void glGenFencesAPPLE(int n, MemorySegment fences) {
     glut_h.glGenFencesAPPLE(n, fences);
   }
 
-  public void glGenFramebuffers(int n, Addressable framebuffers) {
+  public void glGenFramebuffers(int n, MemorySegment framebuffers) {
     glut_h.glGenFramebuffers(n, framebuffers);
   }
 
-  public void glGenFramebuffersEXT(int n, Addressable framebuffers) {
+  public void glGenFramebuffersEXT(int n, MemorySegment framebuffers) {
     glut_h.glGenFramebuffersEXT(n, framebuffers);
   }
 
@@ -1012,31 +1012,31 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glGenLists(range);
   }
 
-  public void glGenProgramsARB(int n, Addressable programs) {
+  public void glGenProgramsARB(int n, MemorySegment programs) {
     glut_h.glGenProgramsARB(n, programs);
   }
 
-  public void glGenQueries(int n, Addressable ids) {
+  public void glGenQueries(int n, MemorySegment ids) {
     glut_h.glGenQueries(n, ids);
   }
 
-  public void glGenQueriesARB(int n, Addressable ids) {
+  public void glGenQueriesARB(int n, MemorySegment ids) {
     glut_h.glGenQueriesARB(n, ids);
   }
 
-  public void glGenRenderbuffers(int n, Addressable renderbuffers) {
+  public void glGenRenderbuffers(int n, MemorySegment renderbuffers) {
     glut_h.glGenRenderbuffers(n, renderbuffers);
   }
 
-  public void glGenRenderbuffersEXT(int n, Addressable renderbuffers) {
+  public void glGenRenderbuffersEXT(int n, MemorySegment renderbuffers) {
     glut_h.glGenRenderbuffersEXT(n, renderbuffers);
   }
 
-  public void glGenTextures(int n, Addressable textures) {
+  public void glGenTextures(int n, MemorySegment textures) {
     glut_h.glGenTextures(n, textures);
   }
 
-  public void glGenVertexArraysAPPLE(int n, Addressable arrays) {
+  public void glGenVertexArraysAPPLE(int n, MemorySegment arrays) {
     glut_h.glGenVertexArraysAPPLE(n, arrays);
   }
 
@@ -1048,107 +1048,107 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glGenerateMipmapEXT(target);
   }
 
-  public void glGetActiveAttrib(int program, int index, int bufSize, Addressable length, Addressable size, Addressable type, Addressable name) {
+  public void glGetActiveAttrib(int program, int index, int bufSize, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
     glut_h.glGetActiveAttrib(program, index, bufSize, length, size, type, name);
   }
 
-  public void glGetActiveAttribARB(Addressable programObj, int index, int maxLength, Addressable length, Addressable size, Addressable type, Addressable name) {
+  public void glGetActiveAttribARB(MemorySegment programObj, int index, int maxLength, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
     glut_h.glGetActiveAttribARB(programObj, index, maxLength, length, size, type, name);
   }
 
-  public void glGetActiveUniform(int program, int index, int bufSize, Addressable length, Addressable size, Addressable type, Addressable name) {
+  public void glGetActiveUniform(int program, int index, int bufSize, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
     glut_h.glGetActiveUniform(program, index, bufSize, length, size, type, name);
   }
 
-  public void glGetActiveUniformARB(Addressable programObj, int index, int maxLength, Addressable length, Addressable size, Addressable type, Addressable name) {
+  public void glGetActiveUniformARB(MemorySegment programObj, int index, int maxLength, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
     glut_h.glGetActiveUniformARB(programObj, index, maxLength, length, size, type, name);
   }
 
-  public void glGetAttachedObjectsARB(Addressable containerObj, int maxCount, Addressable count, Addressable obj) {
+  public void glGetAttachedObjectsARB(MemorySegment containerObj, int maxCount, MemorySegment count, MemorySegment obj) {
     glut_h.glGetAttachedObjectsARB(containerObj, maxCount, count, obj);
   }
 
-  public void glGetAttachedShaders(int program, int maxCount, Addressable count, Addressable shaders) {
+  public void glGetAttachedShaders(int program, int maxCount, MemorySegment count, MemorySegment shaders) {
     glut_h.glGetAttachedShaders(program, maxCount, count, shaders);
   }
 
-  public int glGetAttribLocation(int program, Addressable name) {
+  public int glGetAttribLocation(int program, MemorySegment name) {
     return glut_h.glGetAttribLocation(program, name);
   }
 
-  public int glGetAttribLocationARB(Addressable programObj, Addressable name) {
+  public int glGetAttribLocationARB(MemorySegment programObj, MemorySegment name) {
     return glut_h.glGetAttribLocationARB(programObj, name);
   }
 
-  public void glGetBooleanIndexedvEXT(int target, int index, Addressable data) {
+  public void glGetBooleanIndexedvEXT(int target, int index, MemorySegment data) {
     glut_h.glGetBooleanIndexedvEXT(target, index, data);
   }
 
-  public void glGetBooleanv(int pname, Addressable data) {
+  public void glGetBooleanv(int pname, MemorySegment data) {
     glut_h.glGetBooleanv(pname, data);
   }
 
-  public void glGetBufferParameteriv(int target, int pname, Addressable params) {
+  public void glGetBufferParameteriv(int target, int pname, MemorySegment params) {
     glut_h.glGetBufferParameteriv(target, pname, params);
   }
 
-  public void glGetBufferParameterivARB(int target, int pname, Addressable params) {
+  public void glGetBufferParameterivARB(int target, int pname, MemorySegment params) {
     glut_h.glGetBufferParameterivARB(target, pname, params);
   }
 
-  public void glGetBufferPointerv(int target, int pname, Addressable params) {
+  public void glGetBufferPointerv(int target, int pname, MemorySegment params) {
     glut_h.glGetBufferPointerv(target, pname, params);
   }
 
-  public void glGetBufferPointervARB(int target, int pname, Addressable params) {
+  public void glGetBufferPointervARB(int target, int pname, MemorySegment params) {
     glut_h.glGetBufferPointervARB(target, pname, params);
   }
 
-  public void glGetBufferSubData(int target, long offset, long size, Addressable data) {
+  public void glGetBufferSubData(int target, long offset, long size, MemorySegment data) {
     glut_h.glGetBufferSubData(target, offset, size, data);
   }
 
-  public void glGetBufferSubDataARB(int target, long offset, long size, Addressable data) {
+  public void glGetBufferSubDataARB(int target, long offset, long size, MemorySegment data) {
     glut_h.glGetBufferSubDataARB(target, offset, size, data);
   }
 
-  public void glGetClipPlane(int plane, Addressable equation) {
+  public void glGetClipPlane(int plane, MemorySegment equation) {
     glut_h.glGetClipPlane(plane, equation);
   }
 
-  public void glGetColorTable(int target, int format, int type, Addressable table) {
+  public void glGetColorTable(int target, int format, int type, MemorySegment table) {
     glut_h.glGetColorTable(target, format, type, table);
   }
 
-  public void glGetColorTableParameterfv(int target, int pname, Addressable params) {
+  public void glGetColorTableParameterfv(int target, int pname, MemorySegment params) {
     glut_h.glGetColorTableParameterfv(target, pname, params);
   }
 
-  public void glGetColorTableParameteriv(int target, int pname, Addressable params) {
+  public void glGetColorTableParameteriv(int target, int pname, MemorySegment params) {
     glut_h.glGetColorTableParameteriv(target, pname, params);
   }
 
-  public void glGetCompressedTexImage(int target, int level, Addressable img) {
+  public void glGetCompressedTexImage(int target, int level, MemorySegment img) {
     glut_h.glGetCompressedTexImage(target, level, img);
   }
 
-  public void glGetCompressedTexImageARB(int target, int level, Addressable img) {
+  public void glGetCompressedTexImageARB(int target, int level, MemorySegment img) {
     glut_h.glGetCompressedTexImageARB(target, level, img);
   }
 
-  public void glGetConvolutionFilter(int target, int format, int type, Addressable image) {
+  public void glGetConvolutionFilter(int target, int format, int type, MemorySegment image) {
     glut_h.glGetConvolutionFilter(target, format, type, image);
   }
 
-  public void glGetConvolutionParameterfv(int target, int pname, Addressable params) {
+  public void glGetConvolutionParameterfv(int target, int pname, MemorySegment params) {
     glut_h.glGetConvolutionParameterfv(target, pname, params);
   }
 
-  public void glGetConvolutionParameteriv(int target, int pname, Addressable params) {
+  public void glGetConvolutionParameteriv(int target, int pname, MemorySegment params) {
     glut_h.glGetConvolutionParameteriv(target, pname, params);
   }
 
-  public void glGetDoublev(int pname, Addressable data) {
+  public void glGetDoublev(int pname, MemorySegment data) {
     glut_h.glGetDoublev(pname, data);
   }
 
@@ -1156,283 +1156,283 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glGetError();
   }
 
-  public void glGetFloatv(int pname, Addressable data) {
+  public void glGetFloatv(int pname, MemorySegment data) {
     glut_h.glGetFloatv(pname, data);
   }
 
-  public int glGetFragDataLocationEXT(int program, Addressable name) {
+  public int glGetFragDataLocationEXT(int program, MemorySegment name) {
     return glut_h.glGetFragDataLocationEXT(program, name);
   }
 
-  public void glGetFramebufferAttachmentParameteriv(int target, int attachment, int pname, Addressable params) {
+  public void glGetFramebufferAttachmentParameteriv(int target, int attachment, int pname, MemorySegment params) {
     glut_h.glGetFramebufferAttachmentParameteriv(target, attachment, pname, params);
   }
 
-  public void glGetFramebufferAttachmentParameterivEXT(int target, int attachment, int pname, Addressable params) {
+  public void glGetFramebufferAttachmentParameterivEXT(int target, int attachment, int pname, MemorySegment params) {
     glut_h.glGetFramebufferAttachmentParameterivEXT(target, attachment, pname, params);
   }
 
-  public MemoryAddress glGetHandleARB(int pname) {
+  public MemorySegment glGetHandleARB(int pname) {
     return glut_h.glGetHandleARB(pname);
   }
 
-  public void glGetHistogram(int target, byte reset, int format, int type, Addressable values) {
+  public void glGetHistogram(int target, byte reset, int format, int type, MemorySegment values) {
     glut_h.glGetHistogram(target, reset, format, type, values);
   }
 
-  public void glGetHistogramParameterfv(int target, int pname, Addressable params) {
+  public void glGetHistogramParameterfv(int target, int pname, MemorySegment params) {
     glut_h.glGetHistogramParameterfv(target, pname, params);
   }
 
-  public void glGetHistogramParameteriv(int target, int pname, Addressable params) {
+  public void glGetHistogramParameteriv(int target, int pname, MemorySegment params) {
     glut_h.glGetHistogramParameteriv(target, pname, params);
   }
 
-  public void glGetInfoLogARB(Addressable obj, int maxLength, Addressable length, Addressable infoLog) {
+  public void glGetInfoLogARB(MemorySegment obj, int maxLength, MemorySegment length, MemorySegment infoLog) {
     glut_h.glGetInfoLogARB(obj, maxLength, length, infoLog);
   }
 
-  public void glGetInteger64v(int pname, Addressable data) {
+  public void glGetInteger64v(int pname, MemorySegment data) {
     glut_h.glGetInteger64v(pname, data);
   }
 
-  public void glGetIntegerIndexedvEXT(int target, int index, Addressable data) {
+  public void glGetIntegerIndexedvEXT(int target, int index, MemorySegment data) {
     glut_h.glGetIntegerIndexedvEXT(target, index, data);
   }
 
-  public void glGetIntegerv(int pname, Addressable data) {
+  public void glGetIntegerv(int pname, MemorySegment data) {
     glut_h.glGetIntegerv(pname, data);
   }
 
-  public void glGetLightfv(int light, int pname, Addressable params) {
+  public void glGetLightfv(int light, int pname, MemorySegment params) {
     glut_h.glGetLightfv(light, pname, params);
   }
 
-  public void glGetLightiv(int light, int pname, Addressable params) {
+  public void glGetLightiv(int light, int pname, MemorySegment params) {
     glut_h.glGetLightiv(light, pname, params);
   }
 
-  public void glGetMapdv(int target, int query, Addressable v) {
+  public void glGetMapdv(int target, int query, MemorySegment v) {
     glut_h.glGetMapdv(target, query, v);
   }
 
-  public void glGetMapfv(int target, int query, Addressable v) {
+  public void glGetMapfv(int target, int query, MemorySegment v) {
     glut_h.glGetMapfv(target, query, v);
   }
 
-  public void glGetMapiv(int target, int query, Addressable v) {
+  public void glGetMapiv(int target, int query, MemorySegment v) {
     glut_h.glGetMapiv(target, query, v);
   }
 
-  public void glGetMaterialfv(int face, int pname, Addressable params) {
+  public void glGetMaterialfv(int face, int pname, MemorySegment params) {
     glut_h.glGetMaterialfv(face, pname, params);
   }
 
-  public void glGetMaterialiv(int face, int pname, Addressable params) {
+  public void glGetMaterialiv(int face, int pname, MemorySegment params) {
     glut_h.glGetMaterialiv(face, pname, params);
   }
 
-  public void glGetMinmax(int target, byte reset, int format, int type, Addressable values) {
+  public void glGetMinmax(int target, byte reset, int format, int type, MemorySegment values) {
     glut_h.glGetMinmax(target, reset, format, type, values);
   }
 
-  public void glGetMinmaxParameterfv(int target, int pname, Addressable params) {
+  public void glGetMinmaxParameterfv(int target, int pname, MemorySegment params) {
     glut_h.glGetMinmaxParameterfv(target, pname, params);
   }
 
-  public void glGetMinmaxParameteriv(int target, int pname, Addressable params) {
+  public void glGetMinmaxParameteriv(int target, int pname, MemorySegment params) {
     glut_h.glGetMinmaxParameteriv(target, pname, params);
   }
 
-  public void glGetObjectLabelEXT(int type, int object, int bufSize, Addressable length, Addressable label) {
+  public void glGetObjectLabelEXT(int type, int object, int bufSize, MemorySegment length, MemorySegment label) {
     glut_h.glGetObjectLabelEXT(type, object, bufSize, length, label);
   }
 
-  public void glGetObjectParameterfvARB(Addressable obj, int pname, Addressable params) {
+  public void glGetObjectParameterfvARB(MemorySegment obj, int pname, MemorySegment params) {
     glut_h.glGetObjectParameterfvARB(obj, pname, params);
   }
 
-  public void glGetObjectParameterivAPPLE(int objectType, int name, int pname, Addressable params) {
+  public void glGetObjectParameterivAPPLE(int objectType, int name, int pname, MemorySegment params) {
     glut_h.glGetObjectParameterivAPPLE(objectType, name, pname, params);
   }
 
-  public void glGetObjectParameterivARB(Addressable obj, int pname, Addressable params) {
+  public void glGetObjectParameterivARB(MemorySegment obj, int pname, MemorySegment params) {
     glut_h.glGetObjectParameterivARB(obj, pname, params);
   }
 
-  public void glGetPixelMapfv(int map, Addressable values) {
+  public void glGetPixelMapfv(int map, MemorySegment values) {
     glut_h.glGetPixelMapfv(map, values);
   }
 
-  public void glGetPixelMapuiv(int map, Addressable values) {
+  public void glGetPixelMapuiv(int map, MemorySegment values) {
     glut_h.glGetPixelMapuiv(map, values);
   }
 
-  public void glGetPixelMapusv(int map, Addressable values) {
+  public void glGetPixelMapusv(int map, MemorySegment values) {
     glut_h.glGetPixelMapusv(map, values);
   }
 
-  public void glGetPointerv(int pname, Addressable params) {
+  public void glGetPointerv(int pname, MemorySegment params) {
     glut_h.glGetPointerv(pname, params);
   }
 
-  public void glGetPolygonStipple(Addressable mask) {
+  public void glGetPolygonStipple(MemorySegment mask) {
     glut_h.glGetPolygonStipple(mask);
   }
 
-  public void glGetProgramEnvParameterdvARB(int target, int index, Addressable params) {
+  public void glGetProgramEnvParameterdvARB(int target, int index, MemorySegment params) {
     glut_h.glGetProgramEnvParameterdvARB(target, index, params);
   }
 
-  public void glGetProgramEnvParameterfvARB(int target, int index, Addressable params) {
+  public void glGetProgramEnvParameterfvARB(int target, int index, MemorySegment params) {
     glut_h.glGetProgramEnvParameterfvARB(target, index, params);
   }
 
-  public void glGetProgramInfoLog(int program, int bufSize, Addressable length, Addressable infoLog) {
+  public void glGetProgramInfoLog(int program, int bufSize, MemorySegment length, MemorySegment infoLog) {
     glut_h.glGetProgramInfoLog(program, bufSize, length, infoLog);
   }
 
-  public void glGetProgramLocalParameterdvARB(int target, int index, Addressable params) {
+  public void glGetProgramLocalParameterdvARB(int target, int index, MemorySegment params) {
     glut_h.glGetProgramLocalParameterdvARB(target, index, params);
   }
 
-  public void glGetProgramLocalParameterfvARB(int target, int index, Addressable params) {
+  public void glGetProgramLocalParameterfvARB(int target, int index, MemorySegment params) {
     glut_h.glGetProgramLocalParameterfvARB(target, index, params);
   }
 
-  public void glGetProgramStringARB(int target, int pname, Addressable string) {
+  public void glGetProgramStringARB(int target, int pname, MemorySegment string) {
     glut_h.glGetProgramStringARB(target, pname, string);
   }
 
-  public void glGetProgramiv(int program, int pname, Addressable params) {
+  public void glGetProgramiv(int program, int pname, MemorySegment params) {
     glut_h.glGetProgramiv(program, pname, params);
   }
 
-  public void glGetProgramivARB(int target, int pname, Addressable params) {
+  public void glGetProgramivARB(int target, int pname, MemorySegment params) {
     glut_h.glGetProgramivARB(target, pname, params);
   }
 
-  public void glGetQueryObjecti64vEXT(int id, int pname, Addressable params) {
+  public void glGetQueryObjecti64vEXT(int id, int pname, MemorySegment params) {
     glut_h.glGetQueryObjecti64vEXT(id, pname, params);
   }
 
-  public void glGetQueryObjectiv(int id, int pname, Addressable params) {
+  public void glGetQueryObjectiv(int id, int pname, MemorySegment params) {
     glut_h.glGetQueryObjectiv(id, pname, params);
   }
 
-  public void glGetQueryObjectivARB(int id, int pname, Addressable params) {
+  public void glGetQueryObjectivARB(int id, int pname, MemorySegment params) {
     glut_h.glGetQueryObjectivARB(id, pname, params);
   }
 
-  public void glGetQueryObjectui64vEXT(int id, int pname, Addressable params) {
+  public void glGetQueryObjectui64vEXT(int id, int pname, MemorySegment params) {
     glut_h.glGetQueryObjectui64vEXT(id, pname, params);
   }
 
-  public void glGetQueryObjectuiv(int id, int pname, Addressable params) {
+  public void glGetQueryObjectuiv(int id, int pname, MemorySegment params) {
     glut_h.glGetQueryObjectuiv(id, pname, params);
   }
 
-  public void glGetQueryObjectuivARB(int id, int pname, Addressable params) {
+  public void glGetQueryObjectuivARB(int id, int pname, MemorySegment params) {
     glut_h.glGetQueryObjectuivARB(id, pname, params);
   }
 
-  public void glGetQueryiv(int target, int pname, Addressable params) {
+  public void glGetQueryiv(int target, int pname, MemorySegment params) {
     glut_h.glGetQueryiv(target, pname, params);
   }
 
-  public void glGetQueryivARB(int target, int pname, Addressable params) {
+  public void glGetQueryivARB(int target, int pname, MemorySegment params) {
     glut_h.glGetQueryivARB(target, pname, params);
   }
 
-  public void glGetRenderbufferParameteriv(int target, int pname, Addressable params) {
+  public void glGetRenderbufferParameteriv(int target, int pname, MemorySegment params) {
     glut_h.glGetRenderbufferParameteriv(target, pname, params);
   }
 
-  public void glGetRenderbufferParameterivEXT(int target, int pname, Addressable params) {
+  public void glGetRenderbufferParameterivEXT(int target, int pname, MemorySegment params) {
     glut_h.glGetRenderbufferParameterivEXT(target, pname, params);
   }
 
-  public void glGetSeparableFilter(int target, int format, int type, Addressable row, Addressable column, Addressable span) {
+  public void glGetSeparableFilter(int target, int format, int type, MemorySegment row, MemorySegment column, MemorySegment span) {
     glut_h.glGetSeparableFilter(target, format, type, row, column, span);
   }
 
-  public void glGetShaderInfoLog(int shader, int bufSize, Addressable length, Addressable infoLog) {
+  public void glGetShaderInfoLog(int shader, int bufSize, MemorySegment length, MemorySegment infoLog) {
     glut_h.glGetShaderInfoLog(shader, bufSize, length, infoLog);
   }
 
-  public void glGetShaderSource(int shader, int bufSize, Addressable length, Addressable source) {
+  public void glGetShaderSource(int shader, int bufSize, MemorySegment length, MemorySegment source) {
     glut_h.glGetShaderSource(shader, bufSize, length, source);
   }
 
-  public void glGetShaderSourceARB(Addressable obj, int maxLength, Addressable length, Addressable source) {
+  public void glGetShaderSourceARB(MemorySegment obj, int maxLength, MemorySegment length, MemorySegment source) {
     glut_h.glGetShaderSourceARB(obj, maxLength, length, source);
   }
 
-  public void glGetShaderiv(int shader, int pname, Addressable params) {
+  public void glGetShaderiv(int shader, int pname, MemorySegment params) {
     glut_h.glGetShaderiv(shader, pname, params);
   }
 
-  public String glGetString(int name) {
-    return glut_h.glGetString(name).getUtf8String(0);
+  public MemorySegment glGetString(int name) {
+    return glut_h.glGetString(name);
   }
 
-  public void glGetSynciv(Addressable sync, int pname, int count, Addressable length, Addressable values) {
+  public void glGetSynciv(MemorySegment sync, int pname, int count, MemorySegment length, MemorySegment values) {
     glut_h.glGetSynciv(sync, pname, count, length, values);
   }
 
-  public void glGetTexEnvfv(int target, int pname, Addressable params) {
+  public void glGetTexEnvfv(int target, int pname, MemorySegment params) {
     glut_h.glGetTexEnvfv(target, pname, params);
   }
 
-  public void glGetTexEnviv(int target, int pname, Addressable params) {
+  public void glGetTexEnviv(int target, int pname, MemorySegment params) {
     glut_h.glGetTexEnviv(target, pname, params);
   }
 
-  public void glGetTexGendv(int coord, int pname, Addressable params) {
+  public void glGetTexGendv(int coord, int pname, MemorySegment params) {
     glut_h.glGetTexGendv(coord, pname, params);
   }
 
-  public void glGetTexGenfv(int coord, int pname, Addressable params) {
+  public void glGetTexGenfv(int coord, int pname, MemorySegment params) {
     glut_h.glGetTexGenfv(coord, pname, params);
   }
 
-  public void glGetTexGeniv(int coord, int pname, Addressable params) {
+  public void glGetTexGeniv(int coord, int pname, MemorySegment params) {
     glut_h.glGetTexGeniv(coord, pname, params);
   }
 
-  public void glGetTexImage(int target, int level, int format, int type, Addressable pixels) {
+  public void glGetTexImage(int target, int level, int format, int type, MemorySegment pixels) {
     glut_h.glGetTexImage(target, level, format, type, pixels);
   }
 
-  public void glGetTexLevelParameterfv(int target, int level, int pname, Addressable params) {
+  public void glGetTexLevelParameterfv(int target, int level, int pname, MemorySegment params) {
     glut_h.glGetTexLevelParameterfv(target, level, pname, params);
   }
 
-  public void glGetTexLevelParameteriv(int target, int level, int pname, Addressable params) {
+  public void glGetTexLevelParameteriv(int target, int level, int pname, MemorySegment params) {
     glut_h.glGetTexLevelParameteriv(target, level, pname, params);
   }
 
-  public void glGetTexParameterIivEXT(int target, int pname, Addressable params) {
+  public void glGetTexParameterIivEXT(int target, int pname, MemorySegment params) {
     glut_h.glGetTexParameterIivEXT(target, pname, params);
   }
 
-  public void glGetTexParameterIuivEXT(int target, int pname, Addressable params) {
+  public void glGetTexParameterIuivEXT(int target, int pname, MemorySegment params) {
     glut_h.glGetTexParameterIuivEXT(target, pname, params);
   }
 
-  public void glGetTexParameterPointervAPPLE(int target, int pname, Addressable params) {
+  public void glGetTexParameterPointervAPPLE(int target, int pname, MemorySegment params) {
     glut_h.glGetTexParameterPointervAPPLE(target, pname, params);
   }
 
-  public void glGetTexParameterfv(int target, int pname, Addressable params) {
+  public void glGetTexParameterfv(int target, int pname, MemorySegment params) {
     glut_h.glGetTexParameterfv(target, pname, params);
   }
 
-  public void glGetTexParameteriv(int target, int pname, Addressable params) {
+  public void glGetTexParameteriv(int target, int pname, MemorySegment params) {
     glut_h.glGetTexParameteriv(target, pname, params);
   }
 
-  public void glGetTransformFeedbackVaryingEXT(int program, int index, int bufSize, Addressable length, Addressable size, Addressable type, Addressable name) {
+  public void glGetTransformFeedbackVaryingEXT(int program, int index, int bufSize, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
     glut_h.glGetTransformFeedbackVaryingEXT(program, index, bufSize, length, size, type, name);
   }
 
@@ -1440,11 +1440,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glGetUniformBufferSizeEXT(program, location);
   }
 
-  public int glGetUniformLocation(int program, Addressable name) {
+  public int glGetUniformLocation(int program, MemorySegment name) {
     return glut_h.glGetUniformLocation(program, name);
   }
 
-  public int glGetUniformLocationARB(Addressable programObj, Addressable name) {
+  public int glGetUniformLocationARB(MemorySegment programObj, MemorySegment name) {
     return glut_h.glGetUniformLocationARB(programObj, name);
   }
 
@@ -1452,63 +1452,63 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glGetUniformOffsetEXT(program, location);
   }
 
-  public void glGetUniformfv(int program, int location, Addressable params) {
+  public void glGetUniformfv(int program, int location, MemorySegment params) {
     glut_h.glGetUniformfv(program, location, params);
   }
 
-  public void glGetUniformfvARB(Addressable programObj, int location, Addressable params) {
+  public void glGetUniformfvARB(MemorySegment programObj, int location, MemorySegment params) {
     glut_h.glGetUniformfvARB(programObj, location, params);
   }
 
-  public void glGetUniformiv(int program, int location, Addressable params) {
+  public void glGetUniformiv(int program, int location, MemorySegment params) {
     glut_h.glGetUniformiv(program, location, params);
   }
 
-  public void glGetUniformivARB(Addressable programObj, int location, Addressable params) {
+  public void glGetUniformivARB(MemorySegment programObj, int location, MemorySegment params) {
     glut_h.glGetUniformivARB(programObj, location, params);
   }
 
-  public void glGetUniformuivEXT(int program, int location, Addressable params) {
+  public void glGetUniformuivEXT(int program, int location, MemorySegment params) {
     glut_h.glGetUniformuivEXT(program, location, params);
   }
 
-  public void glGetVertexAttribIivEXT(int index, int pname, Addressable params) {
+  public void glGetVertexAttribIivEXT(int index, int pname, MemorySegment params) {
     glut_h.glGetVertexAttribIivEXT(index, pname, params);
   }
 
-  public void glGetVertexAttribIuivEXT(int index, int pname, Addressable params) {
+  public void glGetVertexAttribIuivEXT(int index, int pname, MemorySegment params) {
     glut_h.glGetVertexAttribIuivEXT(index, pname, params);
   }
 
-  public void glGetVertexAttribPointerv(int index, int pname, Addressable pointer) {
+  public void glGetVertexAttribPointerv(int index, int pname, MemorySegment pointer) {
     glut_h.glGetVertexAttribPointerv(index, pname, pointer);
   }
 
-  public void glGetVertexAttribPointervARB(int index, int pname, Addressable pointer) {
+  public void glGetVertexAttribPointervARB(int index, int pname, MemorySegment pointer) {
     glut_h.glGetVertexAttribPointervARB(index, pname, pointer);
   }
 
-  public void glGetVertexAttribdv(int index, int pname, Addressable params) {
+  public void glGetVertexAttribdv(int index, int pname, MemorySegment params) {
     glut_h.glGetVertexAttribdv(index, pname, params);
   }
 
-  public void glGetVertexAttribdvARB(int index, int pname, Addressable params) {
+  public void glGetVertexAttribdvARB(int index, int pname, MemorySegment params) {
     glut_h.glGetVertexAttribdvARB(index, pname, params);
   }
 
-  public void glGetVertexAttribfv(int index, int pname, Addressable params) {
+  public void glGetVertexAttribfv(int index, int pname, MemorySegment params) {
     glut_h.glGetVertexAttribfv(index, pname, params);
   }
 
-  public void glGetVertexAttribfvARB(int index, int pname, Addressable params) {
+  public void glGetVertexAttribfvARB(int index, int pname, MemorySegment params) {
     glut_h.glGetVertexAttribfvARB(index, pname, params);
   }
 
-  public void glGetVertexAttribiv(int index, int pname, Addressable params) {
+  public void glGetVertexAttribiv(int index, int pname, MemorySegment params) {
     glut_h.glGetVertexAttribiv(index, pname, params);
   }
 
-  public void glGetVertexAttribivARB(int index, int pname, Addressable params) {
+  public void glGetVertexAttribivARB(int index, int pname, MemorySegment params) {
     glut_h.glGetVertexAttribivARB(index, pname, params);
   }
 
@@ -1524,7 +1524,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glIndexMask(mask);
   }
 
-  public void glIndexPointer(int type, int stride, Addressable pointer) {
+  public void glIndexPointer(int type, int stride, MemorySegment pointer) {
     glut_h.glIndexPointer(type, stride, pointer);
   }
 
@@ -1532,7 +1532,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glIndexd(c);
   }
 
-  public void glIndexdv(Addressable c) {
+  public void glIndexdv(MemorySegment c) {
     glut_h.glIndexdv(c);
   }
 
@@ -1540,7 +1540,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glIndexf(c);
   }
 
-  public void glIndexfv(Addressable c) {
+  public void glIndexfv(MemorySegment c) {
     glut_h.glIndexfv(c);
   }
 
@@ -1548,7 +1548,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glIndexi(c);
   }
 
-  public void glIndexiv(Addressable c) {
+  public void glIndexiv(MemorySegment c) {
     glut_h.glIndexiv(c);
   }
 
@@ -1556,7 +1556,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glIndexs(c);
   }
 
-  public void glIndexsv(Addressable c) {
+  public void glIndexsv(MemorySegment c) {
     glut_h.glIndexsv(c);
   }
 
@@ -1564,7 +1564,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glIndexub(c);
   }
 
-  public void glIndexubv(Addressable c) {
+  public void glIndexubv(MemorySegment c) {
     glut_h.glIndexubv(c);
   }
 
@@ -1572,11 +1572,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glInitNames();
   }
 
-  public void glInsertEventMarkerEXT(int length, Addressable marker) {
+  public void glInsertEventMarkerEXT(int length, MemorySegment marker) {
     glut_h.glInsertEventMarkerEXT(length, marker);
   }
 
-  public void glInterleavedArrays(int format, int stride, Addressable pointer) {
+  public void glInterleavedArrays(int format, int stride, MemorySegment pointer) {
     glut_h.glInterleavedArrays(format, stride, pointer);
   }
 
@@ -1640,7 +1640,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glIsShader(shader);
   }
 
-  public byte glIsSync(Addressable sync) {
+  public byte glIsSync(MemorySegment sync) {
     return glut_h.glIsSync(sync);
   }
 
@@ -1656,7 +1656,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glIsVertexAttribEnabledAPPLE(index, pname);
   }
 
-  public void glLabelObjectEXT(int type, int object, int length, Addressable label) {
+  public void glLabelObjectEXT(int type, int object, int length, MemorySegment label) {
     glut_h.glLabelObjectEXT(type, object, length, label);
   }
 
@@ -1664,7 +1664,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glLightModelf(pname, param);
   }
 
-  public void glLightModelfv(int pname, Addressable params) {
+  public void glLightModelfv(int pname, MemorySegment params) {
     glut_h.glLightModelfv(pname, params);
   }
 
@@ -1672,7 +1672,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glLightModeli(pname, param);
   }
 
-  public void glLightModeliv(int pname, Addressable params) {
+  public void glLightModeliv(int pname, MemorySegment params) {
     glut_h.glLightModeliv(pname, params);
   }
 
@@ -1680,7 +1680,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glLightf(light, pname, param);
   }
 
-  public void glLightfv(int light, int pname, Addressable params) {
+  public void glLightfv(int light, int pname, MemorySegment params) {
     glut_h.glLightfv(light, pname, params);
   }
 
@@ -1688,7 +1688,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glLighti(light, pname, param);
   }
 
-  public void glLightiv(int light, int pname, Addressable params) {
+  public void glLightiv(int light, int pname, MemorySegment params) {
     glut_h.glLightiv(light, pname, params);
   }
 
@@ -1704,7 +1704,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glLinkProgram(program);
   }
 
-  public void glLinkProgramARB(Addressable programObj) {
+  public void glLinkProgramARB(MemorySegment programObj) {
     glut_h.glLinkProgramARB(programObj);
   }
 
@@ -1716,11 +1716,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glLoadIdentity();
   }
 
-  public void glLoadMatrixd(Addressable m) {
+  public void glLoadMatrixd(MemorySegment m) {
     glut_h.glLoadMatrixd(m);
   }
 
-  public void glLoadMatrixf(Addressable m) {
+  public void glLoadMatrixf(MemorySegment m) {
     glut_h.glLoadMatrixf(m);
   }
 
@@ -1728,19 +1728,19 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glLoadName(name);
   }
 
-  public void glLoadTransposeMatrixd(Addressable m) {
+  public void glLoadTransposeMatrixd(MemorySegment m) {
     glut_h.glLoadTransposeMatrixd(m);
   }
 
-  public void glLoadTransposeMatrixdARB(Addressable m) {
+  public void glLoadTransposeMatrixdARB(MemorySegment m) {
     glut_h.glLoadTransposeMatrixdARB(m);
   }
 
-  public void glLoadTransposeMatrixf(Addressable m) {
+  public void glLoadTransposeMatrixf(MemorySegment m) {
     glut_h.glLoadTransposeMatrixf(m);
   }
 
-  public void glLoadTransposeMatrixfARB(Addressable m) {
+  public void glLoadTransposeMatrixfARB(MemorySegment m) {
     glut_h.glLoadTransposeMatrixfARB(m);
   }
 
@@ -1748,27 +1748,27 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glLogicOp(opcode);
   }
 
-  public void glMap1d(int target, double u1, double u2, int stride, int order, Addressable points) {
+  public void glMap1d(int target, double u1, double u2, int stride, int order, MemorySegment points) {
     glut_h.glMap1d(target, u1, u2, stride, order, points);
   }
 
-  public void glMap1f(int target, float u1, float u2, int stride, int order, Addressable points) {
+  public void glMap1f(int target, float u1, float u2, int stride, int order, MemorySegment points) {
     glut_h.glMap1f(target, u1, u2, stride, order, points);
   }
 
-  public void glMap2d(int target, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, Addressable points) {
+  public void glMap2d(int target, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, MemorySegment points) {
     glut_h.glMap2d(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
   }
 
-  public void glMap2f(int target, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, Addressable points) {
+  public void glMap2f(int target, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, MemorySegment points) {
     glut_h.glMap2f(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
   }
 
-  public MemoryAddress glMapBuffer(int target, int access) {
+  public MemorySegment glMapBuffer(int target, int access) {
     return glut_h.glMapBuffer(target, access);
   }
 
-  public MemoryAddress glMapBufferARB(int target, int access) {
+  public MemorySegment glMapBufferARB(int target, int access) {
     return glut_h.glMapBufferARB(target, access);
   }
 
@@ -1788,19 +1788,19 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMapGrid2f(un, u1, u2, vn, v1, v2);
   }
 
-  public void glMapVertexAttrib1dAPPLE(int index, int size, double u1, double u2, int stride, int order, Addressable points) {
+  public void glMapVertexAttrib1dAPPLE(int index, int size, double u1, double u2, int stride, int order, MemorySegment points) {
     glut_h.glMapVertexAttrib1dAPPLE(index, size, u1, u2, stride, order, points);
   }
 
-  public void glMapVertexAttrib1fAPPLE(int index, int size, float u1, float u2, int stride, int order, Addressable points) {
+  public void glMapVertexAttrib1fAPPLE(int index, int size, float u1, float u2, int stride, int order, MemorySegment points) {
     glut_h.glMapVertexAttrib1fAPPLE(index, size, u1, u2, stride, order, points);
   }
 
-  public void glMapVertexAttrib2dAPPLE(int index, int size, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, Addressable points) {
+  public void glMapVertexAttrib2dAPPLE(int index, int size, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, MemorySegment points) {
     glut_h.glMapVertexAttrib2dAPPLE(index, size, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
   }
 
-  public void glMapVertexAttrib2fAPPLE(int index, int size, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, Addressable points) {
+  public void glMapVertexAttrib2fAPPLE(int index, int size, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, MemorySegment points) {
     glut_h.glMapVertexAttrib2fAPPLE(index, size, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
   }
 
@@ -1808,7 +1808,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMaterialf(face, pname, param);
   }
 
-  public void glMaterialfv(int face, int pname, Addressable params) {
+  public void glMaterialfv(int face, int pname, MemorySegment params) {
     glut_h.glMaterialfv(face, pname, params);
   }
 
@@ -1816,7 +1816,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMateriali(face, pname, param);
   }
 
-  public void glMaterialiv(int face, int pname, Addressable params) {
+  public void glMaterialiv(int face, int pname, MemorySegment params) {
     glut_h.glMaterialiv(face, pname, params);
   }
 
@@ -1828,55 +1828,55 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMinmax(target, internalformat, sink);
   }
 
-  public void glMultMatrixd(Addressable m) {
+  public void glMultMatrixd(MemorySegment m) {
     glut_h.glMultMatrixd(m);
   }
 
-  public void glMultMatrixf(Addressable m) {
+  public void glMultMatrixf(MemorySegment m) {
     glut_h.glMultMatrixf(m);
   }
 
-  public void glMultTransposeMatrixd(Addressable m) {
+  public void glMultTransposeMatrixd(MemorySegment m) {
     glut_h.glMultTransposeMatrixd(m);
   }
 
-  public void glMultTransposeMatrixdARB(Addressable m) {
+  public void glMultTransposeMatrixdARB(MemorySegment m) {
     glut_h.glMultTransposeMatrixdARB(m);
   }
 
-  public void glMultTransposeMatrixf(Addressable m) {
+  public void glMultTransposeMatrixf(MemorySegment m) {
     glut_h.glMultTransposeMatrixf(m);
   }
 
-  public void glMultTransposeMatrixfARB(Addressable m) {
+  public void glMultTransposeMatrixfARB(MemorySegment m) {
     glut_h.glMultTransposeMatrixfARB(m);
   }
 
-  public void glMultiDrawArrays(int mode, Addressable first, Addressable count, int drawcount) {
+  public void glMultiDrawArrays(int mode, MemorySegment first, MemorySegment count, int drawcount) {
     glut_h.glMultiDrawArrays(mode, first, count, drawcount);
   }
 
-  public void glMultiDrawArraysEXT(int mode, Addressable first, Addressable count, int primcount) {
+  public void glMultiDrawArraysEXT(int mode, MemorySegment first, MemorySegment count, int primcount) {
     glut_h.glMultiDrawArraysEXT(mode, first, count, primcount);
   }
 
-  public void glMultiDrawElementArrayAPPLE(int mode, Addressable first, Addressable count, int primcount) {
+  public void glMultiDrawElementArrayAPPLE(int mode, MemorySegment first, MemorySegment count, int primcount) {
     glut_h.glMultiDrawElementArrayAPPLE(mode, first, count, primcount);
   }
 
-  public void glMultiDrawElements(int mode, Addressable count, int type, Addressable indices, int drawcount) {
+  public void glMultiDrawElements(int mode, MemorySegment count, int type, MemorySegment indices, int drawcount) {
     glut_h.glMultiDrawElements(mode, count, type, indices, drawcount);
   }
 
-  public void glMultiDrawElementsBaseVertex(int mode, Addressable count, int type, Addressable indices, int drawcount, Addressable basevertex) {
+  public void glMultiDrawElementsBaseVertex(int mode, MemorySegment count, int type, MemorySegment indices, int drawcount, MemorySegment basevertex) {
     glut_h.glMultiDrawElementsBaseVertex(mode, count, type, indices, drawcount, basevertex);
   }
 
-  public void glMultiDrawElementsEXT(int mode, Addressable count, int type, Addressable indices, int primcount) {
+  public void glMultiDrawElementsEXT(int mode, MemorySegment count, int type, MemorySegment indices, int primcount) {
     glut_h.glMultiDrawElementsEXT(mode, count, type, indices, primcount);
   }
 
-  public void glMultiDrawRangeElementArrayAPPLE(int mode, int start, int end, Addressable first, Addressable count, int primcount) {
+  public void glMultiDrawRangeElementArrayAPPLE(int mode, int start, int end, MemorySegment first, MemorySegment count, int primcount) {
     glut_h.glMultiDrawRangeElementArrayAPPLE(mode, start, end, first, count, primcount);
   }
 
@@ -1888,11 +1888,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultiTexCoord1dARB(target, s);
   }
 
-  public void glMultiTexCoord1dv(int target, Addressable v) {
+  public void glMultiTexCoord1dv(int target, MemorySegment v) {
     glut_h.glMultiTexCoord1dv(target, v);
   }
 
-  public void glMultiTexCoord1dvARB(int target, Addressable v) {
+  public void glMultiTexCoord1dvARB(int target, MemorySegment v) {
     glut_h.glMultiTexCoord1dvARB(target, v);
   }
 
@@ -1904,11 +1904,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultiTexCoord1fARB(target, s);
   }
 
-  public void glMultiTexCoord1fv(int target, Addressable v) {
+  public void glMultiTexCoord1fv(int target, MemorySegment v) {
     glut_h.glMultiTexCoord1fv(target, v);
   }
 
-  public void glMultiTexCoord1fvARB(int target, Addressable v) {
+  public void glMultiTexCoord1fvARB(int target, MemorySegment v) {
     glut_h.glMultiTexCoord1fvARB(target, v);
   }
 
@@ -1920,11 +1920,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultiTexCoord1iARB(target, s);
   }
 
-  public void glMultiTexCoord1iv(int target, Addressable v) {
+  public void glMultiTexCoord1iv(int target, MemorySegment v) {
     glut_h.glMultiTexCoord1iv(target, v);
   }
 
-  public void glMultiTexCoord1ivARB(int target, Addressable v) {
+  public void glMultiTexCoord1ivARB(int target, MemorySegment v) {
     glut_h.glMultiTexCoord1ivARB(target, v);
   }
 
@@ -1936,11 +1936,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultiTexCoord1sARB(target, s);
   }
 
-  public void glMultiTexCoord1sv(int target, Addressable v) {
+  public void glMultiTexCoord1sv(int target, MemorySegment v) {
     glut_h.glMultiTexCoord1sv(target, v);
   }
 
-  public void glMultiTexCoord1svARB(int target, Addressable v) {
+  public void glMultiTexCoord1svARB(int target, MemorySegment v) {
     glut_h.glMultiTexCoord1svARB(target, v);
   }
 
@@ -1952,11 +1952,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultiTexCoord2dARB(target, s, t);
   }
 
-  public void glMultiTexCoord2dv(int target, Addressable v) {
+  public void glMultiTexCoord2dv(int target, MemorySegment v) {
     glut_h.glMultiTexCoord2dv(target, v);
   }
 
-  public void glMultiTexCoord2dvARB(int target, Addressable v) {
+  public void glMultiTexCoord2dvARB(int target, MemorySegment v) {
     glut_h.glMultiTexCoord2dvARB(target, v);
   }
 
@@ -1968,11 +1968,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultiTexCoord2fARB(target, s, t);
   }
 
-  public void glMultiTexCoord2fv(int target, Addressable v) {
+  public void glMultiTexCoord2fv(int target, MemorySegment v) {
     glut_h.glMultiTexCoord2fv(target, v);
   }
 
-  public void glMultiTexCoord2fvARB(int target, Addressable v) {
+  public void glMultiTexCoord2fvARB(int target, MemorySegment v) {
     glut_h.glMultiTexCoord2fvARB(target, v);
   }
 
@@ -1984,11 +1984,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultiTexCoord2iARB(target, s, t);
   }
 
-  public void glMultiTexCoord2iv(int target, Addressable v) {
+  public void glMultiTexCoord2iv(int target, MemorySegment v) {
     glut_h.glMultiTexCoord2iv(target, v);
   }
 
-  public void glMultiTexCoord2ivARB(int target, Addressable v) {
+  public void glMultiTexCoord2ivARB(int target, MemorySegment v) {
     glut_h.glMultiTexCoord2ivARB(target, v);
   }
 
@@ -2000,11 +2000,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultiTexCoord2sARB(target, s, t);
   }
 
-  public void glMultiTexCoord2sv(int target, Addressable v) {
+  public void glMultiTexCoord2sv(int target, MemorySegment v) {
     glut_h.glMultiTexCoord2sv(target, v);
   }
 
-  public void glMultiTexCoord2svARB(int target, Addressable v) {
+  public void glMultiTexCoord2svARB(int target, MemorySegment v) {
     glut_h.glMultiTexCoord2svARB(target, v);
   }
 
@@ -2016,11 +2016,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultiTexCoord3dARB(target, s, t, r);
   }
 
-  public void glMultiTexCoord3dv(int target, Addressable v) {
+  public void glMultiTexCoord3dv(int target, MemorySegment v) {
     glut_h.glMultiTexCoord3dv(target, v);
   }
 
-  public void glMultiTexCoord3dvARB(int target, Addressable v) {
+  public void glMultiTexCoord3dvARB(int target, MemorySegment v) {
     glut_h.glMultiTexCoord3dvARB(target, v);
   }
 
@@ -2032,11 +2032,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultiTexCoord3fARB(target, s, t, r);
   }
 
-  public void glMultiTexCoord3fv(int target, Addressable v) {
+  public void glMultiTexCoord3fv(int target, MemorySegment v) {
     glut_h.glMultiTexCoord3fv(target, v);
   }
 
-  public void glMultiTexCoord3fvARB(int target, Addressable v) {
+  public void glMultiTexCoord3fvARB(int target, MemorySegment v) {
     glut_h.glMultiTexCoord3fvARB(target, v);
   }
 
@@ -2048,11 +2048,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultiTexCoord3iARB(target, s, t, r);
   }
 
-  public void glMultiTexCoord3iv(int target, Addressable v) {
+  public void glMultiTexCoord3iv(int target, MemorySegment v) {
     glut_h.glMultiTexCoord3iv(target, v);
   }
 
-  public void glMultiTexCoord3ivARB(int target, Addressable v) {
+  public void glMultiTexCoord3ivARB(int target, MemorySegment v) {
     glut_h.glMultiTexCoord3ivARB(target, v);
   }
 
@@ -2064,11 +2064,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultiTexCoord3sARB(target, s, t, r);
   }
 
-  public void glMultiTexCoord3sv(int target, Addressable v) {
+  public void glMultiTexCoord3sv(int target, MemorySegment v) {
     glut_h.glMultiTexCoord3sv(target, v);
   }
 
-  public void glMultiTexCoord3svARB(int target, Addressable v) {
+  public void glMultiTexCoord3svARB(int target, MemorySegment v) {
     glut_h.glMultiTexCoord3svARB(target, v);
   }
 
@@ -2080,11 +2080,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultiTexCoord4dARB(target, s, t, r, q);
   }
 
-  public void glMultiTexCoord4dv(int target, Addressable v) {
+  public void glMultiTexCoord4dv(int target, MemorySegment v) {
     glut_h.glMultiTexCoord4dv(target, v);
   }
 
-  public void glMultiTexCoord4dvARB(int target, Addressable v) {
+  public void glMultiTexCoord4dvARB(int target, MemorySegment v) {
     glut_h.glMultiTexCoord4dvARB(target, v);
   }
 
@@ -2096,11 +2096,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultiTexCoord4fARB(target, s, t, r, q);
   }
 
-  public void glMultiTexCoord4fv(int target, Addressable v) {
+  public void glMultiTexCoord4fv(int target, MemorySegment v) {
     glut_h.glMultiTexCoord4fv(target, v);
   }
 
-  public void glMultiTexCoord4fvARB(int target, Addressable v) {
+  public void glMultiTexCoord4fvARB(int target, MemorySegment v) {
     glut_h.glMultiTexCoord4fvARB(target, v);
   }
 
@@ -2112,11 +2112,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultiTexCoord4iARB(target, s, t, r, q);
   }
 
-  public void glMultiTexCoord4iv(int target, Addressable v) {
+  public void glMultiTexCoord4iv(int target, MemorySegment v) {
     glut_h.glMultiTexCoord4iv(target, v);
   }
 
-  public void glMultiTexCoord4ivARB(int target, Addressable v) {
+  public void glMultiTexCoord4ivARB(int target, MemorySegment v) {
     glut_h.glMultiTexCoord4ivARB(target, v);
   }
 
@@ -2128,11 +2128,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glMultiTexCoord4sARB(target, s, t, r, q);
   }
 
-  public void glMultiTexCoord4sv(int target, Addressable v) {
+  public void glMultiTexCoord4sv(int target, MemorySegment v) {
     glut_h.glMultiTexCoord4sv(target, v);
   }
 
-  public void glMultiTexCoord4svARB(int target, Addressable v) {
+  public void glMultiTexCoord4svARB(int target, MemorySegment v) {
     glut_h.glMultiTexCoord4svARB(target, v);
   }
 
@@ -2144,7 +2144,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glNormal3b(nx, ny, nz);
   }
 
-  public void glNormal3bv(Addressable v) {
+  public void glNormal3bv(MemorySegment v) {
     glut_h.glNormal3bv(v);
   }
 
@@ -2152,7 +2152,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glNormal3d(nx, ny, nz);
   }
 
-  public void glNormal3dv(Addressable v) {
+  public void glNormal3dv(MemorySegment v) {
     glut_h.glNormal3dv(v);
   }
 
@@ -2160,7 +2160,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glNormal3f(nx, ny, nz);
   }
 
-  public void glNormal3fv(Addressable v) {
+  public void glNormal3fv(MemorySegment v) {
     glut_h.glNormal3fv(v);
   }
 
@@ -2168,7 +2168,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glNormal3i(nx, ny, nz);
   }
 
-  public void glNormal3iv(Addressable v) {
+  public void glNormal3iv(MemorySegment v) {
     glut_h.glNormal3iv(v);
   }
 
@@ -2176,11 +2176,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glNormal3s(nx, ny, nz);
   }
 
-  public void glNormal3sv(Addressable v) {
+  public void glNormal3sv(MemorySegment v) {
     glut_h.glNormal3sv(v);
   }
 
-  public void glNormalPointer(int type, int stride, Addressable pointer) {
+  public void glNormalPointer(int type, int stride, MemorySegment pointer) {
     glut_h.glNormalPointer(type, stride, pointer);
   }
 
@@ -2200,15 +2200,15 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glPassThrough(token);
   }
 
-  public void glPixelMapfv(int map, int mapsize, Addressable values) {
+  public void glPixelMapfv(int map, int mapsize, MemorySegment values) {
     glut_h.glPixelMapfv(map, mapsize, values);
   }
 
-  public void glPixelMapuiv(int map, int mapsize, Addressable values) {
+  public void glPixelMapuiv(int map, int mapsize, MemorySegment values) {
     glut_h.glPixelMapuiv(map, mapsize, values);
   }
 
-  public void glPixelMapusv(int map, int mapsize, Addressable values) {
+  public void glPixelMapusv(int map, int mapsize, MemorySegment values) {
     glut_h.glPixelMapusv(map, mapsize, values);
   }
 
@@ -2240,11 +2240,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glPointParameterfARB(pname, param);
   }
 
-  public void glPointParameterfv(int pname, Addressable params) {
+  public void glPointParameterfv(int pname, MemorySegment params) {
     glut_h.glPointParameterfv(pname, params);
   }
 
-  public void glPointParameterfvARB(int pname, Addressable params) {
+  public void glPointParameterfvARB(int pname, MemorySegment params) {
     glut_h.glPointParameterfvARB(pname, params);
   }
 
@@ -2256,11 +2256,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glPointParameteriNV(pname, param);
   }
 
-  public void glPointParameteriv(int pname, Addressable params) {
+  public void glPointParameteriv(int pname, MemorySegment params) {
     glut_h.glPointParameteriv(pname, params);
   }
 
-  public void glPointParameterivNV(int pname, Addressable params) {
+  public void glPointParameterivNV(int pname, MemorySegment params) {
     glut_h.glPointParameterivNV(pname, params);
   }
 
@@ -2276,7 +2276,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glPolygonOffset(factor, units);
   }
 
-  public void glPolygonStipple(Addressable mask) {
+  public void glPolygonStipple(MemorySegment mask) {
     glut_h.glPolygonStipple(mask);
   }
 
@@ -2300,7 +2300,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glPopName();
   }
 
-  public void glPrioritizeTextures(int n, Addressable textures, Addressable priorities) {
+  public void glPrioritizeTextures(int n, MemorySegment textures, MemorySegment priorities) {
     glut_h.glPrioritizeTextures(n, textures, priorities);
   }
 
@@ -2308,7 +2308,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glProgramEnvParameter4dARB(target, index, x, y, z, w);
   }
 
-  public void glProgramEnvParameter4dvARB(int target, int index, Addressable params) {
+  public void glProgramEnvParameter4dvARB(int target, int index, MemorySegment params) {
     glut_h.glProgramEnvParameter4dvARB(target, index, params);
   }
 
@@ -2316,11 +2316,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glProgramEnvParameter4fARB(target, index, x, y, z, w);
   }
 
-  public void glProgramEnvParameter4fvARB(int target, int index, Addressable params) {
+  public void glProgramEnvParameter4fvARB(int target, int index, MemorySegment params) {
     glut_h.glProgramEnvParameter4fvARB(target, index, params);
   }
 
-  public void glProgramEnvParameters4fvEXT(int target, int index, int count, Addressable params) {
+  public void glProgramEnvParameters4fvEXT(int target, int index, int count, MemorySegment params) {
     glut_h.glProgramEnvParameters4fvEXT(target, index, count, params);
   }
 
@@ -2328,7 +2328,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glProgramLocalParameter4dARB(target, index, x, y, z, w);
   }
 
-  public void glProgramLocalParameter4dvARB(int target, int index, Addressable params) {
+  public void glProgramLocalParameter4dvARB(int target, int index, MemorySegment params) {
     glut_h.glProgramLocalParameter4dvARB(target, index, params);
   }
 
@@ -2336,11 +2336,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glProgramLocalParameter4fARB(target, index, x, y, z, w);
   }
 
-  public void glProgramLocalParameter4fvARB(int target, int index, Addressable params) {
+  public void glProgramLocalParameter4fvARB(int target, int index, MemorySegment params) {
     glut_h.glProgramLocalParameter4fvARB(target, index, params);
   }
 
-  public void glProgramLocalParameters4fvEXT(int target, int index, int count, Addressable params) {
+  public void glProgramLocalParameters4fvEXT(int target, int index, int count, MemorySegment params) {
     glut_h.glProgramLocalParameters4fvEXT(target, index, count, params);
   }
 
@@ -2348,7 +2348,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glProgramParameteriEXT(program, pname, value);
   }
 
-  public void glProgramStringARB(int target, int format, int len, Addressable string) {
+  public void glProgramStringARB(int target, int format, int len, MemorySegment string) {
     glut_h.glProgramStringARB(target, format, len, string);
   }
 
@@ -2368,7 +2368,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glPushClientAttrib(mask);
   }
 
-  public void glPushGroupMarkerEXT(int length, Addressable marker) {
+  public void glPushGroupMarkerEXT(int length, MemorySegment marker) {
     glut_h.glPushGroupMarkerEXT(length, marker);
   }
 
@@ -2384,7 +2384,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glRasterPos2d(x, y);
   }
 
-  public void glRasterPos2dv(Addressable v) {
+  public void glRasterPos2dv(MemorySegment v) {
     glut_h.glRasterPos2dv(v);
   }
 
@@ -2392,7 +2392,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glRasterPos2f(x, y);
   }
 
-  public void glRasterPos2fv(Addressable v) {
+  public void glRasterPos2fv(MemorySegment v) {
     glut_h.glRasterPos2fv(v);
   }
 
@@ -2400,7 +2400,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glRasterPos2i(x, y);
   }
 
-  public void glRasterPos2iv(Addressable v) {
+  public void glRasterPos2iv(MemorySegment v) {
     glut_h.glRasterPos2iv(v);
   }
 
@@ -2408,7 +2408,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glRasterPos2s(x, y);
   }
 
-  public void glRasterPos2sv(Addressable v) {
+  public void glRasterPos2sv(MemorySegment v) {
     glut_h.glRasterPos2sv(v);
   }
 
@@ -2416,7 +2416,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glRasterPos3d(x, y, z);
   }
 
-  public void glRasterPos3dv(Addressable v) {
+  public void glRasterPos3dv(MemorySegment v) {
     glut_h.glRasterPos3dv(v);
   }
 
@@ -2424,7 +2424,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glRasterPos3f(x, y, z);
   }
 
-  public void glRasterPos3fv(Addressable v) {
+  public void glRasterPos3fv(MemorySegment v) {
     glut_h.glRasterPos3fv(v);
   }
 
@@ -2432,7 +2432,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glRasterPos3i(x, y, z);
   }
 
-  public void glRasterPos3iv(Addressable v) {
+  public void glRasterPos3iv(MemorySegment v) {
     glut_h.glRasterPos3iv(v);
   }
 
@@ -2440,7 +2440,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glRasterPos3s(x, y, z);
   }
 
-  public void glRasterPos3sv(Addressable v) {
+  public void glRasterPos3sv(MemorySegment v) {
     glut_h.glRasterPos3sv(v);
   }
 
@@ -2448,7 +2448,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glRasterPos4d(x, y, z, w);
   }
 
-  public void glRasterPos4dv(Addressable v) {
+  public void glRasterPos4dv(MemorySegment v) {
     glut_h.glRasterPos4dv(v);
   }
 
@@ -2456,7 +2456,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glRasterPos4f(x, y, z, w);
   }
 
-  public void glRasterPos4fv(Addressable v) {
+  public void glRasterPos4fv(MemorySegment v) {
     glut_h.glRasterPos4fv(v);
   }
 
@@ -2464,7 +2464,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glRasterPos4i(x, y, z, w);
   }
 
-  public void glRasterPos4iv(Addressable v) {
+  public void glRasterPos4iv(MemorySegment v) {
     glut_h.glRasterPos4iv(v);
   }
 
@@ -2472,7 +2472,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glRasterPos4s(x, y, z, w);
   }
 
-  public void glRasterPos4sv(Addressable v) {
+  public void glRasterPos4sv(MemorySegment v) {
     glut_h.glRasterPos4sv(v);
   }
 
@@ -2480,7 +2480,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glReadBuffer(src);
   }
 
-  public void glReadPixels(int x, int y, int width, int height, int format, int type, Addressable pixels) {
+  public void glReadPixels(int x, int y, int width, int height, int format, int type, MemorySegment pixels) {
     glut_h.glReadPixels(x, y, width, height, format, type, pixels);
   }
 
@@ -2488,7 +2488,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glRectd(x1, y1, x2, y2);
   }
 
-  public void glRectdv(Addressable v1, Addressable v2) {
+  public void glRectdv(MemorySegment v1, MemorySegment v2) {
     glut_h.glRectdv(v1, v2);
   }
 
@@ -2496,7 +2496,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glRectf(x1, y1, x2, y2);
   }
 
-  public void glRectfv(Addressable v1, Addressable v2) {
+  public void glRectfv(MemorySegment v1, MemorySegment v2) {
     glut_h.glRectfv(v1, v2);
   }
 
@@ -2504,7 +2504,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glRecti(x1, y1, x2, y2);
   }
 
-  public void glRectiv(Addressable v1, Addressable v2) {
+  public void glRectiv(MemorySegment v1, MemorySegment v2) {
     glut_h.glRectiv(v1, v2);
   }
 
@@ -2512,7 +2512,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glRects(x1, y1, x2, y2);
   }
 
-  public void glRectsv(Addressable v1, Addressable v2) {
+  public void glRectsv(MemorySegment v1, MemorySegment v2) {
     glut_h.glRectsv(v1, v2);
   }
 
@@ -2580,11 +2580,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glSecondaryColor3bEXT(red, green, blue);
   }
 
-  public void glSecondaryColor3bv(Addressable v) {
+  public void glSecondaryColor3bv(MemorySegment v) {
     glut_h.glSecondaryColor3bv(v);
   }
 
-  public void glSecondaryColor3bvEXT(Addressable v) {
+  public void glSecondaryColor3bvEXT(MemorySegment v) {
     glut_h.glSecondaryColor3bvEXT(v);
   }
 
@@ -2596,11 +2596,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glSecondaryColor3dEXT(red, green, blue);
   }
 
-  public void glSecondaryColor3dv(Addressable v) {
+  public void glSecondaryColor3dv(MemorySegment v) {
     glut_h.glSecondaryColor3dv(v);
   }
 
-  public void glSecondaryColor3dvEXT(Addressable v) {
+  public void glSecondaryColor3dvEXT(MemorySegment v) {
     glut_h.glSecondaryColor3dvEXT(v);
   }
 
@@ -2612,11 +2612,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glSecondaryColor3fEXT(red, green, blue);
   }
 
-  public void glSecondaryColor3fv(Addressable v) {
+  public void glSecondaryColor3fv(MemorySegment v) {
     glut_h.glSecondaryColor3fv(v);
   }
 
-  public void glSecondaryColor3fvEXT(Addressable v) {
+  public void glSecondaryColor3fvEXT(MemorySegment v) {
     glut_h.glSecondaryColor3fvEXT(v);
   }
 
@@ -2628,11 +2628,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glSecondaryColor3iEXT(red, green, blue);
   }
 
-  public void glSecondaryColor3iv(Addressable v) {
+  public void glSecondaryColor3iv(MemorySegment v) {
     glut_h.glSecondaryColor3iv(v);
   }
 
-  public void glSecondaryColor3ivEXT(Addressable v) {
+  public void glSecondaryColor3ivEXT(MemorySegment v) {
     glut_h.glSecondaryColor3ivEXT(v);
   }
 
@@ -2644,11 +2644,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glSecondaryColor3sEXT(red, green, blue);
   }
 
-  public void glSecondaryColor3sv(Addressable v) {
+  public void glSecondaryColor3sv(MemorySegment v) {
     glut_h.glSecondaryColor3sv(v);
   }
 
-  public void glSecondaryColor3svEXT(Addressable v) {
+  public void glSecondaryColor3svEXT(MemorySegment v) {
     glut_h.glSecondaryColor3svEXT(v);
   }
 
@@ -2660,11 +2660,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glSecondaryColor3ubEXT(red, green, blue);
   }
 
-  public void glSecondaryColor3ubv(Addressable v) {
+  public void glSecondaryColor3ubv(MemorySegment v) {
     glut_h.glSecondaryColor3ubv(v);
   }
 
-  public void glSecondaryColor3ubvEXT(Addressable v) {
+  public void glSecondaryColor3ubvEXT(MemorySegment v) {
     glut_h.glSecondaryColor3ubvEXT(v);
   }
 
@@ -2676,11 +2676,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glSecondaryColor3uiEXT(red, green, blue);
   }
 
-  public void glSecondaryColor3uiv(Addressable v) {
+  public void glSecondaryColor3uiv(MemorySegment v) {
     glut_h.glSecondaryColor3uiv(v);
   }
 
-  public void glSecondaryColor3uivEXT(Addressable v) {
+  public void glSecondaryColor3uivEXT(MemorySegment v) {
     glut_h.glSecondaryColor3uivEXT(v);
   }
 
@@ -2692,27 +2692,27 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glSecondaryColor3usEXT(red, green, blue);
   }
 
-  public void glSecondaryColor3usv(Addressable v) {
+  public void glSecondaryColor3usv(MemorySegment v) {
     glut_h.glSecondaryColor3usv(v);
   }
 
-  public void glSecondaryColor3usvEXT(Addressable v) {
+  public void glSecondaryColor3usvEXT(MemorySegment v) {
     glut_h.glSecondaryColor3usvEXT(v);
   }
 
-  public void glSecondaryColorPointer(int size, int type, int stride, Addressable pointer) {
+  public void glSecondaryColorPointer(int size, int type, int stride, MemorySegment pointer) {
     glut_h.glSecondaryColorPointer(size, type, stride, pointer);
   }
 
-  public void glSecondaryColorPointerEXT(int size, int type, int stride, Addressable pointer) {
+  public void glSecondaryColorPointerEXT(int size, int type, int stride, MemorySegment pointer) {
     glut_h.glSecondaryColorPointerEXT(size, type, stride, pointer);
   }
 
-  public void glSelectBuffer(int size, Addressable buffer) {
+  public void glSelectBuffer(int size, MemorySegment buffer) {
     glut_h.glSelectBuffer(size, buffer);
   }
 
-  public void glSeparableFilter2D(int target, int internalformat, int width, int height, int format, int type, Addressable row, Addressable column) {
+  public void glSeparableFilter2D(int target, int internalformat, int width, int height, int format, int type, MemorySegment row, MemorySegment column) {
     glut_h.glSeparableFilter2D(target, internalformat, width, height, format, type, row, column);
   }
 
@@ -2724,11 +2724,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glShadeModel(mode);
   }
 
-  public void glShaderSource(int shader, int count, Addressable string, Addressable length) {
+  public void glShaderSource(int shader, int count, MemorySegment string, MemorySegment length) {
     glut_h.glShaderSource(shader, count, string, length);
   }
 
-  public void glShaderSourceARB(Addressable shaderObj, int count, Addressable string, Addressable length) {
+  public void glShaderSourceARB(MemorySegment shaderObj, int count, MemorySegment string, MemorySegment length) {
     glut_h.glShaderSourceARB(shaderObj, count, string, length);
   }
 
@@ -2776,7 +2776,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexCoord1d(s);
   }
 
-  public void glTexCoord1dv(Addressable v) {
+  public void glTexCoord1dv(MemorySegment v) {
     glut_h.glTexCoord1dv(v);
   }
 
@@ -2784,7 +2784,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexCoord1f(s);
   }
 
-  public void glTexCoord1fv(Addressable v) {
+  public void glTexCoord1fv(MemorySegment v) {
     glut_h.glTexCoord1fv(v);
   }
 
@@ -2792,7 +2792,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexCoord1i(s);
   }
 
-  public void glTexCoord1iv(Addressable v) {
+  public void glTexCoord1iv(MemorySegment v) {
     glut_h.glTexCoord1iv(v);
   }
 
@@ -2800,7 +2800,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexCoord1s(s);
   }
 
-  public void glTexCoord1sv(Addressable v) {
+  public void glTexCoord1sv(MemorySegment v) {
     glut_h.glTexCoord1sv(v);
   }
 
@@ -2808,7 +2808,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexCoord2d(s, t);
   }
 
-  public void glTexCoord2dv(Addressable v) {
+  public void glTexCoord2dv(MemorySegment v) {
     glut_h.glTexCoord2dv(v);
   }
 
@@ -2816,7 +2816,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexCoord2f(s, t);
   }
 
-  public void glTexCoord2fv(Addressable v) {
+  public void glTexCoord2fv(MemorySegment v) {
     glut_h.glTexCoord2fv(v);
   }
 
@@ -2824,7 +2824,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexCoord2i(s, t);
   }
 
-  public void glTexCoord2iv(Addressable v) {
+  public void glTexCoord2iv(MemorySegment v) {
     glut_h.glTexCoord2iv(v);
   }
 
@@ -2832,7 +2832,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexCoord2s(s, t);
   }
 
-  public void glTexCoord2sv(Addressable v) {
+  public void glTexCoord2sv(MemorySegment v) {
     glut_h.glTexCoord2sv(v);
   }
 
@@ -2840,7 +2840,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexCoord3d(s, t, r);
   }
 
-  public void glTexCoord3dv(Addressable v) {
+  public void glTexCoord3dv(MemorySegment v) {
     glut_h.glTexCoord3dv(v);
   }
 
@@ -2848,7 +2848,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexCoord3f(s, t, r);
   }
 
-  public void glTexCoord3fv(Addressable v) {
+  public void glTexCoord3fv(MemorySegment v) {
     glut_h.glTexCoord3fv(v);
   }
 
@@ -2856,7 +2856,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexCoord3i(s, t, r);
   }
 
-  public void glTexCoord3iv(Addressable v) {
+  public void glTexCoord3iv(MemorySegment v) {
     glut_h.glTexCoord3iv(v);
   }
 
@@ -2864,7 +2864,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexCoord3s(s, t, r);
   }
 
-  public void glTexCoord3sv(Addressable v) {
+  public void glTexCoord3sv(MemorySegment v) {
     glut_h.glTexCoord3sv(v);
   }
 
@@ -2872,7 +2872,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexCoord4d(s, t, r, q);
   }
 
-  public void glTexCoord4dv(Addressable v) {
+  public void glTexCoord4dv(MemorySegment v) {
     glut_h.glTexCoord4dv(v);
   }
 
@@ -2880,7 +2880,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexCoord4f(s, t, r, q);
   }
 
-  public void glTexCoord4fv(Addressable v) {
+  public void glTexCoord4fv(MemorySegment v) {
     glut_h.glTexCoord4fv(v);
   }
 
@@ -2888,7 +2888,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexCoord4i(s, t, r, q);
   }
 
-  public void glTexCoord4iv(Addressable v) {
+  public void glTexCoord4iv(MemorySegment v) {
     glut_h.glTexCoord4iv(v);
   }
 
@@ -2896,11 +2896,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexCoord4s(s, t, r, q);
   }
 
-  public void glTexCoord4sv(Addressable v) {
+  public void glTexCoord4sv(MemorySegment v) {
     glut_h.glTexCoord4sv(v);
   }
 
-  public void glTexCoordPointer(int size, int type, int stride, Addressable pointer) {
+  public void glTexCoordPointer(int size, int type, int stride, MemorySegment pointer) {
     glut_h.glTexCoordPointer(size, type, stride, pointer);
   }
 
@@ -2908,7 +2908,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexEnvf(target, pname, param);
   }
 
-  public void glTexEnvfv(int target, int pname, Addressable params) {
+  public void glTexEnvfv(int target, int pname, MemorySegment params) {
     glut_h.glTexEnvfv(target, pname, params);
   }
 
@@ -2916,7 +2916,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexEnvi(target, pname, param);
   }
 
-  public void glTexEnviv(int target, int pname, Addressable params) {
+  public void glTexEnviv(int target, int pname, MemorySegment params) {
     glut_h.glTexEnviv(target, pname, params);
   }
 
@@ -2924,7 +2924,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexGend(coord, pname, param);
   }
 
-  public void glTexGendv(int coord, int pname, Addressable params) {
+  public void glTexGendv(int coord, int pname, MemorySegment params) {
     glut_h.glTexGendv(coord, pname, params);
   }
 
@@ -2932,7 +2932,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexGenf(coord, pname, param);
   }
 
-  public void glTexGenfv(int coord, int pname, Addressable params) {
+  public void glTexGenfv(int coord, int pname, MemorySegment params) {
     glut_h.glTexGenfv(coord, pname, params);
   }
 
@@ -2940,27 +2940,27 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexGeni(coord, pname, param);
   }
 
-  public void glTexGeniv(int coord, int pname, Addressable params) {
+  public void glTexGeniv(int coord, int pname, MemorySegment params) {
     glut_h.glTexGeniv(coord, pname, params);
   }
 
-  public void glTexImage1D(int target, int level, int internalformat, int width, int border, int format, int type, Addressable pixels) {
+  public void glTexImage1D(int target, int level, int internalformat, int width, int border, int format, int type, MemorySegment pixels) {
     glut_h.glTexImage1D(target, level, internalformat, width, border, format, type, pixels);
   }
 
-  public void glTexImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, Addressable pixels) {
+  public void glTexImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, MemorySegment pixels) {
     glut_h.glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
   }
 
-  public void glTexImage3D(int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, Addressable pixels) {
+  public void glTexImage3D(int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, MemorySegment pixels) {
     glut_h.glTexImage3D(target, level, internalformat, width, height, depth, border, format, type, pixels);
   }
 
-  public void glTexParameterIivEXT(int target, int pname, Addressable params) {
+  public void glTexParameterIivEXT(int target, int pname, MemorySegment params) {
     glut_h.glTexParameterIivEXT(target, pname, params);
   }
 
-  public void glTexParameterIuivEXT(int target, int pname, Addressable params) {
+  public void glTexParameterIuivEXT(int target, int pname, MemorySegment params) {
     glut_h.glTexParameterIuivEXT(target, pname, params);
   }
 
@@ -2968,7 +2968,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexParameterf(target, pname, param);
   }
 
-  public void glTexParameterfv(int target, int pname, Addressable params) {
+  public void glTexParameterfv(int target, int pname, MemorySegment params) {
     glut_h.glTexParameterfv(target, pname, params);
   }
 
@@ -2976,19 +2976,19 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTexParameteri(target, pname, param);
   }
 
-  public void glTexParameteriv(int target, int pname, Addressable params) {
+  public void glTexParameteriv(int target, int pname, MemorySegment params) {
     glut_h.glTexParameteriv(target, pname, params);
   }
 
-  public void glTexSubImage1D(int target, int level, int xoffset, int width, int format, int type, Addressable pixels) {
+  public void glTexSubImage1D(int target, int level, int xoffset, int width, int format, int type, MemorySegment pixels) {
     glut_h.glTexSubImage1D(target, level, xoffset, width, format, type, pixels);
   }
 
-  public void glTexSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, Addressable pixels) {
+  public void glTexSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, MemorySegment pixels) {
     glut_h.glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
   }
 
-  public void glTexSubImage3D(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, Addressable pixels) {
+  public void glTexSubImage3D(int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int type, MemorySegment pixels) {
     glut_h.glTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
   }
 
@@ -2996,11 +2996,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glTextureBarrierNV();
   }
 
-  public void glTextureRangeAPPLE(int target, int length, Addressable pointer) {
+  public void glTextureRangeAPPLE(int target, int length, MemorySegment pointer) {
     glut_h.glTextureRangeAPPLE(target, length, pointer);
   }
 
-  public void glTransformFeedbackVaryingsEXT(int program, int count, Addressable varyings, int bufferMode) {
+  public void glTransformFeedbackVaryingsEXT(int program, int count, MemorySegment varyings, int bufferMode) {
     glut_h.glTransformFeedbackVaryingsEXT(program, count, varyings, bufferMode);
   }
 
@@ -3020,11 +3020,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glUniform1fARB(location, v0);
   }
 
-  public void glUniform1fv(int location, int count, Addressable value) {
+  public void glUniform1fv(int location, int count, MemorySegment value) {
     glut_h.glUniform1fv(location, count, value);
   }
 
-  public void glUniform1fvARB(int location, int count, Addressable value) {
+  public void glUniform1fvARB(int location, int count, MemorySegment value) {
     glut_h.glUniform1fvARB(location, count, value);
   }
 
@@ -3036,11 +3036,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glUniform1iARB(location, v0);
   }
 
-  public void glUniform1iv(int location, int count, Addressable value) {
+  public void glUniform1iv(int location, int count, MemorySegment value) {
     glut_h.glUniform1iv(location, count, value);
   }
 
-  public void glUniform1ivARB(int location, int count, Addressable value) {
+  public void glUniform1ivARB(int location, int count, MemorySegment value) {
     glut_h.glUniform1ivARB(location, count, value);
   }
 
@@ -3048,7 +3048,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glUniform1uiEXT(location, v0);
   }
 
-  public void glUniform1uivEXT(int location, int count, Addressable value) {
+  public void glUniform1uivEXT(int location, int count, MemorySegment value) {
     glut_h.glUniform1uivEXT(location, count, value);
   }
 
@@ -3060,11 +3060,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glUniform2fARB(location, v0, v1);
   }
 
-  public void glUniform2fv(int location, int count, Addressable value) {
+  public void glUniform2fv(int location, int count, MemorySegment value) {
     glut_h.glUniform2fv(location, count, value);
   }
 
-  public void glUniform2fvARB(int location, int count, Addressable value) {
+  public void glUniform2fvARB(int location, int count, MemorySegment value) {
     glut_h.glUniform2fvARB(location, count, value);
   }
 
@@ -3076,11 +3076,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glUniform2iARB(location, v0, v1);
   }
 
-  public void glUniform2iv(int location, int count, Addressable value) {
+  public void glUniform2iv(int location, int count, MemorySegment value) {
     glut_h.glUniform2iv(location, count, value);
   }
 
-  public void glUniform2ivARB(int location, int count, Addressable value) {
+  public void glUniform2ivARB(int location, int count, MemorySegment value) {
     glut_h.glUniform2ivARB(location, count, value);
   }
 
@@ -3088,7 +3088,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glUniform2uiEXT(location, v0, v1);
   }
 
-  public void glUniform2uivEXT(int location, int count, Addressable value) {
+  public void glUniform2uivEXT(int location, int count, MemorySegment value) {
     glut_h.glUniform2uivEXT(location, count, value);
   }
 
@@ -3100,11 +3100,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glUniform3fARB(location, v0, v1, v2);
   }
 
-  public void glUniform3fv(int location, int count, Addressable value) {
+  public void glUniform3fv(int location, int count, MemorySegment value) {
     glut_h.glUniform3fv(location, count, value);
   }
 
-  public void glUniform3fvARB(int location, int count, Addressable value) {
+  public void glUniform3fvARB(int location, int count, MemorySegment value) {
     glut_h.glUniform3fvARB(location, count, value);
   }
 
@@ -3116,11 +3116,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glUniform3iARB(location, v0, v1, v2);
   }
 
-  public void glUniform3iv(int location, int count, Addressable value) {
+  public void glUniform3iv(int location, int count, MemorySegment value) {
     glut_h.glUniform3iv(location, count, value);
   }
 
-  public void glUniform3ivARB(int location, int count, Addressable value) {
+  public void glUniform3ivARB(int location, int count, MemorySegment value) {
     glut_h.glUniform3ivARB(location, count, value);
   }
 
@@ -3128,7 +3128,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glUniform3uiEXT(location, v0, v1, v2);
   }
 
-  public void glUniform3uivEXT(int location, int count, Addressable value) {
+  public void glUniform3uivEXT(int location, int count, MemorySegment value) {
     glut_h.glUniform3uivEXT(location, count, value);
   }
 
@@ -3140,11 +3140,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glUniform4fARB(location, v0, v1, v2, v3);
   }
 
-  public void glUniform4fv(int location, int count, Addressable value) {
+  public void glUniform4fv(int location, int count, MemorySegment value) {
     glut_h.glUniform4fv(location, count, value);
   }
 
-  public void glUniform4fvARB(int location, int count, Addressable value) {
+  public void glUniform4fvARB(int location, int count, MemorySegment value) {
     glut_h.glUniform4fvARB(location, count, value);
   }
 
@@ -3156,11 +3156,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glUniform4iARB(location, v0, v1, v2, v3);
   }
 
-  public void glUniform4iv(int location, int count, Addressable value) {
+  public void glUniform4iv(int location, int count, MemorySegment value) {
     glut_h.glUniform4iv(location, count, value);
   }
 
-  public void glUniform4ivARB(int location, int count, Addressable value) {
+  public void glUniform4ivARB(int location, int count, MemorySegment value) {
     glut_h.glUniform4ivARB(location, count, value);
   }
 
@@ -3168,7 +3168,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glUniform4uiEXT(location, v0, v1, v2, v3);
   }
 
-  public void glUniform4uivEXT(int location, int count, Addressable value) {
+  public void glUniform4uivEXT(int location, int count, MemorySegment value) {
     glut_h.glUniform4uivEXT(location, count, value);
   }
 
@@ -3176,51 +3176,51 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glUniformBufferEXT(program, location, buffer);
   }
 
-  public void glUniformMatrix2fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix2fv(int location, int count, byte transpose, MemorySegment value) {
     glut_h.glUniformMatrix2fv(location, count, transpose, value);
   }
 
-  public void glUniformMatrix2fvARB(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix2fvARB(int location, int count, byte transpose, MemorySegment value) {
     glut_h.glUniformMatrix2fvARB(location, count, transpose, value);
   }
 
-  public void glUniformMatrix2x3fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix2x3fv(int location, int count, byte transpose, MemorySegment value) {
     glut_h.glUniformMatrix2x3fv(location, count, transpose, value);
   }
 
-  public void glUniformMatrix2x4fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix2x4fv(int location, int count, byte transpose, MemorySegment value) {
     glut_h.glUniformMatrix2x4fv(location, count, transpose, value);
   }
 
-  public void glUniformMatrix3fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix3fv(int location, int count, byte transpose, MemorySegment value) {
     glut_h.glUniformMatrix3fv(location, count, transpose, value);
   }
 
-  public void glUniformMatrix3fvARB(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix3fvARB(int location, int count, byte transpose, MemorySegment value) {
     glut_h.glUniformMatrix3fvARB(location, count, transpose, value);
   }
 
-  public void glUniformMatrix3x2fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix3x2fv(int location, int count, byte transpose, MemorySegment value) {
     glut_h.glUniformMatrix3x2fv(location, count, transpose, value);
   }
 
-  public void glUniformMatrix3x4fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix3x4fv(int location, int count, byte transpose, MemorySegment value) {
     glut_h.glUniformMatrix3x4fv(location, count, transpose, value);
   }
 
-  public void glUniformMatrix4fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix4fv(int location, int count, byte transpose, MemorySegment value) {
     glut_h.glUniformMatrix4fv(location, count, transpose, value);
   }
 
-  public void glUniformMatrix4fvARB(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix4fvARB(int location, int count, byte transpose, MemorySegment value) {
     glut_h.glUniformMatrix4fvARB(location, count, transpose, value);
   }
 
-  public void glUniformMatrix4x2fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix4x2fv(int location, int count, byte transpose, MemorySegment value) {
     glut_h.glUniformMatrix4x2fv(location, count, transpose, value);
   }
 
-  public void glUniformMatrix4x3fv(int location, int count, byte transpose, Addressable value) {
+  public void glUniformMatrix4x3fv(int location, int count, byte transpose, MemorySegment value) {
     glut_h.glUniformMatrix4x3fv(location, count, transpose, value);
   }
 
@@ -3236,7 +3236,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glUseProgram(program);
   }
 
-  public void glUseProgramObjectARB(Addressable programObj) {
+  public void glUseProgramObjectARB(MemorySegment programObj) {
     glut_h.glUseProgramObjectARB(programObj);
   }
 
@@ -3244,7 +3244,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glValidateProgram(program);
   }
 
-  public void glValidateProgramARB(Addressable programObj) {
+  public void glValidateProgramARB(MemorySegment programObj) {
     glut_h.glValidateProgramARB(programObj);
   }
 
@@ -3252,7 +3252,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertex2d(x, y);
   }
 
-  public void glVertex2dv(Addressable v) {
+  public void glVertex2dv(MemorySegment v) {
     glut_h.glVertex2dv(v);
   }
 
@@ -3260,7 +3260,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertex2f(x, y);
   }
 
-  public void glVertex2fv(Addressable v) {
+  public void glVertex2fv(MemorySegment v) {
     glut_h.glVertex2fv(v);
   }
 
@@ -3268,7 +3268,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertex2i(x, y);
   }
 
-  public void glVertex2iv(Addressable v) {
+  public void glVertex2iv(MemorySegment v) {
     glut_h.glVertex2iv(v);
   }
 
@@ -3276,7 +3276,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertex2s(x, y);
   }
 
-  public void glVertex2sv(Addressable v) {
+  public void glVertex2sv(MemorySegment v) {
     glut_h.glVertex2sv(v);
   }
 
@@ -3284,7 +3284,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertex3d(x, y, z);
   }
 
-  public void glVertex3dv(Addressable v) {
+  public void glVertex3dv(MemorySegment v) {
     glut_h.glVertex3dv(v);
   }
 
@@ -3292,7 +3292,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertex3f(x, y, z);
   }
 
-  public void glVertex3fv(Addressable v) {
+  public void glVertex3fv(MemorySegment v) {
     glut_h.glVertex3fv(v);
   }
 
@@ -3300,7 +3300,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertex3i(x, y, z);
   }
 
-  public void glVertex3iv(Addressable v) {
+  public void glVertex3iv(MemorySegment v) {
     glut_h.glVertex3iv(v);
   }
 
@@ -3308,7 +3308,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertex3s(x, y, z);
   }
 
-  public void glVertex3sv(Addressable v) {
+  public void glVertex3sv(MemorySegment v) {
     glut_h.glVertex3sv(v);
   }
 
@@ -3316,7 +3316,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertex4d(x, y, z, w);
   }
 
-  public void glVertex4dv(Addressable v) {
+  public void glVertex4dv(MemorySegment v) {
     glut_h.glVertex4dv(v);
   }
 
@@ -3324,7 +3324,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertex4f(x, y, z, w);
   }
 
-  public void glVertex4fv(Addressable v) {
+  public void glVertex4fv(MemorySegment v) {
     glut_h.glVertex4fv(v);
   }
 
@@ -3332,7 +3332,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertex4i(x, y, z, w);
   }
 
-  public void glVertex4iv(Addressable v) {
+  public void glVertex4iv(MemorySegment v) {
     glut_h.glVertex4iv(v);
   }
 
@@ -3340,7 +3340,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertex4s(x, y, z, w);
   }
 
-  public void glVertex4sv(Addressable v) {
+  public void glVertex4sv(MemorySegment v) {
     glut_h.glVertex4sv(v);
   }
 
@@ -3348,7 +3348,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexArrayParameteriAPPLE(pname, param);
   }
 
-  public void glVertexArrayRangeAPPLE(int length, Addressable pointer) {
+  public void glVertexArrayRangeAPPLE(int length, MemorySegment pointer) {
     glut_h.glVertexArrayRangeAPPLE(length, pointer);
   }
 
@@ -3360,11 +3360,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttrib1dARB(index, x);
   }
 
-  public void glVertexAttrib1dv(int index, Addressable v) {
+  public void glVertexAttrib1dv(int index, MemorySegment v) {
     glut_h.glVertexAttrib1dv(index, v);
   }
 
-  public void glVertexAttrib1dvARB(int index, Addressable v) {
+  public void glVertexAttrib1dvARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib1dvARB(index, v);
   }
 
@@ -3376,11 +3376,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttrib1fARB(index, x);
   }
 
-  public void glVertexAttrib1fv(int index, Addressable v) {
+  public void glVertexAttrib1fv(int index, MemorySegment v) {
     glut_h.glVertexAttrib1fv(index, v);
   }
 
-  public void glVertexAttrib1fvARB(int index, Addressable v) {
+  public void glVertexAttrib1fvARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib1fvARB(index, v);
   }
 
@@ -3392,11 +3392,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttrib1sARB(index, x);
   }
 
-  public void glVertexAttrib1sv(int index, Addressable v) {
+  public void glVertexAttrib1sv(int index, MemorySegment v) {
     glut_h.glVertexAttrib1sv(index, v);
   }
 
-  public void glVertexAttrib1svARB(int index, Addressable v) {
+  public void glVertexAttrib1svARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib1svARB(index, v);
   }
 
@@ -3408,11 +3408,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttrib2dARB(index, x, y);
   }
 
-  public void glVertexAttrib2dv(int index, Addressable v) {
+  public void glVertexAttrib2dv(int index, MemorySegment v) {
     glut_h.glVertexAttrib2dv(index, v);
   }
 
-  public void glVertexAttrib2dvARB(int index, Addressable v) {
+  public void glVertexAttrib2dvARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib2dvARB(index, v);
   }
 
@@ -3424,11 +3424,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttrib2fARB(index, x, y);
   }
 
-  public void glVertexAttrib2fv(int index, Addressable v) {
+  public void glVertexAttrib2fv(int index, MemorySegment v) {
     glut_h.glVertexAttrib2fv(index, v);
   }
 
-  public void glVertexAttrib2fvARB(int index, Addressable v) {
+  public void glVertexAttrib2fvARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib2fvARB(index, v);
   }
 
@@ -3440,11 +3440,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttrib2sARB(index, x, y);
   }
 
-  public void glVertexAttrib2sv(int index, Addressable v) {
+  public void glVertexAttrib2sv(int index, MemorySegment v) {
     glut_h.glVertexAttrib2sv(index, v);
   }
 
-  public void glVertexAttrib2svARB(int index, Addressable v) {
+  public void glVertexAttrib2svARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib2svARB(index, v);
   }
 
@@ -3456,11 +3456,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttrib3dARB(index, x, y, z);
   }
 
-  public void glVertexAttrib3dv(int index, Addressable v) {
+  public void glVertexAttrib3dv(int index, MemorySegment v) {
     glut_h.glVertexAttrib3dv(index, v);
   }
 
-  public void glVertexAttrib3dvARB(int index, Addressable v) {
+  public void glVertexAttrib3dvARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib3dvARB(index, v);
   }
 
@@ -3472,11 +3472,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttrib3fARB(index, x, y, z);
   }
 
-  public void glVertexAttrib3fv(int index, Addressable v) {
+  public void glVertexAttrib3fv(int index, MemorySegment v) {
     glut_h.glVertexAttrib3fv(index, v);
   }
 
-  public void glVertexAttrib3fvARB(int index, Addressable v) {
+  public void glVertexAttrib3fvARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib3fvARB(index, v);
   }
 
@@ -3488,35 +3488,35 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttrib3sARB(index, x, y, z);
   }
 
-  public void glVertexAttrib3sv(int index, Addressable v) {
+  public void glVertexAttrib3sv(int index, MemorySegment v) {
     glut_h.glVertexAttrib3sv(index, v);
   }
 
-  public void glVertexAttrib3svARB(int index, Addressable v) {
+  public void glVertexAttrib3svARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib3svARB(index, v);
   }
 
-  public void glVertexAttrib4Nbv(int index, Addressable v) {
+  public void glVertexAttrib4Nbv(int index, MemorySegment v) {
     glut_h.glVertexAttrib4Nbv(index, v);
   }
 
-  public void glVertexAttrib4NbvARB(int index, Addressable v) {
+  public void glVertexAttrib4NbvARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib4NbvARB(index, v);
   }
 
-  public void glVertexAttrib4Niv(int index, Addressable v) {
+  public void glVertexAttrib4Niv(int index, MemorySegment v) {
     glut_h.glVertexAttrib4Niv(index, v);
   }
 
-  public void glVertexAttrib4NivARB(int index, Addressable v) {
+  public void glVertexAttrib4NivARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib4NivARB(index, v);
   }
 
-  public void glVertexAttrib4Nsv(int index, Addressable v) {
+  public void glVertexAttrib4Nsv(int index, MemorySegment v) {
     glut_h.glVertexAttrib4Nsv(index, v);
   }
 
-  public void glVertexAttrib4NsvARB(int index, Addressable v) {
+  public void glVertexAttrib4NsvARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib4NsvARB(index, v);
   }
 
@@ -3528,35 +3528,35 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttrib4NubARB(index, x, y, z, w);
   }
 
-  public void glVertexAttrib4Nubv(int index, Addressable v) {
+  public void glVertexAttrib4Nubv(int index, MemorySegment v) {
     glut_h.glVertexAttrib4Nubv(index, v);
   }
 
-  public void glVertexAttrib4NubvARB(int index, Addressable v) {
+  public void glVertexAttrib4NubvARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib4NubvARB(index, v);
   }
 
-  public void glVertexAttrib4Nuiv(int index, Addressable v) {
+  public void glVertexAttrib4Nuiv(int index, MemorySegment v) {
     glut_h.glVertexAttrib4Nuiv(index, v);
   }
 
-  public void glVertexAttrib4NuivARB(int index, Addressable v) {
+  public void glVertexAttrib4NuivARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib4NuivARB(index, v);
   }
 
-  public void glVertexAttrib4Nusv(int index, Addressable v) {
+  public void glVertexAttrib4Nusv(int index, MemorySegment v) {
     glut_h.glVertexAttrib4Nusv(index, v);
   }
 
-  public void glVertexAttrib4NusvARB(int index, Addressable v) {
+  public void glVertexAttrib4NusvARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib4NusvARB(index, v);
   }
 
-  public void glVertexAttrib4bv(int index, Addressable v) {
+  public void glVertexAttrib4bv(int index, MemorySegment v) {
     glut_h.glVertexAttrib4bv(index, v);
   }
 
-  public void glVertexAttrib4bvARB(int index, Addressable v) {
+  public void glVertexAttrib4bvARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib4bvARB(index, v);
   }
 
@@ -3568,11 +3568,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttrib4dARB(index, x, y, z, w);
   }
 
-  public void glVertexAttrib4dv(int index, Addressable v) {
+  public void glVertexAttrib4dv(int index, MemorySegment v) {
     glut_h.glVertexAttrib4dv(index, v);
   }
 
-  public void glVertexAttrib4dvARB(int index, Addressable v) {
+  public void glVertexAttrib4dvARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib4dvARB(index, v);
   }
 
@@ -3584,19 +3584,19 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttrib4fARB(index, x, y, z, w);
   }
 
-  public void glVertexAttrib4fv(int index, Addressable v) {
+  public void glVertexAttrib4fv(int index, MemorySegment v) {
     glut_h.glVertexAttrib4fv(index, v);
   }
 
-  public void glVertexAttrib4fvARB(int index, Addressable v) {
+  public void glVertexAttrib4fvARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib4fvARB(index, v);
   }
 
-  public void glVertexAttrib4iv(int index, Addressable v) {
+  public void glVertexAttrib4iv(int index, MemorySegment v) {
     glut_h.glVertexAttrib4iv(index, v);
   }
 
-  public void glVertexAttrib4ivARB(int index, Addressable v) {
+  public void glVertexAttrib4ivARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib4ivARB(index, v);
   }
 
@@ -3608,35 +3608,35 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttrib4sARB(index, x, y, z, w);
   }
 
-  public void glVertexAttrib4sv(int index, Addressable v) {
+  public void glVertexAttrib4sv(int index, MemorySegment v) {
     glut_h.glVertexAttrib4sv(index, v);
   }
 
-  public void glVertexAttrib4svARB(int index, Addressable v) {
+  public void glVertexAttrib4svARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib4svARB(index, v);
   }
 
-  public void glVertexAttrib4ubv(int index, Addressable v) {
+  public void glVertexAttrib4ubv(int index, MemorySegment v) {
     glut_h.glVertexAttrib4ubv(index, v);
   }
 
-  public void glVertexAttrib4ubvARB(int index, Addressable v) {
+  public void glVertexAttrib4ubvARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib4ubvARB(index, v);
   }
 
-  public void glVertexAttrib4uiv(int index, Addressable v) {
+  public void glVertexAttrib4uiv(int index, MemorySegment v) {
     glut_h.glVertexAttrib4uiv(index, v);
   }
 
-  public void glVertexAttrib4uivARB(int index, Addressable v) {
+  public void glVertexAttrib4uivARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib4uivARB(index, v);
   }
 
-  public void glVertexAttrib4usv(int index, Addressable v) {
+  public void glVertexAttrib4usv(int index, MemorySegment v) {
     glut_h.glVertexAttrib4usv(index, v);
   }
 
-  public void glVertexAttrib4usvARB(int index, Addressable v) {
+  public void glVertexAttrib4usvARB(int index, MemorySegment v) {
     glut_h.glVertexAttrib4usvARB(index, v);
   }
 
@@ -3648,7 +3648,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttribI1iEXT(index, x);
   }
 
-  public void glVertexAttribI1ivEXT(int index, Addressable v) {
+  public void glVertexAttribI1ivEXT(int index, MemorySegment v) {
     glut_h.glVertexAttribI1ivEXT(index, v);
   }
 
@@ -3656,7 +3656,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttribI1uiEXT(index, x);
   }
 
-  public void glVertexAttribI1uivEXT(int index, Addressable v) {
+  public void glVertexAttribI1uivEXT(int index, MemorySegment v) {
     glut_h.glVertexAttribI1uivEXT(index, v);
   }
 
@@ -3664,7 +3664,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttribI2iEXT(index, x, y);
   }
 
-  public void glVertexAttribI2ivEXT(int index, Addressable v) {
+  public void glVertexAttribI2ivEXT(int index, MemorySegment v) {
     glut_h.glVertexAttribI2ivEXT(index, v);
   }
 
@@ -3672,7 +3672,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttribI2uiEXT(index, x, y);
   }
 
-  public void glVertexAttribI2uivEXT(int index, Addressable v) {
+  public void glVertexAttribI2uivEXT(int index, MemorySegment v) {
     glut_h.glVertexAttribI2uivEXT(index, v);
   }
 
@@ -3680,7 +3680,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttribI3iEXT(index, x, y, z);
   }
 
-  public void glVertexAttribI3ivEXT(int index, Addressable v) {
+  public void glVertexAttribI3ivEXT(int index, MemorySegment v) {
     glut_h.glVertexAttribI3ivEXT(index, v);
   }
 
@@ -3688,11 +3688,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttribI3uiEXT(index, x, y, z);
   }
 
-  public void glVertexAttribI3uivEXT(int index, Addressable v) {
+  public void glVertexAttribI3uivEXT(int index, MemorySegment v) {
     glut_h.glVertexAttribI3uivEXT(index, v);
   }
 
-  public void glVertexAttribI4bvEXT(int index, Addressable v) {
+  public void glVertexAttribI4bvEXT(int index, MemorySegment v) {
     glut_h.glVertexAttribI4bvEXT(index, v);
   }
 
@@ -3700,15 +3700,15 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttribI4iEXT(index, x, y, z, w);
   }
 
-  public void glVertexAttribI4ivEXT(int index, Addressable v) {
+  public void glVertexAttribI4ivEXT(int index, MemorySegment v) {
     glut_h.glVertexAttribI4ivEXT(index, v);
   }
 
-  public void glVertexAttribI4svEXT(int index, Addressable v) {
+  public void glVertexAttribI4svEXT(int index, MemorySegment v) {
     glut_h.glVertexAttribI4svEXT(index, v);
   }
 
-  public void glVertexAttribI4ubvEXT(int index, Addressable v) {
+  public void glVertexAttribI4ubvEXT(int index, MemorySegment v) {
     glut_h.glVertexAttribI4ubvEXT(index, v);
   }
 
@@ -3716,23 +3716,23 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexAttribI4uiEXT(index, x, y, z, w);
   }
 
-  public void glVertexAttribI4uivEXT(int index, Addressable v) {
+  public void glVertexAttribI4uivEXT(int index, MemorySegment v) {
     glut_h.glVertexAttribI4uivEXT(index, v);
   }
 
-  public void glVertexAttribI4usvEXT(int index, Addressable v) {
+  public void glVertexAttribI4usvEXT(int index, MemorySegment v) {
     glut_h.glVertexAttribI4usvEXT(index, v);
   }
 
-  public void glVertexAttribIPointerEXT(int index, int size, int type, int stride, Addressable pointer) {
+  public void glVertexAttribIPointerEXT(int index, int size, int type, int stride, MemorySegment pointer) {
     glut_h.glVertexAttribIPointerEXT(index, size, type, stride, pointer);
   }
 
-  public void glVertexAttribPointer(int index, int size, int type, byte normalized, int stride, Addressable pointer) {
+  public void glVertexAttribPointer(int index, int size, int type, byte normalized, int stride, MemorySegment pointer) {
     glut_h.glVertexAttribPointer(index, size, type, normalized, stride, pointer);
   }
 
-  public void glVertexAttribPointerARB(int index, int size, int type, byte normalized, int stride, Addressable pointer) {
+  public void glVertexAttribPointerARB(int index, int size, int type, byte normalized, int stride, MemorySegment pointer) {
     glut_h.glVertexAttribPointerARB(index, size, type, normalized, stride, pointer);
   }
 
@@ -3740,7 +3740,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glVertexBlendARB(count);
   }
 
-  public void glVertexPointer(int size, int type, int stride, Addressable pointer) {
+  public void glVertexPointer(int size, int type, int stride, MemorySegment pointer) {
     glut_h.glVertexPointer(size, type, stride, pointer);
   }
 
@@ -3748,43 +3748,43 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glViewport(x, y, width, height);
   }
 
-  public void glWaitSync(Addressable sync, int flags, long timeout) {
+  public void glWaitSync(MemorySegment sync, int flags, long timeout) {
     glut_h.glWaitSync(sync, flags, timeout);
   }
 
-  public void glWeightPointerARB(int size, int type, int stride, Addressable pointer) {
+  public void glWeightPointerARB(int size, int type, int stride, MemorySegment pointer) {
     glut_h.glWeightPointerARB(size, type, stride, pointer);
   }
 
-  public void glWeightbvARB(int size, Addressable weights) {
+  public void glWeightbvARB(int size, MemorySegment weights) {
     glut_h.glWeightbvARB(size, weights);
   }
 
-  public void glWeightdvARB(int size, Addressable weights) {
+  public void glWeightdvARB(int size, MemorySegment weights) {
     glut_h.glWeightdvARB(size, weights);
   }
 
-  public void glWeightfvARB(int size, Addressable weights) {
+  public void glWeightfvARB(int size, MemorySegment weights) {
     glut_h.glWeightfvARB(size, weights);
   }
 
-  public void glWeightivARB(int size, Addressable weights) {
+  public void glWeightivARB(int size, MemorySegment weights) {
     glut_h.glWeightivARB(size, weights);
   }
 
-  public void glWeightsvARB(int size, Addressable weights) {
+  public void glWeightsvARB(int size, MemorySegment weights) {
     glut_h.glWeightsvARB(size, weights);
   }
 
-  public void glWeightubvARB(int size, Addressable weights) {
+  public void glWeightubvARB(int size, MemorySegment weights) {
     glut_h.glWeightubvARB(size, weights);
   }
 
-  public void glWeightuivARB(int size, Addressable weights) {
+  public void glWeightuivARB(int size, MemorySegment weights) {
     glut_h.glWeightuivARB(size, weights);
   }
 
-  public void glWeightusvARB(int size, Addressable weights) {
+  public void glWeightusvARB(int size, MemorySegment weights) {
     glut_h.glWeightusvARB(size, weights);
   }
 
@@ -3796,11 +3796,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glWindowPos2dARB(x, y);
   }
 
-  public void glWindowPos2dv(Addressable v) {
+  public void glWindowPos2dv(MemorySegment v) {
     glut_h.glWindowPos2dv(v);
   }
 
-  public void glWindowPos2dvARB(Addressable v) {
+  public void glWindowPos2dvARB(MemorySegment v) {
     glut_h.glWindowPos2dvARB(v);
   }
 
@@ -3812,11 +3812,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glWindowPos2fARB(x, y);
   }
 
-  public void glWindowPos2fv(Addressable v) {
+  public void glWindowPos2fv(MemorySegment v) {
     glut_h.glWindowPos2fv(v);
   }
 
-  public void glWindowPos2fvARB(Addressable v) {
+  public void glWindowPos2fvARB(MemorySegment v) {
     glut_h.glWindowPos2fvARB(v);
   }
 
@@ -3828,11 +3828,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glWindowPos2iARB(x, y);
   }
 
-  public void glWindowPos2iv(Addressable v) {
+  public void glWindowPos2iv(MemorySegment v) {
     glut_h.glWindowPos2iv(v);
   }
 
-  public void glWindowPos2ivARB(Addressable v) {
+  public void glWindowPos2ivARB(MemorySegment v) {
     glut_h.glWindowPos2ivARB(v);
   }
 
@@ -3844,11 +3844,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glWindowPos2sARB(x, y);
   }
 
-  public void glWindowPos2sv(Addressable v) {
+  public void glWindowPos2sv(MemorySegment v) {
     glut_h.glWindowPos2sv(v);
   }
 
-  public void glWindowPos2svARB(Addressable v) {
+  public void glWindowPos2svARB(MemorySegment v) {
     glut_h.glWindowPos2svARB(v);
   }
 
@@ -3860,11 +3860,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glWindowPos3dARB(x, y, z);
   }
 
-  public void glWindowPos3dv(Addressable v) {
+  public void glWindowPos3dv(MemorySegment v) {
     glut_h.glWindowPos3dv(v);
   }
 
-  public void glWindowPos3dvARB(Addressable v) {
+  public void glWindowPos3dvARB(MemorySegment v) {
     glut_h.glWindowPos3dvARB(v);
   }
 
@@ -3876,11 +3876,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glWindowPos3fARB(x, y, z);
   }
 
-  public void glWindowPos3fv(Addressable v) {
+  public void glWindowPos3fv(MemorySegment v) {
     glut_h.glWindowPos3fv(v);
   }
 
-  public void glWindowPos3fvARB(Addressable v) {
+  public void glWindowPos3fvARB(MemorySegment v) {
     glut_h.glWindowPos3fvARB(v);
   }
 
@@ -3892,11 +3892,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glWindowPos3iARB(x, y, z);
   }
 
-  public void glWindowPos3iv(Addressable v) {
+  public void glWindowPos3iv(MemorySegment v) {
     glut_h.glWindowPos3iv(v);
   }
 
-  public void glWindowPos3ivARB(Addressable v) {
+  public void glWindowPos3ivARB(MemorySegment v) {
     glut_h.glWindowPos3ivARB(v);
   }
 
@@ -3908,111 +3908,111 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glWindowPos3sARB(x, y, z);
   }
 
-  public void glWindowPos3sv(Addressable v) {
+  public void glWindowPos3sv(MemorySegment v) {
     glut_h.glWindowPos3sv(v);
   }
 
-  public void glWindowPos3svARB(Addressable v) {
+  public void glWindowPos3svARB(MemorySegment v) {
     glut_h.glWindowPos3svARB(v);
   }
 
-  public void gluBeginCurve(Addressable arg0) {
+  public void gluBeginCurve(MemorySegment arg0) {
     glut_h.gluBeginCurve(arg0);
   }
 
-  public void gluBeginPolygon(Addressable arg0) {
+  public void gluBeginPolygon(MemorySegment arg0) {
     glut_h.gluBeginPolygon(arg0);
   }
 
-  public void gluBeginSurface(Addressable arg0) {
+  public void gluBeginSurface(MemorySegment arg0) {
     glut_h.gluBeginSurface(arg0);
   }
 
-  public void gluBeginTrim(Addressable arg0) {
+  public void gluBeginTrim(MemorySegment arg0) {
     glut_h.gluBeginTrim(arg0);
   }
 
-  public int gluBuild1DMipmapLevels(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, Addressable arg8) {
+  public int gluBuild1DMipmapLevels(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, MemorySegment arg8) {
     return glut_h.gluBuild1DMipmapLevels(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
   }
 
-  public int gluBuild1DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, Addressable arg5) {
+  public int gluBuild1DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, MemorySegment arg5) {
     return glut_h.gluBuild1DMipmaps(arg0, arg1, arg2, arg3, arg4, arg5);
   }
 
-  public int gluBuild2DMipmapLevels(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, Addressable arg9) {
+  public int gluBuild2DMipmapLevels(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, MemorySegment arg9) {
     return glut_h.gluBuild2DMipmapLevels(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
   }
 
-  public int gluBuild2DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, Addressable arg6) {
+  public int gluBuild2DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, MemorySegment arg6) {
     return glut_h.gluBuild2DMipmaps(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
   }
 
-  public int gluBuild3DMipmapLevels(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, Addressable arg10) {
+  public int gluBuild3DMipmapLevels(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, int arg7, int arg8, int arg9, MemorySegment arg10) {
     return glut_h.gluBuild3DMipmapLevels(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
   }
 
-  public int gluBuild3DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, Addressable arg7) {
+  public int gluBuild3DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, int arg6, MemorySegment arg7) {
     return glut_h.gluBuild3DMipmaps(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7);
   }
 
-  public byte gluCheckExtension(Addressable arg0, Addressable arg1) {
+  public byte gluCheckExtension(MemorySegment arg0, MemorySegment arg1) {
     return glut_h.gluCheckExtension(arg0, arg1);
   }
 
-  public void gluCylinder(Addressable arg0, double arg1, double arg2, double arg3, int arg4, int arg5) {
+  public void gluCylinder(MemorySegment arg0, double arg1, double arg2, double arg3, int arg4, int arg5) {
     glut_h.gluCylinder(arg0, arg1, arg2, arg3, arg4, arg5);
   }
 
-  public void gluDeleteNurbsRenderer(Addressable arg0) {
+  public void gluDeleteNurbsRenderer(MemorySegment arg0) {
     glut_h.gluDeleteNurbsRenderer(arg0);
   }
 
-  public void gluDeleteQuadric(Addressable arg0) {
+  public void gluDeleteQuadric(MemorySegment arg0) {
     glut_h.gluDeleteQuadric(arg0);
   }
 
-  public void gluDeleteTess(Addressable arg0) {
+  public void gluDeleteTess(MemorySegment arg0) {
     glut_h.gluDeleteTess(arg0);
   }
 
-  public void gluDisk(Addressable arg0, double arg1, double arg2, int arg3, int arg4) {
+  public void gluDisk(MemorySegment arg0, double arg1, double arg2, int arg3, int arg4) {
     glut_h.gluDisk(arg0, arg1, arg2, arg3, arg4);
   }
 
-  public void gluEndCurve(Addressable arg0) {
+  public void gluEndCurve(MemorySegment arg0) {
     glut_h.gluEndCurve(arg0);
   }
 
-  public void gluEndPolygon(Addressable arg0) {
+  public void gluEndPolygon(MemorySegment arg0) {
     glut_h.gluEndPolygon(arg0);
   }
 
-  public void gluEndSurface(Addressable arg0) {
+  public void gluEndSurface(MemorySegment arg0) {
     glut_h.gluEndSurface(arg0);
   }
 
-  public void gluEndTrim(Addressable arg0) {
+  public void gluEndTrim(MemorySegment arg0) {
     glut_h.gluEndTrim(arg0);
   }
 
-  public MemoryAddress gluErrorString(int arg0) {
+  public MemorySegment gluErrorString(int arg0) {
     return glut_h.gluErrorString(arg0);
   }
 
-  public void gluGetNurbsProperty(Addressable arg0, int arg1, Addressable arg2) {
+  public void gluGetNurbsProperty(MemorySegment arg0, int arg1, MemorySegment arg2) {
     glut_h.gluGetNurbsProperty(arg0, arg1, arg2);
   }
 
-  public MemoryAddress gluGetString(int arg0) {
+  public MemorySegment gluGetString(int arg0) {
     return glut_h.gluGetString(arg0);
   }
 
-  public void gluGetTessProperty(Addressable arg0, int arg1, Addressable arg2) {
+  public void gluGetTessProperty(MemorySegment arg0, int arg1, MemorySegment arg2) {
     glut_h.gluGetTessProperty(arg0, arg1, arg2);
   }
 
-  public void gluLoadSamplingMatrices(Addressable arg0, Addressable arg1, Addressable arg2, Addressable arg3) {
+  public void gluLoadSamplingMatrices(MemorySegment arg0, MemorySegment arg1, MemorySegment arg2, MemorySegment arg3) {
     glut_h.gluLoadSamplingMatrices(arg0, arg1, arg2, arg3);
   }
 
@@ -4020,43 +4020,43 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.gluLookAt(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
   }
 
-  public MemoryAddress gluNewNurbsRenderer() {
+  public MemorySegment gluNewNurbsRenderer() {
     return glut_h.gluNewNurbsRenderer();
   }
 
-  public MemoryAddress gluNewQuadric() {
+  public MemorySegment gluNewQuadric() {
     return glut_h.gluNewQuadric();
   }
 
-  public MemoryAddress gluNewTess() {
+  public MemorySegment gluNewTess() {
     return glut_h.gluNewTess();
   }
 
-  public void gluNextContour(Addressable arg0, int arg1) {
+  public void gluNextContour(MemorySegment arg0, int arg1) {
     glut_h.gluNextContour(arg0, arg1);
   }
 
-  public void gluNurbsCallback(Addressable arg0, int arg1, Addressable arg2) {
+  public void gluNurbsCallback(MemorySegment arg0, int arg1, MemorySegment arg2) {
     glut_h.gluNurbsCallback(arg0, arg1, arg2);
   }
 
-  public void gluNurbsCallbackData(Addressable arg0, Addressable arg1) {
+  public void gluNurbsCallbackData(MemorySegment arg0, MemorySegment arg1) {
     glut_h.gluNurbsCallbackData(arg0, arg1);
   }
 
-  public void gluNurbsCallbackDataEXT(Addressable arg0, Addressable arg1) {
+  public void gluNurbsCallbackDataEXT(MemorySegment arg0, MemorySegment arg1) {
     glut_h.gluNurbsCallbackDataEXT(arg0, arg1);
   }
 
-  public void gluNurbsCurve(Addressable arg0, int arg1, Addressable arg2, int arg3, Addressable arg4, int arg5, int arg6) {
+  public void gluNurbsCurve(MemorySegment arg0, int arg1, MemorySegment arg2, int arg3, MemorySegment arg4, int arg5, int arg6) {
     glut_h.gluNurbsCurve(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
   }
 
-  public void gluNurbsProperty(Addressable arg0, int arg1, float arg2) {
+  public void gluNurbsProperty(MemorySegment arg0, int arg1, float arg2) {
     glut_h.gluNurbsProperty(arg0, arg1, arg2);
   }
 
-  public void gluNurbsSurface(Addressable arg0, int arg1, Addressable arg2, int arg3, Addressable arg4, int arg5, int arg6, Addressable arg7, int arg8, int arg9, int arg10) {
+  public void gluNurbsSurface(MemorySegment arg0, int arg1, MemorySegment arg2, int arg3, MemorySegment arg4, int arg5, int arg6, MemorySegment arg7, int arg8, int arg9, int arg10) {
     glut_h.gluNurbsSurface(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
   }
 
@@ -4064,7 +4064,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.gluOrtho2D(arg0, arg1, arg2, arg3);
   }
 
-  public void gluPartialDisk(Addressable arg0, double arg1, double arg2, int arg3, int arg4, double arg5, double arg6) {
+  public void gluPartialDisk(MemorySegment arg0, double arg1, double arg2, int arg3, int arg4, double arg5, double arg6) {
     glut_h.gluPartialDisk(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
   }
 
@@ -4072,91 +4072,91 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.gluPerspective(arg0, arg1, arg2, arg3);
   }
 
-  public void gluPickMatrix(double arg0, double arg1, double arg2, double arg3, Addressable arg4) {
+  public void gluPickMatrix(double arg0, double arg1, double arg2, double arg3, MemorySegment arg4) {
     glut_h.gluPickMatrix(arg0, arg1, arg2, arg3, arg4);
   }
 
-  public int gluProject(double arg0, double arg1, double arg2, Addressable arg3, Addressable arg4, Addressable arg5, Addressable arg6, Addressable arg7, Addressable arg8) {
+  public int gluProject(double arg0, double arg1, double arg2, MemorySegment arg3, MemorySegment arg4, MemorySegment arg5, MemorySegment arg6, MemorySegment arg7, MemorySegment arg8) {
     return glut_h.gluProject(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
   }
 
-  public void gluPwlCurve(Addressable arg0, int arg1, Addressable arg2, int arg3, int arg4) {
+  public void gluPwlCurve(MemorySegment arg0, int arg1, MemorySegment arg2, int arg3, int arg4) {
     glut_h.gluPwlCurve(arg0, arg1, arg2, arg3, arg4);
   }
 
-  public void gluQuadricCallback(Addressable arg0, int arg1, Addressable arg2) {
+  public void gluQuadricCallback(MemorySegment arg0, int arg1, MemorySegment arg2) {
     glut_h.gluQuadricCallback(arg0, arg1, arg2);
   }
 
-  public void gluQuadricDrawStyle(Addressable arg0, int arg1) {
+  public void gluQuadricDrawStyle(MemorySegment arg0, int arg1) {
     glut_h.gluQuadricDrawStyle(arg0, arg1);
   }
 
-  public void gluQuadricNormals(Addressable arg0, int arg1) {
+  public void gluQuadricNormals(MemorySegment arg0, int arg1) {
     glut_h.gluQuadricNormals(arg0, arg1);
   }
 
-  public void gluQuadricOrientation(Addressable arg0, int arg1) {
+  public void gluQuadricOrientation(MemorySegment arg0, int arg1) {
     glut_h.gluQuadricOrientation(arg0, arg1);
   }
 
-  public void gluQuadricTexture(Addressable arg0, byte arg1) {
+  public void gluQuadricTexture(MemorySegment arg0, byte arg1) {
     glut_h.gluQuadricTexture(arg0, arg1);
   }
 
-  public int gluScaleImage(int arg0, int arg1, int arg2, int arg3, Addressable arg4, int arg5, int arg6, int arg7, Addressable arg8) {
+  public int gluScaleImage(int arg0, int arg1, int arg2, int arg3, MemorySegment arg4, int arg5, int arg6, int arg7, MemorySegment arg8) {
     return glut_h.gluScaleImage(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
   }
 
-  public void gluSphere(Addressable arg0, double arg1, int arg2, int arg3) {
+  public void gluSphere(MemorySegment arg0, double arg1, int arg2, int arg3) {
     glut_h.gluSphere(arg0, arg1, arg2, arg3);
   }
 
-  public void gluTessBeginContour(Addressable arg0) {
+  public void gluTessBeginContour(MemorySegment arg0) {
     glut_h.gluTessBeginContour(arg0);
   }
 
-  public void gluTessBeginPolygon(Addressable arg0, Addressable arg1) {
+  public void gluTessBeginPolygon(MemorySegment arg0, MemorySegment arg1) {
     glut_h.gluTessBeginPolygon(arg0, arg1);
   }
 
-  public void gluTessCallback(Addressable arg0, int arg1, Addressable arg2) {
+  public void gluTessCallback(MemorySegment arg0, int arg1, MemorySegment arg2) {
     glut_h.gluTessCallback(arg0, arg1, arg2);
   }
 
-  public void gluTessEndContour(Addressable arg0) {
+  public void gluTessEndContour(MemorySegment arg0) {
     glut_h.gluTessEndContour(arg0);
   }
 
-  public void gluTessEndPolygon(Addressable arg0) {
+  public void gluTessEndPolygon(MemorySegment arg0) {
     glut_h.gluTessEndPolygon(arg0);
   }
 
-  public void gluTessNormal(Addressable arg0, double arg1, double arg2, double arg3) {
+  public void gluTessNormal(MemorySegment arg0, double arg1, double arg2, double arg3) {
     glut_h.gluTessNormal(arg0, arg1, arg2, arg3);
   }
 
-  public void gluTessProperty(Addressable arg0, int arg1, double arg2) {
+  public void gluTessProperty(MemorySegment arg0, int arg1, double arg2) {
     glut_h.gluTessProperty(arg0, arg1, arg2);
   }
 
-  public void gluTessVertex(Addressable arg0, Addressable arg1, Addressable arg2) {
+  public void gluTessVertex(MemorySegment arg0, MemorySegment arg1, MemorySegment arg2) {
     glut_h.gluTessVertex(arg0, arg1, arg2);
   }
 
-  public int gluUnProject(double arg0, double arg1, double arg2, Addressable arg3, Addressable arg4, Addressable arg5, Addressable arg6, Addressable arg7, Addressable arg8) {
+  public int gluUnProject(double arg0, double arg1, double arg2, MemorySegment arg3, MemorySegment arg4, MemorySegment arg5, MemorySegment arg6, MemorySegment arg7, MemorySegment arg8) {
     return glut_h.gluUnProject(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
   }
 
-  public int gluUnProject4(double arg0, double arg1, double arg2, double arg3, Addressable arg4, Addressable arg5, Addressable arg6, double arg7, double arg8, Addressable arg9, Addressable arg10, Addressable arg11, Addressable arg12) {
+  public int gluUnProject4(double arg0, double arg1, double arg2, double arg3, MemorySegment arg4, MemorySegment arg5, MemorySegment arg6, double arg7, double arg8, MemorySegment arg9, MemorySegment arg10, MemorySegment arg11, MemorySegment arg12) {
     return glut_h.gluUnProject4(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12);
   }
 
-  public void glutAddMenuEntry(Addressable arg0, int arg1) {
+  public void glutAddMenuEntry(MemorySegment arg0, int arg1) {
     glut_h.glutAddMenuEntry(arg0, arg1);
   }
 
-  public void glutAddSubMenu(Addressable arg0, int arg1) {
+  public void glutAddSubMenu(MemorySegment arg0, int arg1) {
     glut_h.glutAddSubMenu(arg0, arg1);
   }
 
@@ -4164,27 +4164,55 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glutAttachMenu(arg0);
   }
 
-  public void glutBitmapCharacter(Addressable arg0, int arg1) {
+  public void glutBitmap8By13(MemorySegment arg0) {
+    glut_h.glutBitmap8By13(arg0);
+  }
+
+  public MemorySegment glutBitmap9By15() {
+    return glut_h.glutBitmap9By15();
+  }
+
+  public void glutBitmapCharacter(MemorySegment arg0, int arg1) {
     glut_h.glutBitmapCharacter(arg0, arg1);
   }
 
-  public int glutBitmapLength(Addressable arg0, Addressable arg1) {
+  public MemorySegment glutBitmapHelvetica10() {
+    return glut_h.glutBitmapHelvetica10();
+  }
+
+  public void glutBitmapHelvetica12(MemorySegment arg0) {
+    glut_h.glutBitmapHelvetica12(arg0);
+  }
+
+  public MemorySegment glutBitmapHelvetica18() {
+    return glut_h.glutBitmapHelvetica18();
+  }
+
+  public int glutBitmapLength(MemorySegment arg0, MemorySegment arg1) {
     return glut_h.glutBitmapLength(arg0, arg1);
   }
 
-  public int glutBitmapWidth(Addressable arg0, int arg1) {
+  public MemorySegment glutBitmapTimesRoman10() {
+    return glut_h.glutBitmapTimesRoman10();
+  }
+
+  public MemorySegment glutBitmapTimesRoman24() {
+    return glut_h.glutBitmapTimesRoman24();
+  }
+
+  public int glutBitmapWidth(MemorySegment arg0, int arg1) {
     return glut_h.glutBitmapWidth(arg0, arg1);
   }
 
-  public void glutButtonBoxFunc(Addressable arg0) {
+  public void glutButtonBoxFunc(MemorySegment arg0) {
     glut_h.glutButtonBoxFunc(arg0);
   }
 
-  public void glutChangeToMenuEntry(int arg0, Addressable arg1, int arg2) {
+  public void glutChangeToMenuEntry(int arg0, MemorySegment arg1, int arg2) {
     glut_h.glutChangeToMenuEntry(arg0, arg1, arg2);
   }
 
-  public void glutChangeToSubMenu(int arg0, Addressable arg1, int arg2) {
+  public void glutChangeToSubMenu(int arg0, MemorySegment arg1, int arg2) {
     glut_h.glutChangeToSubMenu(arg0, arg1, arg2);
   }
 
@@ -4196,7 +4224,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glutCopyColormap(arg0);
   }
 
-  public int glutCreateMenu(Addressable arg0) {
+  public int glutCreateMenu(MemorySegment arg0) {
     return glut_h.glutCreateMenu(arg0);
   }
 
@@ -4204,7 +4232,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glutCreateSubWindow(arg0, arg1, arg2, arg3, arg4);
   }
 
-  public int glutCreateWindow(Addressable arg0) {
+  public int glutCreateWindow(MemorySegment arg0) {
     return glut_h.glutCreateWindow(arg0);
   }
 
@@ -4224,11 +4252,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glutDeviceGet(arg0);
   }
 
-  public void glutDialsFunc(Addressable arg0) {
+  public void glutDialsFunc(MemorySegment arg0) {
     glut_h.glutDialsFunc(arg0);
   }
 
-  public void glutDisplayFunc(Addressable arg0) {
+  public void glutDisplayFunc(MemorySegment arg0) {
     glut_h.glutDisplayFunc(arg0);
   }
 
@@ -4236,7 +4264,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glutEnterGameMode();
   }
 
-  public void glutEntryFunc(Addressable arg0) {
+  public void glutEntryFunc(MemorySegment arg0) {
     glut_h.glutEntryFunc(arg0);
   }
 
@@ -4244,7 +4272,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glutEstablishOverlay();
   }
 
-  public int glutExtensionSupported(Addressable arg0) {
+  public int glutExtensionSupported(MemorySegment arg0) {
     return glut_h.glutExtensionSupported(arg0);
   }
 
@@ -4260,7 +4288,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glutGameModeGet(arg0);
   }
 
-  public void glutGameModeString(Addressable arg0) {
+  public void glutGameModeString(MemorySegment arg0) {
     glut_h.glutGameModeString(arg0);
   }
 
@@ -4280,7 +4308,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glutGetModifiers();
   }
 
-  public MemoryAddress glutGetProcAddress(Addressable arg0) {
+  public MemorySegment glutGetProcAddress(MemorySegment arg0) {
     return glut_h.glutGetProcAddress(arg0);
   }
 
@@ -4300,7 +4328,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glutIconifyWindow();
   }
 
-  public void glutIdleFunc(Addressable arg0) {
+  public void glutIdleFunc(MemorySegment arg0) {
     glut_h.glutIdleFunc(arg0);
   }
 
@@ -4308,7 +4336,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glutIgnoreKeyRepeat(arg0);
   }
 
-  public void glutInit(Addressable arg0, Addressable arg1) {
+  public void glutInit(MemorySegment arg0, MemorySegment arg1) {
     glut_h.glutInit(arg0, arg1);
   }
 
@@ -4316,7 +4344,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glutInitDisplayMode(arg0);
   }
 
-  public void glutInitDisplayString(Addressable arg0) {
+  public void glutInitDisplayString(MemorySegment arg0) {
     glut_h.glutInitDisplayString(arg0);
   }
 
@@ -4328,15 +4356,15 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glutInitWindowSize(arg0, arg1);
   }
 
-  public void glutJoystickFunc(Addressable arg0, int arg1) {
+  public void glutJoystickFunc(MemorySegment arg0, int arg1) {
     glut_h.glutJoystickFunc(arg0, arg1);
   }
 
-  public void glutKeyboardFunc(Addressable arg0) {
+  public void glutKeyboardFunc(MemorySegment arg0) {
     glut_h.glutKeyboardFunc(arg0);
   }
 
-  public void glutKeyboardUpFunc(Addressable arg0) {
+  public void glutKeyboardUpFunc(MemorySegment arg0) {
     glut_h.glutKeyboardUpFunc(arg0);
   }
 
@@ -4352,27 +4380,27 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glutMainLoop();
   }
 
-  public void glutMenuStateFunc(Addressable arg0) {
+  public void glutMenuStateFunc(MemorySegment arg0) {
     glut_h.glutMenuStateFunc(arg0);
   }
 
-  public void glutMenuStatusFunc(Addressable arg0) {
+  public void glutMenuStatusFunc(MemorySegment arg0) {
     glut_h.glutMenuStatusFunc(arg0);
   }
 
-  public void glutMotionFunc(Addressable arg0) {
+  public void glutMotionFunc(MemorySegment arg0) {
     glut_h.glutMotionFunc(arg0);
   }
 
-  public void glutMouseFunc(Addressable arg0) {
+  public void glutMouseFunc(MemorySegment arg0) {
     glut_h.glutMouseFunc(arg0);
   }
 
-  public void glutOverlayDisplayFunc(Addressable arg0) {
+  public void glutOverlayDisplayFunc(MemorySegment arg0) {
     glut_h.glutOverlayDisplayFunc(arg0);
   }
 
-  public void glutPassiveMotionFunc(Addressable arg0) {
+  public void glutPassiveMotionFunc(MemorySegment arg0) {
     glut_h.glutPassiveMotionFunc(arg0);
   }
 
@@ -4416,7 +4444,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glutReportErrors();
   }
 
-  public void glutReshapeFunc(Addressable arg0) {
+  public void glutReshapeFunc(MemorySegment arg0) {
     glut_h.glutReshapeFunc(arg0);
   }
 
@@ -4432,7 +4460,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glutSetCursor(arg0);
   }
 
-  public void glutSetIconTitle(Addressable arg0) {
+  public void glutSetIconTitle(MemorySegment arg0) {
     glut_h.glutSetIconTitle(arg0);
   }
 
@@ -4448,7 +4476,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glutSetWindow(arg0);
   }
 
-  public void glutSetWindowTitle(Addressable arg0) {
+  public void glutSetWindowTitle(MemorySegment arg0) {
     glut_h.glutSetWindowTitle(arg0);
   }
 
@@ -4500,23 +4528,23 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glutSolidTorus(arg0, arg1, arg2, arg3);
   }
 
-  public void glutSpaceballButtonFunc(Addressable arg0) {
+  public void glutSpaceballButtonFunc(MemorySegment arg0) {
     glut_h.glutSpaceballButtonFunc(arg0);
   }
 
-  public void glutSpaceballMotionFunc(Addressable arg0) {
+  public void glutSpaceballMotionFunc(MemorySegment arg0) {
     glut_h.glutSpaceballMotionFunc(arg0);
   }
 
-  public void glutSpaceballRotateFunc(Addressable arg0) {
+  public void glutSpaceballRotateFunc(MemorySegment arg0) {
     glut_h.glutSpaceballRotateFunc(arg0);
   }
 
-  public void glutSpecialFunc(Addressable arg0) {
+  public void glutSpecialFunc(MemorySegment arg0) {
     glut_h.glutSpecialFunc(arg0);
   }
 
-  public void glutSpecialUpFunc(Addressable arg0) {
+  public void glutSpecialUpFunc(MemorySegment arg0) {
     glut_h.glutSpecialUpFunc(arg0);
   }
 
@@ -4524,15 +4552,23 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glutStopVideoResizing();
   }
 
-  public void glutStrokeCharacter(Addressable arg0, int arg1) {
+  public void glutStrokeCharacter(MemorySegment arg0, int arg1) {
     glut_h.glutStrokeCharacter(arg0, arg1);
   }
 
-  public int glutStrokeLength(Addressable arg0, Addressable arg1) {
+  public int glutStrokeLength(MemorySegment arg0, MemorySegment arg1) {
     return glut_h.glutStrokeLength(arg0, arg1);
   }
 
-  public int glutStrokeWidth(Addressable arg0, int arg1) {
+  public void glutStrokeMonoRoman(MemorySegment arg0) {
+    glut_h.glutStrokeMonoRoman(arg0);
+  }
+
+  public void glutStrokeRoman(MemorySegment arg0) {
+    glut_h.glutStrokeRoman(arg0);
+  }
+
+  public int glutStrokeWidth(MemorySegment arg0, int arg1) {
     return glut_h.glutStrokeWidth(arg0, arg1);
   }
 
@@ -4544,15 +4580,15 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glutSwapBuffers();
   }
 
-  public void glutTabletButtonFunc(Addressable arg0) {
+  public void glutTabletButtonFunc(MemorySegment arg0) {
     glut_h.glutTabletButtonFunc(arg0);
   }
 
-  public void glutTabletMotionFunc(Addressable arg0) {
+  public void glutTabletMotionFunc(MemorySegment arg0) {
     glut_h.glutTabletMotionFunc(arg0);
   }
 
-  public void glutTimerFunc(int arg0, Addressable arg1, int arg2) {
+  public void glutTimerFunc(int arg0, MemorySegment arg1, int arg2) {
     glut_h.glutTimerFunc(arg0, arg1, arg2);
   }
 
@@ -4572,11 +4608,11 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     return glut_h.glutVideoResizeGet(arg0);
   }
 
-  public void glutVisibilityFunc(Addressable arg0) {
+  public void glutVisibilityFunc(MemorySegment arg0) {
     glut_h.glutVisibilityFunc(arg0);
   }
 
-  public void glutWMCloseFunc(Addressable arg0) {
+  public void glutWMCloseFunc(MemorySegment arg0) {
     glut_h.glutWMCloseFunc(arg0);
   }
 
@@ -4584,7 +4620,7 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
     glut_h.glutWarpPointer(arg0, arg1);
   }
 
-  public void glutWindowStatusFunc(Addressable arg0) {
+  public void glutWindowStatusFunc(MemorySegment arg0) {
     glut_h.glutWindowStatusFunc(arg0);
   }
 
