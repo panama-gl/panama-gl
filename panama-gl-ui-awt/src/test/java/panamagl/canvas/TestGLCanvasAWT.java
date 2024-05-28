@@ -32,7 +32,7 @@ import panamagl.offscreen.FBOReader_AWT;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 
-//VM ARGS : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+//VM ARGS : --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 public class TestGLCanvasAWT {
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
   

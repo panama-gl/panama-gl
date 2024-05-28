@@ -1,6 +1,6 @@
 # panama-gl
 
-PanamaGL aims at providing multiplatorm binding to OpenGL using the Foreign Function & Memory API for JDK19.
+PanamaGL aims at providing multiplatorm bindings to OpenGL using the Foreign Function & Memory API for JDK22 and later.
 
 We here show how to use PanamaGL to run OpenGL based rendering application both as a standalone library AND embedded in the Java 3D Charts framework [Jzy3D](https://github.com/jzy3d/jzy3d-api), which already uses JOGL for GPU rendering and EmulGL for CPU rendering.
 

@@ -250,7 +250,7 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
       Debug.debug(debug, this.getClass(), "resizing to " + w + "x" + h);
 
 
-      // Skip rendering we are already in the middle of rendering
+      // Skip rendering if we are already in the middle of rendering
       // the previous frame
       if (isRendering()) {
         return;

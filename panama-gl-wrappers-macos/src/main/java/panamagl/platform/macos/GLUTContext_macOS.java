@@ -19,9 +19,10 @@ package panamagl.platform.macos;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-import opengl.macos.x86.glutDisplayFunc$func;
-import opengl.macos.x86.glutIdleFunc$func;
-import opengl.macos.x86.glut_h;
+import opengl.macos.NativeLibLoader;
+import opengl.macos.arm.glutDisplayFunc$func;
+import opengl.macos.arm.glutIdleFunc$func;
+import opengl.macos.arm.glut_h;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
@@ -51,10 +52,12 @@ public class GLUTContext_macOS extends AGLContext implements GLContext {
 
   /** Initialize GLUT if input arg is true, and create a window */
   public void init(boolean forceLoadGlut) {
-    initScope();
+    NativeLibLoader.load();
+
+    initArena();
     
     if (forceLoadGlut) {
-      MemorySegment argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
+      MemorySegment argc = arena.allocate(ValueLayout.JAVA_INT, 1);
 
       glut_h.glutInit(argc, argc);
     }
@@ -63,7 +66,7 @@ public class GLUTContext_macOS extends AGLContext implements GLContext {
     glutInitWindowSize(initWidth, initHeight);
 
     glut_h.glutInitWindowPosition(-initWidth, -initHeight);
-    windowHandle = glut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
+    windowHandle = glut_h.glutCreateWindow(arena.allocateFrom(windowName));
 
     // This dummy stub registration is required to get macOS onscreen rendering working
     // It will avoid error message
@@ -86,13 +89,13 @@ public class GLUTContext_macOS extends AGLContext implements GLContext {
     initialized = false;
   }
 
-  protected void glutDisplayFunc(glutDisplayFunc$func fi) {
-    MemorySegment displayStub = glutDisplayFunc$func.allocate(fi, scope);
+  protected void glutDisplayFunc(glutDisplayFunc$func.Function fi) {
+    MemorySegment displayStub = glutDisplayFunc$func.allocate(fi, arena);
     glut_h.glutDisplayFunc(displayStub);
   }
 
-  protected void glutIdleFunc(glutIdleFunc$func fi) {
-    MemorySegment idleStub = glutIdleFunc$func.allocate(fi, scope);
+  protected void glutIdleFunc(glutIdleFunc$func.Function fi) {
+    MemorySegment idleStub = glutIdleFunc$func.allocate(fi, arena);
     glut_h.glutIdleFunc(idleStub);
   }
 

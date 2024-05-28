@@ -19,9 +19,10 @@ package panamagl.platform.linux;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-import opengl.ubuntu.v20.glutDisplayFunc$callback;
-import opengl.ubuntu.v20.glutIdleFunc$callback;
-import opengl.ubuntu.v20.glut_h;
+import opengl.linux.NativeLibLoader;
+import opengl.linux.x86.glutDisplayFunc$callback;
+import opengl.linux.x86.glutIdleFunc$callback;
+import opengl.linux.x86.glut_h;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
@@ -46,20 +47,25 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
 
   protected int windowHandle = -1;
   
-  // this is used to prevent multiple instance of
-  // GLUTContext to run glutInit more than one time
-  // in the life of a JVM. 
+  /** this is used to prevent multiple instance of
+   * GLUTContext to run glutInit more than one time
+   * in the life of a JVM. */
   protected static boolean hasInit = false; 
 
+  public GLUTContext_linux() {
+    super();
+    
+    NativeLibLoader.load();
+    
+    initArena();
+  }
+  
   /** Initialize GLUT and create a window */
   @Override
   public void init() {
-    
-    loadNativeLibraries();
-    initScope();
-    
+
     if(!hasInit) {
-      MemorySegment argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
+      MemorySegment argc = arena.allocate(ValueLayout.JAVA_INT, 1);
       glut_h.glutInit(argc, argc);
       hasInit = true;
     }
@@ -68,7 +74,7 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
     glut_h.glutInitWindowSize(initWidth, initHeight);
     glut_h.glutInitWindowPosition(initX, initY);
     
-    windowHandle = glut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
+    windowHandle = glut_h.glutCreateWindow(arena.allocateFrom(windowName));
     
     //System.out.println("WINDOW HANDLE :  " + windowHandle);
     
@@ -81,13 +87,6 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
     glutDisplayFunc(GLUTContext_linux::dummy);
 
     initialized = true;
-  }
-
-  protected void loadNativeLibraries() {
-    System.loadLibrary("GL");
-    System.loadLibrary("glut");
-    System.loadLibrary("GLU");
-    System.loadLibrary("GLX");
   }
 
   private static void dummy() {}
@@ -103,13 +102,13 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
     initialized = false;
   }
 
-  protected void glutDisplayFunc(glutDisplayFunc$callback fi) {
-    MemorySegment displayStub = glutDisplayFunc$callback.allocate(fi, scope);
+  protected void glutDisplayFunc(glutDisplayFunc$callback.Function fi) {
+    MemorySegment displayStub = glutDisplayFunc$callback.allocate(fi, arena);
     glut_h.glutDisplayFunc(displayStub);
   }
 
-  protected void glutIdleFunc(glutIdleFunc$callback fi) {
-    MemorySegment idleStub = glutIdleFunc$callback.allocate(fi, scope);
+  protected void glutIdleFunc(glutIdleFunc$callback.Function fi) {
+    MemorySegment idleStub = glutIdleFunc$callback.allocate(fi, arena);
     glut_h.glutIdleFunc(idleStub);
   }
 }

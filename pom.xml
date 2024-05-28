@@ -4,20 +4,21 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jzy3d</groupId>
 	<artifactId>panama-gl</artifactId>
-	<version>1.1.0-SNAPSHOT</version>
+	<version>1.2.0-SNAPSHOT</version>
 	<name>Panama GL</name>
 	<packaging>pom</packaging>
 
 
 	<scm>
 		<connection>scm:git:https://github.com/jzy3d/panama-gl</connection>
-		<tag>panama-gl-2.0.1</tag>
+		<tag>panama-gl-1.2</tag>
 	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<panamagl.bindings.version>1.0.1-SNAPSHOT</panamagl.bindings.version>
-		<jzy3d.version>2.2.1-SNAPSHOT</jzy3d.version>
+		<panamagl.bindings.version>1.2.0-SNAPSHOT</panamagl.bindings.version>
+		<jzy3d.version>2.2.1-SNAPSHOT</jzy3d.version>		
+		<jdk.version>22</jdk.version>
 	</properties>
 
 	<modules>
@@ -27,8 +28,8 @@
 		<module>panama-gl-ui-javafx</module>
 		<module>panama-gl-ui-swing</module>
 
-		<module>panama-gl-wrappers-linux</module>
 		<module>panama-gl-wrappers-macos</module>
+		<module>panama-gl-wrappers-linux</module>
 		<module>panama-gl-wrappers-windows</module>
 
 		<module>panama-gl-samples</module>
@@ -110,7 +111,7 @@
 
 					<!-- Configure Panama -->
 					<argLine>
-						--enable-native-access=ALL-UNNAMED --enable-preview
+						--enable-native-access=ALL-UNNAMED
 					</argLine>
 
 				</configuration>
@@ -121,11 +122,10 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<source>19</source>
-					<target>19</target>
-					<!--<encoding>UTF-8</encoding>-->
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
 					<compilerArgs>
-						<arg>--enable-preview</arg>
+						<!--<arg>enable-preview</arg>-->
 					</compilerArgs>
 				</configuration>
 			</plugin>
@@ -135,6 +135,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>3.3.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -151,6 +152,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.4.1</version>
 				<executions>
 					<execution>
 						<goals>
@@ -165,9 +167,9 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.6.3</version>
 				<configuration>
-					<release>19</release>
-					<additionalOptions>--enable-preview</additionalOptions>
+					<release>${jdk.version}</release>
 					<additionalparam>-Xdoclint:none</additionalparam>
 					<doclint>none</doclint>
 					<source>8</source>
@@ -230,10 +232,6 @@
 				</os>
 			</activation>
 
-			<properties>
-				<vtk.platform>Linux-x86_64</vtk.platform>
-			</properties>
-
 			<build>
 				<plugins>
 					<plugin>
@@ -244,8 +242,8 @@
 							<!-- Ensure stack trace get displayed -->
 							<trimStackTrace>false</trimStackTrace>
 
-							<!--<forkCount>0</forkCount>
-							<reuseForks>false</reuseForks>-->
+							<forkCount>1</forkCount>
+							<reuseForks>false</reuseForks>
 
 							<!-- Parallel tests DISABLE PARALLEL TEST OTHERWISE CANVAS DO NOT UPDATE
 								PROPERLY (?!)
@@ -255,7 +253,7 @@
 
 							<!-- Configure Panama -->
 							<argLine>
-								--enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
+								--enable-native-access=ALL-UNNAMED -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
 							</argLine>
 						</configuration>
 					</plugin>
@@ -273,10 +271,6 @@
 				</os>
 			</activation>
 
-			<properties>
-				<vtk.platform>Darwin-x86_64</vtk.platform>
-			</properties>
-
 			<build>
 				<plugins>
 					<plugin>
@@ -294,7 +288,7 @@
 
 							<!-- Configure Panama -->
 							<argLine>
-								-XstartOnFirstThread --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+								-XstartOnFirstThread --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 							</argLine>
 						</configuration>
 					</plugin>
@@ -312,10 +306,6 @@
 				</os>
 			</activation>
 
-			<properties>
-				<vtk.platform>Darwin-arm64</vtk.platform>
-			</properties>
-
 			<build>
 				<plugins>
 					<plugin>
@@ -333,7 +323,7 @@
 
 							<!-- Configure Panama -->
 							<argLine>
-								-XstartOnFirstThread --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+								-XstartOnFirstThread --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 							</argLine>
 						</configuration>
 					</plugin>
@@ -349,10 +339,6 @@
 					<family>Windows</family>
 				</os>
 			</activation>
-
-			<properties>
-				<vtk.platform>Windows-x86_64</vtk.platform>
-			</properties>
 
 			<build>
 				<plugins>
@@ -373,7 +359,7 @@
 								<reuseForks>false</reuseForks>
 							<!-- Configure Panama -->
 							<argLine>
-								--enable-native-access=ALL-UNNAMED --enable-preview  -Djava.library.path=C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64
+								--enable-native-access=ALL-UNNAMED  -Djava.library.path=C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64
 							</argLine>
 						</configuration>
 					</plugin>

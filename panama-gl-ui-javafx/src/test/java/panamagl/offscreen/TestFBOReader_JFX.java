@@ -3,8 +3,8 @@ package panamagl.offscreen;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.MemorySession;
 import org.junit.Assert;
 import org.junit.Test;
 import javafx.scene.image.WritableImage;
@@ -12,8 +12,8 @@ import panamagl.image.JFXImage;
 import panamagl.opengl.GL;
 
 public class TestFBOReader_JFX {
-  MemorySession session = MemorySession.openImplicit();
-
+  Arena arena = Arena.ofConfined();
+  
   @Test
   public void read() {
     int WIDTH = 800;
@@ -22,7 +22,7 @@ public class TestFBOReader_JFX {
     int nBytes = WIDTH * HEIGHT * CHANNELS;
 
     // Given
-    MemorySegment pixels = MemorySegment.allocateNative(nBytes, session);
+    MemorySegment pixels = arena.allocate(nBytes);
     
 
     FBO fbo = mock(FBO.class);

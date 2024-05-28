@@ -58,11 +58,13 @@ public class GLError {
    * @see https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGetError.xhtml 
    */
   public static GLError get(GL gl) {
+    if(gl==null)
+      return null;
     
     int code = gl.glGetError();
     
     if(code!=0) {
-      String message = gl.gluErrorString(code).getUtf8String(0);
+      String message = gl.gluErrorString(code).getString(0);
       return new GLError(code, message);
     }
     else {

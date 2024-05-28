@@ -106,7 +106,6 @@ public class TestFBO {
     // ----------------------------------
     // When resize FBO at the same size, nothing change
 
-
     // mark FBO for resize ON THE EXISTING CONFIG
     fbo.resize(width, height);
     Assert.assertTrue(fbo.isPrepared()); // still prepared

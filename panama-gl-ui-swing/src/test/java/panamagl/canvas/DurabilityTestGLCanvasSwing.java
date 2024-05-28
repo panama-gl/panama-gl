@@ -19,6 +19,7 @@ package panamagl.canvas;
 
 import org.junit.Test;
 import junit.framework.Assert;
+import me.tongfei.progressbar.ProgressBar;
 import panamagl.GLEventAdapter;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
@@ -26,11 +27,20 @@ import panamagl.opengl.GL;
 /**
  * This test is intentionnaly named DurabilityTest* to be ignored by maven
  * while running tests (surefire config keeps Test* or *Test or ITTest*)
+ * 
+ * The goal is to run a canvas for a long time to verify potential memory leaks.
+ * 
+ * 
+ * VM ARGS : --enable-native-access=ALL-UNNAMED -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
+ *
  */
-// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
 public class DurabilityTestGLCanvasSwing {
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 200;
-  public static int WAIT_FOR_INIT_AND_DESTROY = 400;
+  public static int WAIT_FOR_INIT_AND_DESTROY = 1500;
+  
+  static int PANEL_SIZE = 2000;
+  static int PAUSE_BETWEEN_DISPLAY = 80; //ms
+  static int NUMBER_OF_DISPLAYS = 10000;
 
   @Test
   public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
@@ -53,6 +63,7 @@ public class DurabilityTestGLCanvasSwing {
       @Override
       public void init(GL gl) {
         event.initCounter++;
+        System.out.println("DurabilityTestGLCanvasSwing : init callback get called (to let test work ???!!!)");
       }
 
       @Override
@@ -76,10 +87,11 @@ public class DurabilityTestGLCanvasSwing {
     panel.addNotify();
     
     // Let AWT or macOS main thread to perform initialization
-    Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
+    Thread.yield();
+    Thread.sleep(WAIT_FOR_INIT_AND_DESTROY); // TODO : find a better way
 
     // Then : should trigger glEventListener.init()
-    Assert.assertEquals(1, event.initCounter);
+    Assert.assertEquals(1, event.initCounter); // FIXME : flacky
     Assert.assertEquals(0, event.displayCounter);
     Assert.assertEquals(0, event.reshapeCounter);
     
@@ -94,20 +106,22 @@ public class DurabilityTestGLCanvasSwing {
     // ------------------------------------------------
     // When : resize, and after a while
     
-    int SIZE = 2000;
-    int PAUSE = 80; //ms
-    int DISPLAYS = 500;
     
-    panel.setSize(SIZE, SIZE);
+    panel.setSize(PANEL_SIZE, PANEL_SIZE);
     
-    System.out.println("Will render " + DISPLAYS + " times every " + PAUSE + " ms which last " + ((PAUSE*DISPLAYS)/1000) + "s");
+    System.out.println("Will render " + NUMBER_OF_DISPLAYS + " times every " + PAUSE_BETWEEN_DISPLAY + " ms which last " + ((PAUSE_BETWEEN_DISPLAY*NUMBER_OF_DISPLAYS)/1000) + "s");
     
-    for(int i=0; i<DISPLAYS; i++) {
+    ProgressBar progressBar = new ProgressBar("DurabilityTestGLCanvasSwing", NUMBER_OF_DISPLAYS);
+    
+   
+    for(int i=0; i<NUMBER_OF_DISPLAYS; i++) {
       panel.display(); 
+      progressBar.step();
+      
       // avoid flooding AWT event queue and ensure we do not 
       // have display events coallesced because of being to close
       // in time.
-      Thread.sleep(PAUSE);
+      Thread.sleep(PAUSE_BETWEEN_DISPLAY);
     }
     
     // Wait for the event to dispatch
@@ -118,7 +132,7 @@ public class DurabilityTestGLCanvasSwing {
     Assert.assertTrue(0 < event.displayCounter);
     Assert.assertTrue(0 < event.reshapeCounter);
     
-    System.out.println("DurabilityTestGLCanvasSwing : display count : " + event.displayCounter + " (expect " + DISPLAYS + " but can be smaller due to event coallesced)");
+    System.out.println("DurabilityTestGLCanvasSwing : display count : " + event.displayCounter + " (expect " + NUMBER_OF_DISPLAYS + " but can be smaller due to event coallesced)");
     
     // Then : the displayed image should be available as screenshot
     Assert.assertNotNull(panel.getScreenshot());

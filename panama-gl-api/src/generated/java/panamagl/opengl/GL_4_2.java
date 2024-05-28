@@ -116,10 +116,10 @@ public interface GL_4_2 extends GL_4_1 {
   public static final int GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT = 0x8E8F;
   public static final int GL_TEXTURE_IMMUTABLE_FORMAT = 0x912F;
   public void glDrawArraysInstancedBaseInstance(int mode, int first, int count, int instancecount, int baseinstance);
-  public void glDrawElementsInstancedBaseInstance(int mode, int count, int type, Addressable indices, int instancecount, int baseinstance);
-  public void glDrawElementsInstancedBaseVertexBaseInstance(int mode, int count, int type, Addressable indices, int instancecount, int basevertex, int baseinstance);
-  public void glGetInternalformativ(int target, int internalformat, int pname, int count, Addressable params);
-  public void glGetActiveAtomicCounterBufferiv(int program, int bufferIndex, int pname, Addressable params);
+  public void glDrawElementsInstancedBaseInstance(int mode, int count, int type, MemorySegment indices, int instancecount, int baseinstance);
+  public void glDrawElementsInstancedBaseVertexBaseInstance(int mode, int count, int type, MemorySegment indices, int instancecount, int basevertex, int baseinstance);
+  public void glGetInternalformativ(int target, int internalformat, int pname, int count, MemorySegment params);
+  public void glGetActiveAtomicCounterBufferiv(int program, int bufferIndex, int pname, MemorySegment params);
   public void glBindImageTexture(int unit, int texture, int level, byte layered, int layer, int access, int format);
   public void glMemoryBarrier(int barriers);
   public void glTexStorage1D(int target, int levels, int internalformat, int width);

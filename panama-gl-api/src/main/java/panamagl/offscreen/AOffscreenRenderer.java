@@ -27,6 +27,11 @@ import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.opengl.GLError;
 
+/**
+ * Base class for offscreen rendering, handling most of the coordination between
+ * a canvas and the GPU.
+ * 
+ */
 public class AOffscreenRenderer implements OffscreenRenderer {
   protected static final int INIT_FBO_WIDTH = 10;
   protected static final int INIT_FBO_HEIGHT = 10;
@@ -66,8 +71,9 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   @Override
   public void onDisplay(GLCanvas drawable, GLEventListener listener) {
     
-    // FIXME : should not resize, only render without changing size
+    // FIXME : should be able to render without resizing to current dimension
     Runnable r = getTask_renderGLToImage(drawable, listener, drawable.getWidth(), drawable.getHeight());
+    
     //Runnable r = getTask_renderGLToImage(drawable, listener);
     
     threadRedirect.run(r);
@@ -126,7 +132,12 @@ public class AOffscreenRenderer implements OffscreenRenderer {
 
     // --------------------------------------
     // FBO init
-    this.fbo = factory.newFBO(INIT_FBO_WIDTH, INIT_FBO_HEIGHT);
+    
+    Debug.debug(debug, "AOffscreenRenderer : initContext : Got input dims : " + drawable.getWidth() + "x" + drawable.getHeight());
+    int initWidth = Math.max(INIT_FBO_WIDTH, drawable.getWidth());
+    int initHeight = Math.max(INIT_FBO_HEIGHT, drawable.getHeight());
+    
+    this.fbo = factory.newFBO(initWidth, initHeight);
     this.fbo.prepare(gl);
 
     Debug.debug(debug, "AOffscreenRenderer : initContext : Got FBO : " + fbo);
@@ -142,11 +153,11 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   }
 
   protected void destroyContext(GLCanvas drawable, GLEventListener listener) {
-    listener.dispose(gl);
-    
     factory.destroyContext();
 
-    initialized = false;
+    initialized = false;    
+    
+    listener.dispose(gl);
   }
 
   /**
@@ -159,35 +170,45 @@ public class AOffscreenRenderer implements OffscreenRenderer {
     Debug.debug(debug, "------------------------------------------------------");
     Debug.debug(debug, "AOffscreenRenderer : renderGLToImage " + width + " x " + height);
 
+    // Resize offscreen buffers
     fbo.release(gl);
     fbo.resize(width, height);
     fbo.prepare(gl);
 
     Debug.debug(debug, "Resized FBO to " + width + " x " + height);
 
-    if (listener != null)
+    // Render GL
+    if (listener != null) {
       listener.reshape(gl, 0, 0, width, height);
-
-    renderGLToImage(canvas, listener);
+      listener.display(gl);
+    }
+    
+    // FBO To image to canvas
+    readImageAndPaintInCanvas(canvas);
   }
 
   /**
    * This method will render in FBO and then query a component repaint to ensure it is repainted
    * ONCE the image is available.
    * 
-   * This method can potentially execute in a separate thread (namely the main macOS thread) and
-   * hence triggers repaint through SwingUtilities.invokeLater()
+   * This method can potentially execute in a separate thread (namely the main macOS thread).
    */
   protected void renderGLToImage(GLCanvas canvas, GLEventListener listener) {
-
+    
+    // Prepare offscreen buffer
+    fbo.prepare(gl);
+    
     // Render GL
     if (listener != null)
       listener.display(gl);
 
-
-    // FBO To image
+    // FBO To image to canvas
+    readImageAndPaintInCanvas(canvas);
+  }
+  
+  protected void readImageAndPaintInCanvas(GLCanvas canvas) {
     if (fbo != null) {
-      
+ 
       Image<?> out = reader.read(fbo, gl);
 
       // Give back the image to the onscreen panel
@@ -200,7 +221,7 @@ public class AOffscreenRenderer implements OffscreenRenderer {
       canvas.repaint();
       
     } else {
-      System.err.println("FBO is null!");
+      throw new IllegalStateException("FBO is null!");
     }
   }
 

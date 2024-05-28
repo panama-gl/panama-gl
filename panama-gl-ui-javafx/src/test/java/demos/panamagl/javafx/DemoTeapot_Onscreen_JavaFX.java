@@ -1,8 +1,7 @@
 
 package demos.panamagl.javafx;
 
-import java.lang.foreign.MemorySession;
-import java.lang.foreign.SegmentAllocator;
+import java.lang.foreign.Arena;
 import java.lang.foreign.ValueLayout;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -22,11 +21,36 @@ import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
 
 
-// --module-path "/Library/Java/JavaVirtualMachines/javafx-sdk-19.0.2.1/lib" --add-modules javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
-// --module-path "C:\Program Files\Java\javafx-sdk-17.0.6\lib" --add-modules javafx.controls
-// --add-exports=java.desktop/sun.awt=ALL-UNNAMED
-//--module-path "/usr/lib/jvm/javafx-sdk-20/lib" --add-modules javafx.controls --add-exports=java.desktop/sun.awt=ALL-UNNAMED
-
+/**
+ * Requires VM arguments such as 
+ * 
+ * <h2>Linux</h2>
+ * <code>
+ * --module-path "/usr/lib/jvm/javafx-sdk-22.0.1/lib" 
+ * --add-modules javafx.controls 
+ * --add-exports=java.desktop/sun.awt=ALL-UNNAMED
+ * --enable-native-access=ALL-UNNAMED 
+ *  -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
+ * </code>
+ * 
+ * <h2>macOS</h2>
+ * <code>
+ * --module-path "/Library/Java/JavaVirtualMachines/javafx-sdk-22.0.1/lib" 
+ * --add-modules javafx.controls 
+ * --add-exports=java.desktop/sun.awt=ALL-UNNAMED
+ * --enable-native-access=ALL-UNNAMED 
+ * -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+ * </code>
+ * 
+ * <h2>Windows</h2>
+ * <code>
+ * --module-path "C:\Program Files\Java\javafx-sdk-22.0.1\lib" 
+ * --add-modules javafx.controls 
+ * --add-exports=java.desktop/sun.awt=ALL-UNNAMED
+ * --enable-native-access=ALL-UNNAMED 
+ * -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
+ * </code>
+ */
 public class DemoTeapot_Onscreen_JavaFX extends Application {
 
   PanamaGLFactory factory;
@@ -90,8 +114,7 @@ public class DemoTeapot_Onscreen_JavaFX extends Application {
       public void init(GL gl) {
         // The segments created in this function will be destroyed
         // one the below scope and allocator are collected by GC.
-        MemorySession scope = MemorySession.openConfined();
-        SegmentAllocator allocator = SegmentAllocator.newNativeArena(scope);
+        Arena allocator = Arena.ofConfined();
 
         // Reset Background
         gl.glClearColor(1f, 1f, 1f, 1f);
@@ -100,10 +123,10 @@ public class DemoTeapot_Onscreen_JavaFX extends Application {
         gl.glShadeModel(GL.GL_SMOOTH);
 
         var pos =
-            allocator.allocateArray(ValueLayout.JAVA_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
+            allocator.allocateFrom(ValueLayout.JAVA_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, pos);
 
-        var spec = allocator.allocateArray(ValueLayout.JAVA_FLOAT, new float[] {1, 1, 1, 0});
+        var spec = allocator.allocateFrom(ValueLayout.JAVA_FLOAT, new float[] {1, 1, 1, 0});
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, spec);
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, spec);
         gl.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, spec);

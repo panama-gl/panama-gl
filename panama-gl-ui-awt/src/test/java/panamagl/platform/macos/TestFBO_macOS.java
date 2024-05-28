@@ -37,7 +37,7 @@ public class TestFBO_macOS extends MacOSTest{
     glutContext.init();
 
     // Given a GL caller
-    GL gl = new panamagl.platform.macos.x64.GL_macOS_x64();
+    GL gl = new panamagl.platform.macos.arm.GL_macOS_arm();
 
     // ---------------------------------------
     // When initialize a FBO UNDER TEST
@@ -74,7 +74,7 @@ public class TestFBO_macOS extends MacOSTest{
     GLContext context = new CGLContext_macOS();
     context.init();
 
-    GL gl = new panamagl.platform.macos.x64.GL_macOS_x64();
+    GL gl = new panamagl.platform.macos.arm.GL_macOS_arm();
 
     // Given a FBO UNDER TEST
     int width = 256;

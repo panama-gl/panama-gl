@@ -34,7 +34,7 @@ public class TestWGLContext_windows extends WindowsTest {
     WGLContext_windows wgl = new WGLContext_windows(false);
     
     // When : init
-    wgl.init(false);
+    wgl.init();
 
     // Then
     Assert.assertNotNull(wgl.context);
@@ -60,7 +60,7 @@ public class TestWGLContext_windows extends WindowsTest {
     WGLContext_windows wgl = new WGLContext_windows();
     
     // When : init
-    wgl.init(false);
+    wgl.init();
 
     // Then
     Assert.assertNotNull(wgl.context);
@@ -71,7 +71,7 @@ public class TestWGLContext_windows extends WindowsTest {
     
     // Then can invoke GL
     GL gl = new GL_windows_x64();
-    String version = gl.glGetString(GL.GL_VERSION);
+    String version = gl.glGetString(GL.GL_VERSION).getString(0);
     System.out.println("GL Version : " + version);
 
     // When : Cleanup
@@ -96,7 +96,7 @@ public class TestWGLContext_windows extends WindowsTest {
     Assert.assertNotNull(wgl.wglCreateContextAttribsARB);
     
     // When : init
-    wgl.init(false);
+    wgl.init();
 
     // Then
     Assert.assertNotNull(wgl.context);

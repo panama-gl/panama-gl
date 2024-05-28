@@ -70,7 +70,7 @@ protected boolean debug = Debug.check(APanamaGLFactory_windows.class);
     
     if (useGLUT) {
       glutContext = new GLUTContext_windows();
-      glutContext.init(true); // Linux VM seams to WANT full init
+      glutContext.init(); 
       Debug.debug(debug, "PanamaGLFactory_windows : initContext : GLUT done");
       
       return glutContext;

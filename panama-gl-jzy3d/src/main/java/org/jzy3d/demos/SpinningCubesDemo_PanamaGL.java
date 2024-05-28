@@ -29,6 +29,21 @@ import org.jzy3d.plot3d.primitives.RandomGeom;
 import org.jzy3d.plot3d.rendering.canvas.Quality;
 import org.jzy3d.plot3d.rendering.view.HiDPI;
 
+/**
+ * Demo a cube chart made with PanamaGL.
+ *
+ * VM ARGS : --enable-native-access=ALL-UNNAMED 
+ * 
+ * -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+ * 
+ * or
+ * -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
+ * 
+ * or
+ * -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
+ *
+ * @author Martin Pernollet
+ */
 public class SpinningCubesDemo_PanamaGL {
   
   

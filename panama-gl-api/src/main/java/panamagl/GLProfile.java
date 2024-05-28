@@ -17,6 +17,7 @@
  *******************************************************************************/
 package panamagl;
 
+import java.lang.foreign.MemorySegment;
 import java.util.ArrayList;
 import java.util.List;
 import panamagl.opengl.GL;
@@ -38,18 +39,26 @@ public class GLProfile {
   public void read(GL gl) {
     platform = new Platform();
     
-    vendor = gl.glGetString(GL.GL_VENDOR);
-    version = gl.glGetString(GL.GL_VERSION);
-    renderer = gl.glGetString(GL.GL_RENDERER);
+    vendor = glGetString(gl, GL.GL_VENDOR);
+    version = glGetString(gl, GL.GL_VERSION);
+    renderer = glGetString(gl, GL.GL_RENDERER);
 
     extensions = new ArrayList<>();
-    String ext = gl.glGetString(GL.GL_EXTENSIONS);
+    String ext = glGetString(gl, GL.GL_EXTENSIONS);
 
     if (ext != null) {
       for (String e : ext.split(" ")) {
         extensions.add(e);
       }
     }
+  }
+  
+  /** Mainly deal with null return to avoid crashing tests with mocks */
+  protected String glGetString(GL gl, int name) {
+    MemorySegment segment = gl.glGetString(name);
+    if(segment!=null)
+      return segment.getString(0);
+    return null;
   }
 
   public String getVendor() {

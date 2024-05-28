@@ -22,6 +22,7 @@ import java.lang.foreign.ValueLayout;
 import freeglut.windows.x86.freeglut_h;
 import freeglut.windows.x86.glutDisplayFunc$callback;
 import freeglut.windows.x86.glutIdleFunc$callback;
+import opengl.windows.NativeLibLoader;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
@@ -45,31 +46,34 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
   protected int initY = Integer.MAX_VALUE;
 
   protected int windowHandle = -1;
+  
+
+  /** this is used to prevent multiple instance of
+   * GLUTContext to run glutInit more than one time
+   * in the life of a JVM. */
+  protected static boolean hasInit = false;
+  
+  public GLUTContext_windows() {
+    NativeLibLoader.load();
+    
+    initArena();
+  }
 
   /** Initialize GLUT and create a window */
   @Override
   public void init() {
-    init(true);
-  }
-  
-  //static int glutInitDone = 0;
-
-  /** Initialize GLUT if input arg is true, and create a window */
-  public void init(boolean forceLoadGlut) {
-    loadNativeLibraries();
-    initScope();
     
-    if (forceLoadGlut) {
-      MemorySegment argc = allocator.allocate(ValueLayout.JAVA_INT, 0);
-      
+    if (!hasInit) {
+      MemorySegment argc = arena.allocate(ValueLayout.JAVA_INT, 1);
       freeglut_h.glutInit(argc, argc);
+      hasInit = true;
     }
     
     freeglut_h.glutInitDisplayMode(freeglut_h.GLUT_DOUBLE() | freeglut_h.GLUT_RGBA() | freeglut_h.GLUT_DEPTH());
     freeglut_h.glutInitWindowSize(initWidth, initHeight);
     freeglut_h.glutInitWindowPosition(initX, initY);
     
-    windowHandle = freeglut_h.glutCreateWindow(allocator.allocateUtf8String(windowName));
+    windowHandle = freeglut_h.glutCreateWindow(arena.allocateFrom(windowName));
     
     // Hacky!! Use it while WGLContext is not working
     freeglut_h.glutHideWindow();   
@@ -80,16 +84,6 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
     //wgl_h.ShowWindow(hnd, 5);
     
     initialized = true;
-  }
-
-  protected void loadNativeLibraries() {
-    System.loadLibrary("opengl32");
-    System.loadLibrary("glu32");
-    System.loadLibrary("freeglut");
-    
-    // To use ShowWindow()
-    //System.loadLibrary("User32");
-
   }
   
   @Override
@@ -103,13 +97,13 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
     initialized = false;
   }
 
-  protected void glutDisplayFunc(glutDisplayFunc$callback fi) {
-    MemorySegment displayStub = glutDisplayFunc$callback.allocate(fi, scope);
+  protected void glutDisplayFunc(glutDisplayFunc$callback.Function fi) {
+    MemorySegment displayStub = glutDisplayFunc$callback.allocate(fi, arena);
     freeglut_h.glutDisplayFunc(displayStub);
   }
 
-  protected void glutIdleFunc(glutIdleFunc$callback fi) {
-    MemorySegment idleStub = glutIdleFunc$callback.allocate(fi, scope);
+  protected void glutIdleFunc(glutIdleFunc$callback.Function fi) {
+    MemorySegment idleStub = glutIdleFunc$callback.allocate(fi, arena);
     freeglut_h.glutIdleFunc(idleStub);
   }
 }

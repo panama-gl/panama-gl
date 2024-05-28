@@ -15,7 +15,6 @@
  *******************************************************************************/
 package panamagl.opengl;
 
-import java.lang.foreign.MemoryAddress;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import panamagl.utils.ForeignMemoryUtils;
@@ -24,11 +23,10 @@ import panamagl.utils.ForeignMemoryUtils;
 /**
  * A base abstract class for Panama based OpenGL binding, implementing part of {@link GL}.
  * 
- * Mainly provides helpers for the Panama API by using {@link ForeignMemoryUtils}, hiding the
- * API that will change in future Java version.
+ * Mainly provides helpers for the PanamaGL API by using {@link ForeignMemoryUtils}.
  * 
- * Also provides methods with base Java types instead of the usual {@link MemorySegment} and
- * {@link MemoryAddress} used in JExtract generated bindings.
+ * Also provides methods with base Java types instead of the usual {@link MemorySegment} 
+ * used in JExtract generated bindings.
  * 
  * @author Martin Pernollet
  */
@@ -79,21 +77,21 @@ public abstract class AGL extends ForeignMemoryUtils implements GL {
 
   // TODO : generate me
   public void glGetIntegerv(int pname, int[] data) {
-    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_INT, data.length);
+    MemorySegment segment = allocator.allocate(ValueLayout.JAVA_INT, data.length);
     glGetIntegerv(pname, segment);
     copySegmentToArray(segment, data);
   }
 
   // TODO : generate me
   public void glGetDoublev(int pname, double[] params) {
-    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_DOUBLE, params.length);
+    MemorySegment segment = allocator.allocate(ValueLayout.JAVA_DOUBLE, params.length);
     glGetDoublev(pname, segment);
     copySegmentToArray(segment, params);
   }
 
   // TODO : generate me
   public void glGetFloatv(int pname, float[] data) {
-    MemorySegment segment = allocator.allocateArray(ValueLayout.JAVA_FLOAT, data.length);
+    MemorySegment segment = allocator.allocate(ValueLayout.JAVA_FLOAT, data.length);
     glGetFloatv(pname, segment);
     copySegmentToArray(segment, data);
   }

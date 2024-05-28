@@ -26,10 +26,10 @@ public interface GL_2_1 extends GL_2_0 {
   public static final int GL_SLUMINANCE8 = 0x8C47;
   public static final int GL_COMPRESSED_SLUMINANCE = 0x8C4A;
   public static final int GL_COMPRESSED_SLUMINANCE_ALPHA = 0x8C4B;
-  public void glUniformMatrix2x3fv(int location, int count, byte transpose, Addressable value);
-  public void glUniformMatrix3x2fv(int location, int count, byte transpose, Addressable value);
-  public void glUniformMatrix2x4fv(int location, int count, byte transpose, Addressable value);
-  public void glUniformMatrix4x2fv(int location, int count, byte transpose, Addressable value);
-  public void glUniformMatrix3x4fv(int location, int count, byte transpose, Addressable value);
-  public void glUniformMatrix4x3fv(int location, int count, byte transpose, Addressable value);
+  public void glUniformMatrix2x3fv(int location, int count, byte transpose, MemorySegment value);
+  public void glUniformMatrix3x2fv(int location, int count, byte transpose, MemorySegment value);
+  public void glUniformMatrix2x4fv(int location, int count, byte transpose, MemorySegment value);
+  public void glUniformMatrix4x2fv(int location, int count, byte transpose, MemorySegment value);
+  public void glUniformMatrix3x4fv(int location, int count, byte transpose, MemorySegment value);
+  public void glUniformMatrix4x3fv(int location, int count, byte transpose, MemorySegment value);
 }

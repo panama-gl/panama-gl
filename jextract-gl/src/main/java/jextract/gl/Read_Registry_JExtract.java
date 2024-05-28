@@ -23,7 +23,7 @@ import java.util.List;
 import com.google.common.collect.ArrayListMultimap;
 import jextract.gl.java.AcceptsGLMethod;
 import jextract.gl.java.ClassMethodRegistry;
-import opengl.ubuntu.v20.glut_h;
+import opengl.linux.x86.glut_h;
 
 /**
  * Enumerate all OpenGL methods available for generated binding.

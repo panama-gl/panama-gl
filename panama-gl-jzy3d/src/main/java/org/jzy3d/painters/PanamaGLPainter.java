@@ -18,8 +18,8 @@ package org.jzy3d.painters;
 import java.awt.Component;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.MemorySession;
 import java.lang.foreign.SegmentAllocator;
 import java.lang.foreign.ValueLayout;
 import java.nio.Buffer;
@@ -56,19 +56,11 @@ public class PanamaGLPainter extends AbstractPainter {
   protected GL gl;
   protected GLContext context;
 
-  protected MemorySession scope;
-  protected SegmentAllocator allocator;
-
+  protected Arena arena;
 
 
   public PanamaGLPainter() {
-    try {
-      scope = MemorySession.openImplicit();// Confined();
-      allocator = SegmentAllocator.newNativeArena(scope);
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.err.println(e);
-    }
+    arena = Arena.ofConfined();
   }
 
   public GL getGL() {
@@ -87,40 +79,32 @@ public class PanamaGLPainter extends AbstractPainter {
     this.context = context;
   }
 
-  public MemorySession getScope() {
-    return scope;
-  }
-
-  public SegmentAllocator getAllocator() {
-    return allocator;
-  }
-
   public MemorySegment alloc(double[] value) {
-    return allocator.allocateArray(ValueLayout.JAVA_DOUBLE, value);
+    return arena.allocateFrom(ValueLayout.JAVA_DOUBLE, value);
   }
 
   public MemorySegment alloc(float[] value) {
-    return allocator.allocateArray(ValueLayout.JAVA_FLOAT, value);
+    return arena.allocateFrom(ValueLayout.JAVA_FLOAT, value);
   }
 
   public MemorySegment alloc(int[] value) {
-    return allocator.allocateArray(ValueLayout.JAVA_INT, value);
+    return arena.allocateFrom(ValueLayout.JAVA_INT, value);
   }
 
   public MemorySegment alloc(FloatBuffer value) {
-    return allocator.allocateArray(ValueLayout.JAVA_FLOAT, value.array());
+    return arena.allocateFrom(ValueLayout.JAVA_FLOAT, value.array());
   }
 
   public MemorySegment alloc(IntBuffer value) {
-    return allocator.allocateArray(ValueLayout.JAVA_INT, value.array());
+    return arena.allocateFrom(ValueLayout.JAVA_INT, value.array());
   }
 
   public MemorySegment alloc(DoubleBuffer value) {
-    return allocator.allocateArray(ValueLayout.JAVA_DOUBLE, value.array());
+    return arena.allocateFrom(ValueLayout.JAVA_DOUBLE, value.array());
   }
 
   public MemorySegment alloc(String value) {
-    return allocator.allocateUtf8String(value);
+    return arena.allocateFrom(value);
   }
   
   protected double[] dbl(float[] values) {
@@ -132,7 +116,10 @@ public class PanamaGLPainter extends AbstractPainter {
   }
 
   public String glGetString(int stringID) {
-    return gl.glGetString(stringID);
+    MemorySegment segment = gl.glGetString(stringID);
+    if(segment!=null)
+      return segment.getString(0);
+    return null;
   }
 
   // GL GET

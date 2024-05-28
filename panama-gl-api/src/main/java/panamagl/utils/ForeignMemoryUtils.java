@@ -18,67 +18,38 @@
 package panamagl.utils;
 
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.MemorySession;
-import java.lang.foreign.SegmentAllocator;
+import java.lang.foreign.Arena;
 import java.lang.foreign.ValueLayout;
 
 public class ForeignMemoryUtils {
-  protected MemorySession scope;
-  protected SegmentAllocator allocator;
+  protected Arena allocator;
   
-  public static enum Mode{
-    IMPLICIT, SHARED, CONFINED;
-  }
-
   public ForeignMemoryUtils() {
-    this(Mode.IMPLICIT);
-  }
-  
-  public ForeignMemoryUtils(Mode mode) {
-    try {
-      if(Mode.IMPLICIT.equals(mode))
-        scope = MemorySession.openImplicit();
-      else if(Mode.SHARED.equals(mode))
-        scope = MemorySession.openShared();
-      else if(Mode.CONFINED.equals(mode))
-        scope = MemorySession.openConfined();
-      
-      allocator = SegmentAllocator.newNativeArena(scope);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  public MemorySession getScope() {
-    return scope;
-  }
-
-  public SegmentAllocator getAllocator() {
-    return allocator;
+    allocator = Arena.ofAuto();
   }
 
   public MemorySegment alloc(String value) {
-    return allocator.allocateUtf8String(value);
+    return allocator.allocateFrom(value);
   }
 
   public MemorySegment alloc(double[] value) {
-    return allocator.allocateArray(ValueLayout.JAVA_DOUBLE, value);
+    return allocator.allocateFrom(ValueLayout.JAVA_DOUBLE, value);
   }
 
   public MemorySegment alloc(float[] value) {
-    return allocator.allocateArray(ValueLayout.JAVA_FLOAT, value);
+    return allocator.allocateFrom(ValueLayout.JAVA_FLOAT, value);
   }
 
   public MemorySegment alloc(int[] value) {
-    return allocator.allocateArray(ValueLayout.JAVA_INT, value);
+    return allocator.allocateFrom(ValueLayout.JAVA_INT, value);
   }
 
   public MemorySegment allocDouble(int length) {
-    return allocator.allocateArray(ValueLayout.JAVA_DOUBLE, length);
+    return allocator.allocate(ValueLayout.JAVA_DOUBLE, length);
   }
 
   public MemorySegment allocDouble(float[] value) {
-    MemorySegment s = allocator.allocateArray(ValueLayout.JAVA_DOUBLE, value.length);
+    MemorySegment s = allocator.allocate(ValueLayout.JAVA_DOUBLE, value.length);
 
     for (int i = 0; i < value.length; i++) {
       s.setAtIndex(ValueLayout.JAVA_DOUBLE, i, (double) value[i]);
@@ -88,15 +59,15 @@ public class ForeignMemoryUtils {
   }
 
   public MemorySegment allocFloat(int length) {
-    return allocator.allocateArray(ValueLayout.JAVA_FLOAT, length);
+    return allocator.allocate(ValueLayout.JAVA_FLOAT, length);
   }
 
   public MemorySegment allocInt(int length) {
-    return allocator.allocateArray(ValueLayout.JAVA_INT, length);
+    return allocator.allocate(ValueLayout.JAVA_INT, length);
   }
 
   public MemorySegment allocFloat(double[] value) {
-    MemorySegment s = allocator.allocateArray(ValueLayout.JAVA_FLOAT, value.length);
+    MemorySegment s = allocator.allocate(ValueLayout.JAVA_FLOAT, value.length);
 
     for (int i = 0; i < value.length; i++) {
       s.setAtIndex(ValueLayout.JAVA_FLOAT, i, (float) value[i]);

@@ -16,12 +16,15 @@
 package panamagl.platform.windows;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import panamagl.GLProfile;
 import panamagl.opengl.GL;
 
-// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
+// VM ARGS : --enable-native-access=ALL-UNNAMED -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
 public class TestGLUTContext_windows extends WindowsTest {
+  
+//@Ignore("Crashing JVM since JDK22 / EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ff9fa68c4ec")
   @Test
   public void createContext() {
     if (!checkPlatform())
