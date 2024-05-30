@@ -17,7 +17,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<panamagl.bindings.version>1.2.0-SNAPSHOT</panamagl.bindings.version>
-		<jzy3d.version>2.2.1-SNAPSHOT</jzy3d.version>		
+		<jzy3d.version>2.2.1-SNAPSHOT</jzy3d.version>
 		<jdk.version>22</jdk.version>
 	</properties>
 
@@ -253,7 +253,7 @@
 
 							<!-- Configure Panama -->
 							<argLine>
-								--enable-native-access=ALL-UNNAMED -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
+								--enable-native-access=ALL-UNNAMED -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/:/usr/lib
 							</argLine>
 						</configuration>
 					</plugin>
