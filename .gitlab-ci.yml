@@ -1,6 +1,7 @@
 #image: maven:latest
 #https://hub.docker.com/_/maven/
-image: maven:3.8.7-eclipse-temurin-19
+image: maven:3.9.7-eclipse-temurin-22-alpine
+#image: maven:3.8.7-eclipse-temurin-22.0.1_8-jdk-ubi9-minimal
 #image: java:8 - only 8 available + prevent maven
 
 variables:
