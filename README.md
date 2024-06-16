@@ -322,6 +322,15 @@ You can find demos in these projects
   * Jzy3D Embedded samples (indirect draw to a Java window)
 * [panama-gl-wrappers-macos](panama-gl-wrappers-macos) Unit tests in src/test/java
 
+#### 3D onscreen GL demos
+
+These two demo open a *native* window with Jzy3D (hence not a Java window yet). One can use the mouse to rotate the object, and double click to start an automatic rotation.
+
+| `SurfaceDemo_PanamaGL`| `DemoTeapot_Onscreen_Swing`|
+|-|-|
+| <img src="doc/panama-gl-surface.png"/> | <img src="./doc/panama-gl-teapot.png"/> |
+
+More details in [demo index](doc/PanamaGL-Demos.md)
 
 #### 3D offscreen GL demo
 
@@ -329,15 +338,6 @@ You can find demos in these projects
 
 More details in [demo index](doc/PanamaGL-Demos.md)
 
-#### 3D onscreen GL demos
-
-These two demo open a *native* window with Jzy3D (hence not a Java window yet). One can use the mouse to rotate the object, and double click to start an automatic rotation.
-
-| `SurfaceDemoPanamaGL`| `TeapotDemoPanamaGL`|
-|-|-|
-| <img src="doc/panama-gl-surface.png"/> | <img src="./doc/panama-gl-teapot.png"/> |
-
-More details in [demo index](doc/PanamaGL-Demos.md)
 
 ## How to develop
 
@@ -370,18 +370,6 @@ Let's clarify 3 words
 
 This project only provides _Wrappers_ and depends on _Bindings_. This avoid the main projects to recompile large _Bindings_ file source folder and makes IDEs faster.
 
-#### Existing Wrappers & Bindings
-
-| Binding | Platform | GPU | Branch |
-| ------- | -------- | --- | ------ |
-| Linux | Ubuntu 20 | Intel | in progress / Blocked by FBO on Ubuntu |
-| Apple | macOS 10.15.7 | Intel | OK |
-| Apple | macOS 11.4.0 M1 | M1 | in progress / Blocked by no Panama JDK on ARM yet (Oracle) |
-| Microsoft | Windows 10 | Intel | in progress / Blocked by JDK19 |
-
-
-
-
 
 ### Build, test, deploy
 
@@ -391,15 +379,33 @@ Any computer able to build Java code with Maven can rebuild the complete API :
 mvn install
 ```
 
-All tests execute on each platform. The computer building the test only runs test for its platform. Properly validating an API improvement hence requires running the tests, especially integration tests such as `DurabilityTest` manually.
+This assumes the [bindings artifacts](https://gitlab.com/jzy3d/panama-gl-bindings/) (`panama-gl-bindings`) are used as is from our Maven repository but you can override them locally by building your own customization of the bindings libs.
 
-To build without running the tests :
+#### Tests
+
+Tests are made of
+* `Test*_all` Generic Unit Tests
+* `Test*_Platform` Platform specific Unit Tests (`Test*_macOS`, `Test*_linux`, etc)
+* `DurabilityTest*` Stress Tests
+
+All computers run all unit tests, but platform specific tests (`Test*_macOS`) will only execute on the suggested target. If they do not execute they issue a console warning during the Maven test phase. Modifying a generic class may mean to review all `Test*_Platform` tests.
+
+Minor release should
+- run unit tests on all target platforms {CPU, OS, JDK}.
+
+
+Major release should
+- run unit tests on all target platforms {CPU, OS, JDK}.
+- run additional `DurabilityTest*` manually.
+The computer building the test only runs test for its platform. Properly validating an API improvement hence requires running the tests, especially integration tests such as `DurabilityTest` manually.
+
+To build _without_ running the tests :
 
 ```
 mvn install -DskipTests
 ```
 
-To deploy
+To deploy to Maven repository :
 
 ```
 mvn deploy
