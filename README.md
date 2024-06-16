@@ -272,7 +272,7 @@ One of the following Maven dependencies should be added to your project accordin
 <dependency>
   <groupId>org.jzy3d</groupId>
   <artifactId>panama-gl-ui-awt</artifactId>
-  <version>1.2.0</version>
+  <version>1.2.0-SNAPSHOT</version>
 </dependency>
 ```
 ##### JavaFX dependency
@@ -281,7 +281,7 @@ One of the following Maven dependencies should be added to your project accordin
 <dependency>
   <groupId>org.jzy3d</groupId>
   <artifactId>panama-gl-ui-javafx</artifactId>
-  <version>1.2.0</version>
+  <version>1.2.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -290,7 +290,7 @@ One of the following Maven dependencies should be added to your project accordin
 <dependency>
   <groupId>org.jzy3d</groupId>
   <artifactId>panama-gl-ui-swing</artifactId>
-  <version>1.2.0</version>
+  <version>1.2.0-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -324,13 +324,12 @@ You can find demos in these projects
 
 #### 3D onscreen GL demos
 
-These two demo open a *native* window with Jzy3D (hence not a Java window yet). One can use the mouse to rotate the object, and double click to start an automatic rotation.
+These demos open a Swing or JavaFX Window. One can use the mouse to rotate the object, and double click to start an automatic rotation.
 
 | `SurfaceDemo_PanamaGL`| `DemoTeapot_Onscreen_Swing`|
 |-|-|
 | <img src="doc/panama-gl-surface.png"/> | <img src="./doc/panama-gl-teapot.png"/> |
 | `ScatterDemo_PanamaGL`| `DemoTeapot_Onscreen_JavaFX`|
-|-|-|
 | <img src="doc/panama-gl-scatter.png"/> | <img src="./doc/panama-gl-teapot.png"/> |
 
 More details in [demo index](doc/PanamaGL-Demos.md)
