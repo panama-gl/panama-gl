@@ -377,65 +377,71 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
    * a different error code indicating the nature of the error.
    */
   protected void choosePixelFormat() {
-    int[] at = new int[4];
+    int[] at = null;
+    
+    if(method==0) {
+      // NO REQUIREMENT
+      at = new int[1];
 
-    // The kCGLPFAAccelerated parameter is used to specify whether the pixel format object should be
-    // created using hardware acceleration, which can improve the performance of graphics rendering.
-    at[0] = cgl_h.kCGLPFAAccelerated();// cgl_h.kCGLPFAAccelerated();
+    }
+    else if(method==1) {
+      at = new int[4];
 
-    // The kCGLPFAOpenGLProfile parameter is used to specify the OpenGL profile that the pixel
-    // format object should support.
-    at[1] = cgl_h.kCGLPFAOpenGLProfile();
-    at[2] = cgl_h.kCGLOGLPVersion_GL4_Core();
+      // The kCGLPFAAccelerated parameter is used to specify whether the pixel format object should be
+      // created using hardware acceleration, which can improve the performance of graphics rendering.
+      at[0] = cgl_h.kCGLPFAAccelerated();// cgl_h.kCGLPFAAccelerated();
 
-
-    //System.out.println("Queried OpenGL version ID : " + at[2]);
-
-    // Ending the attributes
-    at[3] = 0;
-
-
-    // ANOTHER WAY
-    /*
-     * at = new int[3]; at[0] = cgl_h.kCGLPFAOpenGLProfile(); at[1] =
-     * cgl_h.kCGLOGLPVersion_GL4_Core(); at[2] = 0;
-     * System.out.println("Queried OpenGL version ID : " + at[1]);
-     */
+      // The kCGLPFAOpenGLProfile parameter is used to specify the OpenGL profile that the pixel
+      // format object should support.
+      at[1] = cgl_h.kCGLPFAOpenGLProfile();
+      at[2] = cgl_h.kCGLOGLPVersion_GL4_Core();
 
 
-    // ANOTHER WAY OF CONFIGURING
-    at = new int[9];
-    at[0] = cgl_h.kCGLPFAOpenGLProfile();
-    at[1] = cgl_h.kCGLOGLPVersion_GL3_Core();
-    at[2] = cgl_h.kCGLPFAColorSize();
-    at[3] = 24;
-    at[4] = cgl_h.kCGLPFAAlphaSize();
-    at[5] = 8;
-    at[6] = cgl_h.kCGLPFADoubleBuffer();
-    at[7] = cgl_h.kCGLPFAAccelerated();
-    at[8] = 0;
+      //System.out.println("Queried OpenGL version ID : " + at[2]);
+
+      // Ending the attributes
+      at[3] = 0;
+      
+    }
+    else if(method==2) {
+      // ANOTHER WAY OF CONFIGURING
+      at = new int[9];
+      at[0] = cgl_h.kCGLPFAOpenGLProfile();
+      at[1] = cgl_h.kCGLOGLPVersion_GL3_Core();
+      at[2] = cgl_h.kCGLPFAColorSize();
+      at[3] = 24;
+      at[4] = cgl_h.kCGLPFAAlphaSize();
+      at[5] = 8;
+      at[6] = cgl_h.kCGLPFADoubleBuffer();
+      at[7] = cgl_h.kCGLPFAAccelerated();
+      at[8] = 0;
+    }
+    else {
+      // ANOTHER WAY
+      /*
+       * at = new int[3]; at[0] = cgl_h.kCGLPFAOpenGLProfile(); at[1] =
+       * cgl_h.kCGLOGLPVersion_GL4_Core(); at[2] = 0;
+       * System.out.println("Queried OpenGL version ID : " + at[1]);
+       */
 
 
-    // NO REQUIREMENT
-    // at = new int[1];
-
-
-    // ANOTHER WAY OF CONFIGURING : INVALID
-    // at = new int[13];
-    // at[0] = cgl_h.kCGLPFAOpenGLProfile();
-    // at[1] = cgl_h.kCGLOGLPVersion_3_2_Core();
-    // at[2] = cgl_h.kCGLPFAColorSize();
-    // at[3] = 24;
-    // at[4] = cgl_h.kCGLPFAAlphaSize();
-    // at[5] = 8;
-    // at[6] = cgl_h.kCGLPFAAccelerated();
-    // at[7] = cgl_h.kCGLPFAFullScreen();
-    // at[8] = cgl_h.kCGLPFADoubleBuffer();
-    // at[8] = cgl_h.kCGLPFASampleBuffers();
-    // at[9] = 1;
-    // at[10] = cgl_h.kCGLPFASamples();
-    // at[11] = 4;
-    // at[12] = 0;
+      // ANOTHER WAY OF CONFIGURING : INVALID
+      // at = new int[13];
+      // at[0] = cgl_h.kCGLPFAOpenGLProfile();
+      // at[1] = cgl_h.kCGLOGLPVersion_3_2_Core();
+      // at[2] = cgl_h.kCGLPFAColorSize();
+      // at[3] = 24;
+      // at[4] = cgl_h.kCGLPFAAlphaSize();
+      // at[5] = 8;
+      // at[6] = cgl_h.kCGLPFAAccelerated();
+      // at[7] = cgl_h.kCGLPFAFullScreen();
+      // at[8] = cgl_h.kCGLPFADoubleBuffer();
+      // at[8] = cgl_h.kCGLPFASampleBuffers();
+      // at[9] = 1;
+      // at[10] = cgl_h.kCGLPFASamples();
+      // at[11] = 4;
+      // at[12] = 0;      
+    }
 
 
     pixelFormatLength = at.length;
@@ -464,6 +470,8 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
     // Check status and throw exception if error
     throwExceptionUponError("CGLContext.choosePixelFormat : ", status);
   }
+  
+  int method = 1;
 
   /**
    * Retrieve a pixel format value for a given attribute.

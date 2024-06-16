@@ -26,7 +26,7 @@ With the help of `JExtractGL` we bundle all per target binding under a single `G
 
 ## How to use
 
-### Skeleton of a PanamaGL applications
+### Skeleton of a PanamaGL application
 
 #### GLEventListener
 
@@ -59,12 +59,11 @@ The listener will be invoked by the `AWT thread`.
 
 #### GLCanvas
 
-
 The application must then instantiate a `GLCanvas` according to the UI framework it is based on. It requires a factory that (described later) and must register the `GLEventListener` that will be executed upon init, render or resize of the canvas.
 
 ```java
 GLCanvas canvas = new GLCanvasSwing(factory);
-panel.setGLEventListener(listener);
+canvas.setGLEventListener(listener);
 ```
 
 Available canvases :
@@ -96,32 +95,18 @@ Once the canvas gets added to a component hierarchy, a couple of classes will be
 <img src="doc/panama-gl-main-classes.png">
 
 
-### Going to through an example
+### Going through an example
 
-This is one of the examples available in the `panama-gl-samples` maven module in this project.
+This is one of the examples available in the [`panama-gl-samples`](panama-gl-samples) maven module in this project.
 
 #### A simple Java Window to render OpenGL
 
-This example application uses the `TeapotGLEventListener` defined later to draw a teapot in a Java Swing Frame.
+[DemoTeapot_Onscreen_Swing](panama-gl-samples/src/main/java/demos/panamagl/swing/DemoTeapot_Onscreen_Swing.java) application uses the `PanamaGLDemoListener` defined later to draw a teapot in a Java Swing Frame.
 
 :warning: Do not forget to run the program with VM arguments providing the path to the OpenGL binaries as shown in the sample javadoc, e.g. on macOS : ```java PanamaGL_Demo --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/```
 
 
 ```java
-package demos.panamagl.swing;
-
-import java.awt.BorderLayout;
-import java.lang.foreign.Arena;
-import java.lang.foreign.ValueLayout;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-import panamagl.Animator;
-import panamagl.GLEventAdapter;
-import panamagl.canvas.GLCanvasSwing;
-import panamagl.factory.PanamaGLFactory;
-import panamagl.opengl.GL;
-import panamagl.opengl.GLError;
-
 /**
  * VM arguments to add :
  *
@@ -176,12 +161,9 @@ public class PanamaGL_Demo {
 
 #### A simple OpenGL scene
 
-The below demonstrates how to extend a `GLEventAdapter` to to invoke drawing instruction through OpenGL.
-
-
+The below demonstrates how to extend a `GLEventAdapter` to to invoke drawing instruction when your `GLCanvas` requires so.
 
 ```java
-
 /**
  * OpenGL code to render a teapot.
  */
@@ -258,6 +240,10 @@ public static GLEventAdapter PanamaGLDemoListener() {
   };
 }
 ```
+
+This example will show a rotating teapot :
+
+<img src="./doc/panama-gl-teapot.png"/>
 
 ### Dependencies
 

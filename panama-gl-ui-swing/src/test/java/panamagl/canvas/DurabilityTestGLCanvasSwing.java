@@ -123,6 +123,7 @@ public class DurabilityTestGLCanvasSwing {
       // in time.
       Thread.sleep(PAUSE_BETWEEN_DISPLAY);
     }
+    progressBar.close();
     
     // Wait for the event to dispatch
     Thread.sleep(WAIT_FOR_RENDER_DISPATCHED_MS);
