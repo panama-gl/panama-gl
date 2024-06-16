@@ -9,7 +9,7 @@ Supported :
 
 The library is based on multi-platform bindings to the `OpenGL` native library and other per-os companion libraries (`CGL` for macOS, `GLX` for Linux and `WGL` for Windows). Most of the code is generated with JExtract.
 
-
+<img src="doc/panama-gl-surface.png"/>
 
 
 ## Why ?
@@ -329,6 +329,9 @@ These two demo open a *native* window with Jzy3D (hence not a Java window yet). 
 | `SurfaceDemo_PanamaGL`| `DemoTeapot_Onscreen_Swing`|
 |-|-|
 | <img src="doc/panama-gl-surface.png"/> | <img src="./doc/panama-gl-teapot.png"/> |
+| `ScatterDemo_PanamaGL`| `DemoTeapot_Onscreen_JavaFX`|
+|-|-|
+| <img src="doc/panama-gl-scatter.png"/> | <img src="./doc/panama-gl-teapot.png"/> |
 
 More details in [demo index](doc/PanamaGL-Demos.md)
 
