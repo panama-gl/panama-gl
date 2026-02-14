@@ -27,6 +27,8 @@
 		<module>panama-gl-ui-awt</module>
 		<module>panama-gl-ui-javafx</module>
 		<module>panama-gl-ui-swing</module>
+		<module>panama-gl-ui-swt</module>
+
 
 		<module>panama-gl-wrappers-macos</module>
 		<module>panama-gl-wrappers-linux</module>

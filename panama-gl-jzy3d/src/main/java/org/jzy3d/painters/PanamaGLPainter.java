@@ -60,7 +60,10 @@ public class PanamaGLPainter extends AbstractPainter {
 
 
   public PanamaGLPainter() {
-    arena = Arena.ofConfined();
+    //arena = Arena.ofConfined();
+    arena = Arena.ofAuto();
+    
+     
   }
 
   public GL getGL() {

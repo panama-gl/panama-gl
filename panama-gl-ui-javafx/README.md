@@ -1,6 +1,9 @@
 
 https://stackoverflow.com/questions/16946030/how-to-use-opengl-in-javafx
 
+DEMOS 
+- see test folder
+
 TESTS
 - GLCanvasJFX + ResizableCanvas. Deal with addNotify and setSize 
 
