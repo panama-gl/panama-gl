@@ -29,7 +29,16 @@
 		</dependency>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
+=======
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>panama-gl-ui-swt</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+>>>>>>> 9941f59 (init swt)
 		<!-- AS FOR SWT, MIXING AWT AND JAVAFX IN THE CLASSPATH LEAD TO HANGS OF SWING DEMOS ON MACOS -->
 
 		<!--<dependency>
