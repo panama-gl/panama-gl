@@ -17,18 +17,18 @@
  *******************************************************************************/
 package demos.panamagl.swt;
 
-import java.awt.BorderLayout;
 import java.lang.foreign.Arena;
 import java.lang.foreign.ValueLayout;
-import javax.swing.JFrame;
+
 import javax.swing.SwingUtilities;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import panamagl.Animator;
+
+import opengl.macos.NativeLibLoader;
 import panamagl.GLEventAdapter;
-import panamagl.canvas.GLCanvasSwing;
 import panamagl.canvas.swt.GLCanvasSWT;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
@@ -53,6 +53,9 @@ public class DemoSWTTeapot {
     System.out
         .println("SwingUtilities.isEventDispatchThread: " + SwingUtilities.isEventDispatchThread());
 
+    // To force loading GLUT to get teapot
+    NativeLibLoader.load();
+    
     // This is the GL Scene to render
     GLEventAdapter listener = TeapotGLEventListener();
     
@@ -67,6 +70,9 @@ public class DemoSWTTeapot {
     shell.setLayout(new FillLayout());
     GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
     canvas.setGLEventListener(listener);
+    //canvas.display();
+    shell.setSize(640, 480);
+    shell.open();
 
     display.asyncExec(new Runnable() {
         @Override
@@ -75,8 +81,6 @@ public class DemoSWTTeapot {
             display.asyncExec(this);
         }
     });
-    shell.setSize(640, 480);
-    shell.open();
     
     while(!shell.isDisposed()) {
         if(!display.readAndDispatch()) {
@@ -118,6 +122,8 @@ public class DemoSWTTeapot {
         gl.glEnable(GL.GL_DEPTH_TEST);
 
         GLError.checkAndThrow(gl);
+        
+        //System.out.println("INITIALIZED SWT TEAPOT");
       }
 
       public void display(GL gl) {
