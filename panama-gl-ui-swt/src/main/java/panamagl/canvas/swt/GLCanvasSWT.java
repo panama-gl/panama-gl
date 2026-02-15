@@ -51,8 +51,11 @@ public class GLCanvasSWT extends org.eclipse.swt.opengl.GLCanvas
   protected RenderCounter renderCounter = new RenderCounter();
   protected final Runnable paintLoop;
   protected AtomicBoolean rendering = new AtomicBoolean();
+  protected GLContext context;
   protected Color color;
   protected Flip flip = Flip.VERTICAL;
+  
+  
 
   public GLCanvasSWT(Composite parent, int style, PanamaGLFactory glFactory) {
     this(parent, style, createDefaultGLData(), glFactory);
@@ -75,12 +78,15 @@ public class GLCanvasSWT extends org.eclipse.swt.opengl.GLCanvas
         return;
       }
       rendering.set(true);
-      setCurrent();
-      if (listener != null) {
-        listener.display(gl);
+      try {
+        setCurrent();
+        if (listener != null) {
+          listener.display(gl);
+        }
+        swapBuffers();
+      } finally {
+        rendering.set(false);
       }
-      swapBuffers();
-      rendering.set(false);
     };
     addListener(SWT.Resize, event -> {
       if (isDisposed()) {
@@ -96,12 +102,26 @@ public class GLCanvasSWT extends org.eclipse.swt.opengl.GLCanvas
       paintLoop.run();
     });
     addDisposeListener(e -> {
+      // Wait for any in-progress render to complete before cleaning up
+      while (rendering.get()) {
+        Thread.yield();
+      }
       if (this.listener != null) {
         this.listener.dispose(gl);
         this.listener = null;
       }
       gl = null;
     });
+  }
+  
+  PanamaGLFactory factory;
+  
+  public PanamaGLFactory getFactory() {
+	return factory;
+}
+
+  public void setFactory(PanamaGLFactory factory) {
+	this.factory = factory;
   }
 
   @Override
@@ -154,9 +174,14 @@ public class GLCanvasSWT extends org.eclipse.swt.opengl.GLCanvas
   @Override
   public GLContext getContext() {
     // we have a native context here
-    GLData glData = getGLData(); // --> only drawing infos
+    //GLData glData = getGLData(); // --> only drawing infos
     // maybe enhance SWT to return vendor data?
-    return new GLContext() {
+    
+	if(factory==null)
+      return null;
+    return factory.newGLContext();
+    
+    /*return new GLContext() {
 
       protected boolean init;
       protected GLProfile profile;
@@ -188,7 +213,7 @@ public class GLCanvasSWT extends org.eclipse.swt.opengl.GLCanvas
       public void destroy() {
         init = false;
       }
-    };
+    };*/
   }
 
   @Override
@@ -256,10 +281,9 @@ public class GLCanvasSWT extends org.eclipse.swt.opengl.GLCanvas
   public void clear() {
     Color background = getBackground();
     GL gl = getGL();
-    gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
     gl.glClearColor(background.getRed() / 255f, background.getGreen() / 255f,
         background.getBlue() / 255f, 1.0f);
-
+    gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
   }
 
   public void setColor(Color color) {

@@ -84,7 +84,7 @@ public abstract class APanamaGLFactory_macOS extends APanamaGLFactory {
       cglContext.init();
       cglContext.makeCurrent();
       Debug.debug(debug, "PanamaGLMacOSFactory : initContext : CGL done");
-
+      
       return cglContext;
     }
   }

@@ -20,8 +20,6 @@ package demos.panamagl.swt;
 import java.lang.foreign.Arena;
 import java.lang.foreign.ValueLayout;
 
-import javax.swing.SwingUtilities;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
@@ -50,9 +48,6 @@ import panamagl.opengl.GLError;
 public class DemoSWTTeapot {
 
   public static void main(String[] args) throws Exception {
-    System.out
-        .println("SwingUtilities.isEventDispatchThread: " + SwingUtilities.isEventDispatchThread());
-
     // To force loading GLUT to get teapot
     NativeLibLoader.load();
     
@@ -99,31 +94,29 @@ public class DemoSWTTeapot {
     return new GLEventAdapter() {
 
       public void init(GL gl) {
-        Arena arena = Arena.ofConfined();
+        try (Arena arena = Arena.ofConfined()) {
+          // Reset Background
+          gl.glClearColor(1f, 1f, 1f, 1f);
 
-        // Reset Background
-        gl.glClearColor(1f, 1f, 1f, 1f);
+          // Setup Lighting
+          gl.glShadeModel(GL.GL_SMOOTH);
 
-        // Setup Lighting
-        gl.glShadeModel(GL.GL_SMOOTH);
-        
-        var pos = arena.allocateFrom(ValueLayout.JAVA_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
-        gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, pos);
-        
-        var spec = arena.allocateFrom(ValueLayout.JAVA_FLOAT, new float[] {1, 1, 1, 0});
-        gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, spec);
-        gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, spec);
-        gl.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, spec);
-        
-        var shini = arena.allocateFrom(ValueLayout.JAVA_FLOAT, 113);
-        gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, shini);
-        gl.glEnable(GL.GL_LIGHTING);
-        gl.glEnable(GL.GL_LIGHT0);
-        gl.glEnable(GL.GL_DEPTH_TEST);
+          var pos = arena.allocateFrom(ValueLayout.JAVA_FLOAT, new float[] {0.0f, 15.0f, -15.0f, 0});
+          gl.glLightfv(GL.GL_LIGHT0, GL.GL_POSITION, pos);
 
-        GLError.checkAndThrow(gl);
-        
-        //System.out.println("INITIALIZED SWT TEAPOT");
+          var spec = arena.allocateFrom(ValueLayout.JAVA_FLOAT, new float[] {1, 1, 1, 0});
+          gl.glLightfv(GL.GL_LIGHT0, GL.GL_AMBIENT, spec);
+          gl.glLightfv(GL.GL_LIGHT0, GL.GL_DIFFUSE, spec);
+          gl.glLightfv(GL.GL_LIGHT0, GL.GL_SPECULAR, spec);
+
+          var shini = arena.allocateFrom(ValueLayout.JAVA_FLOAT, 113);
+          gl.glMaterialfv(GL.GL_FRONT, GL.GL_SHININESS, shini);
+          gl.glEnable(GL.GL_LIGHTING);
+          gl.glEnable(GL.GL_LIGHT0);
+          gl.glEnable(GL.GL_DEPTH_TEST);
+
+          GLError.checkAndThrow(gl);
+        }
       }
 
       public void display(GL gl) {
