@@ -11,8 +11,8 @@ import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 
 public class DemoSWTText implements GLEventListener {
-	
-	
+
+
 	private GLCanvasSWT_direct canvas;
 
 	public DemoSWTText(GLCanvasSWT_direct canvas) {
@@ -28,7 +28,7 @@ public class DemoSWTText implements GLEventListener {
 		shell.setLayout(new FillLayout());
 		GLCanvasSWT_direct canvas = new GLCanvasSWT_direct(shell, SWT.NONE, factory);
 		Font font = new Font(display, "Arial", 48, SWT.BOLD);
-		
+
 		canvas.setFont(font);
 		canvas.addDisposeListener(e -> font.dispose());
 		DemoSWTText torus = new DemoSWTText(canvas);
@@ -45,7 +45,7 @@ public class DemoSWTText implements GLEventListener {
 
 	@Override
 	public void init(GL gl) {
-		
+
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class DemoSWTText implements GLEventListener {
 	@Override
 	public void dispose(GL gl) {
 	}
-	
+
 	private void drawRect(GL gl, double x, double y, double w, double h) {
 		gl.glBegin(GL.GL_QUADS);
 		gl.glVertex3d(x, y, 0);
