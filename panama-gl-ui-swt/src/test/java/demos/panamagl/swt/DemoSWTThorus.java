@@ -25,6 +25,7 @@ import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 
 //LINUX: --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
+//MACOS: --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/ -XstartOnFirstThread
 public class DemoSWTThorus implements GLEventListener {
 	
 	int rot = 0;
@@ -59,33 +60,58 @@ public class DemoSWTThorus implements GLEventListener {
 	}
 	
 	public static void main(String[] args) {
-		PanamaGLFactory factory = PanamaGLFactory.select();
-		System.out.println("Factory selected: "+factory);
-		final Display display = new Display();
-		Shell shell = new Shell(display);
-		shell.setText("SWT Thorus");
-		shell.setLayout(new FillLayout());
-		GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
-		DemoSWTThorus torus = new DemoSWTThorus();
-		canvas.setGLEventListener(torus);
-		display.asyncExec(new Runnable() {
+		// Forcer macOS à utiliser le thread principal
+	    /*if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+	        try {
+	            Class<?> nativeClass = Class.forName("org.eclipse.swt.internal.cocoa.OS");
+	            java.lang.reflect.Method method = nativeClass.getMethod("objc_msgSend", long.class, long.class);
+	            // Forcer l'initialisation sur le thread principal
+	        } catch (Exception e) {
+	            System.err.println("Impossible de forcer le thread principal: " + e.getMessage());
+	        }
+	    }*/
+		
+	    PanamaGLFactory factory = PanamaGLFactory.select();
+	    System.out.println("Factory selected: " + factory);
+	    System.out.println("Current thread: " + Thread.currentThread());
+	    System.out.println("VM args: " + 
+	        java.lang.management.ManagementFactory.getRuntimeMXBean().getInputArguments());
+	  
+	    final Display display = new Display();
+	    Shell shell = new Shell(display);
+	    shell.setText("SWT Thorus");
+	    shell.setLayout(new FillLayout());
+	    
+	    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+	    DemoSWTThorus torus = new DemoSWTThorus();
+	    canvas.setGLEventListener(torus);
 
-			
-			@Override
-			public void run() {
-				torus.rot++;
-				canvas.display();
-				display.asyncExec(this);
-			}
-		});
-		shell.setSize(640, 480);
-		shell.open();
-		while(!shell.isDisposed()) {
-			if(!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-		display.dispose();
+	    shell.setSize(640, 480);
+	    shell.open();  
+	    
+	    // Attendre que le canvas soit réellement créé
+	    while (display.readAndDispatch()) {
+	        // Process pending events
+	    }
+	    
+	    // Maintenant lancer l'animation
+	    display.asyncExec(new Runnable() {
+	        @Override
+	        public void run() {
+	            if (!shell.isDisposed()) {
+	                torus.rot++;
+	                canvas.display();
+	                display.asyncExec(this);
+	            }
+	        }
+	    });
+	    
+	    while (!shell.isDisposed()) {
+	        if (!display.readAndDispatch()) {
+	            display.sleep();
+	        }
+	    }
+	    display.dispose();
 	}
 
 	@Override

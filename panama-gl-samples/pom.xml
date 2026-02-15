@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 ">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -28,13 +28,14 @@
 			<version>${project.version}</version>
 		</dependency>
 
-		<dependency>
+		
+		<!-- AS FOR SWT, MIXING AWT AND JAVAFX IN THE CLASSPATH LEAD TO HANGS OF SWING DEMOS ON MACOS -->
+
+		<!--<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-ui-swt</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-		
-		<!-- AS FOR SWT, MIXING AWT AND JAVAFX IN THE CLASSPATH LEAD TO HANGS OF SWING DEMOS ON MACOS -->
+		</dependency>-->
 		
 		<!--<dependency>
 			<groupId>org.jzy3d</groupId>
