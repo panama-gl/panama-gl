@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2023 Christoph Läubrich and others
+ * Copyright (c) 2023 Christoph Läubrich, Martin Pernollet and others
  *
  * This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License 2.0 which is available at http://www.eclipse.org/legal/epl-2.0.
@@ -60,6 +60,15 @@ public class GLCanvasSWT extends org.eclipse.swt.opengl.GLCanvas
 
   public GLCanvasSWT(Composite parent, int style, GLData data, PanamaGLFactory glFactory) {
     super(parent, style, data);
+
+    // On macOS Cocoa, SWT's Widget.drawRect assumes NSGraphicsContext.currentContext()
+    // is non-null, but for GLCanvas (backed by NSOpenGLView) there is no NSGraphicsContext.
+    // Disabling SWT redraw prevents the NPE in drawRect. GL rendering is unaffected
+    // because it goes through setCurrent()/swapBuffers(), not SWT's 2D paint pipeline.
+    if ("cocoa".equals(SWT.getPlatform())) {
+      setRedraw(false);
+    }
+
     gl = glFactory.newGL();
     paintLoop = () -> {
       if (isDisposed()) {
@@ -117,6 +126,9 @@ public class GLCanvasSWT extends org.eclipse.swt.opengl.GLCanvas
     return this.listener;
   }
 
+  /**
+   * Does not call display(). Should be called explicitely.
+   */
   @Override
   public void setGLEventListener(GLEventListener listener) {
     if (isDisposed()) {
@@ -127,10 +139,10 @@ public class GLCanvasSWT extends org.eclipse.swt.opengl.GLCanvas
         this.listener.dispose(gl);
       }
       if (listener != null) {
+        setCurrent();
         listener.init(gl);
       }
       this.listener = listener;
-      display();
     }
   }
 
@@ -230,6 +242,7 @@ public class GLCanvasSWT extends org.eclipse.swt.opengl.GLCanvas
   protected static GLData createDefaultGLData() {
     GLData data = new GLData();
     data.doubleBuffer = true;
+    data.depthSize = 24;
     return data;
   }
 

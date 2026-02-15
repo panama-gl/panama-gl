@@ -15,6 +15,7 @@
  *******************************************************************************/
 package panamagl.platform.macos;
 
+import opengl.macos.NativeLibLoader;
 import panamagl.Debug;
 import panamagl.factory.APanamaGLFactory;
 import panamagl.factory.PanamaGLFactory;
@@ -60,6 +61,9 @@ public abstract class APanamaGLFactory_macOS extends APanamaGLFactory {
 
   @Override
   public GLContext newGLContext() {
+
+	// load glut now to be able to use teapot in any of the following cases
+	NativeLibLoader.load();
 
     // --------------------------------------
     // A GL Context with GLUT

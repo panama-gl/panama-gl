@@ -1,3 +1,5 @@
+DEMOS 
+- see test folder
 
 # Troubleshooting
 
@@ -16,7 +18,8 @@ May be due to launcher not running on appropriate architecture
 - MVN JDK
 - IDE JDK
 
-
+## Commencer par clean le cache
+rm -rf ~/.swt
 
 Pour forcer Eclipse à utiliser Java en mode ARM64, voici les solutions :
 
