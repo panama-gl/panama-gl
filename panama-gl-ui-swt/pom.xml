@@ -11,13 +11,11 @@
 	<artifactId>panama-gl-ui-swt</artifactId>
 	<name>Panama GL UI - SWT</name>
 	<properties>
-		<swt.version>4.37</swt.version>
-		
-				<swt.version>3.116.100</swt.version>
-
+		<swt.version>3.116.100</swt.version>
+		<swt.version>3.126.0</swt.version>
 	</properties>
 	<dependencies>
-<dependency>
+	<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-api</artifactId>
 			<version>${project.version}</version>
@@ -83,9 +81,9 @@
     </repository>-->
     
     <repository>
-    <id>eclipse-orbit</id>
-    <url>https://repo.eclipse.org/content/repositories/orbit-releases/</url>
-</repository>
+	    <id>eclipse-orbit</id>
+	    <url>https://repo.eclipse.org/content/repositories/orbit-releases/</url>
+	</repository>
 </repositories>
 
 	
@@ -156,6 +154,8 @@
 					<version>${swt.version}</version>
 				</dependency>
 			</dependencies>
+			
+			
 		</profile>
 
 	</profiles>
