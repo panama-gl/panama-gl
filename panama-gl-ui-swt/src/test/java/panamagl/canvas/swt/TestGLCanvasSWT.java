@@ -15,6 +15,7 @@
  *******************************************************************************/
 package panamagl.canvas.swt;
 
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -22,6 +23,10 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -262,5 +267,103 @@ public class TestGLCanvasSWT {
   public void isInitialized_alwaysTrue() {
     GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
     Assert.assertTrue(canvas.isInitialized());
+  }
+
+  // ==================== dispose waits for rendering (#4) ====================
+
+  @Test
+  public void dispose_waitsForRenderingToComplete() throws InterruptedException {
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+
+    AtomicBoolean glWasAliveAtDispose = new AtomicBoolean(false);
+
+    GLEventListener listener = new GLEventAdapter() {
+      @Override
+      public void dispose(GL gl) {
+        glWasAliveAtDispose.set(gl != null);
+      }
+    };
+    canvas.setGLEventListener(listener);
+
+    // Simulate an in-progress render
+    canvas.rendering.set(true);
+
+    // A background thread will clear the rendering flag after a short delay,
+    // simulating a render completing on another thread while dispose spin-waits.
+    Thread renderSimulator = new Thread(() -> {
+      try {
+        Thread.sleep(100);
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
+      canvas.rendering.set(false);
+    });
+    renderSimulator.start();
+
+    // dispose() runs on the current (UI) thread. The disposeListener will
+    // spin-wait until rendering becomes false, then proceed with cleanup.
+    canvas.dispose();
+    renderSimulator.join(2000);
+
+    Assert.assertFalse("rendering should be false after dispose",
+        canvas.isRendering());
+    Assert.assertTrue("gl should have been non-null when listener.dispose was called",
+        glWasAliveAtDispose.get());
+    Assert.assertNull("listener should be null after dispose",
+        canvas.getGLEventListener());
+  }
+
+  @Test
+  public void dispose_setsGlToNull() {
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+    GLEventListener listener = mock(GLEventListener.class);
+    canvas.setGLEventListener(listener);
+
+    Assert.assertNotNull("gl should be available before dispose", canvas.getGL());
+
+    canvas.dispose();
+
+    // gl is now null - getGL should throw
+    boolean threw = false;
+    try {
+      canvas.getGL();
+    } catch (org.eclipse.swt.SWTError e) {
+      threw = true;
+    }
+    Assert.assertTrue("getGL should throw after dispose nullifies gl", threw);
+  }
+
+  @Test
+  public void dispose_renderingFlagIsFalseAfterDisplay() {
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+    GLEventListener listener = mock(GLEventListener.class);
+    canvas.setGLEventListener(listener);
+
+    canvas.display();
+
+    Assert.assertFalse("rendering flag should be false after display completes",
+        canvas.isRendering());
+  }
+
+  @Test
+  public void display_renderingFlagResetEvenOnException() {
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+
+    GLEventListener listener = new GLEventAdapter() {
+      @Override
+      public void display(GL gl) {
+        throw new RuntimeException("simulated rendering error");
+      }
+    };
+    canvas.setGLEventListener(listener);
+
+    try {
+      canvas.display();
+    } catch (RuntimeException e) {
+      // expected
+    }
+
+    Assert.assertFalse("rendering flag must be reset even after exception",
+        canvas.isRendering());
   }
 }

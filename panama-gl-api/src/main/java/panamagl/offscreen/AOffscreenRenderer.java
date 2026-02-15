@@ -17,6 +17,7 @@ package panamagl.offscreen;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 import panamagl.Debug;
 import panamagl.GLEventListener;
 import panamagl.GLProfile;
