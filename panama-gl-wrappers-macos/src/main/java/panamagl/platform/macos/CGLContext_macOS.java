@@ -68,15 +68,14 @@ import panamagl.opengl.GLContext;
  */
 public class CGLContext_macOS extends AGLContext implements GLContext {
   // I/O data for CGLChoosePixelFormat
-  protected MemorySegment attribs; // input
-  protected MemorySegment pixelFormat; // output
-  protected MemorySegment numberOfPixels; // output
+  protected MemorySegment attribs; // input : CGLPixelFormatAttribute*
+  protected MemorySegment pixelFormatPtr; // output : CGLPixelFormatObj* (pointer to pointer)
+  protected MemorySegment numberOfPixels; // output : GLint*
 
   protected int pixelFormatLength = 0;
-  protected int contextArraySize = 2; // seams to be 2
 
   // I/O data for CGLCreateContext
-  protected MemorySegment context; // output
+  protected MemorySegment context; // the CGLContextObj (a pointer value)
 
   protected boolean debug = Debug.check(CGLContext_macOS.class);
 
@@ -208,56 +207,28 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
    */
   protected MemorySegment createContext() {
 
-    // Inspect pixel format
-    boolean inspect = false;
-    if (inspect) {
+    // Read the pixel format pointer produced by CGLChoosePixelFormat
+    MemorySegment pixelFormat = pixelFormatPtr.get(ValueLayout.ADDRESS, 0);
 
-      // Log the pixel format configuration before creating context
-      Debug.debug(debug, "CGLContext : CGLCreateContext input pixel format : "
-          + Arrays.toString(pixelFormat.toArray(ValueLayout.JAVA_INT)));
-      Debug.debug(debug, "CGLContext : CGLCreateContext input npix : "
-          + Arrays.toString(numberOfPixels.toArray(ValueLayout.JAVA_INT)));
-
-
-      int v1 = describePixelFormat(attribs, cgl_h.kCGLPFAOpenGLProfile(), pixelFormatLength);
-      System.out.println("kCGLPFAOpenGLProfile : " + v1);
-      int v2 = describePixelFormat(attribs, cgl_h.kCGLPFAColorSize(), pixelFormatLength);
-      System.out.println("kCGLPFAColorSize : " + v2);
-    }
+    Debug.debug(debug, "CGLContext : CGLCreateContext input pixel format pointer : " + pixelFormat);
 
     MemorySegment c_share = cgl_h.__DARWIN_NULL();
 
-    // The CGL context seams to be described by an array of 2 ints / 1 long
-    MemorySegment context = arena.allocate(contextArraySize * 4);
-    // allocator.allocate(cgl_h.CGLContextObj, ??);
+    // CGLContextObj* — output pointer to an opaque pointer (8 bytes on 64-bit)
+    MemorySegment contextPtr = arena.allocate(ValueLayout.ADDRESS);
 
-
-    // WARNING : most example online give pixelFormat as first argument, which always
-    // fail in our case. However, we experimentally noticed that attribs allow
-    // initializing a context with OK status, with a retrievable array with
-    // not only zero values.
-
-    int status = cgl_h.CGLCreateContext(attribs, c_share, context);
-    // int status = cgl_h.CGLCreateContext(pixelFormat, c_share, context);
-
-    // TODO : should this be INT or LONG?
-    int[] contextArray = context.toArray(ValueLayout.JAVA_INT);
-    Debug.debug(debug, "CGLContext : CGLCreateContext output : " + Arrays.toString(contextArray));
+    // CGLCreateContext(CGLPixelFormatObj pix, CGLContextObj share, CGLContextObj *ctx)
+    int status = cgl_h.CGLCreateContext(pixelFormat, c_share, contextPtr);
 
     throwExceptionUponError("CGLContext.createContext : ", status);
 
-    // Destroy pixel format
+    // Read the context pointer value
+    MemorySegment context = contextPtr.get(ValueLayout.ADDRESS, 0);
+    Debug.debug(debug, "CGLContext : CGLCreateContext output context pointer : " + context);
+
+    // Destroy pixel format (no longer needed after context creation)
     status = cgl_h.CGLDestroyPixelFormat(pixelFormat);
     throwExceptionUponError("CGLDestroyPixelFormat : ", status);
-
-    // context.
-
-
-    // Do we need to unreference the context value?
-    // MemoryAddress a = context.get(ValueLayout.ADDRESS, 0);
-    // MemorySegment tc = MemorySegment.ofAddress(a, 8, scope);
-    // System.out.println(Arrays.toString(tc.toArray(ValueLayout.JAVA_INT)));
-    // context = tc;
 
     return context;
   }
@@ -379,12 +350,15 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
   protected void choosePixelFormat() {
     int[] at = null;
     
-    if(method==0) {
+    // To be compatible with immediate mode / GL 2.1
+    if(pixelFormatConfigMethod==0) {
       // NO REQUIREMENT
       at = new int[1];
 
     }
-    else if(method==1) {
+    
+    // To be compatible with GL 4
+    else if(pixelFormatConfigMethod==1) {
       at = new int[4];
 
       // The kCGLPFAAccelerated parameter is used to specify whether the pixel format object should be
@@ -403,7 +377,7 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
       at[3] = 0;
       
     }
-    else if(method==2) {
+    else if(pixelFormatConfigMethod==2) {
       // ANOTHER WAY OF CONFIGURING
       at = new int[9];
       at[0] = cgl_h.kCGLPFAOpenGLProfile();
@@ -446,32 +420,40 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
 
     pixelFormatLength = at.length;
 
-    // Input : CGLPixelFormatAttribute
+    // Input : CGLPixelFormatAttribute*
     attribs = arena.allocateFrom(ValueLayout.JAVA_INT, at);
 
-    
-    // Output : CGLPixelFormatObj
-    pixelFormat = arena.allocateFrom(ValueLayout.JAVA_INT, new int[1]);
+    // Output : CGLPixelFormatObj* (pointer to an opaque pointer — 8 bytes on 64-bit)
+    pixelFormatPtr = arena.allocate(ValueLayout.ADDRESS);
 
-    // Output : GLint
+    // Output : GLint*
     numberOfPixels = arena.allocateFrom(ValueLayout.JAVA_INT, new int[1]);
 
     // Invocation
-    int status = cgl_h.CGLChoosePixelFormat(attribs, pixelFormat, numberOfPixels);
+    int status = cgl_h.CGLChoosePixelFormat(attribs, pixelFormatPtr, numberOfPixels);
 
     // Logs
     Debug.debug(debug, "CGLContext : CGLChoosePixelFormat input : attributes "
         + Arrays.toString(attribs.toArray(ValueLayout.JAVA_INT)));
-    Debug.debug(debug, "CGLContext : CGLChoosePixelFormat output : format "
-        + Arrays.toString(pixelFormat.toArray(ValueLayout.JAVA_INT)));
+    Debug.debug(debug, "CGLContext : CGLChoosePixelFormat output : format pointer "
+        + pixelFormatPtr.get(ValueLayout.ADDRESS, 0));
     Debug.debug(debug, "CGLContext : CGLChoosePixelFormat output : max number of sample per pixel "
-        + Arrays.toString(numberOfPixels.toArray(ValueLayout.JAVA_INT)));
+        + numberOfPixels.getAtIndex(ValueLayout.JAVA_INT, 0));
 
     // Check status and throw exception if error
     throwExceptionUponError("CGLContext.choosePixelFormat : ", status);
   }
   
-  int method = 1;
+  /**
+   * Pixel format configuration method.
+   * <ul>
+   * <li>0 : No profile requirement — defaults to Legacy OpenGL 2.1 on macOS, supports immediate mode
+   *     (glBegin/glEnd). Matches the behavior of a GLUT-created context.</li>
+   * <li>1 : Core Profile GL 4.1 — modern OpenGL only, no immediate mode support.</li>
+   * <li>2 : Core Profile GL 3.2 with color/alpha/double buffer.</li>
+   * </ul>
+   */
+  int pixelFormatConfigMethod = 0;
 
   /**
    * Retrieve a pixel format value for a given attribute.
@@ -495,10 +477,10 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
    * @param length MAYBE!! The number of elements int pixel format array
    * @return the attribute value
    */
-  protected int describePixelFormat(MemorySegment pixelFormat, int attribute, int length) {
+  protected int describePixelFormat(MemorySegment pixelFormat, int attribute, int pixNum) {
     MemorySegment value = arena.allocate(ValueLayout.JAVA_INT, 1);
 
-    int status = cgl_h.CGLDescribePixelFormat(pixelFormat, length, attribute, value);
+    int status = cgl_h.CGLDescribePixelFormat(pixelFormat, pixNum, attribute, value);
 
     throwExceptionUponError("CGLContext.describePixelFormat : ", status);
 

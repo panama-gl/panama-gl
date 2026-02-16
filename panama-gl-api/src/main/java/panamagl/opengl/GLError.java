@@ -78,11 +78,25 @@ public class GLError {
       e.throwRuntimeException();
     }
   }
+
+  public static void checkAndThrow(GL gl, String context) {
+    GLError e = get(gl);
+    if(e!=null) {
+      throw new RuntimeException(context + ": " + e.toString());
+    }
+  }
   
   public static void checkAndPrint(GL gl) {
     GLError e = get(gl);
     if(e!=null) {
       e.systemErrPrint();
+    }
+  }
+
+  public static void checkAndPrint(GL gl, String context) {
+    GLError e = get(gl);
+    if(e!=null) {
+      System.err.println(context + ": " + e.toString());
     }
   }
 

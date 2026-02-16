@@ -147,6 +147,8 @@ public class AOffscreenRenderer implements OffscreenRenderer {
     // Invoke GLEventListener.init(..)
     if (listener != null) {
       listener.init(gl);
+      
+      GLError.checkAndThrow(gl, "An error occured in the listener initialization");
     }
 
     // Mark as ready for display
