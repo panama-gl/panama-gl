@@ -6,10 +6,6 @@ import jogamp.nativewindow.macosx.OSXUtil;
 /**
  * Allows redirecting a task execution on macOS main thread, which is required for OpenGL rendering tasks.
  *
- * When using {@code -XstartOnFirstThread}, the Java main thread IS the macOS main thread.
- * In that case, posting a blocking task to the main thread from the main thread would deadlock,
- * so we detect this situation and run the task directly.
- *
  * @author Martin Pernollet
  *
  */
