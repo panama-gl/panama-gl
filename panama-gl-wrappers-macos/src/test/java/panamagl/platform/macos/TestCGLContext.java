@@ -15,7 +15,6 @@
  *******************************************************************************/
 package panamagl.platform.macos;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import junit.framework.Assert;
 import panamagl.opengl.GL;
@@ -25,7 +24,6 @@ import panamagl.platform.macos.arm.GL_macOS_arm;
 // -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 
 public class TestCGLContext extends MacOSTest {
-// @Ignore("Not able to detroy CGL context yet")
   @Test
   public void createCGLContext() {
     if (!checkPlatform())
@@ -50,7 +48,6 @@ public class TestCGLContext extends MacOSTest {
     Assert.assertFalse(cgl.isInitialized());
   }
 
-//  @Ignore("CRASHING")
   @Test
   public void getVersion() {
     if (!checkPlatform())
@@ -61,7 +58,6 @@ public class TestCGLContext extends MacOSTest {
 
     // When : init
     cgl.init();
-
 
     // Then
     Assert.assertTrue(cgl.isInitialized());
@@ -74,10 +70,10 @@ public class TestCGLContext extends MacOSTest {
     
     
     // When : Cleanup
-    //cgl.destroy();
+    cgl.destroy();
 
     // Then
-    //Assert.assertFalse(cgl.initialized);
+    Assert.assertFalse(cgl.isInitialized());
   }
 
   @Test
