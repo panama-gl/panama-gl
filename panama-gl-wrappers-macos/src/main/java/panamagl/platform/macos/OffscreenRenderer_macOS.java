@@ -34,6 +34,13 @@ public class OffscreenRenderer_macOS extends AOffscreenRenderer implements Offsc
   public OffscreenRenderer_macOS(PanamaGLFactory factory, FBOReader reader) {
     super(factory, reader);
     
+    // TODO : make something better
+    // CGL contexts are thread-portable and do not require the macOS main thread.
+    // Using AWTThreadRedirect avoids deadlocks when the main thread is not pumping
+    // AppKit events (e.g. with -XstartOnFirstThread or after main() returns).
+    //
+    // GLUT contexts require the macOS main thread, so we keep MacOSThreadRedirect for them.
+
     threadRedirect = new MacOSThreadRedirect();
   }
 }

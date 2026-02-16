@@ -20,6 +20,8 @@ package panamagl.platform.macos.arm;
 import org.junit.Assert;
 import org.junit.Test;
 import panamagl.factory.PanamaGLFactory;
+import panamagl.opengl.GLContext;
+import panamagl.platform.macos.CGLContext_macOS;
 
 public class TestPanamaGLFactory_macOS_arm extends MacOSarmTest{
   @Test
@@ -34,7 +36,9 @@ public class TestPanamaGLFactory_macOS_arm extends MacOSarmTest{
     Assert.assertTrue(matched);
 
     // Issue on context init
-    //Assert.assertNotNull(f.newGLContext());
+    GLContext c = f.newGLContext();
+    Assert.assertNotNull(c);
+    Assert.assertNotNull(c instanceof CGLContext_macOS);
 
     Assert.assertNotNull(f.newGL());
     Assert.assertNotNull(f.newOffscreenRenderer(null));
