@@ -5,18 +5,17 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-
 import panamagl.GLEventListener;
-import panamagl.canvas.swt.GLCanvasSWT;
+import panamagl.canvas.swt.GLCanvasSWT_direct;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 
 public class DemoSWTText implements GLEventListener {
 	
 	
-	private GLCanvasSWT canvas;
+	private GLCanvasSWT_direct canvas;
 
-	public DemoSWTText(GLCanvasSWT canvas) {
+	public DemoSWTText(GLCanvasSWT_direct canvas) {
 		this.canvas = canvas;
 	}
 
@@ -27,7 +26,7 @@ public class DemoSWTText implements GLEventListener {
 		Shell shell = new Shell(display);
 		shell.setText("Some Strings");
 		shell.setLayout(new FillLayout());
-		GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+		GLCanvasSWT_direct canvas = new GLCanvasSWT_direct(shell, SWT.NONE, factory);
 		Font font = new Font(display, "Arial", 48, SWT.BOLD);
 		
 		canvas.setFont(font);

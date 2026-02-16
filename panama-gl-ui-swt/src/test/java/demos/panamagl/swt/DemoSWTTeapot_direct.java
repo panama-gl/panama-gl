@@ -19,15 +19,13 @@ package demos.panamagl.swt;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.ValueLayout;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-
 import opengl.macos.NativeLibLoader;
 import panamagl.GLEventAdapter;
-import panamagl.canvas.swt.GLCanvasSWT;
+import panamagl.canvas.swt.GLCanvasSWT_direct;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
@@ -45,7 +43,7 @@ import panamagl.opengl.GLError;
  * 
  * @author Martin Pernollet
  */
-public class DemoSWTTeapot {
+public class DemoSWTTeapot_direct {
 
   public static void main(String[] args) throws Exception {
     // To force loading GLUT to get teapot
@@ -63,7 +61,7 @@ public class DemoSWTTeapot {
     Shell shell = new Shell(display);
     shell.setText("SWT GL");
     shell.setLayout(new FillLayout());
-    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+    GLCanvasSWT_direct canvas = new GLCanvasSWT_direct(shell, SWT.NONE, factory);
     canvas.setGLEventListener(listener);
     //canvas.display();
     shell.setSize(640, 480);

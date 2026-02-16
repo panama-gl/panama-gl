@@ -233,6 +233,44 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
     // setRendering(false) will be invoked when painting is done
   }
 
+
+  /**
+   * The {@link ResizeHandler} will trigger rendering on the main macOS thread 
+   * and then trigger repaint by the thread selected by {@link ThreadRedirect} 
+   * attached to the {@link OffscreenRenderer}.
+   */
+  protected class ResizeHandler extends ComponentAdapter {
+    @Override
+    public void componentResized(ComponentEvent e) {
+      
+      // Skip rendering if we are already in the middle of rendering
+      // the previous frame
+      if (isRendering()) {
+    	//System.err.println("GLCanvasSwing : SKIP RENDER");
+        return; 
+      } 
+      // Otherwise indicates that we start to render and do the 
+      // job required for resizing.
+      else {
+        
+        // Get the new dimensions
+        Dimension size = e.getComponent().getSize();
+        int w = (int) Math.round(size.getWidth());
+        int h = (int) Math.round(size.getHeight());
+
+        Debug.debug(debug, this.getClass(), "resizing to " + w + "x" + h);
+
+        setRendering(true);
+
+        getMonitoring().onStartRendering();
+
+        offscreen.onResize(GLCanvasSwing.this, listener, 0, 0, w, h);
+        
+        // setRendering(false) will be invoked when painting is done
+      }
+    }
+  }
+  
   /**
    * Return true if the offscreen renderer has been initialized, which means that this panel has
    * been added to a parent component.
@@ -251,44 +289,6 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
   protected void setRendering(boolean status) {
     rendering.set(status);
-  }
-
-  /**
-   * The {@link ResizeHandler} will trigger rendering on the main macOS thread and then trigger
-   * repaint through {@link SwingUtilities.invokeLater()}.
-   */
-  protected class ResizeHandler extends ComponentAdapter {
-    @Override
-    public void componentResized(ComponentEvent e) {
-
-      // Get the new dimensions
-      Dimension size = e.getComponent().getSize();
-      int w = (int) Math.round(size.getWidth());
-      int h = (int) Math.round(size.getHeight());
-
-      Debug.debug(debug, this.getClass(), "resizing to " + w + "x" + h);
-
-      // <<<<< keep this behaviour commented on purpose for a while >>>>>
-      
-      // Skip rendering if we are already in the middle of rendering
-      // the previous frame
-      if (isRendering()) {
-    	//System.err.println("GLCanvasSwing : SKIP RENDER");
-        return; 
-      } 
-      // Otherwise indicates that we start to render and do the 
-      // job required for resizing.
-      else {
-      
-      // <<<<< 
-      
-        setRendering(true);
-
-        getMonitoring().onStartRendering();
-
-        offscreen.onResize(GLCanvasSwing.this, listener, 0, 0, w, h);
-      }
-    }
   }
 
   /* ===================================================== */
@@ -338,23 +338,19 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
     return new AWTImage(ImageUtils.copy(out));
   }
 
-  // should not be used by anything else than backend
+  /**
+   * Update the image to be displayed.
+   *  
+   * Should not be used by anything else than offscreen rendering.
+   * 
+   * TODO : make method name clearer and visibility hidden?
+   */
   @Override
   public void setScreenshot(Image<?> image) {
     if(image!=null)
       out = ((AWTImage)image).getImage();
   }
-
-  /* ===================================================== */
-
-  public FBO getFBO() {
-    return offscreen.getFBO();
-  }
-
-  public void setFBO(FBO fbo) {
-    this.offscreen.setFBO(fbo);
-  }
-
+  
   @Override
   public RenderCounter getMonitoring() {
     return counter;
@@ -384,8 +380,15 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
   public void setFlip(Flip flip) {
     this.flip = flip;
   }
-  
-  
 
+  /* ===================================================== */
+
+  public FBO getFBO() {
+    return offscreen.getFBO();
+  }
+
+  public void setFBO(FBO fbo) {
+    this.offscreen.setFBO(fbo);
+  }
 
 }
