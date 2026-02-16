@@ -29,7 +29,7 @@ public abstract class APanamaGLFactory_macOS extends APanamaGLFactory {
 
   protected CGLContext_macOS cglContext;
   protected GLUTContext_macOS glutContext;
-  protected boolean useGLUT = true;
+  protected boolean useGLUT = false;
 
   @Override
   public boolean matches(Platform os) {
