@@ -15,35 +15,38 @@
  *******************************************************************************/
 package panamagl.canvas.swt;
 
-import static org.mockito.Mockito.doAnswer;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
-
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.opengl.GLData;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-
 import panamagl.GLEventAdapter;
 import panamagl.GLEventListener;
+import panamagl.canvas.GLCanvas.Flip;
 import panamagl.factory.PanamaGLFactory;
+import panamagl.image.SWTImage;
+import panamagl.offscreen.FBOReader_SWT;
+import panamagl.offscreen.OffscreenRenderer;
+import panamagl.offscreen.ThreadRedirect;
+import panamagl.offscreen.ThreadRedirect_SWT;
 import panamagl.opengl.GL;
+import panamagl.opengl.GLContext;
+import panamagl.performance.RenderCounter;
 
 /**
+ * Unit tests for {@link GLCanvasSWT}, mirroring the structure of
+ * {@code TestGLCanvasSWT}, {@code TestGLCanvasSwing_all}, and {@code TestGLCanvasJFX_all}.
+ *
  * VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED
  * -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
  */
@@ -52,7 +55,7 @@ public class TestGLCanvasSWT {
   Display display;
   Shell shell;
   PanamaGLFactory factory;
-  GL mockGL;
+  OffscreenRenderer mockOffscreen;
 
   @Before
   public void setup() {
@@ -63,9 +66,10 @@ public class TestGLCanvasSWT {
     shell = new Shell(display);
     shell.setLayout(new FillLayout());
 
-    mockGL = mock(GL.class);
+    // Mock the factory to return a mock offscreen renderer
+    mockOffscreen = mock(OffscreenRenderer.class);
     factory = mock(PanamaGLFactory.class);
-    when(factory.newGL()).thenReturn(mockGL);
+    when(factory.newOffscreenRenderer(any(FBOReader_SWT.class))).thenReturn(mockOffscreen);
   }
 
   @After
@@ -78,168 +82,95 @@ public class TestGLCanvasSWT {
     }
   }
 
-  // ==================== createDefaultGLData ====================
+  // ==================== constructor ====================
 
   @Test
-  public void defaultGLData_hasDoubleBuffer() {
-    GLData data = GLCanvasSWT.createDefaultGLData();
-    Assert.assertTrue("GLData should have doubleBuffer enabled", data.doubleBuffer);
-  }
-
-  @Test
-  public void defaultGLData_hasDepthBuffer() {
-    GLData data = GLCanvasSWT.createDefaultGLData();
-    Assert.assertEquals("GLData should request a 24-bit depth buffer", 24, data.depthSize);
-  }
-
-  // ==================== setGLEventListener lifecycle ====================
-
-  @Test
-  public void setGLEventListener_callsInitOnListener() {
+  public void constructor_setsThreadRedirectOnOffscreenRenderer() {
     GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
 
-    GLEventListener listener = mock(GLEventListener.class);
-    canvas.setGLEventListener(listener);
+    Assert.assertFalse(canvas.isDisposed());
 
-    verify(listener).init(mockGL);
+    verify(mockOffscreen).setThreadRedirect(any(ThreadRedirect_SWT.class));
   }
 
-  @Test
-  public void setGLEventListener_callsSetCurrentBeforeInit() {
-    List<String> callOrder = new ArrayList<>();
-
-    // Subclass to track setCurrent() calls
-    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory) {
-      @Override
-      public void setCurrent() {
-        callOrder.add("setCurrent");
-        super.setCurrent();
-      }
-    };
-
-    GLEventListener listener = new GLEventAdapter() {
-      @Override
-      public void init(GL gl) {
-        callOrder.add("init");
-      }
-    };
-
-    canvas.setGLEventListener(listener);
-
-    Assert.assertTrue("setCurrent should be called", callOrder.contains("setCurrent"));
-    Assert.assertTrue("init should be called", callOrder.contains("init"));
-    int setCurrentIndex = callOrder.indexOf("setCurrent");
-    int initIndex = callOrder.indexOf("init");
-    Assert.assertTrue("setCurrent must be called before init", setCurrentIndex < initIndex);
-  }
+  // ==================== setGLEventListener ====================
 
   @Test
-  public void setGLEventListener_disposesOldListener() {
-    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
-
-    GLEventListener first = mock(GLEventListener.class);
-    GLEventListener second = mock(GLEventListener.class);
-
-    canvas.setGLEventListener(first);
-    canvas.setGLEventListener(second);
-
-    verify(first).dispose(mockGL);
-    verify(second).init(mockGL);
-  }
-
-  @Test
-  public void setGLEventListener_doesNotCallInitForNull() {
-    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
-
-    // Should not throw
-    canvas.setGLEventListener(null);
-    Assert.assertNull(canvas.getGLEventListener());
-  }
-
-  @Test
-  public void setGLEventListener_sameListenerIsIgnored() {
+  public void setGLEventListener_callsOffscreenOnInit() {
     GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
     GLEventListener listener = mock(GLEventListener.class);
 
     canvas.setGLEventListener(listener);
-    // Setting the same listener again should not re-init
+
+    verify(mockOffscreen).onInit(canvas, listener);
+  }
+
+  @Test
+  public void setGLEventListener_storesListener() {
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+    GLEventListener listener = mock(GLEventListener.class);
+
     canvas.setGLEventListener(listener);
 
-    // init should only be called once
-    verify(listener).init(mockGL);
-    verify(listener, never()).dispose(mockGL);
+    Assert.assertSame(listener, canvas.getGLEventListener());
   }
 
   // ==================== display() ====================
 
   @Test
-  public void display_callsListenerDisplay() {
+  public void display_callsOffscreenOnDisplay() {
     GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
     GLEventListener listener = mock(GLEventListener.class);
     canvas.setGLEventListener(listener);
 
+    when(mockOffscreen.isInitialized()).thenReturn(true);
+
     canvas.display();
 
-    verify(listener).display(mockGL);
+    verify(mockOffscreen).onDisplay(canvas, listener);
   }
 
   @Test
-  public void display_doesNothingWhenDisposed() {
+  public void display_doesNothingWhenNotInitialized() {
     GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
-    GLEventListener listener = mock(GLEventListener.class);
-    canvas.setGLEventListener(listener);
 
-    canvas.dispose();
+    when(mockOffscreen.isInitialized()).thenReturn(false);
 
-    // Should not throw
+    // Should not throw, and should not call onDisplay
     canvas.display();
   }
 
+  // ==================== isInitialized ====================
+
   @Test
-  public void display_doesNothingWithNoListener() {
+  public void isInitialized_delegatesToOffscreen() {
     GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
 
-    // Should not throw
-    canvas.display();
+    when(mockOffscreen.isInitialized()).thenReturn(false);
+    Assert.assertFalse(canvas.isInitialized());
+
+    when(mockOffscreen.isInitialized()).thenReturn(true);
+    Assert.assertTrue(canvas.isInitialized());
   }
 
-  // ==================== getGL ====================
+  // ==================== getGL / getContext ====================
 
   @Test
-  public void getGL_returnsFactoryGL() {
+  public void getGL_delegatesToOffscreen() {
     GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+    GL mockGL = mock(GL.class);
+    when(mockOffscreen.getGL()).thenReturn(mockGL);
+
     Assert.assertSame(mockGL, canvas.getGL());
   }
 
-  @Test(expected = org.eclipse.swt.SWTError.class)
-  public void getGL_throwsAfterDispose() {
-    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
-    canvas.dispose();
-    canvas.getGL();
-  }
-
-  // ==================== dispose ====================
-
   @Test
-  public void dispose_callsListenerDispose() {
+  public void getContext_delegatesToOffscreen() {
     GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
-    GLEventListener listener = mock(GLEventListener.class);
-    canvas.setGLEventListener(listener);
+    GLContext mockContext = mock(GLContext.class);
+    when(mockOffscreen.getContext()).thenReturn(mockContext);
 
-    canvas.dispose();
-
-    verify(listener).dispose(mockGL);
-  }
-
-  @Test
-  public void dispose_clearsListener() {
-    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
-    GLEventListener listener = mock(GLEventListener.class);
-    canvas.setGLEventListener(listener);
-
-    canvas.dispose();
-
-    Assert.assertNull(canvas.getGLEventListener());
+    Assert.assertSame(mockContext, canvas.getContext());
   }
 
   // ==================== rendering state ====================
@@ -250,120 +181,226 @@ public class TestGLCanvasSWT {
     Assert.assertFalse(canvas.isRendering());
   }
 
-  // ==================== macOS Cocoa setRedraw(false) ====================
-
   @Test
-  public void constructor_doesNotCrashOnCurrentPlatform() {
-    // Validates that the setRedraw(false) workaround for macOS Cocoa
-    // does not break canvas creation on any platform.
+  public void display_setsRenderingTrue() {
     GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
-    Assert.assertNotNull(canvas);
-    Assert.assertFalse(canvas.isDisposed());
-  }
-
-  // ==================== isInitialized ====================
-
-  @Test
-  public void isInitialized_alwaysTrue() {
-    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
-    Assert.assertTrue(canvas.isInitialized());
-  }
-
-  // ==================== dispose waits for rendering (#4) ====================
-
-  @Test
-  public void dispose_waitsForRenderingToComplete() throws InterruptedException {
-    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
-
-    AtomicBoolean glWasAliveAtDispose = new AtomicBoolean(false);
-
-    GLEventListener listener = new GLEventAdapter() {
-      @Override
-      public void dispose(GL gl) {
-        glWasAliveAtDispose.set(gl != null);
-      }
-    };
-    canvas.setGLEventListener(listener);
-
-    // Simulate an in-progress render
-    canvas.rendering.set(true);
-
-    // A background thread will clear the rendering flag after a short delay,
-    // simulating a render completing on another thread while dispose spin-waits.
-    Thread renderSimulator = new Thread(() -> {
-      try {
-        Thread.sleep(100);
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-      }
-      canvas.rendering.set(false);
-    });
-    renderSimulator.start();
-
-    // dispose() runs on the current (UI) thread. The disposeListener will
-    // spin-wait until rendering becomes false, then proceed with cleanup.
-    canvas.dispose();
-    renderSimulator.join(2000);
-
-    Assert.assertFalse("rendering should be false after dispose",
-        canvas.isRendering());
-    Assert.assertTrue("gl should have been non-null when listener.dispose was called",
-        glWasAliveAtDispose.get());
-    Assert.assertNull("listener should be null after dispose",
-        canvas.getGLEventListener());
-  }
-
-  @Test
-  public void dispose_setsGlToNull() {
-    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
-    GLEventListener listener = mock(GLEventListener.class);
-    canvas.setGLEventListener(listener);
-
-    Assert.assertNotNull("gl should be available before dispose", canvas.getGL());
-
-    canvas.dispose();
-
-    // gl is now null - getGL should throw
-    boolean threw = false;
-    try {
-      canvas.getGL();
-    } catch (org.eclipse.swt.SWTError e) {
-      threw = true;
-    }
-    Assert.assertTrue("getGL should throw after dispose nullifies gl", threw);
-  }
-
-  @Test
-  public void dispose_renderingFlagIsFalseAfterDisplay() {
-    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
-    GLEventListener listener = mock(GLEventListener.class);
-    canvas.setGLEventListener(listener);
+    when(mockOffscreen.isInitialized()).thenReturn(true);
 
     canvas.display();
 
-    Assert.assertFalse("rendering flag should be false after display completes",
-        canvas.isRendering());
+    Assert.assertTrue(canvas.isRendering());
+  }
+
+  // ==================== screenshot ====================
+
+  @Test
+  public void setScreenshot_storesImage() {
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+    ImageData data = new ImageData(10, 10, 32, new PaletteData(0xFF0000, 0xFF00, 0xFF));
+    SWTImage image = new SWTImage(data);
+
+    canvas.setScreenshot(image);
+
+    Assert.assertSame(image, canvas.getScreenshot());
+  }
+
+  // ==================== offscreen renderer ====================
+
+  @Test
+  public void getOffscreenRenderer_returnsRenderer() {
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+    Assert.assertSame(mockOffscreen, canvas.getOffscreenRenderer());
+  }
+
+  // ==================== flip ====================
+
+  @Test
+  public void flip_defaultIsVertical() {
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+    Assert.assertEquals(Flip.VERTICAL, canvas.getFlip());
   }
 
   @Test
-  public void display_renderingFlagResetEvenOnException() {
+  public void setFlip_changesFlip() {
     GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+    canvas.setFlip(Flip.HORIZONTAL);
+    Assert.assertEquals(Flip.HORIZONTAL, canvas.getFlip());
+
+    canvas.setFlip(Flip.NONE);
+    Assert.assertEquals(Flip.NONE, canvas.getFlip());
+  }
+
+
+
+  // ==================== dimensions ====================
+
+  @Test
+  public void getWidth_getHeight_returnBounds() {
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+    shell.setSize(320, 240);
+    shell.layout();
+
+    // Canvas fills the shell via FillLayout, so dimensions should be > 0
+    Assert.assertTrue(canvas.getWidth() > 0);
+    Assert.assertTrue(canvas.getHeight() > 0);
+  }
+
+  // ==================== dispose ====================
+
+  @Test
+  public void dispose_callsOffscreenOnDestroy() {
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+    GLEventListener listener = mock(GLEventListener.class);
+    canvas.setGLEventListener(listener);
+
+    canvas.dispose();
+
+    verify(mockOffscreen).onDestroy(canvas, listener);
+  }
+
+  // ==================== repaint ====================
+
+  @Test
+  public void repaint_doesNotThrowWhenNotDisposed() {
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+    // Should not throw
+    canvas.repaint();
+  }
+
+  @Test
+  public void repaint_doesNotThrowWhenDisposed() {
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+    canvas.dispose();
+    // Should not throw
+    canvas.repaint();
+  }
+
+  // ==================== full lifecycle with real factory ====================
+
+  /**
+   * Integration test verifying the full chain:
+   * panel → offscreen_renderer → fbo → listener events.
+   *
+   * Mirrors {@code TestGLCanvasSwing_all.whenPanelIsAdded_ThenGLEventListenerIsInvoked}
+   * and {@code TestGLCanvasJFX_all.whenPanelIsAdded_ThenGLEventListenerIsInvoked}.
+   */
+  @Ignore("Requires native GL context - run with VM args: -XstartOnFirstThread --enable-native-access=ALL-UNNAMED")
+  @Test
+  public void whenListenerIsSet_ThenGLEventListenerIsInvoked() throws InterruptedException {
+    // Given
+    EventCounter event = new EventCounter();
+    PanamaGLFactory realFactory = PanamaGLFactory.select();
+
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, realFactory);
 
     GLEventListener listener = new GLEventAdapter() {
       @Override
+      public void init(GL gl) {
+        event.init++;
+      }
+
+      @Override
       public void display(GL gl) {
-        throw new RuntimeException("simulated rendering error");
+        event.display++;
+      }
+
+      @Override
+      public void reshape(GL gl, int x, int y, int width, int height) {
+        event.reshape++;
+      }
+
+      @Override
+      public void dispose(GL gl) {
+        event.dispose++;
       }
     };
+
+    Assert.assertFalse(canvas.isInitialized());
+
+    // When: set listener triggers offscreen.onInit
     canvas.setGLEventListener(listener);
 
-    try {
-      canvas.display();
-    } catch (RuntimeException e) {
-      // expected
-    }
+    // Process SWT events to allow async init
+    processEvents(500);
 
-    Assert.assertFalse("rendering flag must be reset even after exception",
-        canvas.isRendering());
+    // Then
+    Assert.assertTrue(canvas.isInitialized());
+    Assert.assertEquals(1, event.init);
+
+    // When: display
+    shell.setSize(200, 200);
+    shell.open();
+
+    canvas.display();
+    processEvents(500);
+
+    // Then
+    Assert.assertTrue(event.display > 0);
+    Assert.assertTrue(event.reshape > 0);
+    Assert.assertNotNull(canvas.getScreenshot());
+
+    // Then: thread redirect is SWT type
+    ThreadRedirect redirect = canvas.getOffscreenRenderer().getThreadRedirect();
+    Assert.assertTrue(redirect instanceof ThreadRedirect_SWT);
+  }
+
+  /**
+   * Integration test verifying FBO resize follows canvas resize.
+   *
+   * Mirrors {@code TestGLCanvasSwing_all.whenPanelIsResized_ThenFBOIsResized}
+   * and {@code TestGLCanvasJFX_all.whenPanelIsResized_ThenFBOIsResized}.
+   */
+  @Ignore("Requires native GL context - run with VM args: -XstartOnFirstThread --enable-native-access=ALL-UNNAMED")
+  @Test
+  public void whenCanvasIsResized_ThenFBOIsResized() throws InterruptedException {
+    int WIDTH = 100;
+    int HEIGHT = 100;
+
+    PanamaGLFactory realFactory = PanamaGLFactory.select();
+
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, realFactory);
+    canvas.setGLEventListener(new GLEventAdapter());
+
+    processEvents(500);
+    Assert.assertTrue(canvas.isInitialized());
+
+    // When: resize + display
+    shell.setSize(WIDTH, HEIGHT);
+    shell.layout();
+    canvas.display();
+    processEvents(500);
+
+    // Then: FBO matches
+    Assert.assertEquals(canvas.getWidth(), canvas.getFBO().getWidth());
+    Assert.assertEquals(canvas.getHeight(), canvas.getFBO().getHeight());
+
+    // When: resize again
+    shell.setSize(3 * WIDTH, 2 * HEIGHT);
+    shell.layout();
+    canvas.display();
+    processEvents(500);
+
+    // Then: FBO updated
+    Assert.assertEquals(canvas.getWidth(), canvas.getFBO().getWidth());
+    Assert.assertEquals(canvas.getHeight(), canvas.getFBO().getHeight());
+  }
+
+  // ==================== helpers ====================
+
+  /** Process SWT events for the given duration in milliseconds. */
+  private void processEvents(long durationMs) {
+    long deadline = System.currentTimeMillis() + durationMs;
+    while (System.currentTimeMillis() < deadline) {
+      if (!display.readAndDispatch()) {
+        display.sleep();
+      }
+    }
+  }
+
+  protected class EventCounter {
+    int init = 0;
+    int display = 0;
+    int reshape = 0;
+    int dispose = 0;
   }
 }
