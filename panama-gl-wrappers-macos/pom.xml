@@ -37,4 +37,48 @@
 			<version>${jzy3d.version}</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<!--
+				Some tests require -XstartOnFirstThread (GLUT context, GL profile
+				querying with GLUT) while others must NOT use it (they would freeze).
+				We split test execution in two surefire runs.
+			-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M5</version>
+
+				<!-- Default execution: all tests EXCEPT those needing -XstartOnFirstThread -->
+				<configuration>
+					<excludes>
+						<exclude>**/TestGLProfile_macOS_arm.java</exclude>
+						<exclude>**/TestGLUTContext_macOS.java</exclude>
+					</excludes>
+				</configuration>
+
+				<executions>
+					<!-- Additional execution: only tests requiring -XstartOnFirstThread -->
+					<execution>
+						<id>tests-requiring-main-thread</id>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<excludes combine.self="override" />
+							<includes>
+								<include>**/TestGLProfile_macOS_arm.java</include>
+								<include>**/TestGLUTContext_macOS.java</include>
+							</includes>
+							<argLine>
+								-XstartOnFirstThread --enable-native-access=ALL-UNNAMED
+								-Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+							</argLine>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
