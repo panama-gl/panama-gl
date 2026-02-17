@@ -25,54 +25,18 @@ import panamagl.offscreen.TestFBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 
-// VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-public class TestFBO_macOS extends MacOSTest{
-  @Test
-  public void given_GLUTContext_whenRenderSomething_ThenGetBufferedImage() {
-    if (!checkPlatform())
-      return;
-
-    // Given a GLUT context
-    GLContext glutContext = new GLUTContext_macOS();
-    glutContext.init();
-
-    // Given a GL caller
-    GL gl = new panamagl.platform.macos.arm.GL_macOS_arm();
-
-    // ---------------------------------------
-    // When initialize a FBO UNDER TEST
-    int width = 256;
-    int height = 256;
-    FBO_macOS fbo = new FBO_macOS(width, height);
-    FBOReader_AWT reader = new FBOReader_AWT();
-
-    // Ensure does not leave this debug flag to false
-    Assert.assertTrue(reader.isArrayExport());
-    
-    // Ensure conforms to configuration
-    Assert.assertEquals(width, fbo.getWidth());
-    Assert.assertEquals(height, fbo.getHeight());
-
-    // Execute validation scenario
-    TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(fbo, reader, gl);
-
-    // ---------------------------------------
-    // When Release context resources
-    glutContext.destroy();
-
-    // Then
-    Assert.assertFalse(glutContext.isInitialized());
-  }
-
-  @Ignore("CGL Not working yet")
+// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+public class TestFBO_macOS_withCGL extends MacOSTest{
+  
   @Test
   public void given_CGLContext_whenRenderSomething_ThenGetBufferedImage() {
     if (!checkPlatform())
       return;
 
     // Given a CGL context ONLY
-    GLContext context = new CGLContext_macOS();
+    CGLContext_macOS context = new CGLContext_macOS();
     context.init();
+    context.makeCurrent(); // must be current to work
 
     GL gl = new panamagl.platform.macos.arm.GL_macOS_arm();
 

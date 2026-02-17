@@ -287,8 +287,9 @@
 								<forkCount>1</forkCount>-->
 
 							<!-- Configure Panama -->
+							<!-- -XstartOnFirstThread should not be required anymore -->
 							<argLine>
-								-XstartOnFirstThread --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+								--enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 							</argLine>
 						</configuration>
 					</plugin>
@@ -322,8 +323,9 @@
 								<forkCount>1</forkCount>-->
 
 							<!-- Configure Panama -->
+							<!-- -XstartOnFirstThread should not be required anymore -->
 							<argLine>
-								-XstartOnFirstThread --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+								--enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 							</argLine>
 						</configuration>
 					</plugin>

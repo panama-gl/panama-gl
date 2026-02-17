@@ -41,6 +41,7 @@ public class GLCanvasJFX implements GLCanvas {
 
 
   public GLCanvasJFX(PanamaGLFactory factory, Canvas canvas) {
+    // TODO : do something clearer than overriding this
     factory.setThreadRedirect(new ThreadRedirect_JFX());
 
     this.factory = factory;

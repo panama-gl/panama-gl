@@ -107,18 +107,25 @@
 			</plugin>
 
 
-			<!-- Exclude hanging test -->
+			<!--
+				Override parent surefire config to remove -XstartOnFirstThread.
+
+				JavaFX manages its own main thread (the JavaFX Application Thread).
+				-XstartOnFirstThread conflicts with Platform.startup() and causes
+				a freeze in test context. Since GL operations go through
+				ThreadRedirect_JFX (Platform.runLater), the macOS main thread
+				is not needed here.
+			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M5</version>
 				<configuration>
-					<!-- Ensure stack trace get displayed -->
 					<trimStackTrace>false</trimStackTrace>
-
-					<excludes>
-						<exclude>**TestGLCanvasJFX_all**</exclude>
-					</excludes>
-
+					<argLine>
+						--enable-native-access=ALL-UNNAMED
+						-Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+					</argLine>
 				</configuration>
 			</plugin>
 

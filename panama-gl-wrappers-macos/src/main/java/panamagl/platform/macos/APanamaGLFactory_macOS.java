@@ -18,6 +18,7 @@ package panamagl.platform.macos;
 import panamagl.Debug;
 import panamagl.factory.APanamaGLFactory;
 import panamagl.factory.PanamaGLFactory;
+import panamagl.offscreen.AWTThreadRedirect;
 import panamagl.offscreen.FBO;
 import panamagl.offscreen.FBOReader;
 import panamagl.offscreen.OffscreenRenderer;
@@ -29,7 +30,7 @@ public abstract class APanamaGLFactory_macOS extends APanamaGLFactory {
 
   protected CGLContext_macOS cglContext;
   protected GLUTContext_macOS glutContext;
-  protected boolean useGLUT = true;
+  protected boolean useGLUT = false;
 
   @Override
   public boolean matches(Platform os) {
@@ -40,8 +41,15 @@ public abstract class APanamaGLFactory_macOS extends APanamaGLFactory {
   public OffscreenRenderer newOffscreenRenderer(FBOReader reader) {
     OffscreenRenderer_macOS renderer = new OffscreenRenderer_macOS(this, reader);
     if (getThreadRedirect() != null) {
+      // User explicitly set a ThreadRedirect — use it
       renderer.setThreadRedirect(getThreadRedirect());
+    } else if (!useGLUT) {
+      // CGL contexts are thread-portable: route GL calls to the AWT EDT
+      // instead of the macOS main thread, avoiding deadlocks when the
+      // main thread is not pumping AppKit events.
+      renderer.setThreadRedirect(new AWTThreadRedirect());
     }
+    // For GLUT, keep the default MacOSThreadRedirect set by OffscreenRenderer_macOS
     return renderer;
   }
 

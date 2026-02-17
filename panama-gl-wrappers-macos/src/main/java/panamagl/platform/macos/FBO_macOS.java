@@ -74,6 +74,12 @@ public class FBO_macOS extends AFBO implements FBO {
     
     prepareRenderArena();
 
+    // Flush any residual GL error from prior operations (e.g. listener code, release)
+    // so that our per-call error checks below only catch errors from FBO operations.
+    int residual = gl.glGetError();
+    if (residual != 0) {
+      Debug.debug(debug, "FBO.prepare: flushed residual GL error " + residual + " from prior operations");
+    }
 
     // transfert pixel Format
     Debug.debug(debug, "FBO.internalFormat : " + internalFormat + " (default GL.GL_RGBA8)");
@@ -84,6 +90,7 @@ public class FBO_macOS extends AFBO implements FBO {
     
     textureBufferIds = renderArena.allocate(1 * 4 * 3);
     gl.glGenTextures(1, textureBufferIds);
+    GLError.checkAndThrow(gl, "glGenTextures");
     idTexture = (int) textureBufferIds.get(ValueLayout.JAVA_INT, 0);
 
     Debug.debug(debug, "FBO: Got texture ID : " + idTexture);
@@ -97,18 +104,21 @@ public class FBO_macOS extends AFBO implements FBO {
 
     // Bind texture and set parameters
     gl.glBindTexture(GL.GL_TEXTURE_2D, idTexture);
+    GLError.checkAndThrow(gl, "glBindTexture");
+
     gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
     gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
     gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL.GL_NEAREST);
     gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_NEAREST);
+    GLError.checkAndThrow(gl, "glTexParameteri");
 
     // Create a texture to write to
     int byteSize = width * height * channels;
-    
+
     pixelBuffer = renderArena.allocate(byteSize);
     gl.glTexImage2D(GL.GL_TEXTURE_2D, level, internalFormat, width, height, border, format,
         textureType, pixelBuffer);
-    
+    GLError.checkAndThrow(gl, "glTexImage2D(internalFormat=" + internalFormat + ", format=" + format + ", type=" + textureType + ")");
 
     // -------------------------
     // Generate FRAME buffer
@@ -127,10 +137,12 @@ public class FBO_macOS extends AFBO implements FBO {
 
     // Bind frame buffer
     glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
+    GLError.checkAndThrow(gl, "glBindFramebuffer");
 
     // Attach 2D texture to this FBO
     glut_h.glFramebufferTexture2D(glut_h.GL_FRAMEBUFFER(), glut_h.GL_COLOR_ATTACHMENT0(), glut_h.GL_TEXTURE_2D(),
         idTexture, 0);
+    GLError.checkAndThrow(gl, "glFramebufferTexture2D");
 
     // -------------------------
     // Generate RENDER buffer
@@ -140,7 +152,7 @@ public class FBO_macOS extends AFBO implements FBO {
     idRenderBuffer = (int) renderBufferIds.get(ValueLayout.JAVA_INT, 0);
 
     // Check for error after reading
-    GLError.checkAndThrow(gl);
+    GLError.checkAndThrow(gl, "glGenRenderbuffers");
     
     Debug.debug(debug, "FBO: Got RenderBuffer ID : " + idRenderBuffer);
 
@@ -182,9 +194,13 @@ public class FBO_macOS extends AFBO implements FBO {
   /** Release resources held by this FBO utility.*/
   @Override
   public void release(GL gl) {
+    if (!prepared) {
+      return;
+    }
+
     // Delete resources
     gl.glDeleteTextures(1, textureBufferIds);
-    
+
     glut_h.glDeleteRenderbuffers(1, renderBufferIds);
     unbindFramebuffer();
     glut_h.glDeleteFramebuffers(1, frameBufferIds);
