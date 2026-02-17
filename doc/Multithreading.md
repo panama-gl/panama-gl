@@ -18,13 +18,16 @@ The table below summarizes whether `-XstartOnFirstThread` is required for each c
 |---------|---------|-------|-------------|--------------|
 | **AWT** | No flag needed | No flag needed | No flag needed | `-XstartOnFirstThread` required |
 | **Swing** | No flag needed | No flag needed | No flag needed | `-XstartOnFirstThread` required |
-| **JavaFX** | No flag needed | No flag needed | No flag needed | `-XstartOnFirstThread` required |
+| **JavaFX** | No flag needed | No flag needed | **Must NOT use** `-XstartOnFirstThread` | **Must NOT use** `-XstartOnFirstThread`¹ |
 | **SWT** | No flag needed | No flag needed | TBD | TBD |
+
+¹ JavaFX manages its own main thread via `Platform.startup()`. Using `-XstartOnFirstThread` conflicts with this and causes a freeze. This means JavaFX + GLUT on macOS is currently not supported (GLUT requires `-XstartOnFirstThread` but JavaFX forbids it).
 
 ### Notes
 
 - **macOS with CGL**: CGL is a low-level API whose contexts are thread-portable. There is no requirement to run on the macOS main thread, so `-XstartOnFirstThread` is **not** required. GL calls are routed to the AWT EDT or JavaFX Application Thread depending on the toolkit.
 - **macOS with GLUT**: GLUT requires the macOS main thread for its event loop (`glutMainLoop`) and window management. `-XstartOnFirstThread` is required so that the Java main thread is the AppKit main thread. Without it, `OSXUtil.RunOnMainThread()` is used, but this can deadlock if the main thread is not pumping AppKit events.
+- **JavaFX on macOS**: `-XstartOnFirstThread` must **not** be used. JavaFX manages its own main thread (the JavaFX Application Thread) via `Platform.startup()`. Adding `-XstartOnFirstThread` causes the Java main thread to become the AppKit main thread, which conflicts with JavaFX's own thread initialization and causes a freeze. The `panama-gl-ui-javafx` module overrides the parent surefire configuration to exclude this flag.
 - **Windows and Linux**: No special JVM flags are needed. The AWT Event Dispatch Thread or JavaFX Application Thread is used for GL calls.
 - **SWT**: Work in progress (branch `ui/swt`). SWT has its own event loop and threading model that will need a dedicated `ThreadRedirect_SWT` implementation. On macOS, SWT typically requires the main thread, so `-XstartOnFirstThread` will likely be needed.
 
