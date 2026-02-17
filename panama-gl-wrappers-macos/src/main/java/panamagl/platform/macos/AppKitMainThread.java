@@ -32,7 +32,7 @@ import java.lang.invoke.MethodType;
  * <p>This is functionally equivalent to JOGL's {@code OSXUtil.IsMainThread()} and
  * {@code OSXUtil.RunOnMainThread()}, with the following advantages:
  * <ul>
- *   <li>No dependency on JOGL or any external native library.</li>
+ *   <li>No dependency on any external native library.</li>
  *   <li>Implemented entirely with the standard {@code java.lang.foreign} API (Panama FFI).</li>
  *   <li>Consistent with the rest of PanamaGL's approach of calling native APIs directly from Java.</li>
  * </ul>

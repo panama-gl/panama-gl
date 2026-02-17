@@ -49,7 +49,7 @@ public class ITTestGLCanvasSwing_macOS {
   BufferedImage screenshotWhenShown = null;
   List<BufferedImage> screenshotWhenResize = new ArrayList<>();
 
-@Ignore("Work in progress : can't get GL invoked to draw")
+//@Ignore("Work in progress : can't get GL invoked to draw")
   @Test
   public void main() throws InterruptedException {
 

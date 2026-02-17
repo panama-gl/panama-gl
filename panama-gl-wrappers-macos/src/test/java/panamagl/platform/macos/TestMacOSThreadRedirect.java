@@ -19,185 +19,148 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import junit.framework.Assert;
 import panamagl.offscreen.MacOSThreadRedirect;
 
 // VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview
 
+/**
+ * Tests for {@link MacOSThreadRedirect} in Panama mode.
+ *
+ * <h3>Main-thread tests</h3>
+ * When the test thread is the macOS main thread (typical in Maven surefire),
+ * {@link AppKitMainThread#runOnMainThread} detects this and executes the task
+ * inline. These tests exercise that path and always pass.
+ *
+ * <h3>Cross-thread dispatch</h3>
+ * The GCD cross-thread path ({@code dispatch_sync_f} from a worker thread to the
+ * main queue) requires the main thread to be pumping a CFRunLoop. In Maven surefire,
+ * the main thread is busy running tests — there is no run loop — so
+ * {@code dispatch_sync_f} deadlocks and crashes the forked JVM.
+ *
+ * The cross-thread test is therefore guarded: it only runs when the test thread is
+ * <b>not</b> the main thread (e.g. when launched from an IDE with a different
+ * threading setup and a CFRunLoop active). Otherwise it is skipped.
+ */
 public class TestMacOSThreadRedirect extends MacOSTest {
 
-  // ---------------------------------------------------------------
-  // Configuration
-  // ---------------------------------------------------------------
+  private static final long TIMEOUT_MS = 3000;
+
+  // ------------------------------------------------------------------
+  // Main-thread (inline) tests — always safe in Maven surefire
+  // ------------------------------------------------------------------
 
   @Test
-  public void defaultMode_isPanama() {
+  public void executesTask() {
     if (!checkPlatform())
       return;
 
-    // Given
     MacOSThreadRedirect redirect = new MacOSThreadRedirect();
-
-    // Then
-    Assert.assertFalse("Default mode should be Panama (not JOGL)", redirect.isUseJOGL());
-  }
-
-  @Test
-  public void constructorWithJOGL_setsMode() {
-    if (!checkPlatform())
-      return;
-
-    // Given
-    MacOSThreadRedirect panama = new MacOSThreadRedirect(false);
-    MacOSThreadRedirect jogl = new MacOSThreadRedirect(true);
-
-    // Then
-    Assert.assertFalse(panama.isUseJOGL());
-    Assert.assertTrue(jogl.isUseJOGL());
-  }
-
-  @Test
-  public void setUseJOGL_switchesMode() {
-    if (!checkPlatform())
-      return;
-
-    // Given
-    MacOSThreadRedirect redirect = new MacOSThreadRedirect();
-    Assert.assertFalse(redirect.isUseJOGL());
-
-    // When
-    redirect.setUseJOGL(true);
-
-    // Then
-    Assert.assertTrue(redirect.isUseJOGL());
-  }
-
-  // ---------------------------------------------------------------
-  // Panama mode
-  // ---------------------------------------------------------------
-
-  @Test
-  public void panamaMode_executesTask() {
-    if (!checkPlatform())
-      return;
-
-    // Given
-    MacOSThreadRedirect redirect = new MacOSThreadRedirect(false);
     AtomicBoolean executed = new AtomicBoolean(false);
 
-    // When
     redirect.run(() -> executed.set(true));
 
-    // Then
-    Assert.assertTrue("Task should have been executed in Panama mode", executed.get());
+    Assert.assertTrue("Task should have been executed", executed.get());
   }
 
   @Test
-  public void panamaMode_preservesTaskResult() {
+  public void preservesTaskResult() {
     if (!checkPlatform())
       return;
 
-    // Given
-    MacOSThreadRedirect redirect = new MacOSThreadRedirect(false);
+    MacOSThreadRedirect redirect = new MacOSThreadRedirect();
     AtomicReference<String> result = new AtomicReference<>();
 
-    // When
     redirect.run(() -> result.set("panama"));
 
-    // Then
     Assert.assertEquals("panama", result.get());
   }
 
   @Test
-  public void panamaMode_multipleSequentialTasks() {
+  public void multipleSequentialTasks() {
     if (!checkPlatform())
       return;
 
-    // Given
-    MacOSThreadRedirect redirect = new MacOSThreadRedirect(false);
+    MacOSThreadRedirect redirect = new MacOSThreadRedirect();
     StringBuilder sb = new StringBuilder();
 
-    // When
     redirect.run(() -> sb.append("1"));
     redirect.run(() -> sb.append("2"));
     redirect.run(() -> sb.append("3"));
 
-    // Then
     Assert.assertEquals("123", sb.toString());
   }
 
-  // ---------------------------------------------------------------
-  // JOGL mode
-  //
-  // GLProfile.initSingleton() and OSXUtil.RunOnMainThread() both
-  // may require the macOS main thread to be pumping AppKit events.
-  // In a JUnit runner this is typically not the case, so we run
-  // the test in a daemon thread with a short timeout. If it
-  // freezes (no run loop), the test is skipped gracefully.
-  // ---------------------------------------------------------------
-
-  @Ignore
+  /**
+   * Verifies that an exception thrown inside a task is observable.
+   *
+   * We cannot let the exception propagate through {@code redirect.run()} because
+   * when the task goes through the GCD path ({@code dispatch_sync_f}), an uncaught
+   * Java exception crosses the native upcall boundary and crashes the VM.
+   * Instead, we catch the exception inside the task itself and verify it was thrown.
+   */
   @Test
-  public void joglMode_executesTask() throws Exception {
+  public void taskException_isCaughtInsideTask() {
     if (!checkPlatform())
       return;
 
-    // Given
-    AtomicBoolean executed = new AtomicBoolean(false);
-    AtomicReference<Throwable> error = new AtomicReference<>();
-    CountDownLatch latch = new CountDownLatch(1);
+    MacOSThreadRedirect redirect = new MacOSThreadRedirect();
+    AtomicReference<Throwable> caught = new AtomicReference<>();
 
-    // When — run in a daemon thread to avoid freezing the test suite
+    redirect.run(() -> {
+      try {
+        throw new RuntimeException("test-error");
+      } catch (Throwable t) {
+        caught.set(t);
+      }
+    });
+
+    Assert.assertNotNull("Exception should have been thrown inside the task", caught.get());
+    Assert.assertTrue("Should contain original message",
+        caught.get().getMessage().contains("test-error"));
+  }
+
+  // ------------------------------------------------------------------
+  // Cross-thread test — only runs when test thread is NOT the main thread
+  // (requires a CFRunLoop on the main thread to avoid deadlock)
+  // ------------------------------------------------------------------
+
+  @Test
+  public void executesTask_fromWorkerThread() throws InterruptedException {
+    if (!checkPlatform())
+      return;
+
+    if (AppKitMainThread.isMainThread()) {
+      System.out.println("Skipping cross-thread test: current thread is the main thread "
+          + "(no CFRunLoop available for dispatch_sync_f)");
+      return;
+    }
+
+    MacOSThreadRedirect redirect = new MacOSThreadRedirect();
+    AtomicBoolean executed = new AtomicBoolean(false);
+    CountDownLatch done = new CountDownLatch(1);
+    AtomicReference<Throwable> error = new AtomicReference<>();
+
     Thread worker = new Thread(() -> {
       try {
-        MacOSThreadRedirect redirect = new MacOSThreadRedirect(true);
         redirect.run(() -> executed.set(true));
       } catch (Throwable t) {
         error.set(t);
       } finally {
-        latch.countDown();
+        done.countDown();
       }
-    }, "test-jogl-redirect");
+    }, "test-worker");
     worker.setDaemon(true);
     worker.start();
 
-    // Then — wait briefly; if it hangs, skip
-    if (!latch.await(300, TimeUnit.MILLISECONDS)) {
-      System.out.println("Skipping: JOGL mode timed out — GLProfile.initSingleton() or "
-          + "OSXUtil.RunOnMainThread() likely blocked (no AppKit run loop in JUnit context)");
-      return;
-    }
+    boolean completed = done.await(TIMEOUT_MS, TimeUnit.MILLISECONDS);
 
+    Assert.assertTrue("Task timed out — main thread may not be pumping events", completed);
     if (error.get() != null) {
-      throw new RuntimeException("JOGL mode threw an exception", error.get());
+      throw new RuntimeException("Worker thread threw an exception", error.get());
     }
-
-    Assert.assertTrue("Task should have been executed in JOGL mode", executed.get());
-  }
-
-  // ---------------------------------------------------------------
-  // Both modes produce same result
-  // ---------------------------------------------------------------
-
-  @Ignore
-  @Test
-  public void bothModes_produceSameResult() {
-    if (!checkPlatform())
-      return;
-
-    // Given
-    MacOSThreadRedirect panama = new MacOSThreadRedirect(false);
-    MacOSThreadRedirect jogl = new MacOSThreadRedirect(true);
-    AtomicReference<String> resultPanama = new AtomicReference<>();
-    AtomicReference<String> resultJOGL = new AtomicReference<>();
-
-    // When
-    panama.run(() -> resultPanama.set("done"));
-    jogl.run(() -> resultJOGL.set("done"));
-
-    // Then
-    Assert.assertEquals(resultPanama.get(), resultJOGL.get());
+    Assert.assertTrue("Task should have been executed from worker thread", executed.get());
   }
 }
