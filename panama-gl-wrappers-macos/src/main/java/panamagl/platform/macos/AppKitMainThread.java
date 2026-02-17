@@ -24,6 +24,7 @@ import java.lang.foreign.ValueLayout;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Provides main thread detection and dispatch on macOS using only the Panama FFI — no JNI and
@@ -89,8 +90,16 @@ public class AppKitMainThread {
    */
   private static final MemorySegment WORK_STUB;
 
-  /** The task currently being dispatched (guarded by {@code synchronized} in public methods). */
+  /** The task currently being dispatched (guarded by {@link #dispatchLock}). */
   private static Runnable pendingTask;
+
+  /**
+   * Guards the GCD dispatch path (worker → main thread) so that only one worker thread
+   * dispatches at a time. The main-thread inline path does NOT acquire this lock,
+   * avoiding deadlock when a worker thread is blocked inside {@code dispatch_sync_f}
+   * while the main thread needs to call {@code runOnMainThread}.
+   */
+  private static final ReentrantLock dispatchLock = new ReentrantLock();
 
   static {
     try {
@@ -154,19 +163,30 @@ public class AppKitMainThread {
    * @param task the task to run on the main thread
    * @throws RuntimeException if the native dispatch call fails or the task throws
    */
-  public static synchronized void runOnMainThread(Runnable task) {
+  public static void runOnMainThread(Runnable task) {
+    // Inline path: already on the main thread — run directly without any lock.
+    // This avoids deadlock when a worker thread holds dispatchLock inside
+    // dispatch_sync_f while the main thread also needs to run a task.
     if (isMainThread()) {
       task.run();
       return;
     }
 
-    pendingTask = task;
+    // GCD path: dispatch to the main queue from a worker thread.
+    // The lock serializes concurrent worker dispatches so that pendingTask
+    // is not overwritten between the assignment and the upcall.
+    dispatchLock.lock();
     try {
-      DISPATCH_SYNC_F.invokeExact(MAIN_QUEUE, MemorySegment.NULL, WORK_STUB);
-    } catch (Throwable t) {
-      throw new RuntimeException("dispatch_sync_f() call failed", t);
+      pendingTask = task;
+      try {
+        DISPATCH_SYNC_F.invokeExact(MAIN_QUEUE, MemorySegment.NULL, WORK_STUB);
+      } catch (Throwable t) {
+        throw new RuntimeException("dispatch_sync_f() call failed", t);
+      } finally {
+        pendingTask = null;
+      }
     } finally {
-      pendingTask = null;
+      dispatchLock.unlock();
     }
   }
 
