@@ -45,6 +45,7 @@
 					<excludes>
 						<exclude>**/TestGLProfile_macOS_arm.java</exclude>
 						<exclude>**/TestGLUTContext_macOS.java</exclude>
+						<exclude>**/TestAppKitMainThread.java</exclude>
 					</excludes>
 				</configuration>
 
@@ -60,6 +61,8 @@
 							<includes>
 								<include>**/TestGLProfile_macOS_arm.java</include>
 								<include>**/TestGLUTContext_macOS.java</include>
+								<include>**/TestAppKitMainThread.java</include>
+								
 							</includes>
 							<argLine>
 								-XstartOnFirstThread --enable-native-access=ALL-UNNAMED

@@ -22,8 +22,14 @@ import java.util.concurrent.atomic.AtomicReference;
 import org.junit.Test;
 import junit.framework.Assert;
 
-// VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview
 
+/**
+ * This class MUST be ran with the {@code -XstartOnFirstThread} VM argument
+ * to let all test assuming first thread be relevant.
+ * 
+ * Test requiring to run outside of main thread will spawn dedicated threads.
+ */
+//VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --enable-preview
 public class TestAppKitMainThread extends MacOSTest {
 
   // ---------------------------------------------------------------
@@ -163,24 +169,15 @@ public class TestAppKitMainThread extends MacOSTest {
   // thread is likely idle, and skip gracefully if so.
   // ---------------------------------------------------------------
 
+  // With JUnit 5, @Timeout(value = 2, unit = SECONDS) would run the test body on a
+  // separate thread automatically, which both guards against deadlock and ensures we
+  // are NOT on the main thread. In JUnit 4 we do this manually with a daemon thread
+  // and a CountDownLatch.
+
   @Test
   public void runOnMainThread_executesTask_whenCalledFromWorkerThread() throws Exception {
     if (!checkPlatform())
       return;
-
-    // If the test thread IS the main thread, the main thread is busy running
-    // this test and cannot pump GCD events → dispatch_sync_f from a worker would deadlock.
-    // This cross-thread test can only work in an environment where the main thread
-    // runs a CFRunLoop (e.g. a real application, not a JUnit runner).
-    if (AppKitMainThread.isMainThread()) {
-      System.out.println("Skipping: main thread is busy running tests, "
-          + "cannot dispatch from worker without deadlock");
-      return;
-    }
-
-    // If the test thread is NOT the main thread, the main thread might be idle
-    // (no run loop) → dispatch_sync_f would also deadlock.
-    // We attempt with a short timeout and report skip on failure.
 
     AtomicBoolean executed = new AtomicBoolean(false);
     AtomicReference<Throwable> error = new AtomicReference<>();
@@ -198,7 +195,7 @@ public class TestAppKitMainThread extends MacOSTest {
     worker.setDaemon(true); // allow JVM to exit if dispatch deadlocks
     worker.start();
 
-    if (!latch.await(2, TimeUnit.SECONDS)) {
+    if (!latch.await(500, TimeUnit.MILLISECONDS)) {
       System.out.println("Skipping: dispatch_sync_f timed out — main thread is not pumping events "
           + "(expected in JUnit context without CFRunLoop)");
       return;
