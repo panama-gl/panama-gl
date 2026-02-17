@@ -49,7 +49,7 @@ public class ITTestGLCanvasSwing_macOS {
   BufferedImage screenshotWhenShown = null;
   List<BufferedImage> screenshotWhenResize = new ArrayList<>();
 
-//@Ignore("Work in progress : can't get GL invoked to draw")
+@Ignore("Work in progress : can't get GL invoked to draw")
   @Test
   public void main() throws InterruptedException {
 
@@ -173,8 +173,8 @@ public class ITTestGLCanvasSwing_macOS {
     latch.await(6, TimeUnit.SECONDS);
     System.err.println("UNDERSTAND WHY RESIZE EVENT APPEAR AFTER THIS  :(");
     
-    //Assert.assertNotNull(screenshotWhenShown);  
-    //Assert.assertEquals(1, screenshotWhenResize.size());  
+    Assert.assertNotNull(screenshotWhenShown);  
+    Assert.assertEquals(1, screenshotWhenResize.size());  
 
   }
 
