@@ -37,7 +37,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   
   protected boolean debug = Debug.check(GLContext.class, WGLContext_windows.class);
   
-  protected boolean advanced = false;
+  protected boolean advanced = true;
   
   protected MemorySegment wglChoosePixelFormatARB;
   protected MemorySegment wglCreateContextAttribsARB;
