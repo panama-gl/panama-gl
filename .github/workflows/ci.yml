@@ -19,7 +19,7 @@ jobs:
         os:
           - ubuntu-latest    # Linux x86_64
           - macos-latest     # macOS ARM (Apple Silicon)
-          - macos-13         # macOS Intel x86_64
+          #- macos-13         # macOS Intel x86_64
           - windows-latest   # Windows x86_64
 
     steps:
