@@ -46,8 +46,10 @@ public class TestAnimator {
     //float dist = Math.abs(expectedLoops-a.getLoops());
     //System.out.println(dist + " to " + expectedLoops);
     int margin = 5;
-    Assert.assertTrue(a.getLoops() <= (expectedLoops+margin));
-    Assert.assertTrue(a.getLoops() >= (expectedLoops-margin));
+    
+    
+    Assert.assertTrue("Expect #loops " + a.getLoops() + "<=" + (expectedLoops+margin), a.getLoops() <= (expectedLoops+margin));
+    Assert.assertTrue("Expect #loops " + a.getLoops() + ">=" + (expectedLoops+margin), a.getLoops() >= (expectedLoops-margin));
     
     
   }
