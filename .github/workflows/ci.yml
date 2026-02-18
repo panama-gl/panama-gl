@@ -67,6 +67,38 @@ jobs:
         shell: pwsh
 
       # -------------------------------------------------------
+      # Windows: install Mesa3D D3D12 OpenGL software renderer.
+      # The system opengl32.dll (Microsoft stub) only supports
+      # OpenGL 1.1 and returns NULL for all wglGetProcAddress
+      # extension calls, causing FBO tests to fail on CI VMs.
+      # Mesa D3D12 supports OpenGL 3.3+ via WARP (Microsoft's
+      # always-available software D3D12 renderer) — no GPU needed.
+      # Replaces the stub in System32 (safe: runner is ephemeral).
+      # -------------------------------------------------------
+      - name: Install Mesa software OpenGL (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $headers = @{ Authorization = "Bearer $env:GITHUB_TOKEN" }
+          $release = Invoke-RestMethod `
+            "https://api.github.com/repos/mmozeiko/build-mesa/releases/latest" `
+            -Headers $headers
+          $asset = $release.assets `
+            | Where-Object { $_.name -like "mesa-d3d12-x64-*.7z" } `
+            | Select-Object -First 1
+          if (-not $asset) { Write-Error "Could not find mesa-d3d12-x64 asset"; exit 1 }
+          Write-Host "Downloading $($asset.name)"
+          Invoke-WebRequest -Uri $asset.browser_download_url -OutFile mesa.7z
+          7z x mesa.7z -omesa -y | Out-Null
+          $dll = Get-ChildItem -Path "mesa" -Recurse -Filter "opengl32.dll" `
+            | Select-Object -First 1
+          if (-not $dll) { Write-Error "opengl32.dll not found in Mesa archive"; exit 1 }
+          Copy-Item -Path $dll.FullName -Destination "C:\Windows\System32\opengl32.dll" -Force
+          Write-Host "Installed Mesa OpenGL from $($dll.FullName)"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # -------------------------------------------------------
       # Build & Test
       # Linux uses xvfb-run for the virtual display required by
       # AWT/Swing components during tests.
