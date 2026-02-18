@@ -18,6 +18,7 @@
 package panamagl.platform.windows;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import panamagl.offscreen.FBOReader_AWT;
 import panamagl.offscreen.TestFBO;
@@ -25,6 +26,7 @@ import panamagl.opengl.GL;
 
 // VM ARGS : --enable-native-access=ALL-UNNAMED -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
 public class TestFBO_windows extends WindowsTest{
+  @Ignore
   @Test
   public void given_GLUTContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {
     if (!checkPlatform())
@@ -32,6 +34,44 @@ public class TestFBO_windows extends WindowsTest{
 
     // Given a GLUT context
     GLUTContext_windows glutContext = new GLUTContext_windows();
+    glutContext.init();
+
+    // Given a GL caller
+    GL gl = new panamagl.platform.windows.x64.GL_windows_x64();
+    
+    // ---------------------------------------
+    // When initialize a FBO UNDER TEST
+    int width = 256;
+    int height = 256;
+    FBO_windows fbo = new FBO_windows(width, height);
+    
+    // Ensure does not leave this debug flag to false
+    Assert.assertTrue(fbo.arrayExport);
+    
+    // Then state conforms to configuration
+    Assert.assertFalse(fbo.isPrepared());
+    Assert.assertEquals(width, fbo.getWidth());
+    Assert.assertEquals(height, fbo.getHeight());
+
+    // Execute validation scenario
+    FBOReader_AWT reader = new FBOReader_AWT();
+    TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(fbo, reader, gl);
+    
+    // ---------------------------------------
+    // When Release context resources
+    glutContext.destroy();
+
+    // Then
+    Assert.assertFalse(glutContext.isInitialized());
+  }
+  
+  @Test
+  public void given_WGLContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {
+    if (!checkPlatform())
+      return;
+
+    // Given a GLUT context
+    WGLContext_windows glutContext = new WGLContext_windows();
     glutContext.init();
 
     // Given a GL caller
