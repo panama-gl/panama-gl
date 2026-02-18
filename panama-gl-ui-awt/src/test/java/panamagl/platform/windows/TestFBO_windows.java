@@ -26,16 +26,18 @@ import panamagl.opengl.GL;
 
 // VM ARGS : --enable-native-access=ALL-UNNAMED -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
 public class TestFBO_windows extends WindowsTest{
-  @Ignore
+  
+  
   @Test
-  public void given_GLUTContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {
+  public void given_WGLContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {
     if (!checkPlatform())
       return;
 
     // Given a GLUT context
-    GLUTContext_windows glutContext = new GLUTContext_windows();
-    glutContext.init();
-
+    WGLContext_windows wglContext = new WGLContext_windows();
+    wglContext.init();
+    wglContext.makeCurrent();
+    
     // Given a GL caller
     GL gl = new panamagl.platform.windows.x64.GL_windows_x64();
     
@@ -59,19 +61,20 @@ public class TestFBO_windows extends WindowsTest{
     
     // ---------------------------------------
     // When Release context resources
-    glutContext.destroy();
+    wglContext.destroy();
 
     // Then
-    Assert.assertFalse(glutContext.isInitialized());
+    Assert.assertFalse(wglContext.isInitialized());
   }
   
+  @Ignore
   @Test
-  public void given_WGLContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {
+  public void given_GLUTContext_ONLY_whenRenderSomething_ThenGetBufferedImage() {
     if (!checkPlatform())
       return;
 
     // Given a GLUT context
-    WGLContext_windows glutContext = new WGLContext_windows();
+    GLUTContext_windows glutContext = new GLUTContext_windows();
     glutContext.init();
 
     // Given a GL caller
