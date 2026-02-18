@@ -22,8 +22,7 @@
 		
 		<!-- Default Windows native library path. Override on CI with Mesa prepended:
 		       mvn package -D"native.lib.path.windows=C:\mesa;C:\Windows\system32" -->
-		<native.lib.path.windows>C:\Windows\system32;C:\Users\Martin\Downloads\fre
-eglut-MSVC-3.0.0-2.mp\freeglut\bin\x64</native.lib.path.windows>
+		<native.lib.path.windows>C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64</native.lib.path.windows>
 	</properties>
 
 	<modules>
