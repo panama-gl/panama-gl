@@ -75,7 +75,7 @@ public abstract class APanamaGLFactory_linux extends APanamaGLFactory {
     }
 
     // --------------------------------------
-    // A GL Context with CGL
+    // A GL Context with GLX
 
     else {
 

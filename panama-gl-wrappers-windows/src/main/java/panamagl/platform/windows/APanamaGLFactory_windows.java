@@ -77,7 +77,7 @@ protected boolean debug = Debug.check(APanamaGLFactory_windows.class);
     }
     
     // --------------------------------------
-    // A GL Context with CGL
+    // A GL Context with WGL
     
     else {
       wglContext = new WGLContext_windows();
