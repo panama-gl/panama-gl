@@ -23,6 +23,10 @@
 		<!-- Default Windows native library path. Override on CI with Mesa prepended:
 		       mvn package -D"native.lib.path.windows=C:\mesa;C:\Windows\system32" -->
 		<native.lib.path.windows>C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64</native.lib.path.windows>
+
+		<native.lib.path.linux>.:/usr/lib/x86_64-linux-gnu/:/usr/lib</native.lib.path.linux>
+		<native.lib.path.macos>.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/</native.lib.path.macos>
+
 	</properties>
 
 	<modules>
@@ -257,7 +261,7 @@
 
 							<!-- Configure Panama -->
 							<argLine>
-								--enable-native-access=ALL-UNNAMED -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/:/usr/lib
+								--enable-native-access=ALL-UNNAMED -Djava.library.path=${native.lib.path.linux}
 							</argLine>
 						</configuration>
 					</plugin>
@@ -291,9 +295,8 @@
 								<forkCount>1</forkCount>-->
 
 							<!-- Configure Panama -->
-							<!-- -XstartOnFirstThread should not be required anymore -->
 							<argLine>
-								--enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+								--enable-native-access=ALL-UNNAMED -Djava.library.path=${native.lib.path.macos}
 							</argLine>
 						</configuration>
 					</plugin>
@@ -327,9 +330,8 @@
 								<forkCount>1</forkCount>-->
 
 							<!-- Configure Panama -->
-							<!-- -XstartOnFirstThread should not be required anymore -->
 							<argLine>
-								--enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+								--enable-native-access=ALL-UNNAMED -Djava.library.path=${native.lib.path.macos}
 							</argLine>
 						</configuration>
 					</plugin>
