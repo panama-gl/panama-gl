@@ -182,7 +182,6 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     if(context.equals(wgl_h.NULL())) {
       GLError error = getWindowsLastError();
       error.throwRuntimeException();
-      //System.exit(0);
     }
     else {
       Debug.debug(debug, "WGL : context address : " + context);

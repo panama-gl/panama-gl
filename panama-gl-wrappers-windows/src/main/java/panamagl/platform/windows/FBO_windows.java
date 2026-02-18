@@ -122,9 +122,9 @@ public class FBO_windows extends AFBO implements FBO {
     glGenFramebuffers = wgl_h.wglGetProcAddress(function);
     
     if (glGenFramebuffers.address() == 0L) {
-      throw new RuntimeException(
-          "OpenGL EXT_framebuffer_object extension not available: wglGetProcAddress returned NULL for glGenFramebuffersEXT. "
-        + "This may mean the OpenGL context is a software renderer (no GPU driver).");
+      throw new UnsupportedOperationException(
+          "GL_EXT_framebuffer_object not available: wglGetProcAddress(\"glGenFramebuffersEXT\") returned NULL. "
+        + "A hardware-accelerated OpenGL context with extension support is required.");
     }
     
     // glBindFramebuffer
