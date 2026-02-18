@@ -266,8 +266,8 @@ public class TestGLCanvasJFX_all {
     panel.display();
 
     // Wait until the FBO has been resized to the new dimensions
-    waitFor(() -> panel.getFBO() != null && panel.getFBO().getWidth() == 3 * WIDTH,
-        "FBO width should be resized to " + (3 * WIDTH));
+    waitFor(() -> panel.getFBO() != null && panel.getFBO().getWidth() == 3 * WIDTH && panel.getFBO().getHeight() == 2 * HEIGHT,
+        "FBO width should be resized to " + (3 * WIDTH) );
 
     // Then FBO is resized as well
     Assert.assertEquals(3 * WIDTH, panel.getFBO().getWidth());
