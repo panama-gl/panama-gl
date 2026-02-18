@@ -45,25 +45,25 @@ jobs:
           sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev xvfb
 
       # -------------------------------------------------------
-      # Windows: download and install freeglut so the JVM can
-      # find its DLL (the pom.xml Windows profile hardcodes a
-      # local dev path — we override java.library.path below).
+      # Windows: download pre-built MSVC binaries from the
+      # reference source (same origin as the local dev zip in
+      # pom.xml). Copy freeglut.dll (x64) into System32, which
+      # is already in the pom.xml Windows java.library.path —
+      # no Maven command override needed.
+      # Note: freeglut has no Chocolatey package.
       # -------------------------------------------------------
-      - name: Install freeglut (Windows)
+      - name: Install freeglut MSVC x64 (Windows)
         if: runner.os == 'Windows'
-        run: choco install freeglut --yes
-        shell: pwsh
-
-      - name: Locate freeglut DLL and expose path (Windows)
-        if: runner.os == 'Windows'
-        id: freeglut
         run: |
-          $dll = Get-ChildItem -Path "C:\ProgramData\chocolatey\lib\freeglut" -Recurse -Filter "freeglut.dll" | Select-Object -First 1
-          if ($dll) {
-            echo "FREEGLUT_DIR=$($dll.DirectoryName)" | Out-File -FilePath $env:GITHUB_ENV -Append
-          } else {
-            echo "FREEGLUT_DIR=C:\Windows\System32" | Out-File -FilePath $env:GITHUB_ENV -Append
-          }
+          Invoke-WebRequest `
+            -Uri "https://www.transmissionzero.co.uk/files/software/development/GLUT/freeglut-MSVC.zip" `
+            -OutFile "freeglut-MSVC.zip"
+          Expand-Archive -Path "freeglut-MSVC.zip" -DestinationPath "C:\freeglut"
+          $dll = Get-ChildItem -Path "C:\freeglut" -Recurse -Filter "freeglut.dll" `
+            | Where-Object { $_.FullName -like "*x64*" } `
+            | Select-Object -First 1
+          Copy-Item -Path $dll.FullName -Destination "C:\Windows\System32\freeglut.dll"
+          Write-Host "Installed freeglut.dll from $($dll.FullName)"
         shell: pwsh
 
       # -------------------------------------------------------
@@ -83,10 +83,8 @@ jobs:
 
       - name: Build and test with Maven (Windows)
         if: runner.os == 'Windows'
-        # Override java.library.path to include the freeglut directory installed by Chocolatey
-        run: |
-          mvn --batch-mode package --file pom.xml `
-            "-Dsurefire.argLine=--enable-native-access=ALL-UNNAMED -Djava.library.path=C:\Windows\System32;$env:FREEGLUT_DIR"
+        # freeglut.dll is in System32, already covered by the pom.xml Windows profile
+        run: mvn --batch-mode package --file pom.xml
         shell: pwsh
 
       # -------------------------------------------------------
