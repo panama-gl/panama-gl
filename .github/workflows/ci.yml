@@ -1,0 +1,116 @@
+# Build and test Panama GL on Windows, macOS (ARM + Intel), and Linux
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+
+name: Java CI with Maven
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    name: Build & Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      # Don't cancel other jobs if one platform fails
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest    # Linux x86_64
+          - macos-latest     # macOS ARM (Apple Silicon)
+          - macos-13         # macOS Intel x86_64
+          - windows-latest   # Windows x86_64
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # -------------------------------------------------------
+      # JDK 22 is required for Panama Foreign Function & Memory API
+      # -------------------------------------------------------
+      - name: Set up JDK 22
+        uses: actions/setup-java@v4
+        with:
+          java-version: '22'
+          distribution: temurin
+          cache: maven
+
+      # -------------------------------------------------------
+      # Linux: install OpenGL / GLUT native libraries + virtual display
+      # -------------------------------------------------------
+      - name: Install OpenGL and GLUT libraries (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev xvfb
+
+      # -------------------------------------------------------
+      # Windows: download and install freeglut so the JVM can
+      # find its DLL (the pom.xml Windows profile hardcodes a
+      # local dev path — we override java.library.path below).
+      # -------------------------------------------------------
+      - name: Install freeglut (Windows)
+        if: runner.os == 'Windows'
+        run: choco install freeglut --yes
+        shell: pwsh
+
+      - name: Locate freeglut DLL and expose path (Windows)
+        if: runner.os == 'Windows'
+        id: freeglut
+        run: |
+          $dll = Get-ChildItem -Path "C:\ProgramData\chocolatey\lib\freeglut" -Recurse -Filter "freeglut.dll" | Select-Object -First 1
+          if ($dll) {
+            echo "FREEGLUT_DIR=$($dll.DirectoryName)" | Out-File -FilePath $env:GITHUB_ENV -Append
+          } else {
+            echo "FREEGLUT_DIR=C:\Windows\System32" | Out-File -FilePath $env:GITHUB_ENV -Append
+          }
+        shell: pwsh
+
+      # -------------------------------------------------------
+      # Build & Test
+      # Linux uses xvfb-run for the virtual display required by
+      # AWT/Swing components during tests.
+      # -------------------------------------------------------
+      - name: Build and test with Maven (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          xvfb-run --auto-servernum --server-args="-screen 0 1280x1024x24" \
+            mvn --batch-mode package --file pom.xml
+
+      - name: Build and test with Maven (macOS)
+        if: runner.os == 'macOS'
+        run: mvn --batch-mode package --file pom.xml
+
+      - name: Build and test with Maven (Windows)
+        if: runner.os == 'Windows'
+        # Override java.library.path to include the freeglut directory installed by Chocolatey
+        run: |
+          mvn --batch-mode package --file pom.xml `
+            "-Dsurefire.argLine=--enable-native-access=ALL-UNNAMED -Djava.library.path=C:\Windows\System32;$env:FREEGLUT_DIR"
+        shell: pwsh
+
+      # -------------------------------------------------------
+      # Collect Surefire reports (always, even on test failure)
+      # -------------------------------------------------------
+      - name: Collect Surefire reports (Unix)
+        if: runner.os != 'Windows' && always()
+        run: |
+          mkdir -p surefire-reports
+          find . -path "*/target/surefire-reports/*.xml" -exec cp {} surefire-reports/ \;
+
+      - name: Collect Surefire reports (Windows)
+        if: runner.os == 'Windows' && always()
+        run: |
+          New-Item -ItemType Directory -Force -Path surefire-reports | Out-Null
+          Get-ChildItem -Path . -Recurse -Filter "*.xml" |
+            Where-Object { $_.FullName -like "*\target\surefire-reports\*" } |
+            Copy-Item -Destination surefire-reports
+        shell: pwsh
+
+      - name: Upload Surefire reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: surefire-reports-${{ matrix.os }}
+          path: surefire-reports
+          if-no-files-found: ignore
