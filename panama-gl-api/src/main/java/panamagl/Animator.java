@@ -37,7 +37,7 @@ public class Animator {
   
   protected boolean yieldWhenDone = true;
   
-  protected int loops = 0;
+  protected volatile int loops = 0;
 
   public Animator(GLCanvas canvas) {
     this.canvas = canvas;
