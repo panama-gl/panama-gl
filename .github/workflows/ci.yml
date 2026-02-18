@@ -73,7 +73,8 @@ jobs:
       # extension calls, causing FBO tests to fail on CI VMs.
       # Mesa D3D12 supports OpenGL 3.3+ via WARP (Microsoft's
       # always-available software D3D12 renderer) — no GPU needed.
-      # Replaces the stub in System32 (safe: runner is ephemeral).
+      # Installed in C:\mesa, prepended to java.library.path via
+      # -Dnative.lib.path.windows in the Maven build step below.
       # -------------------------------------------------------
       - name: Install Mesa software OpenGL (Windows)
         if: runner.os == 'Windows'
@@ -93,8 +94,9 @@ jobs:
           $dll = Get-ChildItem -Path "mesa" -Recurse -Filter "opengl32.dll" `
             | Select-Object -First 1
           if (-not $dll) { Write-Error "opengl32.dll not found in Mesa archive"; exit 1 }
-          Copy-Item -Path $dll.FullName -Destination "C:\Windows\System32\opengl32.dll" -Force
-          Write-Host "Installed Mesa OpenGL from $($dll.FullName)"
+          New-Item -ItemType Directory -Force -Path "C:\mesa" | Out-Null
+          Copy-Item -Path $dll.FullName -Destination "C:\mesa\opengl32.dll" -Force
+          Write-Host "Installed Mesa OpenGL to C:\mesa\opengl32.dll"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -115,8 +117,9 @@ jobs:
 
       - name: Build and test with Maven (Windows)
         if: runner.os == 'Windows'
-        # freeglut.dll is in System32, already covered by the pom.xml Windows profile
-        run: mvn --batch-mode package --file pom.xml
+        # Mesa opengl32.dll is in C:\mesa (prepended via native.lib.path.windows),
+        # freeglut.dll is in System32, both covered by the resulting java.library.path.
+        run: mvn --batch-mode package --file pom.xml -D"native.lib.path.windows=C:\mesa;C:\Windows\system32"
         shell: pwsh
 
       # -------------------------------------------------------

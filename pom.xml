@@ -19,6 +19,11 @@
 		<panamagl.bindings.version>1.2.0-SNAPSHOT</panamagl.bindings.version>
 		<jzy3d.version>2.2.1-SNAPSHOT</jzy3d.version>
 		<jdk.version>22</jdk.version>
+		
+		<!-- Default Windows native library path. Override on CI with Mesa prepended:
+		       mvn package -D"native.lib.path.windows=C:\mesa;C:\Windows\system32" -->
+		<native.lib.path.windows>C:\Windows\system32;C:\Users\Martin\Downloads\fre
+eglut-MSVC-3.0.0-2.mp\freeglut\bin\x64</native.lib.path.windows>
 	</properties>
 
 	<modules>
@@ -361,9 +366,11 @@
 
 								<forkCount>1</forkCount>
 								<reuseForks>false</reuseForks>
-							<!-- Configure Panama -->
+							<!-- Configure Panama.
+							     Override native.lib.path.windows to prepend extra dirs (e.g. Mesa on CI):
+							       mvn package -D"native.lib.path.windows=C:\mesa;C:\Windows\system32" -->
 							<argLine>
-								--enable-native-access=ALL-UNNAMED  -Djava.library.path=C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64
+								--enable-native-access=ALL-UNNAMED  -Djava.library.path=${native.lib.path.windows}
 							</argLine>
 						</configuration>
 					</plugin>
