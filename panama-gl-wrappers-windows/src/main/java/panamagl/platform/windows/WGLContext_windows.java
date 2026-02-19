@@ -11,6 +11,8 @@ import panamagl.opengl.GLError;
 import wgl.windows.x86.PFNWGLCHOOSEPIXELFORMATARBPROC;
 import wgl.windows.x86.PFNWGLCREATECONTEXTATTRIBSARBPROC;
 import wgl.windows.x86.PIXELFORMATDESCRIPTOR;
+import wgl.windows.x86.WNDPROC;
+import wgl.windows.x86.tagWNDCLASSEXA;
 import wgl.windows.x86.wgl_h;
 
 /**
@@ -35,7 +37,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   
   protected boolean debug = Debug.check(GLContext.class, WGLContext_windows.class);
   
-  protected boolean advanced = false;
+  protected boolean advanced = true;
   
   protected MemorySegment wglChoosePixelFormatARB;
   protected MemorySegment wglCreateContextAttribsARB;
@@ -50,7 +52,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     this.advanced = advanced;
     
     NativeLibLoader.load();
-    NativeLibLoader.loadWindowsDLL();
+    NativeLibLoader.loadWindowsDLLs();
     
     initArena();
   }
@@ -121,16 +123,16 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     // Choose a pixel format
 
     MemorySegment pixelFormat = PIXELFORMATDESCRIPTOR.allocate(arena);
-    PIXELFORMATDESCRIPTOR.cAccumAlphaBits(pixelFormat, (byte)24);
-    
-    int flags = //wgl_h.PFD_DRAW_TO_WINDOW() |   // support window  
-        wgl_h.PFD_SUPPORT_OPENGL();// |   // support OpenGL  
-        //wgl_h.PFD_DOUBLEBUFFER();
+
+    // PFD_DRAW_TO_WINDOW is required: modern drivers (e.g. Mesa) reject formats
+    // that do not specify a drawable target. Standard bit depths are also needed.
+    int flags = wgl_h.PFD_DRAW_TO_WINDOW()
+              | wgl_h.PFD_SUPPORT_OPENGL();
     PIXELFORMATDESCRIPTOR.dwFlags(pixelFormat, flags);
     PIXELFORMATDESCRIPTOR.iPixelType(pixelFormat, (byte)wgl_h.PFD_TYPE_RGBA());
-    PIXELFORMATDESCRIPTOR.cAlphaBits(pixelFormat, (byte)11);
-    PIXELFORMATDESCRIPTOR.cColorBits(pixelFormat, (byte)13);
-    PIXELFORMATDESCRIPTOR.cDepthBits(pixelFormat, (byte)15);
+    PIXELFORMATDESCRIPTOR.cColorBits(pixelFormat, (byte)32); // was 13 before using mesa
+    PIXELFORMATDESCRIPTOR.cAlphaBits(pixelFormat, (byte)8); // was 11 before using mesa
+    PIXELFORMATDESCRIPTOR.cDepthBits(pixelFormat, (byte)24); // was 15 before using mesa
     PIXELFORMATDESCRIPTOR.iLayerType(pixelFormat, (byte)wgl_h.PFD_MAIN_PLANE());
     
     // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-choosepixelformat
@@ -180,7 +182,6 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     if(context.equals(wgl_h.NULL())) {
       GLError error = getWindowsLastError();
       error.throwRuntimeException();
-      //System.exit(0);
     }
     else {
       Debug.debug(debug, "WGL : context address : " + context);
@@ -270,30 +271,64 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   
   /**
    * Retrieve a handle to the device context required for initializing the WGL context.
+   *
+   * When no window handle is provided, a small invisible dummy window is created to
+   * obtain a valid HWND-based DC. GetDC(NULL) (screen DC) must not be used: it is
+   * not valid for WGL context creation with modern drivers such as Mesa that require
+   * a real HWND to set up their rendering backend.
    */
   protected void initHDC() {
-    
-    // Get a Handle on the window
-    if(windowHandle[0]!=0) {
-      long[] wh = {windowHandle[0]};
-      //hWnd = arena.allocateFrom(ValueLayout.JAVA_LONG, wh);
+    if (windowHandle[0] != 0) {
       hWnd = arena.allocateFrom(ValueLayout.JAVA_INT, windowHandle[0]);
-
       Debug.debug(debug, "WGL : HWND : " + windowHandle[0]);
-
-      // Get a Handle on Current Device Context
-      // https://learn.microsoft.com/fr-fr/windows/win32/api/winuser/nf-winuser-getdc
-      hdc = wgl_h.GetDC(hWnd);
     }
     else {
-      // If hWND is NULL, we get a DEVICE CONTEXT for the whole screen
-      // (and not for the window only)
-      hdc = wgl_h.GetDC(wgl_h.NULL());      
+      hWnd = createDummyWindow();
+      Debug.debug(debug, "WGL : dummy HWND : " + hWnd);
     }
-    
+
+    hdc = wgl_h.GetDC(hWnd);
     Debug.debug(debug, "WGL : HDC : " + hdc);
-    
-    //wgl_h.wglGetCurrentDC(); 
+  }
+
+  /**
+   * Create a minimal invisible 1x1 popup window whose sole purpose is to provide a
+   * valid HWND+DC for WGL pixel format selection and context creation.
+   *
+   * CS_OWNDC ensures the DC is permanently associated with the window (required by WGL).
+   */
+  protected MemorySegment createDummyWindow() {
+    MemorySegment className = arena.allocateFrom("PanamaGLDummy");
+
+    MemorySegment wc = tagWNDCLASSEXA.allocate(arena);
+    tagWNDCLASSEXA.cbSize(wc, (int) wc.byteSize());
+    tagWNDCLASSEXA.style(wc, wgl_h.CS_OWNDC());
+    tagWNDCLASSEXA.lpfnWndProc(wc, WNDPROC.allocate((hwnd, msg, wp, lp) -> 0L, arena));
+    tagWNDCLASSEXA.cbClsExtra(wc, 0);
+    tagWNDCLASSEXA.cbWndExtra(wc, 0);
+    tagWNDCLASSEXA.hInstance(wc, wgl_h.NULL());
+    tagWNDCLASSEXA.hIcon(wc, wgl_h.NULL());
+    tagWNDCLASSEXA.hCursor(wc, wgl_h.NULL());
+    tagWNDCLASSEXA.hbrBackground(wc, wgl_h.NULL());
+    tagWNDCLASSEXA.lpszMenuName(wc, wgl_h.NULL());
+    tagWNDCLASSEXA.lpszClassName(wc, className);
+    tagWNDCLASSEXA.hIconSm(wc, wgl_h.NULL());
+
+    // Ignore return value: if the class is already registered (e.g. previous test in
+    // the same JVM), CreateWindowExA will still succeed with the existing class.
+    wgl_h.RegisterClassExA(wc);
+
+    return wgl_h.CreateWindowExA(
+        0,                              // no extended styles
+        className,                      // class registered above
+        arena.allocateFrom(""),         // empty title
+        wgl_h.WS_POPUP(),              // no title bar / borders
+        0, 0, 1, 1,                    // 1x1 pixel, top-left corner
+        wgl_h.NULL(),                  // no parent
+        wgl_h.NULL(),                  // no menu
+        wgl_h.NULL(),                  // hInstance = current process
+        wgl_h.NULL()                   // no extra param
+    );
   }
   
   /**

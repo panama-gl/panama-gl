@@ -1,0 +1,149 @@
+# Build and test Panama GL on Windows, macOS (ARM + Intel), and Linux
+# https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
+
+name: Java CI with Maven
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    name: Build & Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      # Don't cancel other jobs if one platform fails
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest    # Linux x86_64
+          - macos-latest     # macOS ARM (Apple Silicon)
+          #- macos-13         # macOS Intel x86_64
+          #- windows-latest   # Windows x86_64
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # -------------------------------------------------------
+      # JDK 22 is required for Panama Foreign Function & Memory API
+      # -------------------------------------------------------
+      - name: Set up JDK 22
+        uses: actions/setup-java@v4
+        with:
+          java-version: '22'
+          distribution: temurin
+          cache: maven
+
+      # -------------------------------------------------------
+      # Linux: install OpenGL / GLUT native libraries + virtual display
+      # -------------------------------------------------------
+      - name: Install OpenGL and GLUT libraries (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev xvfb
+
+      # -------------------------------------------------------
+      # Windows: download pre-built MSVC binaries from the
+      # reference source (same origin as the local dev zip in
+      # pom.xml). Copy freeglut.dll (x64) into System32, which
+      # is already in the pom.xml Windows java.library.path —
+      # no Maven command override needed.
+      # Note: freeglut has no Chocolatey package.
+      # -------------------------------------------------------
+      - name: Install freeglut MSVC x64 (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          Invoke-WebRequest `
+            -Uri "https://www.transmissionzero.co.uk/files/software/development/GLUT/freeglut-MSVC.zip" `
+            -OutFile "freeglut-MSVC.zip"
+          Expand-Archive -Path "freeglut-MSVC.zip" -DestinationPath "C:\freeglut"
+          $dll = Get-ChildItem -Path "C:\freeglut" -Recurse -Filter "freeglut.dll" `
+            | Where-Object { $_.FullName -like "*x64*" } `
+            | Select-Object -First 1
+          Copy-Item -Path $dll.FullName -Destination "C:\Windows\System32\freeglut.dll"
+          Write-Host "Installed freeglut.dll from $($dll.FullName)"
+        shell: pwsh
+
+      # -------------------------------------------------------
+      # Windows: install Mesa3D D3D12 OpenGL software renderer.
+      # The system opengl32.dll (Microsoft stub) only supports
+      # OpenGL 1.1 and returns NULL for all wglGetProcAddress
+      # extension calls, causing FBO tests to fail on CI VMs.
+      # Mesa D3D12 supports OpenGL 3.3+ via WARP (Microsoft's
+      # always-available software D3D12 renderer) — no GPU needed.
+      # Installed in C:\mesa, prepended to java.library.path via
+      # -Dnative.lib.path.windows in the Maven build step below.
+      # -------------------------------------------------------
+      - name: Install Mesa software OpenGL (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $headers = @{ Authorization = "Bearer $env:GITHUB_TOKEN" }
+          $release = Invoke-RestMethod `
+            "https://api.github.com/repos/mmozeiko/build-mesa/releases/latest" `
+            -Headers $headers
+          $asset = $release.assets `
+            | Where-Object { $_.name -like "mesa-d3d12-x64-*.7z" } `
+            | Select-Object -First 1
+          if (-not $asset) { Write-Error "Could not find mesa-d3d12-x64 asset"; exit 1 }
+          Write-Host "Downloading $($asset.name)"
+          Invoke-WebRequest -Uri $asset.browser_download_url -OutFile mesa.7z
+          7z x mesa.7z -omesa -y | Out-Null
+          $dll = Get-ChildItem -Path "mesa" -Recurse -Filter "opengl32.dll" `
+            | Select-Object -First 1
+          if (-not $dll) { Write-Error "opengl32.dll not found in Mesa archive"; exit 1 }
+          New-Item -ItemType Directory -Force -Path "C:\mesa" | Out-Null
+          Copy-Item -Path $dll.FullName -Destination "C:\mesa\opengl32.dll" -Force
+          Write-Host "Installed Mesa OpenGL to C:\mesa\opengl32.dll"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # -------------------------------------------------------
+      # Build & Test
+      # Linux uses xvfb-run for the virtual display required by
+      # AWT/Swing components during tests.
+      # -------------------------------------------------------
+      - name: Build and test with Maven (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          xvfb-run --auto-servernum --server-args="-screen 0 1280x1024x24" \
+            mvn --batch-mode package --file pom.xml
+
+      - name: Build and test with Maven (macOS)
+        if: runner.os == 'macOS'
+        run: mvn --batch-mode package --file pom.xml
+
+      - name: Build and test with Maven (Windows)
+        if: runner.os == 'Windows'
+        # Mesa opengl32.dll is in C:\mesa (prepended via native.lib.path.windows),
+        # freeglut.dll is in System32, both covered by the resulting java.library.path.
+        run: mvn --batch-mode package --file pom.xml -D"native.lib.path.windows=C:\mesa;C:\Windows\system32"
+        shell: pwsh
+
+      # -------------------------------------------------------
+      # Collect Surefire reports (always, even on test failure)
+      # -------------------------------------------------------
+      - name: Collect Surefire reports (Unix)
+        if: runner.os != 'Windows' && always()
+        run: |
+          mkdir -p surefire-reports
+          find . -path "*/target/surefire-reports/*.xml" -exec cp {} surefire-reports/ \;
+
+      - name: Collect Surefire reports (Windows)
+        if: runner.os == 'Windows' && always()
+        run: |
+          New-Item -ItemType Directory -Force -Path surefire-reports | Out-Null
+          Get-ChildItem -Path . -Recurse -Filter "*.xml" |
+            Where-Object { $_.FullName -like "*\target\surefire-reports\*" } |
+            Copy-Item -Destination surefire-reports
+        shell: pwsh
+
+      - name: Upload Surefire reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: surefire-reports-${{ matrix.os }}
+          path: surefire-reports
+          if-no-files-found: ignore

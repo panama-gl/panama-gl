@@ -120,7 +120,13 @@ public class FBO_windows extends AFBO implements FBO {
     // glGenFramebuffers
     function = classArena.allocateFrom("glGenFramebuffersEXT");
     glGenFramebuffers = wgl_h.wglGetProcAddress(function);
-        
+    
+    if (glGenFramebuffers.address() == 0L) {
+      throw new UnsupportedOperationException(
+          "GL_EXT_framebuffer_object not available: wglGetProcAddress(\"glGenFramebuffersEXT\") returned NULL. "
+        + "A hardware-accelerated OpenGL context with extension support is required.");
+    }
+    
     // glBindFramebuffer
     function = classArena.allocateFrom("glBindFramebufferEXT");
     glBindFramebuffer = wgl_h.wglGetProcAddress(function);

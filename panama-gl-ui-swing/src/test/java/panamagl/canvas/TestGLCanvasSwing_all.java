@@ -15,16 +15,15 @@
  *******************************************************************************/
 package panamagl.canvas;
 
-import java.util.concurrent.CountDownLatch;
+import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Ignore;
 import org.junit.Test;
-import junit.framework.Assert;
+import org.junit.Assert;
 import panamagl.GLEventListener;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.offscreen.FBOReader_AWT;
 import panamagl.offscreen.OffscreenRenderer;
-import panamagl.opengl.GL;
 import panamagl.platform.macos.OffscreenRenderer_macOS;
 import panamagl.utils.ThreadUtils;
 import panamagl.utils.TicToc;
@@ -46,86 +45,6 @@ public class TestGLCanvasSwing_all {
   public static int WAIT_FOR_INIT_AND_DESTROY = 1000;
   public static int WAIT_FOR_RENDER_DISPATCHED_MS = 1000;
 
-  /*@Test
-  public void whenPanelIsAdded_ThenGLEventListenerIsInvoked() throws InterruptedException {
-    System.err.println("!!\n\tFLAKKY TEST WARNING : may fail because of race condition before asserts");
-
-    // ------------------------------------------------
-    // Given a panel 
-
-    PanamaGLFactory factory = PanamaGLFactory.select();
-    
-    GLCanvasSwing panel = new GLCanvasSwing(factory);
-
-    GLEventListener listener = mock(GLEventListener.class);
-    panel.setGLEventListener(listener);
-
-    Assert.assertFalse(panel.isInitialized());
-    
-    verify(listener, times(0)).init(any());
-    verify(listener, times(0)).display(any());
-    verify(listener, times(0)).reshape(any(), anyInt(), anyInt(), anyInt(), anyInt());
-    verify(listener, times(0)).dispose(any());
-
-
-    // ------------------------------------------------
-    // When : GL initialization is triggered by panel addition
-    // to its parent frame
-
-    panel.addNotify();
-    
-    // Let AWT or macOS main thread to perform initialization
-    Thread.yield();
-    Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
-
-    verify(listener, times(1)).init(any());
-    
-    // Then context is initialized
-    Assert.assertTrue(panel.getContext().isInitialized());
-
-    // Then panel is initialized
-    Assert.assertTrue(panel.isInitialized());
-
-
-
-    // ------------------------------------------------
-    // When : resize, and after a while
-
-    panel.setSize(20, 20);
-    //panel.display(); // used to be required from maven
-
-    // Wait for the event to dispatch
-    Thread.sleep(WAIT_FOR_RENDER_DISPATCHED_MS);
-
-    // Then : should trigger glEventListener.display() and reshape()
-    verify(listener, times(1)).init(any());
-    verify(listener, times(1)).display(any());
-    verify(listener, times(1)).reshape(any(), anyInt(), anyInt(), anyInt(), anyInt());
-    verify(listener, times(0)).dispose(any());
-
-    // Then : the displayed image should be available as screenshot
-    Assert.assertNotNull(panel.getScreenshot());
-
-
-
-    // ------------------------------------------------
-    // When : remove from component hierarchy
-
-    panel.removeNotify();
-
-    // Let AWT or macOS main thread to perform initialization
-    Thread.sleep(WAIT_FOR_INIT_AND_DESTROY);
-
-    // Then : all components are not initialized anymore
-    Assert.assertFalse(panel.getContext().isInitialized());
-    Assert.assertFalse(panel.isInitialized());
-    
-    verify(listener, times(1)).init(any());
-    verify(listener, times(1)).display(any());
-    verify(listener, times(1)).reshape(any(), anyInt(), anyInt(), anyInt(), anyInt());
-    verify(listener, times(1)).dispose(any());
-
-  }*/
 
   /**
    * Verify that event listener get invoked when panel is added.
@@ -224,14 +143,59 @@ public class TestGLCanvasSwing_all {
 
   /**
    * Verify that FBO is resized when Panel is resized.
-   * 
-   * This check the whole chain panel->listener->offscreen_renderer->fbo.
-   * 
-   * Having multiple tests here is important to detect issue related to multiple calls to 
-   * <code>glutInit(...)</code>. Please keep them here.
+   *
+   * <p>This checks the whole chain panel-&gt;listener-&gt;offscreen_renderer-&gt;fbo.
+   *
+   * <p>Having multiple tests here is important to detect issues related to multiple calls to
+   * {@code glutInit(...)}. Please keep them here.
+   *
+   * <h3>Synchronization design</h3>
+   *
+   * <p>Each {@code panel.setSize()} call produces <em>two</em> renders on the AWT EDT:
+   * one from {@code ResizeHandler.componentResized()} and one from the explicit
+   * {@code panel.display()} call. {@code BlockingGLListener} uses one
+   * {@code CountDownLatch} per event type; {@code awaitDisplay()} unblocks on the
+   * <em>first</em> render, leaving the second one still queued ("stale").
+   * {@code resetLatches()} must drain that stale render before creating new latches,
+   * otherwise the stale event would prematurely release the new latch.
+   *
+   * <pre>
+   * Test thread              AWT EDT                           BlockingGLListener
+   * -----------              -------                           ------------------
+   *
+   * setSize(100,100) ------> componentResized()
+   *                            onResize() [direct call, EDT]
+   *                            renderGLToImage(100,100)
+   *                              fbo.resize(100)
+   *                              listener.display() ---------> displayLatch.countDown()
+   *                                                             (latch: 1 -> 0)
+   * panel.display() -------> invokeLater(r1=render100)  &lt;-- r1 still queued
+   *
+   * awaitDisplay() &lt;----------------------------------------- unblocks (latch=0)
+   * [asserts ok, FBO=100]
+   *
+   *                          r1 runs: renderGLToImage(100,100)   &lt;-- STALE
+   *                            fbo.resize(100)
+   * resetLatches()             listener.display() ---------> would hit NEW latch!
+   *   invokeAndWait( {} ) ---> [barrier: wait for r1 to finish first]
+   *   &lt;----------------------- barrier passed, queue empty
+   *   new displayLatch(1)                                        (safe: r1 already done)
+   *
+   * setSize(300,200) ------> componentResized()
+   *                            renderGLToImage(300,200)
+   *                              fbo.resize(300)
+   *                              listener.display() ---------> displayLatch.countDown()
+   *                                                             (latch: 1 -> 0)
+   * panel.display() -------> invokeLater(r2=render300)
+   *
+   * awaitDisplay() &lt;----------------------------------------- unblocks (latch=0)
+   * [asserts ok, FBO=300]    r2 runs later, no-op on latch
+   * </pre>
+   *
+   * @throws InvocationTargetException if the AWT barrier in {@code resetLatches()} fails
    */
   @Test
-  public void whenPanelIsResized_ThenFBOIsResized() throws InterruptedException {
+  public void whenPanelIsResized_ThenFBOIsResized() throws InterruptedException, InvocationTargetException {
     //System.err.println("!!\n\tFLAKKY TEST WARNING : may fail because of race condition before asserts");
     
     BlockingGLListener glGate = new BlockingGLListener();
@@ -286,85 +250,7 @@ public class TestGLCanvasSwing_all {
     Assert.assertEquals(2 * HEIGHT, panel.getFBO().getHeight());
 
   }
-  
-  /**
-   * This listener is used for tests where the unit test threads invokes
-   * a GUI component methods that triggers init(), display(), resize(), dispose() 
-   * that happens in the AWT thread, hence in a different thread than the calling thread. 
-   */
-  class BlockingGLListener implements GLEventListener{
-    CountDownLatch initLatch = new CountDownLatch(1);
-    CountDownLatch displayLatch = new CountDownLatch(1);
-    CountDownLatch disposeLatch = new CountDownLatch(1);
     
-    EventCounter counter = new EventCounter();
-
-
-    public void resetLatches() {
-      
-      if(initLatch!=null)
-        initLatch.countDown();
-      initLatch = new CountDownLatch(1);
-
-      if(displayLatch!=null)
-        displayLatch.countDown();
-      displayLatch = new CountDownLatch(1);
-      
-      if(disposeLatch!=null)
-        disposeLatch.countDown();
-      disposeLatch = new CountDownLatch(1);
-
-    }
-    
-    public void awaitInit() throws InterruptedException {
-      initLatch.await();
-    }
-
-    public void awaitDisplay() throws InterruptedException {
-      displayLatch.await();
-    }
-
-    public void awaitDispose() throws InterruptedException {
-      disposeLatch.await();
-    }
-
-    public EventCounter getCounter() {
-      return counter;
-    }
-
-    @Override
-    public void init(GL gl) {
-      initLatch.countDown();
-      counter.init++;
-    }
-
-    @Override
-    public void display(GL gl) {
-      displayLatch.countDown();
-      counter.display++;
-    }
-
-    @Override
-    public void reshape(GL gl, int x, int y, int width, int height) {
-      counter.reshape++;
-    }
-
-    @Override
-    public void dispose(GL gl) {
-      disposeLatch.countDown();
-      counter.dispose++;
-    }
-  }
-  
-  protected class EventCounter {
-    int init = 0;
-    int display = 0;
-    int reshape = 0;
-    int dispose = 0;
-  }
-
-    
-  
 
  @Ignore("Not working in CLI yet (hanging, despite using surefire unlimited threads)")
   @Test

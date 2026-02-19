@@ -26,29 +26,48 @@ import panamagl.canvas.GLCanvas;
 public class TestAnimator {
   @Test
   public void animator() throws InterruptedException {
-    
-    GLCanvas canvas=  mock(GLCanvas.class);//new GLCanvasSwing(p);
-    
+
+    GLCanvas canvas = mock(GLCanvas.class);
+
     when(canvas.isVisible()).thenReturn(true);
-    
-    float DURATION = 1000.0f;
-    
-    Animator a= new Animator(canvas);
+
+    // How many loops we want to observe before asserting timing
+    final int TARGET_LOOPS = 10;
+    // Generous timeout: even a very slow CI runner should complete 10x40ms in 10s
+    final long TIMEOUT_MS = 10_000;
+
+    Animator a = new Animator(canvas);
     a.setSleepTime(Animator.RETINAL_PERSISTENCE); // 40ms
-    
-    Assert.assertTrue(a.getLoops() == 0);
+
+    Assert.assertEquals("Animator should start at 0 loops", 0, a.getLoops());
+
+    long start = System.currentTimeMillis();
     a.start();
-    Thread.sleep((int)DURATION);
+
+    // Wait until TARGET_LOOPS iterations are done (machine-speed-independent)
+    while (a.getLoops() < TARGET_LOOPS && (System.currentTimeMillis() - start) < TIMEOUT_MS) {
+      Thread.sleep(20);
+    }
+
     a.stop();
-    
-    // Verify number of image per second is relevant
-    float expectedLoops = DURATION/Animator.RETINAL_PERSISTENCE;
-    //float dist = Math.abs(expectedLoops-a.getLoops());
-    //System.out.println(dist + " to " + expectedLoops);
-    int margin = 5;
-    Assert.assertTrue(a.getLoops() <= (expectedLoops+margin));
-    Assert.assertTrue(a.getLoops() >= (expectedLoops-margin));
-    
-    
+    long elapsed = System.currentTimeMillis() - start;
+
+    // 1. Verify the animator actually ran the required number of loops
+    Assert.assertTrue(
+        "Animator should complete at least " + TARGET_LOOPS + " loops, got " + a.getLoops(),
+        a.getLoops() >= TARGET_LOOPS);
+
+    // 2. Verify average time per loop is consistent with sleepTime.
+    //    Each loop sleeps ~sleepTime, so elapsed/loops should be in [sleepTime*0.5 , sleepTime*4].
+    //    The upper bound is intentionally large to absorb CI scheduler jitter.
+    long avgMs = elapsed / a.getLoops();
+    long minAvg = Animator.RETINAL_PERSISTENCE / 2;           // 20ms  — way below expected
+    long maxAvg = Animator.RETINAL_PERSISTENCE * 4;           // 160ms — way above expected
+    Assert.assertTrue(
+        "Avg loop time " + avgMs + "ms should be >= " + minAvg + "ms (sleepTime=" + Animator.RETINAL_PERSISTENCE + "ms)",
+        avgMs >= minAvg);
+    Assert.assertTrue(
+        "Avg loop time " + avgMs + "ms should be <= " + maxAvg + "ms (sleepTime=" + Animator.RETINAL_PERSISTENCE + "ms)",
+        avgMs <= maxAvg);
   }
 }

@@ -19,6 +19,14 @@
 		<panamagl.bindings.version>1.2.0-SNAPSHOT</panamagl.bindings.version>
 		<jzy3d.version>2.2.1-SNAPSHOT</jzy3d.version>
 		<jdk.version>22</jdk.version>
+		
+		<!-- Default Windows native library path. Override on CI with Mesa prepended:
+		       mvn package -D"native.lib.path.windows=C:\mesa;C:\Windows\system32" -->
+		<native.lib.path.windows>C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64</native.lib.path.windows>
+
+		<native.lib.path.linux>.:/usr/lib/x86_64-linux-gnu/:/usr/lib</native.lib.path.linux>
+		<native.lib.path.macos>.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/</native.lib.path.macos>
+
 	</properties>
 
 	<modules>
@@ -40,24 +48,30 @@
 
 		<!-- OTHER MODULES -->
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>2.25.3</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.25.3</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-collections4</artifactId>
-			<version>4.4</version>
+			<version>4.5.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>24.0-jre</version>
+			<version>33.4.8-jre</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.9</version>
+			<version>4.13.2</version>
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
@@ -65,7 +79,7 @@
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
-			<version>4.10.0</version>
+			<version>4.11.0</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -210,7 +224,7 @@
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
 				<artifactId>wagon-ftp</artifactId>
-				<version>2.10</version>
+				<version>3.5.3</version>
 			</extension>
 		</extensions>
 
@@ -253,7 +267,7 @@
 
 							<!-- Configure Panama -->
 							<argLine>
-								--enable-native-access=ALL-UNNAMED -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/:/usr/lib
+								--enable-native-access=ALL-UNNAMED -Djava.library.path=${native.lib.path.linux}
 							</argLine>
 						</configuration>
 					</plugin>
@@ -287,9 +301,8 @@
 								<forkCount>1</forkCount>-->
 
 							<!-- Configure Panama -->
-							<!-- -XstartOnFirstThread should not be required anymore -->
 							<argLine>
-								--enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+								--enable-native-access=ALL-UNNAMED -Djava.library.path=${native.lib.path.macos}
 							</argLine>
 						</configuration>
 					</plugin>
@@ -323,9 +336,8 @@
 								<forkCount>1</forkCount>-->
 
 							<!-- Configure Panama -->
-							<!-- -XstartOnFirstThread should not be required anymore -->
 							<argLine>
-								--enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+								--enable-native-access=ALL-UNNAMED -Djava.library.path=${native.lib.path.macos}
 							</argLine>
 						</configuration>
 					</plugin>
@@ -359,9 +371,11 @@
 
 								<forkCount>1</forkCount>
 								<reuseForks>false</reuseForks>
-							<!-- Configure Panama -->
+							<!-- Configure Panama.
+							     Override native.lib.path.windows to prepend extra dirs (e.g. Mesa on CI):
+							       mvn package -D"native.lib.path.windows=C:\mesa;C:\Windows\system32" -->
 							<argLine>
-								--enable-native-access=ALL-UNNAMED  -Djava.library.path=C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64
+								--enable-native-access=ALL-UNNAMED  -Djava.library.path=${native.lib.path.windows}
 							</argLine>
 						</configuration>
 					</plugin>

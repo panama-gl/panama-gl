@@ -33,7 +33,7 @@
 			<!--
 				Some tests require -XstartOnFirstThread (GLUT context, GL profile
 				querying with GLUT) while others must NOT use it (they would freeze).
-				We split test execution in two surefire runs.
+				The -XstartOnFirstThread execution lives in the macOS-only profile below.
 			-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -48,30 +48,53 @@
 						<exclude>**/TestAppKitMainThread.java</exclude>
 					</excludes>
 				</configuration>
-
-				<executions>
-					<!-- Additional execution: only tests requiring -XstartOnFirstThread -->
-					<execution>
-						<id>tests-requiring-main-thread</id>
-						<goals>
-							<goal>test</goal>
-						</goals>
-						<configuration>
-							<excludes combine.self="override" />
-							<includes>
-								<include>**/TestGLProfile_macOS_arm.java</include>
-								<include>**/TestGLUTContext_macOS.java</include>
-								<include>**/TestAppKitMainThread.java</include>
-								
-							</includes>
-							<argLine>
-								-XstartOnFirstThread --enable-native-access=ALL-UNNAMED
-								-Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
-							</argLine>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<!--
+			-XstartOnFirstThread is a macOS-only JVM flag. Running this execution
+			on Linux or Windows crashes the forked VM immediately (exit code 1).
+			Restrict it to macOS builds only.
+		-->
+		<profile>
+			<id>macos-tests-requiring-main-thread</id>
+			<activation>
+				<os>
+					<family>mac</family>
+				</os>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<version>3.0.0-M5</version>
+						<executions>
+							<execution>
+								<id>tests-requiring-main-thread</id>
+								<goals>
+									<goal>test</goal>
+								</goals>
+								<configuration>
+									<excludes combine.self="override" />
+									<includes>
+										<include>**/TestGLProfile_macOS_arm.java</include>
+										<include>**/TestGLUTContext_macOS.java</include>
+										<include>**/TestAppKitMainThread.java</include>
+									</includes>
+									<argLine>
+										-XstartOnFirstThread --enable-native-access=ALL-UNNAMED
+										-Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+									</argLine>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 </project>
