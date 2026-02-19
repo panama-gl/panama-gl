@@ -15,6 +15,8 @@
  *******************************************************************************/
 package panamagl.canvas;
 
+import java.awt.EventQueue;
+import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Ignore;
@@ -224,14 +226,59 @@ public class TestGLCanvasSwing_all {
 
   /**
    * Verify that FBO is resized when Panel is resized.
-   * 
-   * This check the whole chain panel->listener->offscreen_renderer->fbo.
-   * 
-   * Having multiple tests here is important to detect issue related to multiple calls to 
-   * <code>glutInit(...)</code>. Please keep them here.
+   *
+   * <p>This checks the whole chain panel-&gt;listener-&gt;offscreen_renderer-&gt;fbo.
+   *
+   * <p>Having multiple tests here is important to detect issues related to multiple calls to
+   * {@code glutInit(...)}. Please keep them here.
+   *
+   * <h3>Synchronization design</h3>
+   *
+   * <p>Each {@code panel.setSize()} call produces <em>two</em> renders on the AWT EDT:
+   * one from {@code ResizeHandler.componentResized()} and one from the explicit
+   * {@code panel.display()} call. {@code BlockingGLListener} uses one
+   * {@code CountDownLatch} per event type; {@code awaitDisplay()} unblocks on the
+   * <em>first</em> render, leaving the second one still queued ("stale").
+   * {@code resetLatches()} must drain that stale render before creating new latches,
+   * otherwise the stale event would prematurely release the new latch.
+   *
+   * <pre>
+   * Test thread              AWT EDT                   BlockingGLListener
+   * -----------              -------                   ------------------
+   *
+   * setSize(100,100) ------> componentResized()
+   *                            onResize() [direct call, EDT]
+   *                            renderGLToImage(100,100)
+   *                              fbo.resize(100)
+   *                              listener.display() ---------> displayLatch.countDown()
+   *                                                             (latch: 1 -> 0)
+   * panel.display() -------> invokeLater(r1=render100)  &lt;-- r1 still queued
+   *
+   * awaitDisplay() &lt;----------------------------------------- unblocks (latch=0)
+   * [asserts ok, FBO=100]
+   *
+   *                          r1 runs: renderGLToImage(100,100)   &lt;-- STALE
+   *                            fbo.resize(100)
+   * resetLatches()             listener.display() ---------> would hit NEW latch!
+   *   invokeAndWait( {} ) ---> [barrier: wait for r1 to finish first]
+   *   &lt;----------------------- barrier passed, queue empty
+   *   new displayLatch(1)                                        (safe: r1 already done)
+   *
+   * setSize(300,200) ------> componentResized()
+   *                            renderGLToImage(300,200)
+   *                              fbo.resize(300)
+   *                              listener.display() ---------> displayLatch.countDown()
+   *                                                             (latch: 1 -> 0)
+   * panel.display() -------> invokeLater(r2=render300)
+   *
+   * awaitDisplay() &lt;----------------------------------------- unblocks (latch=0)
+   * [asserts ok, FBO=300]    r2 runs later, no-op on latch
+   * </pre>
+   *
+   * @throws InvocationTargetException if the AWT barrier in {@code resetLatches()} fails
    */
   @Test
-  public void whenPanelIsResized_ThenFBOIsResized() throws InterruptedException {
+  public void whenPanelIsResized_ThenFBOIsResized() throws InterruptedException, InvocationTargetException {
     //System.err.println("!!\n\tFLAKKY TEST WARNING : may fail because of race condition before asserts");
     
     BlockingGLListener glGate = new BlockingGLListener();
@@ -300,20 +347,16 @@ public class TestGLCanvasSwing_all {
     EventCounter counter = new EventCounter();
 
 
-    public void resetLatches() {
-      
-      if(initLatch!=null)
-        initLatch.countDown();
+    public void resetLatches() throws InvocationTargetException, InterruptedException {
+      // Drain all pending AWT tasks before swapping latches.
+      // Any stale render still in the EventQueue will run now and countDown
+      // the *old* latches (already at 0, no-op), not the new ones.
+      if (!EventQueue.isDispatchThread()) {
+        EventQueue.invokeAndWait(() -> {});
+      }
       initLatch = new CountDownLatch(1);
-
-      if(displayLatch!=null)
-        displayLatch.countDown();
       displayLatch = new CountDownLatch(1);
-      
-      if(disposeLatch!=null)
-        disposeLatch.countDown();
       disposeLatch = new CountDownLatch(1);
-
     }
     
     public void awaitInit() throws InterruptedException {
