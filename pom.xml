@@ -19,7 +19,7 @@
 		<panamagl.bindings.version>1.2.0-SNAPSHOT</panamagl.bindings.version>
 		<jzy3d.version>2.2.1-SNAPSHOT</jzy3d.version>
 		<jdk.version>22</jdk.version>
-		
+
 		<!-- Default Windows native library path. Override on CI with Mesa prepended:
 		       mvn package -D"native.lib.path.windows=C:\mesa;C:\Windows\system32" -->
 		<native.lib.path.windows>C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64</native.lib.path.windows>
@@ -57,7 +57,7 @@
 			<artifactId>log4j-core</artifactId>
 			<version>2.25.3</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-collections4</artifactId>
@@ -82,7 +82,6 @@
 			<version>4.11.0</version>
 			<scope>test</scope>
 		</dependency>
-
 
 	</dependencies>
 
