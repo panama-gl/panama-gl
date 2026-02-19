@@ -44,7 +44,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
  
 
   public WGLContext_windows() {
-    this(false);
+    this(true);
   }
   
   public WGLContext_windows(boolean advanced) {
