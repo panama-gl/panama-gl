@@ -357,10 +357,10 @@ public class TestGLCanvasSwing_all {
   }
   
   protected class EventCounter {
-    int init = 0;
-    int display = 0;
-    int reshape = 0;
-    int dispose = 0;
+    volatile int init = 0;
+    volatile int display = 0;
+    volatile int reshape = 0;
+    volatile int dispose = 0;
   }
 
     
