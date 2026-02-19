@@ -44,7 +44,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
  
 
   public WGLContext_windows() {
-    this(true);
+    this(false);
   }
   
   public WGLContext_windows(boolean advanced) {
@@ -52,7 +52,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     this.advanced = advanced;
     
     NativeLibLoader.load();
-    NativeLibLoader.loadWindowsDLL();
+    NativeLibLoader.loadWindowsDLLs();
     
     initArena();
   }
