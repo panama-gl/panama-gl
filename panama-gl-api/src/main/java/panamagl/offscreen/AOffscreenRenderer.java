@@ -142,16 +142,17 @@ public class AOffscreenRenderer implements OffscreenRenderer {
 
     Debug.debug(debug, "AOffscreenRenderer : initContext : Got FBO : " + fbo);
 
+    // Mark as ready for display before notifying the listener, so that
+    // any thread unblocked by listener.init() already sees isInitialized()==true.
+    initialized = true;
+
     // --------------------------------------
     // Invoke GLEventListener.init(..)
     if (listener != null) {
       listener.init(gl);
-      
+
       GLError.checkAndThrow(gl, "An error occured in the listener initialization");
     }
-
-    // Mark as ready for display
-    initialized = true;
   }
 
   protected void destroyContext(GLCanvas drawable, GLEventListener listener) {
