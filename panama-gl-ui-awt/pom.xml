@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.jzy3d</groupId>
 		<artifactId>panama-gl</artifactId>
-		<version>1.2.0-SNAPSHOT</version>
+		<version>1.3.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>panama-gl-ui-awt</artifactId>
 	<name>Panama GL UI - AWT</name>
@@ -30,7 +30,7 @@
 			<artifactId>panama-gl-wrappers-windows</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
+
 		<!-- TEST -->
 		<dependency>
 			<groupId>org.jzy3d</groupId>
