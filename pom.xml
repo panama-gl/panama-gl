@@ -41,7 +41,6 @@
 		<module>panama-gl-wrappers-windows</module>
 
 		<module>panama-gl-samples</module>
-		<module>panama-gl-jzy3d</module>
 	</modules>
 
 	<dependencies>
