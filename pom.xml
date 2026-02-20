@@ -16,7 +16,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<panamagl.bindings.version>1.2.0-SNAPSHOT</panamagl.bindings.version>
+		<panamagl.bindings.version>1.3.0-SNAPSHOT</panamagl.bindings.version>
 		<jzy3d.version>2.2.1-SNAPSHOT</jzy3d.version>
 		<jdk.version>22</jdk.version>
 
@@ -47,14 +47,14 @@
 
 		<!-- OTHER MODULES -->
 		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-			<version>2.25.3</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>2.0.17</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>2.25.3</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.5.18</version>
 		</dependency>
 
 		<dependency>
