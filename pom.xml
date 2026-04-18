@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jzy3d</groupId>
 	<artifactId>panama-gl</artifactId>
-	<version>1.3.0-SNAPSHOT</version>
+	<version>1.3.0</version>
 	<name>Panama GL</name>
 	<packaging>pom</packaging>
 
@@ -16,16 +16,14 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<panamagl.bindings.version>1.3.0-SNAPSHOT</panamagl.bindings.version>
-		<jzy3d.version>2.2.1-SNAPSHOT</jzy3d.version>
+		<panamagl.bindings.version>${project.version}</panamagl.bindings.version>
 		<jdk.version>22</jdk.version>
 
 		<!-- Default Windows native library path. Override on CI with Mesa prepended:
 		       mvn package -D"native.lib.path.windows=C:\mesa;C:\Windows\system32" -->
 		<native.lib.path.windows>C:\Windows\system32;C:\Users\Martin\Dev\panama-gl\freeglut\bin\x64</native.lib.path.windows>
-
-		<native.lib.path.linux>.:/usr/lib/x86_64-linux-gnu/:/usr/lib</native.lib.path.linux>
 		<native.lib.path.macos>.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/</native.lib.path.macos>
+		<native.lib.path.linux>.:/usr/lib/x86_64-linux-gnu/:/usr/lib</native.lib.path.linux>
 
 	</properties>
 
@@ -36,7 +34,6 @@
 		<module>panama-gl-ui-javafx</module>
 		<module>panama-gl-ui-swing</module>
 		<module>panama-gl-ui-swt</module>
-
 
 		<module>panama-gl-wrappers-macos</module>
 		<module>panama-gl-wrappers-linux</module>
