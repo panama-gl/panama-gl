@@ -258,7 +258,7 @@ One of the following Maven dependencies should be added to your project accordin
 <dependency>
   <groupId>org.jzy3d</groupId>
   <artifactId>panama-gl-ui-awt</artifactId>
-  <version>1.2.0-SNAPSHOT</version>
+  <version>1.3.0</version>
 </dependency>
 ```
 ##### JavaFX dependency
@@ -267,7 +267,7 @@ One of the following Maven dependencies should be added to your project accordin
 <dependency>
   <groupId>org.jzy3d</groupId>
   <artifactId>panama-gl-ui-javafx</artifactId>
-  <version>1.2.0-SNAPSHOT</version>
+  <version>1.3.0</version>
 </dependency>
 ```
 
@@ -276,7 +276,7 @@ One of the following Maven dependencies should be added to your project accordin
 <dependency>
   <groupId>org.jzy3d</groupId>
   <artifactId>panama-gl-ui-swing</artifactId>
-  <version>1.2.0-SNAPSHOT</version>
+  <version>1.3.0</version>
 </dependency>
 ```
 
@@ -369,7 +369,7 @@ mvn install
 
 This assumes the [bindings artifacts](https://gitlab.com/jzy3d/panama-gl-bindings/) (`panama-gl-bindings`) are used as is from our Maven repository but you can override them locally by building your own customization of the bindings libs.
 
-The path to the OpenGL libraries are defined in the root pom.xml file : 
+The path to the OpenGL libraries are defined in the root pom.xml file :
 * `native.lib.path.macos`
 * `native.lib.path.linux`
 * `native.lib.path.windows`
@@ -381,7 +381,7 @@ To override the path
 mvn install -D"native.lib.path.windows=C:\mesa;C:\Windows\system32"
 ```
 
-See an example in the `.github/workflow/ci.yml` file. 
+See an example in the `.github/workflow/ci.yml` file.
 
 
 #### Tests
