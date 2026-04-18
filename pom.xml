@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jzy3d</groupId>
 	<artifactId>panama-gl</artifactId>
-	<version>1.2.0-SNAPSHOT</version>
+	<version>1.3.0-SNAPSHOT</version>
 	<name>Panama GL</name>
 	<packaging>pom</packaging>
 
@@ -16,13 +16,13 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<panamagl.bindings.version>1.2.0-SNAPSHOT</panamagl.bindings.version>
+		<panamagl.bindings.version>1.3.0-SNAPSHOT</panamagl.bindings.version>
 		<jzy3d.version>2.2.1-SNAPSHOT</jzy3d.version>
 		<jdk.version>22</jdk.version>
 
 		<!-- Default Windows native library path. Override on CI with Mesa prepended:
 		       mvn package -D"native.lib.path.windows=C:\mesa;C:\Windows\system32" -->
-		<native.lib.path.windows>C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64</native.lib.path.windows>
+		<native.lib.path.windows>C:\Windows\system32;C:\Users\Martin\Dev\panama-gl\freeglut\bin\x64</native.lib.path.windows>
 
 		<native.lib.path.linux>.:/usr/lib/x86_64-linux-gnu/:/usr/lib</native.lib.path.linux>
 		<native.lib.path.macos>.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/</native.lib.path.macos>
@@ -41,21 +41,20 @@
 		<module>panama-gl-wrappers-windows</module>
 
 		<module>panama-gl-samples</module>
-		<module>panama-gl-jzy3d</module>
 	</modules>
 
 	<dependencies>
 
 		<!-- OTHER MODULES -->
 		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-			<version>2.25.3</version>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>2.0.17</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>2.25.3</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>1.5.18</version>
 		</dependency>
 
 		<dependency>
