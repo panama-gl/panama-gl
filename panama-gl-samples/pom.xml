@@ -1,4 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 ">
+<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 ">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -28,37 +28,16 @@
 			<version>${project.version}</version>
 		</dependency>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-		
-=======
-		<dependency>
-=======
-		
 		<!-- AS FOR SWT, MIXING AWT AND JAVAFX IN THE CLASSPATH LEAD TO HANGS OF SWING DEMOS ON MACOS -->
 
 		<!--<dependency>
->>>>>>> 91b68a7 (.)
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-ui-swt</artifactId>
 			<version>${project.version}</version>
 
 		</dependency>
 
->>>>>>> 9941f59 (init swt)
-		<!-- AS FOR SWT, MIXING AWT AND JAVAFX IN THE CLASSPATH LEAD TO HANGS OF SWING DEMOS ON MACOS -->
-		<!--<dependency>
-			<groupId>org.jzy3d</groupId>
-			<artifactId>panama-gl-ui-swt</artifactId>
-			<version>${project.version}</version>
-		</dependency>-->
-		
-=======
-		<!-- AS FOR SWT, MIXING AWT AND JAVAFX IN THE CLASSPATH LEAD TO HANGS OF SWING DEMOS ON MACOS -->
-
->>>>>>> 1b4d5be (Version 1.3.0 - moved jzy3d part to jzy3d-api)
-		<!--<dependency>
+		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-ui-javafx</artifactId>
 			<version>${project.version}</version>
