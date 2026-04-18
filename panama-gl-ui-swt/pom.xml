@@ -11,21 +11,11 @@
 	<artifactId>panama-gl-ui-swt</artifactId>
 	<name>Panama GL UI - SWT</name>
 	<properties>
-<<<<<<< HEAD
 		<swt.version>3.116.100</swt.version>
 		<swt.version>3.126.0</swt.version>
 	</properties>
 	<dependencies>
 	<dependency>
-=======
-		<swt.version>4.37</swt.version>
-		
-				<swt.version>3.116.100</swt.version>
-
-	</properties>
-	<dependencies>
-<dependency>
->>>>>>> 9941f59 (init swt)
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-api</artifactId>
 			<version>${project.version}</version>
@@ -50,7 +40,7 @@
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-wrappers-linux</artifactId>
@@ -63,7 +53,7 @@
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-wrappers-windows</artifactId>
@@ -77,7 +67,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<repositories>
     <!--<repository>
         <id>eclipse</id>
@@ -89,20 +79,14 @@
             <enabled>true</enabled>
         </snapshots>
     </repository>-->
-    
+
     <repository>
-<<<<<<< HEAD
 	    <id>eclipse-orbit</id>
 	    <url>https://repo.eclipse.org/content/repositories/orbit-releases/</url>
 	</repository>
-=======
-    <id>eclipse-orbit</id>
-    <url>https://repo.eclipse.org/content/repositories/orbit-releases/</url>
-</repository>
->>>>>>> 9941f59 (init swt)
 </repositories>
 
-	
+
 	<profiles>
 		<profile>
 			<id>unix</id>
@@ -154,7 +138,7 @@
 					<version>${swt.version}</version>
 				</dependency>
 			</dependencies>
-<<<<<<< HEAD
+
 			<build>
 				<plugins>
 					<plugin>
@@ -172,11 +156,8 @@
 				</plugins>
 			</build>
 		</profile>
-		
-		
-=======
-		</profile>
->>>>>>> 9941f59 (init swt)
+
+
 		<profile>
 			<id>mac_aarch64</id>
 			<activation>
@@ -192,7 +173,6 @@
 					<version>${swt.version}</version>
 				</dependency>
 			</dependencies>
-<<<<<<< HEAD
 			<build>
 				<plugins>
 					<plugin>
@@ -209,9 +189,7 @@
 					</plugin>
 				</plugins>
 			</build>
-			
-=======
->>>>>>> 9941f59 (init swt)
+
 		</profile>
 
 	</profiles>
