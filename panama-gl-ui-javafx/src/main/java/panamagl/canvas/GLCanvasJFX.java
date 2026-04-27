@@ -62,7 +62,13 @@ public class GLCanvasJFX implements GLCanvas {
       return;
     }
 
-    setRendering(true);
+    // Idempotence guard. Platform.runLater has no coalescing (unlike AWT's paint events),
+    // so a fast caller can flood the JavaFX queue with render tasks. We accept a new render
+    // only if no other is in flight; setScreenshot() resets the flag when the frame is drawn,
+    // reopening the gate for the next display(). See repaint().
+    if (!rendering.compareAndSet(false, true)) {
+      return;
+    }
 
     // Start monitoring
     getMonitoring().onDisplay();
@@ -70,7 +76,7 @@ public class GLCanvasJFX implements GLCanvas {
     // Does the actual work of rendering
     offscreen.onDisplay(this, listener);
 
-    // setRendering(false) will be invoked when painting is done
+    // setRendering(false) will be invoked when painting is done (see setScreenshot)
   }
 
 
@@ -138,7 +144,14 @@ public class GLCanvasJFX implements GLCanvas {
 
   @Override
   public void repaint() {
-    display();
+    // No-op on JavaFX. The upstream call site (AOffscreenRenderer.readImageAndPaintInCanvas)
+    // invokes canvas.repaint() after setScreenshot() to request a redraw — the pattern works
+    // on Swing where setScreenshot merely stores the image and the actual blit happens during
+    // the coalesced paintComponent. On JavaFX, setScreenshot() already drew the image onto the
+    // underlying javafx.scene.canvas.Canvas via GraphicsContext.drawImage(), so there is
+    // nothing left to do. Delegating to display() here would re-enqueue a render task via
+    // Platform.runLater on every frame and, because Platform.runLater has no coalescing,
+    // loop forever.
   }
 
   @Override
