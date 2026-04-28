@@ -15,7 +15,6 @@
  *******************************************************************************/
 package panamagl.canvas;
 
-import static org.mockito.Mockito.mock;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -25,7 +24,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
-import junit.framework.Assert;
+import org.junit.Assert;
 import panamagl.GLEventAdapter;
 import panamagl.GLEventListener;
 import panamagl.factory.PanamaGLFactory;
@@ -377,7 +376,7 @@ public class TestGLCanvasJFX_all {
   }
 
 
-  @Ignore("Not working in CLI yet (hanging, despite using surefire unlimited threads)")
+ @Ignore("Not working in CLI yet (hanging, despite using surefire unlimited threads)")
   @Test
   public void whenPanelIsRendering_DisplayWillDoNothing() throws InterruptedException {
     // ThreadUtils.print();
@@ -430,12 +429,15 @@ public class TestGLCanvasJFX_all {
     };
     renderer.setThreadRedirect(new ThreadRedirect_JFX());
 
-    Canvas c = mock(Canvas.class);
+    Canvas c = new ResizableCanvas();
+    c.setWidth(100);
+    c.setHeight(100);
 
     GLCanvasJFX panel = new GLCanvasJFX(factory, c);
 
     panel.setOffscreenRenderer(renderer);
-
+    //panel.setGLEventListener(new GLEventAdapter());
+    
     // -------------------------------
     // When it is added
     // panel.addNotify();
