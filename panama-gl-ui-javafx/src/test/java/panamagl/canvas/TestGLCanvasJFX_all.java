@@ -15,7 +15,6 @@
  *******************************************************************************/
 package panamagl.canvas;
 
-import static org.mockito.Mockito.mock;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -25,7 +24,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
-import junit.framework.Assert;
+import org.junit.Assert;
 import panamagl.GLEventAdapter;
 import panamagl.GLEventListener;
 import panamagl.factory.PanamaGLFactory;
@@ -276,7 +275,108 @@ public class TestGLCanvasJFX_all {
 
   }
 
-  @Ignore("Not working in CLI yet (hanging, despite using surefire unlimited threads)")
+  /**
+   * Regression test for the infinite repaint/display loop on JavaFX.
+   *
+   * <h3>Scenario</h3>
+   *
+   * A single call to {@code panel.display()} must trigger exactly one GL render, not an
+   * unbounded number of them. The historical bug came from {@code AOffscreenRenderer.
+   * readImageAndPaintInCanvas()} calling {@code canvas.repaint()} at the end of each render
+   * — which, on JavaFX, was implemented as {@code display()} and thus re-enqueued a new
+   * render task via {@code Platform.runLater} indefinitely.
+   *
+   * <h3>Flow without the fix</h3>
+   *
+   * <pre>
+   *   panel.display()
+   *         │
+   *         ▼
+   *   Platform.runLater(task)
+   *         │          ┌──────────────────────────────────────┐
+   *         ▼          ▼                                      │
+   *   task: listener.display() + setScreenshot(img)           │
+   *         │                                                 │
+   *         ▼                                                 │
+   *   canvas.repaint() ──▶ display() ──▶ runLater(task+1) ────┘ (loop)
+   * </pre>
+   *
+   * After {@code N} pumps of the JFX queue, {@code listener.display()} has been invoked
+   * {@code N+1} times, not once — which is what this test observes.
+   *
+   * <h3>Flow with the fix</h3>
+   *
+   * <pre>
+   *   panel.display()
+   *         │
+   *         ▼
+   *   Platform.runLater(task)
+   *         │
+   *         ▼
+   *   task: listener.display() + setScreenshot(img)
+   *         │
+   *         ▼
+   *   canvas.repaint() = no-op          ✓ chain stops
+   * </pre>
+   *
+   * <p>Threading: this test thread drives {@code display()}; every GL callback and every
+   * {@code setScreenshot()} call run on the JavaFX Application Thread. The
+   * {@link BlockingGLListener_JFX} bridges the two with a latch (for the first render)
+   * and a volatile counter (for subsequent renders observed after pumping).
+   */
+  @Test
+  public void whenDisplayIsCalledOnce_ThenListenerDisplayIsCalledOnce()
+      throws InterruptedException {
+
+    BlockingGLListener_JFX glGate = new BlockingGLListener_JFX();
+
+    // ------------------------------------------------
+    // Given an initialized panel
+
+    PanamaGLFactory factory = PanamaGLFactory.select();
+
+    Canvas canvas = new ResizableCanvas();
+    canvas.setWidth(100);
+    canvas.setHeight(100);
+
+    GLCanvasJFX panel = new GLCanvasJFX(factory, canvas);
+    panel.setGLEventListener(glGate);
+
+    glGate.awaitInit();
+    Assert.assertTrue(panel.isInitialized());
+
+    // ------------------------------------------------
+    // When display() is invoked exactly once
+
+    panel.display();
+
+    // Wait for the first GL render to reach the listener
+    glGate.awaitDisplay();
+
+    // Pump the JFX queue: each Platform.runLater round-trip gives the JFX thread a chance
+    // to process any re-entrant render task that repaint() → display() would enqueue. If
+    // the bug is present, each pump runs one buggy task and spawns a new one; if the fix
+    // is in place, the queue is empty and the pumps are no-ops.
+    int PUMP_CYCLES = 10;
+    for (int i = 0; i < PUMP_CYCLES; i++) {
+      CountDownLatch pump = new CountDownLatch(1);
+      Platform.runLater(pump::countDown);
+      Assert.assertTrue("JFX queue unexpectedly blocked during pump " + i,
+          pump.await(2, TimeUnit.SECONDS));
+    }
+
+    // ------------------------------------------------
+    // Then: listener.display() has been called exactly once. A higher count means
+    // repaint() re-entered display() and re-enqueued render tasks via Platform.runLater.
+
+    Assert.assertEquals(
+        "display() called once must trigger exactly one listener.display() callback. "
+            + "A higher count indicates repaint() is re-entering display().",
+        1, glGate.getCounter().display);
+  }
+
+
+ @Ignore("Not working in CLI yet (hanging, despite using surefire unlimited threads)")
   @Test
   public void whenPanelIsRendering_DisplayWillDoNothing() throws InterruptedException {
     // ThreadUtils.print();
@@ -329,12 +429,15 @@ public class TestGLCanvasJFX_all {
     };
     renderer.setThreadRedirect(new ThreadRedirect_JFX());
 
-    Canvas c = mock(Canvas.class);
+    Canvas c = new ResizableCanvas();
+    c.setWidth(100);
+    c.setHeight(100);
 
     GLCanvasJFX panel = new GLCanvasJFX(factory, c);
 
     panel.setOffscreenRenderer(renderer);
-
+    //panel.setGLEventListener(new GLEventAdapter());
+    
     // -------------------------------
     // When it is added
     // panel.addNotify();

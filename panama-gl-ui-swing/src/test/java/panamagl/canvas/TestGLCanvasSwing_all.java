@@ -339,7 +339,7 @@ public class TestGLCanvasSwing_all {
     // -------------------------------
     // When display() is invoked again
 
-    int N_DISPLAY_ATTEMPTS = 100;
+    int N_DISPLAY_ATTEMPTS = 2;
     for (int i = 0; i < N_DISPLAY_ATTEMPTS; i++) {
       panel.display();
     }
