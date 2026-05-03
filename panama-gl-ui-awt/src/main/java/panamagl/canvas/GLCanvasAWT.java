@@ -82,7 +82,7 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
   protected PerformanceOverlay_AWT overlay;
 
   protected boolean debug = Debug.check(GLCanvasAWT.class);
-  protected boolean debugPerf = true;
+  protected boolean debugPerf = false;
   
   protected Flip flip = Flip.HORIZONTAL;
 
@@ -361,4 +361,11 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
     return flip;
   }
 
+  public boolean isShowRenderingTime() {
+    return debugPerf;
+  }
+
+  public void setShowRenderingTime(boolean status) {
+    this.debugPerf = status;
+  }
 }
