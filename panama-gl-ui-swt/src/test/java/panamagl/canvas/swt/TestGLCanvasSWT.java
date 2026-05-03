@@ -30,11 +30,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import java.util.concurrent.atomic.AtomicReference;
 import panamagl.GLEventAdapter;
 import panamagl.GLEventListener;
+import panamagl.canvas.GLCanvas;
 import panamagl.canvas.GLCanvas.Flip;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.image.SWTImage;
+import panamagl.offscreen.AOffscreenRenderer;
 import panamagl.offscreen.FBOReader_SWT;
 import panamagl.offscreen.OffscreenRenderer;
 import panamagl.offscreen.ThreadRedirect;
@@ -383,6 +386,159 @@ public class TestGLCanvasSWT {
     // Then: FBO updated
     Assert.assertEquals(canvas.getWidth(), canvas.getFBO().getWidth());
     Assert.assertEquals(canvas.getHeight(), canvas.getFBO().getHeight());
+  }
+
+  // ==================== cross-thread display() — regression for AOffscreenRenderer.onDisplay ====================
+
+  /**
+   * Regression guard for {@link AOffscreenRenderer#onDisplay}.
+   *
+   * <p><b>Bug.</b> {@code onDisplay} used to call {@code drawable.getWidth()} /
+   * {@code getHeight()} on the <i>caller</i> thread <b>before</b> handing off to
+   * {@link ThreadRedirect_SWT}. Those getters bottom out in {@code Control.getBounds()} which
+   * {@code checkWidget()}s and throws {@code SWTException: Invalid thread access} when the
+   * caller is not on the SWT display thread. This bit any non-UI thread that asked the canvas
+   * to repaint — typically the {@code CameraThreadController} behind double-click auto-rotate
+   * in the jzy3d SWT bindings.
+   *
+   * <p><b>Fix.</b> {@code onDisplay} now snapshots the dimensions <i>inside</i> the runnable
+   * passed to {@code threadRedirect.run(...)}, so the SWT widget access is performed on the
+   * SWT display thread.
+   *
+   * <p><b>What this test does.</b> Wires a real {@link AOffscreenRenderer} (subclassed to skip
+   * actual GL work) into a real {@link GLCanvasSWT} (which sets up a real
+   * {@link ThreadRedirect_SWT}). Calls {@link GLCanvasSWT#display()} from a non-SWT background
+   * thread, drains the SWT event queue so the {@code asyncExec} fires, and asserts:
+   * <ul>
+   *   <li>no {@code SWTException} escaped to the background thread,</li>
+   *   <li>the runnable observed by {@code threadRedirect} actually ran on the SWT display
+   *       thread (i.e. the dimension sampling happened where SWT allows it).</li>
+   * </ul>
+   */
+  @Test
+  public void displayFromNonSwtThread_doesNotThrowInvalidThreadAccess() throws Exception {
+    AtomicReference<Thread> renderTaskThread = new AtomicReference<>();
+
+    PanamaGLFactory realFactory = mock(PanamaGLFactory.class);
+    AOffscreenRenderer recordingRenderer =
+        new AOffscreenRenderer(realFactory, mock(FBOReader_SWT.class)) {
+          @Override
+          public boolean isInitialized() {
+            // Force GLCanvasSWT.display() to proceed past its early-out guard without going
+            // through the real init path (which would need a live GL context).
+            return true;
+          }
+
+          @Override
+          public void onDestroy(GLCanvas drawable, GLEventListener listener) {
+            // Avoid the NPE in destroyContext(listener.dispose(gl)) when the dispose
+            // listener fires during shell teardown without a real listener bound.
+          }
+
+          @Override
+          protected Runnable getTask_renderGLToImage(GLCanvas drawable, GLEventListener listener,
+              int width, int height) {
+            // Capture the thread that built the render task — i.e. the thread on which
+            // drawable.getWidth() / getHeight() were sampled. With the fix, this must be the
+            // SWT display thread; without the fix, it would be the caller thread (and the
+            // getWidth() call would already have thrown before we got here).
+            renderTaskThread.set(Thread.currentThread());
+            return () -> {
+              /* no GL work — we are only verifying threading */
+            };
+          }
+        };
+    when(realFactory.newOffscreenRenderer(any(FBOReader_SWT.class))).thenReturn(recordingRenderer);
+
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, realFactory);
+    // Skip setGLEventListener: it would trigger AOffscreenRenderer.onInit() which needs a
+    // live GL context. isInitialized() is forced to true above so display() proceeds anyway.
+
+    // Trigger display() from a non-SWT thread — this is what a CameraThreadController does.
+    Throwable[] err = new Throwable[1];
+    Thread bg = new Thread(() -> {
+      try {
+        canvas.display();
+      } catch (Throwable t) {
+        err[0] = t;
+      }
+    }, "non-swt-display-caller");
+    bg.start();
+    bg.join(2000);
+
+    // Drain the SWT queue so the asyncExec scheduled by ThreadRedirect_SWT actually runs.
+    long deadline = System.currentTimeMillis() + 2000;
+    while (renderTaskThread.get() == null && System.currentTimeMillis() < deadline) {
+      if (!display.readAndDispatch()) {
+        // Briefly yield then keep draining; we cannot use display.sleep() because no native
+        // event will wake it in this isolated unit-test environment.
+        try { Thread.sleep(10); } catch (InterruptedException ignored) {}
+      }
+    }
+
+    if (err[0] != null) {
+      throw new AssertionError(
+          "Calling GLCanvasSWT.display() from a non-SWT thread must not throw, but got: "
+              + err[0],
+          err[0]);
+    }
+    Assert.assertNotNull(
+        "Render task was never executed — ThreadRedirect_SWT did not deliver to the display "
+            + "thread within the timeout",
+        renderTaskThread.get());
+    Assert.assertSame(
+        "AOffscreenRenderer.onDisplay must build the render task on the SWT display thread "
+            + "(so that drawable.getWidth/getHeight is sampled where SWT permits it), "
+            + "not on the caller thread",
+        display.getThread(),
+        renderTaskThread.get());
+  }
+
+  /**
+   * Sanity check: when {@link GLCanvasSWT#display()} is called <i>from</i> the SWT display
+   * thread, the redirect should run synchronously (no event-queue hop required) and the
+   * render task should also execute on the SWT thread.
+   *
+   * Locks in that the cross-thread fix above did not regress the common single-threaded path.
+   */
+  @Test
+  public void displayFromSwtThread_runsSynchronouslyOnSwtThread() {
+    AtomicReference<Thread> renderTaskThread = new AtomicReference<>();
+
+    PanamaGLFactory realFactory = mock(PanamaGLFactory.class);
+    AOffscreenRenderer recordingRenderer =
+        new AOffscreenRenderer(realFactory, mock(FBOReader_SWT.class)) {
+          @Override
+          public boolean isInitialized() {
+            return true;
+          }
+
+          @Override
+          public void onDestroy(GLCanvas drawable, GLEventListener listener) {
+            // Avoid the NPE in destroyContext when shell teardown fires the dispose listener
+            // without a real listener bound.
+          }
+
+          @Override
+          protected Runnable getTask_renderGLToImage(GLCanvas drawable, GLEventListener listener,
+              int width, int height) {
+            renderTaskThread.set(Thread.currentThread());
+            return () -> {};
+          }
+        };
+    when(realFactory.newOffscreenRenderer(any(FBOReader_SWT.class))).thenReturn(recordingRenderer);
+
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, realFactory);
+    // Skip setGLEventListener: it would trigger AOffscreenRenderer.onInit() which needs a
+    // live GL context. isInitialized() is forced to true above so display() proceeds anyway.
+
+    canvas.display();
+
+    Assert.assertSame(
+        "Same-thread display() must build the render task on the SWT thread without an "
+            + "asyncExec hop",
+        display.getThread(),
+        renderTaskThread.get());
   }
 
   // ==================== helpers ====================

@@ -71,19 +71,27 @@ public class AOffscreenRenderer implements OffscreenRenderer {
 
   @Override
   public void onDisplay(GLCanvas drawable, GLEventListener listener) {
-    
-    // FIXME : should be able to render without resizing to current dimension
-    Runnable r = getTask_renderGLToImage(drawable, listener, drawable.getWidth(), drawable.getHeight());
-    
-    //Runnable r = getTask_renderGLToImage(drawable, listener);
-    
-    threadRedirect.run(r);
+    // The drawable size must be sampled inside the redirected runnable, not on the caller
+    // thread. Toolkits like SWT enforce single-thread access to widgets and would throw
+    // "Invalid thread access" if a non-UI thread (e.g. a CameraThreadController) called
+    // drawable.getWidth() before threadRedirect.run() switched us back to the UI thread.
+    threadRedirect.run(new Runnable() {
+      @Override
+      public void run() {
+        int w = drawable.getWidth();
+        int h = drawable.getHeight();
+        getTask_renderGLToImage(drawable, listener, w, h).run();
+      }
+    });
   }
-  
+
   @Override
   public void onResize(GLCanvas drawable, GLEventListener listener, int x, int y, int width, int height) {
-    Runnable r = getTask_renderGLToImage(drawable, listener, drawable.getWidth(), drawable.getHeight());
-    
+    // Use the width/height already snapshotted by the caller (e.g. SWT's ResizeHandler reads
+    // bounds.width/height on the UI thread before invoking us). Re-reading from drawable here
+    // would defeat that snapshot and require an extra UI-thread hop.
+    Runnable r = getTask_renderGLToImage(drawable, listener, width, height);
+
     threadRedirect.run(r);
   }
   
