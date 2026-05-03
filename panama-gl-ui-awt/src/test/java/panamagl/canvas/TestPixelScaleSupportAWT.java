@@ -22,7 +22,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
 
-public class TestAWTPixelScaleSupport {
+public class TestPixelScaleSupportAWT {
 
   @org.junit.Before
   public void requireHeadful() {
@@ -32,7 +32,7 @@ public class TestAWTPixelScaleSupport {
   @Test
   public void read_returnsIdentity_whenComponentNotDisplayable() {
     Panel p = new Panel();
-    AWTPixelScaleSupport support = new AWTPixelScaleSupport(p, false, 0);
+    PixelScaleSupportAWT support = new PixelScaleSupportAWT(p, false, 0);
     PixelScale s = support.read();
     // Not displayable yet -> support returns the cached lastScale, which starts at IDENTITY.
     Assert.assertEquals(PixelScale.IDENTITY, s);
@@ -41,7 +41,7 @@ public class TestAWTPixelScaleSupport {
   @Test
   public void start_isIdempotent() {
     Panel p = new Panel();
-    AWTPixelScaleSupport support = new AWTPixelScaleSupport(p, false, 0);
+    PixelScaleSupportAWT support = new PixelScaleSupportAWT(p, false, 0);
     support.start();
     support.start(); // must not throw or double-register
     support.stop();
@@ -50,7 +50,7 @@ public class TestAWTPixelScaleSupport {
   @Test
   public void stop_isIdempotent() {
     Panel p = new Panel();
-    AWTPixelScaleSupport support = new AWTPixelScaleSupport(p, false, 0);
+    PixelScaleSupportAWT support = new PixelScaleSupportAWT(p, false, 0);
     support.stop(); // before start
     support.start();
     support.stop();
@@ -60,7 +60,7 @@ public class TestAWTPixelScaleSupport {
   @Test
   public void listeners_canBeAddedAndRemoved() {
     Panel p = new Panel();
-    AWTPixelScaleSupport support = new AWTPixelScaleSupport(p, false, 0);
+    PixelScaleSupportAWT support = new PixelScaleSupportAWT(p, false, 0);
     PixelScaleListener l = (o, n) -> {};
     support.addListener(l);
     support.removeListener(l);
@@ -68,15 +68,15 @@ public class TestAWTPixelScaleSupport {
 
   @Test
   public void pollingFlag_defaultsToTrue() {
-    AWTPixelScaleSupport support = new AWTPixelScaleSupport(new Panel());
+    PixelScaleSupportAWT support = new PixelScaleSupportAWT(new Panel());
     Assert.assertTrue(support.isPollingEnabled());
-    Assert.assertEquals(AWTPixelScaleSupport.DEFAULT_POLL_INTERVAL_MS, support.getPollIntervalMs());
+    Assert.assertEquals(PixelScaleSupportAWT.DEFAULT_POLL_INTERVAL_MS, support.getPollIntervalMs());
   }
 
   @Test
   public void recheckOnEDT_doesNotThrow() throws Exception {
     Panel p = new Panel();
-    AWTPixelScaleSupport support = new AWTPixelScaleSupport(p, false, 0);
+    PixelScaleSupportAWT support = new PixelScaleSupportAWT(p, false, 0);
     support.start();
     SwingUtilities.invokeAndWait(() -> {
       // Force a read on the EDT — current() should return a valid scale.

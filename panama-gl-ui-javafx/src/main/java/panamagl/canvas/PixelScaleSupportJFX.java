@@ -41,7 +41,7 @@ import javafx.stage.Window;
  * <p>Unlike the AWT support, no polling is needed: JavaFX publishes a property change every time
  * the render scale changes (e.g. monitor switch, OS scaling change).
  */
-public class JFXPixelScaleSupport {
+public class PixelScaleSupportJFX {
 
   private final Canvas canvas;
   private final List<PixelScaleListener> listeners = new CopyOnWriteArrayList<>();
@@ -55,7 +55,7 @@ public class JFXPixelScaleSupport {
   private Scene observedScene;
   private Window observedWindow;
 
-  public JFXPixelScaleSupport(Canvas canvas) {
+  public PixelScaleSupportJFX(Canvas canvas) {
     this.canvas = canvas;
   }
 

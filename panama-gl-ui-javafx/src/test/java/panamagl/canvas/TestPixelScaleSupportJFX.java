@@ -30,10 +30,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * Unit tests for {@link JFXPixelScaleSupport}. Each test owns its own JavaFX scene/stage so the
+ * Unit tests for {@link PixelScaleSupportJFX}. Each test owns its own JavaFX scene/stage so the
  * cascade of listeners (canvas->scene->window->renderScale) can be exercised end to end.
  */
-public class TestJFXPixelScaleSupport {
+public class TestPixelScaleSupportJFX {
 
   @BeforeClass
   public static void startFx() {
@@ -63,7 +63,7 @@ public class TestJFXPixelScaleSupport {
     AtomicReference<PixelScale> scale = new AtomicReference<>();
     runFx(() -> {
       Canvas canvas = new Canvas(100, 100);
-      JFXPixelScaleSupport support = new JFXPixelScaleSupport(canvas);
+      PixelScaleSupportJFX support = new PixelScaleSupportJFX(canvas);
       scale.set(support.read());
     });
     Assert.assertNotNull(scale.get());
@@ -75,7 +75,7 @@ public class TestJFXPixelScaleSupport {
   public void start_isIdempotent() throws Exception {
     runFx(() -> {
       Canvas canvas = new Canvas(100, 100);
-      JFXPixelScaleSupport support = new JFXPixelScaleSupport(canvas);
+      PixelScaleSupportJFX support = new PixelScaleSupportJFX(canvas);
       support.start();
       support.start(); // must not throw
       support.stop();
@@ -86,7 +86,7 @@ public class TestJFXPixelScaleSupport {
   public void stop_isIdempotent() throws Exception {
     runFx(() -> {
       Canvas canvas = new Canvas(100, 100);
-      JFXPixelScaleSupport support = new JFXPixelScaleSupport(canvas);
+      PixelScaleSupportJFX support = new PixelScaleSupportJFX(canvas);
       support.stop(); // before start
       support.start();
       support.stop();
@@ -105,7 +105,7 @@ public class TestJFXPixelScaleSupport {
     AtomicReference<PixelScale> afterAttach = new AtomicReference<>();
     runFx(() -> {
       Canvas canvas = new Canvas(100, 100);
-      JFXPixelScaleSupport support = new JFXPixelScaleSupport(canvas);
+      PixelScaleSupportJFX support = new PixelScaleSupportJFX(canvas);
       support.start();
       beforeAttach.set(support.current());
 
@@ -128,7 +128,7 @@ public class TestJFXPixelScaleSupport {
   public void listeners_canBeAddedAndRemoved() throws Exception {
     runFx(() -> {
       Canvas canvas = new Canvas(100, 100);
-      JFXPixelScaleSupport support = new JFXPixelScaleSupport(canvas);
+      PixelScaleSupportJFX support = new PixelScaleSupportJFX(canvas);
       PixelScaleListener l = (o, n) -> {};
       support.addListener(l);
       support.removeListener(l);

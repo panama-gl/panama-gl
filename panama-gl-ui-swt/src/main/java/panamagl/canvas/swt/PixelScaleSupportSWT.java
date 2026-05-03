@@ -37,7 +37,7 @@ import panamagl.canvas.PixelScaleListener;
  * 3.126.0). On macOS, additionally listens to {@link SWT#Move} on the canvas because cocoa does
  * not fire ZoomChanged when the window is moved between Retina and non-Retina monitors.
  */
-public class SWTPixelScaleSupport {
+public class PixelScaleSupportSWT {
 
   private final Canvas canvas;
   private final List<PixelScaleListener> listeners = new CopyOnWriteArrayList<>();
@@ -47,7 +47,7 @@ public class SWTPixelScaleSupport {
   private Listener moveListener;
   private Display display;
 
-  public SWTPixelScaleSupport(Canvas canvas) {
+  public PixelScaleSupportSWT(Canvas canvas) {
     this.canvas = canvas;
   }
 

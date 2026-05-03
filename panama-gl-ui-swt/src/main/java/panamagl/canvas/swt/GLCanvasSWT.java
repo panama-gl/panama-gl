@@ -67,7 +67,7 @@ public class GLCanvasSWT extends Canvas implements panamagl.canvas.GLCanvas {
   protected Flip flip = Flip.VERTICAL;
   protected Color color;
 
-  protected SWTPixelScaleSupport pixelScaleSupport;
+  protected PixelScaleSupportSWT pixelScaleSupport;
   protected volatile boolean hiDPIEnabled = true;
 
   public GLCanvasSWT(Composite parent, int style, PanamaGLFactory factory) {
@@ -90,7 +90,7 @@ public class GLCanvasSWT extends Canvas implements panamagl.canvas.GLCanvas {
     addListener(SWT.Resize, new ResizeHandler());
 
     // HiDPI / pixel scale plumbing.
-    pixelScaleSupport = new SWTPixelScaleSupport(this);
+    pixelScaleSupport = new PixelScaleSupportSWT(this);
     pixelScaleSupport.addListener((oldScale, newScale) -> onPixelScaleChanged());
     pixelScaleSupport.start();
 
@@ -387,7 +387,7 @@ public class GLCanvasSWT extends Canvas implements panamagl.canvas.GLCanvas {
   }
 
   /** Test/diagnostics access to the pixel-scale support. */
-  public SWTPixelScaleSupport getPixelScaleSupport() {
+  public PixelScaleSupportSWT getPixelScaleSupport() {
     return pixelScaleSupport;
   }
 }

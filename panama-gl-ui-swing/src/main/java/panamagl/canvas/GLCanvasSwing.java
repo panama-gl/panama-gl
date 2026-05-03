@@ -85,7 +85,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
   protected Flip flip = Flip.VERTICAL;
 
-  protected AWTPixelScaleSupport pixelScaleSupport;
+  protected PixelScaleSupportAWT pixelScaleSupport;
   protected volatile boolean hiDPIEnabled = true;
 
   // For mocking
@@ -107,7 +107,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
     addComponentListener(new ResizeHandler());
 
     // HiDPI / pixel scale plumbing.
-    pixelScaleSupport = new AWTPixelScaleSupport(this);
+    pixelScaleSupport = new PixelScaleSupportAWT(this);
     pixelScaleSupport.addListener((oldScale, newScale) -> onPixelScaleChanged());
   }
 
@@ -463,7 +463,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
   }
 
   /** Test/diagnostics access to the pixel-scale support. */
-  public AWTPixelScaleSupport getPixelScaleSupport() {
+  public PixelScaleSupportAWT getPixelScaleSupport() {
     return pixelScaleSupport;
   }
 }

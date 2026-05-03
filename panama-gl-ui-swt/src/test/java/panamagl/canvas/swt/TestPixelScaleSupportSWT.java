@@ -26,7 +26,7 @@ import org.junit.Test;
 import panamagl.canvas.PixelScale;
 import panamagl.canvas.PixelScaleListener;
 
-public class TestSWTPixelScaleSupport {
+public class TestPixelScaleSupportSWT {
 
   private Display display;
   private Shell shell;
@@ -49,7 +49,7 @@ public class TestSWTPixelScaleSupport {
 
   @Test
   public void read_returnsPositiveScale() {
-    SWTPixelScaleSupport support = new SWTPixelScaleSupport(canvas);
+    PixelScaleSupportSWT support = new PixelScaleSupportSWT(canvas);
     PixelScale s = support.read();
     Assert.assertNotNull(s);
     Assert.assertTrue("scale.x must be > 0, was " + s.x(), s.x() > 0);
@@ -58,7 +58,7 @@ public class TestSWTPixelScaleSupport {
 
   @Test
   public void start_isIdempotent() {
-    SWTPixelScaleSupport support = new SWTPixelScaleSupport(canvas);
+    PixelScaleSupportSWT support = new PixelScaleSupportSWT(canvas);
     support.start();
     support.start(); // must not throw
     support.stop();
@@ -66,7 +66,7 @@ public class TestSWTPixelScaleSupport {
 
   @Test
   public void stop_isIdempotent() {
-    SWTPixelScaleSupport support = new SWTPixelScaleSupport(canvas);
+    PixelScaleSupportSWT support = new PixelScaleSupportSWT(canvas);
     support.stop(); // before start
     support.start();
     support.stop();
@@ -75,7 +75,7 @@ public class TestSWTPixelScaleSupport {
 
   @Test
   public void start_then_stop_capturesInitialValue() {
-    SWTPixelScaleSupport support = new SWTPixelScaleSupport(canvas);
+    PixelScaleSupportSWT support = new PixelScaleSupportSWT(canvas);
     support.start();
     PixelScale s = support.current();
     Assert.assertNotNull(s);
@@ -85,7 +85,7 @@ public class TestSWTPixelScaleSupport {
 
   @Test
   public void listeners_canBeAddedAndRemoved() {
-    SWTPixelScaleSupport support = new SWTPixelScaleSupport(canvas);
+    PixelScaleSupportSWT support = new PixelScaleSupportSWT(canvas);
     PixelScaleListener l = (o, n) -> {};
     support.addListener(l);
     support.removeListener(l);
@@ -94,7 +94,7 @@ public class TestSWTPixelScaleSupport {
   @Test
   public void onCocoa_scaleIsAtLeastOne() {
     Assume.assumeTrue("cocoa".equals(SWT.getPlatform()));
-    SWTPixelScaleSupport support = new SWTPixelScaleSupport(canvas);
+    PixelScaleSupportSWT support = new PixelScaleSupportSWT(canvas);
     PixelScale s = support.read();
     // Backing scale factor is always >= 1.0 on cocoa.
     Assert.assertTrue("backing scale >= 1.0 expected, got " + s.x(), s.x() >= 1.0);

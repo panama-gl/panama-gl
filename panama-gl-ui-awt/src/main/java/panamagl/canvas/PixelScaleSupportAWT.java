@@ -46,7 +46,7 @@ import javax.swing.SwingUtilities;
  *
  * <p>Listeners always run on the EDT.
  */
-public class AWTPixelScaleSupport {
+public class PixelScaleSupportAWT {
 
   /**
    * Default polling interval in milliseconds. Polling is enabled by default to cover platforms or
@@ -66,11 +66,11 @@ public class AWTPixelScaleSupport {
   private ScheduledExecutorService poller;
   private ScheduledFuture<?> pollerFuture;
 
-  public AWTPixelScaleSupport(Component component) {
+  public PixelScaleSupportAWT(Component component) {
     this(component, true, DEFAULT_POLL_INTERVAL_MS);
   }
 
-  public AWTPixelScaleSupport(Component component, boolean pollingEnabled, long pollIntervalMs) {
+  public PixelScaleSupportAWT(Component component, boolean pollingEnabled, long pollIntervalMs) {
     this.component = component;
     this.pollingEnabled = pollingEnabled;
     this.pollIntervalMs = pollIntervalMs;

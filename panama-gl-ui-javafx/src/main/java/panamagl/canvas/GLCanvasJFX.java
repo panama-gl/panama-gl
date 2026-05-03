@@ -39,7 +39,7 @@ public class GLCanvasJFX implements GLCanvas {
 
   protected AtomicBoolean rendering = new AtomicBoolean();
 
-  protected JFXPixelScaleSupport pixelScaleSupport;
+  protected PixelScaleSupportJFX pixelScaleSupport;
   protected volatile boolean hiDPIEnabled = true;
 
 
@@ -57,7 +57,7 @@ public class GLCanvasJFX implements GLCanvas {
     this.canvas.widthProperty().addListener(resize);
     this.canvas.heightProperty().addListener(resize);
 
-    this.pixelScaleSupport = new JFXPixelScaleSupport(canvas);
+    this.pixelScaleSupport = new PixelScaleSupportJFX(canvas);
     this.pixelScaleSupport.addListener((oldScale, newScale) -> onPixelScaleChanged());
     this.pixelScaleSupport.start();
   }
@@ -321,7 +321,7 @@ public class GLCanvasJFX implements GLCanvas {
   }
 
   /** Test/diagnostics access to the pixel-scale support. */
-  public JFXPixelScaleSupport getPixelScaleSupport() {
+  public PixelScaleSupportJFX getPixelScaleSupport() {
     return pixelScaleSupport;
   }
 }
