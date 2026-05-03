@@ -35,7 +35,7 @@ public class GLCanvasJFX implements GLCanvas {
   
   protected PerformanceOverlay_JFX overlay;
   protected RenderCounter counter = new RenderCounter();
-  protected boolean debugPerf = true;
+  protected boolean debugPerf = false;
 
   protected AtomicBoolean rendering = new AtomicBoolean();
 
@@ -250,5 +250,11 @@ public class GLCanvasJFX implements GLCanvas {
     this.offscreen.setFBO(fbo);
   }
 
+  public boolean isShowRenderingTime() {
+    return debugPerf;
+  }
 
+  public void setShowRenderingTime(boolean status) {
+    this.debugPerf = status;
+  }
 }

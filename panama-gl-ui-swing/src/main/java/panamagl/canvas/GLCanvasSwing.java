@@ -1,19 +1,17 @@
 /*******************************************************************************
  * Copyright (c) 2022, 2023 Martin Pernollet & contributors.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU Lesser General Public License as published by the Free Software Foundation; either version
+ * 2.1 of the License, or (at your option) any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * This library is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
+ * You should have received a copy of the GNU Lesser General Public License along with this library;
+ * if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ * 02110-1301, USA
  *******************************************************************************/
 package panamagl.canvas;
 
@@ -84,9 +82,9 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
   protected boolean debug = Debug.check(GLCanvasSwing.class);
   protected boolean debugPerf = true;
-  
+
   protected Flip flip = Flip.VERTICAL;
-  
+
   // For mocking
   public GLCanvasSwing() {}
 
@@ -95,12 +93,12 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
    * {@link GL} interface.
    */
   public GLCanvasSwing(PanamaGLFactory factory) {
-	this.offscreen = factory.newOffscreenRenderer(new FBOReader_AWT());
+    this.offscreen = factory.newOffscreenRenderer(new FBOReader_AWT());
     this.overlay = new PerformanceOverlay_AWT(this);
-    
+
     // Show debug info
-    //if (debug)
-    //  GraphicsUtils.printGraphicsEnvironment("GLCanvasSwing");
+    // if (debug)
+    // GraphicsUtils.printGraphicsEnvironment("GLCanvasSwing");
 
     // This listener hold the most important part of the rendering flow
     addComponentListener(new ResizeHandler());
@@ -123,7 +121,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
   @Override
   public void addNotify() {
     super.addNotify();
-    
+
     // Initialize GL context from the appropriate thread
     // Main OS thread for macOS
     // AWT thread for Linux/Windows
@@ -164,7 +162,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
     getMonitoring().onPaint();
     super.paint(g);
   }
-  
+
   boolean antialiasing = false;
 
   /**
@@ -173,31 +171,29 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
   @Override
   public void paintComponent(Graphics g) {
     if (out != null) {
-      
-      if(antialiasing) {
+
+      if (antialiasing) {
         Graphics2D g2d = (Graphics2D) out.getGraphics();
-  
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-            RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING,
-            RenderingHints.VALUE_RENDER_QUALITY);
+
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
             RenderingHints.VALUE_INTERPOLATION_BICUBIC);
       }
-      
+
       // Standard
-      if(flip==null || Flip.NONE.equals(flip)) {
-        g.drawImage(out, 0, 0, getWidth(), getHeight(), this);        
+      if (flip == null || Flip.NONE.equals(flip)) {
+        g.drawImage(out, 0, 0, getWidth(), getHeight(), this);
       }
       // vertical flip
-      else if(Flip.VERTICAL.equals(flip)) {
+      else if (Flip.VERTICAL.equals(flip)) {
         g.drawImage(out, 0, 0 + getHeight(), getWidth(), -getHeight(), this);
       }
       // horizontal flip
-      else if(Flip.HORIZONTAL.equals(flip)) {
+      else if (Flip.HORIZONTAL.equals(flip)) {
         g.drawImage(out, 0 + getWidth(), 0, -getWidth(), getHeight(), this);
       }
-      
+
       getMonitoring().onPaintComponentBefore();
 
       if (debugPerf)
@@ -206,16 +202,16 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
       rendering.set(false);
     }
   }
-  
-  
+
+
 
   /**
-   * If the panel initialization has achieved, triggers an offscreen rendering from the 
-   * AWT thread, hence happening asynchronously.
+   * If the panel initialization has achieved, triggers an offscreen rendering from the AWT thread,
+   * hence happening asynchronously.
    */
   @Override
   public void display() {
-    
+
     // Skip potential too early calls to display to avoid exceptions
     if (!offscreen.isInitialized()) {
       return;
@@ -229,30 +225,30 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
     // Does the actual work of rendering
     offscreen.onDisplay(this, listener);
-    
+
     // setRendering(false) will be invoked when painting is done
   }
 
 
   /**
-   * The {@link ResizeHandler} will trigger rendering on the main macOS thread 
-   * and then trigger repaint by the thread selected by {@link ThreadRedirect} 
-   * attached to the {@link OffscreenRenderer}.
+   * The {@link ResizeHandler} will trigger rendering on the main macOS thread and then trigger
+   * repaint by the thread selected by {@link ThreadRedirect} attached to the
+   * {@link OffscreenRenderer}.
    */
   protected class ResizeHandler extends ComponentAdapter {
     @Override
     public void componentResized(ComponentEvent e) {
-      
+
       // Skip rendering if we are already in the middle of rendering
       // the previous frame
       if (isRendering()) {
-    	//System.err.println("GLCanvasSwing : SKIP RENDER");
-        return; 
-      } 
-      // Otherwise indicates that we start to render and do the 
+        // System.err.println("GLCanvasSwing : SKIP RENDER");
+        return;
+      }
+      // Otherwise indicates that we start to render and do the
       // job required for resizing.
       else {
-        
+
         // Get the new dimensions
         Dimension size = e.getComponent().getSize();
         int w = (int) Math.round(size.getWidth());
@@ -265,12 +261,12 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
         getMonitoring().onStartRendering();
 
         offscreen.onResize(GLCanvasSwing.this, listener, 0, 0, w, h);
-        
+
         // setRendering(false) will be invoked when painting is done
       }
     }
   }
-  
+
   /**
    * Return true if the offscreen renderer has been initialized, which means that this panel has
    * been added to a parent component.
@@ -299,7 +295,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
    * Show performance in a 2D text overlay.
    */
   protected void overlayPerformance(Graphics g) {
-    if(overlay!=null)
+    if (overlay != null)
       overlay.paint(g);
   }
 
@@ -340,17 +336,17 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
   /**
    * Update the image to be displayed.
-   *  
+   * 
    * Should not be used by anything else than offscreen rendering.
    * 
    * TODO : make method name clearer and visibility hidden?
    */
   @Override
   public void setScreenshot(Image<?> image) {
-    if(image!=null)
-      out = ((AWTImage)image).getImage();
+    if (image != null)
+      out = ((AWTImage) image).getImage();
   }
-  
+
   @Override
   public RenderCounter getMonitoring() {
     return counter;
@@ -390,5 +386,14 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
   public void setFBO(FBO fbo) {
     this.offscreen.setFBO(fbo);
   }
+
+  public boolean isShowRenderingTime() {
+    return debugPerf;
+  }
+
+  public void setShowRenderingTime(boolean status) {
+    this.debugPerf = status;
+  }
+
 
 }

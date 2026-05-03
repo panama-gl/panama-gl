@@ -320,5 +320,5 @@ public class GLCanvasSWT extends Canvas implements panamagl.canvas.GLCanvas {
 
   public void setFBO(FBO fbo) {
     this.offscreen.setFBO(fbo);
-  }
+  }  
 }
