@@ -27,6 +27,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import panamagl.GLEventListener;
+import panamagl.canvas.PixelScale;
+import panamagl.canvas.PixelScaleListener;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.image.SWTImage;
 import panamagl.offscreen.FBO;
@@ -65,6 +67,9 @@ public class GLCanvasSWT extends Canvas implements panamagl.canvas.GLCanvas {
   protected Flip flip = Flip.VERTICAL;
   protected Color color;
 
+  protected SWTPixelScaleSupport pixelScaleSupport;
+  protected volatile boolean hiDPIEnabled = true;
+
   public GLCanvasSWT(Composite parent, int style, PanamaGLFactory factory) {
     super(parent, style | SWT.NO_BACKGROUND);
 
@@ -84,10 +89,26 @@ public class GLCanvasSWT extends Canvas implements panamagl.canvas.GLCanvas {
     // Resize listener: notify offscreen renderer of new dimensions
     addListener(SWT.Resize, new ResizeHandler());
 
+    // HiDPI / pixel scale plumbing.
+    pixelScaleSupport = new SWTPixelScaleSupport(this);
+    pixelScaleSupport.addListener((oldScale, newScale) -> onPixelScaleChanged());
+    pixelScaleSupport.start();
+
     // Dispose listener: clean up offscreen resources
     addDisposeListener(_ -> {
+      pixelScaleSupport.stop();
       offscreen.onDestroy(GLCanvasSWT.this, listener);
     });
+  }
+
+  /** Re-resize the FBO with new physical dimensions when the pixel scale changes. */
+  protected void onPixelScaleChanged() {
+    if (isDisposed() || !offscreen.isInitialized() || isRendering()) {
+      return;
+    }
+    setRendering(true);
+    counter.onStartRendering();
+    offscreen.onResize(this, listener, 0, 0, getPhysicalWidth(), getPhysicalHeight());
   }
 
 
@@ -198,7 +219,12 @@ public class GLCanvasSWT extends Canvas implements panamagl.canvas.GLCanvas {
 
         counter.onStartRendering();
 
-        offscreen.onResize(GLCanvasSWT.this, listener, 0, 0, bounds.width, bounds.height);
+        // FBO is dimensioned in physical pixels when HiDPI is enabled, in logical pixels
+        // otherwise. paintComponentNow blits at logical (getWidth(), getHeight()).
+        PixelScale s = pixelScaleSupport != null ? pixelScaleSupport.read() : PixelScale.IDENTITY;
+        int physW = hiDPIEnabled ? (int) Math.round(bounds.width * s.x()) : bounds.width;
+        int physH = hiDPIEnabled ? (int) Math.round(bounds.height * s.y()) : bounds.height;
+        offscreen.onResize(GLCanvasSWT.this, listener, 0, 0, physW, physH);
 
         // setRendering(false) will be invoked when painting is done
       }
@@ -316,5 +342,52 @@ public class GLCanvasSWT extends Canvas implements panamagl.canvas.GLCanvas {
 
   public void setFBO(FBO fbo) {
     this.offscreen.setFBO(fbo);
-  }  
+  }
+
+  /* ===================================================== */
+  // HiDPI / pixel scale
+
+  @Override
+  public PixelScale getPixelScale() {
+    return pixelScaleSupport != null ? pixelScaleSupport.read() : PixelScale.IDENTITY;
+  }
+
+  @Override
+  public int getPhysicalWidth() {
+    return hiDPIEnabled ? (int) Math.round(getWidth() * getPixelScale().x()) : getWidth();
+  }
+
+  @Override
+  public int getPhysicalHeight() {
+    return hiDPIEnabled ? (int) Math.round(getHeight() * getPixelScale().y()) : getHeight();
+  }
+
+  @Override
+  public void addPixelScaleListener(PixelScaleListener l) {
+    pixelScaleSupport.addListener(l);
+  }
+
+  @Override
+  public void removePixelScaleListener(PixelScaleListener l) {
+    pixelScaleSupport.removeListener(l);
+  }
+
+  @Override
+  public boolean isHiDPIEnabled() {
+    return hiDPIEnabled;
+  }
+
+  @Override
+  public void setHiDPIEnabled(boolean enabled) {
+    if (this.hiDPIEnabled == enabled) {
+      return;
+    }
+    this.hiDPIEnabled = enabled;
+    onPixelScaleChanged();
+  }
+
+  /** Test/diagnostics access to the pixel-scale support. */
+  public SWTPixelScaleSupport getPixelScaleSupport() {
+    return pixelScaleSupport;
+  }
 }

@@ -131,10 +131,7 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
   // AWT OVERRIDES
 
 
-
-
-
-/**
+  /**
    * Called after the JPanel has been added to the Swing hierarchy but before it is made visible.
    * 
    * Initialization may occur in other threads and not be completed when this method returns.
