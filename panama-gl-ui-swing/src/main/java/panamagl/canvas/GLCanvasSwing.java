@@ -85,6 +85,9 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
   protected Flip flip = Flip.VERTICAL;
 
+  protected AWTPixelScaleSupport pixelScaleSupport;
+  protected volatile boolean hiDPIEnabled = true;
+
   // For mocking
   public GLCanvasSwing() {}
 
@@ -102,6 +105,20 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
     // This listener hold the most important part of the rendering flow
     addComponentListener(new ResizeHandler());
+
+    // HiDPI / pixel scale plumbing.
+    pixelScaleSupport = new AWTPixelScaleSupport(this);
+    pixelScaleSupport.addListener((oldScale, newScale) -> onPixelScaleChanged());
+  }
+
+  /** Re-resize the FBO with new physical dimensions when the pixel scale changes. */
+  protected void onPixelScaleChanged() {
+    if (!offscreen.isInitialized() || isRendering()) {
+      return;
+    }
+    setRendering(true);
+    counter.onStartRendering();
+    offscreen.onResize(this, listener, 0, 0, getPhysicalWidth(), getPhysicalHeight());
   }
 
 
@@ -126,6 +143,8 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
     // Main OS thread for macOS
     // AWT thread for Linux/Windows
     offscreen.onInit(this, listener);
+
+    pixelScaleSupport.start();
   }
 
   /**
@@ -133,6 +152,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
    */
   @Override
   public void removeNotify() {
+    pixelScaleSupport.stop();
     offscreen.onDestroy(null, listener);
 
     super.removeNotify();
@@ -260,7 +280,12 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
         getMonitoring().onStartRendering();
 
-        offscreen.onResize(GLCanvasSwing.this, listener, 0, 0, w, h);
+        // FBO is dimensioned in physical pixels when HiDPI is enabled, in logical pixels
+        // otherwise. paintComponent always blits using getWidth()/getHeight() (logical).
+        PixelScale s = pixelScaleSupport.read();
+        int physW = hiDPIEnabled ? (int) Math.round(w * s.x()) : w;
+        int physH = hiDPIEnabled ? (int) Math.round(h * s.y()) : h;
+        offscreen.onResize(GLCanvasSwing.this, listener, 0, 0, physW, physH);
 
         // setRendering(false) will be invoked when painting is done
       }
@@ -395,5 +420,50 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
     this.debugPerf = status;
   }
 
+  /* ===================================================== */
+  // HiDPI / pixel scale
 
+  @Override
+  public PixelScale getPixelScale() {
+    return pixelScaleSupport != null ? pixelScaleSupport.read() : PixelScale.IDENTITY;
+  }
+
+  @Override
+  public int getPhysicalWidth() {
+    return hiDPIEnabled ? (int) Math.round(getWidth() * getPixelScale().x()) : getWidth();
+  }
+
+  @Override
+  public int getPhysicalHeight() {
+    return hiDPIEnabled ? (int) Math.round(getHeight() * getPixelScale().y()) : getHeight();
+  }
+
+  @Override
+  public void addPixelScaleListener(PixelScaleListener l) {
+    pixelScaleSupport.addListener(l);
+  }
+
+  @Override
+  public void removePixelScaleListener(PixelScaleListener l) {
+    pixelScaleSupport.removeListener(l);
+  }
+
+  @Override
+  public boolean isHiDPIEnabled() {
+    return hiDPIEnabled;
+  }
+
+  @Override
+  public void setHiDPIEnabled(boolean enabled) {
+    if (this.hiDPIEnabled == enabled) {
+      return;
+    }
+    this.hiDPIEnabled = enabled;
+    onPixelScaleChanged();
+  }
+
+  /** Test/diagnostics access to the pixel-scale support. */
+  public AWTPixelScaleSupport getPixelScaleSupport() {
+    return pixelScaleSupport;
+  }
 }
