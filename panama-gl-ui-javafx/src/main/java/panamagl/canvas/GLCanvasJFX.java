@@ -39,6 +39,9 @@ public class GLCanvasJFX implements GLCanvas {
 
   protected AtomicBoolean rendering = new AtomicBoolean();
 
+  protected JFXPixelScaleSupport pixelScaleSupport;
+  protected volatile boolean hiDPIEnabled = true;
+
 
   public GLCanvasJFX(PanamaGLFactory factory, Canvas canvas) {
     // TODO : do something clearer than overriding this
@@ -53,6 +56,20 @@ public class GLCanvasJFX implements GLCanvas {
     ResizeHandler resize = new ResizeHandler();
     this.canvas.widthProperty().addListener(resize);
     this.canvas.heightProperty().addListener(resize);
+
+    this.pixelScaleSupport = new JFXPixelScaleSupport(canvas);
+    this.pixelScaleSupport.addListener((oldScale, newScale) -> onPixelScaleChanged());
+    this.pixelScaleSupport.start();
+  }
+
+  /** Re-resize the FBO with new physical dimensions when the pixel scale changes. */
+  protected void onPixelScaleChanged() {
+    if (!offscreen.isInitialized() || isRendering()) {
+      return;
+    }
+    setRendering(true);
+    counter.onStartRendering();
+    offscreen.onResize(this, listener, 0, 0, getPhysicalWidth(), getPhysicalHeight());
   }
 
   @Override
@@ -115,9 +132,12 @@ public class GLCanvasJFX implements GLCanvas {
 
         getMonitoring().onStartRendering();
 
-        //System.out.println("GLCanvasJFX : " + w + " " + h);
-
-        offscreen.onResize(GLCanvasJFX.this, listener, 0, 0, w, h);
+        // FBO is dimensioned in physical pixels when HiDPI is enabled, in logical pixels
+        // otherwise. setScreenshot blits at logical (w, h) via canvas.getGraphicsContext2D.
+        PixelScale s = pixelScaleSupport != null ? pixelScaleSupport.read() : PixelScale.IDENTITY;
+        int physW = hiDPIEnabled ? (int) Math.round(w * s.x()) : w;
+        int physH = hiDPIEnabled ? (int) Math.round(h * s.y()) : h;
+        offscreen.onResize(GLCanvasJFX.this, listener, 0, 0, physW, physH);
       //}
     }
   }
@@ -256,5 +276,52 @@ public class GLCanvasJFX implements GLCanvas {
 
   public void setShowRenderingTime(boolean status) {
     this.debugPerf = status;
+  }
+
+  /* ===================================================== */
+  // HiDPI / pixel scale
+
+  @Override
+  public PixelScale getPixelScale() {
+    return pixelScaleSupport != null ? pixelScaleSupport.read() : PixelScale.IDENTITY;
+  }
+
+  @Override
+  public int getPhysicalWidth() {
+    return hiDPIEnabled ? (int) Math.round(getWidth() * getPixelScale().x()) : getWidth();
+  }
+
+  @Override
+  public int getPhysicalHeight() {
+    return hiDPIEnabled ? (int) Math.round(getHeight() * getPixelScale().y()) : getHeight();
+  }
+
+  @Override
+  public void addPixelScaleListener(PixelScaleListener l) {
+    pixelScaleSupport.addListener(l);
+  }
+
+  @Override
+  public void removePixelScaleListener(PixelScaleListener l) {
+    pixelScaleSupport.removeListener(l);
+  }
+
+  @Override
+  public boolean isHiDPIEnabled() {
+    return hiDPIEnabled;
+  }
+
+  @Override
+  public void setHiDPIEnabled(boolean enabled) {
+    if (this.hiDPIEnabled == enabled) {
+      return;
+    }
+    this.hiDPIEnabled = enabled;
+    onPixelScaleChanged();
+  }
+
+  /** Test/diagnostics access to the pixel-scale support. */
+  public JFXPixelScaleSupport getPixelScaleSupport() {
+    return pixelScaleSupport;
   }
 }
