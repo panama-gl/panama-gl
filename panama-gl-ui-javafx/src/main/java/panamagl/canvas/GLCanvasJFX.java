@@ -178,12 +178,23 @@ public class GLCanvasJFX implements GLCanvas {
   public void setScreenshot(Image<?> image) {
     this.image = (JFXImage) image;
 
+    // Drop stale frames produced before the canvas had its real size — typically the 10x10
+    // init frame {@link panamagl.offscreen.AOffscreenRenderer} renders synchronously from
+    // listener.init() (Jzy3D's View.init -> updateBounds -> shoot -> forceRepaint chain) when
+    // the JavaFX Canvas is still 1x1. Without this guard, the tiny image would be blitted
+    // scaled-up to the canvas size until the next display() at the proper size replaces it.
+    if (isStaleFrame(this.image.getImage())) {
+      // Reset the rendering flag so the next display() at the proper size is not gated.
+      rendering.set(false);
+      return;
+    }
+
     // System.out.println(Thread.currentThread());
 
     getMonitoring().onPaint();
 
     GraphicsContext gc = canvas.getGraphicsContext2D();
-    
+
     // Draw Image
     if(flip==null || Flip.NONE.equals(flip)) {
       gc.drawImage(this.image.getImage(), 0, 0, getWidth(), getHeight());
@@ -196,7 +207,7 @@ public class GLCanvasJFX implements GLCanvas {
     else if(Flip.HORIZONTAL.equals(flip)) {
       gc.drawImage(this.image.getImage(), 0+getWidth(), 0, -getWidth(), getHeight());
     }
-    
+
     getMonitoring().onPaintComponentBefore();
 
     // Draw overlay
@@ -204,6 +215,20 @@ public class GLCanvasJFX implements GLCanvas {
       overlay.paint(gc);
 
     rendering.set(false);
+  }
+
+  /**
+   * A frame is stale if its resolution is significantly smaller than the canvas currently
+   * expects. Threshold is half the expected physical size: comfortable margin against fractional
+   * pixel scales (1.5x, 1.75x) without missing the genuine 10x10 init frame.
+   */
+  boolean isStaleFrame(javafx.scene.image.Image frame) {
+    int expectedW = getPhysicalWidth();
+    int expectedH = getPhysicalHeight();
+    if (expectedW <= 1 || expectedH <= 1) {
+      return false; // canvas itself is not yet sized; nothing better to compare against
+    }
+    return frame.getWidth() < expectedW / 2.0 || frame.getHeight() < expectedH / 2.0;
   }
 
   @Override
