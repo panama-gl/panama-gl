@@ -85,7 +85,10 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
   protected Flip flip = Flip.VERTICAL;
 
-  protected PixelScaleSupportAWT pixelScaleSupport;
+  // Initialized at field-declaration time (rather than in the factory constructor) so that the
+  // mocking-only no-arg constructor below still produces a usable support instance — Jzy3D test
+  // code that calls Mockito spy(GLCanvasSwing.class) would otherwise NPE on addPixelScaleListener.
+  protected PixelScaleSupportAWT pixelScaleSupport = new PixelScaleSupportAWT(this);
   protected volatile boolean hiDPIEnabled = true;
 
   // For mocking
@@ -106,8 +109,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
     // This listener hold the most important part of the rendering flow
     addComponentListener(new ResizeHandler());
 
-    // HiDPI / pixel scale plumbing.
-    pixelScaleSupport = new PixelScaleSupportAWT(this);
+    // HiDPI / pixel scale plumbing (support is constructed at field init).
     pixelScaleSupport.addListener((oldScale, newScale) -> onPixelScaleChanged());
   }
 

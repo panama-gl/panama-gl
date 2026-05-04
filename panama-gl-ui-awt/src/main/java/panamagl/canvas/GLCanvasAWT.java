@@ -86,7 +86,9 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
 
   protected Flip flip = Flip.HORIZONTAL;
 
-  protected PixelScaleSupportAWT pixelScaleSupport;
+  // Initialized at field-declaration time so that any future mocking/spy of this class still
+  // produces a usable support instance. See GLCanvasSwing for the matching rationale.
+  protected PixelScaleSupportAWT pixelScaleSupport = new PixelScaleSupportAWT(this);
   protected volatile boolean hiDPIEnabled = true;
 
 
@@ -108,9 +110,9 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
     // This listener hold the most important part of the rendering flow
     addComponentListener(new ResizeHandler());
 
-    // HiDPI / pixel scale plumbing: detects monitor change, OS scaling change, and falls back
-    // to polling on platforms where AWT does not publish graphicsConfiguration property events.
-    pixelScaleSupport = new PixelScaleSupportAWT(this);
+    // HiDPI / pixel scale plumbing (support is constructed at field init): detects monitor
+    // change, OS scaling change, and falls back to polling on platforms where AWT does not
+    // publish graphicsConfiguration property events.
     pixelScaleSupport.addListener((oldScale, newScale) -> onPixelScaleChanged());
   }
 
