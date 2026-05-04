@@ -123,6 +123,17 @@ public class GLCanvasSWT extends Canvas implements panamagl.canvas.GLCanvas {
       ImageData imageData = out.getImage();
 
       if (imageData != null) {
+        // Drop stale frames produced before the canvas had its real size — typically the 10x10
+        // init frame {@link panamagl.offscreen.AOffscreenRenderer} renders synchronously from
+        // listener.init() (Jzy3D's View.init -> updateBounds -> shoot -> forceRepaint chain) when
+        // the SWT Canvas is still 1x1. Without this guard, AWT's first paint() after layout would
+        // blit that tiny image scaled-up to the canvas size, producing a brief pixelated flash.
+        if (isStaleFrame(imageData)) {
+          // Reset the rendering flag so the next display() at the proper size is not gated.
+          rendering.set(false);
+          return;
+        }
+
         Image swtImage = new Image(display, imageData);
         try {
 
@@ -165,6 +176,20 @@ public class GLCanvasSWT extends Canvas implements panamagl.canvas.GLCanvas {
         rendering.set(false);
       }
     }
+  }
+
+  /**
+   * A frame is stale if its resolution is significantly smaller than the canvas currently
+   * expects. Threshold is half the expected physical size: comfortable margin against fractional
+   * pixel scales (1.5x, 1.75x) without missing the genuine 10x10 init frame.
+   */
+  boolean isStaleFrame(ImageData frame) {
+    int expectedW = getPhysicalWidth();
+    int expectedH = getPhysicalHeight();
+    if (expectedW <= 1 || expectedH <= 1) {
+      return false; // canvas itself is not yet sized; nothing better to compare against
+    }
+    return frame.width < expectedW / 2 || frame.height < expectedH / 2;
   }
 
   // ---------------------------------------------------------------
