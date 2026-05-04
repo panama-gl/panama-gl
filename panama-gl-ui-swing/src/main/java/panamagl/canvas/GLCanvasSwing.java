@@ -81,7 +81,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
   protected PerformanceOverlay_AWT overlay;
 
   protected boolean debug = Debug.check(GLCanvasSwing.class);
-  protected boolean debugPerf = true;
+  protected boolean debugPerf = false;
 
   protected Flip flip = Flip.VERTICAL;
 
