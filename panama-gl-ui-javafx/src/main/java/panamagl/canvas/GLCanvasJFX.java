@@ -111,6 +111,13 @@ public class GLCanvasJFX implements GLCanvas {
     public void changed(ObservableValue<? extends Number> observable, Number oldValue,
         Number newValue) {
 
+      // Skip when the offscreen renderer hasn't been initialized yet. JavaFX layout passes
+      // can fire width/height changes before setGLEventListener triggers onInit, and unit tests
+      // that resize a canvas before wiring a listener would otherwise NPE in renderGLToImage.
+      if (!offscreen.isInitialized()) {
+        return;
+      }
+
       //System.out.println(canvas.getScene());
       //int w = (int) canvas.getScene().widthProperty().get();
       //int h = (int) canvas.getScene().heightProperty().get();

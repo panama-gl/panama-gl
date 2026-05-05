@@ -287,6 +287,13 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
     @Override
     public void componentResized(ComponentEvent e) {
 
+      // Skip when the offscreen renderer hasn't been initialized yet (no addNotify() / onInit
+      // path was reached). Resize events fired during construction or in unit tests that call
+      // setSize() before mounting the panel would otherwise NPE in renderGLToImage on a null fbo.
+      if (!offscreen.isInitialized()) {
+        return;
+      }
+
       // Skip rendering if we are already in the middle of rendering
       // the previous frame
       if (isRendering()) {

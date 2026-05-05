@@ -262,6 +262,13 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
     @Override
     public void componentResized(ComponentEvent e) {
 
+      // Skip when the offscreen renderer hasn't been initialized yet (no addNotify() / onInit
+      // path was reached). Resize events fired during construction or in unit tests that call
+      // setSize() before mounting the panel would otherwise NPE in renderGLToImage on a null fbo.
+      if (!offscreen.isInitialized()) {
+        return;
+      }
+
       // Get the new dimensions
       Dimension size = e.getComponent().getSize();
       int w = (int) Math.round(size.getWidth());
@@ -274,7 +281,7 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
       // the previous frame
       if (isRendering()) {
         return;
-      } 
+      }
       
       // Otherwise indicates that we start to render and do the
       // job required for resizing.
