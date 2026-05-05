@@ -24,15 +24,26 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.stage.Stage;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 
 /**
  * Unit tests for {@link PixelScaleSupportJFX}. Each test owns its own JavaFX scene/stage so the
  * cascade of listeners (canvas->scene->window->renderScale) can be exercised end to end.
+ *
+ * <p><b>Test ordering matters here.</b> The {@code z_} test opens and closes a {@code Stage};
+ * on Linux CI runners without a real display, {@code stage.show()/close()} schedules async
+ * cleanup tasks on the JavaFX queue that can take tens of seconds to drain. We force that test
+ * to run last (alphabetical {@code z_} prefix + {@link MethodSorters#NAME_ASCENDING}) and use an
+ * {@code @After} hook to flush the JavaFX queue between tests, so a slow Stage teardown does not
+ * cascade into a timeout on the next test's {@code Platform.runLater}.
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestPixelScaleSupportJFX {
 
   @BeforeClass
@@ -43,6 +54,18 @@ public class TestPixelScaleSupportJFX {
     } catch (IllegalStateException alreadyStarted) {
       // OK: another test already started the JavaFX platform.
     }
+  }
+
+  /**
+   * Drain pending JavaFX tasks between tests. {@link Platform#runLater(Runnable)} is FIFO, so
+   * awaiting a no-op task ensures every async Runnable scheduled by the just-finished test
+   * (e.g. Stage teardown on a headless Linux CI) has executed before the next test queues its
+   * own. Without this, a slow cleanup can monopolize the queue for &gt;30s and time out the
+   * next test.
+   */
+  @After
+  public void drainFxQueue() throws InterruptedException {
+    runFx(() -> {});
   }
 
   /**
@@ -105,9 +128,13 @@ public class TestPixelScaleSupportJFX {
    * Verify that the listener cascade rewires correctly when the canvas is attached to a stage —
    * i.e. that the support reads the actual window's render scale once a window is present, and
    * not just the screen output scale.
+   *
+   * <p>Prefixed {@code z_} so it runs last under {@link MethodSorters#NAME_ASCENDING}: opening a
+   * Stage on a headless Linux CI saturates the JavaFX queue with cleanup tasks for tens of
+   * seconds, which would otherwise time out subsequent tests' {@code runFx} calls.
    */
   @Test
-  public void read_returnsWindowRenderScale_afterAttachedToStage() throws Exception {
+  public void z_read_returnsWindowRenderScale_afterAttachedToStage() throws Exception {
     AtomicReference<PixelScale> beforeAttach = new AtomicReference<>();
     AtomicReference<PixelScale> afterAttach = new AtomicReference<>();
     runFx(() -> {
