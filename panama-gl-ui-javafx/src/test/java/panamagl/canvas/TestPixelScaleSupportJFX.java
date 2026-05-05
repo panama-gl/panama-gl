@@ -45,7 +45,14 @@ public class TestPixelScaleSupportJFX {
     }
   }
 
-  /** Run a task on the JavaFX thread and wait for it to complete. */
+  /**
+   * Run a task on the JavaFX thread and wait for it to complete.
+   *
+   * <p>30s timeout instead of the obvious "few seconds": on cold Linux CI runners (e.g. GitHub
+   * Actions ubuntu-latest without a real display), the JavaFX Platform's first
+   * {@code Platform.runLater} dispatch can take several seconds to fire while Prism initializes
+   * its software pipeline — the {@code Runnable} itself is trivial here.
+   */
   private static void runFx(Runnable r) throws InterruptedException {
     CountDownLatch latch = new CountDownLatch(1);
     Platform.runLater(() -> {
@@ -55,7 +62,7 @@ public class TestPixelScaleSupportJFX {
         latch.countDown();
       }
     });
-    Assert.assertTrue("FX task timed out", latch.await(5, TimeUnit.SECONDS));
+    Assert.assertTrue("FX task timed out", latch.await(30, TimeUnit.SECONDS));
   }
 
   @Test

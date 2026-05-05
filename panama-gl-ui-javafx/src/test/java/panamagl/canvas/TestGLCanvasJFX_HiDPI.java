@@ -78,7 +78,9 @@ public class TestGLCanvasJFX_HiDPI {
         latch.countDown();
       }
     });
-    Assert.assertTrue("FX task timed out", latch.await(5, TimeUnit.SECONDS));
+    // 30s: cold Linux CI runners can take several seconds before Platform.runLater fires while
+    // Prism initializes its software pipeline.
+    Assert.assertTrue("FX task timed out", latch.await(30, TimeUnit.SECONDS));
   }
 
   /** Build a GLCanvasJFX with an inner Canvas pre-sized for deterministic testing. */
