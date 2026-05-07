@@ -83,8 +83,13 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
 
   protected boolean debug = Debug.check(GLCanvasAWT.class);
   protected boolean debugPerf = false;
-  
+
   protected Flip flip = Flip.HORIZONTAL;
+
+  // Initialized at field-declaration time so that any future mocking/spy of this class still
+  // produces a usable support instance. See GLCanvasSwing for the matching rationale.
+  protected PixelScaleSupportAWT pixelScaleSupport = new PixelScaleSupportAWT(this);
+  protected volatile boolean hiDPIEnabled = true;
 
 
   /**
@@ -104,6 +109,21 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
 
     // This listener hold the most important part of the rendering flow
     addComponentListener(new ResizeHandler());
+
+    // HiDPI / pixel scale plumbing (support is constructed at field init): detects monitor
+    // change, OS scaling change, and falls back to polling on platforms where AWT does not
+    // publish graphicsConfiguration property events.
+    pixelScaleSupport.addListener((oldScale, newScale) -> onPixelScaleChanged());
+  }
+
+  /** Invoked when the pixel scale changes — re-resize the FBO with the new physical dimensions. */
+  protected void onPixelScaleChanged() {
+    if (!offscreen.isInitialized() || isRendering()) {
+      return;
+    }
+    setRendering(true);
+    counter.onStartRendering();
+    offscreen.onResize(this, listener, 0, 0, getPhysicalWidth(), getPhysicalHeight());
   }
 
 
@@ -113,10 +133,7 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
   // AWT OVERRIDES
 
 
-
-
-
-/**
+  /**
    * Called after the JPanel has been added to the Swing hierarchy but before it is made visible.
    * 
    * Initialization may occur in other threads and not be completed when this method returns.
@@ -129,6 +146,8 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
 
     // Initialize GL context from main macOS thread
     offscreen.onInit(this, listener);
+
+    pixelScaleSupport.start();
   }
 
   /**
@@ -136,6 +155,7 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
    */
   @Override
   public void removeNotify() {
+    pixelScaleSupport.stop();
     offscreen.onDestroy(null, listener);
 
     super.removeNotify();
@@ -242,6 +262,13 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
     @Override
     public void componentResized(ComponentEvent e) {
 
+      // Skip when the offscreen renderer hasn't been initialized yet (no addNotify() / onInit
+      // path was reached). Resize events fired during construction or in unit tests that call
+      // setSize() before mounting the panel would otherwise NPE in renderGLToImage on a null fbo.
+      if (!offscreen.isInitialized()) {
+        return;
+      }
+
       // Get the new dimensions
       Dimension size = e.getComponent().getSize();
       int w = (int) Math.round(size.getWidth());
@@ -254,16 +281,21 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
       // the previous frame
       if (isRendering()) {
         return;
-      } 
+      }
       
-      // Otherwise indicates that we start to render and do the 
+      // Otherwise indicates that we start to render and do the
       // job required for resizing.
       else {
         setRendering(true);
 
         getMonitoring().onStartRendering();
 
-        offscreen.onResize(GLCanvasAWT.this, listener, 0, 0, w, h);
+        // FBO is dimensioned in physical pixels when HiDPI is enabled, in logical pixels
+        // otherwise. paint() always blits using getWidth()/getHeight() (logical).
+        PixelScale s = pixelScaleSupport.read();
+        int physW = hiDPIEnabled ? (int) Math.round(w * s.x()) : w;
+        int physH = hiDPIEnabled ? (int) Math.round(h * s.y()) : h;
+        offscreen.onResize(GLCanvasAWT.this, listener, 0, 0, physW, physH);
       }
     }
   }
@@ -367,5 +399,52 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
 
   public void setShowRenderingTime(boolean status) {
     this.debugPerf = status;
+  }
+
+  /* ===================================================== */
+  // HiDPI / pixel scale
+
+  @Override
+  public PixelScale getPixelScale() {
+    return pixelScaleSupport != null ? pixelScaleSupport.read() : PixelScale.IDENTITY;
+  }
+
+  @Override
+  public int getPhysicalWidth() {
+    return hiDPIEnabled ? (int) Math.round(getWidth() * getPixelScale().x()) : getWidth();
+  }
+
+  @Override
+  public int getPhysicalHeight() {
+    return hiDPIEnabled ? (int) Math.round(getHeight() * getPixelScale().y()) : getHeight();
+  }
+
+  @Override
+  public void addPixelScaleListener(PixelScaleListener l) {
+    pixelScaleSupport.addListener(l);
+  }
+
+  @Override
+  public void removePixelScaleListener(PixelScaleListener l) {
+    pixelScaleSupport.removeListener(l);
+  }
+
+  @Override
+  public boolean isHiDPIEnabled() {
+    return hiDPIEnabled;
+  }
+
+  @Override
+  public void setHiDPIEnabled(boolean enabled) {
+    if (this.hiDPIEnabled == enabled) {
+      return;
+    }
+    this.hiDPIEnabled = enabled;
+    onPixelScaleChanged();
+  }
+
+  /** Test/diagnostics access to the pixel-scale support. */
+  public PixelScaleSupportAWT getPixelScaleSupport() {
+    return pixelScaleSupport;
   }
 }

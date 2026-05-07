@@ -39,6 +39,9 @@ public class GLCanvasJFX implements GLCanvas {
 
   protected AtomicBoolean rendering = new AtomicBoolean();
 
+  protected PixelScaleSupportJFX pixelScaleSupport;
+  protected volatile boolean hiDPIEnabled = true;
+
 
   public GLCanvasJFX(PanamaGLFactory factory, Canvas canvas) {
     // TODO : do something clearer than overriding this
@@ -53,6 +56,20 @@ public class GLCanvasJFX implements GLCanvas {
     ResizeHandler resize = new ResizeHandler();
     this.canvas.widthProperty().addListener(resize);
     this.canvas.heightProperty().addListener(resize);
+
+    this.pixelScaleSupport = new PixelScaleSupportJFX(canvas);
+    this.pixelScaleSupport.addListener((oldScale, newScale) -> onPixelScaleChanged());
+    this.pixelScaleSupport.start();
+  }
+
+  /** Re-resize the FBO with new physical dimensions when the pixel scale changes. */
+  protected void onPixelScaleChanged() {
+    if (!offscreen.isInitialized() || isRendering()) {
+      return;
+    }
+    setRendering(true);
+    counter.onStartRendering();
+    offscreen.onResize(this, listener, 0, 0, getPhysicalWidth(), getPhysicalHeight());
   }
 
   @Override
@@ -94,6 +111,13 @@ public class GLCanvasJFX implements GLCanvas {
     public void changed(ObservableValue<? extends Number> observable, Number oldValue,
         Number newValue) {
 
+      // Skip when the offscreen renderer hasn't been initialized yet. JavaFX layout passes
+      // can fire width/height changes before setGLEventListener triggers onInit, and unit tests
+      // that resize a canvas before wiring a listener would otherwise NPE in renderGLToImage.
+      if (!offscreen.isInitialized()) {
+        return;
+      }
+
       //System.out.println(canvas.getScene());
       //int w = (int) canvas.getScene().widthProperty().get();
       //int h = (int) canvas.getScene().heightProperty().get();
@@ -115,9 +139,12 @@ public class GLCanvasJFX implements GLCanvas {
 
         getMonitoring().onStartRendering();
 
-        //System.out.println("GLCanvasJFX : " + w + " " + h);
-
-        offscreen.onResize(GLCanvasJFX.this, listener, 0, 0, w, h);
+        // FBO is dimensioned in physical pixels when HiDPI is enabled, in logical pixels
+        // otherwise. setScreenshot blits at logical (w, h) via canvas.getGraphicsContext2D.
+        PixelScale s = pixelScaleSupport != null ? pixelScaleSupport.read() : PixelScale.IDENTITY;
+        int physW = hiDPIEnabled ? (int) Math.round(w * s.x()) : w;
+        int physH = hiDPIEnabled ? (int) Math.round(h * s.y()) : h;
+        offscreen.onResize(GLCanvasJFX.this, listener, 0, 0, physW, physH);
       //}
     }
   }
@@ -158,12 +185,23 @@ public class GLCanvasJFX implements GLCanvas {
   public void setScreenshot(Image<?> image) {
     this.image = (JFXImage) image;
 
+    // Drop stale frames produced before the canvas had its real size — typically the 10x10
+    // init frame {@link panamagl.offscreen.AOffscreenRenderer} renders synchronously from
+    // listener.init() (Jzy3D's View.init -> updateBounds -> shoot -> forceRepaint chain) when
+    // the JavaFX Canvas is still 1x1. Without this guard, the tiny image would be blitted
+    // scaled-up to the canvas size until the next display() at the proper size replaces it.
+    if (isStaleFrame(this.image.getImage())) {
+      // Reset the rendering flag so the next display() at the proper size is not gated.
+      rendering.set(false);
+      return;
+    }
+
     // System.out.println(Thread.currentThread());
 
     getMonitoring().onPaint();
 
     GraphicsContext gc = canvas.getGraphicsContext2D();
-    
+
     // Draw Image
     if(flip==null || Flip.NONE.equals(flip)) {
       gc.drawImage(this.image.getImage(), 0, 0, getWidth(), getHeight());
@@ -176,7 +214,7 @@ public class GLCanvasJFX implements GLCanvas {
     else if(Flip.HORIZONTAL.equals(flip)) {
       gc.drawImage(this.image.getImage(), 0+getWidth(), 0, -getWidth(), getHeight());
     }
-    
+
     getMonitoring().onPaintComponentBefore();
 
     // Draw overlay
@@ -184,6 +222,20 @@ public class GLCanvasJFX implements GLCanvas {
       overlay.paint(gc);
 
     rendering.set(false);
+  }
+
+  /**
+   * A frame is stale if its resolution is significantly smaller than the canvas currently
+   * expects. Threshold is half the expected physical size: comfortable margin against fractional
+   * pixel scales (1.5x, 1.75x) without missing the genuine 10x10 init frame.
+   */
+  boolean isStaleFrame(javafx.scene.image.Image frame) {
+    int expectedW = getPhysicalWidth();
+    int expectedH = getPhysicalHeight();
+    if (expectedW <= 1 || expectedH <= 1) {
+      return false; // canvas itself is not yet sized; nothing better to compare against
+    }
+    return frame.getWidth() < expectedW / 2.0 || frame.getHeight() < expectedH / 2.0;
   }
 
   @Override
@@ -256,5 +308,52 @@ public class GLCanvasJFX implements GLCanvas {
 
   public void setShowRenderingTime(boolean status) {
     this.debugPerf = status;
+  }
+
+  /* ===================================================== */
+  // HiDPI / pixel scale
+
+  @Override
+  public PixelScale getPixelScale() {
+    return pixelScaleSupport != null ? pixelScaleSupport.read() : PixelScale.IDENTITY;
+  }
+
+  @Override
+  public int getPhysicalWidth() {
+    return hiDPIEnabled ? (int) Math.round(getWidth() * getPixelScale().x()) : getWidth();
+  }
+
+  @Override
+  public int getPhysicalHeight() {
+    return hiDPIEnabled ? (int) Math.round(getHeight() * getPixelScale().y()) : getHeight();
+  }
+
+  @Override
+  public void addPixelScaleListener(PixelScaleListener l) {
+    pixelScaleSupport.addListener(l);
+  }
+
+  @Override
+  public void removePixelScaleListener(PixelScaleListener l) {
+    pixelScaleSupport.removeListener(l);
+  }
+
+  @Override
+  public boolean isHiDPIEnabled() {
+    return hiDPIEnabled;
+  }
+
+  @Override
+  public void setHiDPIEnabled(boolean enabled) {
+    if (this.hiDPIEnabled == enabled) {
+      return;
+    }
+    this.hiDPIEnabled = enabled;
+    onPixelScaleChanged();
+  }
+
+  /** Test/diagnostics access to the pixel-scale support. */
+  public PixelScaleSupportJFX getPixelScaleSupport() {
+    return pixelScaleSupport;
   }
 }

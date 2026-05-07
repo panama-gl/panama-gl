@@ -18,7 +18,7 @@
 package panamagl.canvas;
 
 import org.junit.Test;
-import junit.framework.Assert;
+import org.junit.Assert;
 import me.tongfei.progressbar.ProgressBar;
 import panamagl.GLEventAdapter;
 import panamagl.factory.PanamaGLFactory;

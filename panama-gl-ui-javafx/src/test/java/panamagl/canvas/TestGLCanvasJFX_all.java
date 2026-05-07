@@ -247,15 +247,20 @@ public class TestGLCanvasJFX_all {
 
     panel.display();
 
+    // FBO is dimensioned in *physical* pixels: logical * pixelScale. On a 1x display the
+    // expected size is WIDTH x HEIGHT; on Retina, 2*WIDTH x 2*HEIGHT.
+    int expectedW1 = panel.getPhysicalWidth();
+    int expectedH1 = panel.getPhysicalHeight();
+
     // Wait until the FBO has been resized to the new dimensions
     waitFor(
-        () -> panel.getFBO() != null && panel.getFBO().getWidth() == WIDTH
-            && panel.getFBO().getHeight() == HEIGHT,
-        "FBO width should be resized to " + WIDTH + "x" + HEIGHT);
+        () -> panel.getFBO() != null && panel.getFBO().getWidth() == expectedW1
+            && panel.getFBO().getHeight() == expectedH1,
+        "FBO should be resized to " + expectedW1 + "x" + expectedH1);
 
     // Then FBO is resized as well
-    Assert.assertEquals(WIDTH, panel.getFBO().getWidth());
-    Assert.assertEquals(HEIGHT, panel.getFBO().getHeight());
+    Assert.assertEquals(expectedW1, panel.getFBO().getWidth());
+    Assert.assertEquals(expectedH1, panel.getFBO().getHeight());
 
     // -------------------------------
     // When panel is resized again
@@ -264,13 +269,17 @@ public class TestGLCanvasJFX_all {
 
     panel.display();
 
+    int expectedW2 = panel.getPhysicalWidth();
+    int expectedH2 = panel.getPhysicalHeight();
+
     // Wait until the FBO has been resized to the new dimensions
-    waitFor(() -> panel.getFBO() != null && panel.getFBO().getWidth() == 3 * WIDTH && panel.getFBO().getHeight() == 2 * HEIGHT,
-        "FBO width should be resized to " + (3 * WIDTH) );
+    waitFor(() -> panel.getFBO() != null && panel.getFBO().getWidth() == expectedW2
+            && panel.getFBO().getHeight() == expectedH2,
+        "FBO should be resized to " + expectedW2 + "x" + expectedH2);
 
     // Then FBO is resized as well
-    Assert.assertEquals(3 * WIDTH, panel.getFBO().getWidth());
-    Assert.assertEquals(2 * HEIGHT, panel.getFBO().getHeight());
+    Assert.assertEquals(expectedW2, panel.getFBO().getWidth());
+    Assert.assertEquals(expectedH2, panel.getFBO().getHeight());
 
 
   }

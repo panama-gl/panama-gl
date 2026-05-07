@@ -81,9 +81,15 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
   protected PerformanceOverlay_AWT overlay;
 
   protected boolean debug = Debug.check(GLCanvasSwing.class);
-  protected boolean debugPerf = true;
+  protected boolean debugPerf = false;
 
   protected Flip flip = Flip.VERTICAL;
+
+  // Initialized at field-declaration time (rather than in the factory constructor) so that the
+  // mocking-only no-arg constructor below still produces a usable support instance — Jzy3D test
+  // code that calls Mockito spy(GLCanvasSwing.class) would otherwise NPE on addPixelScaleListener.
+  protected PixelScaleSupportAWT pixelScaleSupport = new PixelScaleSupportAWT(this);
+  protected volatile boolean hiDPIEnabled = true;
 
   // For mocking
   public GLCanvasSwing() {}
@@ -102,6 +108,19 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
     // This listener hold the most important part of the rendering flow
     addComponentListener(new ResizeHandler());
+
+    // HiDPI / pixel scale plumbing (support is constructed at field init).
+    pixelScaleSupport.addListener((oldScale, newScale) -> onPixelScaleChanged());
+  }
+
+  /** Re-resize the FBO with new physical dimensions when the pixel scale changes. */
+  protected void onPixelScaleChanged() {
+    if (!offscreen.isInitialized() || isRendering()) {
+      return;
+    }
+    setRendering(true);
+    counter.onStartRendering();
+    offscreen.onResize(this, listener, 0, 0, getPhysicalWidth(), getPhysicalHeight());
   }
 
 
@@ -126,6 +145,8 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
     // Main OS thread for macOS
     // AWT thread for Linux/Windows
     offscreen.onInit(this, listener);
+
+    pixelScaleSupport.start();
   }
 
   /**
@@ -133,6 +154,7 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
    */
   @Override
   public void removeNotify() {
+    pixelScaleSupport.stop();
     offscreen.onDestroy(null, listener);
 
     super.removeNotify();
@@ -172,6 +194,18 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
   public void paintComponent(Graphics g) {
     if (out != null) {
 
+      // Drop stale frames produced before the panel had its real size — typically the
+      // 10x10 init frame {@link panamagl.offscreen.AOffscreenRenderer} renders synchronously from
+      // listener.init() (Jzy3D's View.init -> updateBounds -> shoot -> forceRepaint chain) when
+      // the JPanel is still 0x0. Without this guard, AWT's first paint() after layout would blit
+      // that tiny image scaled up to the final panel size, producing a ~200ms pixelated flash
+      // before the first proper-size frame replaces it.
+      if (isStaleFrame(out)) {
+        // Reset the rendering flag so the next display() at the proper size is not gated.
+        rendering.set(false);
+        return;
+      }
+
       if (antialiasing) {
         Graphics2D g2d = (Graphics2D) out.getGraphics();
 
@@ -201,6 +235,20 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
       rendering.set(false);
     }
+  }
+
+  /**
+   * A frame is stale if its resolution is significantly smaller than the panel currently expects.
+   * Threshold is half the expected physical width/height: comfortable margin against fractional
+   * pixel scales (1.5x, 1.75x) without missing the genuine 10x10 init frame.
+   */
+  private boolean isStaleFrame(BufferedImage frame) {
+    int expectedW = getPhysicalWidth();
+    int expectedH = getPhysicalHeight();
+    if (expectedW <= 1 || expectedH <= 1) {
+      return false; // panel itself is not yet sized; nothing better to compare against
+    }
+    return frame.getWidth() < expectedW / 2 || frame.getHeight() < expectedH / 2;
   }
 
 
@@ -239,6 +287,13 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
     @Override
     public void componentResized(ComponentEvent e) {
 
+      // Skip when the offscreen renderer hasn't been initialized yet (no addNotify() / onInit
+      // path was reached). Resize events fired during construction or in unit tests that call
+      // setSize() before mounting the panel would otherwise NPE in renderGLToImage on a null fbo.
+      if (!offscreen.isInitialized()) {
+        return;
+      }
+
       // Skip rendering if we are already in the middle of rendering
       // the previous frame
       if (isRendering()) {
@@ -260,7 +315,12 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
 
         getMonitoring().onStartRendering();
 
-        offscreen.onResize(GLCanvasSwing.this, listener, 0, 0, w, h);
+        // FBO is dimensioned in physical pixels when HiDPI is enabled, in logical pixels
+        // otherwise. paintComponent always blits using getWidth()/getHeight() (logical).
+        PixelScale s = pixelScaleSupport.read();
+        int physW = hiDPIEnabled ? (int) Math.round(w * s.x()) : w;
+        int physH = hiDPIEnabled ? (int) Math.round(h * s.y()) : h;
+        offscreen.onResize(GLCanvasSwing.this, listener, 0, 0, physW, physH);
 
         // setRendering(false) will be invoked when painting is done
       }
@@ -395,5 +455,50 @@ public class GLCanvasSwing extends JPanel implements GLCanvas {
     this.debugPerf = status;
   }
 
+  /* ===================================================== */
+  // HiDPI / pixel scale
 
+  @Override
+  public PixelScale getPixelScale() {
+    return pixelScaleSupport != null ? pixelScaleSupport.read() : PixelScale.IDENTITY;
+  }
+
+  @Override
+  public int getPhysicalWidth() {
+    return hiDPIEnabled ? (int) Math.round(getWidth() * getPixelScale().x()) : getWidth();
+  }
+
+  @Override
+  public int getPhysicalHeight() {
+    return hiDPIEnabled ? (int) Math.round(getHeight() * getPixelScale().y()) : getHeight();
+  }
+
+  @Override
+  public void addPixelScaleListener(PixelScaleListener l) {
+    pixelScaleSupport.addListener(l);
+  }
+
+  @Override
+  public void removePixelScaleListener(PixelScaleListener l) {
+    pixelScaleSupport.removeListener(l);
+  }
+
+  @Override
+  public boolean isHiDPIEnabled() {
+    return hiDPIEnabled;
+  }
+
+  @Override
+  public void setHiDPIEnabled(boolean enabled) {
+    if (this.hiDPIEnabled == enabled) {
+      return;
+    }
+    this.hiDPIEnabled = enabled;
+    onPixelScaleChanged();
+  }
+
+  /** Test/diagnostics access to the pixel-scale support. */
+  public PixelScaleSupportAWT getPixelScaleSupport() {
+    return pixelScaleSupport;
+  }
 }

@@ -71,9 +71,68 @@ public interface GLCanvas {
   
   void setFlip(Flip flip);
   Flip getFlip();
-  
+
   enum Flip{
     NONE, VERTICAL, HORIZONTAL;
   }
-  
+
+  /* ===================================================== */
+  // HiDPI / pixel scale
+
+  /**
+   * Return the current pixel scale (ratio between physical pixels and logical pixels).
+   *
+   * <p>Returns {@link PixelScale#IDENTITY} for canvases that have not been displayed yet, or
+   * for implementations that do not yet support HiDPI detection.
+   */
+  default PixelScale getPixelScale() {
+    return PixelScale.IDENTITY;
+  }
+
+  /**
+   * Width of the rendering surface (FBO) in physical pixels.
+   *
+   * <p>When HiDPI is enabled, this is {@code getWidth() * pixelScale.x()}; otherwise it equals
+   * {@link #getWidth()}.
+   */
+  default int getPhysicalWidth() {
+    return isHiDPIEnabled() ? (int) Math.round(getWidth() * getPixelScale().x()) : getWidth();
+  }
+
+  /**
+   * Height of the rendering surface (FBO) in physical pixels.
+   *
+   * @see #getPhysicalWidth()
+   */
+  default int getPhysicalHeight() {
+    return isHiDPIEnabled() ? (int) Math.round(getHeight() * getPixelScale().y()) : getHeight();
+  }
+
+  /**
+   * Register a listener notified when {@link #getPixelScale()} changes.
+   *
+   * <p>Default implementation is a no-op for canvases that do not yet support HiDPI events.
+   */
+  default void addPixelScaleListener(PixelScaleListener listener) {}
+
+  /** Remove a previously registered {@link PixelScaleListener}. */
+  default void removePixelScaleListener(PixelScaleListener listener) {}
+
+  /**
+   * Whether HiDPI rendering is enabled.
+   *
+   * <p>When {@code true} (the default), the FBO is dimensioned in physical pixels — sharp
+   * rendering on Retina/HiDPI displays at the cost of more pixels to fill.
+   *
+   * <p>When {@code false}, the FBO is dimensioned in logical pixels — equivalent to setting a
+   * pixel scale of {@code (1, 1)}: faster but the image is upscaled by the toolkit on HiDPI
+   * displays. Mirrors Jzy3D's {@code Quality.preserveViewportSize=true}.
+   */
+  default boolean isHiDPIEnabled() {
+    return true;
+  }
+
+  /** Toggle HiDPI rendering. @see #isHiDPIEnabled() */
+  default void setHiDPIEnabled(boolean enabled) {}
+
 }

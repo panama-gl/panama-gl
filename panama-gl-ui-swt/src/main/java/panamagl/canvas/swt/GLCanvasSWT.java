@@ -1,9 +1,5 @@
 /*******************************************************************************
-<<<<<<< HEAD
  * Copyright (c) 2023 Martin Pernollet and others
-=======
- * Copyright (c) 2023 Christoph Läubrich, Martin Pernollet and others
->>>>>>> 91b68a7 (.)
  *
  * This program and the accompanying materials are made available under the terms of the Eclipse
  * Public License 2.0 which is available at http://www.eclipse.org/legal/epl-2.0.
@@ -31,6 +27,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import panamagl.GLEventListener;
+import panamagl.canvas.PixelScale;
+import panamagl.canvas.PixelScaleListener;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.image.SWTImage;
 import panamagl.offscreen.FBO;
@@ -69,6 +67,9 @@ public class GLCanvasSWT extends Canvas implements panamagl.canvas.GLCanvas {
   protected Flip flip = Flip.VERTICAL;
   protected Color color;
 
+  protected PixelScaleSupportSWT pixelScaleSupport;
+  protected volatile boolean hiDPIEnabled = true;
+
   public GLCanvasSWT(Composite parent, int style, PanamaGLFactory factory) {
     super(parent, style | SWT.NO_BACKGROUND);
 
@@ -88,10 +89,26 @@ public class GLCanvasSWT extends Canvas implements panamagl.canvas.GLCanvas {
     // Resize listener: notify offscreen renderer of new dimensions
     addListener(SWT.Resize, new ResizeHandler());
 
+    // HiDPI / pixel scale plumbing.
+    pixelScaleSupport = new PixelScaleSupportSWT(this);
+    pixelScaleSupport.addListener((oldScale, newScale) -> onPixelScaleChanged());
+    pixelScaleSupport.start();
+
     // Dispose listener: clean up offscreen resources
     addDisposeListener(_ -> {
+      pixelScaleSupport.stop();
       offscreen.onDestroy(GLCanvasSWT.this, listener);
     });
+  }
+
+  /** Re-resize the FBO with new physical dimensions when the pixel scale changes. */
+  protected void onPixelScaleChanged() {
+    if (isDisposed() || !offscreen.isInitialized() || isRendering()) {
+      return;
+    }
+    setRendering(true);
+    counter.onStartRendering();
+    offscreen.onResize(this, listener, 0, 0, getPhysicalWidth(), getPhysicalHeight());
   }
 
 
@@ -106,6 +123,17 @@ public class GLCanvasSWT extends Canvas implements panamagl.canvas.GLCanvas {
       ImageData imageData = out.getImage();
 
       if (imageData != null) {
+        // Drop stale frames produced before the canvas had its real size — typically the 10x10
+        // init frame {@link panamagl.offscreen.AOffscreenRenderer} renders synchronously from
+        // listener.init() (Jzy3D's View.init -> updateBounds -> shoot -> forceRepaint chain) when
+        // the SWT Canvas is still 1x1. Without this guard, AWT's first paint() after layout would
+        // blit that tiny image scaled-up to the canvas size, producing a brief pixelated flash.
+        if (isStaleFrame(imageData)) {
+          // Reset the rendering flag so the next display() at the proper size is not gated.
+          rendering.set(false);
+          return;
+        }
+
         Image swtImage = new Image(display, imageData);
         try {
 
@@ -148,6 +176,20 @@ public class GLCanvasSWT extends Canvas implements panamagl.canvas.GLCanvas {
         rendering.set(false);
       }
     }
+  }
+
+  /**
+   * A frame is stale if its resolution is significantly smaller than the canvas currently
+   * expects. Threshold is half the expected physical size: comfortable margin against fractional
+   * pixel scales (1.5x, 1.75x) without missing the genuine 10x10 init frame.
+   */
+  boolean isStaleFrame(ImageData frame) {
+    int expectedW = getPhysicalWidth();
+    int expectedH = getPhysicalHeight();
+    if (expectedW <= 1 || expectedH <= 1) {
+      return false; // canvas itself is not yet sized; nothing better to compare against
+    }
+    return frame.width < expectedW / 2 || frame.height < expectedH / 2;
   }
 
   // ---------------------------------------------------------------
@@ -202,7 +244,12 @@ public class GLCanvasSWT extends Canvas implements panamagl.canvas.GLCanvas {
 
         counter.onStartRendering();
 
-        offscreen.onResize(GLCanvasSWT.this, listener, 0, 0, bounds.width, bounds.height);
+        // FBO is dimensioned in physical pixels when HiDPI is enabled, in logical pixels
+        // otherwise. paintComponentNow blits at logical (getWidth(), getHeight()).
+        PixelScale s = pixelScaleSupport != null ? pixelScaleSupport.read() : PixelScale.IDENTITY;
+        int physW = hiDPIEnabled ? (int) Math.round(bounds.width * s.x()) : bounds.width;
+        int physH = hiDPIEnabled ? (int) Math.round(bounds.height * s.y()) : bounds.height;
+        offscreen.onResize(GLCanvasSWT.this, listener, 0, 0, physW, physH);
 
         // setRendering(false) will be invoked when painting is done
       }
@@ -320,5 +367,52 @@ public class GLCanvasSWT extends Canvas implements panamagl.canvas.GLCanvas {
 
   public void setFBO(FBO fbo) {
     this.offscreen.setFBO(fbo);
-  }  
+  }
+
+  /* ===================================================== */
+  // HiDPI / pixel scale
+
+  @Override
+  public PixelScale getPixelScale() {
+    return pixelScaleSupport != null ? pixelScaleSupport.read() : PixelScale.IDENTITY;
+  }
+
+  @Override
+  public int getPhysicalWidth() {
+    return hiDPIEnabled ? (int) Math.round(getWidth() * getPixelScale().x()) : getWidth();
+  }
+
+  @Override
+  public int getPhysicalHeight() {
+    return hiDPIEnabled ? (int) Math.round(getHeight() * getPixelScale().y()) : getHeight();
+  }
+
+  @Override
+  public void addPixelScaleListener(PixelScaleListener l) {
+    pixelScaleSupport.addListener(l);
+  }
+
+  @Override
+  public void removePixelScaleListener(PixelScaleListener l) {
+    pixelScaleSupport.removeListener(l);
+  }
+
+  @Override
+  public boolean isHiDPIEnabled() {
+    return hiDPIEnabled;
+  }
+
+  @Override
+  public void setHiDPIEnabled(boolean enabled) {
+    if (this.hiDPIEnabled == enabled) {
+      return;
+    }
+    this.hiDPIEnabled = enabled;
+    onPixelScaleChanged();
+  }
+
+  /** Test/diagnostics access to the pixel-scale support. */
+  public PixelScaleSupportSWT getPixelScaleSupport() {
+    return pixelScaleSupport;
+  }
 }

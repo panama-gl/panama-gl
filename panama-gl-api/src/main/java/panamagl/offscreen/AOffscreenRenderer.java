@@ -75,11 +75,15 @@ public class AOffscreenRenderer implements OffscreenRenderer {
     // thread. Toolkits like SWT enforce single-thread access to widgets and would throw
     // "Invalid thread access" if a non-UI thread (e.g. a CameraThreadController) called
     // drawable.getWidth() before threadRedirect.run() switched us back to the UI thread.
+    //
+    // Read PHYSICAL pixel dimensions: the FBO must match the resolution used by the
+    // ResizeHandler (which already passes physical pixels to onResize). When HiDPI is disabled
+    // or no scale is reported, getPhysicalWidth/Height fall back to getWidth/getHeight.
     threadRedirect.run(new Runnable() {
       @Override
       public void run() {
-        int w = drawable.getWidth();
-        int h = drawable.getHeight();
+        int w = drawable.getPhysicalWidth();
+        int h = drawable.getPhysicalHeight();
         getTask_renderGLToImage(drawable, listener, w, h).run();
       }
     });

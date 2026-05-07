@@ -20,6 +20,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
 import org.eclipse.swt.layout.FillLayout;
@@ -539,6 +541,85 @@ public class TestGLCanvasSWT {
             + "asyncExec hop",
         display.getThread(),
         renderTaskThread.get());
+  }
+
+  // ==================== HiDPI: stale-frame guard ====================
+
+  private static ImageData newImageData(int w, int h) {
+    return new ImageData(w, h, 32, new PaletteData(0xFF0000, 0xFF00, 0xFF));
+  }
+
+  /** Build a canvas with a deterministic physical size (HiDPI off → physical == logical). */
+  private GLCanvasSWT newCanvasForPaintTest(int w, int h) {
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+    canvas.setSize(w, h);
+    canvas.setHiDPIEnabled(false);
+    canvas.setFlip(Flip.NONE); // simplest drawImage signature
+    return canvas;
+  }
+
+  @Test
+  public void isStaleFrame_returnsTrue_whenFrameMuchSmallerThanCanvas() {
+    GLCanvasSWT canvas = newCanvasForPaintTest(200, 200);
+    Assert.assertTrue("10x10 frame on a 200x200 canvas must be stale",
+        canvas.isStaleFrame(newImageData(10, 10)));
+  }
+
+  @Test
+  public void isStaleFrame_returnsFalse_whenFrameMatchesCanvas() {
+    GLCanvasSWT canvas = newCanvasForPaintTest(200, 200);
+    Assert.assertFalse("200x200 frame on a 200x200 canvas must not be stale",
+        canvas.isStaleFrame(newImageData(200, 200)));
+  }
+
+  @Test
+  public void isStaleFrame_returnsFalse_whenCanvasNotYetSized() {
+    GLCanvasSWT canvas = new GLCanvasSWT(shell, SWT.NONE, factory);
+    canvas.setHiDPIEnabled(false);
+    // Canvas defaults to 0x0 before layout; the guard must not flag any frame as stale here.
+    Assert.assertFalse(canvas.isStaleFrame(newImageData(10, 10)));
+  }
+
+  /**
+   * The 50% threshold tolerates fractional Windows scaling (1.25x, 1.5x, 1.75x): a frame larger
+   * than half the canvas's expected size must be blitted normally even if smaller than the
+   * canvas itself.
+   */
+  @Test
+  public void isStaleFrame_returnsFalse_whenFrameAtHalfThreshold() {
+    GLCanvasSWT canvas = newCanvasForPaintTest(200, 200);
+    Assert.assertFalse(canvas.isStaleFrame(newImageData(100, 100)));
+    Assert.assertTrue(canvas.isStaleFrame(newImageData(99, 100)));
+  }
+
+  /**
+   * Regression guard for the brief pixelated flash on chart open: the stale-frame skip path must
+   * reset the rendering flag so the next display() at the proper size is not gated by
+   * {@code isRendering()==true}.
+   *
+   * <p>The "stale 10x10 image is not actually blitted" property is covered by the
+   * {@link #isStaleFrame_returnsTrue_whenFrameMuchSmallerThanCanvas} unit test on the predicate
+   * itself: SWT's {@link GC} is a {@code final} class and cannot be mocked here, so we cannot
+   * verify {@code drawImage} interactions directly without an integration-grade test rig.
+   */
+  @Test
+  public void paintComponentNow_resetsRenderingFlag_evenWhenSkipped() {
+    GLCanvasSWT canvas = newCanvasForPaintTest(200, 200);
+    canvas.setScreenshot(new SWTImage(newImageData(10, 10)));
+    canvas.setRendering(true);
+
+    // SWT's GC is final → can't be mocked. Use a real one backed by a temporary Image.
+    Image scratch = new Image(display, 1, 1);
+    GC gc = new GC(scratch);
+    try {
+      canvas.paintComponentNow(display, gc);
+    } finally {
+      gc.dispose();
+      scratch.dispose();
+    }
+
+    Assert.assertFalse("rendering must be reset to false after a skipped paint",
+        canvas.isRendering());
   }
 
   // ==================== helpers ====================
