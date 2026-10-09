@@ -24,9 +24,11 @@ jobs:
           - windows-latest   # Windows x86_64
           - windows-11-arm   # Windows ARM64
         include:
-          # No JDK 22 build exists for Windows ARM64 (Temurin, Zulu) : use the next LTS
+          # No JDK 22 build exists for Windows ARM64, and Temurin only provides 21 and 23 :
+          # use the next LTS from Zulu
           - os: windows-11-arm
             java: '25'
+            distribution: zulu
 
     steps:
       - uses: actions/checkout@v4
@@ -38,7 +40,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java || '22' }}
-          distribution: temurin
+          distribution: ${{ matrix.distribution || 'temurin' }}
           cache: maven
 
       # Maven is not installed on every runner image (e.g. Windows ARM64)
