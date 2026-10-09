@@ -13078,9 +13078,9 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     }
   }
 
-  public void glMapNamedBufferRange(int buffer, long offset, long length, int access) {
+  public MemorySegment glMapNamedBufferRange(int buffer, long offset, long length, int access) {
     try {
-      dynamic("glMapNamedBufferRange", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_LONG, ValueLayout.JAVA_LONG, ValueLayout.JAVA_INT)).invokeExact(buffer, offset, length, access);
+      return (MemorySegment) dynamic("glMapNamedBufferRange", () -> FunctionDescriptor.of(ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.JAVA_LONG, ValueLayout.JAVA_LONG, ValueLayout.JAVA_INT)).invokeExact(buffer, offset, length, access);
     } catch (Throwable e) {
       throw dynamicError("glMapNamedBufferRange", e);
     }
@@ -13350,9 +13350,9 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     }
   }
 
-  public void glMapBufferRange(int target, long offset, long length, int access) {
+  public MemorySegment glMapBufferRange(int target, long offset, long length, int access) {
     try {
-      dynamic("glMapBufferRange", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_LONG, ValueLayout.JAVA_LONG, ValueLayout.JAVA_INT)).invokeExact(target, offset, length, access);
+      return (MemorySegment) dynamic("glMapBufferRange", () -> FunctionDescriptor.of(ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.JAVA_LONG, ValueLayout.JAVA_LONG, ValueLayout.JAVA_INT)).invokeExact(target, offset, length, access);
     } catch (Throwable e) {
       throw dynamicError("glMapBufferRange", e);
     }
@@ -23718,9 +23718,9 @@ public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.open
     }
   }
 
-  public void glMapNamedBuffer(int buffer, int access) {
+  public MemorySegment glMapNamedBuffer(int buffer, int access) {
     try {
-      dynamic("glMapNamedBuffer", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(buffer, access);
+      return (MemorySegment) dynamic("glMapNamedBuffer", () -> FunctionDescriptor.of(ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(buffer, access);
     } catch (Throwable e) {
       throw dynamicError("glMapNamedBuffer", e);
     }

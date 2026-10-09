@@ -441,7 +441,7 @@ public class ClassWriter extends JavaWriter {
   public boolean wrapperDynamic(StringBuffer javaCode, GLCommand registryCommand) {
     String name = registryCommand.getName();
     List<Arg> in = registryCommand.getArgs();
-    Arg out = new Arg(registryCommand.getOutputType(), "out");
+    Arg out = new Arg(registryCommand.getJavaOutputType(), "out");
     String outType = typeName(out);
 
     // Native signature
