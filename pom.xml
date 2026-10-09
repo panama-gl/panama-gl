@@ -23,7 +23,7 @@
 		       mvn package -D"native.lib.path.windows=C:\mesa;C:\Windows\system32" -->
 		<native.lib.path.windows>C:\Windows\system32;C:\Users\Martin\Dev\panama-gl\freeglut\bin\x64</native.lib.path.windows>
 		<native.lib.path.macos>.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/</native.lib.path.macos>
-		<native.lib.path.linux>.:/usr/lib/x86_64-linux-gnu/:/usr/lib</native.lib.path.linux>
+		<native.lib.path.linux>.:/usr/lib/x86_64-linux-gnu/:/usr/lib/aarch64-linux-gnu/:/usr/lib</native.lib.path.linux>
 
 	</properties>
 
