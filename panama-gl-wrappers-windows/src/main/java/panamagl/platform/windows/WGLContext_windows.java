@@ -1,5 +1,6 @@
 package panamagl.platform.windows;
 
+import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import freeglut.windows.x86.freeglut_h;
@@ -41,6 +42,14 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   
   protected MemorySegment wglChoosePixelFormatARB;
   protected MemorySegment wglCreateContextAttribsARB;
+
+  /**
+   * Window procedure of the dummy window, delegating to the default procedure. Returning 0 to all
+   * messages makes CreateWindowExA fail (e.g. on WM_NCCREATE). Allocated once for the process, as
+   * the window class registered with it is never unregistered.
+   */
+  protected static final MemorySegment DUMMY_WINDOW_PROC = WNDPROC.allocate(
+      (hwnd, msg, wp, lp) -> wgl_h.DefWindowProcA(hwnd, msg, wp, lp), Arena.global());
  
 
   public WGLContext_windows() {
@@ -307,7 +316,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     MemorySegment wc = tagWNDCLASSEXA.allocate(arena);
     tagWNDCLASSEXA.cbSize(wc, (int) wc.byteSize());
     tagWNDCLASSEXA.style(wc, wgl_h.CS_OWNDC());
-    tagWNDCLASSEXA.lpfnWndProc(wc, WNDPROC.allocate((hwnd, msg, wp, lp) -> 0L, arena));
+    tagWNDCLASSEXA.lpfnWndProc(wc, DUMMY_WINDOW_PROC);
     tagWNDCLASSEXA.cbClsExtra(wc, 0);
     tagWNDCLASSEXA.cbWndExtra(wc, 0);
     tagWNDCLASSEXA.hInstance(wc, wgl_h.NULL());
@@ -322,7 +331,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     // the same JVM), CreateWindowExA will still succeed with the existing class.
     wgl_h.RegisterClassExA(wc);
 
-    return wgl_h.CreateWindowExA(
+    MemorySegment window = wgl_h.CreateWindowExA(
         0,                              // no extended styles
         className,                      // class registered above
         arena.allocateFrom(""),         // empty title
@@ -333,6 +342,11 @@ public class WGLContext_windows extends AGLContext implements GLContext{
         wgl_h.NULL(),                  // hInstance = current process
         wgl_h.NULL()                   // no extra param
     );
+
+    if (window.equals(wgl_h.NULL())) {
+      getWindowsLastError().throwRuntimeException();
+    }
+    return window;
   }
   
   /**
