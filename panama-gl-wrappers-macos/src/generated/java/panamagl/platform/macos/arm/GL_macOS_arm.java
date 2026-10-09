@@ -1,9 +1,15 @@
 package panamagl.platform.macos.arm; 
 
+import java.lang.foreign.FunctionDescriptor;
 import java.lang.foreign.MemorySegment;
+import java.lang.foreign.ValueLayout;
 import opengl.macos.arm.glut_h;
 
 public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
+  public GL_macOS_arm() {
+    setFunctionLoader(new panamagl.platform.macos.GLFunctionLoader_macOS());
+  }
+
   public void glAccum(int op, float value) {
     glut_h.glAccum(op, value);
   }
@@ -4658,6 +4664,1134 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
 
   public void glutWireTorus(double arg0, double arg1, int arg2, int arg3) {
     glut_h.glutWireTorus(arg0, arg1, arg2, arg3);
+  }
+
+  public void glColorMaski(int index, byte r, byte g, byte b, byte a) {
+    try {
+      dynamic("glColorMaski", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_BYTE, ValueLayout.JAVA_BYTE, ValueLayout.JAVA_BYTE, ValueLayout.JAVA_BYTE)).invokeExact(index, r, g, b, a);
+    } catch (Throwable e) {
+      throw dynamicError("glColorMaski", e);
+    }
+  }
+
+  public void glGetBooleani_v(int target, int index, MemorySegment data) {
+    try {
+      dynamic("glGetBooleani_v", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(target, index, data);
+    } catch (Throwable e) {
+      throw dynamicError("glGetBooleani_v", e);
+    }
+  }
+
+  public void glGetIntegeri_v(int target, int index, MemorySegment data) {
+    try {
+      dynamic("glGetIntegeri_v", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(target, index, data);
+    } catch (Throwable e) {
+      throw dynamicError("glGetIntegeri_v", e);
+    }
+  }
+
+  public void glEnablei(int target, int index) {
+    try {
+      dynamic("glEnablei", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(target, index);
+    } catch (Throwable e) {
+      throw dynamicError("glEnablei", e);
+    }
+  }
+
+  public void glDisablei(int target, int index) {
+    try {
+      dynamic("glDisablei", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(target, index);
+    } catch (Throwable e) {
+      throw dynamicError("glDisablei", e);
+    }
+  }
+
+  public byte glIsEnabledi(int target, int index) {
+    try {
+      return (byte) dynamic("glIsEnabledi", () -> FunctionDescriptor.of(ValueLayout.JAVA_BYTE, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(target, index);
+    } catch (Throwable e) {
+      throw dynamicError("glIsEnabledi", e);
+    }
+  }
+
+  public void glBeginTransformFeedback(int primitiveMode) {
+    try {
+      dynamic("glBeginTransformFeedback", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT)).invokeExact(primitiveMode);
+    } catch (Throwable e) {
+      throw dynamicError("glBeginTransformFeedback", e);
+    }
+  }
+
+  public void glEndTransformFeedback() {
+    try {
+      dynamic("glEndTransformFeedback", () -> FunctionDescriptor.ofVoid()).invokeExact();
+    } catch (Throwable e) {
+      throw dynamicError("glEndTransformFeedback", e);
+    }
+  }
+
+  public void glBindBufferRange(int target, int index, int buffer, long offset, long size) {
+    try {
+      dynamic("glBindBufferRange", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_LONG, ValueLayout.JAVA_LONG)).invokeExact(target, index, buffer, offset, size);
+    } catch (Throwable e) {
+      throw dynamicError("glBindBufferRange", e);
+    }
+  }
+
+  public void glBindBufferBase(int target, int index, int buffer) {
+    try {
+      dynamic("glBindBufferBase", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(target, index, buffer);
+    } catch (Throwable e) {
+      throw dynamicError("glBindBufferBase", e);
+    }
+  }
+
+  public void glTransformFeedbackVaryings(int program, int count, MemorySegment varyings, int bufferMode) {
+    try {
+      dynamic("glTransformFeedbackVaryings", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.JAVA_INT)).invokeExact(program, count, varyings, bufferMode);
+    } catch (Throwable e) {
+      throw dynamicError("glTransformFeedbackVaryings", e);
+    }
+  }
+
+  public void glGetTransformFeedbackVarying(int program, int index, int bufSize, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
+    try {
+      dynamic("glGetTransformFeedbackVarying", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS, ValueLayout.ADDRESS)).invokeExact(program, index, bufSize, length, size, type, name);
+    } catch (Throwable e) {
+      throw dynamicError("glGetTransformFeedbackVarying", e);
+    }
+  }
+
+  public void glClampColor(int target, int clamp) {
+    try {
+      dynamic("glClampColor", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(target, clamp);
+    } catch (Throwable e) {
+      throw dynamicError("glClampColor", e);
+    }
+  }
+
+  public void glBeginConditionalRender(int id, int mode) {
+    try {
+      dynamic("glBeginConditionalRender", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(id, mode);
+    } catch (Throwable e) {
+      throw dynamicError("glBeginConditionalRender", e);
+    }
+  }
+
+  public void glEndConditionalRender() {
+    try {
+      dynamic("glEndConditionalRender", () -> FunctionDescriptor.ofVoid()).invokeExact();
+    } catch (Throwable e) {
+      throw dynamicError("glEndConditionalRender", e);
+    }
+  }
+
+  public void glVertexAttribIPointer(int index, int size, int type, int stride, MemorySegment pointer) {
+    try {
+      dynamic("glVertexAttribIPointer", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(index, size, type, stride, pointer);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribIPointer", e);
+    }
+  }
+
+  public void glGetVertexAttribIiv(int index, int pname, MemorySegment params) {
+    try {
+      dynamic("glGetVertexAttribIiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(index, pname, params);
+    } catch (Throwable e) {
+      throw dynamicError("glGetVertexAttribIiv", e);
+    }
+  }
+
+  public void glGetVertexAttribIuiv(int index, int pname, MemorySegment params) {
+    try {
+      dynamic("glGetVertexAttribIuiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(index, pname, params);
+    } catch (Throwable e) {
+      throw dynamicError("glGetVertexAttribIuiv", e);
+    }
+  }
+
+  public void glVertexAttribI1i(int index, int x) {
+    try {
+      dynamic("glVertexAttribI1i", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(index, x);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI1i", e);
+    }
+  }
+
+  public void glVertexAttribI2i(int index, int x, int y) {
+    try {
+      dynamic("glVertexAttribI2i", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(index, x, y);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI2i", e);
+    }
+  }
+
+  public void glVertexAttribI3i(int index, int x, int y, int z) {
+    try {
+      dynamic("glVertexAttribI3i", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(index, x, y, z);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI3i", e);
+    }
+  }
+
+  public void glVertexAttribI4i(int index, int x, int y, int z, int w) {
+    try {
+      dynamic("glVertexAttribI4i", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(index, x, y, z, w);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI4i", e);
+    }
+  }
+
+  public void glVertexAttribI1ui(int index, int x) {
+    try {
+      dynamic("glVertexAttribI1ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(index, x);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI1ui", e);
+    }
+  }
+
+  public void glVertexAttribI2ui(int index, int x, int y) {
+    try {
+      dynamic("glVertexAttribI2ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(index, x, y);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI2ui", e);
+    }
+  }
+
+  public void glVertexAttribI3ui(int index, int x, int y, int z) {
+    try {
+      dynamic("glVertexAttribI3ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(index, x, y, z);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI3ui", e);
+    }
+  }
+
+  public void glVertexAttribI4ui(int index, int x, int y, int z, int w) {
+    try {
+      dynamic("glVertexAttribI4ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(index, x, y, z, w);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI4ui", e);
+    }
+  }
+
+  public void glVertexAttribI1iv(int index, MemorySegment v) {
+    try {
+      dynamic("glVertexAttribI1iv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(index, v);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI1iv", e);
+    }
+  }
+
+  public void glVertexAttribI2iv(int index, MemorySegment v) {
+    try {
+      dynamic("glVertexAttribI2iv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(index, v);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI2iv", e);
+    }
+  }
+
+  public void glVertexAttribI3iv(int index, MemorySegment v) {
+    try {
+      dynamic("glVertexAttribI3iv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(index, v);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI3iv", e);
+    }
+  }
+
+  public void glVertexAttribI4iv(int index, MemorySegment v) {
+    try {
+      dynamic("glVertexAttribI4iv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(index, v);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI4iv", e);
+    }
+  }
+
+  public void glVertexAttribI1uiv(int index, MemorySegment v) {
+    try {
+      dynamic("glVertexAttribI1uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(index, v);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI1uiv", e);
+    }
+  }
+
+  public void glVertexAttribI2uiv(int index, MemorySegment v) {
+    try {
+      dynamic("glVertexAttribI2uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(index, v);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI2uiv", e);
+    }
+  }
+
+  public void glVertexAttribI3uiv(int index, MemorySegment v) {
+    try {
+      dynamic("glVertexAttribI3uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(index, v);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI3uiv", e);
+    }
+  }
+
+  public void glVertexAttribI4uiv(int index, MemorySegment v) {
+    try {
+      dynamic("glVertexAttribI4uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(index, v);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI4uiv", e);
+    }
+  }
+
+  public void glVertexAttribI4bv(int index, MemorySegment v) {
+    try {
+      dynamic("glVertexAttribI4bv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(index, v);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI4bv", e);
+    }
+  }
+
+  public void glVertexAttribI4sv(int index, MemorySegment v) {
+    try {
+      dynamic("glVertexAttribI4sv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(index, v);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI4sv", e);
+    }
+  }
+
+  public void glVertexAttribI4ubv(int index, MemorySegment v) {
+    try {
+      dynamic("glVertexAttribI4ubv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(index, v);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI4ubv", e);
+    }
+  }
+
+  public void glVertexAttribI4usv(int index, MemorySegment v) {
+    try {
+      dynamic("glVertexAttribI4usv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(index, v);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribI4usv", e);
+    }
+  }
+
+  public void glGetUniformuiv(int program, int location, MemorySegment params) {
+    try {
+      dynamic("glGetUniformuiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(program, location, params);
+    } catch (Throwable e) {
+      throw dynamicError("glGetUniformuiv", e);
+    }
+  }
+
+  public void glBindFragDataLocation(int program, int color, MemorySegment name) {
+    try {
+      dynamic("glBindFragDataLocation", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(program, color, name);
+    } catch (Throwable e) {
+      throw dynamicError("glBindFragDataLocation", e);
+    }
+  }
+
+  public int glGetFragDataLocation(int program, MemorySegment name) {
+    try {
+      return (int) dynamic("glGetFragDataLocation", () -> FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(program, name);
+    } catch (Throwable e) {
+      throw dynamicError("glGetFragDataLocation", e);
+    }
+  }
+
+  public void glUniform1ui(int location, int v0) {
+    try {
+      dynamic("glUniform1ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(location, v0);
+    } catch (Throwable e) {
+      throw dynamicError("glUniform1ui", e);
+    }
+  }
+
+  public void glUniform2ui(int location, int v0, int v1) {
+    try {
+      dynamic("glUniform2ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(location, v0, v1);
+    } catch (Throwable e) {
+      throw dynamicError("glUniform2ui", e);
+    }
+  }
+
+  public void glUniform3ui(int location, int v0, int v1, int v2) {
+    try {
+      dynamic("glUniform3ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(location, v0, v1, v2);
+    } catch (Throwable e) {
+      throw dynamicError("glUniform3ui", e);
+    }
+  }
+
+  public void glUniform4ui(int location, int v0, int v1, int v2, int v3) {
+    try {
+      dynamic("glUniform4ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(location, v0, v1, v2, v3);
+    } catch (Throwable e) {
+      throw dynamicError("glUniform4ui", e);
+    }
+  }
+
+  public void glUniform1uiv(int location, int count, MemorySegment value) {
+    try {
+      dynamic("glUniform1uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(location, count, value);
+    } catch (Throwable e) {
+      throw dynamicError("glUniform1uiv", e);
+    }
+  }
+
+  public void glUniform2uiv(int location, int count, MemorySegment value) {
+    try {
+      dynamic("glUniform2uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(location, count, value);
+    } catch (Throwable e) {
+      throw dynamicError("glUniform2uiv", e);
+    }
+  }
+
+  public void glUniform3uiv(int location, int count, MemorySegment value) {
+    try {
+      dynamic("glUniform3uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(location, count, value);
+    } catch (Throwable e) {
+      throw dynamicError("glUniform3uiv", e);
+    }
+  }
+
+  public void glUniform4uiv(int location, int count, MemorySegment value) {
+    try {
+      dynamic("glUniform4uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(location, count, value);
+    } catch (Throwable e) {
+      throw dynamicError("glUniform4uiv", e);
+    }
+  }
+
+  public void glTexParameterIiv(int target, int pname, MemorySegment params) {
+    try {
+      dynamic("glTexParameterIiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(target, pname, params);
+    } catch (Throwable e) {
+      throw dynamicError("glTexParameterIiv", e);
+    }
+  }
+
+  public void glTexParameterIuiv(int target, int pname, MemorySegment params) {
+    try {
+      dynamic("glTexParameterIuiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(target, pname, params);
+    } catch (Throwable e) {
+      throw dynamicError("glTexParameterIuiv", e);
+    }
+  }
+
+  public void glGetTexParameterIiv(int target, int pname, MemorySegment params) {
+    try {
+      dynamic("glGetTexParameterIiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(target, pname, params);
+    } catch (Throwable e) {
+      throw dynamicError("glGetTexParameterIiv", e);
+    }
+  }
+
+  public void glGetTexParameterIuiv(int target, int pname, MemorySegment params) {
+    try {
+      dynamic("glGetTexParameterIuiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(target, pname, params);
+    } catch (Throwable e) {
+      throw dynamicError("glGetTexParameterIuiv", e);
+    }
+  }
+
+  public void glClearBufferiv(int buffer, int drawbuffer, MemorySegment value) {
+    try {
+      dynamic("glClearBufferiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(buffer, drawbuffer, value);
+    } catch (Throwable e) {
+      throw dynamicError("glClearBufferiv", e);
+    }
+  }
+
+  public void glClearBufferuiv(int buffer, int drawbuffer, MemorySegment value) {
+    try {
+      dynamic("glClearBufferuiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(buffer, drawbuffer, value);
+    } catch (Throwable e) {
+      throw dynamicError("glClearBufferuiv", e);
+    }
+  }
+
+  public void glClearBufferfv(int buffer, int drawbuffer, MemorySegment value) {
+    try {
+      dynamic("glClearBufferfv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(buffer, drawbuffer, value);
+    } catch (Throwable e) {
+      throw dynamicError("glClearBufferfv", e);
+    }
+  }
+
+  public void glClearBufferfi(int buffer, int drawbuffer, float depth, int stencil) {
+    try {
+      dynamic("glClearBufferfi", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_FLOAT, ValueLayout.JAVA_INT)).invokeExact(buffer, drawbuffer, depth, stencil);
+    } catch (Throwable e) {
+      throw dynamicError("glClearBufferfi", e);
+    }
+  }
+
+  public String glGetStringi(int name, int index) {
+    try {
+      return dynamicString((MemorySegment) dynamic("glGetStringi", () -> FunctionDescriptor.of(ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(name, index));
+    } catch (Throwable e) {
+      throw dynamicError("glGetStringi", e);
+    }
+  }
+
+  public MemorySegment glMapBufferRange(int target, long offset, long length, int access) {
+    try {
+      return (MemorySegment) dynamic("glMapBufferRange", () -> FunctionDescriptor.of(ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.JAVA_LONG, ValueLayout.JAVA_LONG, ValueLayout.JAVA_INT)).invokeExact(target, offset, length, access);
+    } catch (Throwable e) {
+      throw dynamicError("glMapBufferRange", e);
+    }
+  }
+
+  public void glFlushMappedBufferRange(int target, long offset, long length) {
+    try {
+      dynamic("glFlushMappedBufferRange", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_LONG, ValueLayout.JAVA_LONG)).invokeExact(target, offset, length);
+    } catch (Throwable e) {
+      throw dynamicError("glFlushMappedBufferRange", e);
+    }
+  }
+
+  public void glBindVertexArray(int array) {
+    try {
+      dynamic("glBindVertexArray", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT)).invokeExact(array);
+    } catch (Throwable e) {
+      throw dynamicError("glBindVertexArray", e);
+    }
+  }
+
+  public void glDeleteVertexArrays(int n, MemorySegment arrays) {
+    try {
+      dynamic("glDeleteVertexArrays", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(n, arrays);
+    } catch (Throwable e) {
+      throw dynamicError("glDeleteVertexArrays", e);
+    }
+  }
+
+  public void glGenVertexArrays(int n, MemorySegment arrays) {
+    try {
+      dynamic("glGenVertexArrays", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(n, arrays);
+    } catch (Throwable e) {
+      throw dynamicError("glGenVertexArrays", e);
+    }
+  }
+
+  public byte glIsVertexArray(int array) {
+    try {
+      return (byte) dynamic("glIsVertexArray", () -> FunctionDescriptor.of(ValueLayout.JAVA_BYTE, ValueLayout.JAVA_INT)).invokeExact(array);
+    } catch (Throwable e) {
+      throw dynamicError("glIsVertexArray", e);
+    }
+  }
+
+  public void glDrawArraysInstanced(int mode, int first, int count, int instancecount) {
+    try {
+      dynamic("glDrawArraysInstanced", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(mode, first, count, instancecount);
+    } catch (Throwable e) {
+      throw dynamicError("glDrawArraysInstanced", e);
+    }
+  }
+
+  public void glDrawElementsInstanced(int mode, int count, int type, MemorySegment indices, int instancecount) {
+    try {
+      dynamic("glDrawElementsInstanced", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.JAVA_INT)).invokeExact(mode, count, type, indices, instancecount);
+    } catch (Throwable e) {
+      throw dynamicError("glDrawElementsInstanced", e);
+    }
+  }
+
+  public void glTexBuffer(int target, int internalformat, int buffer) {
+    try {
+      dynamic("glTexBuffer", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(target, internalformat, buffer);
+    } catch (Throwable e) {
+      throw dynamicError("glTexBuffer", e);
+    }
+  }
+
+  public void glPrimitiveRestartIndex(int index) {
+    try {
+      dynamic("glPrimitiveRestartIndex", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT)).invokeExact(index);
+    } catch (Throwable e) {
+      throw dynamicError("glPrimitiveRestartIndex", e);
+    }
+  }
+
+  public void glCopyBufferSubData(int readTarget, int writeTarget, long readOffset, long writeOffset, long size) {
+    try {
+      dynamic("glCopyBufferSubData", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_LONG, ValueLayout.JAVA_LONG, ValueLayout.JAVA_LONG)).invokeExact(readTarget, writeTarget, readOffset, writeOffset, size);
+    } catch (Throwable e) {
+      throw dynamicError("glCopyBufferSubData", e);
+    }
+  }
+
+  public void glGetUniformIndices(int program, int uniformCount, MemorySegment uniformNames, MemorySegment uniformIndices) {
+    try {
+      dynamic("glGetUniformIndices", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS)).invokeExact(program, uniformCount, uniformNames, uniformIndices);
+    } catch (Throwable e) {
+      throw dynamicError("glGetUniformIndices", e);
+    }
+  }
+
+  public void glGetActiveUniformsiv(int program, int uniformCount, MemorySegment uniformIndices, int pname, MemorySegment params) {
+    try {
+      dynamic("glGetActiveUniformsiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(program, uniformCount, uniformIndices, pname, params);
+    } catch (Throwable e) {
+      throw dynamicError("glGetActiveUniformsiv", e);
+    }
+  }
+
+  public void glGetActiveUniformName(int program, int uniformIndex, int bufSize, MemorySegment length, MemorySegment uniformName) {
+    try {
+      dynamic("glGetActiveUniformName", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS)).invokeExact(program, uniformIndex, bufSize, length, uniformName);
+    } catch (Throwable e) {
+      throw dynamicError("glGetActiveUniformName", e);
+    }
+  }
+
+  public int glGetUniformBlockIndex(int program, MemorySegment uniformBlockName) {
+    try {
+      return (int) dynamic("glGetUniformBlockIndex", () -> FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(program, uniformBlockName);
+    } catch (Throwable e) {
+      throw dynamicError("glGetUniformBlockIndex", e);
+    }
+  }
+
+  public void glGetActiveUniformBlockiv(int program, int uniformBlockIndex, int pname, MemorySegment params) {
+    try {
+      dynamic("glGetActiveUniformBlockiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(program, uniformBlockIndex, pname, params);
+    } catch (Throwable e) {
+      throw dynamicError("glGetActiveUniformBlockiv", e);
+    }
+  }
+
+  public void glGetActiveUniformBlockName(int program, int uniformBlockIndex, int bufSize, MemorySegment length, MemorySegment uniformBlockName) {
+    try {
+      dynamic("glGetActiveUniformBlockName", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS, ValueLayout.ADDRESS)).invokeExact(program, uniformBlockIndex, bufSize, length, uniformBlockName);
+    } catch (Throwable e) {
+      throw dynamicError("glGetActiveUniformBlockName", e);
+    }
+  }
+
+  public void glUniformBlockBinding(int program, int uniformBlockIndex, int uniformBlockBinding) {
+    try {
+      dynamic("glUniformBlockBinding", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(program, uniformBlockIndex, uniformBlockBinding);
+    } catch (Throwable e) {
+      throw dynamicError("glUniformBlockBinding", e);
+    }
+  }
+
+  public void glGetInteger64i_v(int target, int index, MemorySegment data) {
+    try {
+      dynamic("glGetInteger64i_v", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(target, index, data);
+    } catch (Throwable e) {
+      throw dynamicError("glGetInteger64i_v", e);
+    }
+  }
+
+  public void glGetBufferParameteri64v(int target, int pname, MemorySegment params) {
+    try {
+      dynamic("glGetBufferParameteri64v", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(target, pname, params);
+    } catch (Throwable e) {
+      throw dynamicError("glGetBufferParameteri64v", e);
+    }
+  }
+
+  public void glFramebufferTexture(int target, int attachment, int texture, int level) {
+    try {
+      dynamic("glFramebufferTexture", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(target, attachment, texture, level);
+    } catch (Throwable e) {
+      throw dynamicError("glFramebufferTexture", e);
+    }
+  }
+
+  public void glTexImage2DMultisample(int target, int samples, int internalformat, int width, int height, byte fixedsamplelocations) {
+    try {
+      dynamic("glTexImage2DMultisample", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_BYTE)).invokeExact(target, samples, internalformat, width, height, fixedsamplelocations);
+    } catch (Throwable e) {
+      throw dynamicError("glTexImage2DMultisample", e);
+    }
+  }
+
+  public void glTexImage3DMultisample(int target, int samples, int internalformat, int width, int height, int depth, byte fixedsamplelocations) {
+    try {
+      dynamic("glTexImage3DMultisample", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_BYTE)).invokeExact(target, samples, internalformat, width, height, depth, fixedsamplelocations);
+    } catch (Throwable e) {
+      throw dynamicError("glTexImage3DMultisample", e);
+    }
+  }
+
+  public void glGetMultisamplefv(int pname, int index, MemorySegment val) {
+    try {
+      dynamic("glGetMultisamplefv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(pname, index, val);
+    } catch (Throwable e) {
+      throw dynamicError("glGetMultisamplefv", e);
+    }
+  }
+
+  public void glSampleMaski(int maskNumber, int mask) {
+    try {
+      dynamic("glSampleMaski", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(maskNumber, mask);
+    } catch (Throwable e) {
+      throw dynamicError("glSampleMaski", e);
+    }
+  }
+
+  public void glBindFragDataLocationIndexed(int program, int colorNumber, int index, MemorySegment name) {
+    try {
+      dynamic("glBindFragDataLocationIndexed", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(program, colorNumber, index, name);
+    } catch (Throwable e) {
+      throw dynamicError("glBindFragDataLocationIndexed", e);
+    }
+  }
+
+  public int glGetFragDataIndex(int program, MemorySegment name) {
+    try {
+      return (int) dynamic("glGetFragDataIndex", () -> FunctionDescriptor.of(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(program, name);
+    } catch (Throwable e) {
+      throw dynamicError("glGetFragDataIndex", e);
+    }
+  }
+
+  public void glGenSamplers(int count, MemorySegment samplers) {
+    try {
+      dynamic("glGenSamplers", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(count, samplers);
+    } catch (Throwable e) {
+      throw dynamicError("glGenSamplers", e);
+    }
+  }
+
+  public void glDeleteSamplers(int count, MemorySegment samplers) {
+    try {
+      dynamic("glDeleteSamplers", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(count, samplers);
+    } catch (Throwable e) {
+      throw dynamicError("glDeleteSamplers", e);
+    }
+  }
+
+  public byte glIsSampler(int sampler) {
+    try {
+      return (byte) dynamic("glIsSampler", () -> FunctionDescriptor.of(ValueLayout.JAVA_BYTE, ValueLayout.JAVA_INT)).invokeExact(sampler);
+    } catch (Throwable e) {
+      throw dynamicError("glIsSampler", e);
+    }
+  }
+
+  public void glBindSampler(int unit, int sampler) {
+    try {
+      dynamic("glBindSampler", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(unit, sampler);
+    } catch (Throwable e) {
+      throw dynamicError("glBindSampler", e);
+    }
+  }
+
+  public void glSamplerParameteri(int sampler, int pname, int param) {
+    try {
+      dynamic("glSamplerParameteri", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(sampler, pname, param);
+    } catch (Throwable e) {
+      throw dynamicError("glSamplerParameteri", e);
+    }
+  }
+
+  public void glSamplerParameteriv(int sampler, int pname, MemorySegment param) {
+    try {
+      dynamic("glSamplerParameteriv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(sampler, pname, param);
+    } catch (Throwable e) {
+      throw dynamicError("glSamplerParameteriv", e);
+    }
+  }
+
+  public void glSamplerParameterf(int sampler, int pname, float param) {
+    try {
+      dynamic("glSamplerParameterf", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_FLOAT)).invokeExact(sampler, pname, param);
+    } catch (Throwable e) {
+      throw dynamicError("glSamplerParameterf", e);
+    }
+  }
+
+  public void glSamplerParameterfv(int sampler, int pname, MemorySegment param) {
+    try {
+      dynamic("glSamplerParameterfv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(sampler, pname, param);
+    } catch (Throwable e) {
+      throw dynamicError("glSamplerParameterfv", e);
+    }
+  }
+
+  public void glSamplerParameterIiv(int sampler, int pname, MemorySegment param) {
+    try {
+      dynamic("glSamplerParameterIiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(sampler, pname, param);
+    } catch (Throwable e) {
+      throw dynamicError("glSamplerParameterIiv", e);
+    }
+  }
+
+  public void glSamplerParameterIuiv(int sampler, int pname, MemorySegment param) {
+    try {
+      dynamic("glSamplerParameterIuiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(sampler, pname, param);
+    } catch (Throwable e) {
+      throw dynamicError("glSamplerParameterIuiv", e);
+    }
+  }
+
+  public void glGetSamplerParameteriv(int sampler, int pname, MemorySegment params) {
+    try {
+      dynamic("glGetSamplerParameteriv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(sampler, pname, params);
+    } catch (Throwable e) {
+      throw dynamicError("glGetSamplerParameteriv", e);
+    }
+  }
+
+  public void glGetSamplerParameterIiv(int sampler, int pname, MemorySegment params) {
+    try {
+      dynamic("glGetSamplerParameterIiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(sampler, pname, params);
+    } catch (Throwable e) {
+      throw dynamicError("glGetSamplerParameterIiv", e);
+    }
+  }
+
+  public void glGetSamplerParameterfv(int sampler, int pname, MemorySegment params) {
+    try {
+      dynamic("glGetSamplerParameterfv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(sampler, pname, params);
+    } catch (Throwable e) {
+      throw dynamicError("glGetSamplerParameterfv", e);
+    }
+  }
+
+  public void glGetSamplerParameterIuiv(int sampler, int pname, MemorySegment params) {
+    try {
+      dynamic("glGetSamplerParameterIuiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(sampler, pname, params);
+    } catch (Throwable e) {
+      throw dynamicError("glGetSamplerParameterIuiv", e);
+    }
+  }
+
+  public void glQueryCounter(int id, int target) {
+    try {
+      dynamic("glQueryCounter", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(id, target);
+    } catch (Throwable e) {
+      throw dynamicError("glQueryCounter", e);
+    }
+  }
+
+  public void glGetQueryObjecti64v(int id, int pname, MemorySegment params) {
+    try {
+      dynamic("glGetQueryObjecti64v", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(id, pname, params);
+    } catch (Throwable e) {
+      throw dynamicError("glGetQueryObjecti64v", e);
+    }
+  }
+
+  public void glGetQueryObjectui64v(int id, int pname, MemorySegment params) {
+    try {
+      dynamic("glGetQueryObjectui64v", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(id, pname, params);
+    } catch (Throwable e) {
+      throw dynamicError("glGetQueryObjectui64v", e);
+    }
+  }
+
+  public void glVertexAttribDivisor(int index, int divisor) {
+    try {
+      dynamic("glVertexAttribDivisor", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(index, divisor);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribDivisor", e);
+    }
+  }
+
+  public void glVertexAttribP1ui(int index, int type, byte normalized, int value) {
+    try {
+      dynamic("glVertexAttribP1ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_BYTE, ValueLayout.JAVA_INT)).invokeExact(index, type, normalized, value);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribP1ui", e);
+    }
+  }
+
+  public void glVertexAttribP1uiv(int index, int type, byte normalized, MemorySegment value) {
+    try {
+      dynamic("glVertexAttribP1uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_BYTE, ValueLayout.ADDRESS)).invokeExact(index, type, normalized, value);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribP1uiv", e);
+    }
+  }
+
+  public void glVertexAttribP2ui(int index, int type, byte normalized, int value) {
+    try {
+      dynamic("glVertexAttribP2ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_BYTE, ValueLayout.JAVA_INT)).invokeExact(index, type, normalized, value);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribP2ui", e);
+    }
+  }
+
+  public void glVertexAttribP2uiv(int index, int type, byte normalized, MemorySegment value) {
+    try {
+      dynamic("glVertexAttribP2uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_BYTE, ValueLayout.ADDRESS)).invokeExact(index, type, normalized, value);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribP2uiv", e);
+    }
+  }
+
+  public void glVertexAttribP3ui(int index, int type, byte normalized, int value) {
+    try {
+      dynamic("glVertexAttribP3ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_BYTE, ValueLayout.JAVA_INT)).invokeExact(index, type, normalized, value);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribP3ui", e);
+    }
+  }
+
+  public void glVertexAttribP3uiv(int index, int type, byte normalized, MemorySegment value) {
+    try {
+      dynamic("glVertexAttribP3uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_BYTE, ValueLayout.ADDRESS)).invokeExact(index, type, normalized, value);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribP3uiv", e);
+    }
+  }
+
+  public void glVertexAttribP4ui(int index, int type, byte normalized, int value) {
+    try {
+      dynamic("glVertexAttribP4ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_BYTE, ValueLayout.JAVA_INT)).invokeExact(index, type, normalized, value);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribP4ui", e);
+    }
+  }
+
+  public void glVertexAttribP4uiv(int index, int type, byte normalized, MemorySegment value) {
+    try {
+      dynamic("glVertexAttribP4uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_BYTE, ValueLayout.ADDRESS)).invokeExact(index, type, normalized, value);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexAttribP4uiv", e);
+    }
+  }
+
+  public void glVertexP2ui(int type, int value) {
+    try {
+      dynamic("glVertexP2ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(type, value);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexP2ui", e);
+    }
+  }
+
+  public void glVertexP2uiv(int type, MemorySegment value) {
+    try {
+      dynamic("glVertexP2uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(type, value);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexP2uiv", e);
+    }
+  }
+
+  public void glVertexP3ui(int type, int value) {
+    try {
+      dynamic("glVertexP3ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(type, value);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexP3ui", e);
+    }
+  }
+
+  public void glVertexP3uiv(int type, MemorySegment value) {
+    try {
+      dynamic("glVertexP3uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(type, value);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexP3uiv", e);
+    }
+  }
+
+  public void glVertexP4ui(int type, int value) {
+    try {
+      dynamic("glVertexP4ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(type, value);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexP4ui", e);
+    }
+  }
+
+  public void glVertexP4uiv(int type, MemorySegment value) {
+    try {
+      dynamic("glVertexP4uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(type, value);
+    } catch (Throwable e) {
+      throw dynamicError("glVertexP4uiv", e);
+    }
+  }
+
+  public void glTexCoordP1ui(int type, int coords) {
+    try {
+      dynamic("glTexCoordP1ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glTexCoordP1ui", e);
+    }
+  }
+
+  public void glTexCoordP1uiv(int type, MemorySegment coords) {
+    try {
+      dynamic("glTexCoordP1uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glTexCoordP1uiv", e);
+    }
+  }
+
+  public void glTexCoordP2ui(int type, int coords) {
+    try {
+      dynamic("glTexCoordP2ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glTexCoordP2ui", e);
+    }
+  }
+
+  public void glTexCoordP2uiv(int type, MemorySegment coords) {
+    try {
+      dynamic("glTexCoordP2uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glTexCoordP2uiv", e);
+    }
+  }
+
+  public void glTexCoordP3ui(int type, int coords) {
+    try {
+      dynamic("glTexCoordP3ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glTexCoordP3ui", e);
+    }
+  }
+
+  public void glTexCoordP3uiv(int type, MemorySegment coords) {
+    try {
+      dynamic("glTexCoordP3uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glTexCoordP3uiv", e);
+    }
+  }
+
+  public void glTexCoordP4ui(int type, int coords) {
+    try {
+      dynamic("glTexCoordP4ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glTexCoordP4ui", e);
+    }
+  }
+
+  public void glTexCoordP4uiv(int type, MemorySegment coords) {
+    try {
+      dynamic("glTexCoordP4uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glTexCoordP4uiv", e);
+    }
+  }
+
+  public void glMultiTexCoordP1ui(int texture, int type, int coords) {
+    try {
+      dynamic("glMultiTexCoordP1ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(texture, type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glMultiTexCoordP1ui", e);
+    }
+  }
+
+  public void glMultiTexCoordP1uiv(int texture, int type, MemorySegment coords) {
+    try {
+      dynamic("glMultiTexCoordP1uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(texture, type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glMultiTexCoordP1uiv", e);
+    }
+  }
+
+  public void glMultiTexCoordP2ui(int texture, int type, int coords) {
+    try {
+      dynamic("glMultiTexCoordP2ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(texture, type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glMultiTexCoordP2ui", e);
+    }
+  }
+
+  public void glMultiTexCoordP2uiv(int texture, int type, MemorySegment coords) {
+    try {
+      dynamic("glMultiTexCoordP2uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(texture, type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glMultiTexCoordP2uiv", e);
+    }
+  }
+
+  public void glMultiTexCoordP3ui(int texture, int type, int coords) {
+    try {
+      dynamic("glMultiTexCoordP3ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(texture, type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glMultiTexCoordP3ui", e);
+    }
+  }
+
+  public void glMultiTexCoordP3uiv(int texture, int type, MemorySegment coords) {
+    try {
+      dynamic("glMultiTexCoordP3uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(texture, type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glMultiTexCoordP3uiv", e);
+    }
+  }
+
+  public void glMultiTexCoordP4ui(int texture, int type, int coords) {
+    try {
+      dynamic("glMultiTexCoordP4ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(texture, type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glMultiTexCoordP4ui", e);
+    }
+  }
+
+  public void glMultiTexCoordP4uiv(int texture, int type, MemorySegment coords) {
+    try {
+      dynamic("glMultiTexCoordP4uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(texture, type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glMultiTexCoordP4uiv", e);
+    }
+  }
+
+  public void glNormalP3ui(int type, int coords) {
+    try {
+      dynamic("glNormalP3ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glNormalP3ui", e);
+    }
+  }
+
+  public void glNormalP3uiv(int type, MemorySegment coords) {
+    try {
+      dynamic("glNormalP3uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(type, coords);
+    } catch (Throwable e) {
+      throw dynamicError("glNormalP3uiv", e);
+    }
+  }
+
+  public void glColorP3ui(int type, int color) {
+    try {
+      dynamic("glColorP3ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(type, color);
+    } catch (Throwable e) {
+      throw dynamicError("glColorP3ui", e);
+    }
+  }
+
+  public void glColorP3uiv(int type, MemorySegment color) {
+    try {
+      dynamic("glColorP3uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(type, color);
+    } catch (Throwable e) {
+      throw dynamicError("glColorP3uiv", e);
+    }
+  }
+
+  public void glColorP4ui(int type, int color) {
+    try {
+      dynamic("glColorP4ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(type, color);
+    } catch (Throwable e) {
+      throw dynamicError("glColorP4ui", e);
+    }
+  }
+
+  public void glColorP4uiv(int type, MemorySegment color) {
+    try {
+      dynamic("glColorP4uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(type, color);
+    } catch (Throwable e) {
+      throw dynamicError("glColorP4uiv", e);
+    }
+  }
+
+  public void glSecondaryColorP3ui(int type, int color) {
+    try {
+      dynamic("glSecondaryColorP3ui", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.JAVA_INT)).invokeExact(type, color);
+    } catch (Throwable e) {
+      throw dynamicError("glSecondaryColorP3ui", e);
+    }
+  }
+
+  public void glSecondaryColorP3uiv(int type, MemorySegment color) {
+    try {
+      dynamic("glSecondaryColorP3uiv", () -> FunctionDescriptor.ofVoid(ValueLayout.JAVA_INT, ValueLayout.ADDRESS)).invokeExact(type, color);
+    } catch (Throwable e) {
+      throw dynamicError("glSecondaryColorP3uiv", e);
+    }
   }
 
 }

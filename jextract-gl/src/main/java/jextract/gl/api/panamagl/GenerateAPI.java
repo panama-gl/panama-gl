@@ -122,8 +122,12 @@ public class GenerateAPI {
       Class<?> factorymatcher = PlatformMatcher_macOS_x64.class;
       boolean genGlut = true;
 
+      // OpenGL functions missing from the static bindings are resolved at runtime
+      wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
+      String functionLoader = "panamagl.platform.macos.GLFunctionLoader_macOS";
+
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
-          null, interfaceFiles);
+          functionLoader, interfaceFiles);
     }
 
     if (MACOS_ARM) {
@@ -135,8 +139,12 @@ public class GenerateAPI {
       boolean genGlut = true;
 
 
+      // OpenGL functions missing from the static bindings are resolved at runtime
+      wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
+      String functionLoader = "panamagl.platform.macos.GLFunctionLoader_macOS";
+
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
-          null, interfaceFiles);
+          functionLoader, interfaceFiles);
     }
 
     // Compile ALL
@@ -194,7 +202,7 @@ public class GenerateAPI {
 
     glInterfaceWriter.addExtension("GL_1");
     glInterfaceWriter.addExtension("GL_2");
-    // glInterfaceWriter.addExtension("GL_3");
+    glInterfaceWriter.addExtension("GL_3");
     // glInterfaceWriter.addExtension("GL_4");
     glInterfaceWriter.addExtension(CLASS_NAME_GLU);
     glInterfaceWriter.addExtension(CLASS_NAME_GLUT);
