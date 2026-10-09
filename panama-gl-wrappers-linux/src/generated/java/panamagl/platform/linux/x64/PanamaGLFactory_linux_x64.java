@@ -6,4 +6,8 @@ public class PanamaGLFactory_linux_x64 extends panamagl.platform.linux.APanamaGL
     return new panamagl.platform.linux.x64.GL_linux_x64();
   }
 
+  public boolean matches(panamagl.platform.Platform platform) {
+    return new panamagl.platform.linux.x64.PlatformMatcher_linux_x64().matches(platform);
+  }
+
 }
