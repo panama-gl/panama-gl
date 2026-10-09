@@ -133,6 +133,14 @@ public class ClassWriter extends JavaWriter {
     wrapperAuto(sb, wrapped, wrappedMethod);
   }
 
+  public boolean wrapperDynamic(GLCommand registryCommand) {
+    return wrapperDynamic(sb, registryCommand);
+  }
+
+  public void constructorWithFunctionLoader(String functionLoader) {
+    constructorWithFunctionLoader(sb, functionLoader);
+  }
+
   // --------------------------------------------------
 
   public void method(StringBuffer sb, String name, List<Code> body) {
@@ -423,6 +431,99 @@ public class ClassWriter extends JavaWriter {
     method(javaCode, registryCommand.getName(), registryCommand.getArgs(), out, List.of(c), null);
   }
   
+  /**
+   * Create a wrapper for a method declared in the specification but not found in the binding. The
+   * function is resolved at runtime by the GL function loader through
+   * <code>AGL.dynamic(String, Supplier)</code>.
+   * 
+   * @return false if a type can not be mapped to a native layout, in which case nothing is written.
+   */
+  public boolean wrapperDynamic(StringBuffer javaCode, GLCommand registryCommand) {
+    String name = registryCommand.getName();
+    List<Arg> in = registryCommand.getArgs();
+    Arg out = new Arg(registryCommand.getOutputType(), "out");
+    String outType = typeName(out);
+
+    // Native signature
+    StringBuffer layouts = new StringBuffer();
+    for (int i = 0; i < in.size(); i++) {
+      String layout = layout(typeName(in.get(i)));
+      if (layout == null)
+        return false;
+      layouts.append(layout);
+      if (i < in.size() - 1)
+        layouts.append(", ");
+    }
+
+    String descriptor;
+    if ("void".equals(outType)) {
+      descriptor = "FunctionDescriptor.ofVoid(" + layouts + ")";
+    } else {
+      String outLayout = layout(outType);
+      if (outLayout == null)
+        return false;
+      descriptor = "FunctionDescriptor.of(" + outLayout + (in.size() > 0 ? ", " : "") + layouts + ")";
+    }
+
+    // Invocation
+    String invoke = "dynamic(\"" + name + "\", () -> " + descriptor + ").invokeExact("
+        + writeInputArgs(in) + ")";
+
+    if ("void".equals(outType)) {
+      invoke = invoke + ";";
+    } else if ("String".equals(outType)) {
+      invoke = "return dynamicString((MemorySegment) " + invoke + ");";
+    } else {
+      invoke = "return (" + outType + ") " + invoke + ";";
+    }
+
+    List<Code> body = new ArrayList<>();
+    body.add(new Code("try {"));
+    body.add(new Code(tab + invoke));
+    body.add(new Code("} catch (Throwable e) {"));
+    body.add(new Code(tab + "throw dynamicError(\"" + name + "\", e);"));
+    body.add(new Code("}"));
+
+    method(javaCode, name, in, out, body, null);
+    return true;
+  }
+
+  /** A constructor that registers the function loader resolving the dynamic wrappers. */
+  public void constructorWithFunctionLoader(StringBuffer javaCode, String functionLoader) {
+    javaCode.append(tab + "public " + className + "() {\n");
+    javaCode.append(tab2 + "setFunctionLoader(new " + functionLoader + "());\n");
+    javaCode.append(tab + "}\n\n");
+  }
+
+  protected String typeName(Arg arg) {
+    StringBuffer type = new StringBuffer();
+    arg.typeName(type);
+    return type.toString().trim();
+  }
+
+  /** The native layout matching a Java type of the wrapper, or null if not supported. */
+  protected String layout(String javaType) {
+    switch (javaType) {
+      case "int":
+        return "ValueLayout.JAVA_INT";
+      case "long":
+        return "ValueLayout.JAVA_LONG";
+      case "short":
+        return "ValueLayout.JAVA_SHORT";
+      case "byte":
+        return "ValueLayout.JAVA_BYTE";
+      case "float":
+        return "ValueLayout.JAVA_FLOAT";
+      case "double":
+        return "ValueLayout.JAVA_DOUBLE";
+      case "MemorySegment":
+      case "String":
+        return "ValueLayout.ADDRESS";
+      default:
+        return null;
+    }
+  }
+
   public void wrapperAuto(StringBuffer sb, Class<?> wrapped, Method wrappedMethod) {
     List<Arg> argsIn = getArgsIn(wrappedMethod);
     Arg argOut = getArgOut(wrappedMethod);

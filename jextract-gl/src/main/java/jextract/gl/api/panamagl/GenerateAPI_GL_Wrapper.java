@@ -123,6 +123,10 @@ public class GenerateAPI_GL_Wrapper {
 
     classWriter.start();
 
+    if (wrapper.functionLoader != null) {
+      classWriter.constructorWithFunctionLoader(wrapper.functionLoader);
+    }
+
 
 
     // ---------------------------------------------------------------------------
@@ -139,7 +143,7 @@ public class GenerateAPI_GL_Wrapper {
     // Create default implementation throwing NOT IMPL EXCEPT if the registry command has
     // not been implement already (and is part of the target GL versions)
 
-    wrapUnavailableMethods(classWriter, glRegistry, wrappedCommands);
+    wrapUnavailableMethods(classWriter, wrapper, glRegistry, wrappedCommands);
 
 
     // ---------------------------------------------------------------------------
@@ -245,10 +249,13 @@ public class GenerateAPI_GL_Wrapper {
 
   /**
    * Create a wrapper for methods that are declared in the specification but not found in binding.
-   * The method body simply throw an exception stating that no implementation is available.
+   * 
+   * If the wrapper has a {@link Wrapper#functionLoader}, the method body resolves the function at
+   * runtime. Otherwise (or if a type can not be mapped) the method body simply throw an exception
+   * stating that no implementation is available.
    */
-  protected int wrapUnavailableMethods(ClassWriter classWriter, Map<String, GLCommand> glRegistry,
-      List<GLCommand> wrappedCommands) {
+  protected int wrapUnavailableMethods(ClassWriter classWriter, Wrapper wrapper,
+      Map<String, GLCommand> glRegistry, List<GLCommand> wrappedCommands) {
     nUnimplemented = 0;
 
     if (addUnimplementedMethodsUponMissingBinding) {
@@ -257,7 +264,11 @@ public class GenerateAPI_GL_Wrapper {
       for (GLCommand registryCommand : glRegistry.values()) {
         if (!wrappedCommands.contains(registryCommand)) {
 
-          classWriter.wrapperNotImplemented(registryCommand);
+          boolean dynamic =
+              wrapper.functionLoader != null && classWriter.wrapperDynamic(registryCommand);
+
+          if (!dynamic)
+            classWriter.wrapperNotImplemented(registryCommand);
 
           wrappedCommands.add(registryCommand);
 

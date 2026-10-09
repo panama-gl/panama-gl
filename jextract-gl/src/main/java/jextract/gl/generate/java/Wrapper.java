@@ -32,6 +32,12 @@ public class Wrapper {
   public List<String> implement = new ArrayList<>();
   public List<String> extend = new ArrayList<>();
   public String platform;
+  /**
+   * Fully qualified name of a {@link panamagl.opengl.GLFunctionLoader} used to resolve at runtime the
+   * methods of the specification that are not available in the static bindings. If null, these
+   * methods throw an exception.
+   */
+  public String functionLoader;
   
   public void setFileIn(String folder) {
     javaFile = folder + packge.replace(".", "/") + "/" + className + ".java";

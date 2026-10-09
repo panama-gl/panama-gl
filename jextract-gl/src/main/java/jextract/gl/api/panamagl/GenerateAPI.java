@@ -123,7 +123,7 @@ public class GenerateAPI {
       boolean genGlut = true;
 
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
-          interfaceFiles);
+          null, interfaceFiles);
     }
 
     if (MACOS_ARM) {
@@ -136,7 +136,7 @@ public class GenerateAPI {
 
 
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
-          interfaceFiles);
+          null, interfaceFiles);
     }
 
     // Compile ALL
@@ -156,8 +156,10 @@ public class GenerateAPI {
       Class<?> factorymatcher = null;
       boolean genGlut = false;
 
+      String functionLoader = "panamagl.platform.linux.GLFunctionLoader_linux";
+
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
-          interfaceFiles);
+          functionLoader, interfaceFiles);
 
     }
 
@@ -173,9 +175,10 @@ public class GenerateAPI {
       Class<?> factoryBase = APanamaGLFactory_windows.class;
       Class<?> factorymatcher = null;
       boolean genGlut = false;
+      String functionLoader = "panamagl.platform.windows.GLFunctionLoader_windows";
 
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
-          interfaceFiles);
+          functionLoader, interfaceFiles);
 
     }*/
 
@@ -207,7 +210,8 @@ public class GenerateAPI {
 
   protected void makeGLWrapperAndFactory(APILayout layout, APIPlatform platform,
       Set<Class<?>> wrapped, Class<?> factoryBase, Class<?> factorymatcher, boolean genGlut,
-      List<String> javaInterfacesFiles) throws IllegalAccessException, IOException {
+      String functionLoader, List<String> javaInterfacesFiles)
+      throws IllegalAccessException, IOException {
 
 
     Wrapper wrapper = new Wrapper();
@@ -217,6 +221,7 @@ public class GenerateAPI {
     wrapper.className = CLASS_BASE_NAME_GL + wrapper.platform;
     wrapper.packge = layout.getPlatformPackage(platform);
     wrapper.setFileIn(layout.getOutputFolder(platform));
+    wrapper.functionLoader = functionLoader;
 
     wrapper.addImplement(interf.packge + "." + superGL);
     wrapper.addImplement(interf.packge + "." + CLASS_NAME_GLU);
