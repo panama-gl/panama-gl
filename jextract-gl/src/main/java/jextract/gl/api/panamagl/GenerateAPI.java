@@ -38,6 +38,7 @@ import panamagl.platform.linux.APanamaGLFactory_linux;
 import panamagl.platform.macos.APanamaGLFactory_macOS;
 import panamagl.platform.macos.arm.PlatformMatcher_macOS_arm;
 import panamagl.platform.macos.x64.PlatformMatcher_macOS_x64;
+import panamagl.platform.linux.x64.PlatformMatcher_linux_x64;
 
 /**
  * Generate an OpenGL API with per-platform implementations wrapping the bindings made available by
@@ -153,7 +154,8 @@ public class GenerateAPI {
       APIPlatform platform = new APIPlatform(OS.linux, CPU.x64);
       Set<Class<?>> wrapped = Set.of(glext.linux.x86.glext_h.class);
       Class<?> factoryBase = APanamaGLFactory_linux.class;
-      Class<?> factorymatcher = null;
+      // Linux ARM64 reuses the x64 wrapper : see panamagl.platform.linux.arm.GL_linux_arm
+      Class<?> factorymatcher = PlatformMatcher_linux_x64.class;
       boolean genGlut = false;
 
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
@@ -171,7 +173,8 @@ public class GenerateAPI {
       APIPlatform platform = new APIPlatform(OS.windows, CPU.x64);
       Set<Class<?>> wrapped = Set.of(freeglut.windows.x86.freeglut_h.class);
       Class<?> factoryBase = APanamaGLFactory_windows.class;
-      Class<?> factorymatcher = null;
+      // Windows ARM64 reuses the x64 wrapper : see panamagl.platform.windows.arm.GL_windows_arm
+      Class<?> factorymatcher = PlatformMatcher_windows_x64.class;
       boolean genGlut = false;
 
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
