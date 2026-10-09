@@ -23,6 +23,10 @@ jobs:
           - macos-15-intel   # macOS Intel x86_64 (last x86_64 image; GitHub Actions drops x86_64 ~Aug 2027)
           - windows-latest   # Windows x86_64
           - windows-11-arm   # Windows ARM64
+        include:
+          # No JDK 22 build exists for Windows ARM64 (Temurin, Zulu) : use the next LTS
+          - os: windows-11-arm
+            java: '25'
 
     steps:
       - uses: actions/checkout@v4
@@ -30,22 +34,11 @@ jobs:
       # -------------------------------------------------------
       # JDK 22 is required for Panama Foreign Function & Memory API
       # -------------------------------------------------------
-      - name: Set up JDK 22
-        id: jdk
+      - name: Set up JDK ${{ matrix.java || '22' }}
         uses: actions/setup-java@v4
-        # Temurin may not provide every JDK version for Windows ARM64
-        continue-on-error: ${{ matrix.os == 'windows-11-arm' }}
         with:
-          java-version: '22'
+          java-version: ${{ matrix.java || '22' }}
           distribution: temurin
-          cache: maven
-
-      - name: Set up JDK 22 (Zulu, if Temurin is not available)
-        if: steps.jdk.outcome == 'failure'
-        uses: actions/setup-java@v4
-        with:
-          java-version: '22'
-          distribution: zulu
           cache: maven
 
       # Maven is not installed on every runner image (e.g. Windows ARM64)
