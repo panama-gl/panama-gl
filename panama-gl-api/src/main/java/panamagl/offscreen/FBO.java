@@ -37,4 +37,16 @@ public interface FBO {
   boolean isPrepared();
   
   MemorySegment readPixels(GL gl);
+
+  /**
+   * Bind this FBO so that following GL commands target it, e.g. GL work performed out of the
+   * rendering of a canvas such as picking. Prepare it if needed.
+   */
+  default void bind(GL gl) {
+    prepare(gl);
+  }
+
+  /** Bind back the default framebuffer. */
+  default void unbind(GL gl) {
+  }
 }

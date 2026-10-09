@@ -334,6 +334,20 @@ public class FBO_linux extends AFBO implements FBO {
     return pixels;
   }
 
+  @Override
+  public void bind(GL gl) {
+    if (!prepared) {
+      prepare(gl);
+    } else {
+      PFNGLBINDFRAMEBUFFEREXTPROC.invoke(glBindFramebuffer, glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
+    }
+  }
+
+  @Override
+  public void unbind(GL gl) {
+    unbindFramebuffer();
+  }
+
   protected void unbindFramebuffer() {
     // Bind 0, which means render to back buffer
     PFNGLBINDFRAMEBUFFEREXTPROC.invoke(glBindFramebuffer, glut_h.GL_FRAMEBUFFER(), 0);    

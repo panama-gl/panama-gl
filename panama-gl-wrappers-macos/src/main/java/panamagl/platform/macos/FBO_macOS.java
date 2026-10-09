@@ -244,6 +244,20 @@ public class FBO_macOS extends AFBO implements FBO {
 
   }
 
+  @Override
+  public void bind(GL gl) {
+    if (!prepared) {
+      prepare(gl);
+    } else {
+      glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
+    }
+  }
+
+  @Override
+  public void unbind(GL gl) {
+    unbindFramebuffer();
+  }
+
   protected void unbindFramebuffer() {
     // Bind 0, which means render to back buffer
     glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), 0);
