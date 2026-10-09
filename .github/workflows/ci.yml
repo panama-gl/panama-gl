@@ -29,6 +29,9 @@ jobs:
           - os: windows-11-arm
             java: '25'
             distribution: zulu
+            # OpenJFX publishes no Windows ARM64 build : skip the JavaFX canvas and the samples
+            # using it
+            maven-args: -pl '!panama-gl-ui-javafx,!panama-gl-samples'
 
     steps:
       - uses: actions/checkout@v4
@@ -170,7 +173,7 @@ jobs:
         if: runner.os == 'Windows'
         # Mesa opengl32.dll is in C:\mesa (prepended via native.lib.path.windows),
         # freeglut.dll is in System32, both covered by the resulting java.library.path.
-        run: mvn --batch-mode package --file pom.xml -D"native.lib.path.windows=C:\mesa;C:\Windows\system32"
+        run: mvn --batch-mode package --file pom.xml -D"native.lib.path.windows=C:\mesa;C:\Windows\system32" ${{ matrix.maven-args }}
         shell: pwsh
 
       # -------------------------------------------------------
