@@ -17,23 +17,33 @@
  *******************************************************************************/
 package panamagl.platform.macos.x64;
 
-import panamagl.platform.Platform;
+import org.junit.Assert;
+import org.junit.Test;
+import panamagl.factory.PanamaGLFactory;
+import panamagl.opengl.GLContext;
+import panamagl.platform.macos.CGLContext_macOS;
 
-public class MacOSx86Test {
-  /**
-   * Print a message in console if not running on macos x64
-   * @return
-   */
-  public boolean checkPlatform() {
-    Platform platform = new Platform();
-    boolean isPlatform = new PlatformMatcher_macOS_x64().matches(platform);
+public class TestPanamaGLFactory_macOS_x64 extends MacOSx64Test{
+  @Test
+  public void test() {
+    if (!checkPlatform())
+      return;
 
-    if(!isPlatform) {
-      System.err.println(" !! \n    Skip test since not on appropriate platform : " + platform + "\n !!");
-    }
-    
-    return isPlatform;
+    PanamaGLFactory f = PanamaGLFactory.select();
+
+    boolean matched = f instanceof PanamaGLFactory_macOS_x64;
+
+    Assert.assertTrue(matched);
+
+    // Issue on context init
+    GLContext c = f.newGLContext();
+    Assert.assertNotNull(c);
+    Assert.assertNotNull(c instanceof CGLContext_macOS);
+
+    Assert.assertNotNull(f.newGL());
+    Assert.assertNotNull(f.newOffscreenRenderer(null));
+    Assert.assertNotNull(f.newFBO(800, 600));
+
+    ;
   }
-  
-
 }
