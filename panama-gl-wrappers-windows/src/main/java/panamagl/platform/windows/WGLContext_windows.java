@@ -124,6 +124,10 @@ public class WGLContext_windows extends AGLContext implements GLContext{
 
     MemorySegment pixelFormat = PIXELFORMATDESCRIPTOR.allocate(arena);
 
+    // nSize and nVersion are mandatory : Mesa rejects a descriptor without them
+    PIXELFORMATDESCRIPTOR.nSize(pixelFormat, (short) pixelFormat.byteSize());
+    PIXELFORMATDESCRIPTOR.nVersion(pixelFormat, (short) 1);
+
     // PFD_DRAW_TO_WINDOW is required: modern drivers (e.g. Mesa) reject formats
     // that do not specify a drawable target. Standard bit depths are also needed.
     int flags = wgl_h.PFD_DRAW_TO_WINDOW()
