@@ -112,7 +112,8 @@
 			<activation>
 				<os>
 					<family>windows</family>
-					<arch>x86_64</arch>
+					<!-- Java reports amd64 as os.arch of 64 bit Windows -->
+					<arch>amd64</arch>
 				</os>
 			</activation>
 			<dependencies>
