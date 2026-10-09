@@ -55,13 +55,24 @@ jobs:
       - name: Install freeglut MSVC x64 (Windows)
         if: runner.os == 'Windows'
         run: |
-          Invoke-WebRequest `
-            -Uri "https://www.transmissionzero.co.uk/files/software/development/GLUT/freeglut-MSVC.zip" `
-            -OutFile "freeglut-MSVC.zip"
-          Expand-Archive -Path "freeglut-MSVC.zip" -DestinationPath "C:\freeglut"
-          $dll = Get-ChildItem -Path "C:\freeglut" -Recurse -Filter "freeglut.dll" `
-            | Where-Object { $_.FullName -like "*x64*" } `
-            | Select-Object -First 1
+          $dll = $null
+          try {
+            Invoke-WebRequest `
+              -Uri "https://www.transmissionzero.co.uk/files/software/development/GLUT/freeglut-MSVC.zip" `
+              -OutFile "freeglut-MSVC.zip"
+            Expand-Archive -Path "freeglut-MSVC.zip" -DestinationPath "C:\freeglut"
+            $dll = Get-ChildItem -Path "C:\freeglut" -Recurse -Filter "freeglut.dll" `
+              | Where-Object { $_.FullName -like "*x64*" } `
+              | Select-Object -First 1
+          } catch {
+            Write-Host "Could not download freeglut-MSVC.zip : $_"
+          }
+          # Fallback : build freeglut with vcpkg, which is installed on Windows runners
+          if (-not $dll) {
+            & "$env:VCPKG_INSTALLATION_ROOT\vcpkg.exe" install freeglut:x64-windows
+            if ($LASTEXITCODE -ne 0) { Write-Error "vcpkg could not install freeglut"; exit 1 }
+            $dll = Get-Item "$env:VCPKG_INSTALLATION_ROOT\installed\x64-windows\bin\freeglut.dll"
+          }
           Copy-Item -Path $dll.FullName -Destination "C:\Windows\System32\freeglut.dll"
           Write-Host "Installed freeglut.dll from $($dll.FullName)"
         shell: pwsh
