@@ -136,7 +136,7 @@ public class FBO_macOS extends AFBO implements FBO {
 
 
     // Bind frame buffer
-    glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
+    bindFramebuffer(idFrameBuffer);
     GLError.checkAndThrow(gl, "glBindFramebuffer");
 
     // Attach 2D texture to this FBO
@@ -180,7 +180,7 @@ public class FBO_macOS extends AFBO implements FBO {
     // -------------------------
     // and now you can render to GL_TEXTURE_2D
 
-    glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
+    bindFramebuffer(idFrameBuffer);
     gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     gl.glClearDepth(1.0f);
     gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
@@ -202,7 +202,7 @@ public class FBO_macOS extends AFBO implements FBO {
     gl.glDeleteTextures(1, textureBufferIds);
 
     glut_h.glDeleteRenderbuffers(1, renderBufferIds);
-    unbindFramebuffer();
+    bindFramebuffer(0);
     glut_h.glDeleteFramebuffers(1, frameBufferIds);
 
     // Free memory
@@ -238,28 +238,14 @@ public class FBO_macOS extends AFBO implements FBO {
 
     Debug.debug(debug, "FBO: PixelBuffer red !");
     
-    unbindFramebuffer();
+    bindFramebuffer(0);
     
     return pixels;
 
   }
 
   @Override
-  public void bind(GL gl) {
-    if (!prepared) {
-      prepare(gl);
-    } else {
-      glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
-    }
-  }
-
-  @Override
-  public void unbind(GL gl) {
-    unbindFramebuffer();
-  }
-
-  protected void unbindFramebuffer() {
-    // Bind 0, which means render to back buffer
-    glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), 0);
+  protected void bindFramebuffer(int id) {
+    glut_h.glBindFramebuffer(glut_h.GL_FRAMEBUFFER(), id);
   }
 }
