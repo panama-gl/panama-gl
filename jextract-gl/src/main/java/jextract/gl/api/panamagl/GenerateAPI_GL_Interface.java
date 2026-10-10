@@ -278,17 +278,7 @@ public class GenerateAPI_GL_Interface {
 
     GLCommand command = getCommand(com.getName());
     
-    String outputType = command.getOutputType();
-    
- // TODO : EXTRACT SPECIAL CASE    
-    if("glMapBuffer".equals(command.getName())
-     || "glMapBufferRange".equals(command.getName())
-     || "glMapNamedBuffer".equals(command.getName())
-     || "glMapNamedBufferRange".equals(command.getName())
-     || "glGetString".equals(command.getName()) 
-     ){
-      outputType = GLTypeInJava.ADDRESSABLE;
-    }    
+    String outputType = command.getJavaOutputType();
     
     String methodName = command.getName();
     List<Arg> input = command.getArgs();

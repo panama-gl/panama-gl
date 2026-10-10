@@ -71,6 +71,10 @@ public class TestFBO_windows extends WindowsTest{
     FBOReader_AWT reader = new FBOReader_AWT();
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(fbo, reader, gl);
 
+    // Execute binding scenario
+    TestFBO.givenFBO_whenBindingOutOfRendering_ThenFBOIsBoundWithoutBeingRecreated(
+        new FBO_windows(width, height), gl);
+
     // ---------------------------------------
     // When Release context resources
     wglContext.destroy();
