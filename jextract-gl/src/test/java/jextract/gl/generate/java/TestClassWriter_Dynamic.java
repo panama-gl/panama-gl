@@ -88,6 +88,39 @@ public class TestClassWriter_Dynamic {
   }
 
   @Test
+  public void primitiveTypesAreMappedToTheirLayout() {
+    GLCommand command = new GLCommand("glPrimitives",
+        List.of(new Arg("long", "l"), new Arg("short", "s"), new Arg("byte", "b"),
+            new Arg("float", "f"), new Arg("double", "d")),
+        "void");
+
+    StringBuffer java = new StringBuffer();
+
+    Assert.assertTrue(writer.wrapperDynamic(java, command));
+    Assert.assertTrue(java.toString(), java.toString().contains(
+        "FunctionDescriptor.ofVoid(ValueLayout.JAVA_LONG, ValueLayout.JAVA_SHORT, ValueLayout.JAVA_BYTE, ValueLayout.JAVA_FLOAT, ValueLayout.JAVA_DOUBLE)"));
+  }
+
+  @Test
+  public void unsupportedOutputTypeIsNotWritten() {
+    GLCommand command = new GLCommand("glUnsupported", List.of(), "boolean");
+
+    StringBuffer java = new StringBuffer();
+
+    Assert.assertFalse(writer.wrapperDynamic(java, command));
+    Assert.assertEquals("", java.toString());
+  }
+
+  @Test
+  public void constructorIsWrittenInTheClass() {
+    writer.start();
+    writer.constructorWithFunctionLoader("panamagl.platform.linux.GLFunctionLoader_linux");
+
+    Assert.assertTrue(writer.getCode(), writer.getCode().contains(
+        "setFunctionLoader(new panamagl.platform.linux.GLFunctionLoader_linux());"));
+  }
+
+  @Test
   public void constructorRegistersTheFunctionLoader() {
     StringBuffer java = new StringBuffer();
 

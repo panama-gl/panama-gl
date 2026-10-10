@@ -40,6 +40,18 @@ public class TestGLFunctionLoader_windows extends WindowsTest {
     Assert.assertTrue(gl.getFunctionLoader() instanceof GLFunctionLoader_windows);
   }
 
+  /** Pure logic, checked on any platform. */
+  @Test
+  public void wglGetProcAddressFailureValuesAreInvalid() {
+    GLFunctionLoader_windows loader = new GLFunctionLoader_windows();
+
+    Assert.assertFalse(loader.isValid(null));
+    for (long failure : new long[] {0, 1, 2, 3, -1}) {
+      Assert.assertFalse(loader.isValid(MemorySegment.ofAddress(failure)));
+    }
+    Assert.assertTrue(loader.isValid(MemorySegment.ofAddress(0x7FFE0000L)));
+  }
+
   @Test
   public void unresolvedFunctionThrowsAnExplicitException() {
     if (!checkPlatform())
