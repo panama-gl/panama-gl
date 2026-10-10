@@ -18,6 +18,7 @@
 package panamagl.platform.linux;
 
 import panamagl.platform.Platform;
+import panamagl.platform.PlatformMatcher;
 
 public class LinuxTest {
   /**
@@ -30,6 +31,21 @@ public class LinuxTest {
 
     if(!isPlatform) {
       System.err.println(" !! \n    Skip test since not on Linux : " + platform + "\n !!");
+    }
+    
+    return isPlatform;
+  }
+
+  /**
+   * Print a message in console if not running on the CPU architecture of the given matcher
+   * @return
+   */
+  public boolean checkPlatform(PlatformMatcher matcher) {
+    Platform platform = new Platform();
+    boolean isPlatform = matcher.matches(platform);
+
+    if(!isPlatform) {
+      System.err.println(" !! \n    Skip test since not on " + matcher.getClass().getSimpleName() + " : " + platform + "\n !!");
     }
     
     return isPlatform;

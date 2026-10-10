@@ -1,4 +1,4 @@
-# Build and test Panama GL on Windows, macOS (ARM + Intel), and Linux
+# Build and test Panama GL on Windows, macOS and Linux, each on x86_64 and ARM64
 # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions
 
 name: Java CI with Maven
@@ -18,9 +18,20 @@ jobs:
       matrix:
         os:
           - ubuntu-latest    # Linux x86_64
+          - ubuntu-24.04-arm # Linux ARM64
           - macos-latest     # macOS ARM (Apple Silicon)
           - macos-15-intel   # macOS Intel x86_64 (last x86_64 image; GitHub Actions drops x86_64 ~Aug 2027)
-          #- windows-latest   # Windows x86_64
+          - windows-latest   # Windows x86_64
+          - windows-11-arm   # Windows ARM64
+        include:
+          # No JDK 22 build exists for Windows ARM64, and Temurin only provides 21 and 23 :
+          # use the next LTS from Zulu
+          - os: windows-11-arm
+            java: '25'
+            distribution: zulu
+            # OpenJFX publishes no Windows ARM64 build : skip the JavaFX canvas and the samples
+            # using it
+            maven-args: -pl '!panama-gl-ui-javafx,!panama-gl-samples'
 
     steps:
       - uses: actions/checkout@v4
@@ -28,12 +39,25 @@ jobs:
       # -------------------------------------------------------
       # JDK 22 is required for Panama Foreign Function & Memory API
       # -------------------------------------------------------
-      - name: Set up JDK 22
+      - name: Set up JDK ${{ matrix.java || '22' }}
         uses: actions/setup-java@v4
         with:
-          java-version: '22'
-          distribution: temurin
+          java-version: ${{ matrix.java || '22' }}
+          distribution: ${{ matrix.distribution || 'temurin' }}
           cache: maven
+
+      # Maven is not installed on every runner image (e.g. Windows ARM64)
+      - name: Install Maven if missing (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          if (Get-Command mvn -ErrorAction SilentlyContinue) { mvn --version; exit 0 }
+          $version = "3.9.9"
+          Invoke-WebRequest `
+            -Uri "https://archive.apache.org/dist/maven/maven-3/$version/binaries/apache-maven-$version-bin.zip" `
+            -OutFile maven.zip
+          Expand-Archive -Path maven.zip -DestinationPath C:\maven
+          "C:\maven\apache-maven-$version\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       # -------------------------------------------------------
       # Linux: install OpenGL / GLUT native libraries + virtual display
@@ -45,25 +69,45 @@ jobs:
           sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev xvfb
 
       # -------------------------------------------------------
-      # Windows: download pre-built MSVC binaries from the
-      # reference source (same origin as the local dev zip in
-      # pom.xml). Copy freeglut.dll (x64) into System32, which
-      # is already in the pom.xml Windows java.library.path —
-      # no Maven command override needed.
+      # Windows: freeglut.dll of the runner CPU (x64 or arm64) in
+      # System32, which is already in the pom.xml Windows
+      # java.library.path. x64 uses the pre-built MSVC binaries
+      # of the reference source (same origin as the local dev zip
+      # in pom.xml), arm64 and fallback build it with vcpkg.
       # Note: freeglut has no Chocolatey package.
       # -------------------------------------------------------
-      - name: Install freeglut MSVC x64 (Windows)
+      - name: Install freeglut (Windows)
         if: runner.os == 'Windows'
         run: |
-          Invoke-WebRequest `
-            -Uri "https://www.transmissionzero.co.uk/files/software/development/GLUT/freeglut-MSVC.zip" `
-            -OutFile "freeglut-MSVC.zip"
-          Expand-Archive -Path "freeglut-MSVC.zip" -DestinationPath "C:\freeglut"
-          $dll = Get-ChildItem -Path "C:\freeglut" -Recurse -Filter "freeglut.dll" `
-            | Where-Object { $_.FullName -like "*x64*" } `
-            | Select-Object -First 1
+          $arch = if ($env:RUNNER_ARCH -eq 'ARM64') { 'arm64' } else { 'x64' }
+          $dll = $null
+          if ($arch -eq 'x64') {
+            try {
+              Invoke-WebRequest `
+                -Uri "https://www.transmissionzero.co.uk/files/software/development/GLUT/freeglut-MSVC.zip" `
+                -OutFile "freeglut-MSVC.zip"
+              Expand-Archive -Path "freeglut-MSVC.zip" -DestinationPath "C:\freeglut"
+              $dll = Get-ChildItem -Path "C:\freeglut" -Recurse -Filter "freeglut.dll" `
+                | Where-Object { $_.FullName -like "*x64*" } `
+                | Select-Object -First 1
+            } catch {
+              Write-Host "Could not download freeglut-MSVC.zip : $_"
+            }
+          }
+          # Build freeglut with vcpkg, installed on most Windows runners
+          if (-not $dll) {
+            $vcpkg = $env:VCPKG_INSTALLATION_ROOT
+            if (-not $vcpkg -or -not (Test-Path "$vcpkg\vcpkg.exe")) {
+              $vcpkg = "C:\vcpkg"
+              git clone --depth 1 https://github.com/microsoft/vcpkg $vcpkg
+              & "$vcpkg\bootstrap-vcpkg.bat" -disableMetrics
+            }
+            & "$vcpkg\vcpkg.exe" install "freeglut:$arch-windows"
+            if ($LASTEXITCODE -ne 0) { Write-Error "vcpkg could not install freeglut"; exit 1 }
+            $dll = Get-Item "$vcpkg\installed\$arch-windows\bin\freeglut.dll"
+          }
           Copy-Item -Path $dll.FullName -Destination "C:\Windows\System32\freeglut.dll"
-          Write-Host "Installed freeglut.dll from $($dll.FullName)"
+          Write-Host "Installed freeglut.dll ($arch) from $($dll.FullName)"
         shell: pwsh
 
       # -------------------------------------------------------
@@ -80,23 +124,33 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
+          $arch = if ($env:RUNNER_ARCH -eq 'ARM64') { 'arm64' } else { 'x64' }
           $headers = @{ Authorization = "Bearer $env:GITHUB_TOKEN" }
           $release = Invoke-RestMethod `
             "https://api.github.com/repos/mmozeiko/build-mesa/releases/latest" `
             -Headers $headers
           $asset = $release.assets `
-            | Where-Object { $_.name -like "mesa-d3d12-x64-*.7z" } `
+            | Where-Object { $_.name -like "mesa-d3d12-$arch-*.7z" } `
             | Select-Object -First 1
-          if (-not $asset) { Write-Error "Could not find mesa-d3d12-x64 asset"; exit 1 }
+          if (-not $asset) {
+            Write-Host "Available assets : $($release.assets.name -join ', ')"
+            Write-Error "Could not find mesa-d3d12-$arch asset"; exit 1
+          }
           Write-Host "Downloading $($asset.name)"
           Invoke-WebRequest -Uri $asset.browser_download_url -OutFile mesa.7z
-          7z x mesa.7z -omesa -y | Out-Null
+          if (Get-Command 7z -ErrorAction SilentlyContinue) {
+            7z x mesa.7z -omesa -y | Out-Null
+          } else {
+            New-Item -ItemType Directory -Force -Path "mesa" | Out-Null
+            tar -xf mesa.7z -C mesa
+          }
           $dll = Get-ChildItem -Path "mesa" -Recurse -Filter "opengl32.dll" `
             | Select-Object -First 1
           if (-not $dll) { Write-Error "opengl32.dll not found in Mesa archive"; exit 1 }
           New-Item -ItemType Directory -Force -Path "C:\mesa" | Out-Null
-          Copy-Item -Path $dll.FullName -Destination "C:\mesa\opengl32.dll" -Force
-          Write-Host "Installed Mesa OpenGL to C:\mesa\opengl32.dll"
+          # opengl32.dll may load other DLLs of the archive (e.g. dxil.dll)
+          Copy-Item -Path "$($dll.DirectoryName)\*.dll" -Destination "C:\mesa" -Force
+          Write-Host "Installed Mesa OpenGL ($arch) to C:\mesa : $((Get-ChildItem C:\mesa).Name -join ', ')"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -119,7 +173,7 @@ jobs:
         if: runner.os == 'Windows'
         # Mesa opengl32.dll is in C:\mesa (prepended via native.lib.path.windows),
         # freeglut.dll is in System32, both covered by the resulting java.library.path.
-        run: mvn --batch-mode package --file pom.xml -D"native.lib.path.windows=C:\mesa;C:\Windows\system32"
+        run: mvn --batch-mode package --file pom.xml -D"native.lib.path.windows=C:\mesa;C:\Windows\system32" ${{ matrix.maven-args }}
         shell: pwsh
 
       # -------------------------------------------------------
@@ -130,6 +184,7 @@ jobs:
         run: |
           mkdir -p surefire-reports
           find . -path "*/target/surefire-reports/*.xml" -exec cp {} surefire-reports/ \;
+          cp panama-gl-ui-awt/target/panamagl-platform.properties surefire-reports/ || true
 
       - name: Collect Surefire reports (Windows)
         if: runner.os == 'Windows' && always()
@@ -138,6 +193,8 @@ jobs:
           Get-ChildItem -Path . -Recurse -Filter "*.xml" |
             Where-Object { $_.FullName -like "*\target\surefire-reports\*" } |
             Copy-Item -Destination surefire-reports
+          Copy-Item -Path panama-gl-ui-awt\target\panamagl-platform.properties `
+            -Destination surefire-reports -ErrorAction SilentlyContinue
         shell: pwsh
 
       - name: Upload Surefire reports
@@ -149,6 +206,37 @@ jobs:
           if-no-files-found: ignore
 
   # -------------------------------------------------------
+  # Report the platforms on which the tests ran (OS, CPU, JVM,
+  # OpenGL) in the job summary, and fail if a PanamaGLFactory
+  # declared by the wrappers was not tested on any runner.
+  # -------------------------------------------------------
+  tested-platforms:
+    name: Tested platforms
+    runs-on: ubuntu-latest
+    needs: build
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: surefire-reports-*
+          path: reports
+
+      - name: Report tested platforms
+        run: |
+          python3 .github/scripts/tested_platforms.py reports \
+            panama-gl-wrappers-*/src/main/resources/META-INF/services/panamagl.factory.PanamaGLFactory \
+            --output tested-platforms.md
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tested-platforms
+          path: tested-platforms.md
+          if-no-files-found: ignore
+
+  # -------------------------------------------------------
   # Deploy to the Jzy3d Maven FTP repository.
   # Runs only on push to main (never on branches or PRs),
   # after all matrix build jobs have passed.
@@ -157,7 +245,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    #if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     environment: panama-ftp-env
     permissions:
       contents: read

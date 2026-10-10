@@ -6,4 +6,8 @@ public class PanamaGLFactory_windows_x64 extends panamagl.platform.windows.APana
     return new panamagl.platform.windows.x64.GL_windows_x64();
   }
 
+  public boolean matches(panamagl.platform.Platform platform) {
+    return new panamagl.platform.windows.x64.PlatformMatcher_windows_x64().matches(platform);
+  }
+
 }
