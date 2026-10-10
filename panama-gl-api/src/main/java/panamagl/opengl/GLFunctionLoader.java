@@ -25,7 +25,7 @@ import java.lang.foreign.MemorySegment;
  * etc) must be queried from the driver, e.g. with <code>glXGetProcAddress</code> or
  * <code>wglGetProcAddress</code>.
  *
- * @see AGL#dynamic(String, java.util.function.Supplier)
+ * @see AGL#address(String)
  *
  * @author Martin Pernollet
  */

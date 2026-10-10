@@ -15,14 +15,10 @@
  *******************************************************************************/
 package panamagl.opengl;
 
-import java.lang.foreign.FunctionDescriptor;
-import java.lang.foreign.Linker;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-import java.lang.invoke.MethodHandle;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Supplier;
 import panamagl.utils.ForeignMemoryUtils;
 
 
@@ -41,8 +37,8 @@ public abstract class AGL extends ForeignMemoryUtils implements GL {
   /** Resolve functions that are not exported as static symbols by the system GL library. */
   protected GLFunctionLoader functionLoader;
 
-  /** Downcall handles of the functions resolved by the {@link #functionLoader}. */
-  protected Map<String, MethodHandle> dynamicFunctions = new ConcurrentHashMap<>();
+  /** Addresses of the functions resolved by the {@link #functionLoader}. */
+  protected Map<String, MemorySegment> addresses = new ConcurrentHashMap<>();
 
   public GLFunctionLoader getFunctionLoader() {
     return functionLoader;
@@ -50,36 +46,35 @@ public abstract class AGL extends ForeignMemoryUtils implements GL {
 
   public void setFunctionLoader(GLFunctionLoader functionLoader) {
     this.functionLoader = functionLoader;
-    this.dynamicFunctions.clear();
+    this.addresses.clear();
   }
 
   /**
-   * Return a downcall handle to an OpenGL function that is resolved at runtime by the
+   * Return the address of an OpenGL function that is resolved at runtime by the
    * {@link GLFunctionLoader}, which is how OpenGL functions beyond the static exports of the system
-   * library (VBO, shaders, FBO, ...) are reached.
+   * library (VBO, shaders, FBO, ...) are reached. The function is then invoked through the
+   * <code>PFN...PROC</code> class of the binding, as <code>FBO_linux</code> or
+   * <code>FBO_windows</code> do.
    * 
    * The function is resolved at its first invocation and then cached. Some platforms (Windows)
    * require a current GL context to resolve a function.
    * 
    * @param function the OpenGL function name, e.g. "glGenBuffers"
-   * @param descriptor the native signature of the function, only evaluated once
    * @throws UnsupportedOperationException if the function can not be resolved
    */
-  protected MethodHandle dynamic(String function, Supplier<FunctionDescriptor> descriptor) {
-    MethodHandle handle = dynamicFunctions.get(function);
+  protected MemorySegment address(String function) {
+    MemorySegment address = addresses.get(function);
 
-    if (handle == null) {
-      MemorySegment address = getProcAddress(function);
+    if (address == null) {
+      address = getProcAddress(function);
 
       if (address == null || MemorySegment.NULL.equals(address)) {
         throw new UnsupportedOperationException("OpenGL function '" + function
             + "' is not available : the driver does not provide it, or no GL context is current");
       }
-
-      handle = Linker.nativeLinker().downcallHandle(address, descriptor.get());
-      dynamicFunctions.put(function, handle);
+      addresses.put(function, address);
     }
-    return handle;
+    return address;
   }
 
   /**
@@ -97,26 +92,15 @@ public abstract class AGL extends ForeignMemoryUtils implements GL {
    * Return true if the given OpenGL function can be resolved by the {@link #functionLoader}.
    */
   public boolean isFunctionAvailable(String function) {
-    if (dynamicFunctions.containsKey(function)) {
+    if (addresses.containsKey(function)) {
       return true;
     }
     MemorySegment address = getProcAddress(function);
     return address != null && !MemorySegment.NULL.equals(address);
   }
 
-  /** Rethrow an error raised while invoking a function resolved with {@link #dynamic}. */
-  protected RuntimeException dynamicError(String function, Throwable t) {
-    if (t instanceof RuntimeException) {
-      return (RuntimeException) t;
-    } else if (t instanceof Error) {
-      throw (Error) t;
-    } else {
-      return new RuntimeException("Error while invoking " + function, t);
-    }
-  }
-
-  /** Read a C string returned by a function resolved with {@link #dynamic}. */
-  protected String dynamicString(MemorySegment string) {
+  /** Read a C string returned by a function resolved at runtime. */
+  protected String string(MemorySegment string) {
     if (string == null || MemorySegment.NULL.equals(string)) {
       return null;
     }

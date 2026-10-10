@@ -39,6 +39,8 @@ import panamagl.platform.macos.APanamaGLFactory_macOS;
 import panamagl.platform.macos.arm.PlatformMatcher_macOS_arm;
 import panamagl.platform.macos.x64.PlatformMatcher_macOS_x64;
 import panamagl.platform.linux.x64.PlatformMatcher_linux_x64;
+import panamagl.platform.windows.APanamaGLFactory_windows;
+import panamagl.platform.windows.x64.PlatformMatcher_windows_x64;
 
 /**
  * Generate an OpenGL API with per-platform implementations wrapping the bindings made available by
@@ -59,6 +61,14 @@ public class GenerateAPI {
   private static final String CLASS_BASE_NAME_GL = "GL_";
   private static final String CLASS_BASE_NAME_PANAMA_GL_FACTORY = "PanamaGLFactory_";
   private static final String GL_PACKAGE = "panamagl.opengl";
+
+  /**
+   * Binding classes of the function pointer typedefs (e.g. <code>PFNGLGENBUFFERSPROC</code>) invoking
+   * the functions resolved at runtime, on all platforms, as <code>FBO_linux</code> and
+   * <code>FBO_windows</code> do. Their descriptors only depend on the GL types, identical on these
+   * platforms.
+   */
+  private static final String FUNCTION_POINTERS = "opengl.linux.x86";
 
   String superGL = "GL";
 
@@ -87,10 +97,10 @@ public class GenerateAPI {
    */
   public void run(APILayout layout) throws Exception {
     //boolean GL_INTERF = false;
-	boolean MACOS_x64 = false;
-    boolean MACOS_ARM = false;
+	boolean MACOS_x64 = true;
+    boolean MACOS_ARM = true;
     boolean LINUX_x64 = true;
-    boolean WINDOWS_x64 = false;
+    boolean WINDOWS_x64 = true;
 
     // ============================================================================
     // GL SPECIFICATION
@@ -176,7 +186,7 @@ public class GenerateAPI {
     // ========================================================
     // Configure Windows wrapper
 
-    /*if (WINDOWS_x64) {
+    if (WINDOWS_x64) {
 
       wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
 
@@ -191,7 +201,7 @@ public class GenerateAPI {
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
           functionLoader, interfaceFiles);
 
-    }*/
+    }
 
     // Compile ALL
     compile(interfaceFiles);
@@ -233,6 +243,7 @@ public class GenerateAPI {
     wrapper.packge = layout.getPlatformPackage(platform);
     wrapper.setFileIn(layout.getOutputFolder(platform));
     wrapper.functionLoader = functionLoader;
+    wrapper.functionPointers = FUNCTION_POINTERS;
 
     wrapper.addImplement(interf.packge + "." + superGL);
     wrapper.addImplement(interf.packge + "." + CLASS_NAME_GLU);

@@ -26,6 +26,14 @@
 			<version>${panamagl.bindings.version}</version>
 		</dependency>
 
+		<!-- Function pointer classes (PFN...PROC) invoking the functions resolved at runtime, as
+		     panama-gl-wrappers-windows -->
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>panama-gl-bindings-linux</artifactId>
+			<version>${panamagl.bindings.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
