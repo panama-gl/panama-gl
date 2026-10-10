@@ -15,15 +15,13 @@
  *******************************************************************************/
 package panamagl.platform.macos;
 
-import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.SymbolLookup;
-import java.nio.file.Path;
 import panamagl.opengl.GLFunctionLoader;
 
 /**
  * Resolve OpenGL functions that are not part of the static bindings by looking for their symbol in
- * the OpenGL framework.
+ * the OpenGL framework, as already loaded by {@link opengl.macos.NativeLibLoader}.
  * 
  * Note that the macOS legacy profile only supports OpenGL 2.1 : functions of later versions are
  * exported by the framework but only work with a core profile context.
@@ -31,15 +29,8 @@ import panamagl.opengl.GLFunctionLoader;
  * @author Martin Pernollet
  */
 public class GLFunctionLoader_macOS implements GLFunctionLoader {
-  public static final String OPENGL_FRAMEWORK = "/System/Library/Frameworks/OpenGL.framework/OpenGL";
-
-  protected SymbolLookup lookup;
-
   @Override
   public MemorySegment getProcAddress(String function) {
-    if (lookup == null) {
-      lookup = SymbolLookup.libraryLookup(Path.of(OPENGL_FRAMEWORK), Arena.global());
-    }
-    return lookup.find(function).orElse(MemorySegment.NULL);
+    return SymbolLookup.loaderLookup().find(function).orElse(MemorySegment.NULL);
   }
 }

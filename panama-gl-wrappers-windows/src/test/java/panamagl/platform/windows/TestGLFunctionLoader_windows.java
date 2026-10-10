@@ -57,6 +57,29 @@ public class TestGLFunctionLoader_windows extends WindowsTest {
   }
 
   @Test
+  public void gl11FunctionsAreResolvedInLoadedOpengl32() {
+    if (!checkPlatform())
+      return;
+
+    WGLContext_windows context = new WGLContext_windows();
+    context.init();
+    context.makeCurrent();
+
+    try {
+      GLFunctionLoader_windows loader = new GLFunctionLoader_windows();
+
+      // wglGetProcAddress returns nothing for GL 1.1 functions, which are found in the opengl32.dll
+      // loaded by NativeLibLoader
+      Assert.assertNotEquals(MemorySegment.NULL, loader.getProcAddress("glClear"));
+
+      // Unknown functions are not resolved
+      Assert.assertEquals(MemorySegment.NULL, loader.getProcAddress("glNotAnOpenGLFunction"));
+    } finally {
+      context.destroy();
+    }
+  }
+
+  @Test
   public void vertexBufferObjects() {
     if (!checkPlatform())
       return;
