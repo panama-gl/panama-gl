@@ -83,4 +83,26 @@ public class TestGLCanvasSwing_Screenshot {
 
     Assert.assertEquals(Color.RED.getRGB(), screenshot.getRGB(0, 0));
   }
+
+  @Test
+  public void screenshotIsFlippedHorizontallyAsDisplayed() {
+    GLCanvasSwing canvas = newCanvas();
+    canvas.setFlip(Flip.HORIZONTAL);
+
+    // An image read from GL : red on the first column
+    BufferedImage image = new BufferedImage(4, 4, BufferedImage.TYPE_INT_ARGB);
+    for (int y = 0; y < 4; y++)
+      image.setRGB(0, y, Color.RED.getRGB());
+    canvas.setScreenshot(new AWTImage(image));
+
+    BufferedImage screenshot = (BufferedImage) canvas.getScreenshot().getImage();
+
+    Assert.assertEquals(Color.RED.getRGB(), screenshot.getRGB(3, 0));
+    Assert.assertNotEquals(Color.RED.getRGB(), screenshot.getRGB(0, 0));
+  }
+
+  @Test
+  public void noScreenshotBeforeRendering() {
+    Assert.assertNull(newCanvas().getScreenshot());
+  }
 }

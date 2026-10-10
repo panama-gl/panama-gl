@@ -51,6 +51,28 @@ public class TestWGLContext_windows extends WindowsTest {
     Assert.assertFalse(wgl.isInitialized());
   }
   
+  /**
+   * Each context owns a dummy window : a failure to create it made the second context reuse the
+   * screen DC, whose pixel format can be set only once.
+   */
+  @Test
+  public void createTwoWGLContextsInAProcess() {
+    if (!checkPlatform())
+      return;
+
+    WGLContext_windows first = new WGLContext_windows();
+    WGLContext_windows second = new WGLContext_windows();
+
+    first.init();
+    second.init();
+
+    Assert.assertTrue(first.isInitialized());
+    Assert.assertTrue(second.isInitialized());
+
+    first.destroy();
+    second.destroy();
+  }
+
   @Test
   public void getOpenGLVersion() {
     if (!checkPlatform())

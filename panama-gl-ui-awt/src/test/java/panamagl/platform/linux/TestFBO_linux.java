@@ -54,6 +54,10 @@ public class TestFBO_linux extends LinuxTest{
     // Execute validation scenario
     TestFBO.givenFBO_whenRenderSomething_ThenGetBufferedImage(fbo, reader, gl);
     
+    // Execute binding scenario
+    TestFBO.givenFBO_whenBindingOutOfRendering_ThenFBOIsBoundWithoutBeingRecreated(
+        new FBO_linux(width, height), gl);
+
     // ---------------------------------------
     // When Release context resources
     glutContext.destroy();
