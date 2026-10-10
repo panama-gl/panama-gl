@@ -36,21 +36,21 @@ import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 
 /** The screenshot must be oriented as the image displayed by the canvas. */
-public class TestGLCanvasSwing_Screenshot {
+public class TestGLCanvasAWT_Screenshot {
 
   @Before
   public void requireHeadful() {
     Assume.assumeFalse(GraphicsEnvironment.isHeadless());
   }
 
-  private GLCanvasSwing newCanvas() {
+  private GLCanvasAWT newCanvas() {
     PanamaGLFactory factory = mock(PanamaGLFactory.class);
     when(factory.newOffscreenRenderer(any()))
         .thenReturn(new AOffscreenRenderer(factory, new FBOReader_AWT()));
     when(factory.newGL()).thenReturn(mock(GL.class));
     when(factory.newGLContext()).thenReturn(mock(GLContext.class));
     when(factory.newFBO(anyInt(), anyInt())).thenReturn(mock(FBO.class));
-    return new GLCanvasSwing(factory);
+    return new GLCanvasAWT(factory);
   }
 
   /** An image read from GL : red on the first row, which is the bottom of the GL frame */
@@ -63,7 +63,7 @@ public class TestGLCanvasSwing_Screenshot {
 
   @Test
   public void screenshotIsFlippedAsDisplayed() {
-    GLCanvasSwing canvas = newCanvas();
+    GLCanvasAWT canvas = newCanvas();
     canvas.setFlip(Flip.VERTICAL);
     canvas.setScreenshot(new AWTImage(glImage()));
 
@@ -75,7 +75,7 @@ public class TestGLCanvasSwing_Screenshot {
 
   @Test
   public void screenshotIsNotFlippedIfNotDisplayedFlipped() {
-    GLCanvasSwing canvas = newCanvas();
+    GLCanvasAWT canvas = newCanvas();
     canvas.setFlip(Flip.NONE);
     canvas.setScreenshot(new AWTImage(glImage()));
 
@@ -86,7 +86,7 @@ public class TestGLCanvasSwing_Screenshot {
 
   @Test
   public void screenshotIsFlippedHorizontallyAsDisplayed() {
-    GLCanvasSwing canvas = newCanvas();
+    GLCanvasAWT canvas = newCanvas();
     canvas.setFlip(Flip.HORIZONTAL);
 
     // An image read from GL : red on the first column
