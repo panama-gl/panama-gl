@@ -153,7 +153,8 @@ public class TestGenerateWrapperFromBindings {
     ClassWriter classWriter = new ClassWriter("", "");
     classWriter.start();
     
-    g.wrapUnavailableMethods(classWriter, glRegistry, wrappedCommands);
+    // without function loader
+    g.wrapUnavailableMethods(classWriter, new Wrapper(), glRegistry, wrappedCommands);
     
     // Then : counter increments
     Assert.assertEquals(1, g.nUnimplemented);
@@ -168,4 +169,30 @@ public class TestGenerateWrapperFromBindings {
     
   }
 
+  @Test
+  public void wrapUnavailableMethods_withFunctionLoader() throws Exception {
+
+    // Given : a registry containing a command missing from the bindings
+    Map<String, GLCommand> glRegistry = new HashMap<>();
+    glRegistry.put("glFlush", new GLCommand("glFlush", "void"));
+    List<GLCommand> wrappedCommands = new ArrayList<>();
+
+    // Given : a wrapper resolving missing functions at runtime
+    Wrapper wrapper = new Wrapper();
+    wrapper.functionLoader = "panamagl.platform.linux.GLFunctionLoader_linux";
+
+    // When wrapping unavailable methods
+    GenerateAPI_GL_Wrapper g = new GenerateAPI_GL_Wrapper();
+    ClassWriter classWriter = new ClassWriter("", "");
+    classWriter.start();
+
+    g.wrapUnavailableMethods(classWriter, wrapper, glRegistry, wrappedCommands);
+
+    // Then : the method resolves the function at runtime instead of throwing
+    Assert.assertEquals(1, g.nUnimplemented);
+    Assert.assertTrue(classWriter.getCode().contains("public void glFlush()"));
+    Assert.assertTrue(classWriter.getCode().contains("dynamic(\"glFlush\""));
+    Assert.assertFalse(classWriter.getCode().contains("throw new RuntimeException"));
+    Assert.assertEquals(new GLCommand("glFlush", "void"), wrappedCommands.get(0));
+  }
 }

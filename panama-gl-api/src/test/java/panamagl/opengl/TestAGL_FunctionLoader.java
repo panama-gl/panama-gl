@@ -97,6 +97,21 @@ public class TestAGL_FunctionLoader {
   }
 
   @Test
+  public void loaderReturningNullResolvesNothing() {
+    AGL gl = newGL();
+    gl.setFunctionLoader(function -> null);
+
+    Assert.assertFalse(gl.isFunctionAvailable("strlen"));
+
+    try {
+      gl.dynamic("strlen", () -> STRLEN);
+      Assert.fail("expect an exception");
+    } catch (UnsupportedOperationException e) {
+      Assert.assertTrue(e.getMessage(), e.getMessage().contains("strlen"));
+    }
+  }
+
+  @Test
   public void changingLoaderClearsResolvedFunctions() {
     AGL gl = newGL();
     gl.setFunctionLoader(new RecordingLoader());
