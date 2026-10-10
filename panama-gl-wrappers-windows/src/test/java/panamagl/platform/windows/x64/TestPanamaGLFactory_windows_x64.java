@@ -27,7 +27,7 @@ import panamagl.platform.windows.WindowsTest;
 public class TestPanamaGLFactory_windows_x64 extends WindowsTest{
   @Test
   public void test() {
-    if (!checkPlatform())
+    if (!checkPlatform(new PlatformMatcher_windows_x64()))
       return;
   
     // When seek a factory
