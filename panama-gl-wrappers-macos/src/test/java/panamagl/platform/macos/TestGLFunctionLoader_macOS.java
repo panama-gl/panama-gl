@@ -16,21 +16,39 @@
 package panamagl.platform.macos;
 
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.SymbolLookup;
-import panamagl.opengl.GLFunctionLoader;
+import org.junit.Assert;
+import org.junit.Test;
+import opengl.macos.NativeLibLoader;
 
 /**
- * Resolve OpenGL functions that are not part of the static bindings by looking for their symbol in
- * the OpenGL framework, as already loaded by {@link opengl.macos.NativeLibLoader}.
- * 
- * Note that the macOS legacy profile only supports OpenGL 2.1 : functions of later versions are
- * exported by the framework but only work with a core profile context.
- * 
- * @author Martin Pernollet
+ * Check that OpenGL functions missing from the static bindings are resolved in the OpenGL framework
+ * loaded by {@link NativeLibLoader}.
  */
-public class GLFunctionLoader_macOS implements GLFunctionLoader {
-  @Override
-  public MemorySegment getProcAddress(String function) {
-    return SymbolLookup.loaderLookup().find(function).orElse(MemorySegment.NULL);
+// VM ARGS : --enable-native-access=ALL-UNNAMED
+public class TestGLFunctionLoader_macOS extends MacOSTest {
+
+  @Test
+  public void resolveFunctionOfLoadedFramework() {
+    if (!checkPlatform())
+      return;
+
+    NativeLibLoader.load();
+
+    GLFunctionLoader_macOS loader = new GLFunctionLoader_macOS();
+
+    // GL 3.0 function exported by the OpenGL framework but missing from the static bindings
+    Assert.assertNotEquals(MemorySegment.NULL, loader.getProcAddress("glBindFragDataLocation"));
+  }
+
+  @Test
+  public void unknownFunctionIsNotResolved() {
+    if (!checkPlatform())
+      return;
+
+    NativeLibLoader.load();
+
+    GLFunctionLoader_macOS loader = new GLFunctionLoader_macOS();
+
+    Assert.assertEquals(MemorySegment.NULL, loader.getProcAddress("glNotAnOpenGLFunction"));
   }
 }

@@ -17,12 +17,14 @@ package panamagl.platform.windows;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
+import java.lang.foreign.SymbolLookup;
 import panamagl.opengl.GLFunctionLoader;
 import wgl.windows.x86.wgl_h;
 
 /**
  * Resolve OpenGL functions with <code>wglGetProcAddress</code>, falling back on the symbols
- * exported by opengl32.dll (GL 1.1) for which <code>wglGetProcAddress</code> returns nothing.
+ * exported by opengl32.dll (GL 1.1) for which <code>wglGetProcAddress</code> returns nothing. These
+ * symbols are looked up in opengl32.dll as already loaded by {@link opengl.windows.NativeLibLoader}.
  * 
  * A GL context must be current on the calling thread. Addresses may depend on the context pixel
  * format, which is why each {@link panamagl.opengl.GL} instance keeps its own cache.
@@ -39,15 +41,7 @@ public class GLFunctionLoader_windows implements GLFunctionLoader {
       if (isValid(address)) {
         return address;
       }
-
-      MemorySegment opengl32 = wgl_h.GetModuleHandleA(arena.allocateFrom("opengl32.dll"));
-      if (isValid(opengl32)) {
-        address = wgl_h.GetProcAddress(opengl32, name);
-        if (isValid(address)) {
-          return address;
-        }
-      }
-      return MemorySegment.NULL;
+      return SymbolLookup.loaderLookup().find(function).orElse(MemorySegment.NULL);
     }
   }
 
