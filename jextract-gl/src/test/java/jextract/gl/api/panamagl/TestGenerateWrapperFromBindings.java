@@ -172,27 +172,59 @@ public class TestGenerateWrapperFromBindings {
   @Test
   public void wrapUnavailableMethods_withFunctionLoader() throws Exception {
 
-    // Given : a registry containing a command missing from the bindings
+    // Given : a registry containing commands missing from the static bindings, one having a
+    // function pointer typedef, one having none
     Map<String, GLCommand> glRegistry = new HashMap<>();
-    glRegistry.put("glFlush", new GLCommand("glFlush", "void"));
+    glRegistry.put("glGenBuffers", new GLCommand("glGenBuffers",
+        List.of(new Arg(Integer.class, "n"), new Arg("MemorySegment", "buffers")), "void"));
+    glRegistry.put("glNoTypedef", new GLCommand("glNoTypedef", "void"));
     List<GLCommand> wrappedCommands = new ArrayList<>();
 
     // Given : a wrapper resolving missing functions at runtime
-    Wrapper wrapper = new Wrapper();
-    wrapper.functionLoader = "panamagl.platform.linux.GLFunctionLoader_linux";
-
-    // When wrapping unavailable methods
     GenerateAPI_GL_Wrapper g = new GenerateAPI_GL_Wrapper();
     ClassWriter classWriter = new ClassWriter("", "");
     classWriter.start();
 
-    g.wrapUnavailableMethods(classWriter, wrapper, glRegistry, wrappedCommands);
+    g.wrapUnavailableMethods(classWriter, wrapperWithFunctionLoader(), glRegistry, wrappedCommands);
 
-    // Then : the method resolves the function at runtime instead of throwing
-    Assert.assertEquals(1, g.nUnimplemented);
-    Assert.assertTrue(classWriter.getCode().contains("public void glFlush()"));
-    Assert.assertTrue(classWriter.getCode().contains("dynamic(\"glFlush\""));
-    Assert.assertFalse(classWriter.getCode().contains("throw new RuntimeException"));
-    Assert.assertEquals(new GLCommand("glFlush", "void"), wrappedCommands.get(0));
+    // Then : the function is invoked through its function pointer class
+    Assert.assertEquals(2, g.nUnimplemented);
+    Assert.assertTrue(classWriter.getCode().contains(
+        "PFNGLGENBUFFERSPROC.invoke(address(\"glGenBuffers\"), n, buffers);"));
+
+    // Then : a function without typedef throws an exception
+    Assert.assertTrue(classWriter.getCode().contains("public void glNoTypedef()"));
+    Assert.assertTrue(classWriter.getCode().contains("throw new RuntimeException"));
+  }
+
+  @Test
+  public void functionPointerOfAnAlias() throws Exception {
+
+    // Given : a GL 1.3 command without typedef, which the registry declares as alias of an ARB
+    // command having one
+    GLCommand core = new GLCommand("glClientActiveTexture", List.of(new Arg(Integer.class, "texture")), "void");
+    GLCommand arb = new GLCommand("glClientActiveTextureARB", List.of(new Arg(Integer.class, "texture")), "void");
+    arb.setAlias("glClientActiveTexture");
+
+    Map<String, GLCommand> glRegistry = new HashMap<>();
+    glRegistry.put(core.getName(), core);
+    glRegistry.put(arb.getName(), arb);
+
+    // When
+    GenerateAPI_GL_Wrapper g = new GenerateAPI_GL_Wrapper();
+    Class<?> functionPointer = g.getFunctionPointer(wrapperWithFunctionLoader(), core, glRegistry);
+
+    // Then : the typedef of the alias is used
+    Assert.assertEquals(opengl.linux.x86.PFNGLCLIENTACTIVETEXTUREARBPROC.class, functionPointer);
+
+    // Then : no function pointer without function loader
+    Assert.assertNull(g.getFunctionPointer(new Wrapper(), core, glRegistry));
+  }
+
+  protected Wrapper wrapperWithFunctionLoader() {
+    Wrapper wrapper = new Wrapper();
+    wrapper.functionLoader = "panamagl.platform.linux.GLFunctionLoader_linux";
+    wrapper.functionPointers = "opengl.linux.x86";
+    return wrapper;
   }
 }

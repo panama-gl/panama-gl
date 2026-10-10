@@ -151,6 +151,10 @@ public class GLCommand {
     return alias;
   }
 
+  public void setAlias(String alias) {
+    this.alias = alias;
+  }
+
   public List<Arg> getArgs() {
     return args;
   }

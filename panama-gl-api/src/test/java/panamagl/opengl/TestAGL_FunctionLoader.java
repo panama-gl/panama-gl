@@ -18,7 +18,6 @@ package panamagl.opengl;
 import static org.mockito.Mockito.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.withSettings;
-import java.io.IOException;
 import java.lang.foreign.Arena;
 import java.lang.foreign.FunctionDescriptor;
 import java.lang.foreign.Linker;
@@ -61,17 +60,13 @@ public class TestAGL_FunctionLoader {
   }
 
   @Test
-  public void functionIsResolvedOnceThenInvoked() throws Throwable {
+  public void functionIsResolvedOnce() throws Throwable {
     AGL gl = newGL();
     RecordingLoader loader = new RecordingLoader();
     gl.setFunctionLoader(loader);
 
-    try (Arena arena = Arena.ofConfined()) {
-      MemorySegment text = arena.allocateFrom("panama");
-
-      Assert.assertEquals(6L, (long) gl.dynamic("strlen", () -> STRLEN).invokeExact(text));
-      Assert.assertEquals(6L, (long) gl.dynamic("strlen", () -> STRLEN).invokeExact(text));
-    }
+    MemorySegment address = gl.address("strlen");
+    Assert.assertEquals(address, gl.address("strlen"));
 
     // Resolved at the first invocation only
     Assert.assertEquals(List.of("strlen"), loader.resolved);
@@ -79,6 +74,13 @@ public class TestAGL_FunctionLoader {
     // Available from the cache without resolving again
     Assert.assertTrue(gl.isFunctionAvailable("strlen"));
     Assert.assertEquals(List.of("strlen"), loader.resolved);
+
+    // The address is the one of the function
+    try (Arena arena = Arena.ofConfined()) {
+      MemorySegment text = arena.allocateFrom("panama");
+      Assert.assertEquals(6L,
+          (long) Linker.nativeLinker().downcallHandle(address, STRLEN).invokeExact(text));
+    }
   }
 
   @Test
@@ -89,7 +91,7 @@ public class TestAGL_FunctionLoader {
     Assert.assertFalse(gl.isFunctionAvailable("glNotAnOpenGLFunction"));
 
     try {
-      gl.dynamic("glNotAnOpenGLFunction", () -> STRLEN);
+      gl.address("glNotAnOpenGLFunction");
       Assert.fail("expect an exception");
     } catch (UnsupportedOperationException e) {
       Assert.assertTrue(e.getMessage(), e.getMessage().contains("glNotAnOpenGLFunction"));
@@ -104,7 +106,7 @@ public class TestAGL_FunctionLoader {
     Assert.assertFalse(gl.isFunctionAvailable("strlen"));
 
     try {
-      gl.dynamic("strlen", () -> STRLEN);
+      gl.address("strlen");
       Assert.fail("expect an exception");
     } catch (UnsupportedOperationException e) {
       Assert.assertTrue(e.getMessage(), e.getMessage().contains("strlen"));
@@ -115,48 +117,27 @@ public class TestAGL_FunctionLoader {
   public void changingLoaderClearsResolvedFunctions() {
     AGL gl = newGL();
     gl.setFunctionLoader(new RecordingLoader());
-    gl.dynamic("strlen", () -> STRLEN);
+    gl.address("strlen");
 
     RecordingLoader other = new RecordingLoader();
     gl.setFunctionLoader(other);
-    gl.dynamic("strlen", () -> STRLEN);
+    gl.address("strlen");
 
     Assert.assertSame(other, gl.getFunctionLoader());
     Assert.assertEquals(List.of("strlen"), other.resolved);
   }
 
   @Test
-  public void dynamicStringReadsCStrings() {
+  public void stringReadsCStrings() {
     AGL gl = newGL();
 
-    Assert.assertNull(gl.dynamicString(null));
-    Assert.assertNull(gl.dynamicString(MemorySegment.NULL));
+    Assert.assertNull(gl.string(null));
+    Assert.assertNull(gl.string(MemorySegment.NULL));
 
     try (Arena arena = Arena.ofConfined()) {
       MemorySegment string = arena.allocateFrom("4.6 Mesa");
       // a native function returns a zero length segment
-      Assert.assertEquals("4.6 Mesa", gl.dynamicString(MemorySegment.ofAddress(string.address())));
-    }
-  }
-
-  @Test
-  public void dynamicErrorRethrowsUncheckedAndWrapsChecked() {
-    AGL gl = newGL();
-
-    IllegalStateException unchecked = new IllegalStateException();
-    Assert.assertSame(unchecked, gl.dynamicError("glFunction", unchecked));
-
-    IOException checked = new IOException();
-    RuntimeException wrapped = gl.dynamicError("glFunction", checked);
-    Assert.assertSame(checked, wrapped.getCause());
-    Assert.assertTrue(wrapped.getMessage().contains("glFunction"));
-
-    AssertionError error = new AssertionError();
-    try {
-      gl.dynamicError("glFunction", error);
-      Assert.fail("expect the error to be thrown");
-    } catch (AssertionError e) {
-      Assert.assertSame(error, e);
+      Assert.assertEquals("4.6 Mesa", gl.string(MemorySegment.ofAddress(string.address())));
     }
   }
 }
