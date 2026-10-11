@@ -347,9 +347,9 @@ PanamaGL is made of two repositories
 
 | OS | Static functions | Functions resolved at runtime | Resolved with |
 |----|------------------|-------------------------------|---------------|
-| Windows | OpenGL 1.1 (`opengl32.dll`) | everything else : VBO, shaders, FBO, VAO, ... | `wglGetProcAddress` |
-| Linux | depends on the `libGL` used to generate the bindings | everything else | `glXGetProcAddress` |
-| macOS | almost all functions of the `OpenGL` framework | a few OpenGL 3.x functions | the framework loaded by `NativeLibLoader` |
+| Windows | OpenGL 1.0 and 1.1 (`opengl32.dll`) | OpenGL 1.2 to 4.6 : VBO, shaders, FBO, VAO, ... | `wglGetProcAddress` |
+| Linux | OpenGL 1.0 to 1.3 | OpenGL 1.4 to 4.6 | `glXGetProcAddress` |
+| macOS | OpenGL 1.0 to 2.1, framebuffer objects (3.0), sync and base vertex (3.2) | other OpenGL 3.0 to 3.3 functions | the framework loaded by `NativeLibLoader` |
 
 A few constraints follow :
 
