@@ -232,8 +232,10 @@ jobs:
           done
           # Summaries last, to be read at the end of the log
           for family in linux windows macos; do
-            [ -f reports/$family.md ] && sed -n '1,/^\*\*/p' reports/$family.md
-            [ -f reports/$family.md ] && grep -A2 '^### Used by PanamaGL' reports/$family.md
+            if [ -f reports/$family.md ]; then
+              sed -n '1,/^\*\*/p' reports/$family.md
+              grep -A2 '^### Used by PanamaGL' reports/$family.md || true
+            fi
           done
 
       - uses: actions/upload-artifact@v4
