@@ -6,7 +6,7 @@
 # Usage : generate_linux.sh <jextract> <panama-gl-bindings/scripts/linux> <output dir>
 set -euo pipefail
 
-JEXTRACT=$1
+JEXTRACT=$(cd "$(dirname "$1")" && pwd)/$(basename "$1")
 SCRIPTS=$(cd "$2" && pwd)
 OUT=$(mkdir -p "$3" && cd "$3" && pwd)
 echo "Mesa headers $(dpkg-query -W -f '${Version}' mesa-common-dev), freeglut headers $(dpkg-query -W -f '${Version}' freeglut3-dev)" >> "$OUT/versions.txt"

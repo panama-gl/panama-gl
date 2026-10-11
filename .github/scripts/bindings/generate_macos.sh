@@ -7,7 +7,7 @@
 # Usage : generate_macos.sh <jextract> <panama-gl-bindings/scripts/macos> <output dir>
 set -euo pipefail
 
-JEXTRACT=$1
+JEXTRACT=$(cd "$(dirname "$1")" && pwd)/$(basename "$1")
 SCRIPTS=$(cd "$2" && pwd)
 OUT=$(mkdir -p "$3" && cd "$3" && pwd)
 echo "macOS SDK $(xcrun --show-sdk-version)" >> "$OUT/versions.txt"
