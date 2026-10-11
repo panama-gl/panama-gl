@@ -186,7 +186,7 @@
 							<!-- Ensure stack trace get displayed -->
 							<trimStackTrace>false</trimStackTrace>
 							<argLine>
-								-XstartOnFirstThread --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+								@{argLine} -XstartOnFirstThread --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 							</argLine>
 						</configuration>
 					</plugin>
@@ -220,7 +220,7 @@
 							<!-- Ensure stack trace get displayed -->
 							<trimStackTrace>false</trimStackTrace>
 							<argLine>
-								-XstartOnFirstThread --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
+								@{argLine} -XstartOnFirstThread --enable-native-access=ALL-UNNAMED -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 							</argLine>
 						</configuration>
 					</plugin>

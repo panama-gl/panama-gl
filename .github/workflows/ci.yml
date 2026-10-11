@@ -185,6 +185,9 @@ jobs:
           mkdir -p surefire-reports
           find . -path "*/target/surefire-reports/*.xml" -exec cp {} surefire-reports/ \;
           cp panama-gl-ui-awt/target/panamagl-platform.properties surefire-reports/ || true
+          for report in */target/site/jacoco/jacoco.csv; do
+            [ -f "$report" ] && cp "$report" "surefire-reports/jacoco-${report%%/*}.csv"
+          done
 
       - name: Collect Surefire reports (Windows)
         if: runner.os == 'Windows' && always()
@@ -195,6 +198,12 @@ jobs:
             Copy-Item -Destination surefire-reports
           Copy-Item -Path panama-gl-ui-awt\target\panamagl-platform.properties `
             -Destination surefire-reports -ErrorAction SilentlyContinue
+          Get-ChildItem -Path . -Recurse -Filter "jacoco.csv" |
+            Where-Object { $_.FullName -like "*\target\site\jacoco\*" } |
+            ForEach-Object {
+              $module = $_.Directory.Parent.Parent.Parent.Name
+              Copy-Item -Path $_.FullName -Destination "surefire-reports\jacoco-$module.csv"
+            }
         shell: pwsh
 
       - name: Upload Surefire reports
@@ -203,6 +212,14 @@ jobs:
         with:
           name: surefire-reports-${{ matrix.os }}
           path: surefire-reports
+          if-no-files-found: ignore
+
+      - name: Upload coverage reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-${{ matrix.os }}
+          path: "*/target/site/jacoco"
           if-no-files-found: ignore
 
   # -------------------------------------------------------
@@ -234,6 +251,34 @@ jobs:
         with:
           name: tested-platforms
           path: tested-platforms.md
+          if-no-files-found: ignore
+
+  # -------------------------------------------------------
+  # Report the test coverage of each module on each runner
+  # (JaCoCo, generated GL wrappers excluded) in the job summary.
+  # HTML reports are in the coverage-<runner> artifacts.
+  # -------------------------------------------------------
+  coverage:
+    name: Test coverage
+    runs-on: ubuntu-latest
+    needs: build
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: surefire-reports-*
+          path: reports
+
+      - name: Report test coverage
+        run: python3 .github/scripts/coverage_summary.py reports --output coverage.md
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage
+          path: coverage.md
           if-no-files-found: ignore
 
   # -------------------------------------------------------

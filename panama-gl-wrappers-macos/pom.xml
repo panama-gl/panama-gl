@@ -95,7 +95,7 @@
 										<include>**/TestAppKitMainThread.java</include>
 									</includes>
 									<argLine>
-										-XstartOnFirstThread --enable-native-access=ALL-UNNAMED
+										@{argLine} -XstartOnFirstThread --enable-native-access=ALL-UNNAMED
 										-Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
 									</argLine>
 								</configuration>
