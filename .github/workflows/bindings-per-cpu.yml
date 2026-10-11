@@ -139,7 +139,7 @@ jobs:
         run: |
           .\gradlew.bat --no-daemon "-Pjdk_home=${{ steps.jdk25.outputs.path }}" "-Pllvm_home=$env:LLVM_HOME" clean verify
           if ($LASTEXITCODE -ne 0) { exit 1 }
-          .\build\jextract\bin\jextract.bat --version | Tee-Object -FilePath "$env:RUNNER_TEMP\versions.txt" -Append
+          .\build\jextract\bin\jextract.bat --version *>&1 | Tee-Object -FilePath "$env:RUNNER_TEMP\versions.txt" -Append
 
       # -------------------------------------------------------
       # Bindings
@@ -169,7 +169,7 @@ jobs:
         shell: bash
         run: |
           out=generated/${{ matrix.family }}-${{ matrix.cpu }}
-          { echo "Runner ${{ matrix.os }} ($RUNNER_OS $RUNNER_ARCH)"; cat "$RUNNER_TEMP/versions.txt"; } >> "$out/versions.txt"
+          { echo "Runner ${{ matrix.os }} ($RUNNER_OS $RUNNER_ARCH)"; cat "$RUNNER_TEMP/versions.txt" || true; } >> "$out/versions.txt"
           cat "$out/versions.txt"
           du -sh "$out"/*/
 
