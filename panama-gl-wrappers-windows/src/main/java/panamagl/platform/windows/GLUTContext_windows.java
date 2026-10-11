@@ -22,7 +22,6 @@ import java.lang.foreign.ValueLayout;
 import freeglut.windows.x86.freeglut_h;
 import freeglut.windows.x86.glutDisplayFunc$callback;
 import freeglut.windows.x86.glutIdleFunc$callback;
-import opengl.windows.NativeLibLoader;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
@@ -54,7 +53,7 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
   protected static boolean hasInit = false;
   
   public GLUTContext_windows() {
-    NativeLibLoader.load();
+    NativeLibLoader_windows.load();
     
     initArena();
   }

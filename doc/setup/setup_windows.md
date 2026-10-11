@@ -1,6 +1,6 @@
 Install
-* Freeglut MSVC Package from [there](https://www.transmissionzero.co.uk/software/freeglut-devel/)
 * CLang
+* Freeglut is optional : a `freeglut.dll` is embedded in `panama-gl-wrappers-windows` for x86_64 and ARM64 CPUs and used if none is found in the `java.library.path`. To use your own, install for example the Freeglut MSVC Package from [there](https://www.transmissionzero.co.uk/software/freeglut-devel/) and add its `bin\x64` folder to the `java.library.path`.
 
 ## How I built the OpenGL wrappers
 

@@ -4,7 +4,6 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import freeglut.windows.x86.freeglut_h;
-import opengl.windows.NativeLibLoader;
 import panamagl.Debug;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;
@@ -60,8 +59,8 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     super();
     this.advanced = advanced;
     
-    NativeLibLoader.load();
-    NativeLibLoader.loadWindowsDLLs();
+    NativeLibLoader_windows.load();
+    NativeLibLoader_windows.loadWindowsDLLs();
     
     initArena();
   }

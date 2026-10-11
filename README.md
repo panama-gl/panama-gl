@@ -115,7 +115,7 @@ This is one of the examples available in the [`panama-gl-samples`](panama-gl-sam
  * for all : --enable-native-access=ALL-UNNAMED
  * macos   : -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
  * linux   : -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
- * windows : -Djava.library.path="C:\Windows\system32;.\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
+ * windows : -Djava.library.path="C:\Windows\system32"
  */
 public class PanamaGL_Demo {
 
@@ -397,6 +397,19 @@ mvn install -D"native.lib.path.windows=C:\mesa;C:\Windows\system32"
 ```
 
 See an example in the `.github/workflow/ci.yml` file.
+
+#### freeglut on Windows
+
+Windows does not provide freeglut. `panama-gl-wrappers-windows` embeds a `freeglut.dll` for each Windows CPU in `natives/windows-x86_64` and `natives/windows-aarch64`, which is extracted in `<java.io.tmpdir>/panamagl` and loaded if no `freeglut.dll` is found in the `java.library.path`. A `freeglut.dll` of the `java.library.path` hence has precedence over the embedded one.
+
+The embedded `freeglut.dll` are cross-compiled from Linux or macOS with the `scripts/windows/build-freeglut-cross.sh` script of [the bindings project](https://github.com/panama-gl/panama-gl-bindings), e.g. from its `scripts/windows` folder :
+
+```
+build-freeglut-cross.sh v3.8.0 x64 ../../../panama-gl/panama-gl-wrappers-windows/src/main/resources/natives/windows-x86_64
+build-freeglut-cross.sh v3.8.0 arm64 ../../../panama-gl/panama-gl-wrappers-windows/src/main/resources/natives/windows-aarch64
+```
+
+They only depend on DLLs of Windows 10 and later. freeglut is distributed under the X-Consortium license, copied next to each `freeglut.dll`.
 
 
 #### Tests
