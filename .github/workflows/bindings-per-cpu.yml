@@ -89,7 +89,9 @@ jobs:
           brew install llvm@18
           echo "LLVM_HOME=$(brew --prefix llvm@18)" >> "$GITHUB_ENV"
 
-      # The same LLVM release on both CPUs : the first one providing an installer for both
+      # The same LLVM release on both CPUs : the first one providing an installer for both.
+      # jextract fails on the anonymous structs of winnt.h with the libclang of LLVM 20, and
+      # LLVM 18 is the one used on Linux and macOS
       - name: Install LLVM (Windows)
         if: matrix.family == 'windows'
         shell: pwsh
@@ -97,7 +99,7 @@ jobs:
           $arch = if ($env:RUNNER_ARCH -eq 'ARM64') { 'woa64' } else { 'win64' }
           $base = 'https://github.com/llvm/llvm-project/releases/download'
           $version = $null
-          foreach ($v in '20.1.8', '19.1.7', '18.1.8') {
+          foreach ($v in '18.1.8', '18.1.7', '18.1.6', '17.0.6') {
             $both = $true
             foreach ($a in 'win64', 'woa64') {
               try { Invoke-WebRequest -Method Head -Uri "$base/llvmorg-$v/LLVM-$v-$a.exe" | Out-Null }
