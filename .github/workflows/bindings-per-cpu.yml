@@ -87,6 +87,10 @@ jobs:
         if: matrix.family == 'macos'
         run: |
           brew install llvm@18
+          # The same SDK on both CPUs : the Xcode of the macOS 15 Intel image, if also installed
+          if [ -d /Applications/Xcode_16.4.app ]; then
+            echo "DEVELOPER_DIR=/Applications/Xcode_16.4.app/Contents/Developer" >> "$GITHUB_ENV"
+          fi
           echo "LLVM_HOME=$(brew --prefix llvm@18)" >> "$GITHUB_ENV"
 
       # The same LLVM release on both CPUs : the first one providing an installer for both.
@@ -221,9 +225,14 @@ jobs:
             for f in "$x64"/*.includes; do
               diff -u "$f" "$arm64/$(basename "$f")" >> reports/$family-includes.diff || true
             done
-            # Full report in the log
-            head -n 5000 reports/$family.md
-            head -n 2000 reports/$family-includes.diff
+            # Report in the log, with the includes that differ
+            head -n 1500 reports/$family.md
+            grep -E '^[-+]--include' reports/$family-includes.diff | head -n 300 || true
+          done
+          # Summaries last, to be read at the end of the log
+          for family in linux windows macos; do
+            [ -f reports/$family.md ] && sed -n '1,/^\*\*/p' reports/$family.md
+            [ -f reports/$family.md ] && grep -A2 '^### Used by PanamaGL' reports/$family.md
           done
 
       - uses: actions/upload-artifact@v4

@@ -61,8 +61,10 @@ def stream(package_dir):
     declarations.setdefault(name, []).extend(lines)
 
   for f in sorted(package_dir.glob('*.java'), key=sort_key):
+    # The closing brace of a header class file would belong to its last declaration, which depends
+    # on how the header class is split in files
     lines = [line for line in f.read_text(encoding='utf-8', errors='replace').splitlines()
-             if line.strip() and not line.startswith(('import ', 'package '))]
+             if line.strip() and not line.startswith(('import ', 'package ')) and line != '}']
     if renaming:
       lines = [renaming.sub(r'\1', line) for line in lines]
     if not (header_file and header_file.match(f.stem)):
