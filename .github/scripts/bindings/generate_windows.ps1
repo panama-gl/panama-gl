@@ -12,7 +12,7 @@ $Scripts = (Resolve-Path $Scripts).Path
 $JExtract = (Resolve-Path $JExtract).Path
 
 # Windows SDK providing the headers of WGL : the one of the committed bindings if installed,
-# the latest otherwise
+# the latest otherwise (the same on both CPUs)
 $sdks = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\Include" -Directory `
   | Where-Object { Test-Path "$($_.FullName)\um\windows.h" } `
   | Sort-Object { [version]$_.Name }
@@ -21,33 +21,14 @@ $sdk = $sdks | Where-Object { $_.Name -eq '10.0.19041.0' } | Select-Object -Firs
 if (-not $sdk) { $sdk = $sdks | Select-Object -Last 1 }
 "Windows SDK $($sdk.Name)" | Tee-Object -FilePath "$Out\versions.txt" -Append
 
-function Run([string]$Package, [string[]]$Arguments) {
-  & $JExtract @Arguments --dump-includes "$Out\$Package.includes" *> "$Out\$Package.log"
-  if ($LASTEXITCODE -eq 0) { & $JExtract @Arguments *>> "$Out\$Package.log" }
-  return $LASTEXITCODE -eq 0
-}
-
-# jextract may fail on the anonymous structs and unions of the SDK headers (TypeLayoutError :
-# InvalidFieldName). They are then named (DUMMYSTRUCTNAME, DUMMYUNIONNAME...) by defining
-# NONAMELESSUNION, and the COM and OLE headers, which PanamaGL does not use, are excluded by
-# defining WIN32_LEAN_AND_MEAN
-$fallbacks = @(
-  @(),
-  @('-D', 'NONAMELESSUNION'),
-  @('-D', 'NONAMELESSUNION', '-D', 'WIN32_LEAN_AND_MEAN')
-)
-
 function Generate([string]$Package, [string]$HeaderClass, [string]$Header, [string[]]$Options) {
   $common = @('--target-package', $Package, '--header-class-name', $HeaderClass, '--output', $Out) + $Options
-  foreach ($defines in $fallbacks) {
-    Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$Out\$($Package.Replace('.', '\'))"
-    if (Run $Package ($common + $defines + $Header)) {
-      "$Package generated with defines : $($defines -join ' ')" | Tee-Object -FilePath "$Out\versions.txt" -Append
-      return
-    }
-    Get-Content "$Out\$Package.log" | Where-Object { $_ -notmatch 'warning' } | Select-Object -Last 5
+  & $JExtract @common --dump-includes "$Out\$Package.includes" $Header *> "$Out\$Package.log"
+  if ($LASTEXITCODE -eq 0) { & $JExtract @common $Header *>> "$Out\$Package.log" }
+  if ($LASTEXITCODE -ne 0) {
+    Get-Content "$Out\$Package.log" | Where-Object { $_ -notmatch 'warning' } | Select-Object -Last 30
+    throw "jextract failed for $Package"
   }
-  throw "jextract failed for $Package"
 }
 
 Push-Location $Scripts

@@ -69,35 +69,31 @@ jobs:
           distribution: zulu
 
       # -------------------------------------------------------
-      # libclang and headers. Since LLVM 16, libclang spells unnamed structs
-      # "struct (unnamed at <file>:<line>:<column>)", which jextract uses as class
-      # and file names : its output does not compile anymore. LLVM 15 is used on
-      # every OS (the jextract builds of jdk.java.net use LLVM 13)
+      # libclang and headers : LLVM 18 on every OS
       # -------------------------------------------------------
       - name: Install LLVM and OpenGL headers (Linux)
         if: matrix.family == 'linux'
         run: |
           sudo apt-get update -q
-          sudo apt-get install -y libclang-15-dev llvm-15 \
+          sudo apt-get install -y libclang-18-dev llvm-18 \
             mesa-common-dev libgl-dev libglx-dev libglu1-mesa-dev freeglut3-dev libglew-dev
-          # The libclang of Ubuntu is a symbolic link in /usr/lib/llvm-15, which jextract does not copy
-          version=$(ls /usr/lib/llvm-15/lib/clang)
+          # The libclang of Ubuntu is a symbolic link in /usr/lib/llvm-18, which jextract does not copy
           mkdir -p "$RUNNER_TEMP/llvm/lib/clang"
-          cp -L "/usr/lib/$(gcc -print-multiarch)/libclang-15.so.$version" "$RUNNER_TEMP/llvm/lib/libclang.so.$version"
-          cp -rL "/usr/lib/llvm-15/lib/clang/$version" "$RUNNER_TEMP/llvm/lib/clang/$version"
+          cp -L "/usr/lib/$(gcc -print-multiarch)/libclang-18.so.18" "$RUNNER_TEMP/llvm/lib/libclang.so.18"
+          cp -rL /usr/lib/llvm-18/lib/clang/18 "$RUNNER_TEMP/llvm/lib/clang/18"
           echo "LLVM_HOME=$RUNNER_TEMP/llvm" >> "$GITHUB_ENV"
 
       - name: Install LLVM (macOS)
         if: matrix.family == 'macos'
         run: |
-          brew install llvm@15
+          brew install llvm@18
           # The same SDK on both CPUs : the Xcode of the macOS 15 Intel image, if also installed
           if [ -d /Applications/Xcode_16.4.app ]; then
             echo "DEVELOPER_DIR=/Applications/Xcode_16.4.app/Contents/Developer" >> "$GITHUB_ENV"
           fi
-          echo "LLVM_HOME=$(brew --prefix llvm@15)" >> "$GITHUB_ENV"
+          echo "LLVM_HOME=$(brew --prefix llvm@18)" >> "$GITHUB_ENV"
 
-      # The same LLVM release on both CPUs : the oldest one providing an installer for both
+      # The same LLVM release on both CPUs : the first one providing an installer for both
       - name: Install LLVM (Windows)
         if: matrix.family == 'windows'
         shell: pwsh
@@ -105,7 +101,7 @@ jobs:
           $arch = if ($env:RUNNER_ARCH -eq 'ARM64') { 'woa64' } else { 'win64' }
           $base = 'https://github.com/llvm/llvm-project/releases/download'
           $version = $null
-          foreach ($v in '15.0.7', '15.0.6', '16.0.6', '17.0.6', '18.1.8') {
+          foreach ($v in '18.1.8', '18.1.7', '18.1.6') {
             $both = $true
             foreach ($a in 'win64', 'woa64') {
               try { Invoke-WebRequest -Method Head -Uri "$base/llvmorg-$v/LLVM-$v-$a.exe" | Out-Null }
@@ -123,6 +119,13 @@ jobs:
       # -------------------------------------------------------
       # jextract
       # -------------------------------------------------------
+      - name: Patch jextract for LLVM 16 and later
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = Windows ]; then python=python; else python=python3; fi
+          $python .github/scripts/bindings/patch_jextract.py jextract
+          git -C jextract diff
+
       - name: Build jextract (Unix)
         if: matrix.family != 'windows'
         working-directory: jextract
