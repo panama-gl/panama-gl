@@ -89,6 +89,27 @@ public abstract class AFBO implements FBO{
     Debug.debug(debug, "FBO: Arena released");
   }
   
+  /**
+   * Bind the framebuffer having the given id, or the default framebuffer if the id is 0. The GL
+   * context must be current on the calling thread.
+   */
+  protected abstract void bindFramebuffer(int id);
+
+  @Override
+  public void bind(GL gl) {
+    if (prepared) {
+      bindFramebuffer(idFrameBuffer);
+    } else {
+      // leaves the FBO bound
+      prepare(gl);
+    }
+  }
+
+  @Override
+  public void unbind(GL gl) {
+    bindFramebuffer(0);
+  }
+
   /** Print error in console */ 
   protected void diagnoseError(GL gl, String item) {
     GLError e = GLError.get(gl);

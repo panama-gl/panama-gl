@@ -159,6 +159,22 @@ public class GLCommand {
     return outputType;
   }
 
+  /**
+   * The Java type returned by the method of this command. The registry output type of commands
+   * returning a pointer (e.g. <code>void *</code> for <code>glMapBuffer</code>) loses the pointer,
+   * so these commands are mapped to {@link GLTypeInJava#ADDRESSABLE}.
+   */
+  public String getJavaOutputType() {
+    if ("glMapBuffer".equals(name)
+        || "glMapBufferRange".equals(name)
+        || "glMapNamedBuffer".equals(name)
+        || "glMapNamedBufferRange".equals(name)
+        || "glGetString".equals(name)) {
+      return GLTypeInJava.ADDRESSABLE;
+    }
+    return outputType;
+  }
+
   @Override
   public int hashCode() {
     return Objects.hash(alias, args, name, outputType);

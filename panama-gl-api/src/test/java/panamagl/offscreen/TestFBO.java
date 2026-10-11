@@ -19,6 +19,9 @@ package panamagl.offscreen;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.lang.foreign.Arena;
+import java.lang.foreign.MemorySegment;
+import java.lang.foreign.ValueLayout;
 import javax.imageio.ImageIO;
 import org.junit.Assert;
 import panamagl.opengl.GL;
@@ -183,6 +186,57 @@ public class TestFBO {
     // Then
 
     Assert.assertFalse(fbo.isPrepared());
+  }
+
+  static final int GL_FRAMEBUFFER_BINDING = 0x8CA6;
+
+  /**
+   * Bind a FBO out of rendering, as done for picking. The given FBO must not be prepared, and a GL
+   * context must be current.
+   */
+  public static void givenFBO_whenBindingOutOfRendering_ThenFBOIsBoundWithoutBeingRecreated(FBO fbo,
+      GL gl) {
+    Assert.assertFalse(fbo.isPrepared());
+
+    // When binding before preparation, then the FBO is prepared and bound
+    fbo.bind(gl);
+    Assert.assertTrue(fbo.isPrepared());
+
+    int id = boundFramebuffer(gl);
+    Assert.assertTrue(id > 0);
+
+    // Given some content
+    gl.glClearColor(1, 0, 0, 1);
+    gl.glClear(GL.GL_COLOR_BUFFER_BIT);
+
+    // When unbinding, then the default framebuffer is bound
+    fbo.unbind(gl);
+    Assert.assertEquals(0, boundFramebuffer(gl));
+
+    // When binding again, then the same FBO is bound, neither recreated nor cleared
+    fbo.bind(gl);
+    Assert.assertEquals(id, boundFramebuffer(gl));
+    Assert.assertArrayEquals(new byte[] {(byte) 255, 0, 0, (byte) 255}, firstPixel(gl));
+
+    fbo.unbind(gl);
+    fbo.release(gl);
+    Assert.assertEquals(GL.GL_NO_ERROR, gl.glGetError());
+  }
+
+  static int boundFramebuffer(GL gl) {
+    try (Arena arena = Arena.ofConfined()) {
+      MemorySegment id = arena.allocate(ValueLayout.JAVA_INT);
+      gl.glGetIntegerv(GL_FRAMEBUFFER_BINDING, id);
+      return id.get(ValueLayout.JAVA_INT, 0);
+    }
+  }
+
+  static byte[] firstPixel(GL gl) {
+    try (Arena arena = Arena.ofConfined()) {
+      MemorySegment rgba = arena.allocate(4);
+      gl.glReadPixels(0, 0, 1, 1, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE, rgba);
+      return rgba.toArray(ValueLayout.JAVA_BYTE);
+    }
   }
 
   public static void saveImage(String file, BufferedImage out) {

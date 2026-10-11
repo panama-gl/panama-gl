@@ -39,6 +39,8 @@ import panamagl.platform.macos.APanamaGLFactory_macOS;
 import panamagl.platform.macos.arm.PlatformMatcher_macOS_arm;
 import panamagl.platform.macos.x64.PlatformMatcher_macOS_x64;
 import panamagl.platform.linux.x64.PlatformMatcher_linux_x64;
+import panamagl.platform.windows.APanamaGLFactory_windows;
+import panamagl.platform.windows.x64.PlatformMatcher_windows_x64;
 
 /**
  * Generate an OpenGL API with per-platform implementations wrapping the bindings made available by
@@ -59,6 +61,14 @@ public class GenerateAPI {
   private static final String CLASS_BASE_NAME_GL = "GL_";
   private static final String CLASS_BASE_NAME_PANAMA_GL_FACTORY = "PanamaGLFactory_";
   private static final String GL_PACKAGE = "panamagl.opengl";
+
+  /**
+   * Binding classes of the function pointer typedefs (e.g. <code>PFNGLGENBUFFERSPROC</code>) invoking
+   * the functions resolved at runtime, on all platforms, as <code>FBO_linux</code> and
+   * <code>FBO_windows</code> do. Their descriptors only depend on the GL types, identical on these
+   * platforms.
+   */
+  private static final String FUNCTION_POINTERS = "opengl.linux.x86";
 
   String superGL = "GL";
 
@@ -87,10 +97,10 @@ public class GenerateAPI {
    */
   public void run(APILayout layout) throws Exception {
     //boolean GL_INTERF = false;
-	boolean MACOS_x64 = false;
-    boolean MACOS_ARM = false;
+	boolean MACOS_x64 = true;
+    boolean MACOS_ARM = true;
     boolean LINUX_x64 = true;
-    boolean WINDOWS_x64 = false;
+    boolean WINDOWS_x64 = true;
 
     // ============================================================================
     // GL SPECIFICATION
@@ -123,8 +133,12 @@ public class GenerateAPI {
       Class<?> factorymatcher = PlatformMatcher_macOS_x64.class;
       boolean genGlut = true;
 
+      // OpenGL functions missing from the static bindings are resolved at runtime
+      wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
+      String functionLoader = "panamagl.platform.macos.GLFunctionLoader_macOS";
+
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
-          interfaceFiles);
+          functionLoader, interfaceFiles);
     }
 
     if (MACOS_ARM) {
@@ -136,8 +150,12 @@ public class GenerateAPI {
       boolean genGlut = true;
 
 
+      // OpenGL functions missing from the static bindings are resolved at runtime
+      wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
+      String functionLoader = "panamagl.platform.macos.GLFunctionLoader_macOS";
+
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
-          interfaceFiles);
+          functionLoader, interfaceFiles);
     }
 
     // Compile ALL
@@ -158,15 +176,17 @@ public class GenerateAPI {
       Class<?> factorymatcher = PlatformMatcher_linux_x64.class;
       boolean genGlut = false;
 
+      String functionLoader = "panamagl.platform.linux.GLFunctionLoader_linux";
+
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
-          interfaceFiles);
+          functionLoader, interfaceFiles);
 
     }
 
     // ========================================================
     // Configure Windows wrapper
 
-    /*if (WINDOWS_x64) {
+    if (WINDOWS_x64) {
 
       wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
 
@@ -176,11 +196,12 @@ public class GenerateAPI {
       // Windows ARM64 reuses the x64 wrapper : see panamagl.platform.windows.arm.GL_windows_arm
       Class<?> factorymatcher = PlatformMatcher_windows_x64.class;
       boolean genGlut = false;
+      String functionLoader = "panamagl.platform.windows.GLFunctionLoader_windows";
 
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
-          interfaceFiles);
+          functionLoader, interfaceFiles);
 
-    }*/
+    }
 
     // Compile ALL
     compile(interfaceFiles);
@@ -194,7 +215,7 @@ public class GenerateAPI {
 
     glInterfaceWriter.addExtension("GL_1");
     glInterfaceWriter.addExtension("GL_2");
-    // glInterfaceWriter.addExtension("GL_3");
+    glInterfaceWriter.addExtension("GL_3");
     // glInterfaceWriter.addExtension("GL_4");
     glInterfaceWriter.addExtension(CLASS_NAME_GLU);
     glInterfaceWriter.addExtension(CLASS_NAME_GLUT);
@@ -210,7 +231,8 @@ public class GenerateAPI {
 
   protected void makeGLWrapperAndFactory(APILayout layout, APIPlatform platform,
       Set<Class<?>> wrapped, Class<?> factoryBase, Class<?> factorymatcher, boolean genGlut,
-      List<String> javaInterfacesFiles) throws IllegalAccessException, IOException {
+      String functionLoader, List<String> javaInterfacesFiles)
+      throws IllegalAccessException, IOException {
 
 
     Wrapper wrapper = new Wrapper();
@@ -220,6 +242,8 @@ public class GenerateAPI {
     wrapper.className = CLASS_BASE_NAME_GL + wrapper.platform;
     wrapper.packge = layout.getPlatformPackage(platform);
     wrapper.setFileIn(layout.getOutputFolder(platform));
+    wrapper.functionLoader = functionLoader;
+    wrapper.functionPointers = FUNCTION_POINTERS;
 
     wrapper.addImplement(interf.packge + "." + superGL);
     wrapper.addImplement(interf.packge + "." + CLASS_NAME_GLU);
