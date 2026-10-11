@@ -11,17 +11,33 @@ $Out = (Resolve-Path $Out).Path
 $Scripts = (Resolve-Path $Scripts).Path
 $JExtract = (Resolve-Path $JExtract).Path
 
-# Latest Windows SDK providing the headers of WGL
-$sdk = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\Include" -Directory `
+# Windows SDK providing the headers of WGL : the one of the committed bindings if installed,
+# the latest otherwise
+$sdks = Get-ChildItem "${env:ProgramFiles(x86)}\Windows Kits\10\Include" -Directory `
   | Where-Object { Test-Path "$($_.FullName)\um\windows.h" } `
-  | Sort-Object { [version]$_.Name } | Select-Object -Last 1
+  | Sort-Object { [version]$_.Name }
+"Windows SDK installed : $($sdks.Name -join ', ')"
+$sdk = $sdks | Where-Object { $_.Name -eq '10.0.19041.0' } | Select-Object -First 1
+if (-not $sdk) { $sdk = $sdks | Select-Object -Last 1 }
 "Windows SDK $($sdk.Name)" | Tee-Object -FilePath "$Out\versions.txt" -Append
 
+function Run([string]$Package, [string[]]$Arguments) {
+  & $JExtract @Arguments --dump-includes "$Out\$Package.includes" *> "$Out\$Package.log"
+  if ($LASTEXITCODE -eq 0) { & $JExtract @Arguments *>> "$Out\$Package.log" }
+  return $LASTEXITCODE -eq 0
+}
+
+# jextract may fail on the anonymous structs and unions of the SDK headers : they are then named
+# (DUMMYSTRUCTNAME, DUMMYUNIONNAME...) by defining NONAMELESSUNION
 function Generate([string]$Package, [string]$HeaderClass, [string]$Header, [string[]]$Options) {
   $common = @('--target-package', $Package, '--header-class-name', $HeaderClass, '--output', $Out) + $Options
-  & $JExtract @common --dump-includes "$Out\$Package.includes" $Header *> "$Out\$Package.log"
-  & $JExtract @common $Header *>> "$Out\$Package.log"
-  if ($LASTEXITCODE -ne 0) { Get-Content "$Out\$Package.log" | Select-Object -Last 30; throw "jextract failed for $Package" }
+  if (Run $Package ($common + $Header)) { return }
+  Get-Content "$Out\$Package.log" | Where-Object { $_ -notmatch 'warning' } | Select-Object -Last 10
+  "$Package generated with -DNONAMELESSUNION" | Tee-Object -FilePath "$Out\versions.txt" -Append
+  Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$Out\$($Package.Replace('.', '\'))"
+  if (Run $Package ($common + @('-D', 'NONAMELESSUNION', $Header))) { return }
+  Get-Content "$Out\$Package.log" | Where-Object { $_ -notmatch 'warning' } | Select-Object -Last 30
+  throw "jextract failed for $Package"
 }
 
 Push-Location $Scripts
