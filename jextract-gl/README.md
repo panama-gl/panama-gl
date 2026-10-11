@@ -49,6 +49,28 @@ https://stackoverflow.com/questions/5346908/generating-a-hello-world-class-with-
 https://stackoverflow.com/questions/2206065/java-parse-java-source-code-extract-methods
 
 
+# Generate the GL API and its wrappers
+
+`jextract.gl.api.panamagl.GenerateAPI` reads the OpenGL registry (`gl.xml`) and the bindings classes of `panama-gl-bindings` to write :
+* the `GL_x_y` interfaces of each OpenGL version in `panama-gl-api`, and `GL` which extends `GL_1`, `GL_2`, `GL_3`, `GLU` and `GLUT`;
+* the `GL_<os>_<cpu>` wrapper implementing `GL` for each platform, in the `src/generated/java` folder of `panama-gl-wrappers-<os>`, and its `PanamaGLFactory_<os>_<cpu>`.
+
+Run its `main` from the `jextract-gl` folder, after `mvn install` of the root project. The `MACOS_x64`, `MACOS_ARM`, `LINUX_x64` and `WINDOWS_x64` flags of `GenerateAPI.run` select the generated platforms.
+
+For each command of the registry, the wrapper method is written as follows (`GenerateAPI_GL_Wrapper`) :
+
+| Case | Wrapper method | Example |
+|------|----------------|---------|
+| The binding declares the function | Delegates to the static method of the binding | `glext_h.glClear(mask);` |
+| The binding only declares its function pointer type | Invokes the `PFN...PROC` class of `Wrapper.functionPointers` with the address given by the `GLFunctionLoader` of the platform (`Wrapper.functionLoader`) | `PFNGLGENBUFFERSPROC.invoke(address("glGenBuffers"), n, buffers);` |
+| Neither | Throws an exception | `throw new RuntimeException("This method is not available in the generated binding.");` |
+
+* The function pointer classes are the ones of `opengl.linux.x86` on all platforms (`GenerateAPI.FUNCTION_POINTERS`), as `FBO_windows` does : their signature only depends on OpenGL types.
+* A command without function pointer type uses the one of a command that the registry declares as its alias (e.g. `PFNGLMULTITEXCOORD2FARBPROC` for `glMultiTexCoord2f`, since `gl.h` declares OpenGL 1.3 without function pointer types).
+* The last two cases are written only if `addUnimplementedMethodsUponMissingBinding` is set for the platform.
+
+The committed wrappers contain a few manual fixes (e.g. the `glutBitmap*` methods), which a regeneration overwrites : review the diff of the generated files before committing them.
+
 # License
 
 All PanamaGL modules as well as JExtractGL are licensed under the [GPLv3 license](https://choosealicense.com/licenses/gpl-3.0/)

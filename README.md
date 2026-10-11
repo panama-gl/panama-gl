@@ -4,8 +4,9 @@ PanamaGL is a Java library allowing real time 2D & 3D Graphics everywhere!
 
 Supported :
 - Windowing toolkits : `AWT`, `JavaFX`, `Swing` and `SWT`.
-- OS : `linux`, `macOS`, `Windows`
+- OS : `linux`, `macOS`, `Windows`, on `x86_64` and `ARM64`
 - JDK Versions : `22`
+- OpenGL : 1.0 to 3.3 through the `GL` interface on all OS (OpenGL 3.x requires a core profile context on macOS). OpenGL 4.x functions are also available on Linux and Windows through their `GL` implementation. See [how GL functions are invoked](#gl-api-and-implementations).
 
 The library is based on multi-platform bindings to the `OpenGL` native library and other per-os companion libraries (`CGL` for macOS, `GLX` for Linux and `WGL` for Windows). Most of the code is generated with JExtract.
 

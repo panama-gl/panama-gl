@@ -59,6 +59,8 @@ The table below shows which `ThreadRedirect` implementation is used for each com
 | OpenGL profile | Configurable (Legacy 2.1 or Core 4.1) | Legacy 2.1 (default) |
 | Deadlock risk | Low | High if main thread not in event loop |
 
+With the legacy 2.1 profile, the OpenGL 3.x methods of `GL` exist but are not supported by the context : use a core profile context to call them.
+
 ### Key differences between WGL and GLUT on Windows
 
 | Aspect | WGL | GLUT |

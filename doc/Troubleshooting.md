@@ -30,6 +30,19 @@ Console says `GLUT Warning: glutInit being called a second time.`? `glut_h.glutI
 I suspect GLUT being init first by the JVM, hence the bypass in the macOS factory implementation. 
 
 
+### OpenGL function not available
+
+`UnsupportedOperationException: OpenGL function 'glXxx' is not available : the driver does not provide it, or no GL context is current`
+
+The function is not exported by the system OpenGL library, so PanamaGL resolves it at runtime with a `GLFunctionLoader` (see [GL API and implementations](../README.md#gl-api-and-implementations)), which could not find it :
+* No GL context is current on the calling thread : on Windows, `wglGetProcAddress` needs one. Call GL from a `GLEventListener` method, or with the `ThreadRedirect` of the renderer (see [GL work out of rendering](Multithreading.md#gl-work-out-of-rendering-eg-picking)).
+* The driver does not support the OpenGL version or extension of the function : check `gl.glGetString(GL.GL_VERSION)` and `GL.GL_EXTENSIONS`.
+* On macOS, OpenGL 3.x functions require a core profile context : the legacy profile only supports OpenGL 2.1.
+
+`RuntimeException: This method is not available in the generated binding.`
+
+The bindings declare neither the function nor its function pointer type, e.g. some vendor or OpenGL ES functions. They can not be invoked with PanamaGL.
+
 ## FFM API 
 
 ### FFM require the preview libraries to be enabled

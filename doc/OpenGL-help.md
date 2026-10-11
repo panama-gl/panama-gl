@@ -31,8 +31,8 @@ We hence use the following _generic_ (multi-os) libraries to establish a GL cont
 OpenGL has several versions from 1.0 to 4.6. Although most recent computers support OpenGL 4.*, the actual ability of a computer to support a given 
 OpenGL version is decided by GPU capabilities and the manufacturer effort.
 
-As of version 2 (OR 3?), OpenGL has grown through extensions that either became merged to the main specification few versions later, 
-either remained extensions (think as plugin) that some GPU manufacturers implement or do not implement.
+OpenGL grows through extensions that either become part of the main specification a few versions later,
+or remain extensions (think as plugin) that some GPU manufacturers implement or do not implement.
 
 As such, part of the drawing capabilities are known at runtime. Discovering these is helped through
 
@@ -42,6 +42,16 @@ As such, part of the drawing capabilities are known at runtime. Discovering thes
 
 List of GPU and supported OpenGL versions
 http://opengl.gpuinfo.org/
+
+# Loading OpenGL functions
+
+The system OpenGL library does not export all OpenGL functions as symbols that a program can link to :
+
+* Windows `opengl32.dll` only exports OpenGL 1.1. All later functions are provided by the GPU driver and must be queried at runtime with `wglGetProcAddress`, with a GL context current on the calling thread.
+* Linux `libGL.so` exports most functions, but the `GL/gl.h` header only declares OpenGL 1.0 to 1.3. Later functions are declared by `GL/glext.h` as function pointer types (e.g. `PFNGLGENBUFFERSPROC`) unless `GL_GLEXT_PROTOTYPES` is defined, and are usually queried with `glXGetProcAddress`.
+* macOS `OpenGL.framework` exports the functions it supports, declared by `OpenGL/gl.h` (legacy profile, OpenGL 2.1) and `OpenGL/gl3.h` (core profile, OpenGL 3.2 to 4.1).
+
+Libraries such as GLEW, glad or JOGL hence query function addresses at runtime and call them through their function pointer type. PanamaGL does the same for the functions missing from its bindings : see [GL API and implementations](../README.md#gl-api-and-implementations).
 
 
 # To clarify
