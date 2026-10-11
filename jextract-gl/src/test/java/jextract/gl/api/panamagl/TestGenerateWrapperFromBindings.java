@@ -31,6 +31,7 @@ import jextract.gl.api.panamagl.GenerateAPI_GL_Wrapper;
 import jextract.gl.generate.java.Arg;
 import jextract.gl.generate.java.ClassWriter;
 import jextract.gl.generate.java.Wrapper;
+import jextract.gl.xml.OpenGLRegistry;
 import jextract.gl.xml.model.GLCommand;
 import junit.framework.Assert;
 
@@ -190,7 +191,7 @@ public class TestGenerateWrapperFromBindings {
     // Then : the function is invoked through its function pointer class
     Assert.assertEquals(2, g.nUnimplemented);
     Assert.assertTrue(classWriter.getCode().contains(
-        "PFNGLGENBUFFERSPROC.invoke(address(\"glGenBuffers\"), n, buffers);"));
+        "PFNGLGENBUFFERSPROC.invoke(load(\"glGenBuffers\"), n, buffers);"));
 
     // Then : a function without typedef throws an exception
     Assert.assertTrue(classWriter.getCode().contains("public void glNoTypedef()"));
@@ -202,23 +203,19 @@ public class TestGenerateWrapperFromBindings {
 
     // Given : a GL 1.3 command without typedef, which the registry declares as alias of an ARB
     // command having one
-    GLCommand core = new GLCommand("glClientActiveTexture", List.of(new Arg(Integer.class, "texture")), "void");
-    GLCommand arb = new GLCommand("glClientActiveTextureARB", List.of(new Arg(Integer.class, "texture")), "void");
-    arb.setAlias("glClientActiveTexture");
-
-    Map<String, GLCommand> glRegistry = new HashMap<>();
-    glRegistry.put(core.getName(), core);
-    glRegistry.put(arb.getName(), arb);
+    Map<String, GLCommand> glRegistry = new OpenGLRegistry().getCommandIndex();
+    GLCommand core = glRegistry.get("glClientActiveTexture");
 
     // When
     GenerateAPI_GL_Wrapper g = new GenerateAPI_GL_Wrapper();
-    Class<?> functionPointer = g.getFunctionPointer(wrapperWithFunctionLoader(), core, glRegistry);
+    Map<String, List<String>> aliases = g.aliases(glRegistry);
 
     // Then : the typedef of the alias is used
-    Assert.assertEquals(opengl.linux.x86.PFNGLCLIENTACTIVETEXTUREARBPROC.class, functionPointer);
+    Assert.assertEquals(opengl.linux.x86.PFNGLCLIENTACTIVETEXTUREARBPROC.class,
+        g.getFunctionPointer(wrapperWithFunctionLoader(), core, aliases));
 
     // Then : no function pointer without function loader
-    Assert.assertNull(g.getFunctionPointer(new Wrapper(), core, glRegistry));
+    Assert.assertNull(g.getFunctionPointer(new Wrapper(), core, aliases));
   }
 
   protected Wrapper wrapperWithFunctionLoader() {

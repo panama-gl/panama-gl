@@ -62,7 +62,7 @@ For each command of the registry, the wrapper method is written as follows (`Gen
 | Case | Wrapper method | Example |
 |------|----------------|---------|
 | The binding declares the function | Delegates to the static method of the binding | `glext_h.glClear(mask);` |
-| The binding only declares its function pointer type | Invokes the `PFN...PROC` class of `Wrapper.functionPointers` with the address given by the `GLFunctionLoader` of the platform (`Wrapper.functionLoader`) | `PFNGLGENBUFFERSPROC.invoke(address("glGenBuffers"), n, buffers);` |
+| The binding only declares its function pointer type | Invokes the `PFN...PROC` class of `Wrapper.functionPointers` with the address given by the `GLFunctionLoader` of the platform (`Wrapper.functionLoader`) | `PFNGLGENBUFFERSPROC.invoke(load("glGenBuffers"), n, buffers);` |
 | Neither | Throws an exception | `throw new RuntimeException("This method is not available in the generated binding.");` |
 
 * The function pointer classes are the ones of `opengl.linux.x86` on all platforms (`GenerateAPI.FUNCTION_POINTERS`), as `FBO_windows` does : their signature only depends on OpenGL types.

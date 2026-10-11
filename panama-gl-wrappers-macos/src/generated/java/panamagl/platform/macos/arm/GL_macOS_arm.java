@@ -4666,567 +4666,567 @@ public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl
   }
 
   public void glColorMaski(int index, byte r, byte g, byte b, byte a) {
-    PFNGLCOLORMASKIPROC.invoke(address("glColorMaski"), index, r, g, b, a);
+    PFNGLCOLORMASKIPROC.invoke(load("glColorMaski"), index, r, g, b, a);
   }
 
   public void glGetBooleani_v(int target, int index, MemorySegment data) {
-    PFNGLGETBOOLEANI_VPROC.invoke(address("glGetBooleani_v"), target, index, data);
+    PFNGLGETBOOLEANI_VPROC.invoke(load("glGetBooleani_v"), target, index, data);
   }
 
   public void glGetIntegeri_v(int target, int index, MemorySegment data) {
-    PFNGLGETINTEGERI_VPROC.invoke(address("glGetIntegeri_v"), target, index, data);
+    PFNGLGETINTEGERI_VPROC.invoke(load("glGetIntegeri_v"), target, index, data);
   }
 
   public void glEnablei(int target, int index) {
-    PFNGLENABLEIPROC.invoke(address("glEnablei"), target, index);
+    PFNGLENABLEIPROC.invoke(load("glEnablei"), target, index);
   }
 
   public void glDisablei(int target, int index) {
-    PFNGLDISABLEIPROC.invoke(address("glDisablei"), target, index);
+    PFNGLDISABLEIPROC.invoke(load("glDisablei"), target, index);
   }
 
   public byte glIsEnabledi(int target, int index) {
-    return PFNGLISENABLEDIPROC.invoke(address("glIsEnabledi"), target, index);
+    return PFNGLISENABLEDIPROC.invoke(load("glIsEnabledi"), target, index);
   }
 
   public void glBeginTransformFeedback(int primitiveMode) {
-    PFNGLBEGINTRANSFORMFEEDBACKPROC.invoke(address("glBeginTransformFeedback"), primitiveMode);
+    PFNGLBEGINTRANSFORMFEEDBACKPROC.invoke(load("glBeginTransformFeedback"), primitiveMode);
   }
 
   public void glEndTransformFeedback() {
-    PFNGLENDTRANSFORMFEEDBACKPROC.invoke(address("glEndTransformFeedback"));
+    PFNGLENDTRANSFORMFEEDBACKPROC.invoke(load("glEndTransformFeedback"));
   }
 
   public void glBindBufferRange(int target, int index, int buffer, long offset, long size) {
-    PFNGLBINDBUFFERRANGEPROC.invoke(address("glBindBufferRange"), target, index, buffer, offset, size);
+    PFNGLBINDBUFFERRANGEPROC.invoke(load("glBindBufferRange"), target, index, buffer, offset, size);
   }
 
   public void glBindBufferBase(int target, int index, int buffer) {
-    PFNGLBINDBUFFERBASEPROC.invoke(address("glBindBufferBase"), target, index, buffer);
+    PFNGLBINDBUFFERBASEPROC.invoke(load("glBindBufferBase"), target, index, buffer);
   }
 
   public void glTransformFeedbackVaryings(int program, int count, MemorySegment varyings, int bufferMode) {
-    PFNGLTRANSFORMFEEDBACKVARYINGSPROC.invoke(address("glTransformFeedbackVaryings"), program, count, varyings, bufferMode);
+    PFNGLTRANSFORMFEEDBACKVARYINGSPROC.invoke(load("glTransformFeedbackVaryings"), program, count, varyings, bufferMode);
   }
 
   public void glGetTransformFeedbackVarying(int program, int index, int bufSize, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
-    PFNGLGETTRANSFORMFEEDBACKVARYINGPROC.invoke(address("glGetTransformFeedbackVarying"), program, index, bufSize, length, size, type, name);
+    PFNGLGETTRANSFORMFEEDBACKVARYINGPROC.invoke(load("glGetTransformFeedbackVarying"), program, index, bufSize, length, size, type, name);
   }
 
   public void glClampColor(int target, int clamp) {
-    PFNGLCLAMPCOLORPROC.invoke(address("glClampColor"), target, clamp);
+    PFNGLCLAMPCOLORPROC.invoke(load("glClampColor"), target, clamp);
   }
 
   public void glBeginConditionalRender(int id, int mode) {
-    PFNGLBEGINCONDITIONALRENDERPROC.invoke(address("glBeginConditionalRender"), id, mode);
+    PFNGLBEGINCONDITIONALRENDERPROC.invoke(load("glBeginConditionalRender"), id, mode);
   }
 
   public void glEndConditionalRender() {
-    PFNGLENDCONDITIONALRENDERPROC.invoke(address("glEndConditionalRender"));
+    PFNGLENDCONDITIONALRENDERPROC.invoke(load("glEndConditionalRender"));
   }
 
   public void glVertexAttribIPointer(int index, int size, int type, int stride, MemorySegment pointer) {
-    PFNGLVERTEXATTRIBIPOINTERPROC.invoke(address("glVertexAttribIPointer"), index, size, type, stride, pointer);
+    PFNGLVERTEXATTRIBIPOINTERPROC.invoke(load("glVertexAttribIPointer"), index, size, type, stride, pointer);
   }
 
   public void glGetVertexAttribIiv(int index, int pname, MemorySegment params) {
-    PFNGLGETVERTEXATTRIBIIVPROC.invoke(address("glGetVertexAttribIiv"), index, pname, params);
+    PFNGLGETVERTEXATTRIBIIVPROC.invoke(load("glGetVertexAttribIiv"), index, pname, params);
   }
 
   public void glGetVertexAttribIuiv(int index, int pname, MemorySegment params) {
-    PFNGLGETVERTEXATTRIBIUIVPROC.invoke(address("glGetVertexAttribIuiv"), index, pname, params);
+    PFNGLGETVERTEXATTRIBIUIVPROC.invoke(load("glGetVertexAttribIuiv"), index, pname, params);
   }
 
   public void glVertexAttribI1i(int index, int x) {
-    PFNGLVERTEXATTRIBI1IPROC.invoke(address("glVertexAttribI1i"), index, x);
+    PFNGLVERTEXATTRIBI1IPROC.invoke(load("glVertexAttribI1i"), index, x);
   }
 
   public void glVertexAttribI2i(int index, int x, int y) {
-    PFNGLVERTEXATTRIBI2IPROC.invoke(address("glVertexAttribI2i"), index, x, y);
+    PFNGLVERTEXATTRIBI2IPROC.invoke(load("glVertexAttribI2i"), index, x, y);
   }
 
   public void glVertexAttribI3i(int index, int x, int y, int z) {
-    PFNGLVERTEXATTRIBI3IPROC.invoke(address("glVertexAttribI3i"), index, x, y, z);
+    PFNGLVERTEXATTRIBI3IPROC.invoke(load("glVertexAttribI3i"), index, x, y, z);
   }
 
   public void glVertexAttribI4i(int index, int x, int y, int z, int w) {
-    PFNGLVERTEXATTRIBI4IPROC.invoke(address("glVertexAttribI4i"), index, x, y, z, w);
+    PFNGLVERTEXATTRIBI4IPROC.invoke(load("glVertexAttribI4i"), index, x, y, z, w);
   }
 
   public void glVertexAttribI1ui(int index, int x) {
-    PFNGLVERTEXATTRIBI1UIPROC.invoke(address("glVertexAttribI1ui"), index, x);
+    PFNGLVERTEXATTRIBI1UIPROC.invoke(load("glVertexAttribI1ui"), index, x);
   }
 
   public void glVertexAttribI2ui(int index, int x, int y) {
-    PFNGLVERTEXATTRIBI2UIPROC.invoke(address("glVertexAttribI2ui"), index, x, y);
+    PFNGLVERTEXATTRIBI2UIPROC.invoke(load("glVertexAttribI2ui"), index, x, y);
   }
 
   public void glVertexAttribI3ui(int index, int x, int y, int z) {
-    PFNGLVERTEXATTRIBI3UIPROC.invoke(address("glVertexAttribI3ui"), index, x, y, z);
+    PFNGLVERTEXATTRIBI3UIPROC.invoke(load("glVertexAttribI3ui"), index, x, y, z);
   }
 
   public void glVertexAttribI4ui(int index, int x, int y, int z, int w) {
-    PFNGLVERTEXATTRIBI4UIPROC.invoke(address("glVertexAttribI4ui"), index, x, y, z, w);
+    PFNGLVERTEXATTRIBI4UIPROC.invoke(load("glVertexAttribI4ui"), index, x, y, z, w);
   }
 
   public void glVertexAttribI1iv(int index, MemorySegment v) {
-    PFNGLVERTEXATTRIBI1IVPROC.invoke(address("glVertexAttribI1iv"), index, v);
+    PFNGLVERTEXATTRIBI1IVPROC.invoke(load("glVertexAttribI1iv"), index, v);
   }
 
   public void glVertexAttribI2iv(int index, MemorySegment v) {
-    PFNGLVERTEXATTRIBI2IVPROC.invoke(address("glVertexAttribI2iv"), index, v);
+    PFNGLVERTEXATTRIBI2IVPROC.invoke(load("glVertexAttribI2iv"), index, v);
   }
 
   public void glVertexAttribI3iv(int index, MemorySegment v) {
-    PFNGLVERTEXATTRIBI3IVPROC.invoke(address("glVertexAttribI3iv"), index, v);
+    PFNGLVERTEXATTRIBI3IVPROC.invoke(load("glVertexAttribI3iv"), index, v);
   }
 
   public void glVertexAttribI4iv(int index, MemorySegment v) {
-    PFNGLVERTEXATTRIBI4IVPROC.invoke(address("glVertexAttribI4iv"), index, v);
+    PFNGLVERTEXATTRIBI4IVPROC.invoke(load("glVertexAttribI4iv"), index, v);
   }
 
   public void glVertexAttribI1uiv(int index, MemorySegment v) {
-    PFNGLVERTEXATTRIBI1UIVPROC.invoke(address("glVertexAttribI1uiv"), index, v);
+    PFNGLVERTEXATTRIBI1UIVPROC.invoke(load("glVertexAttribI1uiv"), index, v);
   }
 
   public void glVertexAttribI2uiv(int index, MemorySegment v) {
-    PFNGLVERTEXATTRIBI2UIVPROC.invoke(address("glVertexAttribI2uiv"), index, v);
+    PFNGLVERTEXATTRIBI2UIVPROC.invoke(load("glVertexAttribI2uiv"), index, v);
   }
 
   public void glVertexAttribI3uiv(int index, MemorySegment v) {
-    PFNGLVERTEXATTRIBI3UIVPROC.invoke(address("glVertexAttribI3uiv"), index, v);
+    PFNGLVERTEXATTRIBI3UIVPROC.invoke(load("glVertexAttribI3uiv"), index, v);
   }
 
   public void glVertexAttribI4uiv(int index, MemorySegment v) {
-    PFNGLVERTEXATTRIBI4UIVPROC.invoke(address("glVertexAttribI4uiv"), index, v);
+    PFNGLVERTEXATTRIBI4UIVPROC.invoke(load("glVertexAttribI4uiv"), index, v);
   }
 
   public void glVertexAttribI4bv(int index, MemorySegment v) {
-    PFNGLVERTEXATTRIBI4BVPROC.invoke(address("glVertexAttribI4bv"), index, v);
+    PFNGLVERTEXATTRIBI4BVPROC.invoke(load("glVertexAttribI4bv"), index, v);
   }
 
   public void glVertexAttribI4sv(int index, MemorySegment v) {
-    PFNGLVERTEXATTRIBI4SVPROC.invoke(address("glVertexAttribI4sv"), index, v);
+    PFNGLVERTEXATTRIBI4SVPROC.invoke(load("glVertexAttribI4sv"), index, v);
   }
 
   public void glVertexAttribI4ubv(int index, MemorySegment v) {
-    PFNGLVERTEXATTRIBI4UBVPROC.invoke(address("glVertexAttribI4ubv"), index, v);
+    PFNGLVERTEXATTRIBI4UBVPROC.invoke(load("glVertexAttribI4ubv"), index, v);
   }
 
   public void glVertexAttribI4usv(int index, MemorySegment v) {
-    PFNGLVERTEXATTRIBI4USVPROC.invoke(address("glVertexAttribI4usv"), index, v);
+    PFNGLVERTEXATTRIBI4USVPROC.invoke(load("glVertexAttribI4usv"), index, v);
   }
 
   public void glGetUniformuiv(int program, int location, MemorySegment params) {
-    PFNGLGETUNIFORMUIVPROC.invoke(address("glGetUniformuiv"), program, location, params);
+    PFNGLGETUNIFORMUIVPROC.invoke(load("glGetUniformuiv"), program, location, params);
   }
 
   public void glBindFragDataLocation(int program, int color, MemorySegment name) {
-    PFNGLBINDFRAGDATALOCATIONPROC.invoke(address("glBindFragDataLocation"), program, color, name);
+    PFNGLBINDFRAGDATALOCATIONPROC.invoke(load("glBindFragDataLocation"), program, color, name);
   }
 
   public int glGetFragDataLocation(int program, MemorySegment name) {
-    return PFNGLGETFRAGDATALOCATIONPROC.invoke(address("glGetFragDataLocation"), program, name);
+    return PFNGLGETFRAGDATALOCATIONPROC.invoke(load("glGetFragDataLocation"), program, name);
   }
 
   public void glUniform1ui(int location, int v0) {
-    PFNGLUNIFORM1UIPROC.invoke(address("glUniform1ui"), location, v0);
+    PFNGLUNIFORM1UIPROC.invoke(load("glUniform1ui"), location, v0);
   }
 
   public void glUniform2ui(int location, int v0, int v1) {
-    PFNGLUNIFORM2UIPROC.invoke(address("glUniform2ui"), location, v0, v1);
+    PFNGLUNIFORM2UIPROC.invoke(load("glUniform2ui"), location, v0, v1);
   }
 
   public void glUniform3ui(int location, int v0, int v1, int v2) {
-    PFNGLUNIFORM3UIPROC.invoke(address("glUniform3ui"), location, v0, v1, v2);
+    PFNGLUNIFORM3UIPROC.invoke(load("glUniform3ui"), location, v0, v1, v2);
   }
 
   public void glUniform4ui(int location, int v0, int v1, int v2, int v3) {
-    PFNGLUNIFORM4UIPROC.invoke(address("glUniform4ui"), location, v0, v1, v2, v3);
+    PFNGLUNIFORM4UIPROC.invoke(load("glUniform4ui"), location, v0, v1, v2, v3);
   }
 
   public void glUniform1uiv(int location, int count, MemorySegment value) {
-    PFNGLUNIFORM1UIVPROC.invoke(address("glUniform1uiv"), location, count, value);
+    PFNGLUNIFORM1UIVPROC.invoke(load("glUniform1uiv"), location, count, value);
   }
 
   public void glUniform2uiv(int location, int count, MemorySegment value) {
-    PFNGLUNIFORM2UIVPROC.invoke(address("glUniform2uiv"), location, count, value);
+    PFNGLUNIFORM2UIVPROC.invoke(load("glUniform2uiv"), location, count, value);
   }
 
   public void glUniform3uiv(int location, int count, MemorySegment value) {
-    PFNGLUNIFORM3UIVPROC.invoke(address("glUniform3uiv"), location, count, value);
+    PFNGLUNIFORM3UIVPROC.invoke(load("glUniform3uiv"), location, count, value);
   }
 
   public void glUniform4uiv(int location, int count, MemorySegment value) {
-    PFNGLUNIFORM4UIVPROC.invoke(address("glUniform4uiv"), location, count, value);
+    PFNGLUNIFORM4UIVPROC.invoke(load("glUniform4uiv"), location, count, value);
   }
 
   public void glTexParameterIiv(int target, int pname, MemorySegment params) {
-    PFNGLTEXPARAMETERIIVPROC.invoke(address("glTexParameterIiv"), target, pname, params);
+    PFNGLTEXPARAMETERIIVPROC.invoke(load("glTexParameterIiv"), target, pname, params);
   }
 
   public void glTexParameterIuiv(int target, int pname, MemorySegment params) {
-    PFNGLTEXPARAMETERIUIVPROC.invoke(address("glTexParameterIuiv"), target, pname, params);
+    PFNGLTEXPARAMETERIUIVPROC.invoke(load("glTexParameterIuiv"), target, pname, params);
   }
 
   public void glGetTexParameterIiv(int target, int pname, MemorySegment params) {
-    PFNGLGETTEXPARAMETERIIVPROC.invoke(address("glGetTexParameterIiv"), target, pname, params);
+    PFNGLGETTEXPARAMETERIIVPROC.invoke(load("glGetTexParameterIiv"), target, pname, params);
   }
 
   public void glGetTexParameterIuiv(int target, int pname, MemorySegment params) {
-    PFNGLGETTEXPARAMETERIUIVPROC.invoke(address("glGetTexParameterIuiv"), target, pname, params);
+    PFNGLGETTEXPARAMETERIUIVPROC.invoke(load("glGetTexParameterIuiv"), target, pname, params);
   }
 
   public void glClearBufferiv(int buffer, int drawbuffer, MemorySegment value) {
-    PFNGLCLEARBUFFERIVPROC.invoke(address("glClearBufferiv"), buffer, drawbuffer, value);
+    PFNGLCLEARBUFFERIVPROC.invoke(load("glClearBufferiv"), buffer, drawbuffer, value);
   }
 
   public void glClearBufferuiv(int buffer, int drawbuffer, MemorySegment value) {
-    PFNGLCLEARBUFFERUIVPROC.invoke(address("glClearBufferuiv"), buffer, drawbuffer, value);
+    PFNGLCLEARBUFFERUIVPROC.invoke(load("glClearBufferuiv"), buffer, drawbuffer, value);
   }
 
   public void glClearBufferfv(int buffer, int drawbuffer, MemorySegment value) {
-    PFNGLCLEARBUFFERFVPROC.invoke(address("glClearBufferfv"), buffer, drawbuffer, value);
+    PFNGLCLEARBUFFERFVPROC.invoke(load("glClearBufferfv"), buffer, drawbuffer, value);
   }
 
   public void glClearBufferfi(int buffer, int drawbuffer, float depth, int stencil) {
-    PFNGLCLEARBUFFERFIPROC.invoke(address("glClearBufferfi"), buffer, drawbuffer, depth, stencil);
+    PFNGLCLEARBUFFERFIPROC.invoke(load("glClearBufferfi"), buffer, drawbuffer, depth, stencil);
   }
 
   public String glGetStringi(int name, int index) {
-    return string(PFNGLGETSTRINGIPROC.invoke(address("glGetStringi"), name, index));
+    return string(PFNGLGETSTRINGIPROC.invoke(load("glGetStringi"), name, index));
   }
 
   public MemorySegment glMapBufferRange(int target, long offset, long length, int access) {
-    return PFNGLMAPBUFFERRANGEPROC.invoke(address("glMapBufferRange"), target, offset, length, access);
+    return PFNGLMAPBUFFERRANGEPROC.invoke(load("glMapBufferRange"), target, offset, length, access);
   }
 
   public void glFlushMappedBufferRange(int target, long offset, long length) {
-    PFNGLFLUSHMAPPEDBUFFERRANGEPROC.invoke(address("glFlushMappedBufferRange"), target, offset, length);
+    PFNGLFLUSHMAPPEDBUFFERRANGEPROC.invoke(load("glFlushMappedBufferRange"), target, offset, length);
   }
 
   public void glBindVertexArray(int array) {
-    PFNGLBINDVERTEXARRAYPROC.invoke(address("glBindVertexArray"), array);
+    PFNGLBINDVERTEXARRAYPROC.invoke(load("glBindVertexArray"), array);
   }
 
   public void glDeleteVertexArrays(int n, MemorySegment arrays) {
-    PFNGLDELETEVERTEXARRAYSPROC.invoke(address("glDeleteVertexArrays"), n, arrays);
+    PFNGLDELETEVERTEXARRAYSPROC.invoke(load("glDeleteVertexArrays"), n, arrays);
   }
 
   public void glGenVertexArrays(int n, MemorySegment arrays) {
-    PFNGLGENVERTEXARRAYSPROC.invoke(address("glGenVertexArrays"), n, arrays);
+    PFNGLGENVERTEXARRAYSPROC.invoke(load("glGenVertexArrays"), n, arrays);
   }
 
   public byte glIsVertexArray(int array) {
-    return PFNGLISVERTEXARRAYPROC.invoke(address("glIsVertexArray"), array);
+    return PFNGLISVERTEXARRAYPROC.invoke(load("glIsVertexArray"), array);
   }
 
   public void glDrawArraysInstanced(int mode, int first, int count, int instancecount) {
-    PFNGLDRAWARRAYSINSTANCEDPROC.invoke(address("glDrawArraysInstanced"), mode, first, count, instancecount);
+    PFNGLDRAWARRAYSINSTANCEDPROC.invoke(load("glDrawArraysInstanced"), mode, first, count, instancecount);
   }
 
   public void glDrawElementsInstanced(int mode, int count, int type, MemorySegment indices, int instancecount) {
-    PFNGLDRAWELEMENTSINSTANCEDPROC.invoke(address("glDrawElementsInstanced"), mode, count, type, indices, instancecount);
+    PFNGLDRAWELEMENTSINSTANCEDPROC.invoke(load("glDrawElementsInstanced"), mode, count, type, indices, instancecount);
   }
 
   public void glTexBuffer(int target, int internalformat, int buffer) {
-    PFNGLTEXBUFFERPROC.invoke(address("glTexBuffer"), target, internalformat, buffer);
+    PFNGLTEXBUFFERPROC.invoke(load("glTexBuffer"), target, internalformat, buffer);
   }
 
   public void glPrimitiveRestartIndex(int index) {
-    PFNGLPRIMITIVERESTARTINDEXPROC.invoke(address("glPrimitiveRestartIndex"), index);
+    PFNGLPRIMITIVERESTARTINDEXPROC.invoke(load("glPrimitiveRestartIndex"), index);
   }
 
   public void glCopyBufferSubData(int readTarget, int writeTarget, long readOffset, long writeOffset, long size) {
-    PFNGLCOPYBUFFERSUBDATAPROC.invoke(address("glCopyBufferSubData"), readTarget, writeTarget, readOffset, writeOffset, size);
+    PFNGLCOPYBUFFERSUBDATAPROC.invoke(load("glCopyBufferSubData"), readTarget, writeTarget, readOffset, writeOffset, size);
   }
 
   public void glGetUniformIndices(int program, int uniformCount, MemorySegment uniformNames, MemorySegment uniformIndices) {
-    PFNGLGETUNIFORMINDICESPROC.invoke(address("glGetUniformIndices"), program, uniformCount, uniformNames, uniformIndices);
+    PFNGLGETUNIFORMINDICESPROC.invoke(load("glGetUniformIndices"), program, uniformCount, uniformNames, uniformIndices);
   }
 
   public void glGetActiveUniformsiv(int program, int uniformCount, MemorySegment uniformIndices, int pname, MemorySegment params) {
-    PFNGLGETACTIVEUNIFORMSIVPROC.invoke(address("glGetActiveUniformsiv"), program, uniformCount, uniformIndices, pname, params);
+    PFNGLGETACTIVEUNIFORMSIVPROC.invoke(load("glGetActiveUniformsiv"), program, uniformCount, uniformIndices, pname, params);
   }
 
   public void glGetActiveUniformName(int program, int uniformIndex, int bufSize, MemorySegment length, MemorySegment uniformName) {
-    PFNGLGETACTIVEUNIFORMNAMEPROC.invoke(address("glGetActiveUniformName"), program, uniformIndex, bufSize, length, uniformName);
+    PFNGLGETACTIVEUNIFORMNAMEPROC.invoke(load("glGetActiveUniformName"), program, uniformIndex, bufSize, length, uniformName);
   }
 
   public int glGetUniformBlockIndex(int program, MemorySegment uniformBlockName) {
-    return PFNGLGETUNIFORMBLOCKINDEXPROC.invoke(address("glGetUniformBlockIndex"), program, uniformBlockName);
+    return PFNGLGETUNIFORMBLOCKINDEXPROC.invoke(load("glGetUniformBlockIndex"), program, uniformBlockName);
   }
 
   public void glGetActiveUniformBlockiv(int program, int uniformBlockIndex, int pname, MemorySegment params) {
-    PFNGLGETACTIVEUNIFORMBLOCKIVPROC.invoke(address("glGetActiveUniformBlockiv"), program, uniformBlockIndex, pname, params);
+    PFNGLGETACTIVEUNIFORMBLOCKIVPROC.invoke(load("glGetActiveUniformBlockiv"), program, uniformBlockIndex, pname, params);
   }
 
   public void glGetActiveUniformBlockName(int program, int uniformBlockIndex, int bufSize, MemorySegment length, MemorySegment uniformBlockName) {
-    PFNGLGETACTIVEUNIFORMBLOCKNAMEPROC.invoke(address("glGetActiveUniformBlockName"), program, uniformBlockIndex, bufSize, length, uniformBlockName);
+    PFNGLGETACTIVEUNIFORMBLOCKNAMEPROC.invoke(load("glGetActiveUniformBlockName"), program, uniformBlockIndex, bufSize, length, uniformBlockName);
   }
 
   public void glUniformBlockBinding(int program, int uniformBlockIndex, int uniformBlockBinding) {
-    PFNGLUNIFORMBLOCKBINDINGPROC.invoke(address("glUniformBlockBinding"), program, uniformBlockIndex, uniformBlockBinding);
+    PFNGLUNIFORMBLOCKBINDINGPROC.invoke(load("glUniformBlockBinding"), program, uniformBlockIndex, uniformBlockBinding);
   }
 
   public void glGetInteger64i_v(int target, int index, MemorySegment data) {
-    PFNGLGETINTEGER64I_VPROC.invoke(address("glGetInteger64i_v"), target, index, data);
+    PFNGLGETINTEGER64I_VPROC.invoke(load("glGetInteger64i_v"), target, index, data);
   }
 
   public void glGetBufferParameteri64v(int target, int pname, MemorySegment params) {
-    PFNGLGETBUFFERPARAMETERI64VPROC.invoke(address("glGetBufferParameteri64v"), target, pname, params);
+    PFNGLGETBUFFERPARAMETERI64VPROC.invoke(load("glGetBufferParameteri64v"), target, pname, params);
   }
 
   public void glFramebufferTexture(int target, int attachment, int texture, int level) {
-    PFNGLFRAMEBUFFERTEXTUREPROC.invoke(address("glFramebufferTexture"), target, attachment, texture, level);
+    PFNGLFRAMEBUFFERTEXTUREPROC.invoke(load("glFramebufferTexture"), target, attachment, texture, level);
   }
 
   public void glTexImage2DMultisample(int target, int samples, int internalformat, int width, int height, byte fixedsamplelocations) {
-    PFNGLTEXIMAGE2DMULTISAMPLEPROC.invoke(address("glTexImage2DMultisample"), target, samples, internalformat, width, height, fixedsamplelocations);
+    PFNGLTEXIMAGE2DMULTISAMPLEPROC.invoke(load("glTexImage2DMultisample"), target, samples, internalformat, width, height, fixedsamplelocations);
   }
 
   public void glTexImage3DMultisample(int target, int samples, int internalformat, int width, int height, int depth, byte fixedsamplelocations) {
-    PFNGLTEXIMAGE3DMULTISAMPLEPROC.invoke(address("glTexImage3DMultisample"), target, samples, internalformat, width, height, depth, fixedsamplelocations);
+    PFNGLTEXIMAGE3DMULTISAMPLEPROC.invoke(load("glTexImage3DMultisample"), target, samples, internalformat, width, height, depth, fixedsamplelocations);
   }
 
   public void glGetMultisamplefv(int pname, int index, MemorySegment val) {
-    PFNGLGETMULTISAMPLEFVPROC.invoke(address("glGetMultisamplefv"), pname, index, val);
+    PFNGLGETMULTISAMPLEFVPROC.invoke(load("glGetMultisamplefv"), pname, index, val);
   }
 
   public void glSampleMaski(int maskNumber, int mask) {
-    PFNGLSAMPLEMASKIPROC.invoke(address("glSampleMaski"), maskNumber, mask);
+    PFNGLSAMPLEMASKIPROC.invoke(load("glSampleMaski"), maskNumber, mask);
   }
 
   public void glBindFragDataLocationIndexed(int program, int colorNumber, int index, MemorySegment name) {
-    PFNGLBINDFRAGDATALOCATIONINDEXEDPROC.invoke(address("glBindFragDataLocationIndexed"), program, colorNumber, index, name);
+    PFNGLBINDFRAGDATALOCATIONINDEXEDPROC.invoke(load("glBindFragDataLocationIndexed"), program, colorNumber, index, name);
   }
 
   public int glGetFragDataIndex(int program, MemorySegment name) {
-    return PFNGLGETFRAGDATAINDEXPROC.invoke(address("glGetFragDataIndex"), program, name);
+    return PFNGLGETFRAGDATAINDEXPROC.invoke(load("glGetFragDataIndex"), program, name);
   }
 
   public void glGenSamplers(int count, MemorySegment samplers) {
-    PFNGLGENSAMPLERSPROC.invoke(address("glGenSamplers"), count, samplers);
+    PFNGLGENSAMPLERSPROC.invoke(load("glGenSamplers"), count, samplers);
   }
 
   public void glDeleteSamplers(int count, MemorySegment samplers) {
-    PFNGLDELETESAMPLERSPROC.invoke(address("glDeleteSamplers"), count, samplers);
+    PFNGLDELETESAMPLERSPROC.invoke(load("glDeleteSamplers"), count, samplers);
   }
 
   public byte glIsSampler(int sampler) {
-    return PFNGLISSAMPLERPROC.invoke(address("glIsSampler"), sampler);
+    return PFNGLISSAMPLERPROC.invoke(load("glIsSampler"), sampler);
   }
 
   public void glBindSampler(int unit, int sampler) {
-    PFNGLBINDSAMPLERPROC.invoke(address("glBindSampler"), unit, sampler);
+    PFNGLBINDSAMPLERPROC.invoke(load("glBindSampler"), unit, sampler);
   }
 
   public void glSamplerParameteri(int sampler, int pname, int param) {
-    PFNGLSAMPLERPARAMETERIPROC.invoke(address("glSamplerParameteri"), sampler, pname, param);
+    PFNGLSAMPLERPARAMETERIPROC.invoke(load("glSamplerParameteri"), sampler, pname, param);
   }
 
   public void glSamplerParameteriv(int sampler, int pname, MemorySegment param) {
-    PFNGLSAMPLERPARAMETERIVPROC.invoke(address("glSamplerParameteriv"), sampler, pname, param);
+    PFNGLSAMPLERPARAMETERIVPROC.invoke(load("glSamplerParameteriv"), sampler, pname, param);
   }
 
   public void glSamplerParameterf(int sampler, int pname, float param) {
-    PFNGLSAMPLERPARAMETERFPROC.invoke(address("glSamplerParameterf"), sampler, pname, param);
+    PFNGLSAMPLERPARAMETERFPROC.invoke(load("glSamplerParameterf"), sampler, pname, param);
   }
 
   public void glSamplerParameterfv(int sampler, int pname, MemorySegment param) {
-    PFNGLSAMPLERPARAMETERFVPROC.invoke(address("glSamplerParameterfv"), sampler, pname, param);
+    PFNGLSAMPLERPARAMETERFVPROC.invoke(load("glSamplerParameterfv"), sampler, pname, param);
   }
 
   public void glSamplerParameterIiv(int sampler, int pname, MemorySegment param) {
-    PFNGLSAMPLERPARAMETERIIVPROC.invoke(address("glSamplerParameterIiv"), sampler, pname, param);
+    PFNGLSAMPLERPARAMETERIIVPROC.invoke(load("glSamplerParameterIiv"), sampler, pname, param);
   }
 
   public void glSamplerParameterIuiv(int sampler, int pname, MemorySegment param) {
-    PFNGLSAMPLERPARAMETERIUIVPROC.invoke(address("glSamplerParameterIuiv"), sampler, pname, param);
+    PFNGLSAMPLERPARAMETERIUIVPROC.invoke(load("glSamplerParameterIuiv"), sampler, pname, param);
   }
 
   public void glGetSamplerParameteriv(int sampler, int pname, MemorySegment params) {
-    PFNGLGETSAMPLERPARAMETERIVPROC.invoke(address("glGetSamplerParameteriv"), sampler, pname, params);
+    PFNGLGETSAMPLERPARAMETERIVPROC.invoke(load("glGetSamplerParameteriv"), sampler, pname, params);
   }
 
   public void glGetSamplerParameterIiv(int sampler, int pname, MemorySegment params) {
-    PFNGLGETSAMPLERPARAMETERIIVPROC.invoke(address("glGetSamplerParameterIiv"), sampler, pname, params);
+    PFNGLGETSAMPLERPARAMETERIIVPROC.invoke(load("glGetSamplerParameterIiv"), sampler, pname, params);
   }
 
   public void glGetSamplerParameterfv(int sampler, int pname, MemorySegment params) {
-    PFNGLGETSAMPLERPARAMETERFVPROC.invoke(address("glGetSamplerParameterfv"), sampler, pname, params);
+    PFNGLGETSAMPLERPARAMETERFVPROC.invoke(load("glGetSamplerParameterfv"), sampler, pname, params);
   }
 
   public void glGetSamplerParameterIuiv(int sampler, int pname, MemorySegment params) {
-    PFNGLGETSAMPLERPARAMETERIUIVPROC.invoke(address("glGetSamplerParameterIuiv"), sampler, pname, params);
+    PFNGLGETSAMPLERPARAMETERIUIVPROC.invoke(load("glGetSamplerParameterIuiv"), sampler, pname, params);
   }
 
   public void glQueryCounter(int id, int target) {
-    PFNGLQUERYCOUNTERPROC.invoke(address("glQueryCounter"), id, target);
+    PFNGLQUERYCOUNTERPROC.invoke(load("glQueryCounter"), id, target);
   }
 
   public void glGetQueryObjecti64v(int id, int pname, MemorySegment params) {
-    PFNGLGETQUERYOBJECTI64VPROC.invoke(address("glGetQueryObjecti64v"), id, pname, params);
+    PFNGLGETQUERYOBJECTI64VPROC.invoke(load("glGetQueryObjecti64v"), id, pname, params);
   }
 
   public void glGetQueryObjectui64v(int id, int pname, MemorySegment params) {
-    PFNGLGETQUERYOBJECTUI64VPROC.invoke(address("glGetQueryObjectui64v"), id, pname, params);
+    PFNGLGETQUERYOBJECTUI64VPROC.invoke(load("glGetQueryObjectui64v"), id, pname, params);
   }
 
   public void glVertexAttribDivisor(int index, int divisor) {
-    PFNGLVERTEXATTRIBDIVISORPROC.invoke(address("glVertexAttribDivisor"), index, divisor);
+    PFNGLVERTEXATTRIBDIVISORPROC.invoke(load("glVertexAttribDivisor"), index, divisor);
   }
 
   public void glVertexAttribP1ui(int index, int type, byte normalized, int value) {
-    PFNGLVERTEXATTRIBP1UIPROC.invoke(address("glVertexAttribP1ui"), index, type, normalized, value);
+    PFNGLVERTEXATTRIBP1UIPROC.invoke(load("glVertexAttribP1ui"), index, type, normalized, value);
   }
 
   public void glVertexAttribP1uiv(int index, int type, byte normalized, MemorySegment value) {
-    PFNGLVERTEXATTRIBP1UIVPROC.invoke(address("glVertexAttribP1uiv"), index, type, normalized, value);
+    PFNGLVERTEXATTRIBP1UIVPROC.invoke(load("glVertexAttribP1uiv"), index, type, normalized, value);
   }
 
   public void glVertexAttribP2ui(int index, int type, byte normalized, int value) {
-    PFNGLVERTEXATTRIBP2UIPROC.invoke(address("glVertexAttribP2ui"), index, type, normalized, value);
+    PFNGLVERTEXATTRIBP2UIPROC.invoke(load("glVertexAttribP2ui"), index, type, normalized, value);
   }
 
   public void glVertexAttribP2uiv(int index, int type, byte normalized, MemorySegment value) {
-    PFNGLVERTEXATTRIBP2UIVPROC.invoke(address("glVertexAttribP2uiv"), index, type, normalized, value);
+    PFNGLVERTEXATTRIBP2UIVPROC.invoke(load("glVertexAttribP2uiv"), index, type, normalized, value);
   }
 
   public void glVertexAttribP3ui(int index, int type, byte normalized, int value) {
-    PFNGLVERTEXATTRIBP3UIPROC.invoke(address("glVertexAttribP3ui"), index, type, normalized, value);
+    PFNGLVERTEXATTRIBP3UIPROC.invoke(load("glVertexAttribP3ui"), index, type, normalized, value);
   }
 
   public void glVertexAttribP3uiv(int index, int type, byte normalized, MemorySegment value) {
-    PFNGLVERTEXATTRIBP3UIVPROC.invoke(address("glVertexAttribP3uiv"), index, type, normalized, value);
+    PFNGLVERTEXATTRIBP3UIVPROC.invoke(load("glVertexAttribP3uiv"), index, type, normalized, value);
   }
 
   public void glVertexAttribP4ui(int index, int type, byte normalized, int value) {
-    PFNGLVERTEXATTRIBP4UIPROC.invoke(address("glVertexAttribP4ui"), index, type, normalized, value);
+    PFNGLVERTEXATTRIBP4UIPROC.invoke(load("glVertexAttribP4ui"), index, type, normalized, value);
   }
 
   public void glVertexAttribP4uiv(int index, int type, byte normalized, MemorySegment value) {
-    PFNGLVERTEXATTRIBP4UIVPROC.invoke(address("glVertexAttribP4uiv"), index, type, normalized, value);
+    PFNGLVERTEXATTRIBP4UIVPROC.invoke(load("glVertexAttribP4uiv"), index, type, normalized, value);
   }
 
   public void glVertexP2ui(int type, int value) {
-    PFNGLVERTEXP2UIPROC.invoke(address("glVertexP2ui"), type, value);
+    PFNGLVERTEXP2UIPROC.invoke(load("glVertexP2ui"), type, value);
   }
 
   public void glVertexP2uiv(int type, MemorySegment value) {
-    PFNGLVERTEXP2UIVPROC.invoke(address("glVertexP2uiv"), type, value);
+    PFNGLVERTEXP2UIVPROC.invoke(load("glVertexP2uiv"), type, value);
   }
 
   public void glVertexP3ui(int type, int value) {
-    PFNGLVERTEXP3UIPROC.invoke(address("glVertexP3ui"), type, value);
+    PFNGLVERTEXP3UIPROC.invoke(load("glVertexP3ui"), type, value);
   }
 
   public void glVertexP3uiv(int type, MemorySegment value) {
-    PFNGLVERTEXP3UIVPROC.invoke(address("glVertexP3uiv"), type, value);
+    PFNGLVERTEXP3UIVPROC.invoke(load("glVertexP3uiv"), type, value);
   }
 
   public void glVertexP4ui(int type, int value) {
-    PFNGLVERTEXP4UIPROC.invoke(address("glVertexP4ui"), type, value);
+    PFNGLVERTEXP4UIPROC.invoke(load("glVertexP4ui"), type, value);
   }
 
   public void glVertexP4uiv(int type, MemorySegment value) {
-    PFNGLVERTEXP4UIVPROC.invoke(address("glVertexP4uiv"), type, value);
+    PFNGLVERTEXP4UIVPROC.invoke(load("glVertexP4uiv"), type, value);
   }
 
   public void glTexCoordP1ui(int type, int coords) {
-    PFNGLTEXCOORDP1UIPROC.invoke(address("glTexCoordP1ui"), type, coords);
+    PFNGLTEXCOORDP1UIPROC.invoke(load("glTexCoordP1ui"), type, coords);
   }
 
   public void glTexCoordP1uiv(int type, MemorySegment coords) {
-    PFNGLTEXCOORDP1UIVPROC.invoke(address("glTexCoordP1uiv"), type, coords);
+    PFNGLTEXCOORDP1UIVPROC.invoke(load("glTexCoordP1uiv"), type, coords);
   }
 
   public void glTexCoordP2ui(int type, int coords) {
-    PFNGLTEXCOORDP2UIPROC.invoke(address("glTexCoordP2ui"), type, coords);
+    PFNGLTEXCOORDP2UIPROC.invoke(load("glTexCoordP2ui"), type, coords);
   }
 
   public void glTexCoordP2uiv(int type, MemorySegment coords) {
-    PFNGLTEXCOORDP2UIVPROC.invoke(address("glTexCoordP2uiv"), type, coords);
+    PFNGLTEXCOORDP2UIVPROC.invoke(load("glTexCoordP2uiv"), type, coords);
   }
 
   public void glTexCoordP3ui(int type, int coords) {
-    PFNGLTEXCOORDP3UIPROC.invoke(address("glTexCoordP3ui"), type, coords);
+    PFNGLTEXCOORDP3UIPROC.invoke(load("glTexCoordP3ui"), type, coords);
   }
 
   public void glTexCoordP3uiv(int type, MemorySegment coords) {
-    PFNGLTEXCOORDP3UIVPROC.invoke(address("glTexCoordP3uiv"), type, coords);
+    PFNGLTEXCOORDP3UIVPROC.invoke(load("glTexCoordP3uiv"), type, coords);
   }
 
   public void glTexCoordP4ui(int type, int coords) {
-    PFNGLTEXCOORDP4UIPROC.invoke(address("glTexCoordP4ui"), type, coords);
+    PFNGLTEXCOORDP4UIPROC.invoke(load("glTexCoordP4ui"), type, coords);
   }
 
   public void glTexCoordP4uiv(int type, MemorySegment coords) {
-    PFNGLTEXCOORDP4UIVPROC.invoke(address("glTexCoordP4uiv"), type, coords);
+    PFNGLTEXCOORDP4UIVPROC.invoke(load("glTexCoordP4uiv"), type, coords);
   }
 
   public void glMultiTexCoordP1ui(int texture, int type, int coords) {
-    PFNGLMULTITEXCOORDP1UIPROC.invoke(address("glMultiTexCoordP1ui"), texture, type, coords);
+    PFNGLMULTITEXCOORDP1UIPROC.invoke(load("glMultiTexCoordP1ui"), texture, type, coords);
   }
 
   public void glMultiTexCoordP1uiv(int texture, int type, MemorySegment coords) {
-    PFNGLMULTITEXCOORDP1UIVPROC.invoke(address("glMultiTexCoordP1uiv"), texture, type, coords);
+    PFNGLMULTITEXCOORDP1UIVPROC.invoke(load("glMultiTexCoordP1uiv"), texture, type, coords);
   }
 
   public void glMultiTexCoordP2ui(int texture, int type, int coords) {
-    PFNGLMULTITEXCOORDP2UIPROC.invoke(address("glMultiTexCoordP2ui"), texture, type, coords);
+    PFNGLMULTITEXCOORDP2UIPROC.invoke(load("glMultiTexCoordP2ui"), texture, type, coords);
   }
 
   public void glMultiTexCoordP2uiv(int texture, int type, MemorySegment coords) {
-    PFNGLMULTITEXCOORDP2UIVPROC.invoke(address("glMultiTexCoordP2uiv"), texture, type, coords);
+    PFNGLMULTITEXCOORDP2UIVPROC.invoke(load("glMultiTexCoordP2uiv"), texture, type, coords);
   }
 
   public void glMultiTexCoordP3ui(int texture, int type, int coords) {
-    PFNGLMULTITEXCOORDP3UIPROC.invoke(address("glMultiTexCoordP3ui"), texture, type, coords);
+    PFNGLMULTITEXCOORDP3UIPROC.invoke(load("glMultiTexCoordP3ui"), texture, type, coords);
   }
 
   public void glMultiTexCoordP3uiv(int texture, int type, MemorySegment coords) {
-    PFNGLMULTITEXCOORDP3UIVPROC.invoke(address("glMultiTexCoordP3uiv"), texture, type, coords);
+    PFNGLMULTITEXCOORDP3UIVPROC.invoke(load("glMultiTexCoordP3uiv"), texture, type, coords);
   }
 
   public void glMultiTexCoordP4ui(int texture, int type, int coords) {
-    PFNGLMULTITEXCOORDP4UIPROC.invoke(address("glMultiTexCoordP4ui"), texture, type, coords);
+    PFNGLMULTITEXCOORDP4UIPROC.invoke(load("glMultiTexCoordP4ui"), texture, type, coords);
   }
 
   public void glMultiTexCoordP4uiv(int texture, int type, MemorySegment coords) {
-    PFNGLMULTITEXCOORDP4UIVPROC.invoke(address("glMultiTexCoordP4uiv"), texture, type, coords);
+    PFNGLMULTITEXCOORDP4UIVPROC.invoke(load("glMultiTexCoordP4uiv"), texture, type, coords);
   }
 
   public void glNormalP3ui(int type, int coords) {
-    PFNGLNORMALP3UIPROC.invoke(address("glNormalP3ui"), type, coords);
+    PFNGLNORMALP3UIPROC.invoke(load("glNormalP3ui"), type, coords);
   }
 
   public void glNormalP3uiv(int type, MemorySegment coords) {
-    PFNGLNORMALP3UIVPROC.invoke(address("glNormalP3uiv"), type, coords);
+    PFNGLNORMALP3UIVPROC.invoke(load("glNormalP3uiv"), type, coords);
   }
 
   public void glColorP3ui(int type, int color) {
-    PFNGLCOLORP3UIPROC.invoke(address("glColorP3ui"), type, color);
+    PFNGLCOLORP3UIPROC.invoke(load("glColorP3ui"), type, color);
   }
 
   public void glColorP3uiv(int type, MemorySegment color) {
-    PFNGLCOLORP3UIVPROC.invoke(address("glColorP3uiv"), type, color);
+    PFNGLCOLORP3UIVPROC.invoke(load("glColorP3uiv"), type, color);
   }
 
   public void glColorP4ui(int type, int color) {
-    PFNGLCOLORP4UIPROC.invoke(address("glColorP4ui"), type, color);
+    PFNGLCOLORP4UIPROC.invoke(load("glColorP4ui"), type, color);
   }
 
   public void glColorP4uiv(int type, MemorySegment color) {
-    PFNGLCOLORP4UIVPROC.invoke(address("glColorP4uiv"), type, color);
+    PFNGLCOLORP4UIVPROC.invoke(load("glColorP4uiv"), type, color);
   }
 
   public void glSecondaryColorP3ui(int type, int color) {
-    PFNGLSECONDARYCOLORP3UIPROC.invoke(address("glSecondaryColorP3ui"), type, color);
+    PFNGLSECONDARYCOLORP3UIPROC.invoke(load("glSecondaryColorP3ui"), type, color);
   }
 
   public void glSecondaryColorP3uiv(int type, MemorySegment color) {
-    PFNGLSECONDARYCOLORP3UIVPROC.invoke(address("glSecondaryColorP3uiv"), type, color);
+    PFNGLSECONDARYCOLORP3UIVPROC.invoke(load("glSecondaryColorP3uiv"), type, color);
   }
 
 }

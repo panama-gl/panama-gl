@@ -33,8 +33,7 @@ public class GLFunctionLoader_linux implements GLFunctionLoader {
   @Override
   public MemorySegment getProcAddress(String function) {
     try (Arena arena = Arena.ofConfined()) {
-      MemorySegment address = glx_h.glXGetProcAddress(arena.allocateFrom(function));
-      return address == null ? MemorySegment.NULL : address;
+      return glx_h.glXGetProcAddress(arena.allocateFrom(function));
     }
   }
 }

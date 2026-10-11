@@ -24,7 +24,7 @@ import java.lang.foreign.MemorySegment;
  * by the system headers. All other functions are declared by <code>glext.h</code> as function
  * pointer typedefs, for which jextract generates <code>PFN...PROC</code> classes. A {@link GL}
  * implementation invokes these functions through their <code>PFN...PROC</code> class, with the
- * address given by the {@link GLFunctionLoader} of the platform (see {@link AGL#address(String)}).
+ * address given by the {@link GLFunctionLoader} of the platform (see {@link AGL#load(String)}).
  *
  * <table border="1">
  * <caption>Static versus dynamic loading of OpenGL functions</caption>
@@ -62,7 +62,7 @@ import java.lang.foreign.MemorySegment;
  * A function that can not be resolved, because the driver does not provide it or no context is
  * current, makes the {@link GL} method throw an {@link UnsupportedOperationException}.
  *
- * @see AGL#address(String)
+ * @see AGL#load(String)
  *
  * @author Martin Pernollet
  */

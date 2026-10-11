@@ -18,6 +18,7 @@ package jextract.gl.api.panamagl;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -259,25 +260,38 @@ public class GenerateAPI_GL_Wrapper {
    * If the binding has no typedef for the command, use the one of a command that the registry
    * declares as its alias, hence with the same signature (e.g. <code>PFNGLMULTITEXCOORD2FARBPROC</code>
    * for <code>glMultiTexCoord2f</code>, as gl.h declares GL 1.3 without typedefs).
+   * 
+   * @param aliases the commands declared as alias of each command, see {@link #aliases(Map)}
    */
   protected Class<?> getFunctionPointer(Wrapper wrapper, GLCommand registryCommand,
-      Map<String, GLCommand> glRegistry) {
+      Map<String, List<String>> aliases) {
     if (wrapper.functionLoader == null || wrapper.functionPointers == null)
       return null;
 
     Class<?> functionPointer = getFunctionPointer(wrapper, registryCommand.getName());
 
-    if (functionPointer == null) {
-      for (GLCommand command : glRegistry.values()) {
-        if (registryCommand.getName().equals(command.getAlias())
-            && !command.getName().equals(command.getAlias())) {
-          functionPointer = getFunctionPointer(wrapper, command.getName());
-          if (functionPointer != null)
-            break;
-        }
-      }
+    for (String alias : aliases.getOrDefault(registryCommand.getName(), List.of())) {
+      if (functionPointer != null)
+        break;
+      functionPointer = getFunctionPointer(wrapper, alias);
     }
     return functionPointer;
+  }
+
+  /**
+   * The names of the commands that the registry declares as alias of each command, sorted so that
+   * the generated code does not depend on the registry order.
+   */
+  protected Map<String, List<String>> aliases(Map<String, GLCommand> glRegistry) {
+    Map<String, List<String>> aliases = new HashMap<>();
+
+    for (GLCommand command : glRegistry.values()) {
+      String alias = command.getAlias();
+      if (alias != null && !alias.equals(command.getName()))
+        aliases.computeIfAbsent(alias, name -> new ArrayList<>()).add(command.getName());
+    }
+    aliases.values().forEach(Collections::sort);
+    return aliases;
   }
 
   protected Class<?> getFunctionPointer(Wrapper wrapper, String command) {
@@ -302,12 +316,13 @@ public class GenerateAPI_GL_Wrapper {
     nUnimplemented = 0;
 
     if (addUnimplementedMethodsUponMissingBinding) {
+      Map<String, List<String>> aliases = aliases(glRegistry);
 
       // OpenGL : Create a method throwing "not implemented" exception
       for (GLCommand registryCommand : glRegistry.values()) {
         if (!wrappedCommands.contains(registryCommand)) {
 
-          Class<?> functionPointer = getFunctionPointer(wrapper, registryCommand, glRegistry);
+          Class<?> functionPointer = getFunctionPointer(wrapper, registryCommand, aliases);
 
           boolean wrapped = functionPointer != null
               && classWriter.wrapperFunctionPointer(functionPointer, registryCommand);

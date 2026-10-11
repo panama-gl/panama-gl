@@ -65,8 +65,8 @@ public class TestAGL_FunctionLoader {
     RecordingLoader loader = new RecordingLoader();
     gl.setFunctionLoader(loader);
 
-    MemorySegment address = gl.address("strlen");
-    Assert.assertEquals(address, gl.address("strlen"));
+    MemorySegment address = gl.load("strlen");
+    Assert.assertEquals(address, gl.load("strlen"));
 
     // Resolved at the first invocation only
     Assert.assertEquals(List.of("strlen"), loader.resolved);
@@ -91,7 +91,7 @@ public class TestAGL_FunctionLoader {
     Assert.assertFalse(gl.isFunctionAvailable("glNotAnOpenGLFunction"));
 
     try {
-      gl.address("glNotAnOpenGLFunction");
+      gl.load("glNotAnOpenGLFunction");
       Assert.fail("expect an exception");
     } catch (UnsupportedOperationException e) {
       Assert.assertTrue(e.getMessage(), e.getMessage().contains("glNotAnOpenGLFunction"));
@@ -106,7 +106,7 @@ public class TestAGL_FunctionLoader {
     Assert.assertFalse(gl.isFunctionAvailable("strlen"));
 
     try {
-      gl.address("strlen");
+      gl.load("strlen");
       Assert.fail("expect an exception");
     } catch (UnsupportedOperationException e) {
       Assert.assertTrue(e.getMessage(), e.getMessage().contains("strlen"));
@@ -117,11 +117,11 @@ public class TestAGL_FunctionLoader {
   public void changingLoaderClearsResolvedFunctions() {
     AGL gl = newGL();
     gl.setFunctionLoader(new RecordingLoader());
-    gl.address("strlen");
+    gl.load("strlen");
 
     RecordingLoader other = new RecordingLoader();
     gl.setFunctionLoader(other);
-    gl.address("strlen");
+    gl.load("strlen");
 
     Assert.assertSame(other, gl.getFunctionLoader());
     Assert.assertEquals(List.of("strlen"), other.resolved);

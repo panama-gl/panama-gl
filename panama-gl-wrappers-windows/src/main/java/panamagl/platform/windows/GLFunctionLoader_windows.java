@@ -46,9 +46,8 @@ public class GLFunctionLoader_windows implements GLFunctionLoader {
   }
 
   /**
-   * wglGetProcAddress may return 1, 2, 3 or -1 instead of NULL to report a failure.
-   * 
-   * @see https://www.khronos.org/opengl/wiki/Load_OpenGL_Functions
+   * wglGetProcAddress may return 1, 2, 3 or -1 instead of NULL to report a failure (see
+   * <a href="https://www.khronos.org/opengl/wiki/Load_OpenGL_Functions">Load OpenGL Functions</a>).
    */
   protected boolean isValid(MemorySegment address) {
     if (address == null)

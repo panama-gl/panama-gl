@@ -347,14 +347,7 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
     if (out == null) {
       return null;
     }
-    boolean vertically = Flip.VERTICAL.equals(flip);
-    boolean horizontally = Flip.HORIZONTAL.equals(flip);
-
-    if (vertically || horizontally) {
-      return new AWTImage(ImageUtils.flip(out, vertically, horizontally));
-    } else {
-      return new AWTImage(ImageUtils.copy(out));
-    }
+    return new AWTImage(ImageUtils.copy(out, flip));
   }
 
   // should not be used by anything else than backend

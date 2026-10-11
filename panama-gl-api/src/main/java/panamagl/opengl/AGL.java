@@ -38,7 +38,7 @@ public abstract class AGL extends ForeignMemoryUtils implements GL {
   protected GLFunctionLoader functionLoader;
 
   /** Addresses of the functions resolved by the {@link #functionLoader}. */
-  protected Map<String, MemorySegment> addresses = new ConcurrentHashMap<>();
+  protected final Map<String, MemorySegment> addresses = new ConcurrentHashMap<>();
 
   public GLFunctionLoader getFunctionLoader() {
     return functionLoader;
@@ -50,25 +50,24 @@ public abstract class AGL extends ForeignMemoryUtils implements GL {
   }
 
   /**
-   * Return the address of an OpenGL function that is resolved at runtime by the
-   * {@link GLFunctionLoader}, which is how OpenGL functions beyond the static exports of the system
-   * library (VBO, shaders, FBO, ...) are reached. The function is then invoked through the
-   * <code>PFN...PROC</code> class of the binding, as <code>FBO_linux</code> or
-   * <code>FBO_windows</code> do.
+   * Load the address of an OpenGL function with the {@link GLFunctionLoader}, which is how OpenGL
+   * functions beyond the static exports of the system library (VBO, shaders, FBO, ...) are reached.
+   * The function is then invoked through the <code>PFN...PROC</code> class of the binding, as
+   * <code>FBO_linux</code> or <code>FBO_windows</code> do.
    * 
-   * The function is resolved at its first invocation and then cached. Some platforms (Windows)
-   * require a current GL context to resolve a function.
+   * The function is loaded at its first invocation and then cached. Some platforms (Windows)
+   * require a current GL context to load a function.
    * 
    * @param function the OpenGL function name, e.g. "glGenBuffers"
-   * @throws UnsupportedOperationException if the function can not be resolved
+   * @throws UnsupportedOperationException if the function can not be loaded
    */
-  protected MemorySegment address(String function) {
+  protected MemorySegment load(String function) {
     MemorySegment address = addresses.get(function);
 
     if (address == null) {
       address = getProcAddress(function);
 
-      if (address == null || MemorySegment.NULL.equals(address)) {
+      if (isNull(address)) {
         throw new UnsupportedOperationException("OpenGL function '" + function
             + "' is not available : the driver does not provide it, or no GL context is current");
       }
@@ -89,22 +88,22 @@ public abstract class AGL extends ForeignMemoryUtils implements GL {
   }
 
   /**
-   * Return true if the given OpenGL function can be resolved by the {@link #functionLoader}.
+   * Return true if the given OpenGL function can be loaded by the {@link #functionLoader}.
    */
   public boolean isFunctionAvailable(String function) {
-    if (addresses.containsKey(function)) {
-      return true;
-    }
-    MemorySegment address = getProcAddress(function);
-    return address != null && !MemorySegment.NULL.equals(address);
+    return addresses.containsKey(function) || !isNull(getProcAddress(function));
   }
 
-  /** Read a C string returned by a function resolved at runtime. */
-  protected String string(MemorySegment string) {
-    if (string == null || MemorySegment.NULL.equals(string)) {
+  /** Read the C string returned by a function loaded at runtime. */
+  protected String string(MemorySegment pointer) {
+    if (isNull(pointer)) {
       return null;
     }
-    return string.reinterpret(Long.MAX_VALUE).getString(0);
+    return pointer.reinterpret(Long.MAX_VALUE).getString(0);
+  }
+
+  protected static boolean isNull(MemorySegment pointer) {
+    return pointer == null || MemorySegment.NULL.equals(pointer);
   }
 
   /** A float-based gluProject */

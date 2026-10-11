@@ -43,7 +43,7 @@ public class TestClassWriter_FunctionPointer {
     Assert.assertTrue(writer.wrapperFunctionPointer(java, PFNGLGENBUFFERSPROC.class, command));
     Assert.assertTrue(java.toString(), java.toString().contains("public void glGenBuffers(int n, MemorySegment buffers) {"));
     Assert.assertTrue(java.toString(), java.toString().contains(
-        "PFNGLGENBUFFERSPROC.invoke(address(\"glGenBuffers\"), n, buffers);"));
+        "PFNGLGENBUFFERSPROC.invoke(load(\"glGenBuffers\"), n, buffers);"));
   }
 
   @Test
@@ -54,7 +54,7 @@ public class TestClassWriter_FunctionPointer {
 
     Assert.assertTrue(writer.wrapperFunctionPointer(java, PFNGLCREATEPROGRAMPROC.class, command));
     Assert.assertTrue(java.toString(), java.toString().contains(
-        "return PFNGLCREATEPROGRAMPROC.invoke(address(\"glCreateProgram\"));"));
+        "return PFNGLCREATEPROGRAMPROC.invoke(load(\"glCreateProgram\"));"));
   }
 
   @Test
@@ -67,7 +67,7 @@ public class TestClassWriter_FunctionPointer {
     Assert.assertTrue(writer.wrapperFunctionPointer(java, PFNGLGETSTRINGIPROC.class, command));
     Assert.assertTrue(java.toString(), java.toString().contains("public String glGetStringi(int name, int index) {"));
     Assert.assertTrue(java.toString(), java.toString().contains(
-        "return string(PFNGLGETSTRINGIPROC.invoke(address(\"glGetStringi\"), name, index));"));
+        "return string(PFNGLGETSTRINGIPROC.invoke(load(\"glGetStringi\"), name, index));"));
   }
 
   @Test
