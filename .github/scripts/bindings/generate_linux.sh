@@ -14,11 +14,12 @@ echo "Mesa headers $(dpkg-query -W -f '${Version}' mesa-common-dev), freeglut he
 generate() {
   local package=$1 header_class=$2 header=$3
   shift 3
-  "$JEXTRACT" --target-package "$package" --header-class-name "$header_class" \
-    --output "$OUT" --dump-includes "$OUT/$package.includes" "$@" \
-    -I /usr/include/GL "$header" > "$OUT/$package.log" 2>&1
-  "$JEXTRACT" --target-package "$package" --header-class-name "$header_class" \
-    --output "$OUT" "$@" -I /usr/include/GL "$header" >> "$OUT/$package.log" 2>&1 || { tail -30 "$OUT/$package.log"; exit 1; }
+  local log="$OUT/$package.log"
+  "$JEXTRACT" --target-package "$package" --header-class-name "$header_class" --output "$OUT" \
+    --dump-includes "$OUT/$package.includes" "$@" -I /usr/include/GL "$header" > "$log" 2>&1 \
+    && "$JEXTRACT" --target-package "$package" --header-class-name "$header_class" --output "$OUT" \
+    "$@" -I /usr/include/GL "$header" >> "$log" 2>&1 \
+    || { grep -v warning "$log" | tail -40; echo "jextract failed for $package"; exit 1; }
 }
 
 generate opengl.linux glut_h /usr/include/GL/glut.h -lGL -lglut -lGLU -lGLEW

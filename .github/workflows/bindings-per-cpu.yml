@@ -166,10 +166,16 @@ jobs:
           cat "$out/versions.txt"
           du -sh "$out"/*/
 
+      # jextract may name a file after an unnamed struct and its location, e.g.
+      # "struct (unnamed at /usr/include/X11/Xlib.h:493:9).java", which an artifact can not contain
+      - name: Archive bindings
+        shell: bash
+        run: tar -czf generated-${{ matrix.family }}-${{ matrix.cpu }}.tgz generated
+
       - uses: actions/upload-artifact@v4
         with:
           name: generated-${{ matrix.family }}-${{ matrix.cpu }}
-          path: generated
+          path: generated-${{ matrix.family }}-${{ matrix.cpu }}.tgz
 
   compare:
     name: Compare x64 and ARM64
@@ -182,11 +188,12 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           pattern: generated-*
-          path: generated
+          path: archives
           merge-multiple: true
 
       - name: Compare
         run: |
+          for archive in archives/*.tgz; do tar -xzf "$archive"; done
           mkdir -p reports
           for family in linux windows macos; do
             x64=generated/$family-x64
