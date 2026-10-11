@@ -69,34 +69,35 @@ jobs:
           distribution: zulu
 
       # -------------------------------------------------------
-      # libclang and headers
+      # libclang and headers. Since LLVM 16, libclang spells unnamed structs
+      # "struct (unnamed at <file>:<line>:<column>)", which jextract uses as class
+      # and file names : its output does not compile anymore. LLVM 15 is used on
+      # every OS (the jextract builds of jdk.java.net use LLVM 13)
       # -------------------------------------------------------
       - name: Install LLVM and OpenGL headers (Linux)
         if: matrix.family == 'linux'
         run: |
           sudo apt-get update -q
-          sudo apt-get install -y libclang-18-dev llvm-18 \
+          sudo apt-get install -y libclang-15-dev llvm-15 \
             mesa-common-dev libgl-dev libglx-dev libglu1-mesa-dev freeglut3-dev libglew-dev
-          # The libclang of Ubuntu is a symbolic link in /usr/lib/llvm-18, which jextract does not copy
+          # The libclang of Ubuntu is a symbolic link in /usr/lib/llvm-15, which jextract does not copy
+          version=$(ls /usr/lib/llvm-15/lib/clang)
           mkdir -p "$RUNNER_TEMP/llvm/lib/clang"
-          cp -L "/usr/lib/$(gcc -print-multiarch)/libclang-18.so.18" "$RUNNER_TEMP/llvm/lib/libclang.so.18"
-          cp -rL /usr/lib/llvm-18/lib/clang/18 "$RUNNER_TEMP/llvm/lib/clang/18"
+          cp -L "/usr/lib/$(gcc -print-multiarch)/libclang-15.so.$version" "$RUNNER_TEMP/llvm/lib/libclang.so.$version"
+          cp -rL "/usr/lib/llvm-15/lib/clang/$version" "$RUNNER_TEMP/llvm/lib/clang/$version"
           echo "LLVM_HOME=$RUNNER_TEMP/llvm" >> "$GITHUB_ENV"
 
       - name: Install LLVM (macOS)
         if: matrix.family == 'macos'
         run: |
-          brew install llvm@18
+          brew install llvm@15
           # The same SDK on both CPUs : the Xcode of the macOS 15 Intel image, if also installed
           if [ -d /Applications/Xcode_16.4.app ]; then
             echo "DEVELOPER_DIR=/Applications/Xcode_16.4.app/Contents/Developer" >> "$GITHUB_ENV"
           fi
-          echo "LLVM_HOME=$(brew --prefix llvm@18)" >> "$GITHUB_ENV"
+          echo "LLVM_HOME=$(brew --prefix llvm@15)" >> "$GITHUB_ENV"
 
-      # The same LLVM release on both CPUs : the first one providing an installer for both.
-      # Since LLVM 16, libclang spells unnamed structs "struct (unnamed at <file>:<line>:<column>)",
-      # which jextract uses as a field or file name, invalid on Windows : the oldest LLVM
-      # with an installer for both CPUs is used
+      # The same LLVM release on both CPUs : the oldest one providing an installer for both
       - name: Install LLVM (Windows)
         if: matrix.family == 'windows'
         shell: pwsh
