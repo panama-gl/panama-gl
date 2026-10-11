@@ -27,16 +27,26 @@ function Run([string]$Package, [string[]]$Arguments) {
   return $LASTEXITCODE -eq 0
 }
 
-# jextract may fail on the anonymous structs and unions of the SDK headers : they are then named
-# (DUMMYSTRUCTNAME, DUMMYUNIONNAME...) by defining NONAMELESSUNION
+# jextract may fail on the anonymous structs and unions of the SDK headers (TypeLayoutError :
+# InvalidFieldName). They are then named (DUMMYSTRUCTNAME, DUMMYUNIONNAME...) by defining
+# NONAMELESSUNION, and the COM and OLE headers, which PanamaGL does not use, are excluded by
+# defining WIN32_LEAN_AND_MEAN
+$fallbacks = @(
+  @(),
+  @('-D', 'NONAMELESSUNION'),
+  @('-D', 'NONAMELESSUNION', '-D', 'WIN32_LEAN_AND_MEAN')
+)
+
 function Generate([string]$Package, [string]$HeaderClass, [string]$Header, [string[]]$Options) {
   $common = @('--target-package', $Package, '--header-class-name', $HeaderClass, '--output', $Out) + $Options
-  if (Run $Package ($common + $Header)) { return }
-  Get-Content "$Out\$Package.log" | Where-Object { $_ -notmatch 'warning' } | Select-Object -Last 10
-  "$Package generated with -DNONAMELESSUNION" | Tee-Object -FilePath "$Out\versions.txt" -Append
-  Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$Out\$($Package.Replace('.', '\'))"
-  if (Run $Package ($common + @('-D', 'NONAMELESSUNION', $Header))) { return }
-  Get-Content "$Out\$Package.log" | Where-Object { $_ -notmatch 'warning' } | Select-Object -Last 30
+  foreach ($defines in $fallbacks) {
+    Remove-Item -Recurse -Force -ErrorAction SilentlyContinue "$Out\$($Package.Replace('.', '\'))"
+    if (Run $Package ($common + $defines + $Header)) {
+      "$Package generated with defines : $($defines -join ' ')" | Tee-Object -FilePath "$Out\versions.txt" -Append
+      return
+    }
+    Get-Content "$Out\$Package.log" | Where-Object { $_ -notmatch 'warning' } | Select-Object -Last 5
+  }
   throw "jextract failed for $Package"
 }
 
