@@ -89,4 +89,32 @@
 
 	</dependencies>
 
+	<profiles>
+		<!-- OpenJFX publishes no Windows ARM64 build, so javafx.platform can not be resolved there :
+		     only keep the empty javafx-controls jar and use the JavaFX modules of a JDK bundling
+		     them, e.g. Liberica Full JDK -->
+		<profile>
+			<id>windows-aarch64-jdk-javafx</id>
+			<activation>
+				<os>
+					<family>windows</family>
+					<arch>aarch64</arch>
+				</os>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.openjfx</groupId>
+					<artifactId>javafx-controls</artifactId>
+					<version>${javafx.version}</version>
+					<exclusions>
+						<exclusion>
+							<groupId>org.openjfx</groupId>
+							<artifactId>*</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
 </project>
