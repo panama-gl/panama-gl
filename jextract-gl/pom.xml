@@ -11,7 +11,7 @@
 
 	<properties>
 		<version.jaxb>2.3.1</version.jaxb>
-		<version.panama>1.3.0-SNAPSHOT</version.panama>
+		<version.panama>1.3.0</version.panama>
 		<version.jdk>22</version.jdk>
 
 	</properties>
@@ -77,11 +77,11 @@
 			<artifactId>panama-gl-wrappers-linux</artifactId>
 			<version>${version.panama}</version>
 		</dependency>
-		<!--<dependency>
+		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-wrappers-windows</artifactId>
 			<version>${version.panama}</version>
-		</dependency>-->
+		</dependency>
 
 
 		<!-- To test  -->

@@ -18,6 +18,7 @@
 package panamagl.platform.windows;
 
 import panamagl.platform.Platform;
+import panamagl.platform.PlatformMatcher;
 
 public class WindowsTest {
   /**
@@ -30,6 +31,21 @@ public class WindowsTest {
 
     if(!isPlatform) {
       System.err.println(" !! \n    Skip test since not on Windows : " + platform + "\n !!");
+    }
+    
+    return isPlatform;
+  }
+
+  /**
+   * Indicate a message in console if not running on the CPU architecture of the given matcher
+   * @return
+   */
+  public boolean checkPlatform(PlatformMatcher matcher) {
+    Platform platform = new Platform();
+    boolean isPlatform = matcher.matches(platform);
+
+    if(!isPlatform) {
+      System.err.println(" !! \n    Skip test since not on " + matcher.getClass().getSimpleName() + " : " + platform + "\n !!");
     }
     
     return isPlatform;

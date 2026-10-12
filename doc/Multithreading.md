@@ -59,6 +59,8 @@ The table below shows which `ThreadRedirect` implementation is used for each com
 | OpenGL profile | Configurable (Legacy 2.1 or Core 4.1) | Legacy 2.1 (default) |
 | Deadlock risk | Low | High if main thread not in event loop |
 
+With the legacy 2.1 profile, the OpenGL 3.x methods of `GL` exist but are not supported by the context : use a core profile context to call them.
+
 ### Key differences between WGL and GLUT on Windows
 
 | Aspect | WGL | GLUT |
@@ -220,4 +222,24 @@ OpenGL calls (context must be current on this thread)
   │
   ▼
 canvas.repaint()  → back to UI thread for display
+```
+
+## GL work out of rendering (e.g. picking)
+
+GL commands issued from a `GLEventListener` method already run on the right thread, with the canvas framebuffer bound. Out of these methods, for example when picking from a mouse event, the application must take care of both :
+
+1. **The thread** : run the work with the `ThreadRedirect` of the canvas renderer, on which the GL context is current. The redirect may run the task later (e.g. `EventQueue.invokeLater()` when not called from the EDT, or on the macOS main thread with GLUT), so results must be handed back from the task rather than read right after `run()` returns.
+2. **The framebuffer** : rendering happens in the canvas `FBO`, which is not bound anymore once a frame has been read. `FBO.bind(gl)` binds it again — without recreating nor clearing it — and `FBO.unbind(gl)` binds back the default framebuffer. Without it, GL commands target the tiny default framebuffer of the offscreen context, and techniques relying on rendering (e.g. `GL_SELECT`, which Mesa accelerates by rendering) report nothing.
+
+```java
+OffscreenRenderer renderer = canvas.getOffscreenRenderer();
+
+renderer.getThreadRedirect().run(() -> {
+  GL gl = renderer.getGL();
+  FBO fbo = renderer.getFBO();
+
+  fbo.bind(gl);
+  // GL work targeting the canvas framebuffer, e.g. GL_SELECT picking
+  fbo.unbind(gl);
+});
 ```

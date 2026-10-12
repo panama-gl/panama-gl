@@ -17,6 +17,8 @@ package panamagl.opengl;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import panamagl.utils.ForeignMemoryUtils;
 
 
@@ -31,6 +33,78 @@ import panamagl.utils.ForeignMemoryUtils;
  * @author Martin Pernollet
  */
 public abstract class AGL extends ForeignMemoryUtils implements GL {
+
+  /** Resolve functions that are not exported as static symbols by the system GL library. */
+  protected GLFunctionLoader functionLoader;
+
+  /** Addresses of the functions resolved by the {@link #functionLoader}. */
+  protected final Map<String, MemorySegment> addresses = new ConcurrentHashMap<>();
+
+  public GLFunctionLoader getFunctionLoader() {
+    return functionLoader;
+  }
+
+  public void setFunctionLoader(GLFunctionLoader functionLoader) {
+    this.functionLoader = functionLoader;
+    this.addresses.clear();
+  }
+
+  /**
+   * Load the address of an OpenGL function with the {@link GLFunctionLoader}, which is how OpenGL
+   * functions beyond the static exports of the system library (VBO, shaders, FBO, ...) are reached.
+   * The function is then invoked through the <code>PFN...PROC</code> class of the binding, as
+   * <code>FBO_linux</code> or <code>FBO_windows</code> do.
+   * 
+   * The function is loaded at its first invocation and then cached. Some platforms (Windows)
+   * require a current GL context to load a function.
+   * 
+   * @param function the OpenGL function name, e.g. "glGenBuffers"
+   * @throws UnsupportedOperationException if the function can not be loaded
+   */
+  protected MemorySegment load(String function) {
+    MemorySegment address = addresses.get(function);
+
+    if (address == null) {
+      address = getProcAddress(function);
+
+      if (isNull(address)) {
+        throw new UnsupportedOperationException("OpenGL function '" + function
+            + "' is not available : the driver does not provide it, or no GL context is current");
+      }
+      addresses.put(function, address);
+    }
+    return address;
+  }
+
+  /**
+   * Return the address of a function using the {@link #functionLoader}, or
+   * {@link MemorySegment#NULL} if there is no loader or the function is unknown.
+   */
+  public MemorySegment getProcAddress(String function) {
+    if (functionLoader == null) {
+      return MemorySegment.NULL;
+    }
+    return functionLoader.getProcAddress(function);
+  }
+
+  /**
+   * Return true if the given OpenGL function can be loaded by the {@link #functionLoader}.
+   */
+  public boolean isFunctionAvailable(String function) {
+    return addresses.containsKey(function) || !isNull(getProcAddress(function));
+  }
+
+  /** Read the C string returned by a function loaded at runtime. */
+  protected String string(MemorySegment pointer) {
+    if (isNull(pointer)) {
+      return null;
+    }
+    return pointer.reinterpret(Long.MAX_VALUE).getString(0);
+  }
+
+  protected static boolean isNull(MemorySegment pointer) {
+    return pointer == null || MemorySegment.NULL.equals(pointer);
+  }
 
   /** A float-based gluProject */
   public boolean gluProject(float objX, float objY, float objZ, float[] model, float[] proj,

@@ -338,12 +338,16 @@ public class GLCanvasAWT extends Panel implements GLCanvas {
 
   /* ===================================================== */
 
+  /**
+   * Return a copy of the last rendered image, oriented as displayed by this canvas (see
+   * {@link #getFlip()}).
+   */
   @Override
   public Image<?> getScreenshot() {
     if (out == null) {
       return null;
     }
-    return new AWTImage(ImageUtils.copy(out));
+    return new AWTImage(ImageUtils.copy(out, flip));
   }
 
   // should not be used by anything else than backend

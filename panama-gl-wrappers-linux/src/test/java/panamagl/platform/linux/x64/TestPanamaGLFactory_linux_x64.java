@@ -30,7 +30,7 @@ public class TestPanamaGLFactory_linux_x64 extends LinuxTest{
 @Ignore("Works from IDE but not from CLI yet")
   @Test
   public void test() {
-    if (!checkPlatform())
+    if (!checkPlatform(new PlatformMatcher_linux_x64()))
       return;
   
     // When seek a factory

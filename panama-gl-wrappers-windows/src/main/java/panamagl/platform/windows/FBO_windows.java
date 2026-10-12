@@ -238,7 +238,7 @@ public class FBO_windows extends AFBO implements FBO {
     }
 
     // Bind frame buffer
-    PFNGLBINDFRAMEBUFFEREXTPROC.invoke(glBindFramebuffer, glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
+    bindFramebuffer(idFrameBuffer);
 
     // Attach 2D texture to this FBO
     PFNGLFRAMEBUFFERTEXTURE2DEXTPROC.invoke(glFramebufferTexture2D, glut_h.GL_FRAMEBUFFER_EXT(), glut_h.GL_COLOR_ATTACHMENT0_EXT(), GL.GL_TEXTURE_2D, idTexture, 0);
@@ -282,7 +282,7 @@ public class FBO_windows extends AFBO implements FBO {
     // -------------------------
     // and now you can render to GL_TEXTURE_2D
     
-    PFNGLBINDFRAMEBUFFEREXTPROC.invoke(glBindFramebuffer, glut_h.GL_FRAMEBUFFER(), idFrameBuffer);
+    bindFramebuffer(idFrameBuffer);
     
     gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
     gl.glClearDepth(1.0f);
@@ -306,7 +306,7 @@ public class FBO_windows extends AFBO implements FBO {
     PFNGLDELETERENDERBUFFERSEXTPROC.invoke(glDeleteRenderbuffers, 1, renderBufferIds);
     
     // Bind 0, which means render to back buffer, as a result, fb is unbound
-    PFNGLBINDFRAMEBUFFEREXTPROC.invoke(glBindFramebuffer, glut_h.GL_FRAMEBUFFER(), 0);
+    bindFramebuffer(0);
  
     // Delete frame buffer
     PFNGLDELETEFRAMEBUFFERSEXTPROC.invoke(glDeleteFramebuffers, 1, frameBufferIds);
@@ -342,14 +342,13 @@ public class FBO_windows extends AFBO implements FBO {
 
     Debug.debug(debug, "FBO: PixelBuffer red !");
     
-    unbindFramebuffer();
+    bindFramebuffer(0);
     
     return pixels;
   }
 
-  protected void unbindFramebuffer() {
-    // Bind 0, which means render to back buffer
-    PFNGLBINDFRAMEBUFFEREXTPROC.invoke(glBindFramebuffer, glut_h.GL_FRAMEBUFFER(), 0);    
+  @Override
+  protected void bindFramebuffer(int id) {
+    PFNGLBINDFRAMEBUFFEREXTPROC.invoke(glBindFramebuffer, glut_h.GL_FRAMEBUFFER(), id);
   }
-  
 }

@@ -50,14 +50,16 @@ public class BlockingGLListener implements GLEventListener {
 
   @Override
   public void init(GL gl) {
-    initLatch.countDown();
+    // count before releasing the waiting thread, which then reads the counter
     counter.init++;
+    initLatch.countDown();
   }
 
   @Override
   public void display(GL gl) {
-    displayLatch.countDown();
+    // count before releasing the waiting thread, which then reads the counter
     counter.display++;
+    displayLatch.countDown();
   }
 
   @Override
@@ -67,8 +69,9 @@ public class BlockingGLListener implements GLEventListener {
 
   @Override
   public void dispose(GL gl) {
-    disposeLatch.countDown();
+    // count before releasing the waiting thread, which then reads the counter
     counter.dispose++;
+    disposeLatch.countDown();
   }
 
   public class EventCounter {

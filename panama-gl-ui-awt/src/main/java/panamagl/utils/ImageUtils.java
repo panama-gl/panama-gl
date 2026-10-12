@@ -24,6 +24,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import panamagl.canvas.GLCanvas.Flip;
 
 public class ImageUtils {
   public static BufferedImage copy(BufferedImage source) {
@@ -32,6 +33,17 @@ public class ImageUtils {
     g.drawImage(source, 0, 0, null);
     g.dispose();
     return b;
+  }
+
+  /** Return a copy of the image, flipped as a canvas displays it with the given {@link Flip}. */
+  public static BufferedImage copy(BufferedImage source, Flip flip) {
+    if (Flip.VERTICAL.equals(flip)) {
+      return flip(source, true, false);
+    } else if (Flip.HORIZONTAL.equals(flip)) {
+      return flip(source, false, true);
+    } else {
+      return copy(source);
+    }
   }
 
   public static BufferedImage scale(BufferedImage in, float x, float y) {

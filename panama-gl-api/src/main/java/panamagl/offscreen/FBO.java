@@ -37,4 +37,37 @@ public interface FBO {
   boolean isPrepared();
   
   MemorySegment readPixels(GL gl);
+
+  /**
+   * Bind this FBO so that the following GL commands target it, e.g. to perform GL work out of the
+   * rendering of a canvas such as picking from a mouse event. The FBO is prepared if it is not
+   * already, otherwise it is bound as is, i.e. without being recreated nor cleared.
+   * 
+   * The GL context of the canvas must be current on the calling thread. Out of a
+   * {@link panamagl.GLEventListener} method, the work must therefore be performed with the
+   * {@link ThreadRedirect} of the canvas renderer, which may run it later (see
+   * <code>doc/Multithreading.md</code>) :
+   * 
+   * <pre>
+   * <code>
+   * OffscreenRenderer renderer = canvas.getOffscreenRenderer();
+   * 
+   * renderer.getThreadRedirect().run(() -&gt; {
+   *   GL gl = renderer.getGL();
+   *   renderer.getFBO().bind(gl);
+   *   // GL work targeting the canvas framebuffer
+   *   renderer.getFBO().unbind(gl);
+   * });
+   * </code>
+   * </pre>
+   * 
+   * @see #unbind(GL)
+   */
+  void bind(GL gl);
+
+  /**
+   * Bind back the default framebuffer, so that the following GL commands do not target this FBO
+   * anymore. Same thread requirement as {@link #bind(GL)}.
+   */
+  void unbind(GL gl);
 }
