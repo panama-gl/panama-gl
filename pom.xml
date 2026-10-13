@@ -431,16 +431,20 @@
 	</profiles>
 
 	<!-- Extra Maven Repositories to fetch artifacts from -->
+	<!-- Only org.jzy3d artifacts are fetched from these repositories, see .mvn/maven.config
+	     and .mvn/rrf/. This avoids flooding the OVH host with 404 on other artifacts. -->
 	<repositories>
 		<repository>
 			<id>jzy3d-snapshots</id>
 			<name>Jzy3d Snapshots</name>
 			<url>https://maven.jzy3d.org/snapshots/</url>
+			<releases><enabled>false</enabled></releases>
 		</repository>
 		<repository>
 			<id>jzy3d-releases</id>
 			<name>Jzy3d Releases</name>
 			<url>https://maven.jzy3d.org/releases/</url>
+			<snapshots><enabled>false</enabled></snapshots>
 		</repository>
 	</repositories>
 
