@@ -32,8 +32,9 @@ public class FBOReader_AWT implements FBOReader{
       return null;
     }
     
-    // Try an image format derived from default screen/gpu to avoid conversion
-    BufferedImage out = GraphicsUtils.createCompatibleImage(width, height);
+    // Keep framebuffer pixels unchanged, as JOGL does : a screen compatible image may store them
+    // premultiplied by alpha (e.g. on macOS), which alters translucent pixels
+    BufferedImage out = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
 
     // Copy pixels to buffered image
