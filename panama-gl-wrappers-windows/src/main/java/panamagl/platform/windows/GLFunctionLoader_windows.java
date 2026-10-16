@@ -24,7 +24,7 @@ import wgl.windows.x86.wgl_h;
 /**
  * Resolve OpenGL functions with <code>wglGetProcAddress</code>, falling back on the symbols
  * exported by opengl32.dll (GL 1.1) for which <code>wglGetProcAddress</code> returns nothing. These
- * symbols are looked up in opengl32.dll as already loaded by {@link opengl.windows.NativeLibLoader}.
+ * symbols are looked up in opengl32.dll as already loaded by {@link NativeLibLoader_windows}.
  * 
  * A GL context must be current on the calling thread. Addresses may depend on the context pixel
  * format, which is why each {@link panamagl.opengl.GL} instance keeps its own cache.
