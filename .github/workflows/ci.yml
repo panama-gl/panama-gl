@@ -24,14 +24,11 @@ jobs:
           - windows-latest   # Windows x86_64
           - windows-11-arm   # Windows ARM64
         include:
-          # No JDK 22 build exists for Windows ARM64, and Temurin only provides 21 and 23 :
-          # use the next LTS from Zulu
+          # OpenJFX publishes no Windows ARM64 build : use Liberica Full JDK 22, which bundles
+          # ARM64 JavaFX modules (see the windows-aarch64-jdk-javafx profile of panama-gl-ui-javafx)
           - os: windows-11-arm
-            java: '25'
-            distribution: zulu
-            # OpenJFX publishes no Windows ARM64 build : skip the JavaFX canvas and the samples
-            # using it
-            maven-args: -pl '!panama-gl-ui-javafx,!panama-gl-samples'
+            distribution: liberica
+            java-package: jdk+fx
 
     steps:
       - uses: actions/checkout@v4
@@ -44,6 +41,7 @@ jobs:
         with:
           java-version: ${{ matrix.java || '22' }}
           distribution: ${{ matrix.distribution || 'temurin' }}
+          java-package: ${{ matrix.java-package || 'jdk' }}
           cache: maven
 
       # Maven is not installed on every runner image (e.g. Windows ARM64)
