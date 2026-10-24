@@ -1,8 +1,8 @@
 package panamagl.platform.linux.x64; 
 
-import glext.linux.x86.glext_h;
+import glext.linux.glext_h;
 import java.lang.foreign.*;
-import opengl.linux.x86.*;
+import opengl.linux.*;
 
 public class GL_linux_x64 extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
   public GL_linux_x64() {

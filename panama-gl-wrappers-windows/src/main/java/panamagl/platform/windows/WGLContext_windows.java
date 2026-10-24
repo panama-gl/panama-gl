@@ -3,18 +3,18 @@ package panamagl.platform.windows;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-import freeglut.windows.x86.freeglut_h;
+import freeglut.windows.freeglut_h;
 import opengl.windows.NativeLibLoader;
 import panamagl.Debug;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;
 import panamagl.opengl.GLError;
-import wgl.windows.x86.PFNWGLCHOOSEPIXELFORMATARBPROC;
-import wgl.windows.x86.PFNWGLCREATECONTEXTATTRIBSARBPROC;
-import wgl.windows.x86.PIXELFORMATDESCRIPTOR;
-import wgl.windows.x86.WNDPROC;
-import wgl.windows.x86.tagWNDCLASSEXA;
-import wgl.windows.x86.wgl_h;
+import wgl.windows.PFNWGLCHOOSEPIXELFORMATARBPROC;
+import wgl.windows.PFNWGLCREATECONTEXTATTRIBSARBPROC;
+import wgl.windows.PIXELFORMATDESCRIPTOR;
+import wgl.windows.WNDPROC;
+import wgl.windows.tagWNDCLASSEXA;
+import wgl.windows.wgl_h;
 
 /**
  * WIP Windows context

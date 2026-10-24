@@ -1,8 +1,8 @@
 package panamagl.platform.windows.x64; 
 
 import java.lang.foreign.MemorySegment;
-import opengl.linux.x86.*;
-import freeglut.windows.x86.freeglut_h;
+import opengl.linux.*;
+import freeglut.windows.freeglut_h;
 
 public class GL_windows_x64 extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
   public GL_windows_x64() {

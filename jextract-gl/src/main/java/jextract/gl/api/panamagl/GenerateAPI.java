@@ -68,7 +68,7 @@ public class GenerateAPI {
    * <code>FBO_windows</code> do. Their descriptors only depend on the GL types, identical on these
    * platforms.
    */
-  private static final String FUNCTION_POINTERS = "opengl.linux.x86";
+  private static final String FUNCTION_POINTERS = "opengl.linux";
 
   String superGL = "GL";
 
@@ -128,7 +128,7 @@ public class GenerateAPI {
       APIPlatform platform = new APIPlatform(OS.macOS, CPU.x64);
       
 // TODO : fix this hack : should require x86 and not arm
-      Set<Class<?>> wrapped = Set.of(opengl.macos.arm.glut_h.class);
+      Set<Class<?>> wrapped = Set.of(opengl.macos.glut_h.class);
       Class<?> factoryBase = APanamaGLFactory_macOS.class;
       Class<?> factorymatcher = PlatformMatcher_macOS_x64.class;
       boolean genGlut = true;
@@ -144,7 +144,7 @@ public class GenerateAPI {
     if (MACOS_ARM) {
 
       APIPlatform platform = new APIPlatform(OS.macOS, CPU.arm);
-      Set<Class<?>> wrapped = Set.of(opengl.macos.arm.glut_h.class);
+      Set<Class<?>> wrapped = Set.of(opengl.macos.glut_h.class);
       Class<?> factoryBase = APanamaGLFactory_macOS.class;
       Class<?> factorymatcher = PlatformMatcher_macOS_arm.class;
       boolean genGlut = true;
@@ -170,7 +170,7 @@ public class GenerateAPI {
       wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
 
       APIPlatform platform = new APIPlatform(OS.linux, CPU.x64);
-      Set<Class<?>> wrapped = Set.of(glext.linux.x86.glext_h.class);
+      Set<Class<?>> wrapped = Set.of(glext.linux.glext_h.class);
       Class<?> factoryBase = APanamaGLFactory_linux.class;
       // Linux ARM64 reuses the x64 wrapper : see panamagl.platform.linux.arm.GL_linux_arm
       Class<?> factorymatcher = PlatformMatcher_linux_x64.class;
@@ -191,7 +191,7 @@ public class GenerateAPI {
       wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
 
       APIPlatform platform = new APIPlatform(OS.windows, CPU.x64);
-      Set<Class<?>> wrapped = Set.of(freeglut.windows.x86.freeglut_h.class);
+      Set<Class<?>> wrapped = Set.of(freeglut.windows.freeglut_h.class);
       Class<?> factoryBase = APanamaGLFactory_windows.class;
       // Windows ARM64 reuses the x64 wrapper : see panamagl.platform.windows.arm.GL_windows_arm
       Class<?> factorymatcher = PlatformMatcher_windows_x64.class;

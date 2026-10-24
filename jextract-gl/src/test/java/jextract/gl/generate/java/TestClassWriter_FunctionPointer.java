@@ -21,9 +21,9 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import jextract.gl.xml.model.GLCommand;
-import opengl.linux.x86.PFNGLCREATEPROGRAMPROC;
-import opengl.linux.x86.PFNGLGENBUFFERSPROC;
-import opengl.linux.x86.PFNGLGETSTRINGIPROC;
+import opengl.linux.PFNGLCREATEPROGRAMPROC;
+import opengl.linux.PFNGLGENBUFFERSPROC;
+import opengl.linux.PFNGLGETSTRINGIPROC;
 
 /**
  * Wrappers of functions missing from the static symbols of the bindings, invoked through the

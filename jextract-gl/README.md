@@ -65,7 +65,7 @@ For each command of the registry, the wrapper method is written as follows (`Gen
 | The binding only declares its function pointer type | Invokes the `PFN...PROC` class of `Wrapper.functionPointers` with the address given by the `GLFunctionLoader` of the platform (`Wrapper.functionLoader`) | `PFNGLGENBUFFERSPROC.invoke(load("glGenBuffers"), n, buffers);` |
 | Neither | Throws an exception | `throw new RuntimeException("This method is not available in the generated binding.");` |
 
-* The function pointer classes are the ones of `opengl.linux.x86` on all platforms (`GenerateAPI.FUNCTION_POINTERS`), as `FBO_windows` does : their signature only depends on OpenGL types.
+* The function pointer classes are the ones of `opengl.linux` on all platforms (`GenerateAPI.FUNCTION_POINTERS`), as `FBO_windows` does : their signature only depends on OpenGL types.
 * A command without function pointer type uses the one of a command that the registry declares as its alias (e.g. `PFNGLMULTITEXCOORD2FARBPROC` for `glMultiTexCoord2f`, since `gl.h` declares OpenGL 1.3 without function pointer types).
 * The last two cases are written only if `addUnimplementedMethodsUponMissingBinding` is set for the platform.
 

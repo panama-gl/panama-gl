@@ -20,7 +20,7 @@ package panamagl.platform.macos;
 import java.awt.image.BufferedImage;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-import opengl.macos.arm.glut_h;
+import opengl.macos.glut_h;
 import panamagl.Debug;
 import panamagl.offscreen.AFBO;
 import panamagl.offscreen.FBO;

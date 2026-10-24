@@ -1,8 +1,8 @@
 package panamagl.platform.macos.x64; 
 
 import java.lang.foreign.MemorySegment;
-import opengl.linux.x86.*;
-import opengl.macos.x86.glut_h;
+import opengl.linux.*;
+import opengl.macos.glut_h;
 
 public class GL_macOS_x64 extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
   public GL_macOS_x64() {

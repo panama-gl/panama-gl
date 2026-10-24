@@ -19,9 +19,9 @@ package panamagl.platform.windows;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-import freeglut.windows.x86.freeglut_h;
-import freeglut.windows.x86.glutDisplayFunc$callback;
-import freeglut.windows.x86.glutIdleFunc$callback;
+import freeglut.windows.freeglut_h;
+import freeglut.windows.glutDisplayFunc$callback;
+import freeglut.windows.glutIdleFunc$callback;
 import opengl.windows.NativeLibLoader;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GL;

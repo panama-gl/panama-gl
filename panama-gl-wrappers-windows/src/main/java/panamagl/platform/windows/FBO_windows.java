@@ -21,26 +21,26 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 // le vrai import peut etre le suivant 
-//import glext.linux.x86.PFNGLBINDFRAMEBUFFEREXTPROC;
-//import glx.linux.x86.PFNGLBINDFRAMEBUFFEREXTPROC;
-import opengl.linux.x86.PFNGLBINDFRAMEBUFFEREXTPROC;
-import opengl.linux.x86.PFNGLBINDRENDERBUFFEREXTPROC;
-import opengl.linux.x86.PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC;
-import opengl.linux.x86.PFNGLDELETEFRAMEBUFFERSEXTPROC;
-import opengl.linux.x86.PFNGLDELETERENDERBUFFERSEXTPROC;
-import opengl.linux.x86.PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC;
-import opengl.linux.x86.PFNGLFRAMEBUFFERTEXTURE2DEXTPROC;
-import opengl.linux.x86.PFNGLGENFRAMEBUFFERSEXTPROC;
-import opengl.linux.x86.PFNGLGENRENDERBUFFERSEXTPROC;
-import opengl.linux.x86.PFNGLRENDERBUFFERSTORAGEEXTPROC;
-import opengl.linux.x86.glut_h;
+//import glext.linux.PFNGLBINDFRAMEBUFFEREXTPROC;
+//import glx.linux.PFNGLBINDFRAMEBUFFEREXTPROC;
+import opengl.linux.PFNGLBINDFRAMEBUFFEREXTPROC;
+import opengl.linux.PFNGLBINDRENDERBUFFEREXTPROC;
+import opengl.linux.PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC;
+import opengl.linux.PFNGLDELETEFRAMEBUFFERSEXTPROC;
+import opengl.linux.PFNGLDELETERENDERBUFFERSEXTPROC;
+import opengl.linux.PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC;
+import opengl.linux.PFNGLFRAMEBUFFERTEXTURE2DEXTPROC;
+import opengl.linux.PFNGLGENFRAMEBUFFERSEXTPROC;
+import opengl.linux.PFNGLGENRENDERBUFFERSEXTPROC;
+import opengl.linux.PFNGLRENDERBUFFERSTORAGEEXTPROC;
+import opengl.linux.glut_h;
 import panamagl.Debug;
 import panamagl.Image;
 import panamagl.offscreen.AFBO;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
-import wgl.windows.x86.wgl_h;
+import wgl.windows.wgl_h;
 
 
 
