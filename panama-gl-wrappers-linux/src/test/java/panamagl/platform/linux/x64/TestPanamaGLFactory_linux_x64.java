@@ -18,16 +18,14 @@
 package panamagl.platform.linux.x64;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import panamagl.factory.PanamaGLFactory;
+import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.platform.linux.LinuxTest;
 
 //VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path=.://usr/lib/x86_64-linux-gnu/
 public class TestPanamaGLFactory_linux_x64 extends LinuxTest{
-//FIXME : https://gitlab.com/jzy3d/panama-gl/-/issues/27
-@Ignore("Works from IDE but not from CLI yet")
   @Test
   public void test() {
     if (!checkPlatform(new PlatformMatcher_linux_x64()))
@@ -36,19 +34,24 @@ public class TestPanamaGLFactory_linux_x64 extends LinuxTest{
     // When seek a factory
     PanamaGLFactory f = PanamaGLFactory.select();
     
-    // Then expect to find the linux one
-    boolean matched = f instanceof PanamaGLFactory_linux_x64;
-    
-    Assert.assertTrue(matched);
+    // Then expect to find the Linux x64 one
+    Assert.assertTrue(f.getClass().getName(), f instanceof PanamaGLFactory_linux_x64);
 
     // ----------------------------
     // When initializing the factory objects, then get not null
     
     GLContext context = f.newGLContext();
     Assert.assertNotNull(context);
-    Assert.assertNotNull(f.newGL());
+    
+    GL gl = f.newGL();
+    Assert.assertTrue(gl instanceof GL_linux_x64);
     Assert.assertNotNull(f.newOffscreenRenderer(null));
     Assert.assertNotNull(f.newFBO(800, 600));
+
+    // Then the bindings can invoke the OpenGL library
+    String version = gl.glGetString(GL.GL_VERSION).getString(0);
+    System.out.println("TestPanamaGLFactory_linux_x64 running with OpenGL version : " + version);
+    Assert.assertFalse(version.isEmpty());
     
     // ----------------------------
     // When

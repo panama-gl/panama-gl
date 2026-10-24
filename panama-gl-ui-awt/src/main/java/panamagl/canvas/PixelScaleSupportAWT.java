@@ -103,8 +103,10 @@ public class PixelScaleSupportAWT {
       return;
     }
 
-    // Initial value: best-effort read; the real value will arrive via DISPLAYABILITY_CHANGED.
-    lastScale = read();
+    // Initial value, notified to listeners if not identity, as they would otherwise never know the
+    // scale of a screen that does not change. It may not be known yet : it will then arrive with
+    // the next change event.
+    recheckAndFire();
 
     gcListener = evt -> SwingUtilities.invokeLater(this::recheckAndFire);
     component.addPropertyChangeListener("graphicsConfiguration", gcListener);
