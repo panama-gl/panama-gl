@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.jzy3d</groupId>
 		<artifactId>panama-gl</artifactId>
-		<version>1.3.2</version>
+		<version>1.4.0</version>
 	</parent>
 	<artifactId>panama-gl-ui-javafx</artifactId>
 	<packaging>jar</packaging>
@@ -43,16 +43,19 @@
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-wrappers-macos</artifactId>
 			<version>${project.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-wrappers-linux</artifactId>
 			<version>${project.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jzy3d</groupId>
 			<artifactId>panama-gl-wrappers-windows</artifactId>
 			<version>${project.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 		<!-- TEST JARS -->

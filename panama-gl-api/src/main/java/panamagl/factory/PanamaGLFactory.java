@@ -150,8 +150,21 @@ public interface PanamaGLFactory extends PlatformMatcher {
         Debug.debug(debug, "PanamaGLFactory : " + factory.getClass().getName() + " not matching platform");
       }
     }
-    throw new IllegalStateException(
-        "No factory found for " + platform + " make sure a suitable native wrapper is on the classpath!");
+    throw new IllegalStateException("No factory found for " + platform
+        + " : add the dependency to " + wrapperArtifact(platform)
+        + " or to panama-gl-wrappers-all, which contains the wrappers of all OS");
     // return null;
+  }
+
+  /** The artifact containing the wrapper of the OS of a platform, e.g. panama-gl-wrappers-linux. */
+  static String wrapperArtifact(Platform platform) {
+    if (platform.isWindows())
+      return "panama-gl-wrappers-windows";
+    else if (platform.isMac())
+      return "panama-gl-wrappers-macos";
+    else if (platform.isUnix())
+      return "panama-gl-wrappers-linux";
+    else
+      return "the panama-gl-wrappers of " + platform.getName();
   }
 }

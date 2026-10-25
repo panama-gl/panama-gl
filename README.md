@@ -260,7 +260,7 @@ One of the following Maven dependencies should be added to your project accordin
 <dependency>
   <groupId>org.jzy3d</groupId>
   <artifactId>panama-gl-ui-awt</artifactId>
-  <version>1.3.0</version>
+  <version>1.4.0</version>
 </dependency>
 ```
 ##### JavaFX dependency
@@ -269,7 +269,7 @@ One of the following Maven dependencies should be added to your project accordin
 <dependency>
   <groupId>org.jzy3d</groupId>
   <artifactId>panama-gl-ui-javafx</artifactId>
-  <version>1.3.0</version>
+  <version>1.4.0</version>
 </dependency>
 ```
 
@@ -278,9 +278,34 @@ One of the following Maven dependencies should be added to your project accordin
 <dependency>
   <groupId>org.jzy3d</groupId>
   <artifactId>panama-gl-ui-swing</artifactId>
-  <version>1.3.0</version>
+  <version>1.4.0</version>
 </dependency>
 ```
+
+#### Native wrappers
+
+Since 1.4.0, the UI dependencies above do not bring the native wrappers of the OS anymore, which avoids shipping the OpenGL bindings of all OS. Add the wrappers of the OS your application runs on :
+
+```xml
+<dependency>
+  <groupId>org.jzy3d</groupId>
+  <artifactId>panama-gl-wrappers-windows</artifactId> <!-- or panama-gl-wrappers-linux, panama-gl-wrappers-macos -->
+  <version>1.4.0</version>
+</dependency>
+```
+
+or the wrappers of all OS :
+
+```xml
+<dependency>
+  <groupId>org.jzy3d</groupId>
+  <artifactId>panama-gl-wrappers-all</artifactId>
+  <version>1.4.0</version>
+  <type>pom</type>
+</dependency>
+```
+
+Without the wrapper of the OS, `PanamaGLFactory.select()` fails with a message naming the missing dependency.
 
 #### Repository
 
