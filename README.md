@@ -260,7 +260,7 @@ One of the following Maven dependencies should be added to your project accordin
 <dependency>
   <groupId>org.jzy3d</groupId>
   <artifactId>panama-gl-ui-awt</artifactId>
-  <version>1.4.0</version>
+  <version>1.4.1</version>
 </dependency>
 ```
 ##### JavaFX dependency
@@ -269,7 +269,7 @@ One of the following Maven dependencies should be added to your project accordin
 <dependency>
   <groupId>org.jzy3d</groupId>
   <artifactId>panama-gl-ui-javafx</artifactId>
-  <version>1.4.0</version>
+  <version>1.4.1</version>
 </dependency>
 ```
 
@@ -278,7 +278,7 @@ One of the following Maven dependencies should be added to your project accordin
 <dependency>
   <groupId>org.jzy3d</groupId>
   <artifactId>panama-gl-ui-swing</artifactId>
-  <version>1.4.0</version>
+  <version>1.4.1</version>
 </dependency>
 ```
 
@@ -290,7 +290,7 @@ Since 1.4.0, the UI dependencies above do not bring the native wrappers of the O
 <dependency>
   <groupId>org.jzy3d</groupId>
   <artifactId>panama-gl-wrappers-windows</artifactId> <!-- or panama-gl-wrappers-linux, panama-gl-wrappers-macos -->
-  <version>1.4.0</version>
+  <version>1.4.1</version>
 </dependency>
 ```
 
@@ -300,7 +300,7 @@ or the wrappers of all OS :
 <dependency>
   <groupId>org.jzy3d</groupId>
   <artifactId>panama-gl-wrappers-all</artifactId>
-  <version>1.4.0</version>
+  <version>1.4.1</version>
   <type>pom</type>
 </dependency>
 ```

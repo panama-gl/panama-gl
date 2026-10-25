@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.jzy3d</groupId>
 		<artifactId>panama-gl</artifactId>
-		<version>1.4.0</version>
+		<version>1.4.1</version>
 	</parent>
 
 	<!-- The wrappers of all OS, for an application that runs on any OS. An application that only
