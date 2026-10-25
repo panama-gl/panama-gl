@@ -23,7 +23,7 @@ import java.util.List;
 import com.google.common.collect.ArrayListMultimap;
 import jextract.gl.java.AcceptsGLMethod;
 import jextract.gl.java.ClassMethodRegistry;
-import opengl.linux.glut_h;
+import opengl.linux.gl_h;
 
 /**
  * Enumerate all OpenGL methods available for generated binding.
@@ -45,12 +45,12 @@ public class Read_Registry_JExtract {
 
   protected static void byDirectLink() throws IllegalAccessException {
     ClassMethodRegistry registry = new ClassMethodRegistry();
-    List<Method> methods = registry.selectMethods(glut_h.class, new AcceptsGLMethod());
+    List<Method> methods = registry.selectMethods(gl_h.class, new AcceptsGLMethod());
     
     registry.sort(methods);
     registry.print(methods);
     
-    System.out.println("Filtered to " + methods.size() + " methods (initially " + glut_h.class.getMethods().length + ")");
+    System.out.println("Filtered to " + methods.size() + " methods (initially " + gl_h.class.getMethods().length + ")");
   }
 
   protected static ClassMethodRegistry byIntrospection()
@@ -62,7 +62,7 @@ public class Read_Registry_JExtract {
     // use reflection to load all classes allowing to invok gl* methods
     String packageName = "opengl.ubuntu.v20";
     // String classPattern = "constants\\$(\\d+)";
-    String classPattern = "glut_h";
+    String classPattern = "gl_h";
     ArrayListMultimap<Class<?>, Method> cm = registry.selectClassMethods(packageName, classPattern, new AcceptsGLMethod());
     System.out.println(cm.values().size() + " GL/GLU/GLUT methods");
     return registry;

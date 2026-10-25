@@ -17,7 +17,7 @@ package panamagl.platform.linux;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import glx.linux.glx_h;
+import opengl.linux.gl_h;
 import panamagl.opengl.GLFunctionLoader;
 
 /**
@@ -33,7 +33,7 @@ public class GLFunctionLoader_linux implements GLFunctionLoader {
   @Override
   public MemorySegment getProcAddress(String function) {
     try (Arena arena = Arena.ofConfined()) {
-      return glx_h.glXGetProcAddress(arena.allocateFrom(function));
+      return gl_h.glXGetProcAddress(arena.allocateFrom(function));
     }
   }
 }

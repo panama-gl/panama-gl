@@ -1,6 +1,6 @@
 package demos.opengl;
 
-import static opengl.linux.glut_h.*;
+import static opengl.linux.gl_h.*;
 import java.lang.foreign.Arena;
 
 /*

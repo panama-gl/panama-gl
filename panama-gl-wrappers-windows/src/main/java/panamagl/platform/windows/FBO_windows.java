@@ -21,8 +21,6 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 // le vrai import peut etre le suivant 
-//import glext.linux.PFNGLBINDFRAMEBUFFEREXTPROC;
-//import glx.linux.PFNGLBINDFRAMEBUFFEREXTPROC;
 import opengl.linux.PFNGLBINDFRAMEBUFFEREXTPROC;
 import opengl.linux.PFNGLBINDRENDERBUFFEREXTPROC;
 import opengl.linux.PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC;
@@ -33,7 +31,7 @@ import opengl.linux.PFNGLFRAMEBUFFERTEXTURE2DEXTPROC;
 import opengl.linux.PFNGLGENFRAMEBUFFERSEXTPROC;
 import opengl.linux.PFNGLGENRENDERBUFFERSEXTPROC;
 import opengl.linux.PFNGLRENDERBUFFERSTORAGEEXTPROC;
-import opengl.linux.glut_h;
+import opengl.linux.gl_h;
 import panamagl.Debug;
 import panamagl.Image;
 import panamagl.offscreen.AFBO;
@@ -241,7 +239,7 @@ public class FBO_windows extends AFBO implements FBO {
     bindFramebuffer(idFrameBuffer);
 
     // Attach 2D texture to this FBO
-    PFNGLFRAMEBUFFERTEXTURE2DEXTPROC.invoke(glFramebufferTexture2D, glut_h.GL_FRAMEBUFFER_EXT(), glut_h.GL_COLOR_ATTACHMENT0_EXT(), GL.GL_TEXTURE_2D, idTexture, 0);
+    PFNGLFRAMEBUFFERTEXTURE2DEXTPROC.invoke(glFramebufferTexture2D, gl_h.GL_FRAMEBUFFER_EXT(), gl_h.GL_COLOR_ATTACHMENT0_EXT(), GL.GL_TEXTURE_2D, idTexture, 0);
 
     
     // -------------------------
@@ -259,24 +257,24 @@ public class FBO_windows extends AFBO implements FBO {
     Debug.debug(debug, "FBO: Got RenderBuffer ID : " + idRenderBuffer);
 
     // Bind render buffer
-    PFNGLBINDRENDERBUFFEREXTPROC.invoke(glBindRenderbuffer, glut_h.GL_RENDERBUFFER_EXT(), idRenderBuffer);
-    PFNGLRENDERBUFFERSTORAGEEXTPROC.invoke(glRenderbufferStorage, glut_h.GL_RENDERBUFFER_EXT(), GL.GL_DEPTH_COMPONENT24, width, height);
+    PFNGLBINDRENDERBUFFEREXTPROC.invoke(glBindRenderbuffer, gl_h.GL_RENDERBUFFER_EXT(), idRenderBuffer);
+    PFNGLRENDERBUFFERSTORAGEEXTPROC.invoke(glRenderbufferStorage, gl_h.GL_RENDERBUFFER_EXT(), GL.GL_DEPTH_COMPONENT24, width, height);
 
     
     // -------------------------
     // Attach depth buffer to FBO
 
-    PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC.invoke(glFramebufferRenderbuffer, glut_h.GL_FRAMEBUFFER_EXT(), glut_h.GL_DEPTH_ATTACHMENT_EXT(), glut_h.GL_RENDERBUFFER_EXT(), idRenderBuffer);
+    PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC.invoke(glFramebufferRenderbuffer, gl_h.GL_FRAMEBUFFER_EXT(), gl_h.GL_DEPTH_ATTACHMENT_EXT(), gl_h.GL_RENDERBUFFER_EXT(), idRenderBuffer);
 
     
     // -------------------------
     // Does the GPU support current FBO configuration?
 
-    int status = PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC.invoke(glCheckFramebufferStatus, glut_h.GL_FRAMEBUFFER_EXT());
+    int status = PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC.invoke(glCheckFramebufferStatus, gl_h.GL_FRAMEBUFFER_EXT());
 
-    if (status != glut_h.GL_FRAMEBUFFER_COMPLETE_EXT()) {
+    if (status != gl_h.GL_FRAMEBUFFER_COMPLETE_EXT()) {
       throw new RuntimeException("Incomplete framebuffer, not supporting current FBO config : "
-          + status + " != GL_FRAMEBUFFER_COMPLETE (" + glut_h.GL_FRAMEBUFFER_COMPLETE_EXT() + ")");
+          + status + " != GL_FRAMEBUFFER_COMPLETE (" + gl_h.GL_FRAMEBUFFER_COMPLETE_EXT() + ")");
     }
 
     // -------------------------
@@ -349,6 +347,6 @@ public class FBO_windows extends AFBO implements FBO {
 
   @Override
   protected void bindFramebuffer(int id) {
-    PFNGLBINDFRAMEBUFFEREXTPROC.invoke(glBindFramebuffer, glut_h.GL_FRAMEBUFFER(), id);
+    PFNGLBINDFRAMEBUFFEREXTPROC.invoke(glBindFramebuffer, gl_h.GL_FRAMEBUFFER(), id);
   }
 }
