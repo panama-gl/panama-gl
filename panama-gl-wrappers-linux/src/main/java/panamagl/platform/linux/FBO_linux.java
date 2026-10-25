@@ -20,10 +20,7 @@ package panamagl.platform.linux;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-import glx.linux.glx_h;
-//import glext.linux.PFNGLBINDFRAMEBUFFEREXTPROC;
-//import glext.linux.PFNGLGENFRAMEBUFFERSEXTPROC;
-//import glext.linux.PFNGLGENRENDERBUFFERSEXTPROC;
+import opengl.linux.gl_h;
 import opengl.linux.PFNGLBINDFRAMEBUFFEREXTPROC;
 import opengl.linux.PFNGLGENFRAMEBUFFERSEXTPROC;
 import opengl.linux.PFNGLGENRENDERBUFFERSEXTPROC;
@@ -34,7 +31,6 @@ import opengl.linux.PFNGLDELETERENDERBUFFERSEXTPROC;
 import opengl.linux.PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC;
 import opengl.linux.PFNGLFRAMEBUFFERTEXTURE2DEXTPROC;
 import opengl.linux.PFNGLRENDERBUFFERSTORAGEEXTPROC;
-import opengl.linux.glut_h;
 import panamagl.Debug;
 import panamagl.Image;
 import panamagl.offscreen.AFBO;
@@ -110,43 +106,43 @@ public class FBO_linux extends AFBO implements FBO {
     
     // glGenFramebuffers
     function = classArena.allocateFrom("glGenFramebuffersEXT");
-    glGenFramebuffers = glx_h.glXGetProcAddress(function);
+    glGenFramebuffers = gl_h.glXGetProcAddress(function);
         
     // glBindFramebuffer
     function = classArena.allocateFrom("glBindFramebufferEXT");
-    glBindFramebuffer = glx_h.glXGetProcAddress(function);
+    glBindFramebuffer = gl_h.glXGetProcAddress(function);
     
     // glFramebufferTexture2D
     function = classArena.allocateFrom("glFramebufferTexture2DEXT");
-    glFramebufferTexture2D = glx_h.glXGetProcAddress(function);
+    glFramebufferTexture2D = gl_h.glXGetProcAddress(function);
 
     // glGenRenderbuffers
     function = classArena.allocateFrom("glGenRenderbuffersEXT");
-    glGenRenderbuffers = glx_h.glXGetProcAddress(function);
+    glGenRenderbuffers = gl_h.glXGetProcAddress(function);
     
     // glBindRenderbuffer
     function = classArena.allocateFrom("glBindRenderbufferEXT");
-    glBindRenderbuffer = glx_h.glXGetProcAddress(function);
+    glBindRenderbuffer = gl_h.glXGetProcAddress(function);
     
     // glRenderbufferStorage
     function = classArena.allocateFrom("glRenderbufferStorageEXT");
-    glRenderbufferStorage = glx_h.glXGetProcAddress(function);
+    glRenderbufferStorage = gl_h.glXGetProcAddress(function);
     
     // glFramebufferRenderbuffer
     function = classArena.allocateFrom("glFramebufferRenderbufferEXT");
-    glFramebufferRenderbuffer = glx_h.glXGetProcAddress(function);
+    glFramebufferRenderbuffer = gl_h.glXGetProcAddress(function);
     
     // glCheckFramebufferStatus
     function = classArena.allocateFrom("glCheckFramebufferStatusEXT");
-    glCheckFramebufferStatus = glx_h.glXGetProcAddress(function);
+    glCheckFramebufferStatus = gl_h.glXGetProcAddress(function);
    
     // glDeleteRenderbuffers
     function = classArena.allocateFrom("glDeleteRenderbuffersEXT");
-    glDeleteRenderbuffers = glx_h.glXGetProcAddress(function);
+    glDeleteRenderbuffers = gl_h.glXGetProcAddress(function);
     
     // glDeleteFramebuffers
     function = classArena.allocateFrom("glDeleteFramebuffersEXT");
-    glDeleteFramebuffers = glx_h.glXGetProcAddress(function);
+    glDeleteFramebuffers = gl_h.glXGetProcAddress(function);
     
   }
   
@@ -213,7 +209,7 @@ public class FBO_linux extends AFBO implements FBO {
       int nFramebuffers = 1;
       frameBufferIds = renderArena.allocate(nFramebuffers * INT_SIZE);
       PFNGLGENFRAMEBUFFERSEXTPROC.invoke(glGenFramebuffers, nFramebuffers, frameBufferIds);
-      // replace >> glut_h.glGenFramebuffers(1, frameBufferIds);
+      // replace >> gl_h.glGenFramebuffers(1, frameBufferIds);
       
       idFrameBuffer = (int) frameBufferIds.get(ValueLayout.JAVA_INT, 0);
     }
@@ -228,7 +224,7 @@ public class FBO_linux extends AFBO implements FBO {
     bindFramebuffer(idFrameBuffer);
 
     // Attach 2D texture to this FBO
-    PFNGLFRAMEBUFFERTEXTURE2DEXTPROC.invoke(glFramebufferTexture2D, glut_h.GL_FRAMEBUFFER_EXT(), glut_h.GL_COLOR_ATTACHMENT0_EXT(), GL.GL_TEXTURE_2D, idTexture, 0);
+    PFNGLFRAMEBUFFERTEXTURE2DEXTPROC.invoke(glFramebufferTexture2D, gl_h.GL_FRAMEBUFFER_EXT(), gl_h.GL_COLOR_ATTACHMENT0_EXT(), GL.GL_TEXTURE_2D, idTexture, 0);
 
     
     // -------------------------
@@ -246,24 +242,24 @@ public class FBO_linux extends AFBO implements FBO {
     Debug.debug(debug, "FBO: Got RenderBuffer ID : " + idRenderBuffer);
 
     // Bind render buffer
-    PFNGLBINDRENDERBUFFEREXTPROC.invoke(glBindRenderbuffer, glut_h.GL_RENDERBUFFER_EXT(), idRenderBuffer);
-    PFNGLRENDERBUFFERSTORAGEEXTPROC.invoke(glRenderbufferStorage, glut_h.GL_RENDERBUFFER_EXT(), GL.GL_DEPTH_COMPONENT24, width, height);
+    PFNGLBINDRENDERBUFFEREXTPROC.invoke(glBindRenderbuffer, gl_h.GL_RENDERBUFFER_EXT(), idRenderBuffer);
+    PFNGLRENDERBUFFERSTORAGEEXTPROC.invoke(glRenderbufferStorage, gl_h.GL_RENDERBUFFER_EXT(), GL.GL_DEPTH_COMPONENT24, width, height);
 
     
     // -------------------------
     // Attach depth buffer to FBO
 
-    PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC.invoke(glFramebufferRenderbuffer, glut_h.GL_FRAMEBUFFER_EXT(), glut_h.GL_DEPTH_ATTACHMENT_EXT(), glut_h.GL_RENDERBUFFER_EXT(), idRenderBuffer);
+    PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC.invoke(glFramebufferRenderbuffer, gl_h.GL_FRAMEBUFFER_EXT(), gl_h.GL_DEPTH_ATTACHMENT_EXT(), gl_h.GL_RENDERBUFFER_EXT(), idRenderBuffer);
 
     
     // -------------------------
     // Does the GPU support current FBO configuration?
 
-    int status = PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC.invoke(glCheckFramebufferStatus, glut_h.GL_FRAMEBUFFER_EXT());
+    int status = PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC.invoke(glCheckFramebufferStatus, gl_h.GL_FRAMEBUFFER_EXT());
 
-    if (status != glut_h.GL_FRAMEBUFFER_COMPLETE_EXT()) {
+    if (status != gl_h.GL_FRAMEBUFFER_COMPLETE_EXT()) {
       throw new RuntimeException("Incomplete framebuffer, not supporting current FBO config : "
-          + status + " != GL_FRAMEBUFFER_COMPLETE (" + glut_h.GL_FRAMEBUFFER_COMPLETE_EXT() + ")");
+          + status + " != GL_FRAMEBUFFER_COMPLETE (" + gl_h.GL_FRAMEBUFFER_COMPLETE_EXT() + ")");
     }
 
     // -------------------------
@@ -336,6 +332,6 @@ public class FBO_linux extends AFBO implements FBO {
 
   @Override
   protected void bindFramebuffer(int id) {
-    PFNGLBINDFRAMEBUFFEREXTPROC.invoke(glBindFramebuffer, glut_h.GL_FRAMEBUFFER(), id);
+    PFNGLBINDFRAMEBUFFEREXTPROC.invoke(glBindFramebuffer, gl_h.GL_FRAMEBUFFER(), id);
   }
 }

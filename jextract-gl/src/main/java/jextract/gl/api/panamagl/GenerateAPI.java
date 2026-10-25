@@ -149,7 +149,7 @@ public class GenerateAPI {
       wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
 
       APIPlatform platform = new APIPlatform(OS.linux);
-      Set<Class<?>> wrapped = Set.of(glext.linux.glext_h.class);
+      Set<Class<?>> wrapped = Set.of(opengl.linux.gl_h.class);
       Class<?> factoryBase = APanamaGLFactory_linux.class;
       Class<?> factorymatcher = PlatformMatcher_linux.class;
       boolean genGlut = false;

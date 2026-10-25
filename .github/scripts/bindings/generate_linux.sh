@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Generate the Linux bindings of PanamaGL with jextract, as the scripts of
-# panama-gl-bindings/scripts/linux do, but in packages without CPU name so
-# that the bindings generated on x86_64 and ARM64 can be compared.
+# Generate the Linux binding of PanamaGL with jextract, as
+# panama-gl-bindings/scripts/linux/generate_opengl.sh does, so that the
+# bindings generated on x86_64 and ARM64 can be compared.
 #
 # Usage : generate_linux.sh <jextract> <panama-gl-bindings/scripts/linux> <output dir>
 set -euo pipefail
@@ -22,7 +22,4 @@ generate() {
     || { grep -v warning "$log" | tail -40; echo "jextract failed for $package"; exit 1; }
 }
 
-generate opengl.linux glut_h /usr/include/GL/glut.h -lGL -lglut -lGLU -lGLEW
-generate glext.linux glext_h "$SCRIPTS/include_glext.h" -lGL -lGLX
-generate glx.linux glx_h /usr/include/GL/glx.h -lGL -lGLX
-generate glxext.linux glxext_h "$SCRIPTS/include_glxext.h" -lGL -lGLX
+generate opengl.linux gl_h "$SCRIPTS/include_linux.h"

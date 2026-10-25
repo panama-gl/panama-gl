@@ -20,9 +20,8 @@ package panamagl.platform.linux;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-import glx.linux.glx_h;
+import opengl.linux.gl_h;
 import opengl.linux.NativeLibLoader;
-import opengl.linux.glut_h;
 import panamagl.Debug;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;
@@ -54,13 +53,13 @@ public class GLXContext_linux extends AGLContext implements GLContext{
       Debug.debug(debug, "GLXContext : will glutInit");
 
       MemorySegment argc = arena.allocate(ValueLayout.JAVA_INT, 1);
-      glut_h.glutInit(argc, argc);
+      gl_h.glutInit(argc, argc);
       GLUTContext_linux.hasInit = true;
     }
     
     // Make display and choose default screen
-    display = glx_h.XOpenDisplay(glx_h.NULL());
-    int screen = glx_h.XDefaultScreen(display);
+    display = gl_h.XOpenDisplay(gl_h.NULL());
+    int screen = gl_h.XDefaultScreen(display);
     
     Debug.debug(debug, "GLXContext : screen : " + screen);
 
@@ -75,17 +74,17 @@ public class GLXContext_linux extends AGLContext implements GLContext{
     // This shows how to load an open gl version
     
     /*PFNGLXCREATECONTEXTATTRIBSARBPROC glXCreateContextAttribsARB = 
-        (PFNGLXCREATECONTEXTATTRIBSARBPROC) glx_h.glXGetProcAddressARB(allocator.allocateUtf8String("glXCreateContextAttribsARB"));
+        (PFNGLXCREATECONTEXTATTRIBSARBPROC) gl_h.glXGetProcAddressARB(allocator.allocateUtf8String("glXCreateContextAttribsARB"));
     PFNGLXMAKECONTEXTCURRENTPROC glXMakeContextCurrentARB = 
-        (PFNGLXMAKECONTEXTCURRENTPROC) glx_h.glXGetProcAddressARB(allocator.allocateUtf8String("glXMakeContextCurrent"));
+        (PFNGLXMAKECONTEXTCURRENTPROC) gl_h.glXGetProcAddressARB(allocator.allocateUtf8String("glXMakeContextCurrent"));
 
     
     int context_attribs[] = {
-        glx_h.GLX_CONTEXT_MAJOR_VERSION_ARB() ,3,
-        glx_h.GLX_CONTEXT_MINOR_VERSION_ARB(), 2,
-        glx_h.GLX_CONTEXT_FLAGS_ARB(), glx_h.GLX_CONTEXT_DEBUG_BIT_ARB(),
-        glx_h.GLX_CONTEXT_PROFILE_MASK_ARB(), glx_h.GLX_CONTEXT_CORE_PROFILE_BIT_ARB(),
-        (int)glx_h.None()
+        gl_h.GLX_CONTEXT_MAJOR_VERSION_ARB() ,3,
+        gl_h.GLX_CONTEXT_MINOR_VERSION_ARB(), 2,
+        gl_h.GLX_CONTEXT_FLAGS_ARB(), gl_h.GLX_CONTEXT_DEBUG_BIT_ARB(),
+        gl_h.GLX_CONTEXT_PROFILE_MASK_ARB(), gl_h.GLX_CONTEXT_CORE_PROFILE_BIT_ARB(),
+        (int)gl_h.None()
     };
 
     MemorySegment contextAttrib = allocator.allocateArray(ValueLayout.JAVA_INT, context_attribs);
@@ -99,7 +98,7 @@ public class GLXContext_linux extends AGLContext implements GLContext{
   
   @Override
   public void destroy() {
-    glx_h.glXDestroyContext(display, context);
+    gl_h.glXDestroyContext(display, context);
     
     initialized = false;
   }
@@ -114,14 +113,14 @@ public class GLXContext_linux extends AGLContext implements GLContext{
   protected MemorySegment chooseVisual(int screen) {
     
     int[] attributes = { 
-        glx_h.GLX_RGBA(), 
-        glx_h.GLX_RED_SIZE(),    8,
-        glx_h.GLX_GREEN_SIZE(),  8,
-        glx_h.GLX_BLUE_SIZE(),   8,
-        glx_h.GLX_ALPHA_SIZE(),  8,
-        glx_h.GLX_DEPTH_SIZE(), 24, //Ideally, the size would be 32 (or at least 24)
-        //glx_h.GLX_DOUBLEBUFFER(), True,
-        (int) glx_h.None() // Should always finish by NONE
+        gl_h.GLX_RGBA(), 
+        gl_h.GLX_RED_SIZE(),    8,
+        gl_h.GLX_GREEN_SIZE(),  8,
+        gl_h.GLX_BLUE_SIZE(),   8,
+        gl_h.GLX_ALPHA_SIZE(),  8,
+        gl_h.GLX_DEPTH_SIZE(), 24, //Ideally, the size would be 32 (or at least 24)
+        //gl_h.GLX_DOUBLEBUFFER(), True,
+        (int) gl_h.None() // Should always finish by NONE
     };
     
     MemorySegment attrib = arena.allocateFrom(ValueLayout.JAVA_INT, attributes);
@@ -132,12 +131,12 @@ public class GLXContext_linux extends AGLContext implements GLContext{
     
     // This one WORK!!
     if(AttribMode.CHOSEN.equals(mode)){
-      visualInfo = glx_h.glXChooseVisual(display, screen, attrib);
+      visualInfo = gl_h.glXChooseVisual(display, screen, attrib);
     }
     
     // XXX This one actually do not work
     else if(AttribMode.DEFAULT.equals(mode)) {
-      visualInfo = glx_h.XDefaultVisual(display, screen);
+      visualInfo = gl_h.XDefaultVisual(display, screen);
     }
     
     // XXX This one actually do not work
@@ -145,9 +144,9 @@ public class GLXContext_linux extends AGLContext implements GLContext{
       
       int[] fboC = {1};
       MemorySegment fboCount = arena.allocateFrom(ValueLayout.JAVA_INT, fboC);
-      MemorySegment frameBufferConfig = glx_h.glXChooseFBConfig(display, screen, attrib, fboCount);
+      MemorySegment frameBufferConfig = gl_h.glXChooseFBConfig(display, screen, attrib, fboCount);
 
-      visualInfo = glx_h.glXGetVisualFromFBConfig(display, frameBufferConfig);
+      visualInfo = gl_h.glXGetVisualFromFBConfig(display, frameBufferConfig);
     }
     else {
       throw new RuntimeException("Unsupported mode");
@@ -163,14 +162,14 @@ public class GLXContext_linux extends AGLContext implements GLContext{
    * @param visualInfo
    */
   protected void createContext(MemorySegment visualInfo) {
-    MemorySegment shareList = glx_h.NULL();
+    MemorySegment shareList = gl_h.NULL();
     
     // A value of True specifies that rendering be done through a direct connection to the 
     // graphics system if possible; a value of False specifies rendering through the X server.
-    int direct = glx_h.GL_TRUE();
+    int direct = gl_h.GL_TRUE();
     
     // https://www.ibm.com/docs/en/aix/7.1?topic=environment-glxcreatecontext-subroutine
-    context = glx_h.glXCreateContext(display, visualInfo, shareList, direct);
+    context = gl_h.glXCreateContext(display, visualInfo, shareList, direct);
     
     Debug.debug(debug, "GLXContext : Got context " + context);
   }
@@ -180,7 +179,7 @@ public class GLXContext_linux extends AGLContext implements GLContext{
    */
   public void makeCurrent() {
     // https://opengl.developpez.com/docs/man/man/glXMakeCurrent
-    glx_h.glXMakeCurrent(display, 0, context);
+    gl_h.glXMakeCurrent(display, 0, context);
 
     Debug.debug(debug, "GLXContext : Made current " + context);
   }

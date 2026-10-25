@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
-import opengl.linux.glut_h;
+import opengl.linux.gl_h;
 
 // vm args : --enable-native-access=ALL-UNNAMED --add-modules jdk.incubator.foreign
 public class TestClassMethodRegistry {
@@ -29,7 +29,7 @@ public class TestClassMethodRegistry {
   public void test() throws IllegalAccessException {
     ClassMethodRegistry registry = new ClassMethodRegistry();
     
-    List<Method> methods = registry.selectMethods(glut_h.class, new AcceptsGLMethod());
+    List<Method> methods = registry.selectMethods(gl_h.class, new AcceptsGLMethod());
 
     Assert.assertEquals(673, methods.size());
   }

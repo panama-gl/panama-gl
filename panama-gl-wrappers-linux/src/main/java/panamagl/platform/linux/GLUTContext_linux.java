@@ -22,7 +22,7 @@ import java.lang.foreign.ValueLayout;
 import opengl.linux.NativeLibLoader;
 import opengl.linux.glutDisplayFunc$callback;
 import opengl.linux.glutIdleFunc$callback;
-import opengl.linux.glut_h;
+import opengl.linux.gl_h;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
@@ -66,20 +66,20 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
 
     if(!hasInit) {
       MemorySegment argc = arena.allocate(ValueLayout.JAVA_INT, 1);
-      glut_h.glutInit(argc, argc);
+      gl_h.glutInit(argc, argc);
       hasInit = true;
     }
     
-    glut_h.glutInitDisplayMode(glut_h.GLUT_DOUBLE() | glut_h.GLUT_RGBA() | glut_h.GLUT_DEPTH());
-    glut_h.glutInitWindowSize(initWidth, initHeight);
-    glut_h.glutInitWindowPosition(initX, initY);
+    gl_h.glutInitDisplayMode(gl_h.GLUT_DOUBLE() | gl_h.GLUT_RGBA() | gl_h.GLUT_DEPTH());
+    gl_h.glutInitWindowSize(initWidth, initHeight);
+    gl_h.glutInitWindowPosition(initX, initY);
     
-    windowHandle = glut_h.glutCreateWindow(arena.allocateFrom(windowName));
+    windowHandle = gl_h.glutCreateWindow(arena.allocateFrom(windowName));
     
     //System.out.println("WINDOW HANDLE :  " + windowHandle);
     
     // Hacky!! Use it while GLXContext is not working
-    glut_h.glutHideWindow();
+    gl_h.glutHideWindow();
 
     // This dummy stub registration is required to get macOS onscreen rendering working
     // It will avoid error message
@@ -94,7 +94,7 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
   @Override
   public void destroy() {
     if(windowHandle>=0) {
-      glut_h.glutDestroyWindow(windowHandle);
+      gl_h.glutDestroyWindow(windowHandle);
       windowHandle = -1;
     }
     
@@ -104,11 +104,11 @@ public class GLUTContext_linux extends AGLContext implements GLContext {
 
   protected void glutDisplayFunc(glutDisplayFunc$callback.Function fi) {
     MemorySegment displayStub = glutDisplayFunc$callback.allocate(fi, arena);
-    glut_h.glutDisplayFunc(displayStub);
+    gl_h.glutDisplayFunc(displayStub);
   }
 
   protected void glutIdleFunc(glutIdleFunc$callback.Function fi) {
     MemorySegment idleStub = glutIdleFunc$callback.allocate(fi, arena);
-    glut_h.glutIdleFunc(idleStub);
+    gl_h.glutIdleFunc(idleStub);
   }
 }
