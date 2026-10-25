@@ -21,24 +21,24 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 // le vrai import peut etre le suivant 
-import opengl.linux.PFNGLBINDFRAMEBUFFEREXTPROC;
-import opengl.linux.PFNGLBINDRENDERBUFFEREXTPROC;
-import opengl.linux.PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC;
-import opengl.linux.PFNGLDELETEFRAMEBUFFERSEXTPROC;
-import opengl.linux.PFNGLDELETERENDERBUFFERSEXTPROC;
-import opengl.linux.PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC;
-import opengl.linux.PFNGLFRAMEBUFFERTEXTURE2DEXTPROC;
-import opengl.linux.PFNGLGENFRAMEBUFFERSEXTPROC;
-import opengl.linux.PFNGLGENRENDERBUFFERSEXTPROC;
-import opengl.linux.PFNGLRENDERBUFFERSTORAGEEXTPROC;
-import opengl.linux.gl_h;
+import opengl.glext.PFNGLBINDFRAMEBUFFEREXTPROC;
+import opengl.glext.PFNGLBINDRENDERBUFFEREXTPROC;
+import opengl.glext.PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC;
+import opengl.glext.PFNGLDELETEFRAMEBUFFERSEXTPROC;
+import opengl.glext.PFNGLDELETERENDERBUFFERSEXTPROC;
+import opengl.glext.PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC;
+import opengl.glext.PFNGLFRAMEBUFFERTEXTURE2DEXTPROC;
+import opengl.glext.PFNGLGENFRAMEBUFFERSEXTPROC;
+import opengl.glext.PFNGLGENRENDERBUFFERSEXTPROC;
+import opengl.glext.PFNGLRENDERBUFFERSTORAGEEXTPROC;
+import opengl.glext.glext_h;
 import panamagl.Debug;
 import panamagl.Image;
 import panamagl.offscreen.AFBO;
 import panamagl.offscreen.FBO;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLError;
-import wgl.windows.wgl_h;
+import opengl.windows.gl_h;
 
 
 
@@ -117,7 +117,7 @@ public class FBO_windows extends AFBO implements FBO {
     
     // glGenFramebuffers
     function = classArena.allocateFrom("glGenFramebuffersEXT");
-    glGenFramebuffers = wgl_h.wglGetProcAddress(function);
+    glGenFramebuffers = gl_h.wglGetProcAddress(function);
     
     if (glGenFramebuffers.address() == 0L) {
       throw new UnsupportedOperationException(
@@ -127,39 +127,39 @@ public class FBO_windows extends AFBO implements FBO {
     
     // glBindFramebuffer
     function = classArena.allocateFrom("glBindFramebufferEXT");
-    glBindFramebuffer = wgl_h.wglGetProcAddress(function);
+    glBindFramebuffer = gl_h.wglGetProcAddress(function);
     
     // glFramebufferTexture2D
     function = classArena.allocateFrom("glFramebufferTexture2DEXT");
-    glFramebufferTexture2D = wgl_h.wglGetProcAddress(function);
+    glFramebufferTexture2D = gl_h.wglGetProcAddress(function);
 
     // glGenRenderbuffers
     function = classArena.allocateFrom("glGenRenderbuffersEXT");
-    glGenRenderbuffers = wgl_h.wglGetProcAddress(function);
+    glGenRenderbuffers = gl_h.wglGetProcAddress(function);
     
     // glBindRenderbuffer
     function = classArena.allocateFrom("glBindRenderbufferEXT");
-    glBindRenderbuffer = wgl_h.wglGetProcAddress(function);
+    glBindRenderbuffer = gl_h.wglGetProcAddress(function);
     
     // glRenderbufferStorage
     function = classArena.allocateFrom("glRenderbufferStorageEXT");
-    glRenderbufferStorage = wgl_h.wglGetProcAddress(function);
+    glRenderbufferStorage = gl_h.wglGetProcAddress(function);
     
     // glFramebufferRenderbuffer
     function = classArena.allocateFrom("glFramebufferRenderbufferEXT");
-    glFramebufferRenderbuffer = wgl_h.wglGetProcAddress(function);
+    glFramebufferRenderbuffer = gl_h.wglGetProcAddress(function);
     
     // glCheckFramebufferStatus
     function = classArena.allocateFrom("glCheckFramebufferStatusEXT");
-    glCheckFramebufferStatus = wgl_h.wglGetProcAddress(function);
+    glCheckFramebufferStatus = gl_h.wglGetProcAddress(function);
    
     // glDeleteRenderbuffers
     function = classArena.allocateFrom("glDeleteRenderbuffersEXT");
-    glDeleteRenderbuffers = wgl_h.wglGetProcAddress(function);
+    glDeleteRenderbuffers = gl_h.wglGetProcAddress(function);
     
     // glDeleteFramebuffers
     function = classArena.allocateFrom("glDeleteFramebuffersEXT");
-    glDeleteFramebuffers = wgl_h.wglGetProcAddress(function);
+    glDeleteFramebuffers = gl_h.wglGetProcAddress(function);
   }
   
   // could avoid renewing buffers, but keep the same behaviour
@@ -239,7 +239,7 @@ public class FBO_windows extends AFBO implements FBO {
     bindFramebuffer(idFrameBuffer);
 
     // Attach 2D texture to this FBO
-    PFNGLFRAMEBUFFERTEXTURE2DEXTPROC.invoke(glFramebufferTexture2D, gl_h.GL_FRAMEBUFFER_EXT(), gl_h.GL_COLOR_ATTACHMENT0_EXT(), GL.GL_TEXTURE_2D, idTexture, 0);
+    PFNGLFRAMEBUFFERTEXTURE2DEXTPROC.invoke(glFramebufferTexture2D, glext_h.GL_FRAMEBUFFER_EXT(), glext_h.GL_COLOR_ATTACHMENT0_EXT(), GL.GL_TEXTURE_2D, idTexture, 0);
 
     
     // -------------------------
@@ -257,24 +257,24 @@ public class FBO_windows extends AFBO implements FBO {
     Debug.debug(debug, "FBO: Got RenderBuffer ID : " + idRenderBuffer);
 
     // Bind render buffer
-    PFNGLBINDRENDERBUFFEREXTPROC.invoke(glBindRenderbuffer, gl_h.GL_RENDERBUFFER_EXT(), idRenderBuffer);
-    PFNGLRENDERBUFFERSTORAGEEXTPROC.invoke(glRenderbufferStorage, gl_h.GL_RENDERBUFFER_EXT(), GL.GL_DEPTH_COMPONENT24, width, height);
+    PFNGLBINDRENDERBUFFEREXTPROC.invoke(glBindRenderbuffer, glext_h.GL_RENDERBUFFER_EXT(), idRenderBuffer);
+    PFNGLRENDERBUFFERSTORAGEEXTPROC.invoke(glRenderbufferStorage, glext_h.GL_RENDERBUFFER_EXT(), GL.GL_DEPTH_COMPONENT24, width, height);
 
     
     // -------------------------
     // Attach depth buffer to FBO
 
-    PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC.invoke(glFramebufferRenderbuffer, gl_h.GL_FRAMEBUFFER_EXT(), gl_h.GL_DEPTH_ATTACHMENT_EXT(), gl_h.GL_RENDERBUFFER_EXT(), idRenderBuffer);
+    PFNGLFRAMEBUFFERRENDERBUFFEREXTPROC.invoke(glFramebufferRenderbuffer, glext_h.GL_FRAMEBUFFER_EXT(), glext_h.GL_DEPTH_ATTACHMENT_EXT(), glext_h.GL_RENDERBUFFER_EXT(), idRenderBuffer);
 
     
     // -------------------------
     // Does the GPU support current FBO configuration?
 
-    int status = PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC.invoke(glCheckFramebufferStatus, gl_h.GL_FRAMEBUFFER_EXT());
+    int status = PFNGLCHECKFRAMEBUFFERSTATUSEXTPROC.invoke(glCheckFramebufferStatus, glext_h.GL_FRAMEBUFFER_EXT());
 
-    if (status != gl_h.GL_FRAMEBUFFER_COMPLETE_EXT()) {
+    if (status != glext_h.GL_FRAMEBUFFER_COMPLETE_EXT()) {
       throw new RuntimeException("Incomplete framebuffer, not supporting current FBO config : "
-          + status + " != GL_FRAMEBUFFER_COMPLETE (" + gl_h.GL_FRAMEBUFFER_COMPLETE_EXT() + ")");
+          + status + " != GL_FRAMEBUFFER_COMPLETE (" + glext_h.GL_FRAMEBUFFER_COMPLETE_EXT() + ")");
     }
 
     // -------------------------
@@ -347,6 +347,6 @@ public class FBO_windows extends AFBO implements FBO {
 
   @Override
   protected void bindFramebuffer(int id) {
-    PFNGLBINDFRAMEBUFFEREXTPROC.invoke(glBindFramebuffer, gl_h.GL_FRAMEBUFFER(), id);
+    PFNGLBINDFRAMEBUFFEREXTPROC.invoke(glBindFramebuffer, glext_h.GL_FRAMEBUFFER(), id);
   }
 }

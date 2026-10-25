@@ -54,6 +54,23 @@ Beyond the CPU, the packages of an OS largely overlap, since each one is generat
 * **Linux** : `glext` is `opengl` (Mesa's `gl.h` includes `glext.h`), `glxext` is `glx` (`glx.h` includes `glxext.h`), and `glx` contains `opengl` except GLUT and GLU. A single binding of `glut.h` and `glx.h` contains all the declarations of the four packages : 17 MB of sources instead of 65 MB, 7 150 classes instead of 25 580, and a jar of 6.7 MB instead of 23.3 MB (generated on Linux x86_64 with jextract 23, compiled for JDK 25). PanamaGL does not use `glxext`.
 * **Windows** : `wgl` (71 MB of sources) and `freeglut` (30 MB) both declare `windows.h`. A single binding of both header sets would be about the size of `wgl`, and smaller with `WIN32_LEAN_AND_MEAN`, which excludes the COM, OLE and RPC headers that PanamaGL does not use (not measured).
 
+## One glext binding for all OS, since 1.4.0
+
+The function pointer types of the OpenGL functions (e.g. `PFNGLGENBUFFERSPROC`), through which the wrappers invoke the functions they resolve at runtime with `wglGetProcAddress`, `glXGetProcAddress` or the symbols of the OpenGL framework, do not bind any symbol : they only describe the signature of a function. They were used by the wrappers of all OS from the Linux binding, generated from the headers of Mesa.
+
+The [glext per OS](../.github/workflows/glext-per-os.yml) workflow generates the Khronos `glext.h` and `khrplatform.h` with jextract 22 on Linux, Windows and macOS, then compares them with `compare_bindings.py --resolve-layouts`, which replaces the C type layouts by their definition on each OS (e.g. `C_LONG` is a `JAVA_INT` on Windows, a `JAVA_LONG` on Linux and macOS) :
+
+| OS | Declarations | Identical | Different |
+|---|---|---|---|
+| Linux vs Windows | 7 873 | 7 873 | 0 |
+| Linux vs macOS | 7 873 | 7 850 | 23 |
+
+The 23 declarations that differ are the function pointer types using `GLhandleARB` (`ARB_shader_objects`), an `unsigned int` except on macOS, where it is a `void*`.
+
+`panama-gl-bindings-glext` (package `opengl.glext`) hence contains the function pointer types and constants of the Khronos `glext.h`, except these 23 types, which are in the Linux and Windows bindings, the only ones using them. `GenerateAPI` searches the function pointer types in `opengl.glext`, then in the package of the binding of the OS.
+
+The Windows binding (`opengl.windows`) only contains OpenGL 1.1, GLU, freeglut, WGL and the Win32 declarations used by PanamaGL, instead of the whole `windows.h` : a jar of 2.1 MB instead of 31.5 MB.
+
 ## Generating the bindings with jextract
 
 Two pitfalls appeared while generating the bindings with a jextract built from its sources, since no jextract build exists for Windows ARM64 :

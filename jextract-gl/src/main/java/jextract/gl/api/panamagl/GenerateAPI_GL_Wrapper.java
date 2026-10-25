@@ -121,7 +121,7 @@ public class GenerateAPI_GL_Wrapper {
 
     ClassWriter classWriter = newClassWriter(wrapper.packge, wrapper.wrapped, wrapper.className);
     if (wrapper.functionPointers != null) {
-      classWriter.addImport(wrapper.functionPointers + ".*");
+      classWriter.addImport(wrapper.functionPointers.get(0) + ".*");
     }
     classWriter.addImplement(wrapper.implement);
     classWriter.addExtension(wrapper.extend);
@@ -295,12 +295,15 @@ public class GenerateAPI_GL_Wrapper {
   }
 
   protected Class<?> getFunctionPointer(Wrapper wrapper, String command) {
-    String name = wrapper.functionPointers + ".PFN" + command.toUpperCase(Locale.ROOT) + "PROC";
-    try {
-      return Class.forName(name, false, getClass().getClassLoader());
-    } catch (ClassNotFoundException e) {
-      return null;
+    for (String packge : wrapper.functionPointers) {
+      String name = packge + ".PFN" + command.toUpperCase(Locale.ROOT) + "PROC";
+      try {
+        return Class.forName(name, false, getClass().getClassLoader());
+      } catch (ClassNotFoundException e) {
+        // search the next package
+      }
     }
+    return null;
   }
 
   /**

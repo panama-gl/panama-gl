@@ -19,7 +19,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.SymbolLookup;
 import panamagl.opengl.GLFunctionLoader;
-import wgl.windows.wgl_h;
+import opengl.windows.gl_h;
 
 /**
  * Resolve OpenGL functions with <code>wglGetProcAddress</code>, falling back on the symbols
@@ -36,7 +36,7 @@ public class GLFunctionLoader_windows implements GLFunctionLoader {
   public MemorySegment getProcAddress(String function) {
     try (Arena arena = Arena.ofConfined()) {
       MemorySegment name = arena.allocateFrom(function);
-      MemorySegment address = wgl_h.wglGetProcAddress(name);
+      MemorySegment address = gl_h.wglGetProcAddress(name);
 
       if (isValid(address)) {
         return address;

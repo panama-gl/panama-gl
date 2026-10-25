@@ -1,0 +1,34 @@
+<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.jzy3d</groupId>
+		<artifactId>panama-gl</artifactId>
+		<version>1.4.0</version>
+	</parent>
+
+	<!-- The wrappers of all OS, for an application that runs on any OS. An application that only
+	runs on some OS can instead depend on the wrappers of these OS, e.g. panama-gl-wrappers-windows,
+	to avoid shipping the bindings of the other OS. -->
+	<artifactId>panama-gl-wrappers-all</artifactId>
+	<name>Panama GL Wrappers - All OS</name>
+	<packaging>pom</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>panama-gl-wrappers-macos</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>panama-gl-wrappers-linux</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jzy3d</groupId>
+			<artifactId>panama-gl-wrappers-windows</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+</project>

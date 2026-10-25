@@ -19,9 +19,9 @@ package panamagl.platform.windows;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-import freeglut.windows.freeglut_h;
-import freeglut.windows.glutDisplayFunc$callback;
-import freeglut.windows.glutIdleFunc$callback;
+import opengl.windows.gl_h;
+import opengl.windows.glutDisplayFunc$callback;
+import opengl.windows.glutIdleFunc$callback;
 import opengl.windows.NativeLibLoader;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GL;
@@ -65,23 +65,23 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
     
     if (!hasInit) {
       MemorySegment argc = arena.allocate(ValueLayout.JAVA_INT, 1);
-      freeglut_h.glutInit(argc, argc);
+      gl_h.glutInit(argc, argc);
       hasInit = true;
     }
     
-    freeglut_h.glutInitDisplayMode(freeglut_h.GLUT_DOUBLE() | freeglut_h.GLUT_RGBA() | freeglut_h.GLUT_DEPTH());
-    freeglut_h.glutInitWindowSize(initWidth, initHeight);
-    freeglut_h.glutInitWindowPosition(initX, initY);
+    gl_h.glutInitDisplayMode(gl_h.GLUT_DOUBLE() | gl_h.GLUT_RGBA() | gl_h.GLUT_DEPTH());
+    gl_h.glutInitWindowSize(initWidth, initHeight);
+    gl_h.glutInitWindowPosition(initX, initY);
     
-    windowHandle = freeglut_h.glutCreateWindow(arena.allocateFrom(windowName));
+    windowHandle = gl_h.glutCreateWindow(arena.allocateFrom(windowName));
     
     // Hacky!! Use it while WGLContext is not working
-    freeglut_h.glutHideWindow();   
-    //freeglut_h.glutIconifyWindow();
+    gl_h.glutHideWindow();   
+    //gl_h.glutIconifyWindow();
     
     //Addressable hnd = allocator.allocate(ValueLayout.JAVA_INT, windowHandle);
     //https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-showwindow
-    //wgl_h.ShowWindow(hnd, 5);
+    //gl_h.ShowWindow(hnd, 5);
     
     initialized = true;
   }
@@ -89,7 +89,7 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
   @Override
   public void destroy() {
     if(windowHandle>=0) {
-      freeglut_h.glutDestroyWindow(windowHandle);
+      gl_h.glutDestroyWindow(windowHandle);
       windowHandle = -1;
     }
     
@@ -99,11 +99,11 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
 
   protected void glutDisplayFunc(glutDisplayFunc$callback.Function fi) {
     MemorySegment displayStub = glutDisplayFunc$callback.allocate(fi, arena);
-    freeglut_h.glutDisplayFunc(displayStub);
+    gl_h.glutDisplayFunc(displayStub);
   }
 
   protected void glutIdleFunc(glutIdleFunc$callback.Function fi) {
     MemorySegment idleStub = glutIdleFunc$callback.allocate(fi, arena);
-    freeglut_h.glutIdleFunc(idleStub);
+    gl_h.glutIdleFunc(idleStub);
   }
 }

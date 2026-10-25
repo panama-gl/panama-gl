@@ -64,6 +64,16 @@ public abstract class JavaWriter {
     fw.close();
   }
 
+  /**
+   * The simple name of a class if it is imported, alone or with its package, its fully qualified name
+   * otherwise.
+   */
+  public String typeName(Class<?> type) {
+    if (imports.contains(type.getName()) || imports.contains(type.getPackageName() + ".*"))
+      return type.getSimpleName();
+    return type.getName();
+  }
+
   public void addImport(String imprt) {
     imports.add(imprt);
   }

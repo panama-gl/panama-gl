@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.jzy3d</groupId>
 	<artifactId>panama-gl</artifactId>
-	<version>1.3.2</version>
+	<version>1.4.0</version>
 	<name>Panama GL</name>
 	<packaging>pom</packaging>
 
@@ -16,7 +16,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<panamagl.bindings.version>1.3.2</panamagl.bindings.version>
+		<panamagl.bindings.version>1.4.1</panamagl.bindings.version>
 		<jdk.version>22</jdk.version>
 
 		<!-- Default Windows native library path. Override on CI with Mesa prepended:
@@ -43,6 +43,7 @@
 		<module>panama-gl-wrappers-macos</module>
 		<module>panama-gl-wrappers-linux</module>
 		<module>panama-gl-wrappers-windows</module>
+		<module>panama-gl-wrappers-all</module>
 
 		<module>panama-gl-samples</module>
 	</modules>
