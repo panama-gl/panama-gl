@@ -1,7 +1,7 @@
 package panamagl.platform.macos; 
 
 import java.lang.foreign.MemorySegment;
-import opengl.linux.*;
+import opengl.glext.*;
 import opengl.macos.glut_h;
 
 public class GL_macOS extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {

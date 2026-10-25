@@ -21,9 +21,9 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import jextract.gl.xml.model.GLCommand;
-import opengl.linux.PFNGLCREATEPROGRAMPROC;
-import opengl.linux.PFNGLGENBUFFERSPROC;
-import opengl.linux.PFNGLGETSTRINGIPROC;
+import opengl.glext.PFNGLCREATEPROGRAMPROC;
+import opengl.glext.PFNGLGENBUFFERSPROC;
+import opengl.glext.PFNGLGETSTRINGIPROC;
 
 /**
  * Wrappers of functions missing from the static symbols of the bindings, invoked through the
@@ -32,6 +32,10 @@ import opengl.linux.PFNGLGETSTRINGIPROC;
 public class TestClassWriter_FunctionPointer {
 
   ClassWriter writer = new ClassWriter("panamagl.platform.windows", "GL_windows");
+  {
+    // As GenerateAPI_GL_Wrapper does : the function pointers of the glext binding are imported
+    writer.addImport("opengl.glext.*");
+  }
 
   @Test
   public void voidFunction() {

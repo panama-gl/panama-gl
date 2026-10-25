@@ -12,10 +12,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# Run on demand, e.g. after updating the Khronos headers or jextract
 on:
   workflow_dispatch:
-  push:
-    branches: [ "glext-per-os" ]
 
 jobs:
   generate:

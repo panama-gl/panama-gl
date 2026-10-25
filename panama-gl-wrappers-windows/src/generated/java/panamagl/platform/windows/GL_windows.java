@@ -1,8 +1,8 @@
 package panamagl.platform.windows; 
 
 import java.lang.foreign.MemorySegment;
-import opengl.linux.*;
-import freeglut.windows.freeglut_h;
+import opengl.glext.*;
+import opengl.windows.gl_h;
 
 public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
   public GL_windows() {
@@ -10,2423 +10,2423 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glAccum(int op, float value) {
-    freeglut_h.glAccum(op, value);
+    gl_h.glAccum(op, value);
   }
 
   public void glAlphaFunc(int func, float ref) {
-    freeglut_h.glAlphaFunc(func, ref);
+    gl_h.glAlphaFunc(func, ref);
   }
 
   public byte glAreTexturesResident(int n, MemorySegment textures, MemorySegment residences) {
-    return freeglut_h.glAreTexturesResident(n, textures, residences);
+    return gl_h.glAreTexturesResident(n, textures, residences);
   }
 
   public void glArrayElement(int i) {
-    freeglut_h.glArrayElement(i);
+    gl_h.glArrayElement(i);
   }
 
   public void glBegin(int mode) {
-    freeglut_h.glBegin(mode);
+    gl_h.glBegin(mode);
   }
 
   public void glBindTexture(int target, int texture) {
-    freeglut_h.glBindTexture(target, texture);
+    gl_h.glBindTexture(target, texture);
   }
 
   public void glBitmap(int width, int height, float xorig, float yorig, float xmove, float ymove, MemorySegment bitmap) {
-    freeglut_h.glBitmap(width, height, xorig, yorig, xmove, ymove, bitmap);
+    gl_h.glBitmap(width, height, xorig, yorig, xmove, ymove, bitmap);
   }
 
   public void glBlendFunc(int sfactor, int dfactor) {
-    freeglut_h.glBlendFunc(sfactor, dfactor);
+    gl_h.glBlendFunc(sfactor, dfactor);
   }
 
   public void glCallList(int list) {
-    freeglut_h.glCallList(list);
+    gl_h.glCallList(list);
   }
 
   public void glCallLists(int n, int type, MemorySegment lists) {
-    freeglut_h.glCallLists(n, type, lists);
+    gl_h.glCallLists(n, type, lists);
   }
 
   public void glClear(int mask) {
-    freeglut_h.glClear(mask);
+    gl_h.glClear(mask);
   }
 
   public void glClearAccum(float red, float green, float blue, float alpha) {
-    freeglut_h.glClearAccum(red, green, blue, alpha);
+    gl_h.glClearAccum(red, green, blue, alpha);
   }
 
   public void glClearColor(float red, float green, float blue, float alpha) {
-    freeglut_h.glClearColor(red, green, blue, alpha);
+    gl_h.glClearColor(red, green, blue, alpha);
   }
 
   public void glClearDepth(double depth) {
-    freeglut_h.glClearDepth(depth);
+    gl_h.glClearDepth(depth);
   }
 
   public void glClearIndex(float c) {
-    freeglut_h.glClearIndex(c);
+    gl_h.glClearIndex(c);
   }
 
   public void glClearStencil(int s) {
-    freeglut_h.glClearStencil(s);
+    gl_h.glClearStencil(s);
   }
 
   public void glClipPlane(int plane, MemorySegment equation) {
-    freeglut_h.glClipPlane(plane, equation);
+    gl_h.glClipPlane(plane, equation);
   }
 
   public void glColor3b(byte red, byte green, byte blue) {
-    freeglut_h.glColor3b(red, green, blue);
+    gl_h.glColor3b(red, green, blue);
   }
 
   public void glColor3bv(MemorySegment v) {
-    freeglut_h.glColor3bv(v);
+    gl_h.glColor3bv(v);
   }
 
   public void glColor3d(double red, double green, double blue) {
-    freeglut_h.glColor3d(red, green, blue);
+    gl_h.glColor3d(red, green, blue);
   }
 
   public void glColor3dv(MemorySegment v) {
-    freeglut_h.glColor3dv(v);
+    gl_h.glColor3dv(v);
   }
 
   public void glColor3f(float red, float green, float blue) {
-    freeglut_h.glColor3f(red, green, blue);
+    gl_h.glColor3f(red, green, blue);
   }
 
   public void glColor3fv(MemorySegment v) {
-    freeglut_h.glColor3fv(v);
+    gl_h.glColor3fv(v);
   }
 
   public void glColor3i(int red, int green, int blue) {
-    freeglut_h.glColor3i(red, green, blue);
+    gl_h.glColor3i(red, green, blue);
   }
 
   public void glColor3iv(MemorySegment v) {
-    freeglut_h.glColor3iv(v);
+    gl_h.glColor3iv(v);
   }
 
   public void glColor3s(short red, short green, short blue) {
-    freeglut_h.glColor3s(red, green, blue);
+    gl_h.glColor3s(red, green, blue);
   }
 
   public void glColor3sv(MemorySegment v) {
-    freeglut_h.glColor3sv(v);
+    gl_h.glColor3sv(v);
   }
 
   public void glColor3ub(byte red, byte green, byte blue) {
-    freeglut_h.glColor3ub(red, green, blue);
+    gl_h.glColor3ub(red, green, blue);
   }
 
   public void glColor3ubv(MemorySegment v) {
-    freeglut_h.glColor3ubv(v);
+    gl_h.glColor3ubv(v);
   }
 
   public void glColor3ui(int red, int green, int blue) {
-    freeglut_h.glColor3ui(red, green, blue);
+    gl_h.glColor3ui(red, green, blue);
   }
 
   public void glColor3uiv(MemorySegment v) {
-    freeglut_h.glColor3uiv(v);
+    gl_h.glColor3uiv(v);
   }
 
   public void glColor3us(short red, short green, short blue) {
-    freeglut_h.glColor3us(red, green, blue);
+    gl_h.glColor3us(red, green, blue);
   }
 
   public void glColor3usv(MemorySegment v) {
-    freeglut_h.glColor3usv(v);
+    gl_h.glColor3usv(v);
   }
 
   public void glColor4b(byte red, byte green, byte blue, byte alpha) {
-    freeglut_h.glColor4b(red, green, blue, alpha);
+    gl_h.glColor4b(red, green, blue, alpha);
   }
 
   public void glColor4bv(MemorySegment v) {
-    freeglut_h.glColor4bv(v);
+    gl_h.glColor4bv(v);
   }
 
   public void glColor4d(double red, double green, double blue, double alpha) {
-    freeglut_h.glColor4d(red, green, blue, alpha);
+    gl_h.glColor4d(red, green, blue, alpha);
   }
 
   public void glColor4dv(MemorySegment v) {
-    freeglut_h.glColor4dv(v);
+    gl_h.glColor4dv(v);
   }
 
   public void glColor4f(float red, float green, float blue, float alpha) {
-    freeglut_h.glColor4f(red, green, blue, alpha);
+    gl_h.glColor4f(red, green, blue, alpha);
   }
 
   public void glColor4fv(MemorySegment v) {
-    freeglut_h.glColor4fv(v);
+    gl_h.glColor4fv(v);
   }
 
   public void glColor4i(int red, int green, int blue, int alpha) {
-    freeglut_h.glColor4i(red, green, blue, alpha);
+    gl_h.glColor4i(red, green, blue, alpha);
   }
 
   public void glColor4iv(MemorySegment v) {
-    freeglut_h.glColor4iv(v);
+    gl_h.glColor4iv(v);
   }
 
   public void glColor4s(short red, short green, short blue, short alpha) {
-    freeglut_h.glColor4s(red, green, blue, alpha);
+    gl_h.glColor4s(red, green, blue, alpha);
   }
 
   public void glColor4sv(MemorySegment v) {
-    freeglut_h.glColor4sv(v);
+    gl_h.glColor4sv(v);
   }
 
   public void glColor4ub(byte red, byte green, byte blue, byte alpha) {
-    freeglut_h.glColor4ub(red, green, blue, alpha);
+    gl_h.glColor4ub(red, green, blue, alpha);
   }
 
   public void glColor4ubv(MemorySegment v) {
-    freeglut_h.glColor4ubv(v);
+    gl_h.glColor4ubv(v);
   }
 
   public void glColor4ui(int red, int green, int blue, int alpha) {
-    freeglut_h.glColor4ui(red, green, blue, alpha);
+    gl_h.glColor4ui(red, green, blue, alpha);
   }
 
   public void glColor4uiv(MemorySegment v) {
-    freeglut_h.glColor4uiv(v);
+    gl_h.glColor4uiv(v);
   }
 
   public void glColor4us(short red, short green, short blue, short alpha) {
-    freeglut_h.glColor4us(red, green, blue, alpha);
+    gl_h.glColor4us(red, green, blue, alpha);
   }
 
   public void glColor4usv(MemorySegment v) {
-    freeglut_h.glColor4usv(v);
+    gl_h.glColor4usv(v);
   }
 
   public void glColorMask(byte red, byte green, byte blue, byte alpha) {
-    freeglut_h.glColorMask(red, green, blue, alpha);
+    gl_h.glColorMask(red, green, blue, alpha);
   }
 
   public void glColorMaterial(int face, int mode) {
-    freeglut_h.glColorMaterial(face, mode);
+    gl_h.glColorMaterial(face, mode);
   }
 
   public void glColorPointer(int size, int type, int stride, MemorySegment pointer) {
-    freeglut_h.glColorPointer(size, type, stride, pointer);
+    gl_h.glColorPointer(size, type, stride, pointer);
   }
 
   public void glCopyPixels(int x, int y, int width, int height, int type) {
-    freeglut_h.glCopyPixels(x, y, width, height, type);
+    gl_h.glCopyPixels(x, y, width, height, type);
   }
 
   public void glCopyTexImage1D(int target, int level, int internalformat, int x, int y, int width, int border) {
-    freeglut_h.glCopyTexImage1D(target, level, internalformat, x, y, width, border);
+    gl_h.glCopyTexImage1D(target, level, internalformat, x, y, width, border);
   }
 
   public void glCopyTexImage2D(int target, int level, int internalformat, int x, int y, int width, int height, int border) {
-    freeglut_h.glCopyTexImage2D(target, level, internalformat, x, y, width, height, border);
+    gl_h.glCopyTexImage2D(target, level, internalformat, x, y, width, height, border);
   }
 
   public void glCopyTexSubImage1D(int target, int level, int xoffset, int x, int y, int width) {
-    freeglut_h.glCopyTexSubImage1D(target, level, xoffset, x, y, width);
+    gl_h.glCopyTexSubImage1D(target, level, xoffset, x, y, width);
   }
 
   public void glCopyTexSubImage2D(int target, int level, int xoffset, int yoffset, int x, int y, int width, int height) {
-    freeglut_h.glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
+    gl_h.glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height);
   }
 
   public void glCullFace(int mode) {
-    freeglut_h.glCullFace(mode);
+    gl_h.glCullFace(mode);
   }
 
   public void glDeleteLists(int list, int range) {
-    freeglut_h.glDeleteLists(list, range);
+    gl_h.glDeleteLists(list, range);
   }
 
   public void glDeleteTextures(int n, MemorySegment textures) {
-    freeglut_h.glDeleteTextures(n, textures);
+    gl_h.glDeleteTextures(n, textures);
   }
 
   public void glDepthFunc(int func) {
-    freeglut_h.glDepthFunc(func);
+    gl_h.glDepthFunc(func);
   }
 
   public void glDepthMask(byte flag) {
-    freeglut_h.glDepthMask(flag);
+    gl_h.glDepthMask(flag);
   }
 
   public void glDepthRange(double n, double f) {
-    freeglut_h.glDepthRange(n, f);
+    gl_h.glDepthRange(n, f);
   }
 
   public void glDisable(int cap) {
-    freeglut_h.glDisable(cap);
+    gl_h.glDisable(cap);
   }
 
   public void glDisableClientState(int array) {
-    freeglut_h.glDisableClientState(array);
+    gl_h.glDisableClientState(array);
   }
 
   public void glDrawArrays(int mode, int first, int count) {
-    freeglut_h.glDrawArrays(mode, first, count);
+    gl_h.glDrawArrays(mode, first, count);
   }
 
   public void glDrawBuffer(int buf) {
-    freeglut_h.glDrawBuffer(buf);
+    gl_h.glDrawBuffer(buf);
   }
 
   public void glDrawElements(int mode, int count, int type, MemorySegment indices) {
-    freeglut_h.glDrawElements(mode, count, type, indices);
+    gl_h.glDrawElements(mode, count, type, indices);
   }
 
   public void glDrawPixels(int width, int height, int format, int type, MemorySegment pixels) {
-    freeglut_h.glDrawPixels(width, height, format, type, pixels);
+    gl_h.glDrawPixels(width, height, format, type, pixels);
   }
 
   public void glEdgeFlag(byte flag) {
-    freeglut_h.glEdgeFlag(flag);
+    gl_h.glEdgeFlag(flag);
   }
 
   public void glEdgeFlagPointer(int stride, MemorySegment pointer) {
-    freeglut_h.glEdgeFlagPointer(stride, pointer);
+    gl_h.glEdgeFlagPointer(stride, pointer);
   }
 
   public void glEdgeFlagv(MemorySegment flag) {
-    freeglut_h.glEdgeFlagv(flag);
+    gl_h.glEdgeFlagv(flag);
   }
 
   public void glEnable(int cap) {
-    freeglut_h.glEnable(cap);
+    gl_h.glEnable(cap);
   }
 
   public void glEnableClientState(int array) {
-    freeglut_h.glEnableClientState(array);
+    gl_h.glEnableClientState(array);
   }
 
   public void glEnd() {
-    freeglut_h.glEnd();
+    gl_h.glEnd();
   }
 
   public void glEndList() {
-    freeglut_h.glEndList();
+    gl_h.glEndList();
   }
 
   public void glEvalCoord1d(double u) {
-    freeglut_h.glEvalCoord1d(u);
+    gl_h.glEvalCoord1d(u);
   }
 
   public void glEvalCoord1dv(MemorySegment u) {
-    freeglut_h.glEvalCoord1dv(u);
+    gl_h.glEvalCoord1dv(u);
   }
 
   public void glEvalCoord1f(float u) {
-    freeglut_h.glEvalCoord1f(u);
+    gl_h.glEvalCoord1f(u);
   }
 
   public void glEvalCoord1fv(MemorySegment u) {
-    freeglut_h.glEvalCoord1fv(u);
+    gl_h.glEvalCoord1fv(u);
   }
 
   public void glEvalCoord2d(double u, double v) {
-    freeglut_h.glEvalCoord2d(u, v);
+    gl_h.glEvalCoord2d(u, v);
   }
 
   public void glEvalCoord2dv(MemorySegment u) {
-    freeglut_h.glEvalCoord2dv(u);
+    gl_h.glEvalCoord2dv(u);
   }
 
   public void glEvalCoord2f(float u, float v) {
-    freeglut_h.glEvalCoord2f(u, v);
+    gl_h.glEvalCoord2f(u, v);
   }
 
   public void glEvalCoord2fv(MemorySegment u) {
-    freeglut_h.glEvalCoord2fv(u);
+    gl_h.glEvalCoord2fv(u);
   }
 
   public void glEvalMesh1(int mode, int i1, int i2) {
-    freeglut_h.glEvalMesh1(mode, i1, i2);
+    gl_h.glEvalMesh1(mode, i1, i2);
   }
 
   public void glEvalMesh2(int mode, int i1, int i2, int j1, int j2) {
-    freeglut_h.glEvalMesh2(mode, i1, i2, j1, j2);
+    gl_h.glEvalMesh2(mode, i1, i2, j1, j2);
   }
 
   public void glEvalPoint1(int i) {
-    freeglut_h.glEvalPoint1(i);
+    gl_h.glEvalPoint1(i);
   }
 
   public void glEvalPoint2(int i, int j) {
-    freeglut_h.glEvalPoint2(i, j);
+    gl_h.glEvalPoint2(i, j);
   }
 
   public void glFeedbackBuffer(int size, int type, MemorySegment buffer) {
-    freeglut_h.glFeedbackBuffer(size, type, buffer);
+    gl_h.glFeedbackBuffer(size, type, buffer);
   }
 
   public void glFinish() {
-    freeglut_h.glFinish();
+    gl_h.glFinish();
   }
 
   public void glFlush() {
-    freeglut_h.glFlush();
+    gl_h.glFlush();
   }
 
   public void glFogf(int pname, float param) {
-    freeglut_h.glFogf(pname, param);
+    gl_h.glFogf(pname, param);
   }
 
   public void glFogfv(int pname, MemorySegment params) {
-    freeglut_h.glFogfv(pname, params);
+    gl_h.glFogfv(pname, params);
   }
 
   public void glFogi(int pname, int param) {
-    freeglut_h.glFogi(pname, param);
+    gl_h.glFogi(pname, param);
   }
 
   public void glFogiv(int pname, MemorySegment params) {
-    freeglut_h.glFogiv(pname, params);
+    gl_h.glFogiv(pname, params);
   }
 
   public void glFrontFace(int mode) {
-    freeglut_h.glFrontFace(mode);
+    gl_h.glFrontFace(mode);
   }
 
   public void glFrustum(double left, double right, double bottom, double top, double zNear, double zFar) {
-    freeglut_h.glFrustum(left, right, bottom, top, zNear, zFar);
+    gl_h.glFrustum(left, right, bottom, top, zNear, zFar);
   }
 
   public int glGenLists(int range) {
-    return freeglut_h.glGenLists(range);
+    return gl_h.glGenLists(range);
   }
 
   public void glGenTextures(int n, MemorySegment textures) {
-    freeglut_h.glGenTextures(n, textures);
+    gl_h.glGenTextures(n, textures);
   }
 
   public void glGetBooleanv(int pname, MemorySegment data) {
-    freeglut_h.glGetBooleanv(pname, data);
+    gl_h.glGetBooleanv(pname, data);
   }
 
   public void glGetClipPlane(int plane, MemorySegment equation) {
-    freeglut_h.glGetClipPlane(plane, equation);
+    gl_h.glGetClipPlane(plane, equation);
   }
 
   public void glGetDoublev(int pname, MemorySegment data) {
-    freeglut_h.glGetDoublev(pname, data);
+    gl_h.glGetDoublev(pname, data);
   }
 
   public int glGetError() {
-    return freeglut_h.glGetError();
+    return gl_h.glGetError();
   }
 
   public void glGetFloatv(int pname, MemorySegment data) {
-    freeglut_h.glGetFloatv(pname, data);
+    gl_h.glGetFloatv(pname, data);
   }
 
   public void glGetIntegerv(int pname, MemorySegment data) {
-    freeglut_h.glGetIntegerv(pname, data);
+    gl_h.glGetIntegerv(pname, data);
   }
 
   public void glGetLightfv(int light, int pname, MemorySegment params) {
-    freeglut_h.glGetLightfv(light, pname, params);
+    gl_h.glGetLightfv(light, pname, params);
   }
 
   public void glGetLightiv(int light, int pname, MemorySegment params) {
-    freeglut_h.glGetLightiv(light, pname, params);
+    gl_h.glGetLightiv(light, pname, params);
   }
 
   public void glGetMapdv(int target, int query, MemorySegment v) {
-    freeglut_h.glGetMapdv(target, query, v);
+    gl_h.glGetMapdv(target, query, v);
   }
 
   public void glGetMapfv(int target, int query, MemorySegment v) {
-    freeglut_h.glGetMapfv(target, query, v);
+    gl_h.glGetMapfv(target, query, v);
   }
 
   public void glGetMapiv(int target, int query, MemorySegment v) {
-    freeglut_h.glGetMapiv(target, query, v);
+    gl_h.glGetMapiv(target, query, v);
   }
 
   public void glGetMaterialfv(int face, int pname, MemorySegment params) {
-    freeglut_h.glGetMaterialfv(face, pname, params);
+    gl_h.glGetMaterialfv(face, pname, params);
   }
 
   public void glGetMaterialiv(int face, int pname, MemorySegment params) {
-    freeglut_h.glGetMaterialiv(face, pname, params);
+    gl_h.glGetMaterialiv(face, pname, params);
   }
 
   public void glGetPixelMapfv(int map, MemorySegment values) {
-    freeglut_h.glGetPixelMapfv(map, values);
+    gl_h.glGetPixelMapfv(map, values);
   }
 
   public void glGetPixelMapuiv(int map, MemorySegment values) {
-    freeglut_h.glGetPixelMapuiv(map, values);
+    gl_h.glGetPixelMapuiv(map, values);
   }
 
   public void glGetPixelMapusv(int map, MemorySegment values) {
-    freeglut_h.glGetPixelMapusv(map, values);
+    gl_h.glGetPixelMapusv(map, values);
   }
 
   public void glGetPointerv(int pname, MemorySegment params) {
-    freeglut_h.glGetPointerv(pname, params);
+    gl_h.glGetPointerv(pname, params);
   }
 
   public void glGetPolygonStipple(MemorySegment mask) {
-    freeglut_h.glGetPolygonStipple(mask);
+    gl_h.glGetPolygonStipple(mask);
   }
 
   public MemorySegment glGetString(int name) {
-    return freeglut_h.glGetString(name);
+    return gl_h.glGetString(name);
   }
 
   public void glGetTexEnvfv(int target, int pname, MemorySegment params) {
-    freeglut_h.glGetTexEnvfv(target, pname, params);
+    gl_h.glGetTexEnvfv(target, pname, params);
   }
 
   public void glGetTexEnviv(int target, int pname, MemorySegment params) {
-    freeglut_h.glGetTexEnviv(target, pname, params);
+    gl_h.glGetTexEnviv(target, pname, params);
   }
 
   public void glGetTexGendv(int coord, int pname, MemorySegment params) {
-    freeglut_h.glGetTexGendv(coord, pname, params);
+    gl_h.glGetTexGendv(coord, pname, params);
   }
 
   public void glGetTexGenfv(int coord, int pname, MemorySegment params) {
-    freeglut_h.glGetTexGenfv(coord, pname, params);
+    gl_h.glGetTexGenfv(coord, pname, params);
   }
 
   public void glGetTexGeniv(int coord, int pname, MemorySegment params) {
-    freeglut_h.glGetTexGeniv(coord, pname, params);
+    gl_h.glGetTexGeniv(coord, pname, params);
   }
 
   public void glGetTexImage(int target, int level, int format, int type, MemorySegment pixels) {
-    freeglut_h.glGetTexImage(target, level, format, type, pixels);
+    gl_h.glGetTexImage(target, level, format, type, pixels);
   }
 
   public void glGetTexLevelParameterfv(int target, int level, int pname, MemorySegment params) {
-    freeglut_h.glGetTexLevelParameterfv(target, level, pname, params);
+    gl_h.glGetTexLevelParameterfv(target, level, pname, params);
   }
 
   public void glGetTexLevelParameteriv(int target, int level, int pname, MemorySegment params) {
-    freeglut_h.glGetTexLevelParameteriv(target, level, pname, params);
+    gl_h.glGetTexLevelParameteriv(target, level, pname, params);
   }
 
   public void glGetTexParameterfv(int target, int pname, MemorySegment params) {
-    freeglut_h.glGetTexParameterfv(target, pname, params);
+    gl_h.glGetTexParameterfv(target, pname, params);
   }
 
   public void glGetTexParameteriv(int target, int pname, MemorySegment params) {
-    freeglut_h.glGetTexParameteriv(target, pname, params);
+    gl_h.glGetTexParameteriv(target, pname, params);
   }
 
   public void glHint(int target, int mode) {
-    freeglut_h.glHint(target, mode);
+    gl_h.glHint(target, mode);
   }
 
   public void glIndexMask(int mask) {
-    freeglut_h.glIndexMask(mask);
+    gl_h.glIndexMask(mask);
   }
 
   public void glIndexPointer(int type, int stride, MemorySegment pointer) {
-    freeglut_h.glIndexPointer(type, stride, pointer);
+    gl_h.glIndexPointer(type, stride, pointer);
   }
 
   public void glIndexd(double c) {
-    freeglut_h.glIndexd(c);
+    gl_h.glIndexd(c);
   }
 
   public void glIndexdv(MemorySegment c) {
-    freeglut_h.glIndexdv(c);
+    gl_h.glIndexdv(c);
   }
 
   public void glIndexf(float c) {
-    freeglut_h.glIndexf(c);
+    gl_h.glIndexf(c);
   }
 
   public void glIndexfv(MemorySegment c) {
-    freeglut_h.glIndexfv(c);
+    gl_h.glIndexfv(c);
   }
 
   public void glIndexi(int c) {
-    freeglut_h.glIndexi(c);
+    gl_h.glIndexi(c);
   }
 
   public void glIndexiv(MemorySegment c) {
-    freeglut_h.glIndexiv(c);
+    gl_h.glIndexiv(c);
   }
 
   public void glIndexs(short c) {
-    freeglut_h.glIndexs(c);
+    gl_h.glIndexs(c);
   }
 
   public void glIndexsv(MemorySegment c) {
-    freeglut_h.glIndexsv(c);
+    gl_h.glIndexsv(c);
   }
 
   public void glIndexub(byte c) {
-    freeglut_h.glIndexub(c);
+    gl_h.glIndexub(c);
   }
 
   public void glIndexubv(MemorySegment c) {
-    freeglut_h.glIndexubv(c);
+    gl_h.glIndexubv(c);
   }
 
   public void glInitNames() {
-    freeglut_h.glInitNames();
+    gl_h.glInitNames();
   }
 
   public void glInterleavedArrays(int format, int stride, MemorySegment pointer) {
-    freeglut_h.glInterleavedArrays(format, stride, pointer);
+    gl_h.glInterleavedArrays(format, stride, pointer);
   }
 
   public byte glIsEnabled(int cap) {
-    return freeglut_h.glIsEnabled(cap);
+    return gl_h.glIsEnabled(cap);
   }
 
   public byte glIsList(int list) {
-    return freeglut_h.glIsList(list);
+    return gl_h.glIsList(list);
   }
 
   public byte glIsTexture(int texture) {
-    return freeglut_h.glIsTexture(texture);
+    return gl_h.glIsTexture(texture);
   }
 
   public void glLightModelf(int pname, float param) {
-    freeglut_h.glLightModelf(pname, param);
+    gl_h.glLightModelf(pname, param);
   }
 
   public void glLightModelfv(int pname, MemorySegment params) {
-    freeglut_h.glLightModelfv(pname, params);
+    gl_h.glLightModelfv(pname, params);
   }
 
   public void glLightModeli(int pname, int param) {
-    freeglut_h.glLightModeli(pname, param);
+    gl_h.glLightModeli(pname, param);
   }
 
   public void glLightModeliv(int pname, MemorySegment params) {
-    freeglut_h.glLightModeliv(pname, params);
+    gl_h.glLightModeliv(pname, params);
   }
 
   public void glLightf(int light, int pname, float param) {
-    freeglut_h.glLightf(light, pname, param);
+    gl_h.glLightf(light, pname, param);
   }
 
   public void glLightfv(int light, int pname, MemorySegment params) {
-    freeglut_h.glLightfv(light, pname, params);
+    gl_h.glLightfv(light, pname, params);
   }
 
   public void glLighti(int light, int pname, int param) {
-    freeglut_h.glLighti(light, pname, param);
+    gl_h.glLighti(light, pname, param);
   }
 
   public void glLightiv(int light, int pname, MemorySegment params) {
-    freeglut_h.glLightiv(light, pname, params);
+    gl_h.glLightiv(light, pname, params);
   }
 
   public void glLineStipple(int factor, short pattern) {
-    freeglut_h.glLineStipple(factor, pattern);
+    gl_h.glLineStipple(factor, pattern);
   }
 
   public void glLineWidth(float width) {
-    freeglut_h.glLineWidth(width);
+    gl_h.glLineWidth(width);
   }
 
   public void glListBase(int base) {
-    freeglut_h.glListBase(base);
+    gl_h.glListBase(base);
   }
 
   public void glLoadIdentity() {
-    freeglut_h.glLoadIdentity();
+    gl_h.glLoadIdentity();
   }
 
   public void glLoadMatrixd(MemorySegment m) {
-    freeglut_h.glLoadMatrixd(m);
+    gl_h.glLoadMatrixd(m);
   }
 
   public void glLoadMatrixf(MemorySegment m) {
-    freeglut_h.glLoadMatrixf(m);
+    gl_h.glLoadMatrixf(m);
   }
 
   public void glLoadName(int name) {
-    freeglut_h.glLoadName(name);
+    gl_h.glLoadName(name);
   }
 
   public void glLogicOp(int opcode) {
-    freeglut_h.glLogicOp(opcode);
+    gl_h.glLogicOp(opcode);
   }
 
   public void glMap1d(int target, double u1, double u2, int stride, int order, MemorySegment points) {
-    freeglut_h.glMap1d(target, u1, u2, stride, order, points);
+    gl_h.glMap1d(target, u1, u2, stride, order, points);
   }
 
   public void glMap1f(int target, float u1, float u2, int stride, int order, MemorySegment points) {
-    freeglut_h.glMap1f(target, u1, u2, stride, order, points);
+    gl_h.glMap1f(target, u1, u2, stride, order, points);
   }
 
   public void glMap2d(int target, double u1, double u2, int ustride, int uorder, double v1, double v2, int vstride, int vorder, MemorySegment points) {
-    freeglut_h.glMap2d(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
+    gl_h.glMap2d(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
   }
 
   public void glMap2f(int target, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, MemorySegment points) {
-    freeglut_h.glMap2f(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
+    gl_h.glMap2f(target, u1, u2, ustride, uorder, v1, v2, vstride, vorder, points);
   }
 
   public void glMapGrid1d(int un, double u1, double u2) {
-    freeglut_h.glMapGrid1d(un, u1, u2);
+    gl_h.glMapGrid1d(un, u1, u2);
   }
 
   public void glMapGrid1f(int un, float u1, float u2) {
-    freeglut_h.glMapGrid1f(un, u1, u2);
+    gl_h.glMapGrid1f(un, u1, u2);
   }
 
   public void glMapGrid2d(int un, double u1, double u2, int vn, double v1, double v2) {
-    freeglut_h.glMapGrid2d(un, u1, u2, vn, v1, v2);
+    gl_h.glMapGrid2d(un, u1, u2, vn, v1, v2);
   }
 
   public void glMapGrid2f(int un, float u1, float u2, int vn, float v1, float v2) {
-    freeglut_h.glMapGrid2f(un, u1, u2, vn, v1, v2);
+    gl_h.glMapGrid2f(un, u1, u2, vn, v1, v2);
   }
 
   public void glMaterialf(int face, int pname, float param) {
-    freeglut_h.glMaterialf(face, pname, param);
+    gl_h.glMaterialf(face, pname, param);
   }
 
   public void glMaterialfv(int face, int pname, MemorySegment params) {
-    freeglut_h.glMaterialfv(face, pname, params);
+    gl_h.glMaterialfv(face, pname, params);
   }
 
   public void glMateriali(int face, int pname, int param) {
-    freeglut_h.glMateriali(face, pname, param);
+    gl_h.glMateriali(face, pname, param);
   }
 
   public void glMaterialiv(int face, int pname, MemorySegment params) {
-    freeglut_h.glMaterialiv(face, pname, params);
+    gl_h.glMaterialiv(face, pname, params);
   }
 
   public void glMatrixMode(int mode) {
-    freeglut_h.glMatrixMode(mode);
+    gl_h.glMatrixMode(mode);
   }
 
   public void glMultMatrixd(MemorySegment m) {
-    freeglut_h.glMultMatrixd(m);
+    gl_h.glMultMatrixd(m);
   }
 
   public void glMultMatrixf(MemorySegment m) {
-    freeglut_h.glMultMatrixf(m);
+    gl_h.glMultMatrixf(m);
   }
 
   public void glNewList(int list, int mode) {
-    freeglut_h.glNewList(list, mode);
+    gl_h.glNewList(list, mode);
   }
 
   public void glNormal3b(byte nx, byte ny, byte nz) {
-    freeglut_h.glNormal3b(nx, ny, nz);
+    gl_h.glNormal3b(nx, ny, nz);
   }
 
   public void glNormal3bv(MemorySegment v) {
-    freeglut_h.glNormal3bv(v);
+    gl_h.glNormal3bv(v);
   }
 
   public void glNormal3d(double nx, double ny, double nz) {
-    freeglut_h.glNormal3d(nx, ny, nz);
+    gl_h.glNormal3d(nx, ny, nz);
   }
 
   public void glNormal3dv(MemorySegment v) {
-    freeglut_h.glNormal3dv(v);
+    gl_h.glNormal3dv(v);
   }
 
   public void glNormal3f(float nx, float ny, float nz) {
-    freeglut_h.glNormal3f(nx, ny, nz);
+    gl_h.glNormal3f(nx, ny, nz);
   }
 
   public void glNormal3fv(MemorySegment v) {
-    freeglut_h.glNormal3fv(v);
+    gl_h.glNormal3fv(v);
   }
 
   public void glNormal3i(int nx, int ny, int nz) {
-    freeglut_h.glNormal3i(nx, ny, nz);
+    gl_h.glNormal3i(nx, ny, nz);
   }
 
   public void glNormal3iv(MemorySegment v) {
-    freeglut_h.glNormal3iv(v);
+    gl_h.glNormal3iv(v);
   }
 
   public void glNormal3s(short nx, short ny, short nz) {
-    freeglut_h.glNormal3s(nx, ny, nz);
+    gl_h.glNormal3s(nx, ny, nz);
   }
 
   public void glNormal3sv(MemorySegment v) {
-    freeglut_h.glNormal3sv(v);
+    gl_h.glNormal3sv(v);
   }
 
   public void glNormalPointer(int type, int stride, MemorySegment pointer) {
-    freeglut_h.glNormalPointer(type, stride, pointer);
+    gl_h.glNormalPointer(type, stride, pointer);
   }
 
   public void glOrtho(double left, double right, double bottom, double top, double zNear, double zFar) {
-    freeglut_h.glOrtho(left, right, bottom, top, zNear, zFar);
+    gl_h.glOrtho(left, right, bottom, top, zNear, zFar);
   }
 
   public void glPassThrough(float token) {
-    freeglut_h.glPassThrough(token);
+    gl_h.glPassThrough(token);
   }
 
   public void glPixelMapfv(int map, int mapsize, MemorySegment values) {
-    freeglut_h.glPixelMapfv(map, mapsize, values);
+    gl_h.glPixelMapfv(map, mapsize, values);
   }
 
   public void glPixelMapuiv(int map, int mapsize, MemorySegment values) {
-    freeglut_h.glPixelMapuiv(map, mapsize, values);
+    gl_h.glPixelMapuiv(map, mapsize, values);
   }
 
   public void glPixelMapusv(int map, int mapsize, MemorySegment values) {
-    freeglut_h.glPixelMapusv(map, mapsize, values);
+    gl_h.glPixelMapusv(map, mapsize, values);
   }
 
   public void glPixelStoref(int pname, float param) {
-    freeglut_h.glPixelStoref(pname, param);
+    gl_h.glPixelStoref(pname, param);
   }
 
   public void glPixelStorei(int pname, int param) {
-    freeglut_h.glPixelStorei(pname, param);
+    gl_h.glPixelStorei(pname, param);
   }
 
   public void glPixelTransferf(int pname, float param) {
-    freeglut_h.glPixelTransferf(pname, param);
+    gl_h.glPixelTransferf(pname, param);
   }
 
   public void glPixelTransferi(int pname, int param) {
-    freeglut_h.glPixelTransferi(pname, param);
+    gl_h.glPixelTransferi(pname, param);
   }
 
   public void glPixelZoom(float xfactor, float yfactor) {
-    freeglut_h.glPixelZoom(xfactor, yfactor);
+    gl_h.glPixelZoom(xfactor, yfactor);
   }
 
   public void glPointSize(float size) {
-    freeglut_h.glPointSize(size);
+    gl_h.glPointSize(size);
   }
 
   public void glPolygonMode(int face, int mode) {
-    freeglut_h.glPolygonMode(face, mode);
+    gl_h.glPolygonMode(face, mode);
   }
 
   public void glPolygonOffset(float factor, float units) {
-    freeglut_h.glPolygonOffset(factor, units);
+    gl_h.glPolygonOffset(factor, units);
   }
 
   public void glPolygonStipple(MemorySegment mask) {
-    freeglut_h.glPolygonStipple(mask);
+    gl_h.glPolygonStipple(mask);
   }
 
   public void glPopAttrib() {
-    freeglut_h.glPopAttrib();
+    gl_h.glPopAttrib();
   }
 
   public void glPopClientAttrib() {
-    freeglut_h.glPopClientAttrib();
+    gl_h.glPopClientAttrib();
   }
 
   public void glPopMatrix() {
-    freeglut_h.glPopMatrix();
+    gl_h.glPopMatrix();
   }
 
   public void glPopName() {
-    freeglut_h.glPopName();
+    gl_h.glPopName();
   }
 
   public void glPrioritizeTextures(int n, MemorySegment textures, MemorySegment priorities) {
-    freeglut_h.glPrioritizeTextures(n, textures, priorities);
+    gl_h.glPrioritizeTextures(n, textures, priorities);
   }
 
   public void glPushAttrib(int mask) {
-    freeglut_h.glPushAttrib(mask);
+    gl_h.glPushAttrib(mask);
   }
 
   public void glPushClientAttrib(int mask) {
-    freeglut_h.glPushClientAttrib(mask);
+    gl_h.glPushClientAttrib(mask);
   }
 
   public void glPushMatrix() {
-    freeglut_h.glPushMatrix();
+    gl_h.glPushMatrix();
   }
 
   public void glPushName(int name) {
-    freeglut_h.glPushName(name);
+    gl_h.glPushName(name);
   }
 
   public void glRasterPos2d(double x, double y) {
-    freeglut_h.glRasterPos2d(x, y);
+    gl_h.glRasterPos2d(x, y);
   }
 
   public void glRasterPos2dv(MemorySegment v) {
-    freeglut_h.glRasterPos2dv(v);
+    gl_h.glRasterPos2dv(v);
   }
 
   public void glRasterPos2f(float x, float y) {
-    freeglut_h.glRasterPos2f(x, y);
+    gl_h.glRasterPos2f(x, y);
   }
 
   public void glRasterPos2fv(MemorySegment v) {
-    freeglut_h.glRasterPos2fv(v);
+    gl_h.glRasterPos2fv(v);
   }
 
   public void glRasterPos2i(int x, int y) {
-    freeglut_h.glRasterPos2i(x, y);
+    gl_h.glRasterPos2i(x, y);
   }
 
   public void glRasterPos2iv(MemorySegment v) {
-    freeglut_h.glRasterPos2iv(v);
+    gl_h.glRasterPos2iv(v);
   }
 
   public void glRasterPos2s(short x, short y) {
-    freeglut_h.glRasterPos2s(x, y);
+    gl_h.glRasterPos2s(x, y);
   }
 
   public void glRasterPos2sv(MemorySegment v) {
-    freeglut_h.glRasterPos2sv(v);
+    gl_h.glRasterPos2sv(v);
   }
 
   public void glRasterPos3d(double x, double y, double z) {
-    freeglut_h.glRasterPos3d(x, y, z);
+    gl_h.glRasterPos3d(x, y, z);
   }
 
   public void glRasterPos3dv(MemorySegment v) {
-    freeglut_h.glRasterPos3dv(v);
+    gl_h.glRasterPos3dv(v);
   }
 
   public void glRasterPos3f(float x, float y, float z) {
-    freeglut_h.glRasterPos3f(x, y, z);
+    gl_h.glRasterPos3f(x, y, z);
   }
 
   public void glRasterPos3fv(MemorySegment v) {
-    freeglut_h.glRasterPos3fv(v);
+    gl_h.glRasterPos3fv(v);
   }
 
   public void glRasterPos3i(int x, int y, int z) {
-    freeglut_h.glRasterPos3i(x, y, z);
+    gl_h.glRasterPos3i(x, y, z);
   }
 
   public void glRasterPos3iv(MemorySegment v) {
-    freeglut_h.glRasterPos3iv(v);
+    gl_h.glRasterPos3iv(v);
   }
 
   public void glRasterPos3s(short x, short y, short z) {
-    freeglut_h.glRasterPos3s(x, y, z);
+    gl_h.glRasterPos3s(x, y, z);
   }
 
   public void glRasterPos3sv(MemorySegment v) {
-    freeglut_h.glRasterPos3sv(v);
+    gl_h.glRasterPos3sv(v);
   }
 
   public void glRasterPos4d(double x, double y, double z, double w) {
-    freeglut_h.glRasterPos4d(x, y, z, w);
+    gl_h.glRasterPos4d(x, y, z, w);
   }
 
   public void glRasterPos4dv(MemorySegment v) {
-    freeglut_h.glRasterPos4dv(v);
+    gl_h.glRasterPos4dv(v);
   }
 
   public void glRasterPos4f(float x, float y, float z, float w) {
-    freeglut_h.glRasterPos4f(x, y, z, w);
+    gl_h.glRasterPos4f(x, y, z, w);
   }
 
   public void glRasterPos4fv(MemorySegment v) {
-    freeglut_h.glRasterPos4fv(v);
+    gl_h.glRasterPos4fv(v);
   }
 
   public void glRasterPos4i(int x, int y, int z, int w) {
-    freeglut_h.glRasterPos4i(x, y, z, w);
+    gl_h.glRasterPos4i(x, y, z, w);
   }
 
   public void glRasterPos4iv(MemorySegment v) {
-    freeglut_h.glRasterPos4iv(v);
+    gl_h.glRasterPos4iv(v);
   }
 
   public void glRasterPos4s(short x, short y, short z, short w) {
-    freeglut_h.glRasterPos4s(x, y, z, w);
+    gl_h.glRasterPos4s(x, y, z, w);
   }
 
   public void glRasterPos4sv(MemorySegment v) {
-    freeglut_h.glRasterPos4sv(v);
+    gl_h.glRasterPos4sv(v);
   }
 
   public void glReadBuffer(int src) {
-    freeglut_h.glReadBuffer(src);
+    gl_h.glReadBuffer(src);
   }
 
   public void glReadPixels(int x, int y, int width, int height, int format, int type, MemorySegment pixels) {
-    freeglut_h.glReadPixels(x, y, width, height, format, type, pixels);
+    gl_h.glReadPixels(x, y, width, height, format, type, pixels);
   }
 
   public void glRectd(double x1, double y1, double x2, double y2) {
-    freeglut_h.glRectd(x1, y1, x2, y2);
+    gl_h.glRectd(x1, y1, x2, y2);
   }
 
   public void glRectdv(MemorySegment v1, MemorySegment v2) {
-    freeglut_h.glRectdv(v1, v2);
+    gl_h.glRectdv(v1, v2);
   }
 
   public void glRectf(float x1, float y1, float x2, float y2) {
-    freeglut_h.glRectf(x1, y1, x2, y2);
+    gl_h.glRectf(x1, y1, x2, y2);
   }
 
   public void glRectfv(MemorySegment v1, MemorySegment v2) {
-    freeglut_h.glRectfv(v1, v2);
+    gl_h.glRectfv(v1, v2);
   }
 
   public void glRecti(int x1, int y1, int x2, int y2) {
-    freeglut_h.glRecti(x1, y1, x2, y2);
+    gl_h.glRecti(x1, y1, x2, y2);
   }
 
   public void glRectiv(MemorySegment v1, MemorySegment v2) {
-    freeglut_h.glRectiv(v1, v2);
+    gl_h.glRectiv(v1, v2);
   }
 
   public void glRects(short x1, short y1, short x2, short y2) {
-    freeglut_h.glRects(x1, y1, x2, y2);
+    gl_h.glRects(x1, y1, x2, y2);
   }
 
   public void glRectsv(MemorySegment v1, MemorySegment v2) {
-    freeglut_h.glRectsv(v1, v2);
+    gl_h.glRectsv(v1, v2);
   }
 
   public int glRenderMode(int mode) {
-    return freeglut_h.glRenderMode(mode);
+    return gl_h.glRenderMode(mode);
   }
 
   public void glRotated(double angle, double x, double y, double z) {
-    freeglut_h.glRotated(angle, x, y, z);
+    gl_h.glRotated(angle, x, y, z);
   }
 
   public void glRotatef(float angle, float x, float y, float z) {
-    freeglut_h.glRotatef(angle, x, y, z);
+    gl_h.glRotatef(angle, x, y, z);
   }
 
   public void glScaled(double x, double y, double z) {
-    freeglut_h.glScaled(x, y, z);
+    gl_h.glScaled(x, y, z);
   }
 
   public void glScalef(float x, float y, float z) {
-    freeglut_h.glScalef(x, y, z);
+    gl_h.glScalef(x, y, z);
   }
 
   public void glScissor(int x, int y, int width, int height) {
-    freeglut_h.glScissor(x, y, width, height);
+    gl_h.glScissor(x, y, width, height);
   }
 
   public void glSelectBuffer(int size, MemorySegment buffer) {
-    freeglut_h.glSelectBuffer(size, buffer);
+    gl_h.glSelectBuffer(size, buffer);
   }
 
   public void glShadeModel(int mode) {
-    freeglut_h.glShadeModel(mode);
+    gl_h.glShadeModel(mode);
   }
 
   public void glStencilFunc(int func, int ref, int mask) {
-    freeglut_h.glStencilFunc(func, ref, mask);
+    gl_h.glStencilFunc(func, ref, mask);
   }
 
   public void glStencilMask(int mask) {
-    freeglut_h.glStencilMask(mask);
+    gl_h.glStencilMask(mask);
   }
 
   public void glStencilOp(int fail, int zfail, int zpass) {
-    freeglut_h.glStencilOp(fail, zfail, zpass);
+    gl_h.glStencilOp(fail, zfail, zpass);
   }
 
   public void glTexCoord1d(double s) {
-    freeglut_h.glTexCoord1d(s);
+    gl_h.glTexCoord1d(s);
   }
 
   public void glTexCoord1dv(MemorySegment v) {
-    freeglut_h.glTexCoord1dv(v);
+    gl_h.glTexCoord1dv(v);
   }
 
   public void glTexCoord1f(float s) {
-    freeglut_h.glTexCoord1f(s);
+    gl_h.glTexCoord1f(s);
   }
 
   public void glTexCoord1fv(MemorySegment v) {
-    freeglut_h.glTexCoord1fv(v);
+    gl_h.glTexCoord1fv(v);
   }
 
   public void glTexCoord1i(int s) {
-    freeglut_h.glTexCoord1i(s);
+    gl_h.glTexCoord1i(s);
   }
 
   public void glTexCoord1iv(MemorySegment v) {
-    freeglut_h.glTexCoord1iv(v);
+    gl_h.glTexCoord1iv(v);
   }
 
   public void glTexCoord1s(short s) {
-    freeglut_h.glTexCoord1s(s);
+    gl_h.glTexCoord1s(s);
   }
 
   public void glTexCoord1sv(MemorySegment v) {
-    freeglut_h.glTexCoord1sv(v);
+    gl_h.glTexCoord1sv(v);
   }
 
   public void glTexCoord2d(double s, double t) {
-    freeglut_h.glTexCoord2d(s, t);
+    gl_h.glTexCoord2d(s, t);
   }
 
   public void glTexCoord2dv(MemorySegment v) {
-    freeglut_h.glTexCoord2dv(v);
+    gl_h.glTexCoord2dv(v);
   }
 
   public void glTexCoord2f(float s, float t) {
-    freeglut_h.glTexCoord2f(s, t);
+    gl_h.glTexCoord2f(s, t);
   }
 
   public void glTexCoord2fv(MemorySegment v) {
-    freeglut_h.glTexCoord2fv(v);
+    gl_h.glTexCoord2fv(v);
   }
 
   public void glTexCoord2i(int s, int t) {
-    freeglut_h.glTexCoord2i(s, t);
+    gl_h.glTexCoord2i(s, t);
   }
 
   public void glTexCoord2iv(MemorySegment v) {
-    freeglut_h.glTexCoord2iv(v);
+    gl_h.glTexCoord2iv(v);
   }
 
   public void glTexCoord2s(short s, short t) {
-    freeglut_h.glTexCoord2s(s, t);
+    gl_h.glTexCoord2s(s, t);
   }
 
   public void glTexCoord2sv(MemorySegment v) {
-    freeglut_h.glTexCoord2sv(v);
+    gl_h.glTexCoord2sv(v);
   }
 
   public void glTexCoord3d(double s, double t, double r) {
-    freeglut_h.glTexCoord3d(s, t, r);
+    gl_h.glTexCoord3d(s, t, r);
   }
 
   public void glTexCoord3dv(MemorySegment v) {
-    freeglut_h.glTexCoord3dv(v);
+    gl_h.glTexCoord3dv(v);
   }
 
   public void glTexCoord3f(float s, float t, float r) {
-    freeglut_h.glTexCoord3f(s, t, r);
+    gl_h.glTexCoord3f(s, t, r);
   }
 
   public void glTexCoord3fv(MemorySegment v) {
-    freeglut_h.glTexCoord3fv(v);
+    gl_h.glTexCoord3fv(v);
   }
 
   public void glTexCoord3i(int s, int t, int r) {
-    freeglut_h.glTexCoord3i(s, t, r);
+    gl_h.glTexCoord3i(s, t, r);
   }
 
   public void glTexCoord3iv(MemorySegment v) {
-    freeglut_h.glTexCoord3iv(v);
+    gl_h.glTexCoord3iv(v);
   }
 
   public void glTexCoord3s(short s, short t, short r) {
-    freeglut_h.glTexCoord3s(s, t, r);
+    gl_h.glTexCoord3s(s, t, r);
   }
 
   public void glTexCoord3sv(MemorySegment v) {
-    freeglut_h.glTexCoord3sv(v);
+    gl_h.glTexCoord3sv(v);
   }
 
   public void glTexCoord4d(double s, double t, double r, double q) {
-    freeglut_h.glTexCoord4d(s, t, r, q);
+    gl_h.glTexCoord4d(s, t, r, q);
   }
 
   public void glTexCoord4dv(MemorySegment v) {
-    freeglut_h.glTexCoord4dv(v);
+    gl_h.glTexCoord4dv(v);
   }
 
   public void glTexCoord4f(float s, float t, float r, float q) {
-    freeglut_h.glTexCoord4f(s, t, r, q);
+    gl_h.glTexCoord4f(s, t, r, q);
   }
 
   public void glTexCoord4fv(MemorySegment v) {
-    freeglut_h.glTexCoord4fv(v);
+    gl_h.glTexCoord4fv(v);
   }
 
   public void glTexCoord4i(int s, int t, int r, int q) {
-    freeglut_h.glTexCoord4i(s, t, r, q);
+    gl_h.glTexCoord4i(s, t, r, q);
   }
 
   public void glTexCoord4iv(MemorySegment v) {
-    freeglut_h.glTexCoord4iv(v);
+    gl_h.glTexCoord4iv(v);
   }
 
   public void glTexCoord4s(short s, short t, short r, short q) {
-    freeglut_h.glTexCoord4s(s, t, r, q);
+    gl_h.glTexCoord4s(s, t, r, q);
   }
 
   public void glTexCoord4sv(MemorySegment v) {
-    freeglut_h.glTexCoord4sv(v);
+    gl_h.glTexCoord4sv(v);
   }
 
   public void glTexCoordPointer(int size, int type, int stride, MemorySegment pointer) {
-    freeglut_h.glTexCoordPointer(size, type, stride, pointer);
+    gl_h.glTexCoordPointer(size, type, stride, pointer);
   }
 
   public void glTexEnvf(int target, int pname, float param) {
-    freeglut_h.glTexEnvf(target, pname, param);
+    gl_h.glTexEnvf(target, pname, param);
   }
 
   public void glTexEnvfv(int target, int pname, MemorySegment params) {
-    freeglut_h.glTexEnvfv(target, pname, params);
+    gl_h.glTexEnvfv(target, pname, params);
   }
 
   public void glTexEnvi(int target, int pname, int param) {
-    freeglut_h.glTexEnvi(target, pname, param);
+    gl_h.glTexEnvi(target, pname, param);
   }
 
   public void glTexEnviv(int target, int pname, MemorySegment params) {
-    freeglut_h.glTexEnviv(target, pname, params);
+    gl_h.glTexEnviv(target, pname, params);
   }
 
   public void glTexGend(int coord, int pname, double param) {
-    freeglut_h.glTexGend(coord, pname, param);
+    gl_h.glTexGend(coord, pname, param);
   }
 
   public void glTexGendv(int coord, int pname, MemorySegment params) {
-    freeglut_h.glTexGendv(coord, pname, params);
+    gl_h.glTexGendv(coord, pname, params);
   }
 
   public void glTexGenf(int coord, int pname, float param) {
-    freeglut_h.glTexGenf(coord, pname, param);
+    gl_h.glTexGenf(coord, pname, param);
   }
 
   public void glTexGenfv(int coord, int pname, MemorySegment params) {
-    freeglut_h.glTexGenfv(coord, pname, params);
+    gl_h.glTexGenfv(coord, pname, params);
   }
 
   public void glTexGeni(int coord, int pname, int param) {
-    freeglut_h.glTexGeni(coord, pname, param);
+    gl_h.glTexGeni(coord, pname, param);
   }
 
   public void glTexGeniv(int coord, int pname, MemorySegment params) {
-    freeglut_h.glTexGeniv(coord, pname, params);
+    gl_h.glTexGeniv(coord, pname, params);
   }
 
   public void glTexImage1D(int target, int level, int internalformat, int width, int border, int format, int type, MemorySegment pixels) {
-    freeglut_h.glTexImage1D(target, level, internalformat, width, border, format, type, pixels);
+    gl_h.glTexImage1D(target, level, internalformat, width, border, format, type, pixels);
   }
 
   public void glTexImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, MemorySegment pixels) {
-    freeglut_h.glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
+    gl_h.glTexImage2D(target, level, internalformat, width, height, border, format, type, pixels);
   }
 
   public void glTexParameterf(int target, int pname, float param) {
-    freeglut_h.glTexParameterf(target, pname, param);
+    gl_h.glTexParameterf(target, pname, param);
   }
 
   public void glTexParameterfv(int target, int pname, MemorySegment params) {
-    freeglut_h.glTexParameterfv(target, pname, params);
+    gl_h.glTexParameterfv(target, pname, params);
   }
 
   public void glTexParameteri(int target, int pname, int param) {
-    freeglut_h.glTexParameteri(target, pname, param);
+    gl_h.glTexParameteri(target, pname, param);
   }
 
   public void glTexParameteriv(int target, int pname, MemorySegment params) {
-    freeglut_h.glTexParameteriv(target, pname, params);
+    gl_h.glTexParameteriv(target, pname, params);
   }
 
   public void glTexSubImage1D(int target, int level, int xoffset, int width, int format, int type, MemorySegment pixels) {
-    freeglut_h.glTexSubImage1D(target, level, xoffset, width, format, type, pixels);
+    gl_h.glTexSubImage1D(target, level, xoffset, width, format, type, pixels);
   }
 
   public void glTexSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, MemorySegment pixels) {
-    freeglut_h.glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
+    gl_h.glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels);
   }
 
   public void glTranslated(double x, double y, double z) {
-    freeglut_h.glTranslated(x, y, z);
+    gl_h.glTranslated(x, y, z);
   }
 
   public void glTranslatef(float x, float y, float z) {
-    freeglut_h.glTranslatef(x, y, z);
+    gl_h.glTranslatef(x, y, z);
   }
 
   public void glVertex2d(double x, double y) {
-    freeglut_h.glVertex2d(x, y);
+    gl_h.glVertex2d(x, y);
   }
 
   public void glVertex2dv(MemorySegment v) {
-    freeglut_h.glVertex2dv(v);
+    gl_h.glVertex2dv(v);
   }
 
   public void glVertex2f(float x, float y) {
-    freeglut_h.glVertex2f(x, y);
+    gl_h.glVertex2f(x, y);
   }
 
   public void glVertex2fv(MemorySegment v) {
-    freeglut_h.glVertex2fv(v);
+    gl_h.glVertex2fv(v);
   }
 
   public void glVertex2i(int x, int y) {
-    freeglut_h.glVertex2i(x, y);
+    gl_h.glVertex2i(x, y);
   }
 
   public void glVertex2iv(MemorySegment v) {
-    freeglut_h.glVertex2iv(v);
+    gl_h.glVertex2iv(v);
   }
 
   public void glVertex2s(short x, short y) {
-    freeglut_h.glVertex2s(x, y);
+    gl_h.glVertex2s(x, y);
   }
 
   public void glVertex2sv(MemorySegment v) {
-    freeglut_h.glVertex2sv(v);
+    gl_h.glVertex2sv(v);
   }
 
   public void glVertex3d(double x, double y, double z) {
-    freeglut_h.glVertex3d(x, y, z);
+    gl_h.glVertex3d(x, y, z);
   }
 
   public void glVertex3dv(MemorySegment v) {
-    freeglut_h.glVertex3dv(v);
+    gl_h.glVertex3dv(v);
   }
 
   public void glVertex3f(float x, float y, float z) {
-    freeglut_h.glVertex3f(x, y, z);
+    gl_h.glVertex3f(x, y, z);
   }
 
   public void glVertex3fv(MemorySegment v) {
-    freeglut_h.glVertex3fv(v);
+    gl_h.glVertex3fv(v);
   }
 
   public void glVertex3i(int x, int y, int z) {
-    freeglut_h.glVertex3i(x, y, z);
+    gl_h.glVertex3i(x, y, z);
   }
 
   public void glVertex3iv(MemorySegment v) {
-    freeglut_h.glVertex3iv(v);
+    gl_h.glVertex3iv(v);
   }
 
   public void glVertex3s(short x, short y, short z) {
-    freeglut_h.glVertex3s(x, y, z);
+    gl_h.glVertex3s(x, y, z);
   }
 
   public void glVertex3sv(MemorySegment v) {
-    freeglut_h.glVertex3sv(v);
+    gl_h.glVertex3sv(v);
   }
 
   public void glVertex4d(double x, double y, double z, double w) {
-    freeglut_h.glVertex4d(x, y, z, w);
+    gl_h.glVertex4d(x, y, z, w);
   }
 
   public void glVertex4dv(MemorySegment v) {
-    freeglut_h.glVertex4dv(v);
+    gl_h.glVertex4dv(v);
   }
 
   public void glVertex4f(float x, float y, float z, float w) {
-    freeglut_h.glVertex4f(x, y, z, w);
+    gl_h.glVertex4f(x, y, z, w);
   }
 
   public void glVertex4fv(MemorySegment v) {
-    freeglut_h.glVertex4fv(v);
+    gl_h.glVertex4fv(v);
   }
 
   public void glVertex4i(int x, int y, int z, int w) {
-    freeglut_h.glVertex4i(x, y, z, w);
+    gl_h.glVertex4i(x, y, z, w);
   }
 
   public void glVertex4iv(MemorySegment v) {
-    freeglut_h.glVertex4iv(v);
+    gl_h.glVertex4iv(v);
   }
 
   public void glVertex4s(short x, short y, short z, short w) {
-    freeglut_h.glVertex4s(x, y, z, w);
+    gl_h.glVertex4s(x, y, z, w);
   }
 
   public void glVertex4sv(MemorySegment v) {
-    freeglut_h.glVertex4sv(v);
+    gl_h.glVertex4sv(v);
   }
 
   public void glVertexPointer(int size, int type, int stride, MemorySegment pointer) {
-    freeglut_h.glVertexPointer(size, type, stride, pointer);
+    gl_h.glVertexPointer(size, type, stride, pointer);
   }
 
   public void glViewport(int x, int y, int width, int height) {
-    freeglut_h.glViewport(x, y, width, height);
+    gl_h.glViewport(x, y, width, height);
   }
 
   public void gluBeginCurve(MemorySegment arg0) {
-    freeglut_h.gluBeginCurve(arg0);
+    gl_h.gluBeginCurve(arg0);
   }
 
   public void gluBeginPolygon(MemorySegment arg0) {
-    freeglut_h.gluBeginPolygon(arg0);
+    gl_h.gluBeginPolygon(arg0);
   }
 
   public void gluBeginSurface(MemorySegment arg0) {
-    freeglut_h.gluBeginSurface(arg0);
+    gl_h.gluBeginSurface(arg0);
   }
 
   public void gluBeginTrim(MemorySegment arg0) {
-    freeglut_h.gluBeginTrim(arg0);
+    gl_h.gluBeginTrim(arg0);
   }
 
   public int gluBuild1DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, MemorySegment arg5) {
-    return freeglut_h.gluBuild1DMipmaps(arg0, arg1, arg2, arg3, arg4, arg5);
+    return gl_h.gluBuild1DMipmaps(arg0, arg1, arg2, arg3, arg4, arg5);
   }
 
   public int gluBuild2DMipmaps(int arg0, int arg1, int arg2, int arg3, int arg4, int arg5, MemorySegment arg6) {
-    return freeglut_h.gluBuild2DMipmaps(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+    return gl_h.gluBuild2DMipmaps(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
   }
 
   public void gluCylinder(MemorySegment arg0, double arg1, double arg2, double arg3, int arg4, int arg5) {
-    freeglut_h.gluCylinder(arg0, arg1, arg2, arg3, arg4, arg5);
+    gl_h.gluCylinder(arg0, arg1, arg2, arg3, arg4, arg5);
   }
 
   public void gluDeleteNurbsRenderer(MemorySegment arg0) {
-    freeglut_h.gluDeleteNurbsRenderer(arg0);
+    gl_h.gluDeleteNurbsRenderer(arg0);
   }
 
   public void gluDeleteQuadric(MemorySegment arg0) {
-    freeglut_h.gluDeleteQuadric(arg0);
+    gl_h.gluDeleteQuadric(arg0);
   }
 
   public void gluDeleteTess(MemorySegment arg0) {
-    freeglut_h.gluDeleteTess(arg0);
+    gl_h.gluDeleteTess(arg0);
   }
 
   public void gluDisk(MemorySegment arg0, double arg1, double arg2, int arg3, int arg4) {
-    freeglut_h.gluDisk(arg0, arg1, arg2, arg3, arg4);
+    gl_h.gluDisk(arg0, arg1, arg2, arg3, arg4);
   }
 
   public void gluEndCurve(MemorySegment arg0) {
-    freeglut_h.gluEndCurve(arg0);
+    gl_h.gluEndCurve(arg0);
   }
 
   public void gluEndPolygon(MemorySegment arg0) {
-    freeglut_h.gluEndPolygon(arg0);
+    gl_h.gluEndPolygon(arg0);
   }
 
   public void gluEndSurface(MemorySegment arg0) {
-    freeglut_h.gluEndSurface(arg0);
+    gl_h.gluEndSurface(arg0);
   }
 
   public void gluEndTrim(MemorySegment arg0) {
-    freeglut_h.gluEndTrim(arg0);
+    gl_h.gluEndTrim(arg0);
   }
 
   public MemorySegment gluErrorString(int arg0) {
-    return freeglut_h.gluErrorString(arg0);
+    return gl_h.gluErrorString(arg0);
   }
 
   public MemorySegment gluErrorUnicodeStringEXT(int arg0) {
-    return freeglut_h.gluErrorUnicodeStringEXT(arg0);
+    return gl_h.gluErrorUnicodeStringEXT(arg0);
   }
 
   public void gluGetNurbsProperty(MemorySegment arg0, int arg1, MemorySegment arg2) {
-    freeglut_h.gluGetNurbsProperty(arg0, arg1, arg2);
+    gl_h.gluGetNurbsProperty(arg0, arg1, arg2);
   }
 
   public MemorySegment gluGetString(int arg0) {
-    return freeglut_h.gluGetString(arg0);
+    return gl_h.gluGetString(arg0);
   }
 
   public void gluGetTessProperty(MemorySegment arg0, int arg1, MemorySegment arg2) {
-    freeglut_h.gluGetTessProperty(arg0, arg1, arg2);
+    gl_h.gluGetTessProperty(arg0, arg1, arg2);
   }
 
   public void gluLoadSamplingMatrices(MemorySegment arg0, MemorySegment arg1, MemorySegment arg2, MemorySegment arg3) {
-    freeglut_h.gluLoadSamplingMatrices(arg0, arg1, arg2, arg3);
+    gl_h.gluLoadSamplingMatrices(arg0, arg1, arg2, arg3);
   }
 
   public void gluLookAt(double arg0, double arg1, double arg2, double arg3, double arg4, double arg5, double arg6, double arg7, double arg8) {
-    freeglut_h.gluLookAt(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+    gl_h.gluLookAt(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
   }
 
   public MemorySegment gluNewNurbsRenderer() {
-    return freeglut_h.gluNewNurbsRenderer();
+    return gl_h.gluNewNurbsRenderer();
   }
 
   public MemorySegment gluNewQuadric() {
-    return freeglut_h.gluNewQuadric();
+    return gl_h.gluNewQuadric();
   }
 
   public MemorySegment gluNewTess() {
-    return freeglut_h.gluNewTess();
+    return gl_h.gluNewTess();
   }
 
   public void gluNextContour(MemorySegment arg0, int arg1) {
-    freeglut_h.gluNextContour(arg0, arg1);
+    gl_h.gluNextContour(arg0, arg1);
   }
 
   public void gluNurbsCallback(MemorySegment arg0, int arg1, MemorySegment arg2) {
-    freeglut_h.gluNurbsCallback(arg0, arg1, arg2);
+    gl_h.gluNurbsCallback(arg0, arg1, arg2);
   }
 
   public void gluNurbsCurve(MemorySegment arg0, int arg1, MemorySegment arg2, int arg3, MemorySegment arg4, int arg5, int arg6) {
-    freeglut_h.gluNurbsCurve(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+    gl_h.gluNurbsCurve(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
   }
 
   public void gluNurbsProperty(MemorySegment arg0, int arg1, float arg2) {
-    freeglut_h.gluNurbsProperty(arg0, arg1, arg2);
+    gl_h.gluNurbsProperty(arg0, arg1, arg2);
   }
 
   public void gluNurbsSurface(MemorySegment arg0, int arg1, MemorySegment arg2, int arg3, MemorySegment arg4, int arg5, int arg6, MemorySegment arg7, int arg8, int arg9, int arg10) {
-    freeglut_h.gluNurbsSurface(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
+    gl_h.gluNurbsSurface(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10);
   }
 
   public void gluOrtho2D(double arg0, double arg1, double arg2, double arg3) {
-    freeglut_h.gluOrtho2D(arg0, arg1, arg2, arg3);
+    gl_h.gluOrtho2D(arg0, arg1, arg2, arg3);
   }
 
   public void gluPartialDisk(MemorySegment arg0, double arg1, double arg2, int arg3, int arg4, double arg5, double arg6) {
-    freeglut_h.gluPartialDisk(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
+    gl_h.gluPartialDisk(arg0, arg1, arg2, arg3, arg4, arg5, arg6);
   }
 
   public void gluPerspective(double arg0, double arg1, double arg2, double arg3) {
-    freeglut_h.gluPerspective(arg0, arg1, arg2, arg3);
+    gl_h.gluPerspective(arg0, arg1, arg2, arg3);
   }
 
   public void gluPickMatrix(double arg0, double arg1, double arg2, double arg3, MemorySegment arg4) {
-    freeglut_h.gluPickMatrix(arg0, arg1, arg2, arg3, arg4);
+    gl_h.gluPickMatrix(arg0, arg1, arg2, arg3, arg4);
   }
 
   public int gluProject(double arg0, double arg1, double arg2, MemorySegment arg3, MemorySegment arg4, MemorySegment arg5, MemorySegment arg6, MemorySegment arg7, MemorySegment arg8) {
-    return freeglut_h.gluProject(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+    return gl_h.gluProject(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
   }
 
   public void gluPwlCurve(MemorySegment arg0, int arg1, MemorySegment arg2, int arg3, int arg4) {
-    freeglut_h.gluPwlCurve(arg0, arg1, arg2, arg3, arg4);
+    gl_h.gluPwlCurve(arg0, arg1, arg2, arg3, arg4);
   }
 
   public void gluQuadricCallback(MemorySegment arg0, int arg1, MemorySegment arg2) {
-    freeglut_h.gluQuadricCallback(arg0, arg1, arg2);
+    gl_h.gluQuadricCallback(arg0, arg1, arg2);
   }
 
   public void gluQuadricDrawStyle(MemorySegment arg0, int arg1) {
-    freeglut_h.gluQuadricDrawStyle(arg0, arg1);
+    gl_h.gluQuadricDrawStyle(arg0, arg1);
   }
 
   public void gluQuadricNormals(MemorySegment arg0, int arg1) {
-    freeglut_h.gluQuadricNormals(arg0, arg1);
+    gl_h.gluQuadricNormals(arg0, arg1);
   }
 
   public void gluQuadricOrientation(MemorySegment arg0, int arg1) {
-    freeglut_h.gluQuadricOrientation(arg0, arg1);
+    gl_h.gluQuadricOrientation(arg0, arg1);
   }
 
   public void gluQuadricTexture(MemorySegment arg0, byte arg1) {
-    freeglut_h.gluQuadricTexture(arg0, arg1);
+    gl_h.gluQuadricTexture(arg0, arg1);
   }
 
   public int gluScaleImage(int arg0, int arg1, int arg2, int arg3, MemorySegment arg4, int arg5, int arg6, int arg7, MemorySegment arg8) {
-    return freeglut_h.gluScaleImage(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+    return gl_h.gluScaleImage(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
   }
 
   public void gluSphere(MemorySegment arg0, double arg1, int arg2, int arg3) {
-    freeglut_h.gluSphere(arg0, arg1, arg2, arg3);
+    gl_h.gluSphere(arg0, arg1, arg2, arg3);
   }
 
   public void gluTessBeginContour(MemorySegment arg0) {
-    freeglut_h.gluTessBeginContour(arg0);
+    gl_h.gluTessBeginContour(arg0);
   }
 
   public void gluTessBeginPolygon(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.gluTessBeginPolygon(arg0, arg1);
+    gl_h.gluTessBeginPolygon(arg0, arg1);
   }
 
   public void gluTessCallback(MemorySegment arg0, int arg1, MemorySegment arg2) {
-    freeglut_h.gluTessCallback(arg0, arg1, arg2);
+    gl_h.gluTessCallback(arg0, arg1, arg2);
   }
 
   public void gluTessEndContour(MemorySegment arg0) {
-    freeglut_h.gluTessEndContour(arg0);
+    gl_h.gluTessEndContour(arg0);
   }
 
   public void gluTessEndPolygon(MemorySegment arg0) {
-    freeglut_h.gluTessEndPolygon(arg0);
+    gl_h.gluTessEndPolygon(arg0);
   }
 
   public void gluTessNormal(MemorySegment arg0, double arg1, double arg2, double arg3) {
-    freeglut_h.gluTessNormal(arg0, arg1, arg2, arg3);
+    gl_h.gluTessNormal(arg0, arg1, arg2, arg3);
   }
 
   public void gluTessProperty(MemorySegment arg0, int arg1, double arg2) {
-    freeglut_h.gluTessProperty(arg0, arg1, arg2);
+    gl_h.gluTessProperty(arg0, arg1, arg2);
   }
 
   public void gluTessVertex(MemorySegment arg0, MemorySegment arg1, MemorySegment arg2) {
-    freeglut_h.gluTessVertex(arg0, arg1, arg2);
+    gl_h.gluTessVertex(arg0, arg1, arg2);
   }
 
   public int gluUnProject(double arg0, double arg1, double arg2, MemorySegment arg3, MemorySegment arg4, MemorySegment arg5, MemorySegment arg6, MemorySegment arg7, MemorySegment arg8) {
-    return freeglut_h.gluUnProject(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
+    return gl_h.gluUnProject(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8);
   }
 
   public void glutAddMenuEntry(MemorySegment arg0, int arg1) {
-    freeglut_h.glutAddMenuEntry(arg0, arg1);
+    gl_h.glutAddMenuEntry(arg0, arg1);
   }
 
   public void glutAddSubMenu(MemorySegment arg0, int arg1) {
-    freeglut_h.glutAddSubMenu(arg0, arg1);
+    gl_h.glutAddSubMenu(arg0, arg1);
   }
 
   public void glutAppStatusFunc(MemorySegment arg0) {
-    freeglut_h.glutAppStatusFunc(arg0);
+    gl_h.glutAppStatusFunc(arg0);
   }
 
   public void glutAppStatusFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutAppStatusFuncUcall(arg0, arg1);
+    gl_h.glutAppStatusFuncUcall(arg0, arg1);
   }
 
   public void glutAttachMenu(int arg0) {
-    freeglut_h.glutAttachMenu(arg0);
+    gl_h.glutAttachMenu(arg0);
   }
 
   public void glutBitmapCharacter(MemorySegment arg0, int arg1) {
-    freeglut_h.glutBitmapCharacter(arg0, arg1);
+    gl_h.glutBitmapCharacter(arg0, arg1);
   }
 
   public int glutBitmapHeight(MemorySegment arg0) {
-    return freeglut_h.glutBitmapHeight(arg0);
+    return gl_h.glutBitmapHeight(arg0);
   }
 
   public int glutBitmapLength(MemorySegment arg0, MemorySegment arg1) {
-    return freeglut_h.glutBitmapLength(arg0, arg1);
+    return gl_h.glutBitmapLength(arg0, arg1);
   }
 
   public void glutBitmapString(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutBitmapString(arg0, arg1);
+    gl_h.glutBitmapString(arg0, arg1);
   }
 
   public int glutBitmapWidth(MemorySegment arg0, int arg1) {
-    return freeglut_h.glutBitmapWidth(arg0, arg1);
+    return gl_h.glutBitmapWidth(arg0, arg1);
   }
 
   public void glutButtonBoxFunc(MemorySegment arg0) {
-    freeglut_h.glutButtonBoxFunc(arg0);
+    gl_h.glutButtonBoxFunc(arg0);
   }
 
   public void glutButtonBoxFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutButtonBoxFuncUcall(arg0, arg1);
+    gl_h.glutButtonBoxFuncUcall(arg0, arg1);
   }
 
   public void glutChangeToMenuEntry(int arg0, MemorySegment arg1, int arg2) {
-    freeglut_h.glutChangeToMenuEntry(arg0, arg1, arg2);
+    gl_h.glutChangeToMenuEntry(arg0, arg1, arg2);
   }
 
   public void glutChangeToSubMenu(int arg0, MemorySegment arg1, int arg2) {
-    freeglut_h.glutChangeToSubMenu(arg0, arg1, arg2);
+    gl_h.glutChangeToSubMenu(arg0, arg1, arg2);
   }
 
   public void glutCloseFunc(MemorySegment arg0) {
-    freeglut_h.glutCloseFunc(arg0);
+    gl_h.glutCloseFunc(arg0);
   }
 
   public void glutCloseFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutCloseFuncUcall(arg0, arg1);
+    gl_h.glutCloseFuncUcall(arg0, arg1);
   }
 
   public void glutCopyColormap(int arg0) {
-    freeglut_h.glutCopyColormap(arg0);
+    gl_h.glutCopyColormap(arg0);
   }
 
   public int glutCreateMenu(MemorySegment arg0) {
-    return freeglut_h.glutCreateMenu(arg0);
+    return gl_h.glutCreateMenu(arg0);
   }
 
   public int glutCreateMenuUcall(MemorySegment arg0, MemorySegment arg1) {
-    return freeglut_h.glutCreateMenuUcall(arg0, arg1);
+    return gl_h.glutCreateMenuUcall(arg0, arg1);
   }
 
   /*public int glutCreateMenuUcall_ATEXIT_HACK(MemorySegment arg0, MemorySegment arg1) {
-    return freeglut_h.glutCreateMenuUcall_ATEXIT_HACK(arg0, arg1);
+    return gl_h.glutCreateMenuUcall_ATEXIT_HACK(arg0, arg1);
   }
 
   public int glutCreateMenu_ATEXIT_HACK(MemorySegment arg0) {
-    return freeglut_h.glutCreateMenu_ATEXIT_HACK(arg0);
+    return gl_h.glutCreateMenu_ATEXIT_HACK(arg0);
   }*/
 
   public int glutCreateSubWindow(int arg0, int arg1, int arg2, int arg3, int arg4) {
-    return freeglut_h.glutCreateSubWindow(arg0, arg1, arg2, arg3, arg4);
+    return gl_h.glutCreateSubWindow(arg0, arg1, arg2, arg3, arg4);
   }
 
   public int glutCreateWindow(MemorySegment arg0) {
-    return freeglut_h.glutCreateWindow(arg0);
+    return gl_h.glutCreateWindow(arg0);
   }
 
   public int glutCreateWindow_ATEXIT_HACK(MemorySegment arg0) {
-    return -1;//freeglut_h.glutCreateWindow_ATEXIT_HACK(arg0);
+    return -1;//gl_h.glutCreateWindow_ATEXIT_HACK(arg0);
   }
 
   public void glutDestroyMenu(int arg0) {
-    freeglut_h.glutDestroyMenu(arg0);
+    gl_h.glutDestroyMenu(arg0);
   }
 
   public void glutDestroyWindow(int arg0) {
-    freeglut_h.glutDestroyWindow(arg0);
+    gl_h.glutDestroyWindow(arg0);
   }
 
   public void glutDetachMenu(int arg0) {
-    freeglut_h.glutDetachMenu(arg0);
+    gl_h.glutDetachMenu(arg0);
   }
 
   public int glutDeviceGet(int arg0) {
-    return freeglut_h.glutDeviceGet(arg0);
+    return gl_h.glutDeviceGet(arg0);
   }
 
   public void glutDialsFunc(MemorySegment arg0) {
-    freeglut_h.glutDialsFunc(arg0);
+    gl_h.glutDialsFunc(arg0);
   }
 
   public void glutDialsFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutDialsFuncUcall(arg0, arg1);
+    gl_h.glutDialsFuncUcall(arg0, arg1);
   }
 
   public void glutDisplayFunc(MemorySegment arg0) {
-    freeglut_h.glutDisplayFunc(arg0);
+    gl_h.glutDisplayFunc(arg0);
   }
 
   public void glutDisplayFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutDisplayFuncUcall(arg0, arg1);
+    gl_h.glutDisplayFuncUcall(arg0, arg1);
   }
 
   public int glutEnterGameMode() {
-    return freeglut_h.glutEnterGameMode();
+    return gl_h.glutEnterGameMode();
   }
 
   public void glutEntryFunc(MemorySegment arg0) {
-    freeglut_h.glutEntryFunc(arg0);
+    gl_h.glutEntryFunc(arg0);
   }
 
   public void glutEntryFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutEntryFuncUcall(arg0, arg1);
+    gl_h.glutEntryFuncUcall(arg0, arg1);
   }
 
   public void glutEstablishOverlay() {
-    freeglut_h.glutEstablishOverlay();
+    gl_h.glutEstablishOverlay();
   }
 
   public void glutExit() {
-    freeglut_h.glutExit();
+    gl_h.glutExit();
   }
 
   public int glutExtensionSupported(MemorySegment arg0) {
-    return freeglut_h.glutExtensionSupported(arg0);
+    return gl_h.glutExtensionSupported(arg0);
   }
 
   public void glutForceJoystickFunc() {
-    freeglut_h.glutForceJoystickFunc();
+    gl_h.glutForceJoystickFunc();
   }
 
   public void glutFullScreen() {
-    freeglut_h.glutFullScreen();
+    gl_h.glutFullScreen();
   }
 
   public void glutFullScreenToggle() {
-    freeglut_h.glutFullScreenToggle();
+    gl_h.glutFullScreenToggle();
   }
 
   public int glutGameModeGet(int arg0) {
-    return freeglut_h.glutGameModeGet(arg0);
+    return gl_h.glutGameModeGet(arg0);
   }
 
   public void glutGameModeString(MemorySegment arg0) {
-    freeglut_h.glutGameModeString(arg0);
+    gl_h.glutGameModeString(arg0);
   }
 
   public int glutGet(int arg0) {
-    return freeglut_h.glutGet(arg0);
+    return gl_h.glutGet(arg0);
   }
 
   public float glutGetColor(int arg0, int arg1) {
-    return freeglut_h.glutGetColor(arg0, arg1);
+    return gl_h.glutGetColor(arg0, arg1);
   }
 
   public int glutGetMenu() {
-    return freeglut_h.glutGetMenu();
+    return gl_h.glutGetMenu();
   }
 
   public MemorySegment glutGetMenuData() {
-    return freeglut_h.glutGetMenuData();
+    return gl_h.glutGetMenuData();
   }
 
   public MemorySegment glutGetModeValues(int arg0, MemorySegment arg1) {
-    return freeglut_h.glutGetModeValues(arg0, arg1);
+    return gl_h.glutGetModeValues(arg0, arg1);
   }
 
   public int glutGetModifiers() {
-    return freeglut_h.glutGetModifiers();
+    return gl_h.glutGetModifiers();
   }
 
   public MemorySegment glutGetProcAddress(MemorySegment arg0) {
-    return freeglut_h.glutGetProcAddress(arg0);
+    return gl_h.glutGetProcAddress(arg0);
   }
 
   public int glutGetWindow() {
-    return freeglut_h.glutGetWindow();
+    return gl_h.glutGetWindow();
   }
 
   public MemorySegment glutGetWindowData() {
-    return freeglut_h.glutGetWindowData();
+    return gl_h.glutGetWindowData();
   }
 
   public void glutHideOverlay() {
-    freeglut_h.glutHideOverlay();
+    gl_h.glutHideOverlay();
   }
 
   public void glutHideWindow() {
-    freeglut_h.glutHideWindow();
+    gl_h.glutHideWindow();
   }
 
   public void glutIconifyWindow() {
-    freeglut_h.glutIconifyWindow();
+    gl_h.glutIconifyWindow();
   }
 
   public void glutIdleFunc(MemorySegment arg0) {
-    freeglut_h.glutIdleFunc(arg0);
+    gl_h.glutIdleFunc(arg0);
   }
 
   public void glutIdleFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutIdleFuncUcall(arg0, arg1);
+    gl_h.glutIdleFuncUcall(arg0, arg1);
   }
 
   public void glutIgnoreKeyRepeat(int arg0) {
-    freeglut_h.glutIgnoreKeyRepeat(arg0);
+    gl_h.glutIgnoreKeyRepeat(arg0);
   }
 
   public void glutInit(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutInit(arg0, arg1);
+    gl_h.glutInit(arg0, arg1);
   }
 
   public void glutInitContextFlags(int arg0) {
-    freeglut_h.glutInitContextFlags(arg0);
+    gl_h.glutInitContextFlags(arg0);
   }
 
   public void glutInitContextFunc(MemorySegment arg0) {
-    freeglut_h.glutInitContextFunc(arg0);
+    gl_h.glutInitContextFunc(arg0);
   }
 
   public void glutInitContextFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutInitContextFuncUcall(arg0, arg1);
+    gl_h.glutInitContextFuncUcall(arg0, arg1);
   }
 
   public void glutInitContextProfile(int arg0) {
-    freeglut_h.glutInitContextProfile(arg0);
+    gl_h.glutInitContextProfile(arg0);
   }
 
   public void glutInitContextVersion(int arg0, int arg1) {
-    freeglut_h.glutInitContextVersion(arg0, arg1);
+    gl_h.glutInitContextVersion(arg0, arg1);
   }
 
   public void glutInitDisplayMode(int arg0) {
-    freeglut_h.glutInitDisplayMode(arg0);
+    gl_h.glutInitDisplayMode(arg0);
   }
 
   public void glutInitDisplayString(MemorySegment arg0) {
-    freeglut_h.glutInitDisplayString(arg0);
+    gl_h.glutInitDisplayString(arg0);
   }
 
   public void glutInitErrorFunc(MemorySegment arg0) {
-    freeglut_h.glutInitErrorFunc(arg0);
+    gl_h.glutInitErrorFunc(arg0);
   }
 
   public void glutInitErrorFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutInitErrorFuncUcall(arg0, arg1);
+    gl_h.glutInitErrorFuncUcall(arg0, arg1);
   }
 
   public void glutInitWarningFunc(MemorySegment arg0) {
-    freeglut_h.glutInitWarningFunc(arg0);
+    gl_h.glutInitWarningFunc(arg0);
   }
 
   public void glutInitWarningFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutInitWarningFuncUcall(arg0, arg1);
+    gl_h.glutInitWarningFuncUcall(arg0, arg1);
   }
 
   public void glutInitWindowPosition(int arg0, int arg1) {
-    freeglut_h.glutInitWindowPosition(arg0, arg1);
+    gl_h.glutInitWindowPosition(arg0, arg1);
   }
 
   public void glutInitWindowSize(int arg0, int arg1) {
-    freeglut_h.glutInitWindowSize(arg0, arg1);
+    gl_h.glutInitWindowSize(arg0, arg1);
   }
 
   public void glutInit_ATEXIT_HACK(MemorySegment arg0, MemorySegment arg1) {
-    //freeglut_h.glutInit_ATEXIT_HACK(arg0, arg1);
+    //gl_h.glutInit_ATEXIT_HACK(arg0, arg1);
   }
 
   public void glutJoystickFunc(MemorySegment arg0, int arg1) {
-    freeglut_h.glutJoystickFunc(arg0, arg1);
+    gl_h.glutJoystickFunc(arg0, arg1);
   }
 
   public void glutJoystickFuncUcall(MemorySegment arg0, int arg1, MemorySegment arg2) {
-    freeglut_h.glutJoystickFuncUcall(arg0, arg1, arg2);
+    gl_h.glutJoystickFuncUcall(arg0, arg1, arg2);
   }
 
   public void glutJoystickGetCenter(int arg0, MemorySegment arg1) {
-    freeglut_h.glutJoystickGetCenter(arg0, arg1);
+    gl_h.glutJoystickGetCenter(arg0, arg1);
   }
 
   public float glutJoystickGetDeadBand(int arg0, int arg1) {
-    return freeglut_h.glutJoystickGetDeadBand(arg0, arg1);
+    return gl_h.glutJoystickGetDeadBand(arg0, arg1);
   }
 
   public void glutJoystickGetMaxRange(int arg0, MemorySegment arg1) {
-    freeglut_h.glutJoystickGetMaxRange(arg0, arg1);
+    gl_h.glutJoystickGetMaxRange(arg0, arg1);
   }
 
   public void glutJoystickGetMinRange(int arg0, MemorySegment arg1) {
-    freeglut_h.glutJoystickGetMinRange(arg0, arg1);
+    gl_h.glutJoystickGetMinRange(arg0, arg1);
   }
 
   public int glutJoystickGetNumAxes(int arg0) {
-    return freeglut_h.glutJoystickGetNumAxes(arg0);
+    return gl_h.glutJoystickGetNumAxes(arg0);
   }
 
   public int glutJoystickGetNumButtons(int arg0) {
-    return freeglut_h.glutJoystickGetNumButtons(arg0);
+    return gl_h.glutJoystickGetNumButtons(arg0);
   }
 
   public float glutJoystickGetSaturation(int arg0, int arg1) {
-    return freeglut_h.glutJoystickGetSaturation(arg0, arg1);
+    return gl_h.glutJoystickGetSaturation(arg0, arg1);
   }
 
   public int glutJoystickNotWorking(int arg0) {
-    return freeglut_h.glutJoystickNotWorking(arg0);
+    return gl_h.glutJoystickNotWorking(arg0);
   }
 
   public void glutJoystickSetCenter(int arg0, MemorySegment arg1) {
-    freeglut_h.glutJoystickSetCenter(arg0, arg1);
+    gl_h.glutJoystickSetCenter(arg0, arg1);
   }
 
   public void glutJoystickSetDeadBand(int arg0, int arg1, float arg2) {
-    freeglut_h.glutJoystickSetDeadBand(arg0, arg1, arg2);
+    gl_h.glutJoystickSetDeadBand(arg0, arg1, arg2);
   }
 
   public void glutJoystickSetMaxRange(int arg0, MemorySegment arg1) {
-    freeglut_h.glutJoystickSetMaxRange(arg0, arg1);
+    gl_h.glutJoystickSetMaxRange(arg0, arg1);
   }
 
   public void glutJoystickSetMinRange(int arg0, MemorySegment arg1) {
-    freeglut_h.glutJoystickSetMinRange(arg0, arg1);
+    gl_h.glutJoystickSetMinRange(arg0, arg1);
   }
 
   public void glutJoystickSetSaturation(int arg0, int arg1, float arg2) {
-    freeglut_h.glutJoystickSetSaturation(arg0, arg1, arg2);
+    gl_h.glutJoystickSetSaturation(arg0, arg1, arg2);
   }
 
   public void glutKeyboardFunc(MemorySegment arg0) {
-    freeglut_h.glutKeyboardFunc(arg0);
+    gl_h.glutKeyboardFunc(arg0);
   }
 
   public void glutKeyboardFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutKeyboardFuncUcall(arg0, arg1);
+    gl_h.glutKeyboardFuncUcall(arg0, arg1);
   }
 
   public void glutKeyboardUpFunc(MemorySegment arg0) {
-    freeglut_h.glutKeyboardUpFunc(arg0);
+    gl_h.glutKeyboardUpFunc(arg0);
   }
 
   public void glutKeyboardUpFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutKeyboardUpFuncUcall(arg0, arg1);
+    gl_h.glutKeyboardUpFuncUcall(arg0, arg1);
   }
 
   public int glutLayerGet(int arg0) {
-    return freeglut_h.glutLayerGet(arg0);
+    return gl_h.glutLayerGet(arg0);
   }
 
   public void glutLeaveFullScreen() {
-    freeglut_h.glutLeaveFullScreen();
+    gl_h.glutLeaveFullScreen();
   }
 
   public void glutLeaveGameMode() {
-    freeglut_h.glutLeaveGameMode();
+    gl_h.glutLeaveGameMode();
   }
 
   public void glutLeaveMainLoop() {
-    freeglut_h.glutLeaveMainLoop();
+    gl_h.glutLeaveMainLoop();
   }
 
   public void glutMainLoop() {
-    freeglut_h.glutMainLoop();
+    gl_h.glutMainLoop();
   }
 
   public void glutMainLoopEvent() {
-    freeglut_h.glutMainLoopEvent();
+    gl_h.glutMainLoopEvent();
   }
 
   public void glutMenuDestroyFunc(MemorySegment arg0) {
-    freeglut_h.glutMenuDestroyFunc(arg0);
+    gl_h.glutMenuDestroyFunc(arg0);
   }
 
   public void glutMenuDestroyFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutMenuDestroyFuncUcall(arg0, arg1);
+    gl_h.glutMenuDestroyFuncUcall(arg0, arg1);
   }
 
   public void glutMenuStateFunc(MemorySegment arg0) {
-    freeglut_h.glutMenuStateFunc(arg0);
+    gl_h.glutMenuStateFunc(arg0);
   }
 
   public void glutMenuStatusFunc(MemorySegment arg0) {
-    freeglut_h.glutMenuStatusFunc(arg0);
+    gl_h.glutMenuStatusFunc(arg0);
   }
 
   public void glutMenuStatusFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutMenuStatusFuncUcall(arg0, arg1);
+    gl_h.glutMenuStatusFuncUcall(arg0, arg1);
   }
 
   public void glutMotionFunc(MemorySegment arg0) {
-    freeglut_h.glutMotionFunc(arg0);
+    gl_h.glutMotionFunc(arg0);
   }
 
   public void glutMotionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutMotionFuncUcall(arg0, arg1);
+    gl_h.glutMotionFuncUcall(arg0, arg1);
   }
 
   public void glutMouseFunc(MemorySegment arg0) {
-    freeglut_h.glutMouseFunc(arg0);
+    gl_h.glutMouseFunc(arg0);
   }
 
   public void glutMouseFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutMouseFuncUcall(arg0, arg1);
+    gl_h.glutMouseFuncUcall(arg0, arg1);
   }
 
   public void glutMouseWheelFunc(MemorySegment arg0) {
-    freeglut_h.glutMouseWheelFunc(arg0);
+    gl_h.glutMouseWheelFunc(arg0);
   }
 
   public void glutMouseWheelFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutMouseWheelFuncUcall(arg0, arg1);
+    gl_h.glutMouseWheelFuncUcall(arg0, arg1);
   }
 
   public void glutMultiButtonFunc(MemorySegment arg0) {
-    freeglut_h.glutMultiButtonFunc(arg0);
+    gl_h.glutMultiButtonFunc(arg0);
   }
 
   public void glutMultiButtonFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutMultiButtonFuncUcall(arg0, arg1);
+    gl_h.glutMultiButtonFuncUcall(arg0, arg1);
   }
 
   public void glutMultiEntryFunc(MemorySegment arg0) {
-    freeglut_h.glutMultiEntryFunc(arg0);
+    gl_h.glutMultiEntryFunc(arg0);
   }
 
   public void glutMultiEntryFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutMultiEntryFuncUcall(arg0, arg1);
+    gl_h.glutMultiEntryFuncUcall(arg0, arg1);
   }
 
   public void glutMultiMotionFunc(MemorySegment arg0) {
-    freeglut_h.glutMultiMotionFunc(arg0);
+    gl_h.glutMultiMotionFunc(arg0);
   }
 
   public void glutMultiMotionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutMultiMotionFuncUcall(arg0, arg1);
+    gl_h.glutMultiMotionFuncUcall(arg0, arg1);
   }
 
   public void glutMultiPassiveFunc(MemorySegment arg0) {
-    freeglut_h.glutMultiPassiveFunc(arg0);
+    gl_h.glutMultiPassiveFunc(arg0);
   }
 
   public void glutMultiPassiveFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutMultiPassiveFuncUcall(arg0, arg1);
+    gl_h.glutMultiPassiveFuncUcall(arg0, arg1);
   }
 
   public void glutOverlayDisplayFunc(MemorySegment arg0) {
-    freeglut_h.glutOverlayDisplayFunc(arg0);
+    gl_h.glutOverlayDisplayFunc(arg0);
   }
 
   public void glutOverlayDisplayFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutOverlayDisplayFuncUcall(arg0, arg1);
+    gl_h.glutOverlayDisplayFuncUcall(arg0, arg1);
   }
 
   public void glutPassiveMotionFunc(MemorySegment arg0) {
-    freeglut_h.glutPassiveMotionFunc(arg0);
+    gl_h.glutPassiveMotionFunc(arg0);
   }
 
   public void glutPassiveMotionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutPassiveMotionFuncUcall(arg0, arg1);
+    gl_h.glutPassiveMotionFuncUcall(arg0, arg1);
   }
 
   public void glutPopWindow() {
-    freeglut_h.glutPopWindow();
+    gl_h.glutPopWindow();
   }
 
   public void glutPositionFunc(MemorySegment arg0) {
-    freeglut_h.glutPositionFunc(arg0);
+    gl_h.glutPositionFunc(arg0);
   }
 
   public void glutPositionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutPositionFuncUcall(arg0, arg1);
+    gl_h.glutPositionFuncUcall(arg0, arg1);
   }
 
   public void glutPositionWindow(int arg0, int arg1) {
-    freeglut_h.glutPositionWindow(arg0, arg1);
+    gl_h.glutPositionWindow(arg0, arg1);
   }
 
   public void glutPostOverlayRedisplay() {
-    freeglut_h.glutPostOverlayRedisplay();
+    gl_h.glutPostOverlayRedisplay();
   }
 
   public void glutPostRedisplay() {
-    freeglut_h.glutPostRedisplay();
+    gl_h.glutPostRedisplay();
   }
 
   public void glutPostWindowOverlayRedisplay(int arg0) {
-    freeglut_h.glutPostWindowOverlayRedisplay(arg0);
+    gl_h.glutPostWindowOverlayRedisplay(arg0);
   }
 
   public void glutPostWindowRedisplay(int arg0) {
-    freeglut_h.glutPostWindowRedisplay(arg0);
+    gl_h.glutPostWindowRedisplay(arg0);
   }
 
   public void glutPushWindow() {
-    freeglut_h.glutPushWindow();
+    gl_h.glutPushWindow();
   }
 
   public void glutRemoveMenuItem(int arg0) {
-    freeglut_h.glutRemoveMenuItem(arg0);
+    gl_h.glutRemoveMenuItem(arg0);
   }
 
   public void glutRemoveOverlay() {
-    freeglut_h.glutRemoveOverlay();
+    gl_h.glutRemoveOverlay();
   }
 
   public void glutReportErrors() {
-    freeglut_h.glutReportErrors();
+    gl_h.glutReportErrors();
   }
 
   public void glutReshapeFunc(MemorySegment arg0) {
-    freeglut_h.glutReshapeFunc(arg0);
+    gl_h.glutReshapeFunc(arg0);
   }
 
   public void glutReshapeFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutReshapeFuncUcall(arg0, arg1);
+    gl_h.glutReshapeFuncUcall(arg0, arg1);
   }
 
   public void glutReshapeWindow(int arg0, int arg1) {
-    freeglut_h.glutReshapeWindow(arg0, arg1);
+    gl_h.glutReshapeWindow(arg0, arg1);
   }
 
   public void glutSetColor(int arg0, float arg1, float arg2, float arg3) {
-    freeglut_h.glutSetColor(arg0, arg1, arg2, arg3);
+    gl_h.glutSetColor(arg0, arg1, arg2, arg3);
   }
 
   public void glutSetCursor(int arg0) {
-    freeglut_h.glutSetCursor(arg0);
+    gl_h.glutSetCursor(arg0);
   }
 
   public void glutSetIconTitle(MemorySegment arg0) {
-    freeglut_h.glutSetIconTitle(arg0);
+    gl_h.glutSetIconTitle(arg0);
   }
 
   public void glutSetKeyRepeat(int arg0) {
-    freeglut_h.glutSetKeyRepeat(arg0);
+    gl_h.glutSetKeyRepeat(arg0);
   }
 
   public void glutSetMenu(int arg0) {
-    freeglut_h.glutSetMenu(arg0);
+    gl_h.glutSetMenu(arg0);
   }
 
   public void glutSetMenuData(MemorySegment arg0) {
-    freeglut_h.glutSetMenuData(arg0);
+    gl_h.glutSetMenuData(arg0);
   }
 
   public void glutSetMenuFont(int arg0, MemorySegment arg1) {
-    freeglut_h.glutSetMenuFont(arg0, arg1);
+    gl_h.glutSetMenuFont(arg0, arg1);
   }
 
   public void glutSetOption(int arg0, int arg1) {
-    freeglut_h.glutSetOption(arg0, arg1);
+    gl_h.glutSetOption(arg0, arg1);
   }
 
   public void glutSetVertexAttribCoord3(int arg0) {
-    freeglut_h.glutSetVertexAttribCoord3(arg0);
+    gl_h.glutSetVertexAttribCoord3(arg0);
   }
 
   public void glutSetVertexAttribNormal(int arg0) {
-    freeglut_h.glutSetVertexAttribNormal(arg0);
+    gl_h.glutSetVertexAttribNormal(arg0);
   }
 
   public void glutSetVertexAttribTexCoord2(int arg0) {
-    freeglut_h.glutSetVertexAttribTexCoord2(arg0);
+    gl_h.glutSetVertexAttribTexCoord2(arg0);
   }
 
   public void glutSetWindow(int arg0) {
-    freeglut_h.glutSetWindow(arg0);
+    gl_h.glutSetWindow(arg0);
   }
 
   public void glutSetWindowData(MemorySegment arg0) {
-    freeglut_h.glutSetWindowData(arg0);
+    gl_h.glutSetWindowData(arg0);
   }
 
   public void glutSetWindowTitle(MemorySegment arg0) {
-    freeglut_h.glutSetWindowTitle(arg0);
+    gl_h.glutSetWindowTitle(arg0);
   }
 
   public void glutSetupVideoResizing() {
-    freeglut_h.glutSetupVideoResizing();
+    gl_h.glutSetupVideoResizing();
   }
 
   public void glutShowOverlay() {
-    freeglut_h.glutShowOverlay();
+    gl_h.glutShowOverlay();
   }
 
   public void glutShowWindow() {
-    freeglut_h.glutShowWindow();
+    gl_h.glutShowWindow();
   }
 
   public void glutSolidCone(double arg0, double arg1, int arg2, int arg3) {
-    freeglut_h.glutSolidCone(arg0, arg1, arg2, arg3);
+    gl_h.glutSolidCone(arg0, arg1, arg2, arg3);
   }
 
   public void glutSolidCube(double arg0) {
-    freeglut_h.glutSolidCube(arg0);
+    gl_h.glutSolidCube(arg0);
   }
 
   public void glutSolidCylinder(double arg0, double arg1, int arg2, int arg3) {
-    freeglut_h.glutSolidCylinder(arg0, arg1, arg2, arg3);
+    gl_h.glutSolidCylinder(arg0, arg1, arg2, arg3);
   }
 
   public void glutSolidDodecahedron() {
-    freeglut_h.glutSolidDodecahedron();
+    gl_h.glutSolidDodecahedron();
   }
 
   public void glutSolidIcosahedron() {
-    freeglut_h.glutSolidIcosahedron();
+    gl_h.glutSolidIcosahedron();
   }
 
   public void glutSolidOctahedron() {
-    freeglut_h.glutSolidOctahedron();
+    gl_h.glutSolidOctahedron();
   }
 
   public void glutSolidRhombicDodecahedron() {
-    freeglut_h.glutSolidRhombicDodecahedron();
+    gl_h.glutSolidRhombicDodecahedron();
   }
 
   public void glutSolidSierpinskiSponge(int arg0, MemorySegment arg1, double arg2) {
-    freeglut_h.glutSolidSierpinskiSponge(arg0, arg1, arg2);
+    gl_h.glutSolidSierpinskiSponge(arg0, arg1, arg2);
   }
 
   public void glutSolidSphere(double arg0, int arg1, int arg2) {
-    freeglut_h.glutSolidSphere(arg0, arg1, arg2);
+    gl_h.glutSolidSphere(arg0, arg1, arg2);
   }
 
   public void glutSolidTeacup(double arg0) {
-    freeglut_h.glutSolidTeacup(arg0);
+    gl_h.glutSolidTeacup(arg0);
   }
 
   public void glutSolidTeapot(double arg0) {
-    freeglut_h.glutSolidTeapot(arg0);
+    gl_h.glutSolidTeapot(arg0);
   }
 
   public void glutSolidTeaspoon(double arg0) {
-    freeglut_h.glutSolidTeaspoon(arg0);
+    gl_h.glutSolidTeaspoon(arg0);
   }
 
   public void glutSolidTetrahedron() {
-    freeglut_h.glutSolidTetrahedron();
+    gl_h.glutSolidTetrahedron();
   }
 
   public void glutSolidTorus(double arg0, double arg1, int arg2, int arg3) {
-    freeglut_h.glutSolidTorus(arg0, arg1, arg2, arg3);
+    gl_h.glutSolidTorus(arg0, arg1, arg2, arg3);
   }
 
   public void glutSpaceballButtonFunc(MemorySegment arg0) {
-    freeglut_h.glutSpaceballButtonFunc(arg0);
+    gl_h.glutSpaceballButtonFunc(arg0);
   }
 
   public void glutSpaceballButtonFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutSpaceballButtonFuncUcall(arg0, arg1);
+    gl_h.glutSpaceballButtonFuncUcall(arg0, arg1);
   }
 
   public void glutSpaceballMotionFunc(MemorySegment arg0) {
-    freeglut_h.glutSpaceballMotionFunc(arg0);
+    gl_h.glutSpaceballMotionFunc(arg0);
   }
 
   public void glutSpaceballMotionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutSpaceballMotionFuncUcall(arg0, arg1);
+    gl_h.glutSpaceballMotionFuncUcall(arg0, arg1);
   }
 
   public void glutSpaceballRotateFunc(MemorySegment arg0) {
-    freeglut_h.glutSpaceballRotateFunc(arg0);
+    gl_h.glutSpaceballRotateFunc(arg0);
   }
 
   public void glutSpaceballRotateFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutSpaceballRotateFuncUcall(arg0, arg1);
+    gl_h.glutSpaceballRotateFuncUcall(arg0, arg1);
   }
 
   public void glutSpecialFunc(MemorySegment arg0) {
-    freeglut_h.glutSpecialFunc(arg0);
+    gl_h.glutSpecialFunc(arg0);
   }
 
   public void glutSpecialFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutSpecialFuncUcall(arg0, arg1);
+    gl_h.glutSpecialFuncUcall(arg0, arg1);
   }
 
   public void glutSpecialUpFunc(MemorySegment arg0) {
-    freeglut_h.glutSpecialUpFunc(arg0);
+    gl_h.glutSpecialUpFunc(arg0);
   }
 
   public void glutSpecialUpFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutSpecialUpFuncUcall(arg0, arg1);
+    gl_h.glutSpecialUpFuncUcall(arg0, arg1);
   }
 
   public void glutStopVideoResizing() {
-    freeglut_h.glutStopVideoResizing();
+    gl_h.glutStopVideoResizing();
   }
 
   public void glutStrokeCharacter(MemorySegment arg0, int arg1) {
-    freeglut_h.glutStrokeCharacter(arg0, arg1);
+    gl_h.glutStrokeCharacter(arg0, arg1);
   }
 
   public float glutStrokeHeight(MemorySegment arg0) {
-    return freeglut_h.glutStrokeHeight(arg0);
+    return gl_h.glutStrokeHeight(arg0);
   }
 
   public int glutStrokeLength(MemorySegment arg0, MemorySegment arg1) {
-    return freeglut_h.glutStrokeLength(arg0, arg1);
+    return gl_h.glutStrokeLength(arg0, arg1);
   }
 
   public float glutStrokeLengthf(MemorySegment arg0, MemorySegment arg1) {
-    return freeglut_h.glutStrokeLengthf(arg0, arg1);
+    return gl_h.glutStrokeLengthf(arg0, arg1);
   }
 
   public void glutStrokeString(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutStrokeString(arg0, arg1);
+    gl_h.glutStrokeString(arg0, arg1);
   }
 
   public int glutStrokeWidth(MemorySegment arg0, int arg1) {
-    return freeglut_h.glutStrokeWidth(arg0, arg1);
+    return gl_h.glutStrokeWidth(arg0, arg1);
   }
 
   public float glutStrokeWidthf(MemorySegment arg0, int arg1) {
-    return freeglut_h.glutStrokeWidthf(arg0, arg1);
+    return gl_h.glutStrokeWidthf(arg0, arg1);
   }
 
   public void glutSwapBuffers() {
-    freeglut_h.glutSwapBuffers();
+    gl_h.glutSwapBuffers();
   }
 
   public void glutTabletButtonFunc(MemorySegment arg0) {
-    freeglut_h.glutTabletButtonFunc(arg0);
+    gl_h.glutTabletButtonFunc(arg0);
   }
 
   public void glutTabletButtonFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutTabletButtonFuncUcall(arg0, arg1);
+    gl_h.glutTabletButtonFuncUcall(arg0, arg1);
   }
 
   public void glutTabletMotionFunc(MemorySegment arg0) {
-    freeglut_h.glutTabletMotionFunc(arg0);
+    gl_h.glutTabletMotionFunc(arg0);
   }
 
   public void glutTabletMotionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutTabletMotionFuncUcall(arg0, arg1);
+    gl_h.glutTabletMotionFuncUcall(arg0, arg1);
   }
 
   public void glutTimerFunc(int arg0, MemorySegment arg1, int arg2) {
-    freeglut_h.glutTimerFunc(arg0, arg1, arg2);
+    gl_h.glutTimerFunc(arg0, arg1, arg2);
   }
 
   public void glutTimerFuncUcall(int arg0, MemorySegment arg1, int arg2, MemorySegment arg3) {
-    freeglut_h.glutTimerFuncUcall(arg0, arg1, arg2, arg3);
+    gl_h.glutTimerFuncUcall(arg0, arg1, arg2, arg3);
   }
 
   public void glutUseLayer(int arg0) {
-    freeglut_h.glutUseLayer(arg0);
+    gl_h.glutUseLayer(arg0);
   }
 
   public void glutVideoPan(int arg0, int arg1, int arg2, int arg3) {
-    freeglut_h.glutVideoPan(arg0, arg1, arg2, arg3);
+    gl_h.glutVideoPan(arg0, arg1, arg2, arg3);
   }
 
   public void glutVideoResize(int arg0, int arg1, int arg2, int arg3) {
-    freeglut_h.glutVideoResize(arg0, arg1, arg2, arg3);
+    gl_h.glutVideoResize(arg0, arg1, arg2, arg3);
   }
 
   public int glutVideoResizeGet(int arg0) {
-    return freeglut_h.glutVideoResizeGet(arg0);
+    return gl_h.glutVideoResizeGet(arg0);
   }
 
   public void glutVisibilityFunc(MemorySegment arg0) {
-    freeglut_h.glutVisibilityFunc(arg0);
+    gl_h.glutVisibilityFunc(arg0);
   }
 
   public void glutVisibilityFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutVisibilityFuncUcall(arg0, arg1);
+    gl_h.glutVisibilityFuncUcall(arg0, arg1);
   }
 
   public void glutWMCloseFunc(MemorySegment arg0) {
-    freeglut_h.glutWMCloseFunc(arg0);
+    gl_h.glutWMCloseFunc(arg0);
   }
 
   public void glutWMCloseFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutWMCloseFuncUcall(arg0, arg1);
+    gl_h.glutWMCloseFuncUcall(arg0, arg1);
   }
 
   public void glutWarpPointer(int arg0, int arg1) {
-    freeglut_h.glutWarpPointer(arg0, arg1);
+    gl_h.glutWarpPointer(arg0, arg1);
   }
 
   public void glutWindowStatusFunc(MemorySegment arg0) {
-    freeglut_h.glutWindowStatusFunc(arg0);
+    gl_h.glutWindowStatusFunc(arg0);
   }
 
   public void glutWindowStatusFuncUcall(MemorySegment arg0, MemorySegment arg1) {
-    freeglut_h.glutWindowStatusFuncUcall(arg0, arg1);
+    gl_h.glutWindowStatusFuncUcall(arg0, arg1);
   }
 
   public void glutWireCone(double arg0, double arg1, int arg2, int arg3) {
-    freeglut_h.glutWireCone(arg0, arg1, arg2, arg3);
+    gl_h.glutWireCone(arg0, arg1, arg2, arg3);
   }
 
   public void glutWireCube(double arg0) {
-    freeglut_h.glutWireCube(arg0);
+    gl_h.glutWireCube(arg0);
   }
 
   public void glutWireCylinder(double arg0, double arg1, int arg2, int arg3) {
-    freeglut_h.glutWireCylinder(arg0, arg1, arg2, arg3);
+    gl_h.glutWireCylinder(arg0, arg1, arg2, arg3);
   }
 
   public void glutWireDodecahedron() {
-    freeglut_h.glutWireDodecahedron();
+    gl_h.glutWireDodecahedron();
   }
 
   public void glutWireIcosahedron() {
-    freeglut_h.glutWireIcosahedron();
+    gl_h.glutWireIcosahedron();
   }
 
   public void glutWireOctahedron() {
-    freeglut_h.glutWireOctahedron();
+    gl_h.glutWireOctahedron();
   }
 
   public void glutWireRhombicDodecahedron() {
-    freeglut_h.glutWireRhombicDodecahedron();
+    gl_h.glutWireRhombicDodecahedron();
   }
 
   public void glutWireSierpinskiSponge(int arg0, MemorySegment arg1, double arg2) {
-    freeglut_h.glutWireSierpinskiSponge(arg0, arg1, arg2);
+    gl_h.glutWireSierpinskiSponge(arg0, arg1, arg2);
   }
 
   public void glutWireSphere(double arg0, int arg1, int arg2) {
-    freeglut_h.glutWireSphere(arg0, arg1, arg2);
+    gl_h.glutWireSphere(arg0, arg1, arg2);
   }
 
   public void glutWireTeacup(double arg0) {
-    freeglut_h.glutWireTeacup(arg0);
+    gl_h.glutWireTeacup(arg0);
   }
 
   public void glutWireTeapot(double arg0) {
-    freeglut_h.glutWireTeapot(arg0);
+    gl_h.glutWireTeapot(arg0);
   }
 
   public void glutWireTeaspoon(double arg0) {
-    freeglut_h.glutWireTeaspoon(arg0);
+    gl_h.glutWireTeaspoon(arg0);
   }
 
   public void glutWireTetrahedron() {
-    freeglut_h.glutWireTetrahedron();
+    gl_h.glutWireTetrahedron();
   }
 
   public void glutWireTorus(double arg0, double arg1, int arg2, int arg3) {
-    freeglut_h.glutWireTorus(arg0, arg1, arg2, arg3);
+    gl_h.glutWireTorus(arg0, arg1, arg2, arg3);
   }
 
   public void glMultiTexImage3DEXT(int texunit, int target, int level, int internalformat, int width, int height, int depth, int border, int format, int type, MemorySegment pixels) {
@@ -2454,7 +2454,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glGetInfoLogARB(int obj, int maxLength, MemorySegment length, MemorySegment infoLog) {
-    PFNGLGETINFOLOGARBPROC.invoke(load("glGetInfoLogARB"), obj, maxLength, length, infoLog);
+    opengl.windows.PFNGLGETINFOLOGARBPROC.invoke(load("glGetInfoLogARB"), obj, maxLength, length, infoLog);
   }
 
   public void glBufferAddressRangeNV(int pname, int index, long address, long length) {
@@ -2666,7 +2666,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glGetShaderSourceARB(int obj, int maxLength, MemorySegment length, MemorySegment source) {
-    PFNGLGETSHADERSOURCEARBPROC.invoke(load("glGetShaderSourceARB"), obj, maxLength, length, source);
+    opengl.windows.PFNGLGETSHADERSOURCEARBPROC.invoke(load("glGetShaderSourceARB"), obj, maxLength, length, source);
   }
 
   public void glCoverFillPathNV(int path, int coverMode) {
@@ -4070,7 +4070,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glBindAttribLocationARB(int programObj, int index, MemorySegment name) {
-    PFNGLBINDATTRIBLOCATIONARBPROC.invoke(load("glBindAttribLocationARB"), programObj, index, name);
+    opengl.windows.PFNGLBINDATTRIBLOCATIONARBPROC.invoke(load("glBindAttribLocationARB"), programObj, index, name);
   }
 
   public void glLightxvOES(int light, int pname, MemorySegment params) {
@@ -4146,7 +4146,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glEGLImageTargetTexture2DOES(int target, MemorySegment image) {
-    PFNGLEGLIMAGETARGETTEXTURE2DOESPROC.invoke(load("glEGLImageTargetTexture2DOES"), target, image);
+    throw new RuntimeException("This method is not available in the generated binding.");
   }
 
   public void glFeedbackBufferxOES(int n, int type, MemorySegment buffer) {
@@ -4814,7 +4814,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glShaderSourceARB(int shaderObj, int count, MemorySegment string, MemorySegment length) {
-    PFNGLSHADERSOURCEARBPROC.invoke(load("glShaderSourceARB"), shaderObj, count, string, length);
+    opengl.windows.PFNGLSHADERSOURCEARBPROC.invoke(load("glShaderSourceARB"), shaderObj, count, string, length);
   }
 
   public void glCompressedTexSubImage2DARB(int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, MemorySegment data) {
@@ -4826,7 +4826,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glGetActiveUniformARB(int programObj, int index, int maxLength, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
-    PFNGLGETACTIVEUNIFORMARBPROC.invoke(load("glGetActiveUniformARB"), programObj, index, maxLength, length, size, type, name);
+    opengl.windows.PFNGLGETACTIVEUNIFORMARBPROC.invoke(load("glGetActiveUniformARB"), programObj, index, maxLength, length, size, type, name);
   }
 
   public void glVertexAttribL1d(int index, double x) {
@@ -5242,7 +5242,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glAttachObjectARB(int containerObj, int obj) {
-    PFNGLATTACHOBJECTARBPROC.invoke(load("glAttachObjectARB"), containerObj, obj);
+    opengl.windows.PFNGLATTACHOBJECTARBPROC.invoke(load("glAttachObjectARB"), containerObj, obj);
   }
 
   public void glCurrentPaletteMatrixARB(int index) {
@@ -5334,7 +5334,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glDetachObjectARB(int containerObj, int attachedObj) {
-    PFNGLDETACHOBJECTARBPROC.invoke(load("glDetachObjectARB"), containerObj, attachedObj);
+    opengl.windows.PFNGLDETACHOBJECTARBPROC.invoke(load("glDetachObjectARB"), containerObj, attachedObj);
   }
 
   public void glMaxShaderCompilerThreadsARB(int count) {
@@ -5530,7 +5530,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glGetAttachedObjectsARB(int containerObj, int maxCount, MemorySegment count, MemorySegment obj) {
-    PFNGLGETATTACHEDOBJECTSARBPROC.invoke(load("glGetAttachedObjectsARB"), containerObj, maxCount, count, obj);
+    opengl.windows.PFNGLGETATTACHEDOBJECTSARBPROC.invoke(load("glGetAttachedObjectsARB"), containerObj, maxCount, count, obj);
   }
 
   public void glTexCoord2hvNV(MemorySegment v) {
@@ -5986,7 +5986,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public int glCreateProgramObjectARB() {
-    return PFNGLCREATEPROGRAMOBJECTARBPROC.invoke(load("glCreateProgramObjectARB"));
+    return opengl.windows.PFNGLCREATEPROGRAMOBJECTARBPROC.invoke(load("glCreateProgramObjectARB"));
   }
 
   public void glBindBufferARB(int target, int buffer) {
@@ -6078,7 +6078,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public int glCreateShaderObjectARB(int shaderType) {
-    return PFNGLCREATESHADEROBJECTARBPROC.invoke(load("glCreateShaderObjectARB"), shaderType);
+    return opengl.windows.PFNGLCREATESHADEROBJECTARBPROC.invoke(load("glCreateShaderObjectARB"), shaderType);
   }
 
   public void glMultiTexCoord2s(int target, short s, short t) {
@@ -6490,7 +6490,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glCompileShaderARB(int shaderObj) {
-    PFNGLCOMPILESHADERARBPROC.invoke(load("glCompileShaderARB"), shaderObj);
+    opengl.windows.PFNGLCOMPILESHADERARBPROC.invoke(load("glCompileShaderARB"), shaderObj);
   }
 
   public void glBinormal3sEXT(short bx, short by, short bz) {
@@ -7002,7 +7002,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glGetUniformfvARB(int programObj, int location, MemorySegment params) {
-    PFNGLGETUNIFORMFVARBPROC.invoke(load("glGetUniformfvARB"), programObj, location, params);
+    opengl.windows.PFNGLGETUNIFORMFVARBPROC.invoke(load("glGetUniformfvARB"), programObj, location, params);
   }
 
   public void glTexCoordPointervINTEL(int size, int type, MemorySegment pointer) {
@@ -7102,7 +7102,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glValidateProgramARB(int programObj) {
-    PFNGLVALIDATEPROGRAMARBPROC.invoke(load("glValidateProgramARB"), programObj);
+    opengl.windows.PFNGLVALIDATEPROGRAMARBPROC.invoke(load("glValidateProgramARB"), programObj);
   }
 
   public void glBeginVertexShaderEXT() {
@@ -7122,7 +7122,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public int glGetAttribLocationARB(int programObj, MemorySegment name) {
-    return PFNGLGETATTRIBLOCATIONARBPROC.invoke(load("glGetAttribLocationARB"), programObj, name);
+    return opengl.windows.PFNGLGETATTRIBLOCATIONARBPROC.invoke(load("glGetAttribLocationARB"), programObj, name);
   }
 
   public void glMemoryBarrierEXT(int barriers) {
@@ -7286,7 +7286,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public int glGetHandleARB(int pname) {
-    return PFNGLGETHANDLEARBPROC.invoke(load("glGetHandleARB"), pname);
+    return opengl.windows.PFNGLGETHANDLEARBPROC.invoke(load("glGetHandleARB"), pname);
   }
 
   public void glGetSeparableFilterEXT(int target, int format, int type, MemorySegment row, MemorySegment column, MemorySegment span) {
@@ -8006,7 +8006,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public int glGetUniformLocationARB(int programObj, MemorySegment name) {
-    return PFNGLGETUNIFORMLOCATIONARBPROC.invoke(load("glGetUniformLocationARB"), programObj, name);
+    return opengl.windows.PFNGLGETUNIFORMLOCATIONARBPROC.invoke(load("glGetUniformLocationARB"), programObj, name);
   }
 
   public void glDeleteFencesAPPLE(int n, MemorySegment fences) {
@@ -8130,7 +8130,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glLinkProgramARB(int programObj) {
-    PFNGLLINKPROGRAMARBPROC.invoke(load("glLinkProgramARB"), programObj);
+    opengl.windows.PFNGLLINKPROGRAMARBPROC.invoke(load("glLinkProgramARB"), programObj);
   }
 
   public void glUniform4ivARB(int location, int count, MemorySegment value) {
@@ -9558,7 +9558,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glGetUniformivARB(int programObj, int location, MemorySegment params) {
-    PFNGLGETUNIFORMIVARBPROC.invoke(load("glGetUniformivARB"), programObj, location, params);
+    opengl.windows.PFNGLGETUNIFORMIVARBPROC.invoke(load("glGetUniformivARB"), programObj, location, params);
   }
 
   public byte glIsProgram(int program) {
@@ -9818,7 +9818,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glGetActiveAttribARB(int programObj, int index, int maxLength, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
-    PFNGLGETACTIVEATTRIBARBPROC.invoke(load("glGetActiveAttribARB"), programObj, index, maxLength, length, size, type, name);
+    opengl.windows.PFNGLGETACTIVEATTRIBARBPROC.invoke(load("glGetActiveAttribARB"), programObj, index, maxLength, length, size, type, name);
   }
 
   public void glUniform1fvARB(int location, int count, MemorySegment value) {
@@ -10258,7 +10258,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glDeleteObjectARB(int obj) {
-    PFNGLDELETEOBJECTARBPROC.invoke(load("glDeleteObjectARB"), obj);
+    opengl.windows.PFNGLDELETEOBJECTARBPROC.invoke(load("glDeleteObjectARB"), obj);
   }
 
   public void glMultiModeDrawArraysIBM(MemorySegment mode, MemorySegment first, MemorySegment count, int primcount, int modestride) {
@@ -11374,7 +11374,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glEGLImageTargetRenderbufferStorageOES(int target, MemorySegment image) {
-    PFNGLEGLIMAGETARGETRENDERBUFFERSTORAGEOESPROC.invoke(load("glEGLImageTargetRenderbufferStorageOES"), target, image);
+    throw new RuntimeException("This method is not available in the generated binding.");
   }
 
   public void glGetVariantFloatvEXT(int id, int value, MemorySegment data) {
@@ -11998,7 +11998,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glUseProgramObjectARB(int programObj) {
-    PFNGLUSEPROGRAMOBJECTARBPROC.invoke(load("glUseProgramObjectARB"), programObj);
+    opengl.windows.PFNGLUSEPROGRAMOBJECTARBPROC.invoke(load("glUseProgramObjectARB"), programObj);
   }
 
   public void glGetActiveAtomicCounterBufferiv(int program, int bufferIndex, int pname, MemorySegment params) {
@@ -12086,7 +12086,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glGetObjectParameterivARB(int obj, int pname, MemorySegment params) {
-    PFNGLGETOBJECTPARAMETERIVARBPROC.invoke(load("glGetObjectParameterivARB"), obj, pname, params);
+    opengl.windows.PFNGLGETOBJECTPARAMETERIVARBPROC.invoke(load("glGetObjectParameterivARB"), obj, pname, params);
   }
 
   public void glTexImage3DMultisampleCoverageNV(int target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, int depth, byte fixedSampleLocations) {
@@ -12958,7 +12958,7 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glGetObjectParameterfvARB(int obj, int pname, MemorySegment params) {
-    PFNGLGETOBJECTPARAMETERFVARBPROC.invoke(load("glGetObjectParameterfvARB"), obj, pname, params);
+    opengl.windows.PFNGLGETOBJECTPARAMETERFVARBPROC.invoke(load("glGetObjectParameterfvARB"), obj, pname, params);
   }
 
   public void glUniform2iv(int location, int count, MemorySegment value) {

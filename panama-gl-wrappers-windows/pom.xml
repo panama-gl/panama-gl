@@ -30,9 +30,11 @@
 			<version>${panamagl.bindings.version}</version>
 		</dependency>
 
+		<!-- Function pointer classes (PFN...PROC) invoking the functions resolved at runtime, and the
+		     OpenGL constants, on all OS -->
 		<dependency>
 			<groupId>org.jzy3d</groupId>
-			<artifactId>panama-gl-bindings-linux</artifactId>
+			<artifactId>panama-gl-bindings-glext</artifactId>
 			<version>${panamagl.bindings.version}</version>
 		</dependency>
 

@@ -463,7 +463,7 @@ public class ClassWriter extends JavaWriter {
     }
 
     StringBuffer args = writeInputArgs(argsIn);
-    String call = functionPointer.getSimpleName() + ".invoke(load(\"" + name + "\")"
+    String call = typeName(functionPointer) + ".invoke(load(\"" + name + "\")"
         + (argsIn.isEmpty() ? "" : ", " + args) + ")";
 
     Arg argOut = getArgOut(invoke);

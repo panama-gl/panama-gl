@@ -2,7 +2,7 @@ package panamagl.platform.linux;
 
 import opengl.linux.gl_h;
 import java.lang.foreign.*;
-import opengl.linux.*;
+import opengl.glext.*;
 
 public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
   public GL_linux() {
@@ -2580,7 +2580,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glGetInfoLogARB(int obj, int maxLength, MemorySegment length, MemorySegment infoLog) {
-    PFNGLGETINFOLOGARBPROC.invoke(load("glGetInfoLogARB"), obj, maxLength, length, infoLog);
+    opengl.linux.PFNGLGETINFOLOGARBPROC.invoke(load("glGetInfoLogARB"), obj, maxLength, length, infoLog);
   }
 
   public void glBufferAddressRangeNV(int pname, int index, long address, long length) {
@@ -2788,7 +2788,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glGetShaderSourceARB(int obj, int maxLength, MemorySegment length, MemorySegment source) {
-    PFNGLGETSHADERSOURCEARBPROC.invoke(load("glGetShaderSourceARB"), obj, maxLength, length, source);
+    opengl.linux.PFNGLGETSHADERSOURCEARBPROC.invoke(load("glGetShaderSourceARB"), obj, maxLength, length, source);
   }
 
   public void glCoverFillPathNV(int path, int coverMode) {
@@ -4132,7 +4132,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glBindAttribLocationARB(int programObj, int index, MemorySegment name) {
-    PFNGLBINDATTRIBLOCATIONARBPROC.invoke(load("glBindAttribLocationARB"), programObj, index, name);
+    opengl.linux.PFNGLBINDATTRIBLOCATIONARBPROC.invoke(load("glBindAttribLocationARB"), programObj, index, name);
   }
 
   public void glLightxvOES(int light, int pname, MemorySegment params) {
@@ -4204,7 +4204,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glEGLImageTargetTexture2DOES(int target, MemorySegment image) {
-    PFNGLEGLIMAGETARGETTEXTURE2DOESPROC.invoke(load("glEGLImageTargetTexture2DOES"), target, image);
+    throw new RuntimeException("This method is not available in the generated binding.");
   }
 
   public void glFeedbackBufferxOES(int n, int type, MemorySegment buffer) {
@@ -4860,7 +4860,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glShaderSourceARB(int shaderObj, int count, MemorySegment string, MemorySegment length) {
-    PFNGLSHADERSOURCEARBPROC.invoke(load("glShaderSourceARB"), shaderObj, count, string, length);
+    opengl.linux.PFNGLSHADERSOURCEARBPROC.invoke(load("glShaderSourceARB"), shaderObj, count, string, length);
   }
 
   public void glCompressedTexSubImage2DARB(int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, MemorySegment data) {
@@ -4872,7 +4872,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glGetActiveUniformARB(int programObj, int index, int maxLength, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
-    PFNGLGETACTIVEUNIFORMARBPROC.invoke(load("glGetActiveUniformARB"), programObj, index, maxLength, length, size, type, name);
+    opengl.linux.PFNGLGETACTIVEUNIFORMARBPROC.invoke(load("glGetActiveUniformARB"), programObj, index, maxLength, length, size, type, name);
   }
 
   public void glVertexAttribL1d(int index, double x) {
@@ -5272,7 +5272,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glAttachObjectARB(int containerObj, int obj) {
-    PFNGLATTACHOBJECTARBPROC.invoke(load("glAttachObjectARB"), containerObj, obj);
+    opengl.linux.PFNGLATTACHOBJECTARBPROC.invoke(load("glAttachObjectARB"), containerObj, obj);
   }
 
   public void glCurrentPaletteMatrixARB(int index) {
@@ -5360,7 +5360,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glDetachObjectARB(int containerObj, int attachedObj) {
-    PFNGLDETACHOBJECTARBPROC.invoke(load("glDetachObjectARB"), containerObj, attachedObj);
+    opengl.linux.PFNGLDETACHOBJECTARBPROC.invoke(load("glDetachObjectARB"), containerObj, attachedObj);
   }
 
   public void glMaxShaderCompilerThreadsARB(int count) {
@@ -5536,7 +5536,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glGetAttachedObjectsARB(int containerObj, int maxCount, MemorySegment count, MemorySegment obj) {
-    PFNGLGETATTACHEDOBJECTSARBPROC.invoke(load("glGetAttachedObjectsARB"), containerObj, maxCount, count, obj);
+    opengl.linux.PFNGLGETATTACHEDOBJECTSARBPROC.invoke(load("glGetAttachedObjectsARB"), containerObj, maxCount, count, obj);
   }
 
   public void glTexCoord2hvNV(MemorySegment v) {
@@ -5944,7 +5944,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public int glCreateProgramObjectARB() {
-    return PFNGLCREATEPROGRAMOBJECTARBPROC.invoke(load("glCreateProgramObjectARB"));
+    return opengl.linux.PFNGLCREATEPROGRAMOBJECTARBPROC.invoke(load("glCreateProgramObjectARB"));
   }
 
   public void glBindBufferARB(int target, int buffer) {
@@ -6008,7 +6008,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public int glCreateShaderObjectARB(int shaderType) {
-    return PFNGLCREATESHADEROBJECTARBPROC.invoke(load("glCreateShaderObjectARB"), shaderType);
+    return opengl.linux.PFNGLCREATESHADEROBJECTARBPROC.invoke(load("glCreateShaderObjectARB"), shaderType);
   }
 
   public void glMapVertexAttrib2fAPPLE(int index, int size, float u1, float u2, int ustride, int uorder, float v1, float v2, int vstride, int vorder, MemorySegment points) {
@@ -6396,7 +6396,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glCompileShaderARB(int shaderObj) {
-    PFNGLCOMPILESHADERARBPROC.invoke(load("glCompileShaderARB"), shaderObj);
+    opengl.linux.PFNGLCOMPILESHADERARBPROC.invoke(load("glCompileShaderARB"), shaderObj);
   }
 
   public void glBinormal3sEXT(short bx, short by, short bz) {
@@ -6888,7 +6888,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glGetUniformfvARB(int programObj, int location, MemorySegment params) {
-    PFNGLGETUNIFORMFVARBPROC.invoke(load("glGetUniformfvARB"), programObj, location, params);
+    opengl.linux.PFNGLGETUNIFORMFVARBPROC.invoke(load("glGetUniformfvARB"), programObj, location, params);
   }
 
   public void glTexCoordPointervINTEL(int size, int type, MemorySegment pointer) {
@@ -6988,7 +6988,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glValidateProgramARB(int programObj) {
-    PFNGLVALIDATEPROGRAMARBPROC.invoke(load("glValidateProgramARB"), programObj);
+    opengl.linux.PFNGLVALIDATEPROGRAMARBPROC.invoke(load("glValidateProgramARB"), programObj);
   }
 
   public void glBeginVertexShaderEXT() {
@@ -7008,7 +7008,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public int glGetAttribLocationARB(int programObj, MemorySegment name) {
-    return PFNGLGETATTRIBLOCATIONARBPROC.invoke(load("glGetAttribLocationARB"), programObj, name);
+    return opengl.linux.PFNGLGETATTRIBLOCATIONARBPROC.invoke(load("glGetAttribLocationARB"), programObj, name);
   }
 
   public void glMemoryBarrierEXT(int barriers) {
@@ -7164,7 +7164,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public int glGetHandleARB(int pname) {
-    return PFNGLGETHANDLEARBPROC.invoke(load("glGetHandleARB"), pname);
+    return opengl.linux.PFNGLGETHANDLEARBPROC.invoke(load("glGetHandleARB"), pname);
   }
 
   public void glGetSeparableFilterEXT(int target, int format, int type, MemorySegment row, MemorySegment column, MemorySegment span) {
@@ -7864,7 +7864,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public int glGetUniformLocationARB(int programObj, MemorySegment name) {
-    return PFNGLGETUNIFORMLOCATIONARBPROC.invoke(load("glGetUniformLocationARB"), programObj, name);
+    return opengl.linux.PFNGLGETUNIFORMLOCATIONARBPROC.invoke(load("glGetUniformLocationARB"), programObj, name);
   }
 
   public void glDeleteFencesAPPLE(int n, MemorySegment fences) {
@@ -7984,7 +7984,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glLinkProgramARB(int programObj) {
-    PFNGLLINKPROGRAMARBPROC.invoke(load("glLinkProgramARB"), programObj);
+    opengl.linux.PFNGLLINKPROGRAMARBPROC.invoke(load("glLinkProgramARB"), programObj);
   }
 
   public void glUniform4ivARB(int location, int count, MemorySegment value) {
@@ -9364,7 +9364,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glGetUniformivARB(int programObj, int location, MemorySegment params) {
-    PFNGLGETUNIFORMIVARBPROC.invoke(load("glGetUniformivARB"), programObj, location, params);
+    opengl.linux.PFNGLGETUNIFORMIVARBPROC.invoke(load("glGetUniformivARB"), programObj, location, params);
   }
 
   public byte glIsProgram(int program) {
@@ -9604,7 +9604,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glGetActiveAttribARB(int programObj, int index, int maxLength, MemorySegment length, MemorySegment size, MemorySegment type, MemorySegment name) {
-    PFNGLGETACTIVEATTRIBARBPROC.invoke(load("glGetActiveAttribARB"), programObj, index, maxLength, length, size, type, name);
+    opengl.linux.PFNGLGETACTIVEATTRIBARBPROC.invoke(load("glGetActiveAttribARB"), programObj, index, maxLength, length, size, type, name);
   }
 
   public void glUniform1fvARB(int location, int count, MemorySegment value) {
@@ -10036,7 +10036,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glDeleteObjectARB(int obj) {
-    PFNGLDELETEOBJECTARBPROC.invoke(load("glDeleteObjectARB"), obj);
+    opengl.linux.PFNGLDELETEOBJECTARBPROC.invoke(load("glDeleteObjectARB"), obj);
   }
 
   public void glMultiModeDrawArraysIBM(MemorySegment mode, MemorySegment first, MemorySegment count, int primcount, int modestride) {
@@ -11108,7 +11108,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glEGLImageTargetRenderbufferStorageOES(int target, MemorySegment image) {
-    PFNGLEGLIMAGETARGETRENDERBUFFERSTORAGEOESPROC.invoke(load("glEGLImageTargetRenderbufferStorageOES"), target, image);
+    throw new RuntimeException("This method is not available in the generated binding.");
   }
 
   public void glGetVariantFloatvEXT(int id, int value, MemorySegment data) {
@@ -11716,7 +11716,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glUseProgramObjectARB(int programObj) {
-    PFNGLUSEPROGRAMOBJECTARBPROC.invoke(load("glUseProgramObjectARB"), programObj);
+    opengl.linux.PFNGLUSEPROGRAMOBJECTARBPROC.invoke(load("glUseProgramObjectARB"), programObj);
   }
 
   public void glGetActiveAtomicCounterBufferiv(int program, int bufferIndex, int pname, MemorySegment params) {
@@ -11804,7 +11804,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glGetObjectParameterivARB(int obj, int pname, MemorySegment params) {
-    PFNGLGETOBJECTPARAMETERIVARBPROC.invoke(load("glGetObjectParameterivARB"), obj, pname, params);
+    opengl.linux.PFNGLGETOBJECTPARAMETERIVARBPROC.invoke(load("glGetObjectParameterivARB"), obj, pname, params);
   }
 
   public void glTexImage3DMultisampleCoverageNV(int target, int coverageSamples, int colorSamples, int internalFormat, int width, int height, int depth, byte fixedSampleLocations) {
@@ -12664,7 +12664,7 @@ public class GL_linux extends panamagl.opengl.AGL implements panamagl.opengl.GL,
   }
 
   public void glGetObjectParameterfvARB(int obj, int pname, MemorySegment params) {
-    PFNGLGETOBJECTPARAMETERFVARBPROC.invoke(load("glGetObjectParameterfvARB"), obj, pname, params);
+    opengl.linux.PFNGLGETOBJECTPARAMETERFVARBPROC.invoke(load("glGetObjectParameterfvARB"), obj, pname, params);
   }
 
   public void glUniform2iv(int location, int count, MemorySegment value) {

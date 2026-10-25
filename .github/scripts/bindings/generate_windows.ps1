@@ -1,6 +1,6 @@
-# Generate the Windows bindings of PanamaGL with jextract, as the scripts of
-# panama-gl-bindings/scripts/windows do, but in packages without CPU name so
-# that the bindings generated on x64 and ARM64 can be compared.
+# Generate the Windows binding of PanamaGL with jextract, as
+# panama-gl-bindings/scripts/windows/generate_opengl.bat does, so that the
+# bindings generated on x64 and ARM64 can be compared.
 #
 # Usage : generate_windows.ps1 <jextract.bat> <panama-gl-bindings/scripts/windows> <output dir>
 param([string]$JExtract, [string]$Scripts, [string]$Out)
@@ -21,20 +21,17 @@ $sdk = $sdks | Where-Object { $_.Name -eq '10.0.19041.0' } | Select-Object -Firs
 if (-not $sdk) { $sdk = $sdks | Select-Object -Last 1 }
 "Windows SDK $($sdk.Name)" | Tee-Object -FilePath "$Out\versions.txt" -Append
 
-function Generate([string]$Package, [string]$HeaderClass, [string]$Header, [string[]]$Options) {
-  $common = @('--target-package', $Package, '--header-class-name', $HeaderClass, '--output', $Out) + $Options
-  & $JExtract @common --dump-includes "$Out\$Package.includes" $Header *> "$Out\$Package.log"
-  if ($LASTEXITCODE -eq 0) { & $JExtract @common $Header *>> "$Out\$Package.log" }
-  if ($LASTEXITCODE -ne 0) {
-    Get-Content "$Out\$Package.log" | Where-Object { $_ -notmatch 'warning' } | Select-Object -Last 30
-    throw "jextract failed for $Package"
-  }
-}
-
+# The single filtered binding of panama-gl-bindings/scripts/windows/generate_opengl.py
 Push-Location $Scripts
 try {
-  Generate 'wgl.windows' 'wgl_h' 'include_wgl.h' @('-I', "$($sdk.FullName)\um", '-I', "$($sdk.FullName)\shared")
-  Generate 'freeglut.windows' 'freeglut_h' 'GL/freeglut.h' @('-I', '.')
+  # Into a sub folder, which generate_opengl.py empties
+  python generate_opengl.py $JExtract $sdk.FullName "$Out\java" *> "$Out\opengl.windows.log"
+  if ($LASTEXITCODE -ne 0) {
+    Get-Content "$Out\opengl.windows.log" | Where-Object { $_ -notmatch 'warning' } | Select-Object -Last 30
+    throw "jextract failed for opengl.windows"
+  }
+  Move-Item -Force windows.includes "$Out\opengl.windows.includes"
+  Remove-Item all.includes
 } finally {
   Pop-Location
 }

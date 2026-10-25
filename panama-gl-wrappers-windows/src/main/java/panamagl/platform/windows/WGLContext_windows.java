@@ -3,18 +3,17 @@ package panamagl.platform.windows;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-import freeglut.windows.freeglut_h;
+import opengl.windows.gl_h;
 import opengl.windows.NativeLibLoader;
 import panamagl.Debug;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;
 import panamagl.opengl.GLError;
-import wgl.windows.PFNWGLCHOOSEPIXELFORMATARBPROC;
-import wgl.windows.PFNWGLCREATECONTEXTATTRIBSARBPROC;
-import wgl.windows.PIXELFORMATDESCRIPTOR;
-import wgl.windows.WNDPROC;
-import wgl.windows.tagWNDCLASSEXA;
-import wgl.windows.wgl_h;
+import opengl.windows.PFNWGLCHOOSEPIXELFORMATARBPROC;
+import opengl.windows.PFNWGLCREATECONTEXTATTRIBSARBPROC;
+import opengl.windows.PIXELFORMATDESCRIPTOR;
+import opengl.windows.WNDPROC;
+import opengl.windows.tagWNDCLASSEXA;
 
 /**
  * WIP Windows context
@@ -49,7 +48,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
    * the window class registered with it is never unregistered.
    */
   protected static final MemorySegment DUMMY_WINDOW_PROC = WNDPROC.allocate(
-      (hwnd, msg, wp, lp) -> wgl_h.DefWindowProcA(hwnd, msg, wp, lp), Arena.global());
+      (hwnd, msg, wp, lp) -> gl_h.DefWindowProcA(hwnd, msg, wp, lp), Arena.global());
  
 
   public WGLContext_windows() {
@@ -76,20 +75,20 @@ public class WGLContext_windows extends AGLContext implements GLContext{
 
       MemorySegment argc = arena.allocateFrom(ValueLayout.JAVA_INT, 0);
       MemorySegment argv = arena.allocateFrom("");
-      freeglut_h.glutInit(argc, argv);
+      gl_h.glutInit(argc, argv);
       GLUTContext_windows.hasInit = true;
     }
     
-    //freeglut_h.glutInitDisplayMode(freeglut_h.GLUT_DOUBLE() | freeglut_h.GLUT_RGBA() | freeglut_h.GLUT_DEPTH());
-    //freeglut_h.glutInitWindowSize(1, 1);
-    //freeglut_h.glutInitWindowPosition(1000000, 1000000);
+    //gl_h.glutInitDisplayMode(gl_h.GLUT_DOUBLE() | gl_h.GLUT_RGBA() | gl_h.GLUT_DEPTH());
+    //gl_h.glutInitWindowSize(1, 1);
+    //gl_h.glutInitWindowPosition(1000000, 1000000);
     
-    //int windowHandle = freeglut_h.glutCreateWindow(arena.allocateFrom("...."));
+    //int windowHandle = gl_h.glutCreateWindow(arena.allocateFrom("...."));
     
     // Hacky!! Use it while WGLContext is not working
-    //freeglut_h.glutHideWindow();   
+    //gl_h.glutHideWindow();   
     
-    //freeglut_h.glutDestroyWindow(windowHandle);
+    //gl_h.glutDestroyWindow(windowHandle);
 
     if(advanced)
       initAdvanced();
@@ -101,15 +100,15 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   
   @Override
   public void destroy() {
-    wgl_h.wglMakeCurrent (wgl_h.NULL(), wgl_h.NULL()) ;
-    wgl_h.wglDeleteContext(context);
+    gl_h.wglMakeCurrent (gl_h.NULL(), gl_h.NULL()) ;
+    gl_h.wglDeleteContext(context);
     context = null;
     initialized = false;
   }
   
   public void makeCurrent() {
     // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-wglmakecurrent
-    wgl_h.wglMakeCurrent(hdc, context);
+    gl_h.wglMakeCurrent(hdc, context);
     
     Debug.debug(debug, "WGL : make context current");
   }
@@ -139,17 +138,17 @@ public class WGLContext_windows extends AGLContext implements GLContext{
 
     // PFD_DRAW_TO_WINDOW is required: modern drivers (e.g. Mesa) reject formats
     // that do not specify a drawable target. Standard bit depths are also needed.
-    int flags = wgl_h.PFD_DRAW_TO_WINDOW()
-              | wgl_h.PFD_SUPPORT_OPENGL();
+    int flags = gl_h.PFD_DRAW_TO_WINDOW()
+              | gl_h.PFD_SUPPORT_OPENGL();
     PIXELFORMATDESCRIPTOR.dwFlags(pixelFormat, flags);
-    PIXELFORMATDESCRIPTOR.iPixelType(pixelFormat, (byte)wgl_h.PFD_TYPE_RGBA());
+    PIXELFORMATDESCRIPTOR.iPixelType(pixelFormat, (byte)gl_h.PFD_TYPE_RGBA());
     PIXELFORMATDESCRIPTOR.cColorBits(pixelFormat, (byte)32); // was 13 before using mesa
     PIXELFORMATDESCRIPTOR.cAlphaBits(pixelFormat, (byte)8); // was 11 before using mesa
     PIXELFORMATDESCRIPTOR.cDepthBits(pixelFormat, (byte)24); // was 15 before using mesa
-    PIXELFORMATDESCRIPTOR.iLayerType(pixelFormat, (byte)wgl_h.PFD_MAIN_PLANE());
+    PIXELFORMATDESCRIPTOR.iLayerType(pixelFormat, (byte)gl_h.PFD_MAIN_PLANE());
     
     // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-choosepixelformat
-    int format = wgl_h.ChoosePixelFormat(hdc, pixelFormat);
+    int format = gl_h.ChoosePixelFormat(hdc, pixelFormat);
     
     if(format==0) {
       throw new RuntimeException("Fail to choose pixel format");
@@ -161,7 +160,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     // ----------------------------
     // Set a pixel format
     // https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-setpixelformat
-    status = wgl_h.SetPixelFormat(hdc, format, pixelFormat);
+    status = gl_h.SetPixelFormat(hdc, format, pixelFormat);
     
     if(status==0) {
       throw new RuntimeException("Fail to set pixel format");
@@ -176,7 +175,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     
     MemorySegment pixelFormatOut = PIXELFORMATDESCRIPTOR.allocate(arena);
     
-    status = wgl_h.DescribePixelFormat(hdc, format, (int)nBytes, pixelFormatOut);
+    status = gl_h.DescribePixelFormat(hdc, format, (int)nBytes, pixelFormatOut);
     
     if(status==0) {
       throw new RuntimeException("Fail to get pixel format description");
@@ -190,9 +189,9 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     // Create the context
 
     //https://learn.microsoft.com/en-us/windows/win32/api/wingdi/nf-wingdi-wglcreatecontext
-    context = wgl_h.wglCreateContext(hdc);
+    context = gl_h.wglCreateContext(hdc);
     
-    if(context.equals(wgl_h.NULL())) {
+    if(context.equals(gl_h.NULL())) {
       GLError error = getWindowsLastError();
       error.throwRuntimeException();
     }
@@ -225,18 +224,18 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     // Pixel configuration
     int attribList[] =
       {
-          wgl_h.WGL_DRAW_TO_WINDOW_ARB(), wgl_h.GL_TRUE(),
-          wgl_h.WGL_SUPPORT_OPENGL_ARB(), wgl_h.GL_TRUE(),
-          wgl_h.WGL_DOUBLE_BUFFER_ARB(), wgl_h.GL_TRUE(),
-          wgl_h.WGL_PIXEL_TYPE_ARB(), wgl_h.WGL_TYPE_RGBA_ARB(),
-          wgl_h.WGL_COLOR_BITS_ARB(), 32,
-          wgl_h.WGL_DEPTH_BITS_ARB(), 24,
-          wgl_h.WGL_STENCIL_BITS_ARB(), 8,
+          gl_h.WGL_DRAW_TO_WINDOW_ARB(), gl_h.GL_TRUE(),
+          gl_h.WGL_SUPPORT_OPENGL_ARB(), gl_h.GL_TRUE(),
+          gl_h.WGL_DOUBLE_BUFFER_ARB(), gl_h.GL_TRUE(),
+          gl_h.WGL_PIXEL_TYPE_ARB(), gl_h.WGL_TYPE_RGBA_ARB(),
+          gl_h.WGL_COLOR_BITS_ARB(), 32,
+          gl_h.WGL_DEPTH_BITS_ARB(), 24,
+          gl_h.WGL_STENCIL_BITS_ARB(), 8,
           0, // End
       };
     
     MemorySegment attribsInt = arena.allocateFrom(ValueLayout.JAVA_INT, attribList);
-    //MemoryAddress attribsFloat = wgl_h.NULL();
+    //MemoryAddress attribsFloat = gl_h.NULL();
     MemorySegment attribsFloat = arena.allocateFrom(ValueLayout.JAVA_FLOAT, new float[0]);
     int nMaxFormats = 1;
     MemorySegment pixelFormat = arena.allocateFrom(ValueLayout.JAVA_INT, new int[nMaxFormats]);
@@ -245,11 +244,11 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     Debug.debug(debug, "WGL : HDC " + hdc);
     int status = PFNWGLCHOOSEPIXELFORMATARBPROC.invoke(wglChoosePixelFormatARB, hdc, attribsInt, attribsFloat, nMaxFormats, pixelFormat, numberOfFormats);
     
-    Debug.debug(debug, "WGL : status " + status + " expect " + wgl_h.GL_TRUE() );
+    Debug.debug(debug, "WGL : status " + status + " expect " + gl_h.GL_TRUE() );
     
-    context = PFNWGLCREATECONTEXTATTRIBSARBPROC.invoke(wglCreateContextAttribsARB, hdc,  wgl_h.NULL(), attribsInt);
+    context = PFNWGLCREATECONTEXTATTRIBSARBPROC.invoke(wglCreateContextAttribsARB, hdc,  gl_h.NULL(), attribsInt);
     
-    if(context.equals(wgl_h.NULL())) {
+    if(context.equals(gl_h.NULL())) {
       GLError error = getWindowsLastError();
       //error.throwRuntimeException();
       System.err.println("Error getting context : " + error);
@@ -269,11 +268,11 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     MemorySegment address;
     
     name = arena.allocateFrom("wglChoosePixelFormatARB");
-    wglChoosePixelFormatARB = wgl_h.wglGetProcAddress(name);
+    wglChoosePixelFormatARB = gl_h.wglGetProcAddress(name);
     //wglChoosePixelFormatARB = PFNWGLCHOOSEPIXELFORMATARBPROC.ofAddress(address, arena);
 
     name = arena.allocateFrom("wglCreateContextAttribsARB");
-    wglCreateContextAttribsARB = wgl_h.wglGetProcAddress(name);
+    wglCreateContextAttribsARB = gl_h.wglGetProcAddress(name);
    // wglCreateContextAttribsARB = PFNWGLCREATECONTEXTATTRIBSARBPROC.ofAddress(address, arena);
 
     name = null;
@@ -300,7 +299,7 @@ public class WGLContext_windows extends AGLContext implements GLContext{
       Debug.debug(debug, "WGL : dummy HWND : " + hWnd);
     }
 
-    hdc = wgl_h.GetDC(hWnd);
+    hdc = gl_h.GetDC(hWnd);
     Debug.debug(debug, "WGL : HDC : " + hdc);
   }
 
@@ -315,35 +314,35 @@ public class WGLContext_windows extends AGLContext implements GLContext{
 
     MemorySegment wc = tagWNDCLASSEXA.allocate(arena);
     tagWNDCLASSEXA.cbSize(wc, (int) wc.byteSize());
-    tagWNDCLASSEXA.style(wc, wgl_h.CS_OWNDC());
+    tagWNDCLASSEXA.style(wc, gl_h.CS_OWNDC());
     tagWNDCLASSEXA.lpfnWndProc(wc, DUMMY_WINDOW_PROC);
     tagWNDCLASSEXA.cbClsExtra(wc, 0);
     tagWNDCLASSEXA.cbWndExtra(wc, 0);
-    tagWNDCLASSEXA.hInstance(wc, wgl_h.NULL());
-    tagWNDCLASSEXA.hIcon(wc, wgl_h.NULL());
-    tagWNDCLASSEXA.hCursor(wc, wgl_h.NULL());
-    tagWNDCLASSEXA.hbrBackground(wc, wgl_h.NULL());
-    tagWNDCLASSEXA.lpszMenuName(wc, wgl_h.NULL());
+    tagWNDCLASSEXA.hInstance(wc, gl_h.NULL());
+    tagWNDCLASSEXA.hIcon(wc, gl_h.NULL());
+    tagWNDCLASSEXA.hCursor(wc, gl_h.NULL());
+    tagWNDCLASSEXA.hbrBackground(wc, gl_h.NULL());
+    tagWNDCLASSEXA.lpszMenuName(wc, gl_h.NULL());
     tagWNDCLASSEXA.lpszClassName(wc, className);
-    tagWNDCLASSEXA.hIconSm(wc, wgl_h.NULL());
+    tagWNDCLASSEXA.hIconSm(wc, gl_h.NULL());
 
     // Ignore return value: if the class is already registered (e.g. previous test in
     // the same JVM), CreateWindowExA will still succeed with the existing class.
-    wgl_h.RegisterClassExA(wc);
+    gl_h.RegisterClassExA(wc);
 
-    MemorySegment window = wgl_h.CreateWindowExA(
+    MemorySegment window = gl_h.CreateWindowExA(
         0,                              // no extended styles
         className,                      // class registered above
         arena.allocateFrom(""),         // empty title
-        wgl_h.WS_POPUP(),              // no title bar / borders
+        gl_h.WS_POPUP(),              // no title bar / borders
         0, 0, 1, 1,                    // 1x1 pixel, top-left corner
-        wgl_h.NULL(),                  // no parent
-        wgl_h.NULL(),                  // no menu
-        wgl_h.NULL(),                  // hInstance = current process
-        wgl_h.NULL()                   // no extra param
+        gl_h.NULL(),                  // no parent
+        gl_h.NULL(),                  // no menu
+        gl_h.NULL(),                  // hInstance = current process
+        gl_h.NULL()                   // no extra param
     );
 
-    if (window.equals(wgl_h.NULL())) {
+    if (window.equals(gl_h.NULL())) {
       getWindowsLastError().throwRuntimeException();
     }
     return window;
@@ -357,29 +356,29 @@ public class WGLContext_windows extends AGLContext implements GLContext{
    */
   protected GLError getWindowsLastError() {
     //https://learn.microsoft.com/en-us/windows/win32/api/errhandlingapi/nf-errhandlingapi-getlasterror
-    int errorCode = wgl_h.GetLastError();
+    int errorCode = gl_h.GetLastError();
     
     Debug.debug(debug, "Error getting context : " + errorCode);
 
-    //wgl_h.LPVOID.bitAlignment();
+    //gl_h.LPVOID.bitAlignment();
     
     int size = 1000;
     MemorySegment mess = arena.allocate(size);
     
-    //wgl_h.MAKE
+    //gl_h.MAKE
     
     //https://community.khronos.org/t/wglcreatecontext-failed/38840/23
-    wgl_h.FormatMessageW(
-        wgl_h.FORMAT_MESSAGE_ALLOCATE_BUFFER() |
-        wgl_h.FORMAT_MESSAGE_FROM_SYSTEM() |
-        //wgl_h.FORMAT_MESSAGE_FROM_STRING(),
-        wgl_h.FORMAT_MESSAGE_IGNORE_INSERTS(),
-        wgl_h.NULL(),
+    gl_h.FormatMessageW(
+        gl_h.FORMAT_MESSAGE_ALLOCATE_BUFFER() |
+        gl_h.FORMAT_MESSAGE_FROM_SYSTEM() |
+        //gl_h.FORMAT_MESSAGE_FROM_STRING(),
+        gl_h.FORMAT_MESSAGE_IGNORE_INSERTS(),
+        gl_h.NULL(),
         errorCode,
-        0,//wgl_h.MAKELANGID(wgl_h.LANG_NEUTRAL(), wgl_h.SUBLANG_DEFAULT()), // Default language
+        0,//gl_h.MAKELANGID(gl_h.LANG_NEUTRAL(), gl_h.SUBLANG_DEFAULT()), // Default language
         mess,
         size,
-        wgl_h.NULL()
+        gl_h.NULL()
         );
     
     String e127 = "The specified procedure could not be found";

@@ -201,27 +201,42 @@ public class TestGenerateWrapperFromBindings {
   @Test
   public void functionPointerOfAnAlias() throws Exception {
 
-    // Given : a GL 1.3 command without typedef, which the registry declares as alias of an ARB
-    // command having one
+    // Given : a command without typedef in the Linux binding, which the registry declares as alias of
+    // an ARB command having one
     Map<String, GLCommand> glRegistry = new OpenGLRegistry().getCommandIndex();
-    GLCommand core = glRegistry.get("glClientActiveTexture");
+    GLCommand core = glRegistry.get("glCompileShader");
+    Wrapper wrapper = wrapperWithFunctionLoader();
+    wrapper.functionPointers = List.of("opengl.linux");
 
     // When
     GenerateAPI_GL_Wrapper g = new GenerateAPI_GL_Wrapper();
     Map<String, List<String>> aliases = g.aliases(glRegistry);
 
     // Then : the typedef of the alias is used
-    Assert.assertEquals(opengl.linux.PFNGLCLIENTACTIVETEXTUREARBPROC.class,
-        g.getFunctionPointer(wrapperWithFunctionLoader(), core, aliases));
+    Assert.assertEquals(opengl.linux.PFNGLCOMPILESHADERARBPROC.class,
+        g.getFunctionPointer(wrapper, core, aliases));
 
     // Then : no function pointer without function loader
     Assert.assertNull(g.getFunctionPointer(new Wrapper(), core, aliases));
   }
 
+  @Test
+  public void whenFunctionPointerDependsOnOS_ThenUseTheOneOfTheOSBinding() throws Exception {
+    GenerateAPI_GL_Wrapper g = new GenerateAPI_GL_Wrapper();
+
+    // GLhandleARB is an unsigned int on Linux, a void* on macOS : not in the glext binding
+    Assert.assertEquals(opengl.linux.PFNGLATTACHOBJECTARBPROC.class,
+        g.getFunctionPointer(wrapperWithFunctionLoader(), "glAttachObjectARB"));
+
+    // Otherwise the one of the glext binding
+    Assert.assertEquals(opengl.glext.PFNGLGENBUFFERSPROC.class,
+        g.getFunctionPointer(wrapperWithFunctionLoader(), "glGenBuffers"));
+  }
+
   protected Wrapper wrapperWithFunctionLoader() {
     Wrapper wrapper = new Wrapper();
     wrapper.functionLoader = "panamagl.platform.linux.GLFunctionLoader_linux";
-    wrapper.functionPointers = "opengl.linux";
+    wrapper.functionPointers = List.of("opengl.glext", "opengl.linux");
     return wrapper;
   }
 }

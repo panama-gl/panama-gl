@@ -64,9 +64,10 @@ public class GenerateAPI {
    * Binding classes of the function pointer typedefs (e.g. <code>PFNGLGENBUFFERSPROC</code>) invoking
    * the functions resolved at runtime, on all platforms, as <code>FBO_linux</code> and
    * <code>FBO_windows</code> do. Their descriptors only depend on the GL types, identical on these
-   * platforms.
+   * platforms : they are in panama-gl-bindings-glext, shared by the wrappers of all OS. The ones
+   * depending on the OS (using GLhandleARB) are searched in the package of the wrapped bindings.
    */
-  private static final String FUNCTION_POINTERS = "opengl.linux";
+  private static final String FUNCTION_POINTERS = "opengl.glext";
 
   String superGL = "GL";
 
@@ -169,7 +170,7 @@ public class GenerateAPI {
       wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
 
       APIPlatform platform = new APIPlatform(OS.windows);
-      Set<Class<?>> wrapped = Set.of(freeglut.windows.freeglut_h.class);
+      Set<Class<?>> wrapped = Set.of(opengl.windows.gl_h.class);
       Class<?> factoryBase = APanamaGLFactory_windows.class;
       Class<?> factorymatcher = PlatformMatcher_windows.class;
       boolean genGlut = false;
@@ -220,7 +221,8 @@ public class GenerateAPI {
     wrapper.packge = layout.getPlatformPackage(platform);
     wrapper.setFileIn(layout.getOutputFolder(platform));
     wrapper.functionLoader = functionLoader;
-    wrapper.functionPointers = FUNCTION_POINTERS;
+    wrapper.functionPointers = new ArrayList<>(List.of(FUNCTION_POINTERS));
+    wrapped.forEach(c -> wrapper.functionPointers.add(c.getPackageName()));
 
     wrapper.addImplement(interf.packge + "." + superGL);
     wrapper.addImplement(interf.packge + "." + CLASS_NAME_GLU);
