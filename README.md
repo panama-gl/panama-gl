@@ -81,7 +81,7 @@ All per-platform components required to perform drawing are provided by a factor
 PanamaGLFactory factory = PanamaGLFactory.select();
 ```
 
-Which returns one of
+Which returns one of the following factories, each serving the x86_64 and ARM64 CPUs of its OS
 * `PanamaGLFactory_linux`
 * `PanamaGLFactory_macOS`
 * `PanamaGLFactory_windows`

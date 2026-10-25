@@ -15,6 +15,6 @@ It is nice to use the provided [code formatters](setup/formatters)
 
 * Abstract class name start with A : `AClass`
 * No I in java interface names
-* Platform specific classes end with OS and CPU name : `MyClass_macOS_x86_64`
+* Platform specific classes end with OS name : `MyClass_macOS`. They serve all the CPUs of the OS, as the bindings do (see [Bindings per CPU](doc/Bindings-per-CPU.md))
 * Fields should be `protected` and not `private`, to let anyone override classes more easily, without having to recopy the complete overriden class nor modifying the library to access a field 
 * Avoid `static` as much as possible to let methods be overridable

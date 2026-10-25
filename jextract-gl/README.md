@@ -53,9 +53,9 @@ https://stackoverflow.com/questions/2206065/java-parse-java-source-code-extract-
 
 `jextract.gl.api.panamagl.GenerateAPI` reads the OpenGL registry (`gl.xml`) and the bindings classes of `panama-gl-bindings` to write :
 * the `GL_x_y` interfaces of each OpenGL version in `panama-gl-api`, and `GL` which extends `GL_1`, `GL_2`, `GL_3`, `GLU` and `GLUT`;
-* the `GL_<os>_<cpu>` wrapper implementing `GL` for each platform, in the `src/generated/java` folder of `panama-gl-wrappers-<os>`, and its `PanamaGLFactory_<os>_<cpu>`.
+* the `GL_<os>` wrapper implementing `GL` for each OS, in the `src/generated/java` folder of `panama-gl-wrappers-<os>`, and its `PanamaGLFactory_<os>`. A wrapper serves all the CPUs of its OS, as the bindings do (see [Bindings per CPU](../doc/Bindings-per-CPU.md)).
 
-Run its `main` from the `jextract-gl` folder, after `mvn install` of the root project. The `MACOS_x64`, `MACOS_ARM`, `LINUX_x64` and `WINDOWS_x64` flags of `GenerateAPI.run` select the generated platforms.
+Run its `main` from the `jextract-gl` folder, after `mvn install` of the root project. The `MACOS`, `LINUX` and `WINDOWS` flags of `GenerateAPI.run` select the generated OS.
 
 For each command of the registry, the wrapper method is written as follows (`GenerateAPI_GL_Wrapper`) :
 

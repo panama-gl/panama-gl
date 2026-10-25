@@ -30,7 +30,7 @@ A struct of OpenGL, GLX, X11, WGL, Win32 or CGL containing one of these types wo
 
 ## Tests on ARM64 with the x86_64 bindings
 
-`GL_windows_arm` and `GL_linux_arm` already extend `GL_windows_x64` and `GL_linux_x64`, i.e. use the bindings generated on x86_64. The [CI](../.github/workflows/ci.yml) of `main` runs all the tests on the six runners :
+Before 1.3.1, `GL_windows_arm` and `GL_linux_arm` already extended `GL_windows_x64` and `GL_linux_x64`, i.e. used the bindings generated on x86_64. The [CI](../.github/workflows/ci.yml) of `main` ran all the tests on the six runners :
 
 | Runner | Factory | OpenGL | Tests | Failed |
 |---|---|---|---|---|
@@ -41,12 +41,13 @@ A struct of OpenGL, GLX, X11, WGL, Win32 or CGL containing one of these types wo
 | `macos-15-intel` | `PanamaGLFactory_macOS_x64` | 2.1 Apple Software Renderer | 208 | 0 |
 | `macos-latest` | `PanamaGLFactory_macOS_arm` | 2.1 Apple Software Renderer | 208 | 0 |
 
-The macOS x86_64 bindings (`opengl.macos.x86`, `glext.macos.x86`, `cgl.macos.x86`) are the ARM64 ones with another package name, and the `GL_macOS_x64` wrapper is `GL_macOS_arm` with another package name.
+The macOS x86_64 bindings (`opengl.macos.x86`, `glext.macos.x86`, `cgl.macos.x86`) were the ARM64 ones with another package name, and the `GL_macOS_x64` wrapper was `GL_macOS_arm` with another package name.
 
-## What a single binding per OS simplifies
+## A single binding per OS, since 1.3.1
 
-* **Bindings** : one package per header set and OS, without CPU name (e.g. `opengl.macos` instead of `opengl.macos.arm` and `opengl.macos.x86`). The macOS bindings are divided by two (8.8 MB of sources to 4.4 MB).
-* **Wrappers** : one `GL_<os>` and one `PanamaGLFactory_<os>` per OS instead of `GL_<os>_x64`, `GL_<os>_arm` and their factories, platform matchers and tests. The `PlatformMatcher` of an OS can accept any CPU, or the 64-bit CPUs PanamaGL is tested on (`amd64`, `x86_64`, `aarch64`, `arm64`). `GenerateAPI` writes one wrapper per OS : the generated wrappers of macOS are divided by two.
+* **Bindings** : `panama-gl-bindings` 1.3.1 has one package per header set and OS, without CPU name (e.g. `opengl.macos` instead of `opengl.macos.arm` and `opengl.macos.x86`). The macOS bindings are divided by two (jar of 1.9 MB).
+* **Wrappers** : one `GL_<os>`, `PanamaGLFactory_<os>` and `PlatformMatcher_<os>` per OS in `panamagl.platform.<os>`, instead of `GL_<os>_x64`, `GL_<os>_arm` and their factories, platform matchers and tests. `PlatformMatcher_<os>` accepts the 64-bit CPUs PanamaGL is tested on (`amd64`, `x86_64`, `aarch64`, `arm64`). `GenerateAPI` writes one wrapper per OS.
+* **CI** : [tested_platforms.py](../.github/scripts/tested_platforms.py) fails if the factory of an OS was not tested on both a x86_64 and an ARM64 runner.
 
 Beyond the CPU, the packages of an OS largely overlap, since each one is generated from headers including the others :
 

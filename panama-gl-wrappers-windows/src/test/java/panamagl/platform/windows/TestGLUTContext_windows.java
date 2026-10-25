@@ -39,7 +39,7 @@ public class TestGLUTContext_windows extends WindowsTest {
     Assert.assertTrue(context.isInitialized());
 
     // When
-    GL gl = new panamagl.platform.windows.x64.GL_windows_x64();
+    GL gl = new panamagl.platform.windows.GL_windows();
     GLProfile p = new GLProfile(gl);
 
     // Then

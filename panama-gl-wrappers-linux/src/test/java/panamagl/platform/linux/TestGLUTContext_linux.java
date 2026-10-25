@@ -37,7 +37,7 @@ public class TestGLUTContext_linux extends LinuxTest {
     Assert.assertTrue(context.isInitialized());
 
     // When
-    GL gl = new panamagl.platform.linux.x64.GL_linux_x64();
+    GL gl = new panamagl.platform.linux.GL_linux();
     GLProfile p = new GLProfile(gl);
 
     // Then

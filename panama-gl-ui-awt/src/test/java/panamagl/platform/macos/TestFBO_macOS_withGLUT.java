@@ -38,7 +38,7 @@ public class TestFBO_macOS_withGLUT extends MacOSTest{
     glutContext.init();
 
     // Given a GL caller
-    GL gl = new panamagl.platform.macos.arm.GL_macOS_arm();
+    GL gl = new panamagl.platform.macos.GL_macOS();
 
     // ---------------------------------------
     // When initialize a FBO UNDER TEST

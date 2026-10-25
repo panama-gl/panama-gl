@@ -1,11 +1,11 @@
-package panamagl.platform.macos.arm; 
+package panamagl.platform.macos; 
 
 import java.lang.foreign.MemorySegment;
 import opengl.linux.*;
 import opengl.macos.glut_h;
 
-public class GL_macOS_arm extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
-  public GL_macOS_arm() {
+public class GL_macOS extends panamagl.opengl.AGL implements panamagl.opengl.GL, panamagl.opengl.GLU, panamagl.opengl.GLUT {
+  public GL_macOS() {
     setFunctionLoader(new panamagl.platform.macos.GLFunctionLoader_macOS());
   }
 
