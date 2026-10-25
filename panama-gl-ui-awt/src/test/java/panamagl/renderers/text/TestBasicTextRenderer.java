@@ -19,29 +19,35 @@ package panamagl.renderers.text;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
+import java.io.InputStream;
 import org.junit.Assert;
 import org.junit.Test;
-import panamagl.platform.Platform;
 import panamagl.renderers.image.ForeignImage;
 
 public class TestBasicTextRenderer {
+  /**
+   * A font shipped with the tests, so that the text has the same size on all OS, which do not have
+   * the same fonts (e.g. Arial is usually missing on Linux).
+   */
+  public static Font font(float size) throws IOException, FontFormatException {
+    try (InputStream in = TestBasicTextRenderer.class.getResourceAsStream("/fonts/DejaVuSansMono.ttf")) {
+      return Font.createFont(Font.TRUETYPE_FONT, in).deriveFont(Font.PLAIN, size);
+    }
+  }
+
   @Test
-  public void createForeignImage() {
+  public void createForeignImage() throws IOException, FontFormatException {
     BasicTextRenderer r = new BasicTextRenderer();
     
-    ForeignImage i = r.createForeignImage(new Font("Arial", Font.PLAIN, 12), "Coucou", Color.BLUE);
+    ForeignImage i = r.createForeignImage(font(12), "Coucou", Color.BLUE);
     
     Assert.assertNotNull(i.image);
     Assert.assertNotNull(i.segment);
     
-    Platform p = new Platform();
-    if(p.isWindows() || p.isMac()) {
-      Assert.assertEquals(43, i.image.getWidth());
-      Assert.assertEquals(13, i.image.getHeight());
-    }
-    else if(p.isUnix()) {
-      Assert.assertEquals(47, i.image.getWidth());
-      Assert.assertEquals(13, i.image.getHeight());
-    }
+    // 6 characters of 7 pixels advance (DejaVu Sans Mono at 12 points), on all OS
+    Assert.assertEquals(42, i.image.getWidth());
+    Assert.assertEquals(13, i.image.getHeight());
   }
 }
