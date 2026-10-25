@@ -15,26 +15,26 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA
  *******************************************************************************/
-package panamagl.platform.windows.arm;
+package panamagl.platform.windows;
 
 import org.junit.Assert;
 import org.junit.Test;
 import panamagl.factory.PanamaGLFactory;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
-import panamagl.platform.windows.WindowsTest;
 
-public class TestPanamaGLFactory_windows_arm extends WindowsTest{
+//VM ARGS : --enable-native-access=ALL-UNNAMED --enable-preview -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
+public class TestPanamaGLFactory_windows extends WindowsTest{
   @Test
   public void test() {
-    if (!checkPlatform(new PlatformMatcher_windows_arm()))
+    if (!checkPlatform(new PlatformMatcher_windows()))
       return;
   
     // When seek a factory
     PanamaGLFactory f = PanamaGLFactory.select();
     
-    // Then expect to find the Windows ARM one
-    Assert.assertTrue(f.getClass().getName(), f instanceof PanamaGLFactory_windows_arm);
+    // Then expect to find the Windows one, whatever the CPU
+    Assert.assertTrue(f.getClass().getName(), f instanceof PanamaGLFactory_windows);
 
     // ----------------------------
     // When initializing the factory objects, then get not null
@@ -43,13 +43,13 @@ public class TestPanamaGLFactory_windows_arm extends WindowsTest{
     Assert.assertNotNull(context);
     
     GL gl = f.newGL();
-    Assert.assertTrue(gl instanceof GL_windows_arm);
+    Assert.assertTrue(gl instanceof GL_windows);
     Assert.assertNotNull(f.newOffscreenRenderer(null));
     Assert.assertNotNull(f.newFBO(800, 600));
 
-    // Then the x64 bindings can invoke the ARM64 OpenGL library
+    // Then the bindings can invoke the OpenGL library of the CPU
     String version = gl.glGetString(GL.GL_VERSION).getString(0);
-    System.out.println("TestPanamaGLFactory_windows_arm running with OpenGL version : " + version);
+    System.out.println("TestPanamaGLFactory_windows running with OpenGL version : " + version);
     Assert.assertFalse(version.isEmpty());
     
     // ----------------------------

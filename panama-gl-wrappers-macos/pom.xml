@@ -51,8 +51,7 @@
 				<!-- Default execution: all tests EXCEPT those needing -XstartOnFirstThread -->
 				<configuration>
 					<excludes>
-						<exclude>**/TestGLProfile_macOS_arm.java</exclude>
-						<exclude>**/TestGLProfile_macOS_x64.java</exclude>
+						<exclude>**/TestGLProfile_macOS.java</exclude>
 						<exclude>**/TestGLUTContext_macOS.java</exclude>
 						<exclude>**/TestAppKitMainThread.java</exclude>
 					</excludes>
@@ -89,8 +88,7 @@
 								<configuration>
 									<excludes combine.self="override" />
 									<includes>
-										<include>**/TestGLProfile_macOS_arm.java</include>
-										<include>**/TestGLProfile_macOS_x64.java</include>
+										<include>**/TestGLProfile_macOS.java</include>
 										<include>**/TestGLUTContext_macOS.java</include>
 										<include>**/TestAppKitMainThread.java</include>
 									</includes>

@@ -19,7 +19,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import junit.framework.Assert;
 import panamagl.opengl.GL;
-import panamagl.platform.windows.x64.GL_windows_x64;
+import panamagl.platform.windows.GL_windows;
 
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --enable-preview
 // -Djava.library.path="C:\Windows\system32;C:\Users\Martin\Downloads\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
@@ -92,7 +92,7 @@ public class TestWGLContext_windows extends WindowsTest {
     wgl.makeCurrent();
     
     // Then can invoke GL
-    GL gl = new GL_windows_x64();
+    GL gl = new GL_windows();
     String version = gl.glGetString(GL.GL_VERSION).getString(0);
     System.out.println("GL Version : " + version);
 

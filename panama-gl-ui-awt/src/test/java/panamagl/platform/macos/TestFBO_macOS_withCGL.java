@@ -38,7 +38,7 @@ public class TestFBO_macOS_withCGL extends MacOSTest{
     context.init();
     context.makeCurrent(); // must be current to work
 
-    GL gl = new panamagl.platform.macos.arm.GL_macOS_arm();
+    GL gl = new panamagl.platform.macos.GL_macOS();
 
     // Given a FBO UNDER TEST
     int width = 256;

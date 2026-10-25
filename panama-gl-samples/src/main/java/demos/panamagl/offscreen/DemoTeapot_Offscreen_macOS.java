@@ -37,7 +37,7 @@ public class DemoTeapot_Offscreen_macOS {
     GLContext context = new GLUTContext_macOS();
     context.init();
 
-    GL gl = new panamagl.platform.macos.arm.GL_macOS_arm();
+    GL gl = new panamagl.platform.macos.GL_macOS();
 
     //-------------------------
     // Prepare VBO

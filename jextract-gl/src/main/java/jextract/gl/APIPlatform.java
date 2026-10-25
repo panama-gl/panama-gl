@@ -1,27 +1,20 @@
 package jextract.gl;
 
+/**
+ * The OS for which an API is generated. The generated wrappers do not depend on the CPU : the
+ * bindings of an OS are the same for x86_64 and ARM64.
+ */
 public class APIPlatform {
-  public final CPU cpu;
   public final OS os;
-  
-  public APIPlatform(OS os, CPU cpu) {
-    this.os = os;
-    this.cpu = cpu;
-  }
 
   public APIPlatform(OS os) {
     this.os = os;
-    this.cpu = null;
   }
 
   public String getName() {
-    return os + "_" + cpu;
+    return os.toString();
   }
 
-  public enum CPU{
-    x64, x32, arm;
-  }
-  
   public enum OS{
     api, macOS, linux, windows;
   }

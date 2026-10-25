@@ -24,7 +24,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.lang.foreign.Arena;
 import javax.swing.SwingUtilities;
-import opengl.macos.arm.glut_h;
+import opengl.macos.glut_h;
 import panamagl.Animator;
 import panamagl.GLEventAdapter;
 import panamagl.canvas.GLCanvasAWT;

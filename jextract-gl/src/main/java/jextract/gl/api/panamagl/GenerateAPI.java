@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Set;
 import jextract.gl.APILayout;
 import jextract.gl.APIPlatform;
-import jextract.gl.APIPlatform.CPU;
 import jextract.gl.APIPlatform.OS;
 import jextract.gl.generate.java.Arg;
 import jextract.gl.generate.java.ClassCompiler;
@@ -36,11 +35,10 @@ import jextract.gl.java.AcceptsGLMethod;
 import panamagl.platform.Platform;
 import panamagl.platform.linux.APanamaGLFactory_linux;
 import panamagl.platform.macos.APanamaGLFactory_macOS;
-import panamagl.platform.macos.arm.PlatformMatcher_macOS_arm;
-import panamagl.platform.macos.x64.PlatformMatcher_macOS_x64;
-import panamagl.platform.linux.x64.PlatformMatcher_linux_x64;
+import panamagl.platform.macos.PlatformMatcher_macOS;
+import panamagl.platform.linux.PlatformMatcher_linux;
 import panamagl.platform.windows.APanamaGLFactory_windows;
-import panamagl.platform.windows.x64.PlatformMatcher_windows_x64;
+import panamagl.platform.windows.PlatformMatcher_windows;
 
 /**
  * Generate an OpenGL API with per-platform implementations wrapping the bindings made available by
@@ -68,7 +66,7 @@ public class GenerateAPI {
    * <code>FBO_windows</code> do. Their descriptors only depend on the GL types, identical on these
    * platforms.
    */
-  private static final String FUNCTION_POINTERS = "opengl.linux.x86";
+  private static final String FUNCTION_POINTERS = "opengl.linux";
 
   String superGL = "GL";
 
@@ -97,10 +95,9 @@ public class GenerateAPI {
    */
   public void run(APILayout layout) throws Exception {
     //boolean GL_INTERF = false;
-	boolean MACOS_x64 = true;
-    boolean MACOS_ARM = true;
-    boolean LINUX_x64 = true;
-    boolean WINDOWS_x64 = true;
+    boolean MACOS = true;
+    boolean LINUX = true;
+    boolean WINDOWS = true;
 
     // ============================================================================
     // GL SPECIFICATION
@@ -121,34 +118,16 @@ public class GenerateAPI {
 
 
     // ========================================================
-    // Configure macOS wrapper
+    // Configure macOS wrapper. Each wrapper serves all the CPUs of its OS : the bindings of an OS
+    // are the same on x86_64 and ARM64.
 
-    if (MACOS_x64) {
+    if (MACOS) {
 
-      APIPlatform platform = new APIPlatform(OS.macOS, CPU.x64);
-      
-// TODO : fix this hack : should require x86 and not arm
-      Set<Class<?>> wrapped = Set.of(opengl.macos.arm.glut_h.class);
+      APIPlatform platform = new APIPlatform(OS.macOS);
+      Set<Class<?>> wrapped = Set.of(opengl.macos.glut_h.class);
       Class<?> factoryBase = APanamaGLFactory_macOS.class;
-      Class<?> factorymatcher = PlatformMatcher_macOS_x64.class;
+      Class<?> factorymatcher = PlatformMatcher_macOS.class;
       boolean genGlut = true;
-
-      // OpenGL functions missing from the static bindings are resolved at runtime
-      wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
-      String functionLoader = "panamagl.platform.macos.GLFunctionLoader_macOS";
-
-      makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
-          functionLoader, interfaceFiles);
-    }
-
-    if (MACOS_ARM) {
-
-      APIPlatform platform = new APIPlatform(OS.macOS, CPU.arm);
-      Set<Class<?>> wrapped = Set.of(opengl.macos.arm.glut_h.class);
-      Class<?> factoryBase = APanamaGLFactory_macOS.class;
-      Class<?> factorymatcher = PlatformMatcher_macOS_arm.class;
-      boolean genGlut = true;
-
 
       // OpenGL functions missing from the static bindings are resolved at runtime
       wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
@@ -165,15 +144,14 @@ public class GenerateAPI {
     // ========================================================
     // Configure Linux wrapper
 
-    if (LINUX_x64) {
+    if (LINUX) {
 
       wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
 
-      APIPlatform platform = new APIPlatform(OS.linux, CPU.x64);
-      Set<Class<?>> wrapped = Set.of(glext.linux.x86.glext_h.class);
+      APIPlatform platform = new APIPlatform(OS.linux);
+      Set<Class<?>> wrapped = Set.of(glext.linux.glext_h.class);
       Class<?> factoryBase = APanamaGLFactory_linux.class;
-      // Linux ARM64 reuses the x64 wrapper : see panamagl.platform.linux.arm.GL_linux_arm
-      Class<?> factorymatcher = PlatformMatcher_linux_x64.class;
+      Class<?> factorymatcher = PlatformMatcher_linux.class;
       boolean genGlut = false;
 
       String functionLoader = "panamagl.platform.linux.GLFunctionLoader_linux";
@@ -186,15 +164,14 @@ public class GenerateAPI {
     // ========================================================
     // Configure Windows wrapper
 
-    if (WINDOWS_x64) {
+    if (WINDOWS) {
 
       wrapperGen.addUnimplementedMethodsUponMissingBinding = true;
 
-      APIPlatform platform = new APIPlatform(OS.windows, CPU.x64);
-      Set<Class<?>> wrapped = Set.of(freeglut.windows.x86.freeglut_h.class);
+      APIPlatform platform = new APIPlatform(OS.windows);
+      Set<Class<?>> wrapped = Set.of(freeglut.windows.freeglut_h.class);
       Class<?> factoryBase = APanamaGLFactory_windows.class;
-      // Windows ARM64 reuses the x64 wrapper : see panamagl.platform.windows.arm.GL_windows_arm
-      Class<?> factorymatcher = PlatformMatcher_windows_x64.class;
+      Class<?> factorymatcher = PlatformMatcher_windows.class;
       boolean genGlut = false;
       String functionLoader = "panamagl.platform.windows.GLFunctionLoader_windows";
 

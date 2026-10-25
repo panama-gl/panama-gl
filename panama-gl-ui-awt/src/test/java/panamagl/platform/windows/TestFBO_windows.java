@@ -40,7 +40,7 @@ public class TestFBO_windows extends WindowsTest{
     wglContext.makeCurrent();
     
     // Given a GL caller
-    GL gl = new panamagl.platform.windows.x64.GL_windows_x64();
+    GL gl = new panamagl.platform.windows.GL_windows();
     
     // ---------------------------------------
     // When initialize a FBO UNDER TEST
@@ -94,7 +94,7 @@ public class TestFBO_windows extends WindowsTest{
     glutContext.init();
 
     // Given a GL caller
-    GL gl = new panamagl.platform.windows.x64.GL_windows_x64();
+    GL gl = new panamagl.platform.windows.GL_windows();
     
     // ---------------------------------------
     // When initialize a FBO UNDER TEST

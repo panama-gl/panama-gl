@@ -1,6 +1,6 @@
 package demos.opengl;
 
-import static opengl.linux.x86.glut_h.*;
+import static opengl.linux.glut_h.*;
 import java.lang.foreign.Arena;
 
 /*
@@ -36,8 +36,8 @@ import java.lang.foreign.Arena;
 
 import java.lang.foreign.ValueLayout;
 import opengl.linux.NativeLibLoader;
-import opengl.linux.x86.glutDisplayFunc$callback;
-import opengl.linux.x86.glutIdleFunc$callback;
+import opengl.linux.glutDisplayFunc$callback;
+import opengl.linux.glutIdleFunc$callback;
 
 /**
  * This is the original demonstration program provided at https://github.com/sundararajana/panama-jextract-samples/tree/master/opengl.

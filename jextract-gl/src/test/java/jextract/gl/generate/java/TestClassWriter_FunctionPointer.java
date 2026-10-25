@@ -21,9 +21,9 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 import jextract.gl.xml.model.GLCommand;
-import opengl.linux.x86.PFNGLCREATEPROGRAMPROC;
-import opengl.linux.x86.PFNGLGENBUFFERSPROC;
-import opengl.linux.x86.PFNGLGETSTRINGIPROC;
+import opengl.linux.PFNGLCREATEPROGRAMPROC;
+import opengl.linux.PFNGLGENBUFFERSPROC;
+import opengl.linux.PFNGLGETSTRINGIPROC;
 
 /**
  * Wrappers of functions missing from the static symbols of the bindings, invoked through the
@@ -31,7 +31,7 @@ import opengl.linux.x86.PFNGLGETSTRINGIPROC;
  */
 public class TestClassWriter_FunctionPointer {
 
-  ClassWriter writer = new ClassWriter("panamagl.platform.windows.x64", "GL_windows_x64");
+  ClassWriter writer = new ClassWriter("panamagl.platform.windows", "GL_windows");
 
   @Test
   public void voidFunction() {
@@ -86,7 +86,7 @@ public class TestClassWriter_FunctionPointer {
     writer.start();
     writer.constructorWithFunctionLoader("panamagl.platform.windows.GLFunctionLoader_windows");
 
-    Assert.assertTrue(writer.getCode(), writer.getCode().contains("public GL_windows_x64() {"));
+    Assert.assertTrue(writer.getCode(), writer.getCode().contains("public GL_windows() {"));
     Assert.assertTrue(writer.getCode(), writer.getCode().contains(
         "setFunctionLoader(new panamagl.platform.windows.GLFunctionLoader_windows());"));
   }

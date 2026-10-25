@@ -20,9 +20,9 @@ package panamagl.platform.linux;
 
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
-import glx.linux.x86.glx_h;
+import glx.linux.glx_h;
 import opengl.linux.NativeLibLoader;
-import opengl.linux.x86.glut_h;
+import opengl.linux.glut_h;
 import panamagl.Debug;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;

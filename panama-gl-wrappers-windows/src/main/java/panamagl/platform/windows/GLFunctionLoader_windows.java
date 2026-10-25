@@ -19,7 +19,7 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.SymbolLookup;
 import panamagl.opengl.GLFunctionLoader;
-import wgl.windows.x86.wgl_h;
+import wgl.windows.wgl_h;
 
 /**
  * Resolve OpenGL functions with <code>wglGetProcAddress</code>, falling back on the symbols

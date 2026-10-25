@@ -35,7 +35,7 @@ public class TestFBO_linux extends LinuxTest{
     glutContext.init();
 
     // Given a GL caller
-    GL gl = new panamagl.platform.linux.x64.GL_linux_x64();
+    GL gl = new panamagl.platform.linux.GL_linux();
     
     // ---------------------------------------
     // When initialize a FBO UNDER TEST

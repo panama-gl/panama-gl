@@ -5,8 +5,9 @@ Reads the artifacts downloaded from the build jobs, one folder per runner, each 
 Surefire XML reports and the panamagl-platform.properties written by TestPlatformReport.
 
 Writes a Markdown table of the platforms (OS, CPU, JVM, OpenGL) with their test results, and
-checks that every PanamaGLFactory declared in the wrappers modules was selected on at least one
-runner. Exits with 1 if a factory was not tested or if a runner has no platform report.
+checks that every PanamaGLFactory declared in the wrappers modules, one per OS, was selected on
+a x86_64 and an ARM64 runner. Exits with 1 if a factory was not tested on both CPUs or if a
+runner has no platform report.
 
 Usage : tested_platforms.py <artifacts dir> <services file>... [--output tested-platforms.md]
 """
@@ -49,6 +50,14 @@ def declared_factories(service_files):
     return factories
 
 
+# CPU families, by the os.arch values Java reports for them
+CPUS = {"x86_64": {"amd64", "x86_64"}, "ARM64": {"aarch64", "arm64"}}
+
+
+def cpu_family(arch):
+    return next((family for family, archs in CPUS.items() if arch in archs), arch)
+
+
 def short(class_name):
     return class_name.rsplit(".", 1)[-1] if class_name else ""
 
@@ -73,9 +82,11 @@ def main():
         rows.append((runner, props, count_tests(folder)))
 
     factories = declared_factories(args.services)
-    tested = {props.get("factory") for _, props, counts in rows
-              if props.get("gl.version") and counts["failures"] + counts["errors"] == 0}
-    untested = [f for f in factories if f not in tested]
+    tested = {}
+    for _, props, counts in rows:
+        if props.get("gl.version") and counts["failures"] + counts["errors"] == 0:
+            tested.setdefault(props.get("factory"), set()).add(cpu_family(props.get("os.arch")))
+    untested = [f for f in factories if not set(CPUS) <= tested.get(f, set())]
 
     lines = ["## Platforms on which PanamaGL was tested", "",
              "| Runner | OS | CPU | JVM | Factory | OpenGL | Renderer | Tests | Failed | Skipped |",
@@ -95,7 +106,12 @@ def main():
 
     lines += ["", "### Factories", ""]
     for factory in factories:
-        lines.append("- {} `{}`".format("✅" if factory in tested else "❌ not tested", short(factory)))
+        cpus = tested.get(factory, set())
+        missing = [cpu for cpu in CPUS if cpu not in cpus]
+        lines.append("- {} `{}` : {}".format(
+            "❌" if missing else "✅", short(factory),
+            ", ".join(sorted(cpus & set(CPUS))) or "not tested")
+            + (" (not tested on {})".format(", ".join(missing)) if missing else ""))
     if missing_reports:
         lines += ["", "Runners without platform report : " + ", ".join(missing_reports)]
 
@@ -109,7 +125,8 @@ def main():
     print(markdown)
 
     if untested or missing_reports:
-        print("Untested factories : {}".format(", ".join(map(short, untested))), file=sys.stderr)
+        print("Factories not tested on x86_64 and ARM64 : {}".format(", ".join(map(short, untested))),
+              file=sys.stderr)
         return 1
     return 0
 

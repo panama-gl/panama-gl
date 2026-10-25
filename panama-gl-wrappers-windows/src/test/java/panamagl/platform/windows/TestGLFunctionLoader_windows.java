@@ -21,7 +21,7 @@ import java.lang.foreign.ValueLayout;
 import org.junit.Assert;
 import org.junit.Test;
 import panamagl.opengl.GL;
-import panamagl.platform.windows.x64.GL_windows_x64;
+import panamagl.platform.windows.GL_windows;
 
 /**
  * Check that OpenGL functions that are not exported as static symbols by opengl32.dll (VBO, shaders,
@@ -35,7 +35,7 @@ public class TestGLFunctionLoader_windows extends WindowsTest {
     if (!checkPlatform())
       return;
 
-    GL_windows_x64 gl = new GL_windows_x64();
+    GL_windows gl = new GL_windows();
 
     Assert.assertTrue(gl.getFunctionLoader() instanceof GLFunctionLoader_windows);
   }
@@ -57,7 +57,7 @@ public class TestGLFunctionLoader_windows extends WindowsTest {
     if (!checkPlatform())
       return;
 
-    GL_windows_x64 gl = new GL_windows_x64();
+    GL_windows gl = new GL_windows();
     gl.setFunctionLoader(function -> MemorySegment.NULL);
 
     try (Arena arena = Arena.ofConfined()) {
@@ -101,7 +101,7 @@ public class TestGLFunctionLoader_windows extends WindowsTest {
     context.makeCurrent();
 
     try (Arena arena = Arena.ofConfined()) {
-      GL gl = new GL_windows_x64();
+      GL gl = new GL_windows();
 
       // When generating a buffer
       MemorySegment ids = arena.allocate(ValueLayout.JAVA_INT);
@@ -147,7 +147,7 @@ public class TestGLFunctionLoader_windows extends WindowsTest {
     context.makeCurrent();
 
     try (Arena arena = Arena.ofConfined()) {
-      GL gl = new GL_windows_x64();
+      GL gl = new GL_windows();
 
       int vertex = compile(gl, arena, GL.GL_VERTEX_SHADER,
           "#version 110\n uniform float scale; void main() { gl_Position = gl_Vertex * scale; }");

@@ -20,7 +20,7 @@ package panamagl.platform.macos;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.util.Arrays;
-import cgl.macos.arm.cgl_h;
+import cgl.macos.cgl_h;
 import opengl.macos.NativeLibLoader;
 import panamagl.Debug;
 import panamagl.opengl.AGLContext;

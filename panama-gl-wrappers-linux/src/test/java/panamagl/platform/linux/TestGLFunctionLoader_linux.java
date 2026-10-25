@@ -21,7 +21,7 @@ import java.lang.foreign.ValueLayout;
 import org.junit.Assert;
 import org.junit.Test;
 import panamagl.opengl.GL;
-import panamagl.platform.linux.x64.GL_linux_x64;
+import panamagl.platform.linux.GL_linux;
 
 /**
  * Check that OpenGL functions that are not exported as static symbols by libGL (VBO, shaders, ...)
@@ -35,7 +35,7 @@ public class TestGLFunctionLoader_linux extends LinuxTest {
     if (!checkPlatform())
       return;
 
-    GL_linux_x64 gl = new GL_linux_x64();
+    GL_linux gl = new GL_linux();
 
     Assert.assertTrue(gl.getFunctionLoader() instanceof GLFunctionLoader_linux);
   }
@@ -45,7 +45,7 @@ public class TestGLFunctionLoader_linux extends LinuxTest {
     if (!checkPlatform())
       return;
 
-    GL_linux_x64 gl = new GL_linux_x64();
+    GL_linux gl = new GL_linux();
     gl.setFunctionLoader(function -> MemorySegment.NULL);
 
     try (Arena arena = Arena.ofConfined()) {
@@ -66,7 +66,7 @@ public class TestGLFunctionLoader_linux extends LinuxTest {
     context.makeCurrent();
 
     try (Arena arena = Arena.ofConfined()) {
-      GL gl = new GL_linux_x64();
+      GL gl = new GL_linux();
 
       // When generating a buffer
       MemorySegment ids = arena.allocate(ValueLayout.JAVA_INT);
@@ -112,7 +112,7 @@ public class TestGLFunctionLoader_linux extends LinuxTest {
     context.makeCurrent();
 
     try (Arena arena = Arena.ofConfined()) {
-      GL gl = new GL_linux_x64();
+      GL gl = new GL_linux();
 
       int vertex = compile(gl, arena, GL.GL_VERTEX_SHADER,
           "#version 110\n uniform float scale; void main() { gl_Position = gl_Vertex * scale; }");

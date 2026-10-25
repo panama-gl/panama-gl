@@ -17,7 +17,7 @@ package panamagl.platform.linux;
 
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
-import glx.linux.x86.glx_h;
+import glx.linux.glx_h;
 import panamagl.opengl.GLFunctionLoader;
 
 /**

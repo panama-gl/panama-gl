@@ -211,7 +211,7 @@ public class TestGenerateWrapperFromBindings {
     Map<String, List<String>> aliases = g.aliases(glRegistry);
 
     // Then : the typedef of the alias is used
-    Assert.assertEquals(opengl.linux.x86.PFNGLCLIENTACTIVETEXTUREARBPROC.class,
+    Assert.assertEquals(opengl.linux.PFNGLCLIENTACTIVETEXTUREARBPROC.class,
         g.getFunctionPointer(wrapperWithFunctionLoader(), core, aliases));
 
     // Then : no function pointer without function loader
@@ -221,7 +221,7 @@ public class TestGenerateWrapperFromBindings {
   protected Wrapper wrapperWithFunctionLoader() {
     Wrapper wrapper = new Wrapper();
     wrapper.functionLoader = "panamagl.platform.linux.GLFunctionLoader_linux";
-    wrapper.functionPointers = "opengl.linux.x86";
+    wrapper.functionPointers = "opengl.linux";
     return wrapper;
   }
 }

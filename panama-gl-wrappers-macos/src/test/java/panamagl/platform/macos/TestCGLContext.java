@@ -18,7 +18,7 @@ package panamagl.platform.macos;
 import org.junit.Test;
 import junit.framework.Assert;
 import panamagl.opengl.GL;
-import panamagl.platform.macos.arm.GL_macOS_arm;
+import panamagl.platform.macos.GL_macOS;
 
 // VM ARGS : -XstartOnFirstThread --enable-native-access=ALL-UNNAMED --enable-preview
 // -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
@@ -65,7 +65,7 @@ public class TestCGLContext extends MacOSTest {
     
     cgl.makeCurrent();
 
-    GL gl = new GL_macOS_arm();
+    GL gl = new GL_macOS();
     System.out.println("version" + gl.glGetString(GL.GL_VERSION));
     
     
@@ -84,7 +84,7 @@ public class TestCGLContext extends MacOSTest {
     System.out.println("-----------");
 
     // Given
-    GL gl = new GL_macOS_arm();
+    GL gl = new GL_macOS();
     CGLContext_macOS cgl = new CGLContext_macOS();
     cgl.init();
 
