@@ -11,9 +11,14 @@ The report lists, for each package :
 * the declarations generated for both CPUs with a different code (layout, descriptor, value),
 * among them, the ones that the PanamaGL sources given with --uses refer to.
 
+With --resolve-layouts, the C type layouts of the header classes (e.g. C_LONG) are replaced by
+their definition (e.g. ValueLayout.JAVA_LONG), which depends on the OS : bindings generated on two
+OS are then compared on the actual size of their types, e.g. a khronos_ssize_t declared as long on
+Linux (C_LONG) and as long long on Windows (C_LONG_LONG) is a JAVA_LONG on both.
+
 Usage :
   compare_bindings.py <bindings of CPU a> <bindings of CPU b> --labels x64 arm64
-                      --uses <java source dir>... --output report.md
+                      --uses <java source dir>... --output report.md [--resolve-layouts]
 """
 
 import argparse
@@ -29,6 +34,10 @@ DECLARATION = re.compile(r'([A-Za-z_]\w*)(?:\$\w+)?\s*[(={]')
 
 IDENTIFIER = re.compile(r'\b[A-Za-z_]\w*\b')
 
+# Definition of a C type layout in a header class, e.g.
+# "public static final ValueLayout.OfLong C_LONG = ValueLayout.JAVA_LONG;"
+LAYOUT = re.compile(r'public static final [\w.]+ (C_\w+) = (.*?);', re.DOTALL)
+
 
 def header_classes(package_dir):
   """Header classes are written in several files, e.g. glx_h, glx_h_1, glx_h_2 and glx_h$shared."""
@@ -43,7 +52,17 @@ def sort_key(path):
   return (match.group(1), int(match.group(2))) if match else (path.stem, -1)
 
 
-def stream(package_dir):
+def layouts(package_dir, headers):
+  """The C type layouts defined by the header classes of a package, as a dict name -> definition."""
+  definitions = {}
+  for f in package_dir.glob('*.java'):
+    if any(f.stem == h or f.stem.startswith(h + '_') for h in headers):
+      for name, definition in LAYOUT.findall(f.read_text(encoding='utf-8', errors='replace')):
+        definitions[name] = ' '.join(definition.split())
+  return definitions
+
+
+def stream(package_dir, resolve_layouts=False):
   """The declarations of a package, as a dict name -> code, in file order.
 
   A file declaring a struct, union, typedef or function pointer is one declaration. A header
@@ -83,7 +102,13 @@ def stream(package_dir):
       if current is not None:
         add(current, pending + [line])
       pending = []
-  return {name: '\n'.join(code) for name, code in declarations.items()}
+  result = {name: '\n'.join(code) for name, code in declarations.items()}
+  if resolve_layouts and headers:
+    definitions = layouts(package_dir, headers)
+    usage = re.compile(r'\b(?:(?:' + '|'.join(map(re.escape, headers)) + r')\.)?(C_\w+)\b')
+    result = {name: usage.sub(lambda m: definitions.get(m.group(1), m.group(0)), code)
+              for name, code in result.items() if name not in definitions}
+  return result
 
 
 def packages(root):
@@ -98,13 +123,13 @@ def used_identifiers(source_dirs):
   return used
 
 
-def compare(dir_a, dir_b, label_a, label_b, used, max_diff_lines):
+def compare(dir_a, dir_b, label_a, label_b, used, max_diff_lines, resolve_layouts=False):
   out = []
   summary = []
   all_packages = sorted(set(packages(dir_a)) | set(packages(dir_b)))
   for package in all_packages:
-    a = stream(dir_a / package) if (dir_a / package).is_dir() else {}
-    b = stream(dir_b / package) if (dir_b / package).is_dir() else {}
+    a = stream(dir_a / package, resolve_layouts) if (dir_a / package).is_dir() else {}
+    b = stream(dir_b / package, resolve_layouts) if (dir_b / package).is_dir() else {}
     only_a = [n for n in a if n not in b]
     only_b = [n for n in b if n not in a]
     different = [n for n in a if n in b and a[n] != b[n]]
@@ -160,10 +185,11 @@ def main():
   parser.add_argument('--uses', nargs='*', default=[])
   parser.add_argument('--output', type=Path)
   parser.add_argument('--max-diff-lines', type=int, default=4000)
+  parser.add_argument('--resolve-layouts', action='store_true')
   args = parser.parse_args()
 
   report, identical, safe = compare(args.a, args.b, *args.labels, used_identifiers(args.uses),
-                                    args.max_diff_lines)
+                                    args.max_diff_lines, args.resolve_layouts)
   if args.output:
     args.output.write_text(report, encoding='utf-8')
   print(report)
