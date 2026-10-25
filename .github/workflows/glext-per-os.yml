@@ -8,6 +8,10 @@
 
 name: glext per OS
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   workflow_dispatch:
   push:
@@ -88,6 +92,7 @@ jobs:
           for archive in archives/*.tgz; do tar -xzf "$archive"; done
           mkdir -p reports
           for other in windows macos; do
+            if [ ! -d generated/$other ]; then echo "## $other : bindings missing" | tee -a "$GITHUB_STEP_SUMMARY"; continue; fi
             python3 .github/scripts/bindings/compare_bindings.py generated/linux generated/$other \
               --labels linux $other --resolve-layouts \
               --uses panama-gl-wrappers-linux/src panama-gl-wrappers-windows/src panama-gl-wrappers-macos/src panama-gl-api/src/main \
@@ -99,7 +104,7 @@ jobs:
             } >> "$GITHUB_STEP_SUMMARY"
             head -n 600 reports/linux-$other.md
           done
-          for other in windows macos; do sed -n '1,/^\*\*/p' reports/linux-$other.md; grep -A2 '^### Used by PanamaGL' reports/linux-$other.md || true; done
+          for other in windows macos; do [ -f reports/linux-$other.md ] || continue; sed -n '1,/^\*\*/p' reports/linux-$other.md; grep -A2 '^### Used by PanamaGL' reports/linux-$other.md || true; done
 
       - uses: actions/upload-artifact@v4
         if: always()
