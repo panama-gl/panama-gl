@@ -6,6 +6,12 @@ name: Java CI with Maven
 on:
   push:
   pull_request:
+  # Sent by the Build and Deploy workflow of panama-gl-bindings after deploying new bindings :
+  # rebuild and test main against them
+  repository_dispatch:
+    types: [ bindings-deployed ]
+  # Run on demand, e.g. after deploying the bindings by hand
+  workflow_dispatch:
 
 jobs:
   build:
@@ -43,6 +49,21 @@ jobs:
           distribution: ${{ matrix.distribution || 'temurin' }}
           java-package: ${{ matrix.java-package || 'jdk' }}
           cache: maven
+
+      # -------------------------------------------------------
+      # The bindings are redeployed with the same version, so the
+      # cached ones would be used instead of those just deployed.
+      # Remove them when triggered by a bindings deployment.
+      # -------------------------------------------------------
+      - name: Remove cached bindings
+        if: github.event_name == 'repository_dispatch' || github.event_name == 'workflow_dispatch'
+        shell: bash
+        env:
+          BINDINGS_SHA: ${{ github.event.client_payload.sha }}
+          BINDINGS_RUN: ${{ github.event.client_payload.run_url }}
+        run: |
+          echo "Bindings commit : ${BINDINGS_SHA:-unknown} ${BINDINGS_RUN}"
+          rm -rf ~/.m2/repository/org/jzy3d/panama-gl-bindings*
 
       # Maven is not installed on every runner image (e.g. Windows ARM64)
       - name: Install Maven if missing (Windows)

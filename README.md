@@ -428,6 +428,8 @@ mvn install
 
 This assumes the [bindings artifacts](https://gitlab.com/jzy3d/panama-gl-bindings/) (`panama-gl-bindings`) are used as is from our Maven repository but you can override them locally by building your own customization of the bindings libs.
 
+The CI (`.github/workflows/ci.yml`) also runs on `main` each time panama-gl-bindings deploys new bindings : its `Build and Deploy` workflow sends a `bindings-deployed` `repository_dispatch` event, and the CI then removes the cached bindings to test against those just deployed. Run it by hand with `workflow_dispatch` after deploying the bindings from a computer.
+
 The build measures test coverage with JaCoCo : each module has its report in `target/site/jacoco/index.html` (generated GL wrappers excluded). The CI reports the coverage of each module on each runner in the summary of the `Test coverage` job, as platform code is only tested on its own OS. Skip it with `-Djacoco.skip=true`.
 
 The path to the OpenGL libraries are defined in the root pom.xml file :
