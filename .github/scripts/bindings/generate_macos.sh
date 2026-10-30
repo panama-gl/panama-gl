@@ -25,5 +25,4 @@ generate() {
 
 cd "$SCRIPTS"
 generate opengl.macos glut_h include_opengl.h --framework GLUT
-generate glext.macos glext_h include_glext.h --framework OpenGL --framework GLUT
 generate cgl.macos cgl_h include_cgl.h
