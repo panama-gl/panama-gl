@@ -20,7 +20,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -79,16 +78,23 @@ public class TestNativeLibLoader_windows extends WindowsTest {
     NativeLibLoader_windows.extract("natives/windows-unknown/freeglut.dll", folder.getRoot().toPath());
   }
 
-  /** The DLL of the optional jar for the CPU of the JVM, if this jar is in the classpath. */
+  /**
+   * The optional jar, a test dependency on Windows, embeds freeglut for both CPUs, and the DLL of the
+   * CPU of the JVM loads. Fails on CI if the jar is not in the classpath, skipped elsewhere.
+   */
   @Test
   public void embeddedFreeglutLoadsOnThisCPU() throws IOException {
     if (!checkPlatform())
       return;
 
+    for (String cpu : new String[] {"amd64", "aarch64"}) {
+      String resource = NativeLibLoader_windows.resource(NativeLibLoader_windows.GLUT, cpu);
+      assumeOrFailOnCI(resource + " is in the classpath (" + NativeLibLoader_windows.GLUT_ARTIFACT
+          + ")", getClass().getClassLoader().getResource(resource) != null);
+    }
+
     String resource =
         NativeLibLoader_windows.resource(NativeLibLoader_windows.GLUT, System.getProperty("os.arch"));
-    Assume.assumeNotNull(getClass().getClassLoader().getResource(resource));
-
     System.load(NativeLibLoader_windows.extract(resource, folder.getRoot().toPath()).toString());
   }
 

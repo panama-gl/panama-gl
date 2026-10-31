@@ -44,7 +44,11 @@ public class NativeLibLoader_windows {
   /** The optional jar embedding freeglut.dll. */
   public static final String GLUT_ARTIFACT = "org.jzy3d:panama-gl-bindings-windows-freeglut";
 
+  /** Origin of freeglut when loaded from the <code>java.library.path</code>. */
+  public static final String LIBRARY_PATH = "java.library.path";
+
   protected static boolean glutLoaded = false;
+  protected static String glutOrigin = null;
 
   /** Load OpenGL related DLL : opengl32, glu32. freeglut is loaded by {@link #loadGLUT()}. */
   public static void load() {
@@ -67,10 +71,13 @@ public class NativeLibLoader_windows {
 
     try {
       System.loadLibrary(GLUT);
+      glutOrigin = LIBRARY_PATH;
     } catch (UnsatisfiedLinkError notInLibraryPath) {
       String resource = resource(GLUT, System.getProperty("os.arch"));
       try {
-        System.load(extract(resource, tempDirectory()).toString());
+        Path extracted = extract(resource, tempDirectory());
+        System.load(extracted.toString());
+        glutOrigin = extracted.toString();
       } catch (IOException | UnsatisfiedLinkError e) {
         UnsatisfiedLinkError error = new UnsatisfiedLinkError("Could not load " + GLUT
             + ", required by GLUT functions and the GLUT context : it is not in the java.library.path"
@@ -87,6 +94,14 @@ public class NativeLibLoader_windows {
   /** True once freeglut has been loaded by {@link #loadGLUT()}. */
   public static synchronized boolean isGLUTLoaded() {
     return glutLoaded;
+  }
+
+  /**
+   * Where freeglut was loaded from : {@link #LIBRARY_PATH}, or the path of the freeglut.dll
+   * extracted from the classpath. Null if freeglut is not loaded.
+   */
+  public static synchronized String getGLUTOrigin() {
+    return glutOrigin;
   }
 
   /**
