@@ -1,5 +1,5 @@
 Install
-* Freeglut MSVC Package from [there](https://www.transmissionzero.co.uk/software/freeglut-devel/)
+* Freeglut is optional : only GLUT functions (e.g. `glutSolidTeapot`) and the GLUT context need it, and the tests and samples get it from the `panama-gl-bindings-windows-freeglut` jar. To use your own, install for example the Freeglut MSVC Package from [there](https://www.transmissionzero.co.uk/software/freeglut-devel/) and add its `bin\x64` folder to the `java.library.path`.
 * CLang
 
 ## How I built the OpenGL wrappers

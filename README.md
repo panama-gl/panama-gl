@@ -115,7 +115,7 @@ This is one of the examples available in the [`panama-gl-samples`](panama-gl-sam
  * for all : --enable-native-access=ALL-UNNAMED
  * macos   : -Djava.library.path=.:/System/Library/Frameworks/OpenGL.framework/Versions/Current/Libraries/
  * linux   : -Djava.library.path=.:/usr/lib/x86_64-linux-gnu/
- * windows : -Djava.library.path="C:\Windows\system32;.\freeglut-MSVC-3.0.0-2.mp\freeglut\bin\x64"
+ * windows : -Djava.library.path="C:\Windows\system32"
  */
 public class PanamaGL_Demo {
 
@@ -416,6 +416,25 @@ This project only provides _Wrappers_ and depends on _Bindings_. This avoid the 
   * macOS : the OpenGL 3.x functions, which the legacy `gl.h` does not declare, e.g. vertex arrays (`glGenVertexArrays`), samplers, instancing, transform feedback, `glGetStringi` (141 functions of `GL_macOS`). `FBO_macOS` uses the binding of macOS only.
 
   The function pointer types only describe the signature of a function, which only depends on the size of the OpenGL types : they are identical on all OS and CPUs, except the 23 ones using `GLhandleARB` (`ARB_shader_objects`), an `unsigned int` except on macOS where it is a `void*`. These 23 ones are in the bindings of Linux and Windows instead, the only ones using them. See [Bindings per CPU](doc/Bindings-per-CPU.md#one-glext-binding-for-all-os-since-140) and the `glext per OS` workflow, which checks it.
+
+#### freeglut on Windows is optional
+
+Windows provides OpenGL (`opengl32.dll`) and GLU (`glu32.dll`), but not freeglut, which PanamaGL does not need to render on Windows : the default GL context is created with WGL, and the OpenGL and GLU functions of `GL` work without freeglut. freeglut is only needed by the GLUT functions of `GL` (e.g. `glutSolidTeapot`, `glutBitmapString`) and by the GLUT context (`GLUTContext_windows`).
+
+freeglut is hence loaded lazily by `GLUT_windows.init()`, which the GLUT methods of `GL_windows` and `GLUTContext_windows` invoke first : `freeglut.dll` is only opened, and `glutInit` only invoked, at the first GLUT call. `TestGLUT_windows` checks that WGL rendering does not open `freeglut.dll`. Code invoking the GLUT functions of the binding directly (`opengl.windows.gl_h.glut*`) must invoke `GLUT_windows.init()` first.
+
+freeglut is loaded from the `java.library.path` if a `freeglut.dll` is there, otherwise from the optional [`panama-gl-bindings-windows-freeglut`](https://github.com/panama-gl/panama-gl-bindings/tree/main/panama-gl-bindings-windows-freeglut) jar, which embeds freeglut for x86_64 and ARM64. An application using GLUT on computers where freeglut may not be installed should add it :
+
+```xml
+<dependency>
+  <groupId>org.jzy3d</groupId>
+  <artifactId>panama-gl-bindings-windows-freeglut</artifactId>
+  <version>1.4.1</version>
+  <scope>runtime</scope>
+</dependency>
+```
+
+The tests and samples of this project use it on Windows.
 
 
 ### Build, test, deploy
