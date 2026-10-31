@@ -135,7 +135,7 @@ public class GenerateAPI {
       String functionLoader = "panamagl.platform.macos.GLFunctionLoader_macOS";
 
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
-          functionLoader, interfaceFiles);
+          functionLoader, null, interfaceFiles);
     }
 
     // Compile ALL
@@ -158,7 +158,7 @@ public class GenerateAPI {
       String functionLoader = "panamagl.platform.linux.GLFunctionLoader_linux";
 
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
-          functionLoader, interfaceFiles);
+          functionLoader, null, interfaceFiles);
 
     }
 
@@ -175,9 +175,11 @@ public class GenerateAPI {
       Class<?> factorymatcher = PlatformMatcher_windows.class;
       boolean genGlut = false;
       String functionLoader = "panamagl.platform.windows.GLFunctionLoader_windows";
+      // freeglut is optional on Windows : loaded and initialized at the first GLUT call
+      String glutInitializer = "panamagl.platform.windows.GLUT_windows.init();";
 
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
-          functionLoader, interfaceFiles);
+          functionLoader, glutInitializer, interfaceFiles);
 
     }
 
@@ -209,7 +211,7 @@ public class GenerateAPI {
 
   protected void makeGLWrapperAndFactory(APILayout layout, APIPlatform platform,
       Set<Class<?>> wrapped, Class<?> factoryBase, Class<?> factorymatcher, boolean genGlut,
-      String functionLoader, List<String> javaInterfacesFiles)
+      String functionLoader, String glutInitializer, List<String> javaInterfacesFiles)
       throws IllegalAccessException, IOException {
 
 
@@ -221,6 +223,7 @@ public class GenerateAPI {
     wrapper.packge = layout.getPlatformPackage(platform);
     wrapper.setFileIn(layout.getOutputFolder(platform));
     wrapper.functionLoader = functionLoader;
+    wrapper.glutInitializer = glutInitializer;
     wrapper.functionPointers = new ArrayList<>(List.of(FUNCTION_POINTERS));
     wrapped.forEach(c -> wrapper.functionPointers.add(c.getPackageName()));
 

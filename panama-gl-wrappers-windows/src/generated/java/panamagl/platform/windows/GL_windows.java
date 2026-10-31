@@ -1562,78 +1562,97 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glutAddMenuEntry(MemorySegment arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutAddMenuEntry(arg0, arg1);
   }
 
   public void glutAddSubMenu(MemorySegment arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutAddSubMenu(arg0, arg1);
   }
 
   public void glutAppStatusFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutAppStatusFunc(arg0);
   }
 
   public void glutAppStatusFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutAppStatusFuncUcall(arg0, arg1);
   }
 
   public void glutAttachMenu(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutAttachMenu(arg0);
   }
 
   public void glutBitmapCharacter(MemorySegment arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutBitmapCharacter(arg0, arg1);
   }
 
   public int glutBitmapHeight(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutBitmapHeight(arg0);
   }
 
   public int glutBitmapLength(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutBitmapLength(arg0, arg1);
   }
 
   public void glutBitmapString(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutBitmapString(arg0, arg1);
   }
 
   public int glutBitmapWidth(MemorySegment arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutBitmapWidth(arg0, arg1);
   }
 
   public void glutButtonBoxFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutButtonBoxFunc(arg0);
   }
 
   public void glutButtonBoxFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutButtonBoxFuncUcall(arg0, arg1);
   }
 
   public void glutChangeToMenuEntry(int arg0, MemorySegment arg1, int arg2) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutChangeToMenuEntry(arg0, arg1, arg2);
   }
 
   public void glutChangeToSubMenu(int arg0, MemorySegment arg1, int arg2) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutChangeToSubMenu(arg0, arg1, arg2);
   }
 
   public void glutCloseFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutCloseFunc(arg0);
   }
 
   public void glutCloseFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutCloseFuncUcall(arg0, arg1);
   }
 
   public void glutCopyColormap(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutCopyColormap(arg0);
   }
 
   public int glutCreateMenu(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutCreateMenu(arg0);
   }
 
   public int glutCreateMenuUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutCreateMenuUcall(arg0, arg1);
   }
 
@@ -1646,10 +1665,12 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }*/
 
   public int glutCreateSubWindow(int arg0, int arg1, int arg2, int arg3, int arg4) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutCreateSubWindow(arg0, arg1, arg2, arg3, arg4);
   }
 
   public int glutCreateWindow(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutCreateWindow(arg0);
   }
 
@@ -1658,194 +1679,242 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glutDestroyMenu(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutDestroyMenu(arg0);
   }
 
   public void glutDestroyWindow(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutDestroyWindow(arg0);
   }
 
   public void glutDetachMenu(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutDetachMenu(arg0);
   }
 
   public int glutDeviceGet(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutDeviceGet(arg0);
   }
 
   public void glutDialsFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutDialsFunc(arg0);
   }
 
   public void glutDialsFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutDialsFuncUcall(arg0, arg1);
   }
 
   public void glutDisplayFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutDisplayFunc(arg0);
   }
 
   public void glutDisplayFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutDisplayFuncUcall(arg0, arg1);
   }
 
   public int glutEnterGameMode() {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutEnterGameMode();
   }
 
   public void glutEntryFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutEntryFunc(arg0);
   }
 
   public void glutEntryFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutEntryFuncUcall(arg0, arg1);
   }
 
   public void glutEstablishOverlay() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutEstablishOverlay();
   }
 
   public void glutExit() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutExit();
   }
 
   public int glutExtensionSupported(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutExtensionSupported(arg0);
   }
 
   public void glutForceJoystickFunc() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutForceJoystickFunc();
   }
 
   public void glutFullScreen() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutFullScreen();
   }
 
   public void glutFullScreenToggle() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutFullScreenToggle();
   }
 
   public int glutGameModeGet(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutGameModeGet(arg0);
   }
 
   public void glutGameModeString(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutGameModeString(arg0);
   }
 
   public int glutGet(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutGet(arg0);
   }
 
   public float glutGetColor(int arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutGetColor(arg0, arg1);
   }
 
   public int glutGetMenu() {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutGetMenu();
   }
 
   public MemorySegment glutGetMenuData() {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutGetMenuData();
   }
 
   public MemorySegment glutGetModeValues(int arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutGetModeValues(arg0, arg1);
   }
 
   public int glutGetModifiers() {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutGetModifiers();
   }
 
   public MemorySegment glutGetProcAddress(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutGetProcAddress(arg0);
   }
 
   public int glutGetWindow() {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutGetWindow();
   }
 
   public MemorySegment glutGetWindowData() {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutGetWindowData();
   }
 
   public void glutHideOverlay() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutHideOverlay();
   }
 
   public void glutHideWindow() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutHideWindow();
   }
 
   public void glutIconifyWindow() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutIconifyWindow();
   }
 
   public void glutIdleFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutIdleFunc(arg0);
   }
 
   public void glutIdleFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutIdleFuncUcall(arg0, arg1);
   }
 
   public void glutIgnoreKeyRepeat(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutIgnoreKeyRepeat(arg0);
   }
 
   public void glutInit(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutInit(arg0, arg1);
   }
 
   public void glutInitContextFlags(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutInitContextFlags(arg0);
   }
 
   public void glutInitContextFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutInitContextFunc(arg0);
   }
 
   public void glutInitContextFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutInitContextFuncUcall(arg0, arg1);
   }
 
   public void glutInitContextProfile(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutInitContextProfile(arg0);
   }
 
   public void glutInitContextVersion(int arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutInitContextVersion(arg0, arg1);
   }
 
   public void glutInitDisplayMode(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutInitDisplayMode(arg0);
   }
 
   public void glutInitDisplayString(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutInitDisplayString(arg0);
   }
 
   public void glutInitErrorFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutInitErrorFunc(arg0);
   }
 
   public void glutInitErrorFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutInitErrorFuncUcall(arg0, arg1);
   }
 
   public void glutInitWarningFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutInitWarningFunc(arg0);
   }
 
   public void glutInitWarningFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutInitWarningFuncUcall(arg0, arg1);
   }
 
   public void glutInitWindowPosition(int arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutInitWindowPosition(arg0, arg1);
   }
 
   public void glutInitWindowSize(int arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutInitWindowSize(arg0, arg1);
   }
 
@@ -1854,578 +1923,722 @@ public class GL_windows extends panamagl.opengl.AGL implements panamagl.opengl.G
   }
 
   public void glutJoystickFunc(MemorySegment arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutJoystickFunc(arg0, arg1);
   }
 
   public void glutJoystickFuncUcall(MemorySegment arg0, int arg1, MemorySegment arg2) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutJoystickFuncUcall(arg0, arg1, arg2);
   }
 
   public void glutJoystickGetCenter(int arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutJoystickGetCenter(arg0, arg1);
   }
 
   public float glutJoystickGetDeadBand(int arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutJoystickGetDeadBand(arg0, arg1);
   }
 
   public void glutJoystickGetMaxRange(int arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutJoystickGetMaxRange(arg0, arg1);
   }
 
   public void glutJoystickGetMinRange(int arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutJoystickGetMinRange(arg0, arg1);
   }
 
   public int glutJoystickGetNumAxes(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutJoystickGetNumAxes(arg0);
   }
 
   public int glutJoystickGetNumButtons(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutJoystickGetNumButtons(arg0);
   }
 
   public float glutJoystickGetSaturation(int arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutJoystickGetSaturation(arg0, arg1);
   }
 
   public int glutJoystickNotWorking(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutJoystickNotWorking(arg0);
   }
 
   public void glutJoystickSetCenter(int arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutJoystickSetCenter(arg0, arg1);
   }
 
   public void glutJoystickSetDeadBand(int arg0, int arg1, float arg2) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutJoystickSetDeadBand(arg0, arg1, arg2);
   }
 
   public void glutJoystickSetMaxRange(int arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutJoystickSetMaxRange(arg0, arg1);
   }
 
   public void glutJoystickSetMinRange(int arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutJoystickSetMinRange(arg0, arg1);
   }
 
   public void glutJoystickSetSaturation(int arg0, int arg1, float arg2) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutJoystickSetSaturation(arg0, arg1, arg2);
   }
 
   public void glutKeyboardFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutKeyboardFunc(arg0);
   }
 
   public void glutKeyboardFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutKeyboardFuncUcall(arg0, arg1);
   }
 
   public void glutKeyboardUpFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutKeyboardUpFunc(arg0);
   }
 
   public void glutKeyboardUpFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutKeyboardUpFuncUcall(arg0, arg1);
   }
 
   public int glutLayerGet(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutLayerGet(arg0);
   }
 
   public void glutLeaveFullScreen() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutLeaveFullScreen();
   }
 
   public void glutLeaveGameMode() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutLeaveGameMode();
   }
 
   public void glutLeaveMainLoop() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutLeaveMainLoop();
   }
 
   public void glutMainLoop() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMainLoop();
   }
 
   public void glutMainLoopEvent() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMainLoopEvent();
   }
 
   public void glutMenuDestroyFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMenuDestroyFunc(arg0);
   }
 
   public void glutMenuDestroyFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMenuDestroyFuncUcall(arg0, arg1);
   }
 
   public void glutMenuStateFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMenuStateFunc(arg0);
   }
 
   public void glutMenuStatusFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMenuStatusFunc(arg0);
   }
 
   public void glutMenuStatusFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMenuStatusFuncUcall(arg0, arg1);
   }
 
   public void glutMotionFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMotionFunc(arg0);
   }
 
   public void glutMotionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMotionFuncUcall(arg0, arg1);
   }
 
   public void glutMouseFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMouseFunc(arg0);
   }
 
   public void glutMouseFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMouseFuncUcall(arg0, arg1);
   }
 
   public void glutMouseWheelFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMouseWheelFunc(arg0);
   }
 
   public void glutMouseWheelFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMouseWheelFuncUcall(arg0, arg1);
   }
 
   public void glutMultiButtonFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMultiButtonFunc(arg0);
   }
 
   public void glutMultiButtonFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMultiButtonFuncUcall(arg0, arg1);
   }
 
   public void glutMultiEntryFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMultiEntryFunc(arg0);
   }
 
   public void glutMultiEntryFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMultiEntryFuncUcall(arg0, arg1);
   }
 
   public void glutMultiMotionFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMultiMotionFunc(arg0);
   }
 
   public void glutMultiMotionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMultiMotionFuncUcall(arg0, arg1);
   }
 
   public void glutMultiPassiveFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMultiPassiveFunc(arg0);
   }
 
   public void glutMultiPassiveFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutMultiPassiveFuncUcall(arg0, arg1);
   }
 
   public void glutOverlayDisplayFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutOverlayDisplayFunc(arg0);
   }
 
   public void glutOverlayDisplayFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutOverlayDisplayFuncUcall(arg0, arg1);
   }
 
   public void glutPassiveMotionFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutPassiveMotionFunc(arg0);
   }
 
   public void glutPassiveMotionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutPassiveMotionFuncUcall(arg0, arg1);
   }
 
   public void glutPopWindow() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutPopWindow();
   }
 
   public void glutPositionFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutPositionFunc(arg0);
   }
 
   public void glutPositionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutPositionFuncUcall(arg0, arg1);
   }
 
   public void glutPositionWindow(int arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutPositionWindow(arg0, arg1);
   }
 
   public void glutPostOverlayRedisplay() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutPostOverlayRedisplay();
   }
 
   public void glutPostRedisplay() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutPostRedisplay();
   }
 
   public void glutPostWindowOverlayRedisplay(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutPostWindowOverlayRedisplay(arg0);
   }
 
   public void glutPostWindowRedisplay(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutPostWindowRedisplay(arg0);
   }
 
   public void glutPushWindow() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutPushWindow();
   }
 
   public void glutRemoveMenuItem(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutRemoveMenuItem(arg0);
   }
 
   public void glutRemoveOverlay() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutRemoveOverlay();
   }
 
   public void glutReportErrors() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutReportErrors();
   }
 
   public void glutReshapeFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutReshapeFunc(arg0);
   }
 
   public void glutReshapeFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutReshapeFuncUcall(arg0, arg1);
   }
 
   public void glutReshapeWindow(int arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutReshapeWindow(arg0, arg1);
   }
 
   public void glutSetColor(int arg0, float arg1, float arg2, float arg3) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSetColor(arg0, arg1, arg2, arg3);
   }
 
   public void glutSetCursor(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSetCursor(arg0);
   }
 
   public void glutSetIconTitle(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSetIconTitle(arg0);
   }
 
   public void glutSetKeyRepeat(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSetKeyRepeat(arg0);
   }
 
   public void glutSetMenu(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSetMenu(arg0);
   }
 
   public void glutSetMenuData(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSetMenuData(arg0);
   }
 
   public void glutSetMenuFont(int arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSetMenuFont(arg0, arg1);
   }
 
   public void glutSetOption(int arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSetOption(arg0, arg1);
   }
 
   public void glutSetVertexAttribCoord3(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSetVertexAttribCoord3(arg0);
   }
 
   public void glutSetVertexAttribNormal(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSetVertexAttribNormal(arg0);
   }
 
   public void glutSetVertexAttribTexCoord2(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSetVertexAttribTexCoord2(arg0);
   }
 
   public void glutSetWindow(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSetWindow(arg0);
   }
 
   public void glutSetWindowData(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSetWindowData(arg0);
   }
 
   public void glutSetWindowTitle(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSetWindowTitle(arg0);
   }
 
   public void glutSetupVideoResizing() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSetupVideoResizing();
   }
 
   public void glutShowOverlay() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutShowOverlay();
   }
 
   public void glutShowWindow() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutShowWindow();
   }
 
   public void glutSolidCone(double arg0, double arg1, int arg2, int arg3) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSolidCone(arg0, arg1, arg2, arg3);
   }
 
   public void glutSolidCube(double arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSolidCube(arg0);
   }
 
   public void glutSolidCylinder(double arg0, double arg1, int arg2, int arg3) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSolidCylinder(arg0, arg1, arg2, arg3);
   }
 
   public void glutSolidDodecahedron() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSolidDodecahedron();
   }
 
   public void glutSolidIcosahedron() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSolidIcosahedron();
   }
 
   public void glutSolidOctahedron() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSolidOctahedron();
   }
 
   public void glutSolidRhombicDodecahedron() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSolidRhombicDodecahedron();
   }
 
   public void glutSolidSierpinskiSponge(int arg0, MemorySegment arg1, double arg2) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSolidSierpinskiSponge(arg0, arg1, arg2);
   }
 
   public void glutSolidSphere(double arg0, int arg1, int arg2) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSolidSphere(arg0, arg1, arg2);
   }
 
   public void glutSolidTeacup(double arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSolidTeacup(arg0);
   }
 
   public void glutSolidTeapot(double arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSolidTeapot(arg0);
   }
 
   public void glutSolidTeaspoon(double arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSolidTeaspoon(arg0);
   }
 
   public void glutSolidTetrahedron() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSolidTetrahedron();
   }
 
   public void glutSolidTorus(double arg0, double arg1, int arg2, int arg3) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSolidTorus(arg0, arg1, arg2, arg3);
   }
 
   public void glutSpaceballButtonFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSpaceballButtonFunc(arg0);
   }
 
   public void glutSpaceballButtonFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSpaceballButtonFuncUcall(arg0, arg1);
   }
 
   public void glutSpaceballMotionFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSpaceballMotionFunc(arg0);
   }
 
   public void glutSpaceballMotionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSpaceballMotionFuncUcall(arg0, arg1);
   }
 
   public void glutSpaceballRotateFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSpaceballRotateFunc(arg0);
   }
 
   public void glutSpaceballRotateFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSpaceballRotateFuncUcall(arg0, arg1);
   }
 
   public void glutSpecialFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSpecialFunc(arg0);
   }
 
   public void glutSpecialFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSpecialFuncUcall(arg0, arg1);
   }
 
   public void glutSpecialUpFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSpecialUpFunc(arg0);
   }
 
   public void glutSpecialUpFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSpecialUpFuncUcall(arg0, arg1);
   }
 
   public void glutStopVideoResizing() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutStopVideoResizing();
   }
 
   public void glutStrokeCharacter(MemorySegment arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutStrokeCharacter(arg0, arg1);
   }
 
   public float glutStrokeHeight(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutStrokeHeight(arg0);
   }
 
   public int glutStrokeLength(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutStrokeLength(arg0, arg1);
   }
 
   public float glutStrokeLengthf(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutStrokeLengthf(arg0, arg1);
   }
 
   public void glutStrokeString(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutStrokeString(arg0, arg1);
   }
 
   public int glutStrokeWidth(MemorySegment arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutStrokeWidth(arg0, arg1);
   }
 
   public float glutStrokeWidthf(MemorySegment arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutStrokeWidthf(arg0, arg1);
   }
 
   public void glutSwapBuffers() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutSwapBuffers();
   }
 
   public void glutTabletButtonFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutTabletButtonFunc(arg0);
   }
 
   public void glutTabletButtonFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutTabletButtonFuncUcall(arg0, arg1);
   }
 
   public void glutTabletMotionFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutTabletMotionFunc(arg0);
   }
 
   public void glutTabletMotionFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutTabletMotionFuncUcall(arg0, arg1);
   }
 
   public void glutTimerFunc(int arg0, MemorySegment arg1, int arg2) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutTimerFunc(arg0, arg1, arg2);
   }
 
   public void glutTimerFuncUcall(int arg0, MemorySegment arg1, int arg2, MemorySegment arg3) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutTimerFuncUcall(arg0, arg1, arg2, arg3);
   }
 
   public void glutUseLayer(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutUseLayer(arg0);
   }
 
   public void glutVideoPan(int arg0, int arg1, int arg2, int arg3) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutVideoPan(arg0, arg1, arg2, arg3);
   }
 
   public void glutVideoResize(int arg0, int arg1, int arg2, int arg3) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutVideoResize(arg0, arg1, arg2, arg3);
   }
 
   public int glutVideoResizeGet(int arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     return gl_h.glutVideoResizeGet(arg0);
   }
 
   public void glutVisibilityFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutVisibilityFunc(arg0);
   }
 
   public void glutVisibilityFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutVisibilityFuncUcall(arg0, arg1);
   }
 
   public void glutWMCloseFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWMCloseFunc(arg0);
   }
 
   public void glutWMCloseFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWMCloseFuncUcall(arg0, arg1);
   }
 
   public void glutWarpPointer(int arg0, int arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWarpPointer(arg0, arg1);
   }
 
   public void glutWindowStatusFunc(MemorySegment arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWindowStatusFunc(arg0);
   }
 
   public void glutWindowStatusFuncUcall(MemorySegment arg0, MemorySegment arg1) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWindowStatusFuncUcall(arg0, arg1);
   }
 
   public void glutWireCone(double arg0, double arg1, int arg2, int arg3) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWireCone(arg0, arg1, arg2, arg3);
   }
 
   public void glutWireCube(double arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWireCube(arg0);
   }
 
   public void glutWireCylinder(double arg0, double arg1, int arg2, int arg3) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWireCylinder(arg0, arg1, arg2, arg3);
   }
 
   public void glutWireDodecahedron() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWireDodecahedron();
   }
 
   public void glutWireIcosahedron() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWireIcosahedron();
   }
 
   public void glutWireOctahedron() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWireOctahedron();
   }
 
   public void glutWireRhombicDodecahedron() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWireRhombicDodecahedron();
   }
 
   public void glutWireSierpinskiSponge(int arg0, MemorySegment arg1, double arg2) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWireSierpinskiSponge(arg0, arg1, arg2);
   }
 
   public void glutWireSphere(double arg0, int arg1, int arg2) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWireSphere(arg0, arg1, arg2);
   }
 
   public void glutWireTeacup(double arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWireTeacup(arg0);
   }
 
   public void glutWireTeapot(double arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWireTeapot(arg0);
   }
 
   public void glutWireTeaspoon(double arg0) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWireTeaspoon(arg0);
   }
 
   public void glutWireTetrahedron() {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWireTetrahedron();
   }
 
   public void glutWireTorus(double arg0, double arg1, int arg2, int arg3) {
+    panamagl.platform.windows.GLUT_windows.init();
     gl_h.glutWireTorus(arg0, arg1, arg2, arg3);
   }
 

@@ -39,4 +39,40 @@
 		</dependency>
 
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<executions>
+					<!-- All the tests, with the optional freeglut jar in the classpath on Windows -->
+					<execution>
+						<id>default-test</id>
+						<configuration>
+							<excludes>
+								<exclude>**/TestGLUT_windows_withoutFreeglut.java</exclude>
+							</excludes>
+						</configuration>
+					</execution>
+					<!-- What happens when freeglut is missing : the optional freeglut jar is excluded
+					     from the classpath, and freeglut is not installed on CI -->
+					<execution>
+						<id>without-freeglut</id>
+						<goals>
+							<goal>test</goal>
+						</goals>
+						<configuration>
+							<includes combine.self="override">
+								<include>**/TestGLUT_windows_withoutFreeglut.java</include>
+							</includes>
+							<classpathDependencyExcludes>
+								<classpathDependencyExclude>org.jzy3d:panama-gl-bindings-windows-freeglut</classpathDependencyExclude>
+							</classpathDependencyExcludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

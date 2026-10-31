@@ -45,6 +45,12 @@ public class Wrapper {
    * classes of the others are written with their fully qualified name.
    */
   public List<String> functionPointers;
+  /**
+   * Statement invoked at the beginning of each GLUT method of the wrapper, e.g. to load and
+   * initialize GLUT lazily on Windows where freeglut is optional. If null, GLUT methods only
+   * invoke the binding.
+   */
+  public String glutInitializer;
   
   public void setFileIn(String folder) {
     javaFile = folder + packge.replace(".", "/") + "/" + className + ".java";

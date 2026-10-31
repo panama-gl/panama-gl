@@ -88,48 +88,6 @@ jobs:
           sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev xvfb
 
       # -------------------------------------------------------
-      # Windows: freeglut.dll of the runner CPU (x64 or arm64) in
-      # System32, which is already in the pom.xml Windows
-      # java.library.path. x64 uses the pre-built MSVC binaries
-      # of the reference source (same origin as the local dev zip
-      # in pom.xml), arm64 and fallback build it with vcpkg.
-      # Note: freeglut has no Chocolatey package.
-      # -------------------------------------------------------
-      - name: Install freeglut (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          $arch = if ($env:RUNNER_ARCH -eq 'ARM64') { 'arm64' } else { 'x64' }
-          $dll = $null
-          if ($arch -eq 'x64') {
-            try {
-              Invoke-WebRequest `
-                -Uri "https://www.transmissionzero.co.uk/files/software/development/GLUT/freeglut-MSVC.zip" `
-                -OutFile "freeglut-MSVC.zip"
-              Expand-Archive -Path "freeglut-MSVC.zip" -DestinationPath "C:\freeglut"
-              $dll = Get-ChildItem -Path "C:\freeglut" -Recurse -Filter "freeglut.dll" `
-                | Where-Object { $_.FullName -like "*x64*" } `
-                | Select-Object -First 1
-            } catch {
-              Write-Host "Could not download freeglut-MSVC.zip : $_"
-            }
-          }
-          # Build freeglut with vcpkg, installed on most Windows runners
-          if (-not $dll) {
-            $vcpkg = $env:VCPKG_INSTALLATION_ROOT
-            if (-not $vcpkg -or -not (Test-Path "$vcpkg\vcpkg.exe")) {
-              $vcpkg = "C:\vcpkg"
-              git clone --depth 1 https://github.com/microsoft/vcpkg $vcpkg
-              & "$vcpkg\bootstrap-vcpkg.bat" -disableMetrics
-            }
-            & "$vcpkg\vcpkg.exe" install "freeglut:$arch-windows"
-            if ($LASTEXITCODE -ne 0) { Write-Error "vcpkg could not install freeglut"; exit 1 }
-            $dll = Get-Item "$vcpkg\installed\$arch-windows\bin\freeglut.dll"
-          }
-          Copy-Item -Path $dll.FullName -Destination "C:\Windows\System32\freeglut.dll"
-          Write-Host "Installed freeglut.dll ($arch) from $($dll.FullName)"
-        shell: pwsh
-
-      # -------------------------------------------------------
       # Windows: install Mesa3D D3D12 OpenGL software renderer.
       # The system opengl32.dll (Microsoft stub) only supports
       # OpenGL 1.1 and returns NULL for all wglGetProcAddress
@@ -191,7 +149,8 @@ jobs:
       - name: Build and test with Maven (Windows)
         if: runner.os == 'Windows'
         # Mesa opengl32.dll is in C:\mesa (prepended via native.lib.path.windows),
-        # freeglut.dll is in System32, both covered by the resulting java.library.path.
+        # freeglut is not installed : the tests using GLUT load the freeglut.dll of the runner CPU
+        # embedded in panama-gl-bindings-windows-freeglut (test dependency on Windows).
         run: mvn --batch-mode package --file pom.xml -D"native.lib.path.windows=C:\mesa;C:\Windows\system32" ${{ matrix.maven-args }}
         shell: pwsh
 
