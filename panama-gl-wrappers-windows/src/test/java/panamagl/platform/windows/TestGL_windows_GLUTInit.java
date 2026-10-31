@@ -82,8 +82,12 @@ public class TestGL_windows_GLUTInit {
         unexpected.isEmpty());
   }
 
-  /** Remove commented code, e.g. stubs whose GLUT call is commented. */
+  /**
+   * Remove commented code, e.g. stubs whose GLUT call is commented, and use LF line endings, as
+   * git checks the source out with CRLF line endings on Windows.
+   */
   static String withoutComments(String source) {
-    return source.replaceAll("(?s)/\\*.*?\\*/", "").replaceAll("//[^\n]*", "");
+    return source.replace("\r\n", "\n").replaceAll("(?s)/\\*.*?\\*/", "")
+        .replaceAll("//[^\n]*", "");
   }
 }
