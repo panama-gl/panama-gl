@@ -25,6 +25,12 @@ import java.util.List;
 import jextract.gl.xml.model.GLCommand;
 
 public class ClassWriter extends JavaWriter {
+  /**
+   * Statement written at the beginning of each GLUT method (name starting with <code>glut</code>)
+   * of a wrapper, before invoking the binding, e.g. to load and initialize GLUT lazily. If null,
+   * GLUT methods only invoke the binding.
+   */
+  protected String glutInitializer;
 
   public ClassWriter(String classPackage, String className) {
     super();
@@ -504,7 +510,19 @@ public class ClassWriter extends JavaWriter {
 
     List<Exception> exceptions = null; 
     
-    wrapper(sb, wrappedMethod.getName(), argsIn, argOut, wrapped.getSimpleName(), exceptions);
+    String name = wrappedMethod.getName();
+
+    if (glutInitializer != null && name.startsWith("glut")) {
+      String call = wrapped.getSimpleName() + "." + name + "(" + writeInputArgs(argsIn) + ");";
+      Code invoke = new Code(argOut == null ? call : "return " + call);
+      method(sb, name, argsIn, argOut, List.of(new Code(glutInitializer), invoke), exceptions);
+    } else {
+      wrapper(sb, name, argsIn, argOut, wrapped.getSimpleName(), exceptions);
+    }
+  }
+
+  public void setGlutInitializer(String glutInitializer) {
+    this.glutInitializer = glutInitializer;
   }
   
   // ================================

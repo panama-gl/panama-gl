@@ -4,7 +4,6 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import opengl.windows.gl_h;
-import opengl.windows.NativeLibLoader;
 import panamagl.Debug;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;
@@ -59,8 +58,9 @@ public class WGLContext_windows extends AGLContext implements GLContext{
     super();
     this.advanced = advanced;
     
-    NativeLibLoader.load();
-    NativeLibLoader.loadWindowsDLLs();
+    // freeglut is not needed by WGL, but only loaded at the first use of GLUT (see GLUT_windows)
+    NativeLibLoader_windows.load();
+    NativeLibLoader_windows.loadWindowsDLLs();
     
     initArena();
   }
@@ -69,27 +69,6 @@ public class WGLContext_windows extends AGLContext implements GLContext{
   public void init() {
     Debug.debug(debug, "WGLContext : from thread " + Thread.currentThread().getName());
     
-    // Init glut so that it can be used
-    if(!GLUTContext_windows.hasInit) {
-      Debug.debug(debug, "WGLContext : will glutInit");
-
-      MemorySegment argc = arena.allocateFrom(ValueLayout.JAVA_INT, 0);
-      MemorySegment argv = arena.allocateFrom("");
-      gl_h.glutInit(argc, argv);
-      GLUTContext_windows.hasInit = true;
-    }
-    
-    //gl_h.glutInitDisplayMode(gl_h.GLUT_DOUBLE() | gl_h.GLUT_RGBA() | gl_h.GLUT_DEPTH());
-    //gl_h.glutInitWindowSize(1, 1);
-    //gl_h.glutInitWindowPosition(1000000, 1000000);
-    
-    //int windowHandle = gl_h.glutCreateWindow(arena.allocateFrom("...."));
-    
-    // Hacky!! Use it while WGLContext is not working
-    //gl_h.glutHideWindow();   
-    
-    //gl_h.glutDestroyWindow(windowHandle);
-
     if(advanced)
       initAdvanced();
     else
