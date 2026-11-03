@@ -389,6 +389,17 @@
 				</os>
 			</activation>
 
+			<!-- freeglut is optional on Windows : the tests using GLUT get it from this jar, as freeglut
+			     is not installed on Windows -->
+			<dependencies>
+				<dependency>
+					<groupId>org.jzy3d</groupId>
+					<artifactId>panama-gl-bindings-windows-freeglut</artifactId>
+					<version>${panamagl.bindings.version}</version>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+
 			<build>
 				<plugins>
 					<plugin>

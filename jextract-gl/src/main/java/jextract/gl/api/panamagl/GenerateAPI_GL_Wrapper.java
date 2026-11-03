@@ -125,6 +125,7 @@ public class GenerateAPI_GL_Wrapper {
     }
     classWriter.addImplement(wrapper.implement);
     classWriter.addExtension(wrapper.extend);
+    classWriter.setGlutInitializer(wrapper.glutInitializer);
 
     classWriter.start();
 

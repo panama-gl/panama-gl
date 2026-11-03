@@ -18,11 +18,9 @@
 package panamagl.platform.windows;
 
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.ValueLayout;
 import opengl.windows.gl_h;
 import opengl.windows.glutDisplayFunc$callback;
 import opengl.windows.glutIdleFunc$callback;
-import opengl.windows.NativeLibLoader;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
@@ -31,9 +29,7 @@ import panamagl.opengl.GLContext;
  * This GLUT {@link GLContext} initialize a GLUT offscreen context allowing to then invoke
  * {@link GL} methods.
  *
- * NB : glutInit() should only be called once. In case part of the program invokes it, it is
- * possible to initialize the window without calling glutInit by instead calling
- * GLUTContext.init(false)
+ * freeglut is loaded and glutInit invoked once per process by {@link GLUT_windows#init()}.
  * 
  * @author Martin Pernollet
  */
@@ -46,15 +42,9 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
   protected int initY = Integer.MAX_VALUE;
 
   protected int windowHandle = -1;
-  
 
-  /** this is used to prevent multiple instance of
-   * GLUTContext to run glutInit more than one time
-   * in the life of a JVM. */
-  protected static boolean hasInit = false;
-  
   public GLUTContext_windows() {
-    NativeLibLoader.load();
+    NativeLibLoader_windows.load();
     
     initArena();
   }
@@ -63,11 +53,7 @@ public class GLUTContext_windows extends AGLContext implements GLContext {
   @Override
   public void init() {
     
-    if (!hasInit) {
-      MemorySegment argc = arena.allocate(ValueLayout.JAVA_INT, 1);
-      gl_h.glutInit(argc, argc);
-      hasInit = true;
-    }
+    GLUT_windows.init();
     
     gl_h.glutInitDisplayMode(gl_h.GLUT_DOUBLE() | gl_h.GLUT_RGBA() | gl_h.GLUT_DEPTH());
     gl_h.glutInitWindowSize(initWidth, initHeight);

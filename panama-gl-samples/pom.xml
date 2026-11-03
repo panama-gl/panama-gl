@@ -47,4 +47,25 @@
 			<version>${project.version}</version>
 		</dependency>-->
 	</dependencies>
+
+	<profiles>
+		<!-- The teapot demos use GLUT, which Windows does not provide : freeglut.dll for x86_64 and
+		     ARM64, used if no freeglut.dll is in the java.library.path -->
+		<profile>
+			<id>Windows</id>
+			<activation>
+				<os>
+					<family>Windows</family>
+				</os>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.jzy3d</groupId>
+					<artifactId>panama-gl-bindings-windows-freeglut</artifactId>
+					<version>${panamagl.bindings.version}</version>
+					<scope>runtime</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 </project>
