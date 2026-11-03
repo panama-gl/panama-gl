@@ -186,6 +186,17 @@ public class AOffscreenRenderer implements OffscreenRenderer {
     Debug.debug(debug, "------------------------------------------------------");
     Debug.debug(debug, "AOffscreenRenderer : renderGLToImage " + width + " x " + height);
 
+    // An FBO with an empty size is incomplete for OpenGL (GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT).
+    // This happens when a display is requested before the canvas is laid out, e.g. from
+    // GLEventListener.init() invoked by addNotify() on the AWT thread : keep the current FBO size
+    // (the init size) instead. The canvas drops this undersized frame once it gets its real size.
+    if (width <= 0 || height <= 0) {
+      Debug.debug(debug, "AOffscreenRenderer : empty size " + width + " x " + height
+          + ", keep FBO size " + fbo.getWidth() + " x " + fbo.getHeight());
+      width = Math.max(INIT_FBO_WIDTH, fbo.getWidth());
+      height = Math.max(INIT_FBO_HEIGHT, fbo.getHeight());
+    }
+
     // Resize offscreen buffers
     fbo.release(gl);
     fbo.resize(width, height);
