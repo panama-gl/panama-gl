@@ -29,6 +29,17 @@ jobs:
           - macos-15-intel   # macOS Intel x86_64 (last x86_64 image; GitHub Actions drops x86_64 ~Aug 2027)
           - windows-latest   # Windows x86_64
           - windows-11-arm   # Windows ARM64
+        # macos-15-intel only runs on main (push, bindings deployment) and on demand : not on pull
+        # requests nor on the push of other branches.
+        # Tests run each test class in a fresh JVM (forkCount=1, reuseForks=false in pom.xml, see why
+        # there). Starting a JVM takes about 5.5 s on this runner instead of about 1 s on the others,
+        # so its build takes about 7 min instead of 1 to 2 min, for 63 test classes. Pull requests
+        # keep a fast feedback, and macOS x86_64 is still tested before each deployment, which
+        # happens on main. Run the workflow by hand (workflow_dispatch) to test a branch on it.
+        # The "Tested platforms" job then accepts that macOS is not tested on x86_64 : keep its
+        # condition in sync with this one.
+        exclude:
+          - os: ${{ (github.ref != 'refs/heads/main' && github.event_name != 'workflow_dispatch') && 'macos-15-intel' || '' }}
         include:
           # OpenJFX publishes no Windows ARM64 build : use Liberica Full JDK 22, which bundles
           # ARM64 JavaFX modules (see the windows-aarch64-jdk-javafx profile of panama-gl-ui-javafx)
@@ -218,11 +229,19 @@ jobs:
           pattern: surefire-reports-*
           path: reports
 
+      # macos-15-intel only runs on main and on demand (see the exclude of the build matrix, keep
+      # this condition in sync with it) : elsewhere, accept that macOS is not tested on x86_64.
       - name: Report tested platforms
+        env:
+          INTEL_EXCLUDED: ${{ github.ref != 'refs/heads/main' && github.event_name != 'workflow_dispatch' }}
         run: |
+          allow=()
+          if [ "$INTEL_EXCLUDED" = "true" ]; then
+            allow=(--allow-untested "PanamaGLFactory_macOS:x86_64:Intel only runs on main")
+          fi
           python3 .github/scripts/tested_platforms.py reports \
             panama-gl-wrappers-*/src/main/resources/META-INF/services/panamagl.factory.PanamaGLFactory \
-            --output tested-platforms.md
+            --output tested-platforms.md "${allow[@]}"
 
       - uses: actions/upload-artifact@v4
         if: always()
