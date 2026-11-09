@@ -291,6 +291,26 @@
 							<!-- Ensure stack trace get displayed -->
 							<trimStackTrace>false</trimStackTrace>
 
+							<!-- forkCount=1 and reuseForks=false : each test class runs in its own, fresh
+							     JVM, one test class at a time.
+
+							     The tests rely on process-wide native and toolkit state, which is set up once
+							     per JVM and cannot be reset :
+							     - freeglut is loaded and glutInit invoked once per process, and remembered in
+							       static fields (GLUTContext_linux, GLUT_windows, NativeLibLoader_windows).
+							       Invoking glutInit a second time can exit the process. Some tests check
+							       that freeglut is NOT loaded before the first GLUT call (TestGLUT_windows),
+							       which only holds in a JVM where no other test class used GLUT.
+							     - the JavaFX toolkit can only be started once per JVM (Platform.startup).
+							     - OpenGL contexts, the AWT event dispatch thread and, on macOS, the AppKit
+							       main thread belong to the process : a context, a pending AWT event or a
+							       thread left by a test class could otherwise affect the next one.
+							     Running the tests in parallel also made the canvases not update properly
+							     (see below).
+
+							     The price is the start of one JVM per test class : about 1 s on most CI
+							     runners, about 5.5 s on macos-15-intel, which is why that runner only builds
+							     main (see .github/workflows/ci.yml). -->
 							<forkCount>1</forkCount>
 							<reuseForks>false</reuseForks>
 
@@ -415,6 +435,14 @@
 								<parallel>classes</parallel> <useUnlimitedThreads>true</useUnlimitedThreads>
 								<forkCount>1</forkCount>-->
 
+								<!-- forkCount=1 and reuseForks=false : each test class runs in its own, fresh
+								     JVM, one test class at a time, because the tests rely on process-wide state
+								     that is set up once per JVM and cannot be reset. On Windows in particular,
+								     freeglut is loaded and glutInit invoked once per process (GLUT_windows,
+								     NativeLibLoader_windows), invoking glutInit again can exit the process, and
+								     TestGLUT_windows checks that freeglut is NOT loaded before the first GLUT
+								     call, which only holds in a JVM where no other test class used GLUT.
+								     See the Unix profile for the other reasons. -->
 								<forkCount>1</forkCount>
 								<reuseForks>false</reuseForks>
 							<!-- Configure Panama.

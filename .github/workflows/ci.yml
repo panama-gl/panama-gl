@@ -29,6 +29,15 @@ jobs:
           - macos-15-intel   # macOS Intel x86_64 (last x86_64 image; GitHub Actions drops x86_64 ~Aug 2027)
           - windows-latest   # Windows x86_64
           - windows-11-arm   # Windows ARM64
+        # macos-15-intel only runs on main (push, bindings deployment) and on demand : not on pull
+        # requests nor on the push of other branches.
+        # Tests run each test class in a fresh JVM (forkCount=1, reuseForks=false in pom.xml, see why
+        # there). Starting a JVM takes about 5.5 s on this runner instead of about 1 s on the others,
+        # so its build takes about 7 min instead of 1 to 2 min, for 63 test classes. Pull requests
+        # keep a fast feedback, and macOS x86_64 is still tested before each deployment, which
+        # happens on main. Run the workflow by hand (workflow_dispatch) to test a branch on it.
+        exclude:
+          - os: ${{ (github.ref != 'refs/heads/main' && github.event_name != 'workflow_dispatch') && 'macos-15-intel' || '' }}
         include:
           # OpenJFX publishes no Windows ARM64 build : use Liberica Full JDK 22, which bundles
           # ARM64 JavaFX modules (see the windows-aarch64-jdk-javafx profile of panama-gl-ui-javafx)
