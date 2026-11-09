@@ -9,7 +9,12 @@ checks that every PanamaGLFactory declared in the wrappers modules, one per OS, 
 a x86_64 and an ARM64 runner. Exits with 1 if a factory was not tested on both CPUs or if a
 runner has no platform report.
 
+--allow-untested <factory>:<CPU>:<reason> accepts that a factory is not tested on a CPU, e.g. because
+its runner is excluded from this build, and writes the reason in the report. The factory is its
+simple class name, the CPU is x86_64 or ARM64. Can be repeated.
+
 Usage : tested_platforms.py <artifacts dir> <services file>... [--output tested-platforms.md]
+                            [--allow-untested PanamaGLFactory_macOS:x86_64:"Intel only runs on main"]
 """
 import argparse
 import glob
@@ -67,7 +72,18 @@ def main():
     parser.add_argument("artifacts")
     parser.add_argument("services", nargs="+")
     parser.add_argument("--output", default="tested-platforms.md")
+    parser.add_argument("--allow-untested", action="append", default=[],
+                        metavar="FACTORY:CPU:REASON")
     args = parser.parse_args()
+
+    # (simple factory name, CPU) -> reason why it is accepted not to be tested
+    allowed = {}
+    for spec in args.allow_untested:
+        parts = spec.split(":", 2)
+        if len(parts) != 3 or parts[1] not in CPUS:
+            parser.error("--allow-untested expects FACTORY:CPU:REASON with CPU in {}, got {}"
+                         .format(", ".join(CPUS), spec))
+        allowed[(parts[0], parts[1])] = parts[2]
 
     rows = []
     missing_reports = []
@@ -86,7 +102,15 @@ def main():
     for _, props, counts in rows:
         if props.get("gl.version") and counts["failures"] + counts["errors"] == 0:
             tested.setdefault(props.get("factory"), set()).add(cpu_family(props.get("os.arch")))
-    untested = [f for f in factories if not set(CPUS) <= tested.get(f, set())]
+
+    def missing_cpus(factory):
+        return [cpu for cpu in CPUS if cpu not in tested.get(factory, set())]
+
+    def allowed_reason(factory, cpu):
+        return allowed.get((short(factory), cpu))
+
+    untested = [f for f in factories
+                if any(allowed_reason(f, cpu) is None for cpu in missing_cpus(f))]
 
     lines = ["## Platforms on which PanamaGL was tested", "",
              "| Runner | OS | CPU | JVM | Factory | OpenGL | Renderer | Tests | Failed | Skipped |",
@@ -107,11 +131,16 @@ def main():
     lines += ["", "### Factories", ""]
     for factory in factories:
         cpus = tested.get(factory, set())
-        missing = [cpu for cpu in CPUS if cpu not in cpus]
+        missing = missing_cpus(factory)
+        refused = [cpu for cpu in missing if allowed_reason(factory, cpu) is None]
+        notes = ["not tested on {}".format(", ".join(refused))] if refused else []
+        notes += ["not tested on {} : {}".format(cpu, allowed_reason(factory, cpu))
+                  for cpu in missing if cpu not in refused]
+        status = "❌" if refused else ("⏭️" if missing else "✅")
         lines.append("- {} `{}` : {}".format(
-            "❌" if missing else "✅", short(factory),
+            status, short(factory),
             ", ".join(sorted(cpus & set(CPUS))) or "not tested")
-            + (" (not tested on {})".format(", ".join(missing)) if missing else ""))
+            + (" ({})".format(" ; ".join(notes)) if notes else ""))
     if missing_reports:
         lines += ["", "Runners without platform report : " + ", ".join(missing_reports)]
 

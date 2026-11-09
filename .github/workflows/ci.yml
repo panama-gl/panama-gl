@@ -36,6 +36,8 @@ jobs:
         # so its build takes about 7 min instead of 1 to 2 min, for 63 test classes. Pull requests
         # keep a fast feedback, and macOS x86_64 is still tested before each deployment, which
         # happens on main. Run the workflow by hand (workflow_dispatch) to test a branch on it.
+        # The "Tested platforms" job then accepts that macOS is not tested on x86_64 : keep its
+        # condition in sync with this one.
         exclude:
           - os: ${{ (github.ref != 'refs/heads/main' && github.event_name != 'workflow_dispatch') && 'macos-15-intel' || '' }}
         include:
@@ -227,11 +229,19 @@ jobs:
           pattern: surefire-reports-*
           path: reports
 
+      # macos-15-intel only runs on main and on demand (see the exclude of the build matrix, keep
+      # this condition in sync with it) : elsewhere, accept that macOS is not tested on x86_64.
       - name: Report tested platforms
+        env:
+          INTEL_EXCLUDED: ${{ github.ref != 'refs/heads/main' && github.event_name != 'workflow_dispatch' }}
         run: |
+          allow=()
+          if [ "$INTEL_EXCLUDED" = "true" ]; then
+            allow=(--allow-untested "PanamaGLFactory_macOS:x86_64:Intel only runs on main")
+          fi
           python3 .github/scripts/tested_platforms.py reports \
             panama-gl-wrappers-*/src/main/resources/META-INF/services/panamagl.factory.PanamaGLFactory \
-            --output tested-platforms.md
+            --output tested-platforms.md "${allow[@]}"
 
       - uses: actions/upload-artifact@v4
         if: always()
