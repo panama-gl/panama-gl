@@ -117,8 +117,13 @@ public abstract class AFBO implements FBO{
     if (e != null) {
       e.throwRuntimeException();
     } else {
-      System.err.println("FBO: " + item
-          + " handle=0 but get no OpenGL error. This may happen if the call was not issued from main thread on macOS");
+      // OpenGL returns 0 handles without raising an error when no context is current on the
+      // calling thread, as glGetError() is then a no-op as well.
+      System.err.println("FBO: " + item + " handle=0 but got no OpenGL error on thread '"
+          + Thread.currentThread().getName() + "'. This means no OpenGL context is current on"
+          + " this thread : the context was made current on another thread, or it was released"
+          + " (e.g. by destroying another context from this thread), or on macOS the call was"
+          + " not issued from the main thread.");
     }
     // https://stackoverflow.com/questions/2985034/glgentextures-keeps-returing-0s
   }
