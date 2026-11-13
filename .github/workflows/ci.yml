@@ -19,8 +19,9 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
-      # Don't cancel other jobs if one platform fails
-      fail-fast: false
+      # Cancel the other platforms as soon as one fails, to save CI time. Cancelled jobs still
+      # upload the reports they produced (steps below with if: always()).
+      fail-fast: true
       matrix:
         os:
           - ubuntu-latest    # Linux x86_64
