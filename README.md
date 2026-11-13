@@ -325,14 +325,27 @@ Each wrapper brings the bindings it needs (see [OpenGL Wrappers, Bindings, Nativ
     <id>jzy3d-snapshots</id>
     <name>Jzy3d Snapshots</name>
     <url>https://maven.jzy3d.org/snapshots/</url>
+    <releases><enabled>false</enabled></releases>
   </repository>
   <repository>
     <id>jzy3d-releases</id>
     <name>Jzy3d Releases</name>
     <url>https://maven.jzy3d.org/releases/</url>
+    <snapshots><enabled>false</enabled></snapshots>
   </repository>
 </repositories>
 ```
+
+These repositories only host `org.jzy3d` artifacts. Maven otherwise asks them for every dependency it can not find elsewhere, and the 404 replies can get your IP banned by the host. With Maven 3.9+, restrict them to `org.jzy3d` with a [remote repository filter](https://maven.apache.org/resolver/remote-repository-filtering.html), as done in this project :
+
+* `.mvn/maven.config` enables the filter and points it to the `.mvn/rrf` folder (*rrf* stands for *remote repository filter*) :
+```
+-Daether.remoteRepositoryFilter.groupId=true
+-Daether.remoteRepositoryFilter.groupId.basedir=${maven.multiModuleProjectDirectory}/.mvn/rrf
+```
+* `.mvn/rrf/groupId-<repository id>.txt` lists the groupIds allowed for each repository, here `org.jzy3d` in `groupId-jzy3d-releases.txt` and `groupId-jzy3d-snapshots.txt`. A repository without a file is not filtered.
+
+These files are part of the build configuration and must be committed. If a new dependency hosted on these repositories has another groupId, add it to both files.
 
 ### Demos
 
