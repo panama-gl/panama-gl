@@ -237,3 +237,78 @@ LIBGL_ALWAYS_SOFTWARE=1 GALLIUM_DRIVER=zink \
 _JAVA_OPTIONS=-Dpanamagl.linux.context=egl LIBGL_ALWAYS_SOFTWARE=1 GALLIUM_DRIVER=zink \
   mvn test -pl jzy3d-bindings/jzy3d-native-panama-gl-swing -Dtest=TestPanamaGLOffscreenCanvas
 ```
+
+## 8. Zink ou couche de portage Java ?
+
+### Retours d'expérience (hors Java ou proches)
+
+| Source | Ce qu'on en retient |
+|---|---|
+| Fil Khronos *How to use OpenGL on Zink, Mesa, MoltenVK, and macOS* et mesa-dev *Enable OpenGL software rendering on macOS* (2022, Jzy3D) | Sur macOS, Mesa remplit ses pointeurs GL depuis `OpenGL.framework`. Le `libGL` de Mesa passe par GLX, donc X11/XQuartz. Charger un `libGL.dylib` osmesa via `DYLD_INSERT_LIBRARIES` + `LIBGL_ALWAYS_SOFTWARE` n'a pas abouti. À l'époque, les correctifs Zink+MoltenVK n'étaient pas publics. |
+| Fil Khronos *Zink+MoltenVK+Gallium+mesa on macos compilation problems* (M2 Pro) | La compilation de Mesa sur macOS reste fragile (options meson, TLS dialect d'Apple clang). |
+| Minecraft / Voxy sur macOS (fin 2025 – 2026) | Zink + **KosmicKrisp** + Metal fonctionne en GL 4.6 avec `MESA_LOADER_DRIVER_OVERRIDE=zink` et un **`libEGL.dylib` de Mesa chargé par LWJGL** : en Java, et via EGL. Il faut un Mesa compilé soi-même, voire un fork, macOS 26+, Apple Silicon et un GLFW patché. |
+| Wine (MR brouillon, 2026) | Proposition d'utiliser Zink par défaut pour OpenGL-sur-Vulkan. |
+| X-Plane, Kopper WGL | Zink sur Windows : GL 4.6 accéléré via `opengl32.dll` de Mesa (mesa-dist-win). |
+| Benchmarks Phoronix / Igalia (2021-2022) | Performances de Zink entre ~80 % et ≥ 100 % du driver GL natif selon les jeux. Points lents : conversions de formats de sommets. |
+| Profil compatibility | Limité à GL 3.0 en 2021 ; **GL 4.6 Compatibility** avec Mesa 25.2, d'après notre POC. |
+
+Le cas Minecraft valide notre direction : en EGL, sans X11, on contourne exactement ce qui bloquait
+en 2022 (GLX → XQuartz). Notre `EGLContext_linux` est transposable à macOS avec le `libEGL.dylib`
+de Mesa.
+
+### Ce que Zink apporte
+
+* **Toute la sémantique GL, maintenue par d'autres** : pipeline fixe compilé en shaders, display
+  lists, `GL_SELECT`/feedback, stipple, lignes épaisses, `glPolygonMode`, quads, clip planes.
+  Le frontend GL de Mesa a des décennies de maturité, et Zink passe la CTS GL.
+* **Il couvre aussi ce qui contourne `IPainter`** : code utilisateur qui fait `acquireGL()` et appelle
+  `GL` directement, `GLSLProgram` et shaders GLSL fournis par l'utilisateur, `DrawableVBO2`, depth
+  peeling, renderers texte et image de PanamaGL. Une couche Java ne couvre que ce qu'on réécrit.
+* **Zéro ligne de rendu à écrire** : le POC montre une image identique au pixel près.
+* **Un oracle de test** : Zink + lavapipe en CI fournit une référence Vulkan CPU gratuite.
+
+### Ce que Zink coûte : les « galères de libs natives »
+
+| OS | Situation |
+|---|---|
+| Linux | Mesa est presque toujours installé, donc **rien à distribuer**. Avec le pilote propriétaire NVIDIA, il faut sélectionner le vendeur Mesa (GLVND). |
+| Windows | Il faut **distribuer** l'`opengl32.dll` de Mesa (plusieurs dizaines de Mo) et le charger à la place de celui de `system32`. Pièges connus : `opengl32.dll` vs `libEGL.dll` à ne pas mélanger, variables d'environnement mal réglées, ce qui donne « plus d'OpenGL du tout ». |
+| macOS | **Aucun binaire officiel** : il faut compiler Mesa (meson, LLVM optionnel) pour x86_64 et arm64, livrer `libEGL`/`libGL` + KosmicKrisp ou MoltenVK + le loader Vulkan, puis **signer et notariser** les dylibs. Support qualifié d'« expérimental » par Mesa. |
+| Tous | La configuration passe par des variables d'environnement globales au processus (`GALLIUM_DRIVER`…), fixées avant le lancement de la JVM. Le comportement dépend de la version de Mesa embarquée. Les crashs ont lieu en natif et sont opaques depuis Java. |
+
+C'est précisément ce dont PanamaGL voulait se libérer (« only Java code, easy to rebuild »).
+
+### Ce qu'apporte une couche Java
+
+* **Dépendances natives = bibliothèques système uniquement** :
+  * macOS : **Metal.framework + libobjc**, toujours présents. Un backend Metal en Java via
+    `objc_msgSend` **n'a aucune lib native à livrer**, et les shaders MSL sont compilés par le système
+    (`newLibraryWithSource`).
+  * Linux/Windows : le loader Vulkan (`libvulkan.so.1` / `vulkan-1.dll`) est installé avec les pilotes
+    GPU. Il peut manquer en VM, en RDP ou avec un « adaptateur d'affichage de base ».
+  * Puisque le rendu est offscreen, on n'a **pas besoin du WSI** (surfaces et swapchains) : les
+    bindings Vulkan sont **identiques sur tous les OS**, contrairement à GLX/WGL/CGL.
+* **Shaders précompilés au build** : les uber-shaders GLSL sont compilés en SPIR-V par Maven
+  (glslang) et embarqués comme ressources. On évite ainsi toute lib de compilation de shaders à
+  l'exécution.
+* Débogable en Java, comportement identique partout, et ouverture vers le modèle retenu (niveau 3)
+  et l'enregistrement multi-thread des commandes.
+
+**Limites** : effort important. On ne couvre que `IPainter`, pas le GL brut ni les shaders GLSL
+utilisateur. Ceux-ci exigeraient un compilateur GLSL → SPIR-V natif (shaderc) ou de rester sur GL.
+
+### Conclusion révisée
+
+* Sur Linux et Windows, les pilotes OpenGL natifs fonctionnent. **Le vrai problème « hors OpenGL »,
+  c'est macOS** (GL déprécié, plafonné à 4.1, et à 2.1 en compatibility). Il faut aussi surveiller
+  Windows ARM, dont l'OpenGL passe déjà par une couche de traduction.
+* **Zink** : chemin de compatibilité et **oracle de CI**. Il est quasi gratuit sur Linux (Mesa déjà
+  présent), optionnel sur Windows, et seulement expérimental sur macOS, où il cumule les problèmes
+  de libs natives.
+* **Couche Java** : investissement stratégique, à **orienter d'abord vers Metal natif sur macOS**, car
+  c'est le seul backend sans aucune lib native à livrer. Cela corrige la §2, qui proposait Metal via
+  Vulkan-sur-Metal : sous l'angle des libs natives, KosmicKrisp ou MoltenVK réintroduisent une
+  dylib à livrer et à signer. Vulkan passe en priorité secondaire, puisque GL natif reste disponible
+  sur Linux et Windows.
+* Le `FixedFunctionPainter` et son `GLCoreBackend` (§4) restent la première marche. Ils servent de
+  banc d'essai, testé contre Zink et contre GL natif, avant d'écrire le backend Metal.
