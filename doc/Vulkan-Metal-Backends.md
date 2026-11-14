@@ -2,6 +2,8 @@
 
 Statut : **plan + POC du niveau 1**. Branche `claude/optimistic-cray-is2ldf`.
 
+Voir aussi [OpenGL-Ecosystem.md](OpenGL-Ecosystem.md) : les libs, les couches (GL, GLEXT, EGL, GLX, WGL, CGL, GLVND, DRI, Xvfb…) et la vue des technos supportées.
+
 ## 1. Constat de départ
 
 ### Ce que Jzy3D attend d'un painter
