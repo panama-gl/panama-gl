@@ -31,6 +31,7 @@ public abstract class APanamaGLFactory_linux extends APanamaGLFactory {
 
   protected GLXContext_linux glxContext;
   protected GLUTContext_linux glutContext;
+  protected EGLContext_linux eglContext;
   protected boolean useGLUT = false;
 
   public APanamaGLFactory_linux() {
@@ -66,6 +67,15 @@ public abstract class APanamaGLFactory_linux extends APanamaGLFactory {
     // --------------------------------------
     // A GL Context with GLUT
 
+    // Headless EGL context, e.g. to run on an OpenGL implementation layered over Vulkan (Zink)
+    if (EGLContext_linux.isRequested()) {
+      eglContext = new EGLContext_linux();
+      eglContext.init();
+      Debug.debug(debug, "PanamaGLFactory_linux : initContext : EGL done");
+
+      return eglContext;
+    }
+
     if (useGLUT) {
       glutContext = new GLUTContext_linux();
       glutContext.init(); // Linux VM seams to WANT full init
@@ -98,6 +108,9 @@ public abstract class APanamaGLFactory_linux extends APanamaGLFactory {
     // Clean up GLUT context
     if (glutContext != null)
       glutContext.destroy();
+
+    if (eglContext != null)
+      eglContext.destroy();
 
   }
 
