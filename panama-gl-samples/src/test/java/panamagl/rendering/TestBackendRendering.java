@@ -20,6 +20,7 @@ import panamagl.offscreen.FBOReader_AWT;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.opengl.GLError;
+import panamagl.platform.linux.APanamaGLFactory_linux;
 import panamagl.platform.linux.PanamaGLFactory_linux;
 
 /**
@@ -54,10 +55,38 @@ public class TestBackendRendering {
     return PanamaGLFactory.select();
   }
 
+  /** Write a .properties file without image, giving the backend expected and the error. */
+  static void saveFailure(PanamaGLFactory factory, Throwable e) throws Exception {
+    String os = System.getProperty("os.name").toLowerCase(Locale.ROOT);
+    String contextClass = factory instanceof APanamaGLFactory_linux linux
+        ? (linux.isUseEGL() ? "EGLContext_linux" : "GLXContext_linux")
+        : os.contains("win") ? "WGLContext_windows" : "CGLContext_macOS";
+    String error = String.valueOf(e.getMessage()).replaceAll("\\s+", " ");
+    RenderingBackend backend = RenderingBackend.expected(contextClass, error);
+    File dir = new File(OUTPUT);
+    dir.mkdirs();
+    String name = backend.getName(SCENE);
+    Properties p = backend.toProperties();
+    p.setProperty("scene", SCENE);
+    p.setProperty("status", "failed");
+    p.setProperty("error", e.getClass().getSimpleName() + " : " + error);
+    try (OutputStream out = new FileOutputStream(new File(dir, name + ".properties"))) {
+      p.store(out, "PanamaGL rendering backend, failed");
+    }
+    System.out.println("TestBackendRendering : FAILED " + backend + " : " + error);
+  }
+
   @Test
   public void renderReferenceScene() throws Exception {
     PanamaGLFactory factory = factory();
-    GLContext context = factory.newGLContext();
+    GLContext context;
+    try {
+      context = factory.newGLContext();
+    } catch (RuntimeException | Error e) {
+      // Keep a trace of the backend that could not render, for the comparison
+      saveFailure(factory, e);
+      throw e;
+    }
     GL gl = factory.newGL();
     GLProfile profile = new GLProfile(gl);
     RenderingBackend backend = new RenderingBackend(context, profile);
@@ -103,6 +132,7 @@ public class TestBackendRendering {
 
       Properties p = backend.toProperties();
       p.setProperty("scene", SCENE);
+      p.setProperty("status", "rendered");
       p.setProperty("image", name + ".png");
       p.setProperty("width", String.valueOf(W));
       p.setProperty("height", String.valueOf(H));

@@ -74,21 +74,38 @@ def main(src, out):
     (out / "diff").mkdir(parents=True, exist_ok=True)
 
     items = []
-    for png in sorted(src.rglob("*.png")):
-        props_file = png.with_suffix(".properties")
-        if not props_file.exists():
-            continue
-        items.append({"name": png.stem, "png": png, "props": read_properties(props_file),
-                      "image": Image.open(png).convert("RGB")})
-    if not items:
+    for props_file in sorted(src.rglob("*.properties")):
+        png = props_file.with_suffix(".png")
+        props = read_properties(props_file)
+        failed = props.get("status") == "failed" or not png.exists()
+        items.append({"name": props_file.stem, "png": png, "props": props, "failed": failed,
+                      "image": None if failed else Image.open(png).convert("RGB")})
+    rendered = [i for i in items if not i["failed"]]
+    if not rendered:
         print("No rendering found in", src)
         return 1
     items.sort(key=sort_key)
 
-    reference = next((i for k in REFERENCE_KEYS for i in items if k in i["name"]), items[0])
+    reference = next((i for k in REFERENCE_KEYS for i in rendered if k in i["name"]), rendered[0])
     items.remove(reference)
     items.insert(0, reference)
+    size = reference["image"].size
     for item in items:
+        if item["failed"]:
+            item["diff"] = None
+            tile = Image.new("RGB", size, (235, 235, 235))
+            d = ImageDraw.Draw(tile)
+            d.text((20, 20), "FAILED", fill=(170, 0, 0), font=font(28))
+            error = item["props"].get("error", item["props"].get("version", ""))
+            words, line, y = error.split(" "), "", 70
+            for word in words:
+                if len(line) + len(word) > 44:
+                    d.text((20, y), line, fill=(60, 60, 60), font=font(15))
+                    line, y = "", y + 22
+                line = (line + " " + word).strip()
+            d.text((20, y), line, fill=(60, 60, 60), font=font(15))
+            item["image"] = tile
+            continue
         ratio, overlay = diff_ratio(item["image"], reference["image"])
         item["diff"] = ratio
         if overlay is not None:
@@ -112,14 +129,15 @@ def main(src, out):
         sheet.paste(item["image"], (x, y))
         draw.rectangle([x, y, x + w - 1, y + h - 1], outline=(180, 180, 180))
         is_ref = item is reference
-        diff = "reference" if is_ref else ("size differs" if item["diff"] is None
-                                           else f"{100 * item['diff']:.2f}% pixels differ")
+        diff = "reference" if is_ref else ("not rendered" if item["failed"] else (
+            "size differs" if item["diff"] is None else f"{100 * item['diff']:.2f}% pixels differ"))
         draw.text((x, y + h + 4), f"{p.get('os')}-{p.get('arch')} / {p.get('context')} / {p.get('backend')}",
                   fill="black", font=bold)
         draw.text((x, y + h + 26), p.get("renderer", "")[:62], fill=(60, 60, 60), font=small)
         draw.text((x, y + h + 44), p.get("version", "")[:62], fill=(60, 60, 60), font=small)
         draw.text((x, y + h + 62), f"{p.get('ms.per.frame', '?')} ms per frame  -  {diff}",
-                  fill=(0, 90, 0) if is_ref or (item["diff"] or 0) < 0.01 else (170, 60, 0), font=small)
+                  fill=(170, 0, 0) if item["failed"] else (
+                      (0, 90, 0) if is_ref or (item["diff"] or 0) < 0.01 else (170, 60, 0)), font=small)
     sheet.save(out / "comparison.png")
 
     lines = ["## Rendering backends", "",
@@ -128,11 +146,11 @@ def main(src, out):
              "|---|---|---|---|---|---|---|---|---|"]
     for item in items:
         p = item["props"]
-        diff = "reference" if item is reference else (
-            "size differs" if item["diff"] is None else f"{100 * item['diff']:.2f} %")
+        diff = "reference" if item is reference else ("**failed** : " + p.get("error", "")[:120]
+            if item["failed"] else ("size differs" if item["diff"] is None else f"{100 * item['diff']:.2f} %"))
         lines.append(f"| {p.get('os')} | {p.get('arch')} | {p.get('context')} | **{p.get('backend')}** | "
                      f"{p.get('renderer')} | {p.get('version')} | {p.get('ms.per.frame')} | {diff} | "
-                     f"`{item['name']}.png` |")
+                     f"`{item['name']}` |")
     lines += ["", "Images : artifact `rendering-comparison` (comparison.png, renderings, diff/)."]
     markdown = "\n".join(lines) + "\n"
     (out / "comparison.md").write_text(markdown, encoding="utf-8")

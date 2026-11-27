@@ -64,6 +64,26 @@ public class RenderingBackend {
     this.backend = backend(this.os, this.arch, this.renderer, this.vendor);
   }
 
+  /**
+   * The backend expected from the environment, when the context could not be created : the OpenGL
+   * driver of Mesa (GALLIUM_DRIVER) and the Vulkan driver of Zink (VK_DRIVER_FILES).
+   */
+  public static RenderingBackend expected(String contextClass, String error) {
+    String gallium = System.getenv("GALLIUM_DRIVER");
+    String icd = System.getenv("VK_DRIVER_FILES");
+    String renderer = gallium == null ? "unknown" : gallium;
+    if ("zink".equalsIgnoreCase(gallium)) {
+      String vulkan = icd == null ? "" : new java.io.File(icd).getName().toLowerCase(Locale.ROOT);
+      renderer = "zink Vulkan ("
+          + (vulkan.contains("kosmickrisp") ? "kosmickrisp" : vulkan.contains("moltenvk") ? "MoltenVK"
+              : vulkan.contains("lvp") ? "lavapipe" : vulkan.contains("dzn") ? "dzn" : vulkan)
+          + ")";
+    }
+    RenderingBackend b = new RenderingBackend(System.getProperty("os.name"),
+        System.getProperty("os.arch"), contextClass, renderer, "failed : " + error, "");
+    return b;
+  }
+
   static String os(String name) {
     String n = name.toLowerCase(Locale.ROOT);
     if (n.contains("win"))
@@ -104,7 +124,7 @@ public class RenderingBackend {
         return "vulkan-zink-moltenvk";
       if (r.contains("kosmickrisp"))
         return "vulkan-zink-kosmickrisp";
-      if (r.contains("microsoft") || r.contains("dzn") || r.contains("d3d12"))
+      if (r.contains("microsoft") || r.contains("dzn") || r.contains("dozen") || r.contains("d3d12"))
         return "vulkan-zink-dozen";
       return "vulkan-zink";
     }

@@ -325,6 +325,8 @@ jobs:
   windows-mesa:
     name: Rendering (windows, Mesa ${{ matrix.driver }}${{ matrix.vulkan && format(' over {0}', matrix.vulkan) || '' }})
     runs-on: windows-latest
+    # Experimental backends report their failure in the comparison without failing the run
+    continue-on-error: ${{ matrix.experimental == true }}
     strategy:
       fail-fast: false
       matrix:
@@ -338,6 +340,7 @@ jobs:
           # OpenGL over Vulkan, on dzn (Vulkan over Direct3D 12, here on WARP)
           - driver: zink
             vulkan: dzn
+            experimental: true
     steps:
       - uses: actions/checkout@v4
 
@@ -397,6 +400,10 @@ jobs:
             "VK_DRIVER_FILES=$($icd.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
             "VK_ICD_FILENAMES=$($icd.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
             "VK_LOADER_DEBUG=error,warn,driver" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+            # The Vulkan loader ignores these variables in elevated processes, as on GitHub runners :
+            # declare the driver in the registry too
+            New-Item -Path "HKLM:\SOFTWARE\Khronos\Vulkan\Drivers" -Force | Out-Null
+            New-ItemProperty -Path "HKLM:\SOFTWARE\Khronos\Vulkan\Drivers" -Name $icd.FullName -Value 0 -PropertyType DWord -Force | Out-Null
             # Let Zink use a CPU Vulkan device
             if ($env:SOFTWARE -eq "1") { "LIBGL_ALWAYS_SOFTWARE=1" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append }
 
@@ -441,6 +448,9 @@ jobs:
   macos-mesa:
     name: Rendering (macos, Mesa ${{ matrix.driver }}${{ matrix.vulkan && format(' over {0}', matrix.vulkan) || '' }})
     runs-on: macos-latest
+    # Zink over Metal is experimental : KosmicKrisp finds no device on the runner, and MoltenVK lacks
+    # the nullDescriptor feature that Zink requires. Failures are reported in the comparison.
+    continue-on-error: ${{ matrix.experimental == true }}
     strategy:
       fail-fast: false
       matrix:
@@ -449,9 +459,11 @@ jobs:
           - driver: zink
             vulkan: kosmickrisp
             icd: /opt/homebrew/opt/mesa/share/vulkan/icd.d/kosmickrisp_mesa_icd.aarch64.json
+            experimental: true
           - driver: zink
             vulkan: moltenvk
             icd: /opt/homebrew/opt/molten-vk/etc/vulkan/icd.d/MoltenVK_icd.json
+            experimental: true
     steps:
       - uses: actions/checkout@v4
 
