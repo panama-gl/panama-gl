@@ -37,6 +37,10 @@ import opengl.linux.NativeLibLoader;
  * <li><code>panamagl.mesa.gl</code> : default <code>/opt/homebrew/opt/mesa/lib/libGL.dylib</code></li>
  * <li><code>panamagl.mesa.glu</code> : default <code>/opt/homebrew/opt/mesa-glu/lib/libGLU.dylib</code>,
  * optional</li>
+ * <li><code>panamagl.mesa.vulkan</code> : default
+ * <code>/opt/homebrew/opt/vulkan-loader/lib/libvulkan.1.dylib</code>, optional, preloaded for Zink,
+ * which opens <code>@rpath/libvulkan.1.dylib</code>. If Zink still does not find it, launch java
+ * with <code>DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib</code>.</li>
  * </ul>
  *
  * The OpenGL functions of the bindings are looked up in the libraries loaded by the class loader
@@ -47,6 +51,7 @@ public class MesaLibraries {
   public static final String EGL_PROPERTY = "panamagl.mesa.egl";
   public static final String GL_PROPERTY = "panamagl.mesa.gl";
   public static final String GLU_PROPERTY = "panamagl.mesa.glu";
+  public static final String VULKAN_PROPERTY = "panamagl.mesa.vulkan";
 
   static final String HOMEBREW_MESA = "/opt/homebrew/opt/mesa/lib/";
   static final String HOMEBREW_GLU = "/opt/homebrew/opt/mesa-glu/lib/";
@@ -80,6 +85,12 @@ public class MesaLibraries {
       String glu = System.getProperty(GLU_PROPERTY, HOMEBREW_GLU + "libGLU.dylib");
       if (new File(glu).exists())
         System.load(glu);
+
+      // The Vulkan loader is optional : only needed by Zink
+      String vulkan = System.getProperty(VULKAN_PROPERTY,
+          "/opt/homebrew/opt/vulkan-loader/lib/libvulkan.1.dylib");
+      if (new File(vulkan).exists())
+        System.load(vulkan);
     } else {
       NativeLibLoader.load();
     }

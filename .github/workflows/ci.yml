@@ -393,11 +393,15 @@ jobs:
             $icd = Get-ChildItem -Path "C:\mesa" -Filter "*_icd*.json" | Select-Object -First 1
             if (-not $icd) { Write-Error "Vulkan ICD json not found"; exit 1 }
             Get-Content $icd.FullName
+            # VK_ICD_FILENAMES : name read by Vulkan loaders older than 1.3.207, instead of VK_DRIVER_FILES
             "VK_DRIVER_FILES=$($icd.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+            "VK_ICD_FILENAMES=$($icd.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+            "VK_LOADER_DEBUG=error,warn,driver" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
             # Let Zink use a CPU Vulkan device
             if ($env:SOFTWARE -eq "1") { "LIBGL_ALWAYS_SOFTWARE=1" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append }
 
             # Vulkan loader : vulkan-1.dll is only installed with GPU drivers or the Vulkan runtime
+            if (Test-Path "C:\Windows\System32\vulkan-1.dll") { Write-Host "System Vulkan loader : $((Get-Item C:\Windows\System32\vulkan-1.dll).VersionInfo.FileVersion)" }
             if (-not (Test-Path "C:\Windows\System32\vulkan-1.dll") -and -not (Test-Path "C:\mesa\vulkan-1.dll")) {
               Invoke-WebRequest -Uri "https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-runtime-components.zip" -OutFile vkrt.zip
               Expand-Archive -Path vkrt.zip -DestinationPath vkrt
@@ -462,6 +466,10 @@ jobs:
         run: |
           brew install mesa mesa-glu vulkan-loader molten-vk
           ls /opt/homebrew/opt/mesa/lib/dri /opt/homebrew/opt/mesa/share/vulkan/icd.d
+          # Zink opens @rpath/libvulkan.1.dylib : expose Homebrew's loader in a default dyld fallback
+          # path, since SIP removes DYLD_* variables from the shell scripts launching Maven
+          sudo mkdir -p /usr/local/lib
+          sudo ln -sf /opt/homebrew/opt/vulkan-loader/lib/libvulkan.1.dylib /usr/local/lib/libvulkan.1.dylib
 
       - name: Render the reference scene
         env:
