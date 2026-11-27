@@ -46,6 +46,10 @@ import opengl.linux.NativeLibLoader;
  * The OpenGL functions of the bindings are looked up in the libraries loaded by the class loader
  * (<code>SymbolLookup.loaderLookup()</code>) : loading Mesa's <code>libGL.dylib</code> makes them
  * call Mesa rather than the OpenGL framework of Apple.
+ *
+ * <p><img src="doc-files/native-dependencies.svg" alt="Native dependencies" style="max-width:100%"/>
+ *
+ * <p><img src="doc-files/backends-per-platform.svg" alt="Backends on each OS" style="max-width:100%"/>
  */
 public class MesaLibraries {
   public static final String EGL_PROPERTY = "panamagl.mesa.egl";

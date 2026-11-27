@@ -33,6 +33,8 @@ import panamagl.opengl.GLFunctionLoader;
  * EGL path hence uses <code>eglGetProcAddress</code>, without loading libEGL when EGL is not used.
  * 
  * @author Martin Pernollet
+ * 
+ * <p><img src="doc-files/egl-gl-glext.svg" alt="EGL, GL and GLEXT in PanamaGL" style="max-width:100%"/>
  */
 public class GLFunctionLoader_linux implements GLFunctionLoader {
   @Override

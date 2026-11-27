@@ -48,6 +48,21 @@ import panamagl.opengl.GLContext;
  * <p>The OpenGL functions are then resolved with <code>eglGetProcAddress</code> by
  * {@link GLFunctionLoader_linux}. GLUT functions remain available if an X display is available
  * (see {@link GLUT_linux}).
+ *
+ * <p>How EGL plugs into the OpenGL bindings of PanamaGL : only the creation of the context and the
+ * resolution of the functions change.
+ *
+ * <p><img src="doc-files/egl-gl-glext.svg" alt="EGL, GL and GLEXT in PanamaGL" style="max-width:100%"/>
+ *
+ * <p>The layers below EGL, from Mesa to the hardware, through Zink and Vulkan :
+ *
+ * <p><img src="doc-files/egl-zink-stack.svg" alt="EGL, Mesa, Zink and Vulkan" style="max-width:100%"/>
+ *
+ * <p>The backends available on each OS, and their native dependencies :
+ *
+ * <p><img src="doc-files/backends-per-platform.svg" alt="Backends on each OS" style="max-width:100%"/>
+ *
+ * <p><img src="doc-files/native-dependencies.svg" alt="Native dependencies" style="max-width:100%"/>
  */
 public class EGLContext_linux extends AGLContext implements GLContext {
   /** System property selecting the kind of context created by the Linux factory : glx or egl. */

@@ -6,6 +6,22 @@ s'appuie, ou pourrait s'appuyer. Il sert de référence au plan
 constatés sur le poste de test (Ubuntu 24.04, Mesa 25.2.8). Les autres viennent du code, de la CI ou
 de la documentation des projets.
 
+## Diagrammes
+
+Générés par [`doc/diagrams/generate-diagrams.py`](diagrams/generate-diagrams.py) dans les
+répertoires `doc-files` des paquets, pour être inclus dans la Javadoc (`EGLContext_linux`,
+`GLFunctionLoader_linux`, `MesaLibraries`, `PanamaGLFactory`).
+
+| | |
+|---|---|
+| EGL, GL et GLEXT dans PanamaGL | ![](../panama-gl-wrappers-linux/src/main/java/panamagl/platform/linux/doc-files/egl-gl-glext.svg) |
+| De PanamaGL au matériel : EGL, Mesa, Zink, Vulkan, Metal, Direct3D 12 | ![](../panama-gl-wrappers-linux/src/main/java/panamagl/platform/linux/doc-files/egl-zink-stack.svg) |
+| Chemins de rendu sur chaque OS et statut en CI | ![](../panama-gl-api/src/main/java/panamagl/factory/doc-files/backends-per-platform.svg) |
+| Dépendances natives de chaque configuration | ![](../panama-gl-api/src/main/java/panamagl/factory/doc-files/native-dependencies.svg) |
+
+La CI rend une même scène de référence sur chacun de ces chemins et compare les images (job
+« Rendering comparison », artefact `rendering-comparison`, test `TestBackendRendering`).
+
 ## Sommaire
 
 1. [Vocabulaire](#1-vocabulaire)
@@ -446,10 +462,14 @@ possible mais non testé · ❌ non supporté.
 | Linux / Wayland | EGL | pilote système | — | ⚠️ (Xwayland + GLX aujourd'hui) |
 | Windows x86_64, ARM64 | **WGL** (défaut) | ICD du GPU ; en CI, **Mesa d3d12 → D3D12 → WARP** | 1.0 → 4.x | ✅ |
 | Windows | GLUT (freeglut, optionnel) | idem | idem | ✅ (option) |
-| Windows | WGL + Mesa Zink (`opengl32.dll` Mesa) | Zink → Vulkan | 4.6 | 🔭 |
-| macOS ARM64, x86_64 | **CGL** (défaut) | `OpenGL.framework` (sur Metal en Apple Silicon) | 2.1 legacy ; 3.x en core | ✅ (x86_64 sur `main` uniquement) |
+| Windows | WGL + Mesa llvmpipe (`opengl32.dll` Mesa) | Mesa CPU | 4.6 compat | ✅ job « Rendering (windows, Mesa llvmpipe) » |
+| Windows | WGL + Mesa Zink (`opengl32.dll` Mesa) | Zink → Vulkan (lavapipe, driver déclaré dans le registre) | 4.6 compat | ✅ job « Rendering (windows, Mesa zink over lavapipe) » |
+| Windows | WGL + Mesa Zink sur dzn | Zink → Vulkan (dzn) → Direct3D 12 | — | ❌ Zink ne démarre pas sur dzn (WARP) |
+| macOS ARM64, x86_64 | **CGL** (défaut) | `OpenGL.framework` (sur Metal en Apple Silicon ; « Apple Software Renderer » sur les runners CI) | 2.1 legacy ; 3.x en core | ✅ (x86_64 sur `main` uniquement) |
 | macOS | GLUT.framework | idem | idem | ✅ (option) |
-| macOS | EGL Mesa + Zink + KosmicKrisp/MoltenVK | Zink → Vulkan → Metal | 4.6 (non confirmé en compat) | 🔭 (expérimental) |
+| macOS | EGL Mesa (Homebrew), `PanamaGLFactory_linux` + `setUseEGL(true)` | Mesa llvmpipe | 4.6 compat | ✅ job « Rendering (macos, Mesa llvmpipe) » |
+| macOS | EGL Mesa + Zink + KosmicKrisp | Zink → Vulkan → Metal | — | ❌ en CI : aucun device Vulkan sur le runner |
+| macOS | EGL Mesa + Zink + MoltenVK | Zink → Vulkan → Metal | — | ❌ MoltenVK n'a pas `nullDescriptor` (robustness2), exigé par Zink |
 | macOS | EGL ANGLE | GLES 3 → Metal | GLES 3.0 | 🔭 (painter GLES requis) |
 
 ### Autres axes

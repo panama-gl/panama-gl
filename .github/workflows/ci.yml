@@ -337,7 +337,7 @@ jobs:
           - driver: zink
             vulkan: lavapipe
             software: '1'
-          # OpenGL over Vulkan, on dzn (Vulkan over Direct3D 12, here on WARP)
+          # OpenGL over Vulkan, on dzn (Vulkan over Direct3D 12, here on WARP) : Zink does not start
           - driver: zink
             vulkan: dzn
             experimental: true

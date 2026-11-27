@@ -454,6 +454,12 @@ PANAMAGL_LINUX_CONTEXT=egl GALLIUM_DRIVER=zink LIBGL_ALWAYS_SOFTWARE=1 java ...
 
 `GLProfile.getRenderer()` then reads `zink Vulkan 1.x(...)`. Note that `GALLIUM_DRIVER` applies to every OpenGL user of the process : under X11 without DRI3 (e.g. Xvfb), the GLX contexts of JavaFX (Prism) or of the native SWT `GLCanvas` can not run on Zink, so use `-Dprism.order=sw` with JavaFX there. OpenGL functions are resolved with `eglGetProcAddress`. GLUT functions remain available when a `DISPLAY` is set (GLUT is initialized at the first GLUT call), and throw an `UnsupportedOperationException` otherwise.
 
+<img src="panama-gl-api/src/main/java/panamagl/factory/doc-files/backends-per-platform.svg"/>
+
+The CI renders a reference scene on each of these paths and compares the images (`TestBackendRendering`, job `Rendering comparison`). On macOS, `PanamaGLFactory_linux` with `setUseEGL(true)` renders with Homebrew's Mesa (`brew install mesa mesa-glu`, see `MesaLibraries`). The native dependencies of each configuration :
+
+<img src="panama-gl-api/src/main/java/panamagl/factory/doc-files/native-dependencies.svg"/>
+
 The demos [`DemoEGL_Offscreen`](panama-gl-samples/src/main/java/demos/panamagl/linux/DemoEGL_Offscreen.java) (headless, saves a PNG) and [`DemoEGL_Onscreen_Swing`](panama-gl-samples/src/main/java/demos/panamagl/linux/DemoEGL_Onscreen_Swing.java) show both. The CI job `Build & Test (OpenGL over Vulkan, Zink)` runs the tests this way. See [OpenGL-Ecosystem.md](doc/OpenGL-Ecosystem.md) (in French) for EGL, GLVND, Zink and the other layers, and [Vulkan-Metal-Backends.md](doc/Vulkan-Metal-Backends.md) for the plan towards Vulkan and Metal.
 
 ### Build, test, deploy

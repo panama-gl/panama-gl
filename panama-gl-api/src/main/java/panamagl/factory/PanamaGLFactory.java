@@ -59,6 +59,15 @@ import panamagl.platform.PlatformMatcher;
  * 
  * <img src="doc-files/factory.png"/>
  * 
+ * <p>The OpenGL implementation behind the context of a factory depends on the OS and on the native
+ * libraries installed : the OpenGL driver of the GPU, Apple OpenGL, or Mesa, whose implementations
+ * may run OpenGL over Vulkan (Zink), Direct3D 12 (d3d12) or Metal (Zink over KosmicKrisp or
+ * MoltenVK). The same GL calls then go through different paths :
+ * 
+ * <p><img src="doc-files/backends-per-platform.svg" alt="Backends on each OS" style="max-width:100%"/>
+ * 
+ * <p><img src="doc-files/native-dependencies.svg" alt="Native dependencies" style="max-width:100%"/>
+ * 
  * @author Martin Pernollet
  *
  */
