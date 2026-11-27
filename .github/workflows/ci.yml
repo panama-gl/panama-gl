@@ -323,12 +323,21 @@ jobs:
   # Builds of mmozeiko/build-mesa.
   # -------------------------------------------------------
   windows-mesa:
-    name: Rendering (windows, Mesa ${{ matrix.driver }})
+    name: Rendering (windows, Mesa ${{ matrix.driver }}${{ matrix.vulkan && format(' over {0}', matrix.vulkan) || '' }})
     runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
-        driver: [ llvmpipe, zink ]
+        include:
+          # OpenGL on the CPU
+          - driver: llvmpipe
+          # OpenGL over Vulkan, on lavapipe (CPU Vulkan)
+          - driver: zink
+            vulkan: lavapipe
+            software: '1'
+          # OpenGL over Vulkan, on dzn (Vulkan over Direct3D 12, here on WARP)
+          - driver: zink
+            vulkan: dzn
     steps:
       - uses: actions/checkout@v4
 
@@ -355,6 +364,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRIVER: ${{ matrix.driver }}
+          VULKAN: ${{ matrix.vulkan }}
+          SOFTWARE: ${{ matrix.software }}
         run: |
           $headers = @{ Authorization = "Bearer $env:GITHUB_TOKEN" }
           $release = Invoke-RestMethod "https://api.github.com/repos/mmozeiko/build-mesa/releases/latest" -Headers $headers
@@ -376,14 +387,15 @@ jobs:
           Copy-Item -Path "$($dll.DirectoryName)\*.dll" -Destination "C:\mesa" -Force
 
           if ($env:DRIVER -eq "zink") {
-            # Vulkan driver : lavapipe, the CPU Vulkan driver of Mesa
-            Expand-Asset "mesa-lavapipe-x64-*.7z" "lavapipe"
-            Get-ChildItem -Path "lavapipe" -Recurse -Include "*.dll","*.json" | Copy-Item -Destination "C:\mesa" -Force
-            $icd = Get-ChildItem -Path "C:\mesa" -Filter "*lvp*.json" | Select-Object -First 1
-            if (-not $icd) { Write-Error "lavapipe ICD json not found"; exit 1 }
+            # Vulkan driver of Mesa : lavapipe (CPU) or dzn (Vulkan over Direct3D 12)
+            Expand-Asset "mesa-$env:VULKAN-x64-*.7z" "vulkan"
+            Get-ChildItem -Path "vulkan" -Recurse -Include "*.dll","*.json" | Copy-Item -Destination "C:\mesa" -Force
+            $icd = Get-ChildItem -Path "C:\mesa" -Filter "*_icd*.json" | Select-Object -First 1
+            if (-not $icd) { Write-Error "Vulkan ICD json not found"; exit 1 }
             Get-Content $icd.FullName
             "VK_DRIVER_FILES=$($icd.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-            "LIBGL_ALWAYS_SOFTWARE=1" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+            # Let Zink use a CPU Vulkan device
+            if ($env:SOFTWARE -eq "1") { "LIBGL_ALWAYS_SOFTWARE=1" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append }
 
             # Vulkan loader : vulkan-1.dll is only installed with GPU drivers or the Vulkan runtime
             if (-not (Test-Path "C:\Windows\System32\vulkan-1.dll") -and -not (Test-Path "C:\mesa\vulkan-1.dll")) {
@@ -399,41 +411,74 @@ jobs:
         shell: pwsh
         run: |
           $env:PATH = "C:\mesa;$env:PATH"
-          mvn --batch-mode package --file pom.xml -pl panama-gl-samples -am -Djacoco.skip=true `
-            -D"test=TestBackendRendering,TestRenderingBackend" -D"surefire.failIfNoSpecifiedTests=false" `
-            -D"native.lib.path.windows=C:\mesa;C:\Windows\system32"
+          # PowerShell splits unquoted -Dname.with.dots=value arguments : quote them
+          mvn --batch-mode package --file pom.xml -pl panama-gl-samples -am "-Djacoco.skip=true" `
+            "-Dtest=TestBackendRendering,TestRenderingBackend" "-Dsurefire.failIfNoSpecifiedTests=false" `
+            "-Dnative.lib.path.windows=C:\mesa;C:\Windows\system32"
 
       - name: Upload renderings
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: renderings-windows-mesa-${{ matrix.driver }}
+          name: renderings-windows-mesa-${{ matrix.driver }}${{ matrix.vulkan && format('-{0}', matrix.vulkan) || '' }}
           path: panama-gl-samples/target/renderings
           if-no-files-found: ignore
 
   # -------------------------------------------------------
-  # macOS : what Homebrew provides to run OpenGL over Metal
-  # through Mesa (Zink over MoltenVK). Probe only : PanamaGL
-  # renders with Apple OpenGL (CGL) in the build job.
+  # macOS : render the reference scene with the OpenGL of Mesa
+  # (Homebrew), through a headless EGL context of Mesa
+  # (PANAMAGL_FACTORY=mesa-egl), rather than Apple OpenGL :
+  # - llvmpipe : OpenGL on the CPU ;
+  # - zink over KosmicKrisp : OpenGL over Vulkan over Metal ;
+  # - zink over MoltenVK : OpenGL over Vulkan over Metal.
+  # The build job renders it with Apple OpenGL (CGL), which
+  # Apple implements over Metal on Apple Silicon.
   # -------------------------------------------------------
-  macos-mesa-probe:
-    name: Probe (macos, Homebrew Mesa and MoltenVK)
+  macos-mesa:
+    name: Rendering (macos, Mesa ${{ matrix.driver }}${{ matrix.vulkan && format(' over {0}', matrix.vulkan) || '' }})
     runs-on: macos-latest
-    continue-on-error: true
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - driver: llvmpipe
+          - driver: zink
+            vulkan: kosmickrisp
+            icd: /opt/homebrew/opt/mesa/share/vulkan/icd.d/kosmickrisp_mesa_icd.aarch64.json
+          - driver: zink
+            vulkan: moltenvk
+            icd: /opt/homebrew/opt/molten-vk/etc/vulkan/icd.d/MoltenVK_icd.json
     steps:
-      - name: Install Mesa and MoltenVK with Homebrew
-        run: brew install mesa molten-vk vulkan-loader vulkan-tools || true
-      - name: Report what was installed
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 22
+        uses: actions/setup-java@v4
+        with:
+          java-version: '22'
+          distribution: temurin
+          cache: maven
+
+      - name: Install Mesa, GLU, the Vulkan loader and MoltenVK with Homebrew
         run: |
-          brew info mesa || true
-          for f in mesa molten-vk vulkan-loader; do
-            echo "== $f : $(brew --prefix $f)"
-            find "$(brew --prefix $f)/" \( -name "*.dylib" -o -name "*.json" -o -name "*dri*" \) 2>/dev/null | head -60
-          done
-          echo "== Mesa build options"
-          cat "$(brew --prefix mesa)"/INSTALL_RECEIPT.json 2>/dev/null | head -40 || true
-          echo "== vulkaninfo (MoltenVK)"
-          VK_DRIVER_FILES="$(brew --prefix molten-vk)/etc/vulkan/icd.d/MoltenVK_icd.json" vulkaninfo --summary 2>&1 | head -40 || true
+          brew install mesa mesa-glu vulkan-loader molten-vk
+          ls /opt/homebrew/opt/mesa/lib/dri /opt/homebrew/opt/mesa/share/vulkan/icd.d
+
+      - name: Render the reference scene
+        env:
+          PANAMAGL_FACTORY: mesa-egl
+          GALLIUM_DRIVER: ${{ matrix.driver }}
+          VK_DRIVER_FILES: ${{ matrix.icd }}
+        run: |
+          mvn --batch-mode package --file pom.xml -pl panama-gl-samples -am -Djacoco.skip=true \
+            -Dtest=TestBackendRendering,TestRenderingBackend -Dsurefire.failIfNoSpecifiedTests=false
+
+      - name: Upload renderings
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: renderings-macos-mesa-${{ matrix.driver }}${{ matrix.vulkan && format('-{0}', matrix.vulkan) || '' }}
+          path: panama-gl-samples/target/renderings
+          if-no-files-found: ignore
 
   # -------------------------------------------------------
   # Compare the renderings of the reference scene made on every
@@ -442,7 +487,7 @@ jobs:
   rendering-comparison:
     name: Rendering comparison
     runs-on: ubuntu-latest
-    needs: [ build, zink, windows-mesa ]
+    needs: [ build, zink, windows-mesa, macos-mesa ]
     if: always()
     steps:
       - uses: actions/checkout@v4

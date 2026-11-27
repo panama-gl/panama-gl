@@ -17,7 +17,6 @@ package panamagl.platform.linux;
 
 import static panamagl.platform.linux.EGL_linux.*;
 import java.lang.foreign.MemorySegment;
-import opengl.linux.NativeLibLoader;
 import panamagl.Debug;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;
@@ -42,6 +41,9 @@ import panamagl.opengl.GLContext;
  * (<code>EGL_KHR_no_config_context</code>) nor surface (<code>EGL_KHR_surfaceless_context</code>).
  * It requests a compatibility profile by default, since Jzy3D relies on immediate mode, or a core
  * profile of a given version with {@link #setCoreProfile(int, int)}.
+ *
+ * <p>It also runs on macOS with Mesa (e.g. from Homebrew), through {@link PanamaGLFactory_linux}
+ * with {@link APanamaGLFactory_linux#setUseEGL(boolean)} : see {@link MesaLibraries}.
  *
  * <p>The OpenGL functions are then resolved with <code>eglGetProcAddress</code> by
  * {@link GLFunctionLoader_linux}. GLUT functions remain available if an X display is available
@@ -93,8 +95,8 @@ public class EGLContext_linux extends AGLContext implements GLContext {
   public EGLContext_linux() {
     super();
     initArena();
-    // Load libGL, which shares its dispatch with libEGL through GLVND
-    NativeLibLoader.load();
+    // Load libGL, which shares its dispatch with libEGL through GLVND on Linux, or Mesa on macOS
+    MesaLibraries.load();
   }
 
   /** Request a core profile of the given version instead of the default compatibility profile. */

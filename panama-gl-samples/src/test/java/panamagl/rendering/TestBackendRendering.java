@@ -20,6 +20,7 @@ import panamagl.offscreen.FBOReader_AWT;
 import panamagl.opengl.GL;
 import panamagl.opengl.GLContext;
 import panamagl.opengl.GLError;
+import panamagl.platform.linux.PanamaGLFactory_linux;
 
 /**
  * Render the {@link ReferenceScene} with the OpenGL context of the platform, as the factory creates
@@ -30,6 +31,11 @@ import panamagl.opengl.GLError;
  * <p>The CI runs it on every OS and on OpenGL implementations layered over other graphics APIs
  * (Mesa Zink over Vulkan, Mesa d3d12 over Direct3D 12, Apple OpenGL over Metal), then compares the
  * images.
+ *
+ * <p>With the environment variable <code>PANAMAGL_FACTORY=mesa-egl</code>, the scene is rendered
+ * through a headless EGL context of Mesa, on any OS where Mesa provides EGL : Linux, and macOS with
+ * Homebrew's Mesa, where <code>GALLIUM_DRIVER=zink</code> runs OpenGL over Vulkan over Metal
+ * (KosmicKrisp or MoltenVK).
  */
 public class TestBackendRendering {
   public static final String SCENE = "reference-scene";
@@ -38,9 +44,19 @@ public class TestBackendRendering {
   static final int H = 360;
   static final int FRAMES = 30;
 
+  /** The factory of the platform, or the EGL factory of Mesa if PANAMAGL_FACTORY=mesa-egl. */
+  static PanamaGLFactory factory() {
+    if ("mesa-egl".equalsIgnoreCase(System.getenv("PANAMAGL_FACTORY"))) {
+      PanamaGLFactory_linux mesa = new PanamaGLFactory_linux();
+      mesa.setUseEGL(true);
+      return mesa;
+    }
+    return PanamaGLFactory.select();
+  }
+
   @Test
   public void renderReferenceScene() throws Exception {
-    PanamaGLFactory factory = PanamaGLFactory.select();
+    PanamaGLFactory factory = factory();
     GLContext context = factory.newGLContext();
     GL gl = factory.newGL();
     GLProfile profile = new GLProfile(gl);

@@ -34,7 +34,8 @@ import java.lang.invoke.MethodHandle;
  * <p>Constants are those of the Khronos <code>EGL/egl.h</code> and <code>EGL/eglext.h</code>.
  */
 public final class EGL_linux {
-  public static final String LIBRARY = "libEGL.so.1";
+  /** The EGL library : libEGL.so.1 on Linux, Mesa's libEGL.dylib on macOS (see MesaLibraries). */
+  public static final String LIBRARY = MesaLibraries.egl();
 
   public static final int EGL_FALSE = 0;
   public static final int EGL_NONE = 0x3038;
