@@ -147,7 +147,7 @@ des **surfaces** et **résolvent les fonctions**.
 | Résoudre une fonction | `glXGetProcAddress` | `wglGetProcAddress` | symboles du framework | `eglGetProcAddress` |
 | Profils / versions | `GLX_ARB_create_context(_profile)` | `WGL_ARB_create_context(_profile)` | legacy 2.1 / core 3.2→4.1 | attributs de `eglCreateContext` |
 | API clientes | GL | GL | GL | **GL, GLES 1/2/3, OpenVG** |
-| Dans PanamaGL | `GLXContext_linux` (défaut) | `WGLContext_windows` (défaut) | `CGLContext_macOS` (défaut) | `EGLContext_linux` (**POC**) |
+| Dans PanamaGL | `GLXContext_linux` (défaut) | `WGLContext_windows` (défaut) | `CGLContext_macOS` (défaut) | `EGLContext_linux` (option, testé en CI) |
 
 **GLUT/freeglut** n'est pas une API de liaison mais une boîte à outils au-dessus de celles-ci :
 fenêtre, boucle d'événements, polices bitmap, teapot. PanamaGL l'utilise comme contexte alternatif
@@ -210,26 +210,61 @@ EGL **remplace GLX, WGL ou CGL**, et **rien d'autre** :
   interfaces `GLES1_1_0`, `GLES2_2_0`… Un wrapper GLES (ANGLE sur Metal, D3D ou Vulkan) passerait
   forcément par EGL.
 
-### Pourquoi le POC marche « par chance », et ce qu'il faudra nettoyer
+### L'implémentation dans PanamaGL (Linux)
 
-Le POC crée le contexte avec EGL, mais il continue de charger `libGL.so.1` (via `NativeLibLoader`) et
-de résoudre avec `glXGetProcAddress`. Cela fonctionne grâce à **GLVND** (§6) : sur Linux, les
-fonctions GL exportées et les pointeurs renvoyés par `glXGetProcAddress` sont des **stubs de
-dispatch** de `libGLdispatch`. Ils aiguillent vers le contexte courant **quelle que soit l'API de
-liaison** qui l'a créé. Sans GLVND (vieux systèmes, macOS, Windows), ce mélange ne marcherait pas.
+| Classe | Rôle |
+|---|---|
+| `EGL_linux` | Les 12 points d'entrée EGL utilisés, appelés par downcalls FFM écrits à la main. `libEGL.so.1` n'est ouvert qu'à la première utilisation : le chemin GLX ne le charge jamais. |
+| `EGLContext_linux` | Contexte sans fenêtre : platform *surfaceless* (repli sur `EGL_DEFAULT_DISPLAY`), sans config ni surface, profil **compatibility** par défaut ou **core** via `setCoreProfile(major, minor)`. Expose la platform, la version, le vendeur et les API clientes EGL. |
+| `GLFunctionLoader_linux` | Résout avec **`eglGetProcAddress`** dès qu'un contexte EGL a été créé dans le processus, avec `glXGetProcAddress` sinon. |
+| `GLUT_linux` | Appelle `glutInit` au premier appel GLUT quand le contexte est EGL et qu'un `DISPLAY` existe. Sans display, lève une `UnsupportedOperationException` explicite au lieu de laisser freeglut terminer la JVM. Les 128 méthodes `glut*` de `GL_linux` l'appellent d'abord (générateur JExtractGL : `glutInitializer`). |
+| `APanamaGLFactory_linux` | `setUseEGL(true)`, ou propriété `-Dpanamagl.linux.context=egl`, ou variable d'environnement `PANAMAGL_LINUX_CONTEXT=egl`. GLX reste le défaut. |
 
-À faire pour une version propre :
+Constats faits en l'implémentant :
 
-1. Générer les bindings EGL avec JExtract (`EGL/egl.h`, `EGL/eglext.h` du registre Khronos, qui
-   n'est pas lié à l'OS : il pourrait vivre dans un module commun comme `glext`).
-2. `GLFunctionLoader_egl` basé sur `eglGetProcAddress`. Avec EGL 1.5 / `EGL_KHR_get_all_proc_addresses`,
-   il résout aussi les fonctions de base.
-3. Charger **`libOpenGL.so.0`** (GL seul, sans GLX ni X11) et `libEGL.so.1`, plutôt que `libGL.so.1`
-   (= `libGLX` + `libOpenGL`), `libGLX` et `libglut`.
-4. GLUT : en mode EGL, ne pas appeler `glutInit`, qui exige un `DISPLAY`. Les fonctions
-   `glutSolidTeapot` et `glutBitmapString` sont alors à remplacer ou à désactiver : géométrie Java et
-   texte AWT.
-5. Choix du GPU par `EGL_EXT_device_enumeration`, avec repli *surfaceless* puis `EGL_DEFAULT_DISPLAY`.
+* **Un contexte *surfaceless* n'a pas de framebuffer par défaut** : dessiner hors d'un FBO lève
+  `GL_INVALID_FRAMEBUFFER_OPERATION`. Ce n'est pas un problème, puisque PanamaGL dessine toujours
+  dans un FBO, mais un test fixe ce comportement.
+* **Le display EGL est partagé** par tous les contextes du processus : `destroy()` ne fait pas
+  `eglTerminate`, qui invaliderait les contextes des autres canvas.
+* **GLVND** : les stubs de `glXGetProcAddress` fonctionnent aussi avec un contexte EGL, parce que
+  `libGLdispatch` suit le contexte courant quelle que soit l'API de liaison. Seul
+  `eglGetProcAddress` garantit cependant les fonctions de l'implémentation choisie par EGL.
+* **`GALLIUM_DRIVER` vaut pour tout le processus**, pas seulement pour PanamaGL. Sous Linux,
+  JavaFX dessine lui-même avec OpenGL ES 2 sur GLX (pipeline Prism `es2`), tout comme le `GLCanvas`
+  natif de SWT et freeglut. Sous Xvfb, sans DRI3, ces contextes GLX ne peuvent pas être créés sur
+  Zink, et une scène JavaFX se bloque. Parade : `-Dprism.order=sw` (pipeline logiciel de JavaFX). Sur
+  un bureau avec DRI3, GLX fonctionne aussi sur Zink.
+* Avec `GALLIUM_DRIVER=zink`, freeglut affiche `glx: failed to create drisw screen` lors de
+  `glutInit`. Il sonde GLX, ce qui échoue sous Xvfb, mais c'est sans conséquence : le dessin GLUT
+  passe par le contexte EGL.
+
+Tests (`panama-gl-wrappers-linux`) : `TestEGLContext_linux` (cycle de vie, sélection par la
+factory, résolution par EGL, VBO, shaders, profils compatibility et core, plusieurs contextes,
+absence de framebuffer par défaut, rendu en mode immédiat dans un FBO), `TestGLUT_linux` (sans et
+avec display), `TestEGLContext_linux_Zink` (ignoré si `GALLIUM_DRIVER` ne vaut pas `zink` :
+renderer Zink sur Vulkan, profil compatibility, rendu).
+
+Démos : `panama-gl-samples` → `demos.panamagl.linux.DemoEGL_Offscreen` (headless, PNG + temps par
+frame) et `DemoEGL_Onscreen_Swing` (fenêtre Swing) ; `jzy3d-tutorials-panama-gl-swing` →
+`SurfaceDemo_PanamaGL_EGL` (fenêtre ou `--offscreen fichier.png`).
+
+CI : le job **« Build & Test (OpenGL over Vulkan, Zink) »** installe lavapipe et lance toute la
+suite avec `PANAMAGL_LINUX_CONTEXT=egl GALLIUM_DRIVER=zink`. Il exclut seulement les 5 classes qui
+créent explicitement un contexte GLX ou GLUT, vérifie que le renderer est bien Zink, exécute la
+démo headless et publie son image.
+
+Reste à faire :
+
+1. Générer les bindings EGL avec JExtract (`EGL/egl.h`, `EGL/eglext.h` du registre Khronos, non liés
+   à l'OS : un module commun comme `glext`) à la place des downcalls écrits à la main.
+2. Charger **`libOpenGL.so.0`** (GL seul) plutôt que `libGL.so.1` (= `libGLX` + `libOpenGL`), et ne
+   charger `libGLX` et `libglut` qu'en mode GLX ou GLUT.
+3. Choix du GPU par `EGL_EXT_device_enumeration` (voie headless NVIDIA), avant le repli
+   *surfaceless* puis `EGL_DEFAULT_DISPLAY`.
+4. Le wrapper généré de `glutInit` appelle l'initialiseur, puis `glutInit` une seconde fois, ce qui
+   fait échouer freeglut. Personne ne l'appelle aujourd'hui, et c'est déjà le cas sous Windows, mais
+   ce serait à corriger dans le générateur.
 
 Sur **macOS** et **Windows**, la même architecture fonctionne si l'on fournit une lib EGL : celle de
 Mesa (`libEGL.dylib` + Zink + KosmicKrisp, comme le font les joueurs de Minecraft sur Mac) ou celle
@@ -396,7 +431,7 @@ besoin ni de X ni de DRI3, et c'est pour cela qu'il fonctionne.
 
 ## 11. Vue des technos supportées par PanamaGL
 
-Légende : ✅ supporté et testé en CI · 🧪 POC sur une branche · 🔭 envisagé dans le plan · ⚠️
+Légende : ✅ supporté et testé en CI · 🧪 essai sur une branche · 🔭 envisagé dans le plan · ⚠️
 possible mais non testé · ❌ non supporté.
 
 ### Plateformes, contextes et implémentations
@@ -405,8 +440,8 @@ possible mais non testé · ❌ non supporté.
 |---|---|---|---|---|
 | Linux x86_64, ARM64 | **GLX** (défaut) | pilote système ; en CI, Mesa llvmpipe sous **Xvfb** | 1.0 → 4.6 | ✅ |
 | Linux | GLUT (`useGLUT`) | idem | idem | ✅ (option) |
-| Linux | **EGL surfaceless** (`-Dpanamagl.linux.context=egl`) | Mesa llvmpipe | 4.5 compat | 🧪 (sans X) |
-| Linux | **EGL surfaceless + Zink** (`GALLIUM_DRIVER=zink`) | Mesa Zink → **Vulkan** (lavapipe) | 4.6 compat | 🧪 (chart Jzy3D identique au pixel près) |
+| Linux | **EGL surfaceless** (`PANAMAGL_LINUX_CONTEXT=egl`, `-Dpanamagl.linux.context=egl` ou `setUseEGL(true)`) | Mesa llvmpipe | 4.5 compat | ✅ tests EGL dans le job Linux (sans X possible) |
+| Linux | **EGL surfaceless + Zink** (`GALLIUM_DRIVER=zink`) | Mesa Zink → **Vulkan** (lavapipe) | 4.6 compat | ✅ job CI « OpenGL over Vulkan, Zink » (suite complète hors tests GLX/GLUT explicites) |
 | Linux | EGL device (GPU NVIDIA headless) | pilote NVIDIA | — | ⚠️ |
 | Linux / Wayland | EGL | pilote système | — | ⚠️ (Xwayland + GLX aujourd'hui) |
 | Windows x86_64, ARM64 | **WGL** (défaut) | ICD du GPU ; en CI, **Mesa d3d12 → D3D12 → WARP** | 1.0 → 4.x | ✅ |

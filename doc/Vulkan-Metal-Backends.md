@@ -212,7 +212,7 @@ immédiat devient beaucoup plus simple.
 | Phase | Contenu | Estimation* | Critère de sortie |
 |---|---|---|---|
 | 0 ✅ | POC EGL + Zink (ce document) | fait | chart Jzy3D identique au pixel près sur Vulkan |
-| 1 | Industrialiser le niveau 1 Linux/Windows + job CI Zink ; spike macOS (Zink+KosmicKrisp vs ANGLE) | 1–2 sem. + 1 sem. spike | tests PanamaGL de Jzy3D verts sur Zink en CI |
+| 1 🟡 | Industrialiser le niveau 1 Linux/Windows + job CI Zink ; spike macOS (Zink+KosmicKrisp vs ANGLE) | 1–2 sem. + 1 sem. spike | tests PanamaGL de Jzy3D verts sur Zink en CI. **Linux fait** : `EGLContext_linux`, `eglGetProcAddress`, GLUT à la demande, tests unitaires, démos, job CI Zink (voir [OpenGL-Ecosystem.md §5](OpenGL-Ecosystem.md#5-egl-en-détail-et-comment-il-se-greffe-à-gl-et-glext)). Restent : Windows (Zink), le spike macOS, et les tests Jzy3D en CI sur Zink. |
 | 2 | `FixedFunctionPainter` + `RenderBackend` + `GLCoreBackend` | 4–6 sem. | `PainterGPUConformance` et tests d'images verts en GL core, y compris macOS 4.1 core |
 | 3 | `VulkanBackend` (bindings JExtract `vulkan.h` dans panama-gl-bindings), cible offscreen + readback, généralisation des canvas PanamaGL | 4–6 sem. | mêmes tests verts sur lavapipe (CI) et un GPU réel ; macOS via KosmicKrisp |
 | 4 | `RecordingPainter` + `RenderItem` pour Scatter/Surface | 3–4 sem. | gain FPS mesuré (benchmark grosse surface / 1M points) |
