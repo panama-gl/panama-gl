@@ -535,24 +535,27 @@ jobs:
           name: rendering-comparison
           path: rendering-comparison
 
-      # The contact sheet in the log too, as a small JPEG in base64, for tools that can read the
+      # The contact sheets in the log too, as small JPEGs in base64, for tools that can read the
       # logs but not download the artifacts
-      - name: Print the comparison image (base64 JPEG)
+      - name: Print the comparison images (base64 JPEG)
         run: |
           python - <<'EOF'
           import base64, io
+          from pathlib import Path
           from PIL import Image
-          image = Image.open("rendering-comparison/comparison.png").convert("RGB")
-          image.thumbnail((1500, 6000))
-          out = io.BytesIO()
-          image.save(out, "JPEG", quality=82)
-          data = base64.b64encode(out.getvalue()).decode()
-          print("::group::comparison.jpg in base64")
-          print("BEGIN-COMPARISON-JPEG")
-          for i in range(0, len(data), 2000):
-              print(data[i:i + 2000])
-          print("END-COMPARISON-JPEG")
-          print("::endgroup::")
+          for png in sorted(Path("rendering-comparison").glob("comparison-*.png")):
+              scene = png.stem[len("comparison-"):]
+              image = Image.open(png).convert("RGB")
+              image.thumbnail((1500, 6000))
+              out = io.BytesIO()
+              image.save(out, "JPEG", quality=80)
+              data = base64.b64encode(out.getvalue()).decode()
+              print(f"::group::comparison-{scene}.jpg in base64")
+              print(f"BEGIN-COMPARISON-JPEG {scene}")
+              for i in range(0, len(data), 2000):
+                  print(data[i:i + 2000])
+              print(f"END-COMPARISON-JPEG {scene}")
+              print("::endgroup::")
           EOF
 
   # -------------------------------------------------------

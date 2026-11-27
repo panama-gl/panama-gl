@@ -56,7 +56,7 @@ def diff_ratio(image, reference):
     diff = ImageChops.difference(image, reference)
     mask = diff.point(lambda v: 255 if v > THRESHOLD else 0).convert("L")
     # convert("L") averages channels : any channel above the threshold gives a non zero value
-    differing = sum(1 for v in mask.getdata() if v > 0)
+    differing = sum(mask.histogram()[1:])
     overlay = Image.blend(reference, Image.new("RGB", reference.size, "white"), 0.7)
     overlay.paste(Image.new("RGB", reference.size, (220, 0, 0)), mask=mask)
     return differing / (image.size[0] * image.size[1]), overlay
@@ -69,64 +69,23 @@ def sort_key(item):
     return (p.get("os", ""), p.get("arch", ""), order, p.get("context", ""))
 
 
-def main(src, out):
-    src, out = Path(src), Path(out)
-    (out / "diff").mkdir(parents=True, exist_ok=True)
-
-    items = []
-    for props_file in sorted(src.rglob("*.properties")):
-        png = props_file.with_suffix(".png")
-        props = read_properties(props_file)
-        failed = props.get("status") == "failed" or not png.exists()
-        items.append({"name": props_file.stem, "png": png, "props": props, "failed": failed,
-                      "image": None if failed else Image.open(png).convert("RGB")})
-    rendered = [i for i in items if not i["failed"]]
-    if not rendered:
-        print("No rendering found in", src)
-        return 1
-    items.sort(key=sort_key)
-
-    reference = next((i for k in REFERENCE_KEYS for i in rendered if k in i["name"]), rendered[0])
-    items.remove(reference)
-    items.insert(0, reference)
-    size = reference["image"].size
-    for item in items:
-        if item["failed"]:
-            item["diff"] = None
-            tile = Image.new("RGB", size, (235, 235, 235))
-            d = ImageDraw.Draw(tile)
-            d.text((20, 20), "FAILED", fill=(170, 0, 0), font=font(28))
-            error = item["props"].get("error", item["props"].get("version", ""))
-            words, line, y = error.split(" "), "", 70
-            for word in words:
-                if len(line) + len(word) > 44:
-                    d.text((20, y), line, fill=(60, 60, 60), font=font(15))
-                    line, y = "", y + 22
-                line = (line + " " + word).strip()
-            d.text((20, y), line, fill=(60, 60, 60), font=font(15))
-            item["image"] = tile
-            continue
-        ratio, overlay = diff_ratio(item["image"], reference["image"])
-        item["diff"] = ratio
-        if overlay is not None:
-            overlay.save(out / "diff" / (item["name"] + ".png"))
-
-    # Contact sheet : 3 columns of labelled renderings
-    w, h = items[0]["image"].size
+def sheet(items, reference, title, out_file, use_diff=False):
+    """A contact sheet of the items of one scene : renderings, or their differences."""
+    w, h = reference["image"].size
     cols = min(3, len(items))
     rows = (len(items) + cols - 1) // cols
     label_h, margin = 92, 12
-    sheet = Image.new("RGB", (cols * (w + margin) + margin, rows * (h + label_h + margin) + margin + 40),
+    image = Image.new("RGB", (cols * (w + margin) + margin, rows * (h + label_h + margin) + margin + 40),
                       "white")
-    draw = ImageDraw.Draw(sheet)
-    title, bold, small = font(22), font(17), font(14)
-    draw.text((margin, 10), "PanamaGL reference scene : the same OpenGL calls on each backend", fill="black",
-              font=title)
+    draw = ImageDraw.Draw(image)
+    title_font, bold, small = font(22), font(17), font(14)
+    draw.text((margin, 10), title, fill="black", font=title_font)
     for n, item in enumerate(items):
         p = item["props"]
         x = margin + (n % cols) * (w + margin)
         y = 40 + margin + (n // cols) * (h + label_h + margin)
-        sheet.paste(item["image"], (x, y))
+        tile = item.get("overlay") if use_diff and item.get("overlay") is not None else item["image"]
+        image.paste(tile, (x, y))
         draw.rectangle([x, y, x + w - 1, y + h - 1], outline=(180, 180, 180))
         is_ref = item is reference
         diff = "reference" if is_ref else ("not rendered" if item["failed"] else (
@@ -138,20 +97,82 @@ def main(src, out):
         draw.text((x, y + h + 62), f"{p.get('ms.per.frame', '?')} ms per frame  -  {diff}",
                   fill=(170, 0, 0) if item["failed"] else (
                       (0, 90, 0) if is_ref or (item["diff"] or 0) < 0.01 else (170, 60, 0)), font=small)
-    sheet.save(out / "comparison.png")
+    image.save(out_file)
+
+
+def failed_tile(item, size):
+    tile = Image.new("RGB", size, (235, 235, 235))
+    d = ImageDraw.Draw(tile)
+    d.text((20, 20), "FAILED", fill=(170, 0, 0), font=font(28))
+    error = item["props"].get("error", item["props"].get("version", ""))
+    line, y = "", 70
+    for word in error.split(" "):
+        if len(line) + len(word) > 44:
+            d.text((20, y), line, fill=(60, 60, 60), font=font(15))
+            line, y = "", y + 22
+        line = (line + " " + word).strip()
+    d.text((20, y), line, fill=(60, 60, 60), font=font(15))
+    return tile
+
+
+def main(src, out):
+    src, out = Path(src), Path(out)
+    (out / "diff").mkdir(parents=True, exist_ok=True)
+
+    scenes = {}
+    for props_file in sorted(src.rglob("*.properties")):
+        png = props_file.with_suffix(".png")
+        props = read_properties(props_file)
+        failed = props.get("status") == "failed" or not png.exists()
+        item = {"name": props_file.stem, "png": png, "props": props, "failed": failed,
+                "image": None if failed else Image.open(png).convert("RGB")}
+        scenes.setdefault(props.get("scene", "reference-scene"), []).append(item)
+    if not scenes:
+        print("No rendering found in", src)
+        return 1
 
     lines = ["## Rendering backends", "",
-             f"Reference : `{reference['name']}`. A pixel differs when a channel differs by more than {THRESHOLD}.",
-             "", "| OS | CPU | Context | Backend | Renderer | OpenGL | ms / frame | Differing pixels | Image |",
-             "|---|---|---|---|---|---|---|---|---|"]
-    for item in items:
-        p = item["props"]
-        diff = "reference" if item is reference else ("**failed** : " + p.get("error", "")[:120]
-            if item["failed"] else ("size differs" if item["diff"] is None else f"{100 * item['diff']:.2f} %"))
-        lines.append(f"| {p.get('os')} | {p.get('arch')} | {p.get('context')} | **{p.get('backend')}** | "
-                     f"{p.get('renderer')} | {p.get('version')} | {p.get('ms.per.frame')} | {diff} | "
-                     f"`{item['name']}` |")
-    lines += ["", "Images : artifact `rendering-comparison` (comparison.png, renderings, diff/)."]
+             f"A pixel differs from the reference when a channel differs by more than {THRESHOLD}.", ""]
+    order = ["reference-scene", "fractal", "planet", "landscape", "still-life"]
+    for scene in sorted(scenes, key=lambda s: order.index(s) if s in order else len(order)):
+        items = scenes[scene]
+        rendered = [i for i in items if not i["failed"]]
+        if not rendered:
+            continue
+        items.sort(key=sort_key)
+        reference = next((i for k in REFERENCE_KEYS for i in rendered if k in i["name"]), rendered[0])
+        items.remove(reference)
+        items.insert(0, reference)
+        size = reference["image"].size
+        for item in items:
+            if item["failed"]:
+                item["diff"], item["image"], item["overlay"] = None, failed_tile(item, size), None
+                continue
+            item["diff"], item["overlay"] = diff_ratio(item["image"], reference["image"])
+            if item["overlay"] is not None:
+                item["overlay"].save(out / "diff" / (item["name"] + ".png"))
+
+        sheet(items, reference, f"{scene} : the same OpenGL calls on each backend",
+              out / f"comparison-{scene}.png")
+        sheet(items, reference, f"{scene} : pixels differing from {reference['props'].get('os')} "
+              f"{reference['props'].get('context')} {reference['props'].get('backend')} (red)",
+              out / f"differences-{scene}.png", use_diff=True)
+        if scene == "reference-scene":
+            sheet(items, reference, "PanamaGL reference scene : the same OpenGL calls on each backend",
+                  out / "comparison.png")
+
+        lines += [f"### {scene}", "", f"Reference : `{reference['name']}`.", "",
+                  "| OS | CPU | Context | Backend | Renderer | ms / frame | Differing pixels |",
+                  "|---|---|---|---|---|---|---|"]
+        for item in items:
+            p = item["props"]
+            diff = "reference" if item is reference else ("**failed** : " + p.get("error", "")[:110]
+                if item["failed"] else ("size differs" if item["diff"] is None else f"{100 * item['diff']:.2f} %"))
+            lines.append(f"| {p.get('os')} | {p.get('arch')} | {p.get('context')} | **{p.get('backend')}** | "
+                         f"{p.get('renderer')} | {p.get('ms.per.frame', '')} | {diff} |")
+        lines.append("")
+    lines += ["Images : artifact `rendering-comparison` (comparison-<scene>.png, differences-<scene>.png, "
+              "renderings, diff/)."]
     markdown = "\n".join(lines) + "\n"
     (out / "comparison.md").write_text(markdown, encoding="utf-8")
     summary = os.environ.get("GITHUB_STEP_SUMMARY")
