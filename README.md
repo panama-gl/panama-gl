@@ -437,6 +437,25 @@ freeglut is loaded from the `java.library.path` if a `freeglut.dll` is there, ot
 The tests and samples of this project use it on Windows.
 
 
+#### Linux : headless EGL context, OpenGL over Vulkan with Zink
+
+On Linux, PanamaGL creates a GLX context by default. It can instead create a **headless EGL context** (`EGLContext_linux`), which needs no X display nor window since PanamaGL always renders in a FBO. EGL lets the driver loader choose the OpenGL implementation, e.g. Mesa **Zink**, which implements OpenGL over **Vulkan** : the `GL` calls of PanamaGL and Jzy3D then run on Vulkan unchanged.
+
+Select EGL with one of :
+* the environment variable `PANAMAGL_LINUX_CONTEXT=egl`,
+* the system property `-Dpanamagl.linux.context=egl`,
+* `((APanamaGLFactory_linux) factory).setUseEGL(true)`.
+
+Then run on Zink with `GALLIUM_DRIVER=zink`. On a computer without GPU, Zink can use lavapipe, the CPU Vulkan driver of Mesa (`sudo apt-get install mesa-vulkan-drivers`), with `LIBGL_ALWAYS_SOFTWARE=1` :
+
+```
+PANAMAGL_LINUX_CONTEXT=egl GALLIUM_DRIVER=zink LIBGL_ALWAYS_SOFTWARE=1 java ...
+```
+
+`GLProfile.getRenderer()` then reads `zink Vulkan 1.x(...)`. Note that `GALLIUM_DRIVER` applies to every OpenGL user of the process : under X11 without DRI3 (e.g. Xvfb), the GLX contexts of JavaFX (Prism) or of the native SWT `GLCanvas` can not run on Zink, so use `-Dprism.order=sw` with JavaFX there. OpenGL functions are resolved with `eglGetProcAddress`. GLUT functions remain available when a `DISPLAY` is set (GLUT is initialized at the first GLUT call), and throw an `UnsupportedOperationException` otherwise.
+
+The demos [`DemoEGL_Offscreen`](panama-gl-samples/src/main/java/demos/panamagl/linux/DemoEGL_Offscreen.java) (headless, saves a PNG) and [`DemoEGL_Onscreen_Swing`](panama-gl-samples/src/main/java/demos/panamagl/linux/DemoEGL_Onscreen_Swing.java) show both. The CI job `Build & Test (OpenGL over Vulkan, Zink)` runs the tests this way. See [OpenGL-Ecosystem.md](doc/OpenGL-Ecosystem.md) (in French) for EGL, GLVND, Zink and the other layers, and [Vulkan-Metal-Backends.md](doc/Vulkan-Metal-Backends.md) for the plan towards Vulkan and Metal.
+
 ### Build, test, deploy
 
 Any computer able to build Java code with Maven can rebuild the complete API :

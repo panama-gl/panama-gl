@@ -156,9 +156,12 @@ public class GenerateAPI {
       boolean genGlut = false;
 
       String functionLoader = "panamagl.platform.linux.GLFunctionLoader_linux";
+      // GLUT is initialized by the GLX and GLUT contexts, but not by a headless EGL context :
+      // initialized at the first GLUT call if needed
+      String glutInitializer = "panamagl.platform.linux.GLUT_linux.init();";
 
       makeGLWrapperAndFactory(layout, platform, wrapped, factoryBase, factorymatcher, genGlut,
-          functionLoader, null, interfaceFiles);
+          functionLoader, glutInitializer, interfaceFiles);
 
     }
 

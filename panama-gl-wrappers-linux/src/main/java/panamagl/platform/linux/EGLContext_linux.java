@@ -15,177 +15,194 @@
  *******************************************************************************/
 package panamagl.platform.linux;
 
-import static java.lang.foreign.ValueLayout.ADDRESS;
-import static java.lang.foreign.ValueLayout.JAVA_INT;
-import java.lang.foreign.FunctionDescriptor;
-import java.lang.foreign.Linker;
+import static panamagl.platform.linux.EGL_linux.*;
 import java.lang.foreign.MemorySegment;
-import java.lang.foreign.SymbolLookup;
-import java.lang.invoke.MethodHandle;
 import opengl.linux.NativeLibLoader;
 import panamagl.Debug;
 import panamagl.opengl.AGLContext;
 import panamagl.opengl.GLContext;
 
 /**
- * PROOF OF CONCEPT. A headless OpenGL context created with EGL, without any X11 window or display.
+ * A headless OpenGL context created with EGL, without any X11 window or display.
  *
  * <p>PanamaGL always renders into an {@link panamagl.offscreen.FBO} and reads the pixels back, so
- * the context never needs a window. EGL lets the GL implementation be chosen by the driver loader,
+ * the context never needs a window. EGL lets the driver loader choose the OpenGL implementation,
  * which makes it possible to run the unchanged {@link panamagl.opengl.GL} calls on OpenGL
- * implementations layered over another graphics API, e.g. Mesa Zink (OpenGL over Vulkan) :
+ * implementations layered over another graphics API, such as Mesa Zink (OpenGL over Vulkan) :
  *
  * <pre>
- * -Dpanamagl.linux.context=egl
- * GALLIUM_DRIVER=zink                (OpenGL over Vulkan)
- * LIBGL_ALWAYS_SOFTWARE=1            (only to let Zink use a CPU Vulkan device such as lavapipe)
+ * -Dpanamagl.linux.context=egl       select this context (GLX remains the default),
+ *                                    or the environment variable PANAMAGL_LINUX_CONTEXT=egl
+ * GALLIUM_DRIVER=zink                OpenGL over Vulkan
+ * LIBGL_ALWAYS_SOFTWARE=1            only to let Zink use a CPU Vulkan device such as lavapipe
  * </pre>
  *
- * <p>The context is created on the {@code EGL_MESA_platform_surfaceless} platform when available,
- * on the default EGL display otherwise, with {@code EGL_KHR_no_config_context} and
- * {@code EGL_KHR_surfaceless_context}. It requests a compatibility profile since Jzy3D relies on
- * immediate mode.
+ * <p>The context is created on the <code>EGL_MESA_platform_surfaceless</code> platform when
+ * available, on the default EGL display otherwise, without config
+ * (<code>EGL_KHR_no_config_context</code>) nor surface (<code>EGL_KHR_surfaceless_context</code>).
+ * It requests a compatibility profile by default, since Jzy3D relies on immediate mode, or a core
+ * profile of a given version with {@link #setCoreProfile(int, int)}.
  *
- * <p>The EGL entry points are invoked with hand written downcalls since only seven of them are
- * needed : this avoids generating EGL bindings with JExtract for a proof of concept.
+ * <p>The OpenGL functions are then resolved with <code>eglGetProcAddress</code> by
+ * {@link GLFunctionLoader_linux}. GLUT functions remain available if an X display is available
+ * (see {@link GLUT_linux}).
  */
 public class EGLContext_linux extends AGLContext implements GLContext {
+  /** System property selecting the kind of context created by the Linux factory : glx or egl. */
   public static final String PROPERTY = "panamagl.linux.context";
 
-  static final int EGL_NONE = 0x3038;
-  static final int EGL_OPENGL_API = 0x30A2;
-  static final int EGL_PLATFORM_SURFACELESS_MESA = 0x31DD;
-  static final int EGL_CONTEXT_OPENGL_PROFILE_MASK = 0x30FD;
-  static final int EGL_CONTEXT_OPENGL_COMPATIBILITY_PROFILE_BIT = 0x00000002;
+  /** Environment variable read when the system property {@link #PROPERTY} is not set. */
+  public static final String ENVIRONMENT_VARIABLE = "PANAMAGL_LINUX_CONTEXT";
+
+  /** The EGL platform the display was obtained from. */
+  public enum Platform {
+    SURFACELESS, DEFAULT
+  }
 
   protected boolean debug = Debug.check(GLContext.class, EGLContext_linux.class);
 
   protected MemorySegment display = MemorySegment.NULL;
   protected MemorySegment context = MemorySegment.NULL;
+  protected Platform platform;
+  protected int[] eglVersion;
 
-  protected MethodHandle eglGetProcAddress;
-  protected MethodHandle eglGetDisplay;
-  protected MethodHandle eglInitialize;
-  protected MethodHandle eglBindAPI;
-  protected MethodHandle eglCreateContext;
-  protected MethodHandle eglMakeCurrent;
-  protected MethodHandle eglDestroyContext;
-  protected MethodHandle eglTerminate;
+  protected boolean coreProfile = false;
+  protected int coreMajor = 3;
+  protected int coreMinor = 3;
 
-  /** @return true if the system property asks PanamaGL to use EGL rather than GLX on Linux. */
+  /** True once an EGL context has been created in this process. */
+  protected static volatile boolean used = false;
+
+  /**
+   * @return true if the system property <code>panamagl.linux.context</code>, or if not set the
+   *         environment variable <code>PANAMAGL_LINUX_CONTEXT</code>, asks PanamaGL to use EGL
+   *         rather than GLX on Linux.
+   */
   public static boolean isRequested() {
-    return "egl".equalsIgnoreCase(System.getProperty(PROPERTY));
+    String value = System.getProperty(PROPERTY);
+    if (value == null)
+      value = System.getenv(ENVIRONMENT_VARIABLE);
+    return "egl".equalsIgnoreCase(value);
+  }
+
+  /** @return true once an EGL context has been created in this process. */
+  public static boolean isUsed() {
+    return used;
   }
 
   public EGLContext_linux() {
     super();
     initArena();
-    // Let the GL bindings resolve libGL, which shares its dispatch with libEGL through GLVND
+    // Load libGL, which shares its dispatch with libEGL through GLVND
     NativeLibLoader.load();
-    bindEGL();
   }
 
-  protected void bindEGL() {
-    Linker linker = Linker.nativeLinker();
-    SymbolLookup egl = SymbolLookup.libraryLookup("libEGL.so.1", arena);
-
-    eglGetProcAddress = downcall(linker, egl, "eglGetProcAddress", FunctionDescriptor.of(ADDRESS, ADDRESS));
-    eglGetDisplay = downcall(linker, egl, "eglGetDisplay", FunctionDescriptor.of(ADDRESS, ADDRESS));
-    eglInitialize = downcall(linker, egl, "eglInitialize", FunctionDescriptor.of(JAVA_INT, ADDRESS, ADDRESS, ADDRESS));
-    eglBindAPI = downcall(linker, egl, "eglBindAPI", FunctionDescriptor.of(JAVA_INT, JAVA_INT));
-    eglCreateContext = downcall(linker, egl, "eglCreateContext", FunctionDescriptor.of(ADDRESS, ADDRESS, ADDRESS, ADDRESS, ADDRESS));
-    eglMakeCurrent = downcall(linker, egl, "eglMakeCurrent", FunctionDescriptor.of(JAVA_INT, ADDRESS, ADDRESS, ADDRESS, ADDRESS));
-    eglDestroyContext = downcall(linker, egl, "eglDestroyContext", FunctionDescriptor.of(JAVA_INT, ADDRESS, ADDRESS));
-    eglTerminate = downcall(linker, egl, "eglTerminate", FunctionDescriptor.of(JAVA_INT, ADDRESS));
+  /** Request a core profile of the given version instead of the default compatibility profile. */
+  public void setCoreProfile(int major, int minor) {
+    this.coreProfile = true;
+    this.coreMajor = major;
+    this.coreMinor = minor;
   }
 
-  static MethodHandle downcall(Linker linker, SymbolLookup lib, String name, FunctionDescriptor fd) {
-    MemorySegment symbol = lib.find(name)
-        .orElseThrow(() -> new IllegalStateException("EGL symbol not found : " + name));
-    return linker.downcallHandle(symbol, fd);
+  public boolean isCoreProfile() {
+    return coreProfile;
   }
 
   @Override
   public void init() {
-    try {
-      display = surfacelessDisplay();
-      if (display.address() == 0) {
-        display = (MemorySegment) eglGetDisplay.invokeExact(MemorySegment.NULL);
-      }
+    EGL_linux egl = EGL_linux.get();
+
+    display = egl.platformDisplay(EGL_PLATFORM_SURFACELESS_MESA);
+    platform = Platform.SURFACELESS;
+    eglVersion = display.address() == 0 ? null : egl.initialize(display);
+
+    if (eglVersion == null) {
+      display = egl.defaultDisplay();
+      platform = Platform.DEFAULT;
       if (display.address() == 0)
         throw new IllegalStateException("EGL : no display");
-
-      int ok = (int) eglInitialize.invokeExact(display, MemorySegment.NULL, MemorySegment.NULL);
-      if (ok == 0)
-        throw new IllegalStateException("EGL : eglInitialize failed");
-
-      ok = (int) eglBindAPI.invokeExact(EGL_OPENGL_API);
-      if (ok == 0)
-        throw new IllegalStateException("EGL : desktop OpenGL API not available");
-
-      int[] attributes = {EGL_CONTEXT_OPENGL_PROFILE_MASK,
-          EGL_CONTEXT_OPENGL_COMPATIBILITY_PROFILE_BIT, EGL_NONE};
-      MemorySegment attribs = arena.allocateFrom(JAVA_INT, attributes);
-
-      // EGL_NO_CONFIG_KHR, EGL_NO_CONTEXT
-      context = (MemorySegment) eglCreateContext.invokeExact(display, MemorySegment.NULL,
-          MemorySegment.NULL, attribs);
-      if (context.address() == 0)
-        throw new IllegalStateException("EGL : eglCreateContext failed");
-
-      makeCurrent();
-
-      Debug.debug(debug, "EGLContext : context " + context + " on display " + display);
-      initialized = true;
-    } catch (RuntimeException e) {
-      throw e;
-    } catch (Throwable t) {
-      throw new IllegalStateException(t);
+      eglVersion = egl.initialize(display);
+      if (eglVersion == null)
+        throw new IllegalStateException("EGL : eglInitialize failed, error 0x"
+            + Integer.toHexString(egl.error()));
     }
-  }
 
-  protected MemorySegment surfacelessDisplay() throws Throwable {
-    MemorySegment name = arena.allocateFrom("eglGetPlatformDisplayEXT");
-    MemorySegment fn = (MemorySegment) eglGetProcAddress.invokeExact(name);
-    if (fn.address() == 0)
-      return MemorySegment.NULL;
+    if (!egl.bindAPI(EGL_OPENGL_API))
+      throw new IllegalStateException("EGL : desktop OpenGL API not available");
 
-    MethodHandle getPlatformDisplay = Linker.nativeLinker().downcallHandle(fn,
-        FunctionDescriptor.of(ADDRESS, JAVA_INT, ADDRESS, ADDRESS));
-    return (MemorySegment) getPlatformDisplay.invokeExact(EGL_PLATFORM_SURFACELESS_MESA,
-        MemorySegment.NULL, MemorySegment.NULL);
+    int[] attributes = coreProfile
+        ? new int[] {EGL_CONTEXT_MAJOR_VERSION, coreMajor, EGL_CONTEXT_MINOR_VERSION, coreMinor,
+            EGL_CONTEXT_OPENGL_PROFILE_MASK, EGL_CONTEXT_OPENGL_CORE_PROFILE_BIT, EGL_NONE}
+        : new int[] {EGL_CONTEXT_OPENGL_PROFILE_MASK,
+            EGL_CONTEXT_OPENGL_COMPATIBILITY_PROFILE_BIT, EGL_NONE};
+
+    context = egl.createContext(display, attributes);
+    if (context.address() == 0)
+      throw new IllegalStateException("EGL : eglCreateContext failed, error 0x"
+          + Integer.toHexString(egl.error()));
+
+    makeCurrent();
+
+    used = true;
+    initialized = true;
+
+    Debug.debug(debug, "EGLContext : EGL " + getEGLVersion() + " on " + platform + " platform, "
+        + getEGLVendor());
   }
 
   /** Make the context current on the calling thread, without any draw or read surface. */
   public void makeCurrent() {
-    try {
-      int ok = (int) eglMakeCurrent.invokeExact(display, MemorySegment.NULL, MemorySegment.NULL,
-          context);
-      if (ok == 0)
-        throw new IllegalStateException("EGL : eglMakeCurrent failed");
-    } catch (RuntimeException e) {
-      throw e;
-    } catch (Throwable t) {
-      throw new IllegalStateException(t);
-    }
+    if (!EGL_linux.get().makeCurrent(display, context))
+      throw new IllegalStateException("EGL : eglMakeCurrent failed, error 0x"
+          + Integer.toHexString(EGL_linux.get().error()));
+  }
+
+  /** Release the context from the calling thread. */
+  public void release() {
+    EGL_linux.get().makeCurrent(display, MemorySegment.NULL);
+  }
+
+  /** @return true if this context is current on the calling thread. */
+  public boolean isCurrent() {
+    return context.address() != 0
+        && EGL_linux.get().currentContext().address() == context.address();
   }
 
   @Override
   public void destroy() {
-    try {
-      if (context.address() != 0) {
-        int ignored = (int) eglMakeCurrent.invokeExact(display, MemorySegment.NULL,
-            MemorySegment.NULL, MemorySegment.NULL);
-        ignored = (int) eglDestroyContext.invokeExact(display, context);
-      }
-      if (display.address() != 0) {
-        int ignored = (int) eglTerminate.invokeExact(display);
-      }
-    } catch (Throwable t) {
-      throw new IllegalStateException(t);
+    if (!EGL_linux.isLoaded())
+      return;
+    EGL_linux egl = EGL_linux.get();
+    if (context.address() != 0) {
+      if (isCurrent())
+        release();
+      egl.destroyContext(display, context);
     }
+    // The display is not terminated : eglGetPlatformDisplay returns the same display to all the
+    // contexts of the process, and eglTerminate would invalidate the contexts of other canvases.
+
     context = MemorySegment.NULL;
     display = MemorySegment.NULL;
     initialized = false;
+  }
+
+  /** @return the EGL platform of the display, null before {@link #init()}. */
+  public Platform getPlatform() {
+    return platform;
+  }
+
+  /** @return the EGL version, e.g. "1.5", null before {@link #init()}. */
+  public String getEGLVersion() {
+    return eglVersion == null ? null : eglVersion[0] + "." + eglVersion[1];
+  }
+
+  /** @return the EGL vendor, e.g. "Mesa Project", null before {@link #init()}. */
+  public String getEGLVendor() {
+    return display.address() == 0 ? null : EGL_linux.get().queryString(display, EGL_VENDOR);
+  }
+
+  /** @return the EGL client APIs, e.g. "OpenGL OpenGL_ES", null before {@link #init()}. */
+  public String getEGLClientAPIs() {
+    return display.address() == 0 ? null : EGL_linux.get().queryString(display, EGL_CLIENT_APIS);
   }
 }
