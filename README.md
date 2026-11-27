@@ -452,6 +452,14 @@ Then run on Zink with `GALLIUM_DRIVER=zink`. On a computer without GPU, Zink can
 PANAMAGL_LINUX_CONTEXT=egl GALLIUM_DRIVER=zink LIBGL_ALWAYS_SOFTWARE=1 java ...
 ```
 
+How EGL plugs into PanamaGL : only the creation of the context and the resolution of the functions change, the `GL` and GLEXT calls stay the same.
+
+<img src="panama-gl-wrappers-linux/src/main/java/panamagl/platform/linux/doc-files/egl-gl-glext.svg"/>
+
+From PanamaGL to the hardware, through EGL, Mesa, Zink, Vulkan, Metal or Direct3D 12 :
+
+<img src="panama-gl-wrappers-linux/src/main/java/panamagl/platform/linux/doc-files/egl-zink-stack.svg"/>
+
 `GLProfile.getRenderer()` then reads `zink Vulkan 1.x(...)`. Note that `GALLIUM_DRIVER` applies to every OpenGL user of the process : under X11 without DRI3 (e.g. Xvfb), the GLX contexts of JavaFX (Prism) or of the native SWT `GLCanvas` can not run on Zink, so use `-Dprism.order=sw` with JavaFX there. OpenGL functions are resolved with `eglGetProcAddress`. GLUT functions remain available when a `DISPLAY` is set (GLUT is initialized at the first GLUT call), and throw an `UnsupportedOperationException` otherwise.
 
 <img src="panama-gl-api/src/main/java/panamagl/factory/doc-files/backends-per-platform.svg"/>
