@@ -43,6 +43,10 @@ public class TestRenderingBackend {
     RenderingBackend silicon = new RenderingBackend("Mac OS X", "aarch64", "CGLContext_macOS",
         "Apple M1 (Virtual)", "2.1 Metal - 89.3", "Apple");
     Assert.assertEquals("apple-opengl-metal", silicon.getBackend());
+
+    RenderingBackend software = new RenderingBackend("Mac OS X", "aarch64", "CGLContext_macOS",
+        "Apple Software Renderer", "2.1 APPLE-23.1.1", "Apple Inc.");
+    Assert.assertEquals("apple-opengl-software", software.getBackend());
     Assert.assertEquals("cgl", silicon.getContext());
 
     RenderingBackend intel = new RenderingBackend("Mac OS X", "x86_64", "CGLContext_macOS",

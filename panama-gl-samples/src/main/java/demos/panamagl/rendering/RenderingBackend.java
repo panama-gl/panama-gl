@@ -29,8 +29,9 @@ import panamagl.opengl.GLContext;
  * <li><code>vulkan-zink-*</code> : Mesa Zink, OpenGL over Vulkan (lavapipe, MoltenVK, a GPU...)</li>
  * <li><code>d3d12-*</code> : Mesa d3d12, OpenGL over Direct3D 12 (WARP or a GPU)</li>
  * <li><code>cpu-llvmpipe</code>, <code>cpu-softpipe</code> : Mesa, OpenGL on the CPU</li>
- * <li><code>apple-opengl-metal</code> : Apple OpenGL on Apple Silicon, which Apple implements over
- * Metal ; <code>apple-opengl</code> on Intel Macs</li>
+ * <li><code>apple-opengl-metal</code> : Apple OpenGL on the GPU of Apple Silicon, which Apple
+ * implements over Metal ; <code>apple-opengl-software</code> : the Apple Software Renderer (CPU),
+ * e.g. on CI runners without GPU</li>
  * <li><code>gdi-generic</code> : the OpenGL 1.1 software renderer of Windows</li>
  * <li><code>opengl-native</code> : any other OpenGL driver (GPU vendor)</li>
  * </ul>
@@ -136,8 +137,11 @@ public class RenderingBackend {
       return "cpu-softpipe";
     if (r.contains("gdi generic"))
       return "gdi-generic";
-    if ("macos".equals(os) && vendor.toLowerCase(Locale.ROOT).contains("apple"))
+    if ("macos".equals(os) && vendor.toLowerCase(Locale.ROOT).contains("apple")) {
+      if (r.contains("software"))
+        return "apple-opengl-software";
       return "arm64".equals(arch) ? "apple-opengl-metal" : "apple-opengl";
+    }
     return "opengl-native";
   }
 

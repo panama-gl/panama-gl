@@ -24,7 +24,7 @@ THRESHOLD = 16  # a pixel differs when a channel differs by more than this
 REFERENCE_KEYS = ["linux-x86_64__glx__cpu-llvmpipe", "linux-x86_64__egl__cpu-llvmpipe"]
 
 # Order of the backends in the comparison : plain OpenGL first, then OpenGL layered over other APIs
-BACKEND_ORDER = ["cpu-llvmpipe", "opengl-native", "apple-opengl", "apple-opengl-metal",
+BACKEND_ORDER = ["cpu-llvmpipe", "opengl-native", "apple-opengl", "apple-opengl-software", "apple-opengl-metal",
                  "vulkan-zink", "vulkan-zink-lavapipe", "vulkan-zink-moltenvk",
                  "vulkan-zink-kosmickrisp", "vulkan-zink-dozen", "d3d12", "d3d12-warp"]
 
