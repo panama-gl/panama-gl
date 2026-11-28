@@ -119,7 +119,7 @@ public abstract class AFBO implements FBO{
     } else {
       // OpenGL returns 0 handles without raising an error when no context is current on the
       // calling thread, as glGetError() is then a no-op as well.
-      System.err.println("FBO: " + item + " handle=0 but got no OpenGL error on thread '"
+      Debug.debug(debug, "FBO: " + item + " handle=0 but got no OpenGL error on thread '"
           + Thread.currentThread().getName() + "'. This means no OpenGL context is current on"
           + " this thread : the context was made current on another thread, or it was released"
           + " (e.g. by destroying another context from this thread), or on macOS the call was"
