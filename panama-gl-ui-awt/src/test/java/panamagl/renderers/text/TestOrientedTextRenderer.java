@@ -115,7 +115,7 @@ public class TestOrientedTextRenderer {
     r.setPixelScale(2);
     TextImage scaled = r.getTextImage(font, "Coucou", Color.BLUE);
     Assert.assertNotSame(image, scaled);
-    Assert.assertEquals(image.getWidth() * 2, scaled.getWidth(), 2);
+    assertTwice(image.getWidth(), scaled.getWidth());
 
     r.setAntialiasing(false);
     Assert.assertNotSame(scaled, r.getTextImage(font, "Coucou", Color.BLUE));
