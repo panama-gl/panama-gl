@@ -48,6 +48,10 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   protected ThreadRedirect threadRedirect;
   
   protected boolean initialized = false;
+
+  /** Size given to the last {@link GLEventListener#reshape} call, -1 if not reshaped yet. */
+  protected int reshapedWidth = -1;
+  protected int reshapedHeight = -1;
   
   protected String debugFile = null;
   /** Only used to export debug images if a debug file is given */
@@ -155,6 +159,10 @@ public class AOffscreenRenderer implements OffscreenRenderer {
 
     Debug.debug(debug, "AOffscreenRenderer : initContext : Got FBO : " + fbo);
 
+    // The listener of a new context has not been given its size yet
+    reshapedWidth = -1;
+    reshapedHeight = -1;
+
     // Mark as ready for display before notifying the listener, so that
     // any thread unblocked by listener.init() already sees isInitialized()==true.
     initialized = true;
@@ -177,7 +185,12 @@ public class AOffscreenRenderer implements OffscreenRenderer {
   }
 
   /**
-   * This method will resize the FBO and then update the component
+   * Render the listener in the FBO for the given size, then update the component.
+   * 
+   * The FBO is only recreated, and the listener only reshaped, when the size differs from the one
+   * of the previous rendering : this is called for each frame, and recreating the FBO allocates
+   * its texture and pixel buffer again, while reshaping a listener such as Jzy3D's renders the
+   * scene once more before {@link GLEventListener#display(GL)}.
    * 
    * @see {@link #renderGLToImage()}
    */
@@ -197,16 +210,24 @@ public class AOffscreenRenderer implements OffscreenRenderer {
       height = Math.max(INIT_FBO_HEIGHT, fbo.getHeight());
     }
 
-    // Resize offscreen buffers
-    fbo.release(gl);
-    fbo.resize(width, height);
-    fbo.prepare(gl);
+    // Resize offscreen buffers only if needed, otherwise bind them as they are
+    if (!fbo.isPrepared() || fbo.getWidth() != width || fbo.getHeight() != height) {
+      fbo.release(gl);
+      fbo.resize(width, height);
+      fbo.prepare(gl);
 
-    Debug.debug(debug, "Resized FBO to " + width + " x " + height);
+      Debug.debug(debug, "Resized FBO to " + width + " x " + height);
+    } else {
+      fbo.bind(gl);
+    }
 
     // Render GL
     if (listener != null) {
-      listener.reshape(gl, 0, 0, width, height);
+      if (reshapedWidth != width || reshapedHeight != height) {
+        listener.reshape(gl, 0, 0, width, height);
+        reshapedWidth = width;
+        reshapedHeight = height;
+      }
       listener.display(gl);
     }
     
@@ -222,8 +243,8 @@ public class AOffscreenRenderer implements OffscreenRenderer {
    */
   protected void renderGLToImage(GLCanvas canvas, GLEventListener listener) {
     
-    // Prepare offscreen buffer
-    fbo.prepare(gl);
+    // Bind offscreen buffer, preparing it only if it is not already
+    fbo.bind(gl);
     
     // Render GL
     if (listener != null)

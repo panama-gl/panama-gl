@@ -26,6 +26,9 @@ import java.awt.image.BufferedImage;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 import panamagl.opengl.GL;
 
 /**
@@ -40,10 +43,29 @@ import panamagl.opengl.GL;
  *
  * This renderer only relies on AWT and OpenGL 1.x (no GLUT) and requires a context supporting the
  * fixed pipeline (e.g. a compatibility profile).
+ *
+ * Texts are drawn again at each frame, e.g. axis labels : the images of the last drawn texts are
+ * kept in a cache bounded to {@link #getCacheSize()} entries, so that a text is only drawn with
+ * AWT and converted to OpenGL pixels once.
  */
 public class OrientedTextRenderer implements TextRenderer<Font, Color> {
+  /** Default number of text images kept in the cache. */
+  public static final int DEFAULT_CACHE_SIZE = 512;
+
   protected float pixelScale = 1;
   protected boolean antialiasing = true;
+  protected int cacheSize = DEFAULT_CACHE_SIZE;
+
+  /** Last drawn texts, the least recently drawn first. */
+  protected final Map<TextKey, TextImage> cache =
+      new LinkedHashMap<TextKey, TextImage>(16, 0.75f, true) {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        protected boolean removeEldestEntry(Map.Entry<TextKey, TextImage> eldest) {
+          return size() > cacheSize;
+        }
+      };
 
   /**
    * Draw a text with the left of its baseline at the given position, in pixels from the bottom left
@@ -59,7 +81,7 @@ public class OrientedTextRenderer implements TextRenderer<Font, Color> {
       return;
     }
 
-    TextImage image = createTextImage(font, text, color);
+    TextImage image = getTextImage(font, text, color);
 
     float rotationD = (float) Math.toDegrees(rotation);
 
@@ -69,15 +91,16 @@ public class OrientedTextRenderer implements TextRenderer<Font, Color> {
     int yPreShift = 0;
 
     if (rotationD != 0) {
-      xPreShift = getTextWidth(font, text) / 2;
+      xPreShift = image.getTextWidth() / 2;
       yPreShift = font.getSize() / 2;
     }
 
     int[] viewport = getViewport(gl);
 
     // Text baseline is at the origin, shifted to deal with rotation
-    drawTexture(gl, image.getImage(), x + xPreShift, y + yPreShift, rotationD, -xPreShift,
-        -yPreShift - image.getDescent(), viewport[2], viewport[3]);
+    drawTexture(gl, image.getWidth(), image.getHeight(), image.getRGBA(), x + xPreShift,
+        y + yPreShift, rotationD, -xPreShift, -yPreShift - image.getDescent(), viewport[2],
+        viewport[3]);
   }
 
   /**
@@ -89,18 +112,16 @@ public class OrientedTextRenderer implements TextRenderer<Font, Color> {
       return;
     }
 
-    TextImage image = createTextImage(font, text, color);
+    TextImage image = getTextImage(font, text, color);
 
-    try (Arena arena = Arena.ofConfined()) {
-      // Move the raster position from the baseline to the bottom of the text image
-      gl.glBitmap(0, 0, 0, 0, 0, -image.getDescent(), MemorySegment.NULL);
+    // Move the raster position from the baseline to the bottom of the text image
+    gl.glBitmap(0, 0, 0, 0, 0, -image.getDescent(), MemorySegment.NULL);
 
-      gl.glDrawPixels(image.getWidth(), image.getHeight(), GL.GL_RGBA, GL.GL_UNSIGNED_BYTE,
-          toRGBA(arena, image.getImage()));
+    gl.glDrawPixels(image.getWidth(), image.getHeight(), GL.GL_RGBA, GL.GL_UNSIGNED_BYTE,
+        image.getRGBA());
 
-      // Move the raster position to the end of the text on the baseline
-      gl.glBitmap(0, 0, 0, 0, image.getAdvance(), image.getDescent(), MemorySegment.NULL);
-    }
+    // Move the raster position to the end of the text on the baseline
+    gl.glBitmap(0, 0, 0, 0, image.getAdvance(), image.getDescent(), MemorySegment.NULL);
   }
 
   /**
@@ -125,6 +146,24 @@ public class OrientedTextRenderer implements TextRenderer<Font, Color> {
     int width = image.getWidth();
     int height = image.getHeight();
 
+    // Nothing is visible in an empty viewport, and glOrtho would fail
+    if (viewportWidth <= 0 || viewportHeight <= 0 || width <= 0 || height <= 0) {
+      return;
+    }
+
+    try (Arena arena = Arena.ofConfined()) {
+      drawTexture(gl, width, height, toRGBA(arena, image), x, y, rotationD, x0, y0,
+          viewportWidth, viewportHeight);
+    }
+  }
+
+  /**
+   * Draw RGBA pixels, bottom row first, as a texture mapped on a quad in screen coordinates.
+   *
+   * @see #drawTexture(GL, BufferedImage, float, float, float, float, float, int, int)
+   */
+  protected void drawTexture(GL gl, int width, int height, MemorySegment rgba, float x, float y,
+      float rotationD, float x0, float y0, int viewportWidth, int viewportHeight) {
     // Nothing is visible in an empty viewport, and glOrtho would fail
     if (viewportWidth <= 0 || viewportHeight <= 0 || width <= 0 || height <= 0) {
       return;
@@ -161,7 +200,7 @@ public class OrientedTextRenderer implements TextRenderer<Font, Color> {
       gl.glTexEnvi(GL.GL_TEXTURE_ENV, GL.GL_TEXTURE_ENV_MODE, GL.GL_MODULATE);
       gl.glPixelStorei(GL.GL_UNPACK_ALIGNMENT, 4);
       gl.glTexImage2D(GL.GL_TEXTURE_2D, 0, GL.GL_RGBA, width, height, 0, GL.GL_RGBA,
-          GL.GL_UNSIGNED_BYTE, toRGBA(arena, image));
+          GL.GL_UNSIGNED_BYTE, rgba);
 
       float x1 = x0 + width;
       float y1 = y0 + height;
@@ -190,14 +229,32 @@ public class OrientedTextRenderer implements TextRenderer<Font, Color> {
   }
 
   /**
+   * Return the image of a text from the cache, or draw it with
+   * {@link #createTextImage(Font, String, Color)} and keep it in the cache.
+   */
+  public synchronized TextImage getTextImage(Font font, String text, Color color) {
+    TextKey key = new TextKey(font, text, color, pixelScale, antialiasing);
+
+    TextImage image = cache.get(key);
+
+    if (image == null) {
+      image = createTextImage(font, text, color);
+      cache.put(key, image);
+    }
+    return image;
+  }
+
+  /**
    * Draw a text with AWT in an image, with a font scaled by the {@link #getPixelScale() pixel
-   * scale}. The dimensions of the returned image are hence in physical pixels.
+   * scale}. The dimensions of the returned image are hence in physical pixels. The image is not
+   * cached, see {@link #getTextImage(Font, String, Color)}.
    */
   public TextImage createTextImage(Font font, String text, Color color) {
     Font scaled = scale(font);
     FontMetrics fm = metrics(scaled);
 
     TextImage out = new TextImage();
+    out.textWidth = getTextWidth(font, text);
     out.advance = fm.stringWidth(text);
     out.descent = fm.getDescent();
 
@@ -291,11 +348,71 @@ public class OrientedTextRenderer implements TextRenderer<Font, Color> {
     this.antialiasing = antialiasing;
   }
 
+  /** Maximum number of text images kept in the cache. */
+  public synchronized int getCacheSize() {
+    return cacheSize;
+  }
+
+  /** Set the maximum number of text images kept in the cache, 0 to disable it. */
+  public synchronized void setCacheSize(int cacheSize) {
+    this.cacheSize = Math.max(0, cacheSize);
+
+    while (cache.size() > this.cacheSize) {
+      cache.remove(cache.keySet().iterator().next());
+    }
+  }
+
+  /** Number of text images currently in the cache. */
+  public synchronized int getCachedTextCount() {
+    return cache.size();
+  }
+
+  public synchronized void clearCache() {
+    cache.clear();
+  }
+
+  /** Identify the image of a text in the cache. */
+  protected static final class TextKey {
+    final Font font;
+    final String text;
+    final Color color;
+    final float pixelScale;
+    final boolean antialiasing;
+
+    TextKey(Font font, String text, Color color, float pixelScale, boolean antialiasing) {
+      this.font = font;
+      this.text = text;
+      this.color = color;
+      this.pixelScale = pixelScale;
+      this.antialiasing = antialiasing;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof TextKey)) {
+        return false;
+      }
+      TextKey k = (TextKey) o;
+      return Float.compare(pixelScale, k.pixelScale) == 0 && antialiasing == k.antialiasing
+          && text.equals(k.text) && font.equals(k.font) && Objects.equals(color, k.color);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(font, text, color, pixelScale, antialiasing);
+    }
+  }
+
   /** A text drawn in an image, with metrics in physical pixels. */
   public static class TextImage {
     protected BufferedImage image;
     protected int descent;
     protected int advance;
+    protected int textWidth;
+    protected MemorySegment rgba;
 
     public BufferedImage getImage() {
       return image;
@@ -317,6 +434,22 @@ public class OrientedTextRenderer implements TextRenderer<Font, Color> {
     /** Distance from the left of the text to the position following it on the baseline. */
     public int getAdvance() {
       return advance;
+    }
+
+    /** Width of the text in logical pixels, i.e. not scaled by the pixel scale. */
+    public int getTextWidth() {
+      return textWidth;
+    }
+
+    /**
+     * Pixels of the image in RGBA, bottom row first as expected by OpenGL. They are converted once,
+     * and freed when this image is not referenced anymore.
+     */
+    public synchronized MemorySegment getRGBA() {
+      if (rgba == null) {
+        rgba = toRGBA(Arena.ofAuto(), image);
+      }
+      return rgba;
     }
   }
 }
