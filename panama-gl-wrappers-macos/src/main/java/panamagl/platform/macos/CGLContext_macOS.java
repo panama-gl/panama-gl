@@ -17,6 +17,7 @@
 package panamagl.platform.macos;
 
 
+import panamagl.platform.natives.OpenGLImplementation;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import java.util.Arrays;
@@ -79,7 +80,12 @@ public class CGLContext_macOS extends AGLContext implements GLContext {
 
   protected boolean debug = Debug.check(CGLContext_macOS.class);
 
+  /** The name under which CGL and GLUT contexts claim the OpenGL of Apple. */
+  public static final String APPLE_OPENGL = "Apple OpenGL";
+
   public CGLContext_macOS() {
+    // A JVM can only use one OpenGL implementation : not Apple's and Mesa's (EGL) together
+    OpenGLImplementation.claim(APPLE_OPENGL, "/System/Library/Frameworks/OpenGL.framework");
     NativeLibLoader.load();
 
     initArena();

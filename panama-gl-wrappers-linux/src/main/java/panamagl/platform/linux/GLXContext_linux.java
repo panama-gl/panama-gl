@@ -18,6 +18,7 @@
 package panamagl.platform.linux;
 
 
+import panamagl.platform.natives.OpenGLImplementation;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import opengl.linux.gl_h;
@@ -39,6 +40,7 @@ public class GLXContext_linux extends AGLContext implements GLContext{
   public GLXContext_linux() {
     super();
     
+    OpenGLImplementation.claim(MesaLibraries.SYSTEM_LIBGL, "libGL of the system");
     NativeLibLoader.load();
     
     initArena();

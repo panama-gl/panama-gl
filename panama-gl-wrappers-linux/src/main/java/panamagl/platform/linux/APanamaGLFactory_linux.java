@@ -31,6 +31,8 @@ public abstract class APanamaGLFactory_linux extends APanamaGLFactory {
 
   protected GLXContext_linux glxContext;
   protected GLUTContext_linux glutContext;
+  protected EGLContext_linux eglContext;
+  protected boolean useEGL = EGLContext_linux.isRequested();
   protected boolean useGLUT = false;
 
   public APanamaGLFactory_linux() {
@@ -66,6 +68,15 @@ public abstract class APanamaGLFactory_linux extends APanamaGLFactory {
     // --------------------------------------
     // A GL Context with GLUT
 
+    // Headless EGL context, e.g. to run on an OpenGL implementation layered over Vulkan (Zink)
+    if (useEGL) {
+      eglContext = new EGLContext_linux();
+      eglContext.init();
+      Debug.debug(debug, "PanamaGLFactory_linux : initContext : EGL done");
+
+      return eglContext;
+    }
+
     if (useGLUT) {
       glutContext = new GLUTContext_linux();
       glutContext.init(); // Linux VM seams to WANT full init
@@ -89,6 +100,27 @@ public abstract class APanamaGLFactory_linux extends APanamaGLFactory {
     }
   }
 
+  /**
+   * Create a headless {@link EGLContext_linux} instead of a GLX context, e.g. to render on Mesa
+   * Zink (OpenGL over Vulkan). Defaults to true if the system property
+   * <code>panamagl.linux.context</code>, or the environment variable
+   * <code>PANAMAGL_LINUX_CONTEXT</code>, is <code>egl</code>.
+   */
+  public void setUseEGL(boolean useEGL) {
+    this.useEGL = useEGL;
+  }
+
+  public boolean isUseEGL() {
+    return useEGL;
+  }
+
+  /** @return the last context created by this factory, null if none. */
+  public GLContext getContext() {
+    if (useEGL)
+      return eglContext;
+    return useGLUT ? glutContext : glxContext;
+  }
+
   @Override
   public void destroyContext() {
     // Clean up CGL context
@@ -98,6 +130,9 @@ public abstract class APanamaGLFactory_linux extends APanamaGLFactory {
     // Clean up GLUT context
     if (glutContext != null)
       glutContext.destroy();
+
+    if (eglContext != null)
+      eglContext.destroy();
 
   }
 

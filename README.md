@@ -436,6 +436,83 @@ freeglut is loaded from the `java.library.path` if a `freeglut.dll` is there, ot
 
 The tests and samples of this project use it on Windows.
 
+#### Mesa on Windows is optional : OpenGL 4.x without GPU driver
+
+Without GPU driver, e.g. on virtual machines and CI runners, the `opengl32.dll` of Windows only provides OpenGL 1.1. The optional [`panama-gl-bindings-windows-mesa`](https://github.com/panama-gl/panama-gl-bindings/tree/main/panama-gl-bindings-windows-mesa) jar embeds [Mesa](https://mesa3d.org) for x86_64 and ARM64. Mesa is **never used unless selected**, before the first OpenGL call :
+
+| `-Dpanamagl.windows.opengl=` or `PANAMAGL_WINDOWS_OPENGL=` | OpenGL |
+|---|---|
+| `system` (default) | `opengl32.dll` of Windows, i.e. the OpenGL driver of the GPU |
+| `mesa-llvmpipe` | Mesa over the CPU |
+| `mesa-d3d12` | Mesa over Direct3D 12 : the GPU, or WARP without GPU driver |
+| `mesa-zink` | Mesa over the Vulkan driver of the GPU |
+| `mesa-zink-lavapipe` | Mesa over Vulkan over the CPU (lavapipe, also in the jar) |
+
+```xml
+<dependency>
+  <groupId>org.jzy3d</groupId>
+  <artifactId>panama-gl-bindings-windows-mesa</artifactId>
+  <version>1.4.2</version>
+  <scope>runtime</scope>
+</dependency>
+```
+
+The `opengl32.dll` of Mesa then replaces the one of Windows in the whole process : the WGL and GLUT contexts, `glu32.dll` and `freeglut.dll` use it. The Windows CI runs the whole test suite on Mesa d3d12 this way, and renders the scenes on llvmpipe and Zink over lavapipe. In elevated processes, the Vulkan loader ignores the driver that PanamaGL declares for `mesa-zink-lavapipe` (`VK_DRIVER_FILES`) : declare it in the registry, see the `windows-mesa` CI job.
+
+#### Embedded native libraries : native bundles
+
+freeglut and Mesa are **native bundles** : folders of the classpath, `natives/<os>-<cpu>/<bundle>/`, holding libraries and a `bundle.properties` manifest with the SHA-256 and size of each file and the libraries to load in order. `NativeBundle` (`panama-gl-api`) extracts and loads them :
+
+* the files of a bundle are extracted together in `<java.io.tmpdir>/panamagl-natives-<user>/<bundle>-<hash>/` (or `~/.panamagl/natives`, or `-Dpanamagl.natives.dir`) : two versions never share a folder, a library in use is never overwritten ;
+* a file already extracted, by a previous run or another JVM, is reused if identical to the manifest, and replaced otherwise ; a file of the classpath that differs from the manifest (corrupted jar) is never extracted ;
+* files are written aside and moved atomically : concurrent JVMs never load a partial file ;
+* folders that are not writable, or belong to another user on POSIX systems, are skipped ;
+* libraries are loaded in the order of the manifest, those whose dependencies are not loaded yet being retried ;
+* unsafe file names (`../`, hidden files, names differing only by case) are rejected.
+
+`TestNativeBundle` covers these cases. `java -cp ... panamagl.platform.natives.NativeBundle extract <bundle>` extracts a bundle and prints its folder, e.g. for an installer.
+
+#### One OpenGL implementation per JVM
+
+The OpenGL functions are looked up by name among the libraries loaded by the class loader : two OpenGL implementations in one process would make this lookup undefined. Each context hence claims the implementation it loads (`OpenGLImplementation`) :
+
+* the CGL and GLUT contexts of macOS use the OpenGL of Apple, and never Mesa ; an EGL context of Mesa on macOS in the same JVM fails explicitly, and conversely ;
+* the GLX, GLUT and EGL contexts of Linux share the `libGL` of the system, dispatched by GLVND ;
+* the WGL and GLUT contexts of Windows share the loaded `opengl32.dll`, of Windows by default, of Mesa if selected ; selecting Mesa once the one of Windows is loaded fails explicitly.
+
+
+#### Linux : headless EGL context, OpenGL over Vulkan with Zink
+
+On Linux, PanamaGL creates a GLX context by default. It can instead create a **headless EGL context** (`EGLContext_linux`), which needs no X display nor window since PanamaGL always renders in a FBO. EGL lets the driver loader choose the OpenGL implementation, e.g. Mesa **Zink**, which implements OpenGL over **Vulkan** : the `GL` calls of PanamaGL and Jzy3D then run on Vulkan unchanged.
+
+Select EGL with one of :
+* the environment variable `PANAMAGL_LINUX_CONTEXT=egl`,
+* the system property `-Dpanamagl.linux.context=egl`,
+* `((APanamaGLFactory_linux) factory).setUseEGL(true)`.
+
+Then run on Zink with `GALLIUM_DRIVER=zink`. On a computer without GPU, Zink can use lavapipe, the CPU Vulkan driver of Mesa (`sudo apt-get install mesa-vulkan-drivers`), with `LIBGL_ALWAYS_SOFTWARE=1` :
+
+```
+PANAMAGL_LINUX_CONTEXT=egl GALLIUM_DRIVER=zink LIBGL_ALWAYS_SOFTWARE=1 java ...
+```
+
+How EGL plugs into PanamaGL : only the creation of the context and the resolution of the functions change, the `GL` and GLEXT calls stay the same.
+
+<img src="panama-gl-wrappers-linux/src/main/java/panamagl/platform/linux/doc-files/egl-gl-glext.svg"/>
+
+From PanamaGL to the hardware, through EGL, Mesa, Zink, Vulkan, Metal or Direct3D 12 :
+
+<img src="panama-gl-wrappers-linux/src/main/java/panamagl/platform/linux/doc-files/egl-zink-stack.svg"/>
+
+`GLProfile.getRenderer()` then reads `zink Vulkan 1.x(...)`. Note that `GALLIUM_DRIVER` applies to every OpenGL user of the process : under X11 without DRI3 (e.g. Xvfb), the GLX contexts of JavaFX (Prism) or of the native SWT `GLCanvas` can not run on Zink, so use `-Dprism.order=sw` with JavaFX there. OpenGL functions are resolved with `eglGetProcAddress`. GLUT functions remain available when a `DISPLAY` is set (GLUT is initialized at the first GLUT call), and throw an `UnsupportedOperationException` otherwise.
+
+<img src="panama-gl-api/src/main/java/panamagl/factory/doc-files/backends-per-platform.svg"/>
+
+The CI renders a reference scene on each of these paths and compares the images (`TestBackendRendering`, job `Rendering comparison`). On macOS, `PanamaGLFactory_linux` with `setUseEGL(true)` renders with Homebrew's Mesa (`brew install mesa mesa-glu`, see `MesaLibraries`). The native dependencies of each configuration :
+
+<img src="panama-gl-api/src/main/java/panamagl/factory/doc-files/native-dependencies.svg"/>
+
+The demos [`DemoEGL_Offscreen`](panama-gl-samples/src/main/java/demos/panamagl/linux/DemoEGL_Offscreen.java) (headless, saves a PNG) and [`DemoEGL_Onscreen_Swing`](panama-gl-samples/src/main/java/demos/panamagl/linux/DemoEGL_Onscreen_Swing.java) show both. The CI job `Build & Test (OpenGL over Vulkan, Zink)` runs the tests this way. See [OpenGL-Ecosystem.md](doc/OpenGL-Ecosystem.md) (in French) for EGL, GLVND, Zink and the other layers, and [Vulkan-Metal-Backends.md](doc/Vulkan-Metal-Backends.md) for the plan towards Vulkan and Metal.
 
 ### Build, test, deploy
 
@@ -459,11 +536,13 @@ The path to the OpenGL libraries are defined in the root pom.xml file :
 * `native.lib.path.windows`
 
 
-To override the path
+To override the path, e.g. to use an `opengl32.dll` installed in another folder
 
 ```
-mvn install -D"native.lib.path.windows=C:\mesa;C:\Windows\system32"
+mvn install -D"native.lib.path.windows=C:\opengl;C:\Windows\system32"
 ```
+
+On Windows without GPU driver, rather select Mesa with `PANAMAGL_WINDOWS_OPENGL=mesa-d3d12`, as the CI does.
 
 See an example in the `.github/workflow/ci.yml` file.
 

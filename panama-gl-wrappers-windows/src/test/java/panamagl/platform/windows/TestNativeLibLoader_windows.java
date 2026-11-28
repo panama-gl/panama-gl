@@ -56,7 +56,8 @@ public class TestNativeLibLoader_windows extends WindowsTest {
 
     // Then the file has the content of the resource
     Assert.assertEquals("NativeLibLoader_windows.class", file.getFileName().toString());
-    Assert.assertEquals(directory, file.getParent().getParent());
+    // The same folder, as a real path : /var is /private/var on macOS, RUNNER~1 is runneradmin on Windows
+    Assert.assertTrue(Files.isSameFile(directory, file.getParent().getParent()));
     try (InputStream in = getClass().getClassLoader().getResourceAsStream(resource)) {
       Assert.assertArrayEquals(in.readAllBytes(), Files.readAllBytes(file));
     }

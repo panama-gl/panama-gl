@@ -103,48 +103,12 @@ jobs:
           sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev xvfb
 
       # -------------------------------------------------------
-      # Windows: install Mesa3D D3D12 OpenGL software renderer.
-      # The system opengl32.dll (Microsoft stub) only supports
-      # OpenGL 1.1 and returns NULL for all wglGetProcAddress
-      # extension calls, causing FBO tests to fail on CI VMs.
-      # Mesa D3D12 supports OpenGL 3.3+ via WARP (Microsoft's
-      # always-available software D3D12 renderer) — no GPU needed.
-      # Installed in C:\mesa, prepended to java.library.path via
-      # -Dnative.lib.path.windows in the Maven build step below.
+      # macOS : Mesa from Homebrew, required by the EGL context tests
+      # (TestEGLContext_linux), which fail without it.
       # -------------------------------------------------------
-      - name: Install Mesa software OpenGL (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          $arch = if ($env:RUNNER_ARCH -eq 'ARM64') { 'arm64' } else { 'x64' }
-          $headers = @{ Authorization = "Bearer $env:GITHUB_TOKEN" }
-          $release = Invoke-RestMethod `
-            "https://api.github.com/repos/mmozeiko/build-mesa/releases/latest" `
-            -Headers $headers
-          $asset = $release.assets `
-            | Where-Object { $_.name -like "mesa-d3d12-$arch-*.7z" } `
-            | Select-Object -First 1
-          if (-not $asset) {
-            Write-Host "Available assets : $($release.assets.name -join ', ')"
-            Write-Error "Could not find mesa-d3d12-$arch asset"; exit 1
-          }
-          Write-Host "Downloading $($asset.name)"
-          Invoke-WebRequest -Uri $asset.browser_download_url -OutFile mesa.7z
-          if (Get-Command 7z -ErrorAction SilentlyContinue) {
-            7z x mesa.7z -omesa -y | Out-Null
-          } else {
-            New-Item -ItemType Directory -Force -Path "mesa" | Out-Null
-            tar -xf mesa.7z -C mesa
-          }
-          $dll = Get-ChildItem -Path "mesa" -Recurse -Filter "opengl32.dll" `
-            | Select-Object -First 1
-          if (-not $dll) { Write-Error "opengl32.dll not found in Mesa archive"; exit 1 }
-          New-Item -ItemType Directory -Force -Path "C:\mesa" | Out-Null
-          # opengl32.dll may load other DLLs of the archive (e.g. dxil.dll)
-          Copy-Item -Path "$($dll.DirectoryName)\*.dll" -Destination "C:\mesa" -Force
-          Write-Host "Installed Mesa OpenGL ($arch) to C:\mesa : $((Get-ChildItem C:\mesa).Name -join ', ')"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Mesa (macOS)
+        if: runner.os == 'macOS'
+        run: brew install mesa mesa-glu
 
       # -------------------------------------------------------
       # Build & Test
@@ -163,10 +127,13 @@ jobs:
 
       - name: Build and test with Maven (Windows)
         if: runner.os == 'Windows'
-        # Mesa opengl32.dll is in C:\mesa (prepended via native.lib.path.windows),
-        # freeglut is not installed : the tests using GLUT load the freeglut.dll of the runner CPU
-        # embedded in panama-gl-bindings-windows-freeglut (test dependency on Windows).
-        run: mvn --batch-mode package --file pom.xml -D"native.lib.path.windows=C:\mesa;C:\Windows\system32"
+        # The runners have no GPU driver : the opengl32.dll of Windows only provides OpenGL 1.1.
+        # The tests use Mesa d3d12 (OpenGL over Direct3D 12, on WARP), loaded from
+        # panama-gl-bindings-windows-mesa, and the freeglut.dll of
+        # panama-gl-bindings-windows-freeglut : both are test dependencies on Windows.
+        env:
+          PANAMAGL_WINDOWS_OPENGL: mesa-d3d12
+        run: mvn --batch-mode package --file pom.xml
         shell: pwsh
 
       # -------------------------------------------------------
@@ -214,6 +181,319 @@ jobs:
           name: coverage-${{ matrix.os }}
           path: "*/target/site/jacoco"
           if-no-files-found: ignore
+
+      # Rendering of the reference scene by TestBackendRendering, named after the backend
+      - name: Upload renderings
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: renderings-${{ matrix.os }}
+          path: panama-gl-samples/target/renderings
+          if-no-files-found: ignore
+
+  # -------------------------------------------------------
+  # OpenGL over Vulkan : run the tests on Linux with a headless
+  # EGL context (PANAMAGL_LINUX_CONTEXT=egl) and Mesa Zink
+  # (GALLIUM_DRIVER=zink) on lavapipe, the CPU Vulkan driver of
+  # Mesa (LIBGL_ALWAYS_SOFTWARE=1 lets Zink use a CPU device).
+  #
+  # Excluded : the tests creating a GLX or GLUT context
+  # explicitly. Zink needs DRI3 under X11, which Xvfb lacks, so
+  # GLX can not run on Zink here. Xvfb is still needed by the
+  # AWT, Swing, JavaFX and SWT tests, and by GLUT.
+  #
+  # GALLIUM_DRIVER applies to every OpenGL user of the process :
+  # the OpenGL (GLX) pipeline of JavaFX would fail as well, so
+  # JavaFX uses its software pipeline (prism.order=sw).
+  # -------------------------------------------------------
+  zink:
+    name: Build & Test (OpenGL over Vulkan, Zink)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 22
+        uses: actions/setup-java@v4
+        with:
+          java-version: '22'
+          distribution: temurin
+          cache: maven
+
+      - name: Install OpenGL, GLUT, EGL and Vulkan (lavapipe) libraries
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev libegl1 xvfb \
+            mesa-vulkan-drivers vulkan-tools
+          vulkaninfo --summary | grep -E "deviceName|driverName|apiVersion" || true
+
+      - name: Build and test with Maven on Zink
+        env:
+          PANAMAGL_LINUX_CONTEXT: egl
+          LIBGL_ALWAYS_SOFTWARE: '1'
+          GALLIUM_DRIVER: zink
+          JDK_JAVA_OPTIONS: -Dprism.order=sw
+        run: |
+          xvfb-run --auto-servernum --server-args="-screen 0 1280x1024x24" \
+            mvn --batch-mode package --file pom.xml -Djacoco.skip=true \
+              -Dtest='Test*,*Test,ITTest*,!TestGLXContext_linux,!TestGLFunctionLoader_linux,!TestGLUTContext_linux,!TestFBO_linux,!TestGLCanvasSWT_direct' \
+              -Dsurefire.failIfNoSpecifiedTests=false
+
+      - name: Check the renderer is Zink
+        run: |
+          report=panama-gl-wrappers-linux/target/surefire-reports/TEST-panamagl.platform.linux.TestEGLContext_linux_Zink.xml
+          grep -o "TestEGLContext_linux_Zink : [^&<]*" "$report"
+          grep -q "zink Vulkan" "$report"
+          ! grep -q "<skipped" "$report"
+
+      - name: Run the headless EGL demo on Zink, without X display
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+          GALLIUM_DRIVER: zink
+        run: |
+          # Classpath of the samples built by this reactor, rather than of released PanamaGL jars
+          mvn --batch-mode -q -pl panama-gl-samples -am package dependency:build-classpath \
+            -DskipTests -Djacoco.skip=true -Dmdep.outputFile=cp.txt
+          mkdir -p demo-zink
+          java --enable-native-access=ALL-UNNAMED -Djava.awt.headless=true \
+            -Djava.library.path=/usr/lib/x86_64-linux-gnu \
+            -cp "panama-gl-samples/target/classes:$(cat panama-gl-samples/cp.txt)" \
+            demos.panamagl.linux.DemoEGL_Offscreen demo-zink/DemoEGL_Offscreen_Zink.png 480 360 50 \
+            | tee demo-zink/output.txt
+          grep -q "Over Vulkan (Zink) : true" demo-zink/output.txt
+
+      - name: Collect Surefire reports
+        if: always()
+        run: |
+          mkdir -p zink-reports
+          find . -path "*/target/surefire-reports/*.xml" -exec cp {} zink-reports/ \;
+
+      - name: Upload Surefire reports and demo image
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: zink-reports
+          path: |
+            zink-reports
+            demo-zink
+          if-no-files-found: ignore
+
+      - name: Upload renderings
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: renderings-zink-ubuntu-latest
+          path: panama-gl-samples/target/renderings
+          if-no-files-found: ignore
+
+  # -------------------------------------------------------
+  # Windows : render the reference scene on the other OpenGL
+  # implementations of Mesa (the build job already renders it
+  # with Mesa d3d12, i.e. OpenGL over Direct3D 12 on WARP) :
+  # - llvmpipe : OpenGL on the CPU ;
+  # - zink : OpenGL over Vulkan, on lavapipe (CPU Vulkan).
+  # Builds of mmozeiko/build-mesa.
+  # -------------------------------------------------------
+  windows-mesa:
+    name: Rendering (windows, ${{ matrix.opengl }})
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Mesa of panama-gl-bindings-windows-mesa, selected by PANAMAGL_WINDOWS_OPENGL. Mesa d3d12
+        # is tested by the build job.
+        opengl:
+          # OpenGL on the CPU
+          - mesa-llvmpipe
+          # OpenGL over Vulkan, on lavapipe (Vulkan on the CPU)
+          - mesa-zink-lavapipe
+    env:
+      PANAMAGL_WINDOWS_OPENGL: ${{ matrix.opengl }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 22
+        uses: actions/setup-java@v4
+        with:
+          java-version: '22'
+          distribution: temurin
+          cache: maven
+
+      - name: Install Maven if missing
+        shell: pwsh
+        run: |
+          if (Get-Command mvn -ErrorAction SilentlyContinue) { mvn --version; exit 0 }
+          $version = "3.9.9"
+          Invoke-WebRequest `
+            -Uri "https://archive.apache.org/dist/maven/maven-3/$version/binaries/apache-maven-$version-bin.zip" `
+            -OutFile maven.zip
+          Expand-Archive -Path maven.zip -DestinationPath C:\maven
+          "C:\maven\apache-maven-$version\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+
+      - name: Build
+        shell: pwsh
+        run: mvn --batch-mode install --file pom.xml -pl panama-gl-samples -am "-DskipTests" "-Djacoco.skip=true"
+
+      # The Vulkan loader ignores VK_DRIVER_FILES, set by PanamaGL for lavapipe, in elevated
+      # processes as on GitHub runners : declare the ICD of the extracted bundle in the registry.
+      - name: Declare the Vulkan driver of the bundle (Zink)
+        if: matrix.opengl == 'mesa-zink-lavapipe'
+        shell: pwsh
+        run: |
+          mvn --batch-mode -q -pl panama-gl-samples dependency:build-classpath "-Dmdep.outputFile=$PWD\cp.txt" "-Dmdep.includeScope=test"
+          $cp = "panama-gl-api\target\classes;" + (Get-Content cp.txt -Raw).Trim()
+          $icd = (java -cp $cp panamagl.platform.natives.NativeBundle extract mesa-lavapipe vulkan.icd | Select-Object -Last 1).Trim()
+          if (-not (Test-Path $icd)) { Write-Error "ICD not extracted : $icd"; exit 1 }
+          Get-Content $icd
+          New-Item -Path "HKLM:\SOFTWARE\Khronos\Vulkan\Drivers" -Force | Out-Null
+          New-ItemProperty -Path "HKLM:\SOFTWARE\Khronos\Vulkan\Drivers" -Name $icd -Value 0 -PropertyType DWord -Force | Out-Null
+          # Vulkan loader : vulkan-1.dll is only installed with GPU drivers or the Vulkan runtime
+          Write-Host "Vulkan loader of Windows : $(Test-Path C:\Windows\System32\vulkan-1.dll)"
+          if (-not (Test-Path "C:\Windows\System32\vulkan-1.dll")) {
+            Invoke-WebRequest -Uri "https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-runtime-components.zip" -OutFile vkrt.zip
+            Expand-Archive -Path vkrt.zip -DestinationPath vkrt
+            New-Item -ItemType Directory -Force -Path "C:\vulkan" | Out-Null
+            Get-ChildItem -Path "vkrt" -Recurse -Filter "vulkan-1.dll" | Where-Object { $_.FullName -match "x64" } | Select-Object -First 1 | Copy-Item -Destination "C:\vulkan" -Force
+            "C:\vulkan" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          }
+          "VK_LOADER_DEBUG=error,warn,driver" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Test Mesa and render the scenes
+        shell: pwsh
+        run: |
+          # PowerShell splits unquoted -Dname.with.dots=value arguments : quote them
+          mvn --batch-mode package --file pom.xml -pl panama-gl-samples -am "-Djacoco.skip=true" `
+            "-Dtest=TestMesa_windows,TestBackendRendering,TestRenderingBackend" "-Dsurefire.failIfNoSpecifiedTests=false"
+
+      - name: Upload renderings
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: renderings-windows-${{ matrix.opengl }}
+          path: panama-gl-samples/target/renderings
+          if-no-files-found: ignore
+
+  # -------------------------------------------------------
+  # macOS : render the reference scene with the OpenGL of Mesa
+  # (Homebrew), through a headless EGL context of Mesa
+  # (PANAMAGL_FACTORY=mesa-egl), rather than Apple OpenGL :
+  # - llvmpipe : OpenGL on the CPU ;
+  # - zink over KosmicKrisp : OpenGL over Vulkan over Metal ;
+  # - zink over MoltenVK : OpenGL over Vulkan over Metal.
+  # The build job renders it with Apple OpenGL (CGL), which
+  # Apple implements over Metal on Apple Silicon.
+  # -------------------------------------------------------
+  macos-mesa:
+    name: Rendering (macos, Mesa ${{ matrix.driver }}${{ matrix.vulkan && format(' over {0}', matrix.vulkan) || '' }})
+    runs-on: macos-latest
+    # Zink over Metal is experimental : KosmicKrisp finds no device on the runner, and MoltenVK lacks
+    # the nullDescriptor feature that Zink requires. Failures are reported in the comparison.
+    continue-on-error: ${{ matrix.experimental == true }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - driver: llvmpipe
+          - driver: zink
+            vulkan: kosmickrisp
+            icd: /opt/homebrew/opt/mesa/share/vulkan/icd.d/kosmickrisp_mesa_icd.aarch64.json
+            experimental: true
+          - driver: zink
+            vulkan: moltenvk
+            icd: /opt/homebrew/opt/molten-vk/etc/vulkan/icd.d/MoltenVK_icd.json
+            experimental: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 22
+        uses: actions/setup-java@v4
+        with:
+          java-version: '22'
+          distribution: temurin
+          cache: maven
+
+      - name: Install Mesa, GLU, the Vulkan loader and MoltenVK with Homebrew
+        run: |
+          brew install mesa mesa-glu vulkan-loader molten-vk
+          ls /opt/homebrew/opt/mesa/lib/dri /opt/homebrew/opt/mesa/share/vulkan/icd.d
+          # Zink opens @rpath/libvulkan.1.dylib : expose Homebrew's loader in a default dyld fallback
+          # path, since SIP removes DYLD_* variables from the shell scripts launching Maven
+          sudo mkdir -p /usr/local/lib
+          sudo ln -sf /opt/homebrew/opt/vulkan-loader/lib/libvulkan.1.dylib /usr/local/lib/libvulkan.1.dylib
+
+      - name: Render the scenes
+        env:
+          PANAMAGL_FACTORY: mesa-egl
+          GALLIUM_DRIVER: ${{ matrix.driver }}
+          VK_DRIVER_FILES: ${{ matrix.icd }}
+        run: |
+          mvn --batch-mode package --file pom.xml -pl panama-gl-samples -am -Djacoco.skip=true \
+            -Dtest=TestEGLContext_linux,TestBackendRendering,TestRenderingBackend -Dsurefire.failIfNoSpecifiedTests=false
+
+      - name: Upload renderings
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: renderings-macos-mesa-${{ matrix.driver }}${{ matrix.vulkan && format('-{0}', matrix.vulkan) || '' }}
+          path: panama-gl-samples/target/renderings
+          if-no-files-found: ignore
+
+  # -------------------------------------------------------
+  # Compare the renderings of the reference scene made on every
+  # OS and backend : contact sheet, differences, summary table.
+  # -------------------------------------------------------
+  rendering-comparison:
+    name: Rendering comparison
+    runs-on: ubuntu-latest
+    needs: [ build, zink, windows-mesa, macos-mesa ]
+    if: always()
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: renderings-*
+          path: renderings
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Compare the renderings
+        run: |
+          pip install --quiet pillow
+          python .github/scripts/compare-renderings.py renderings rendering-comparison
+          mkdir -p rendering-comparison/renderings
+          find renderings -name "*.png" -exec cp {} rendering-comparison/renderings/ \;
+          find renderings -name "*.properties" -exec cp {} rendering-comparison/renderings/ \;
+
+      - name: Upload the comparison
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendering-comparison
+          path: rendering-comparison
+
+      # The contact sheets in the log too, as small JPEGs in base64, for tools that can read the
+      # logs but not download the artifacts
+      - name: Print the comparison images (base64 JPEG)
+        run: |
+          python - <<'EOF'
+          import base64, io
+          from pathlib import Path
+          from PIL import Image
+          for png in sorted(Path("rendering-comparison").glob("comparison-*.png")):
+              scene = png.stem[len("comparison-"):]
+              image = Image.open(png).convert("RGB")
+              image.thumbnail((1500, 6000))
+              out = io.BytesIO()
+              image.save(out, "JPEG", quality=80)
+              data = base64.b64encode(out.getvalue()).decode()
+              print(f"::group::comparison-{scene}.jpg in base64")
+              print(f"BEGIN-COMPARISON-JPEG {scene}")
+              for i in range(0, len(data), 2000):
+                  print(data[i:i + 2000])
+              print(f"END-COMPARISON-JPEG {scene}")
+              print("::endgroup::")
+          EOF
 
   # -------------------------------------------------------
   # Report the platforms on which the tests ran (OS, CPU, JVM,

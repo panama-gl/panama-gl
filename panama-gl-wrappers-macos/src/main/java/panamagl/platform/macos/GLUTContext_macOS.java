@@ -17,6 +17,7 @@
  *******************************************************************************/
 package panamagl.platform.macos;
 
+import panamagl.platform.natives.OpenGLImplementation;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import opengl.macos.NativeLibLoader;
@@ -52,6 +53,8 @@ public class GLUTContext_macOS extends AGLContext implements GLContext {
 
   /** Initialize GLUT if input arg is true, and create a window */
   public void init(boolean forceLoadGlut) {
+    // A JVM can only use one OpenGL implementation : not Apple's and Mesa's (EGL) together
+    OpenGLImplementation.claim(CGLContext_macOS.APPLE_OPENGL, "/System/Library/Frameworks/OpenGL.framework");
     NativeLibLoader.load();
 
     initArena();
