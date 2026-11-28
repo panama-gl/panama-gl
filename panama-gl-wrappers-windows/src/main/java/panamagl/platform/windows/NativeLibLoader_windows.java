@@ -195,6 +195,10 @@ public class NativeLibLoader_windows {
     OpenGLImplementation.claim("Mesa " + bundle.getName() + " " + bundle.getVersion(),
         folder.toString());
 
+    // The Gallium driver of the bundle : without it, the WGL of Mesa picks its default driver,
+    // which is not Zink
+    Kernel32_windows.setenv("GALLIUM_DRIVER", gl.bundle().substring("mesa-".length()));
+
     if (gl.bundle().equals(OpenGL.MESA_ZINK.bundle()))
       loadVulkanLoader();
 

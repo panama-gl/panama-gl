@@ -36,7 +36,7 @@ public class TestMesa_windows extends WindowsTest {
   public void printModules() {
     for (String dll : new String[] {"opengl32.dll", "vulkan-1.dll", "vulkan_lvp.dll"})
       System.out.println("TestMesa_windows : " + dll + " : " + Kernel32_windows.loadedModule(dll).orElse("not loaded"));
-    for (String v : new String[] {"LIBGL_ALWAYS_SOFTWARE", "VK_DRIVER_FILES"})
+    for (String v : new String[] {"GALLIUM_DRIVER", "LIBGL_ALWAYS_SOFTWARE", "VK_DRIVER_FILES"})
       System.out.println("TestMesa_windows : " + v + " = " + Kernel32_windows.getenv(v).orElse("") + " / CRT : "
           + Kernel32_windows.crtGetenv(v).orElse(""));
   }

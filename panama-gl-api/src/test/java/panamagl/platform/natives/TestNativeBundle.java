@@ -236,7 +236,8 @@ public class TestNativeBundle {
     NativeBundle b = find("lib");
     Path folder = b.extract(List.of(base));
 
-    assertEquals(base.resolve(b.getId()), folder);
+    // The real path : /var is /private/var on macOS, RUNNER~1 is runneradmin on Windows
+    assertSame(base.resolve(b.getId()), folder);
     assertEquals("dependency", Files.readString(folder.resolve("dep.dll")));
     assertEquals("application", Files.readString(folder.resolve("app.dll")));
     assertEquals(folder, b.getDirectory());
@@ -328,7 +329,7 @@ public class TestNativeBundle {
     Path fallback = base.resolve("fallback");
 
     Path folder = find("lib").extract(List.of(notAFolder, fallback));
-    assertEquals(fallback, folder.getParent());
+    assertSame(fallback, folder.getParent());
   }
 
   @Test
@@ -340,7 +341,7 @@ public class TestNativeBundle {
     Path fallback = tmp.newFolder("fallback").toPath();
 
     Path folder = b.extract(List.of(base, fallback));
-    assertEquals(fallback.resolve(b.getId()), folder);
+    assertSame(fallback.resolve(b.getId()), folder);
     assertEquals("application", Files.readString(folder.resolve("app.dll")));
   }
 
@@ -370,7 +371,7 @@ public class TestNativeBundle {
 
     simpleBundle();
     Path folder = find("lib").extract();
-    assertEquals(explicit, folder.getParent());
+    assertSame(explicit, folder.getParent());
 
     System.clearProperty(NativeBundle.DIRECTORY_PROPERTY);
     List<Path> defaults = NativeBundle.candidateDirectories();
@@ -422,6 +423,12 @@ public class TestNativeBundle {
     } finally {
       pool.shutdownNow();
     }
+  }
+
+  /** The same file, whatever the links or short names of the paths. */
+  static void assertSame(Path expected, Path actual) throws IOException {
+    assertTrue(expected + " is not " + actual, Files.isSameFile(expected, actual));
+    assertEquals("not a real path : " + actual, actual.toRealPath(), actual);
   }
 
   static void assertNoTemporaryFile(Path folder) throws IOException {
