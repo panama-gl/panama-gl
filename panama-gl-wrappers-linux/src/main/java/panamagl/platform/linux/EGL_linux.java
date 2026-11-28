@@ -92,7 +92,14 @@ public final class EGL_linux {
 
   private EGL_linux() {
     Linker linker = Linker.nativeLinker();
-    SymbolLookup egl = SymbolLookup.libraryLookup(LIBRARY, arena);
+    SymbolLookup egl;
+    try {
+      egl = SymbolLookup.libraryLookup(LIBRARY, arena);
+    } catch (IllegalArgumentException e) {
+      throw new IllegalStateException("EGL library not found : " + LIBRARY + (MesaLibraries.isMacOS()
+          ? " (install Mesa with '" + MesaLibraries.INSTALL + "' or set -D" + MesaLibraries.EGL_PROPERTY + ")"
+          : " (install libegl1, e.g. 'apt install libegl1 libgl1-mesa-dri')"), e);
+    }
 
     eglGetProcAddress = downcall(linker, egl, "eglGetProcAddress", FunctionDescriptor.of(ADDRESS, ADDRESS));
     eglGetDisplay = downcall(linker, egl, "eglGetDisplay", FunctionDescriptor.of(ADDRESS, ADDRESS));

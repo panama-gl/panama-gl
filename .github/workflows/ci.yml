@@ -99,48 +99,12 @@ jobs:
           sudo apt-get install -y libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev xvfb
 
       # -------------------------------------------------------
-      # Windows: install Mesa3D D3D12 OpenGL software renderer.
-      # The system opengl32.dll (Microsoft stub) only supports
-      # OpenGL 1.1 and returns NULL for all wglGetProcAddress
-      # extension calls, causing FBO tests to fail on CI VMs.
-      # Mesa D3D12 supports OpenGL 3.3+ via WARP (Microsoft's
-      # always-available software D3D12 renderer) — no GPU needed.
-      # Installed in C:\mesa, prepended to java.library.path via
-      # -Dnative.lib.path.windows in the Maven build step below.
+      # macOS : Mesa from Homebrew, required by the EGL context tests
+      # (TestEGLContext_linux), which fail without it.
       # -------------------------------------------------------
-      - name: Install Mesa software OpenGL (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          $arch = if ($env:RUNNER_ARCH -eq 'ARM64') { 'arm64' } else { 'x64' }
-          $headers = @{ Authorization = "Bearer $env:GITHUB_TOKEN" }
-          $release = Invoke-RestMethod `
-            "https://api.github.com/repos/mmozeiko/build-mesa/releases/latest" `
-            -Headers $headers
-          $asset = $release.assets `
-            | Where-Object { $_.name -like "mesa-d3d12-$arch-*.7z" } `
-            | Select-Object -First 1
-          if (-not $asset) {
-            Write-Host "Available assets : $($release.assets.name -join ', ')"
-            Write-Error "Could not find mesa-d3d12-$arch asset"; exit 1
-          }
-          Write-Host "Downloading $($asset.name)"
-          Invoke-WebRequest -Uri $asset.browser_download_url -OutFile mesa.7z
-          if (Get-Command 7z -ErrorAction SilentlyContinue) {
-            7z x mesa.7z -omesa -y | Out-Null
-          } else {
-            New-Item -ItemType Directory -Force -Path "mesa" | Out-Null
-            tar -xf mesa.7z -C mesa
-          }
-          $dll = Get-ChildItem -Path "mesa" -Recurse -Filter "opengl32.dll" `
-            | Select-Object -First 1
-          if (-not $dll) { Write-Error "opengl32.dll not found in Mesa archive"; exit 1 }
-          New-Item -ItemType Directory -Force -Path "C:\mesa" | Out-Null
-          # opengl32.dll may load other DLLs of the archive (e.g. dxil.dll)
-          Copy-Item -Path "$($dll.DirectoryName)\*.dll" -Destination "C:\mesa" -Force
-          Write-Host "Installed Mesa OpenGL ($arch) to C:\mesa : $((Get-ChildItem C:\mesa).Name -join ', ')"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Mesa (macOS)
+        if: runner.os == 'macOS'
+        run: brew install mesa mesa-glu
 
       # -------------------------------------------------------
       # Build & Test
@@ -149,9 +113,6 @@ jobs:
       # -------------------------------------------------------
       - name: Build and test with Maven (Linux)
         if: runner.os == 'Linux'
-        env:
-          # The EGL context tests fail rather than skip if Mesa's EGL does not work
-          PANAMAGL_TEST_EGL: required
         run: |
           xvfb-run --auto-servernum --server-args="-screen 0 1280x1024x24" \
             mvn --batch-mode package --file pom.xml
@@ -162,10 +123,13 @@ jobs:
 
       - name: Build and test with Maven (Windows)
         if: runner.os == 'Windows'
-        # Mesa opengl32.dll is in C:\mesa (prepended via native.lib.path.windows),
-        # freeglut is not installed : the tests using GLUT load the freeglut.dll of the runner CPU
-        # embedded in panama-gl-bindings-windows-freeglut (test dependency on Windows).
-        run: mvn --batch-mode package --file pom.xml -D"native.lib.path.windows=C:\mesa;C:\Windows\system32" ${{ matrix.maven-args }}
+        # The runners have no GPU driver : the opengl32.dll of Windows only provides OpenGL 1.1.
+        # The tests use Mesa d3d12 (OpenGL over Direct3D 12, on WARP), loaded from
+        # panama-gl-bindings-windows-mesa, and the freeglut.dll of
+        # panama-gl-bindings-windows-freeglut : both are test dependencies on Windows.
+        env:
+          PANAMAGL_WINDOWS_OPENGL: mesa-d3d12
+        run: mvn --batch-mode package --file pom.xml ${{ matrix.maven-args }}
         shell: pwsh
 
       # -------------------------------------------------------
@@ -326,24 +290,20 @@ jobs:
   # Builds of mmozeiko/build-mesa.
   # -------------------------------------------------------
   windows-mesa:
-    name: Rendering (windows, Mesa ${{ matrix.driver }}${{ matrix.vulkan && format(' over {0}', matrix.vulkan) || '' }})
+    name: Rendering (windows, ${{ matrix.opengl }})
     runs-on: windows-latest
-    # Experimental backends report their failure in the comparison without failing the run
-    continue-on-error: ${{ matrix.experimental == true }}
     strategy:
       fail-fast: false
       matrix:
-        include:
+        # Mesa of panama-gl-bindings-windows-mesa, selected by PANAMAGL_WINDOWS_OPENGL. Mesa d3d12
+        # is tested by the build job.
+        opengl:
           # OpenGL on the CPU
-          - driver: llvmpipe
-          # OpenGL over Vulkan, on lavapipe (CPU Vulkan)
-          - driver: zink
-            vulkan: lavapipe
-            software: '1'
-          # OpenGL over Vulkan, on dzn (Vulkan over Direct3D 12, here on WARP) : Zink does not start
-          - driver: zink
-            vulkan: dzn
-            experimental: true
+          - mesa-llvmpipe
+          # OpenGL over Vulkan, on lavapipe (Vulkan on the CPU)
+          - mesa-zink-lavapipe
+    env:
+      PANAMAGL_WINDOWS_OPENGL: ${{ matrix.opengl }}
     steps:
       - uses: actions/checkout@v4
 
@@ -365,76 +325,45 @@ jobs:
           Expand-Archive -Path maven.zip -DestinationPath C:\maven
           "C:\maven\apache-maven-$version\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
-      - name: Install Mesa ${{ matrix.driver }}
+      - name: Build
         shell: pwsh
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DRIVER: ${{ matrix.driver }}
-          VULKAN: ${{ matrix.vulkan }}
-          SOFTWARE: ${{ matrix.software }}
-        run: |
-          $headers = @{ Authorization = "Bearer $env:GITHUB_TOKEN" }
-          $release = Invoke-RestMethod "https://api.github.com/repos/mmozeiko/build-mesa/releases/latest" -Headers $headers
-          Write-Host "mmozeiko/build-mesa $($release.tag_name) : $($release.assets.name -join ', ')"
-          function Expand-Asset($pattern, $dir) {
-            $asset = $release.assets | Where-Object { $_.name -like $pattern } | Select-Object -First 1
-            if (-not $asset) { Write-Error "No asset matching $pattern"; exit 1 }
-            Write-Host "Downloading $($asset.name)"
-            Invoke-WebRequest -Uri $asset.browser_download_url -OutFile "$dir.7z"
-            New-Item -ItemType Directory -Force -Path $dir | Out-Null
-            if (Get-Command 7z -ErrorAction SilentlyContinue) { 7z x "$dir.7z" "-o$dir" -y | Out-Null } else { tar -xf "$dir.7z" -C $dir }
-          }
-          New-Item -ItemType Directory -Force -Path "C:\mesa" | Out-Null
+        run: mvn --batch-mode install --file pom.xml -pl panama-gl-samples -am "-DskipTests" "-Djacoco.skip=true"
 
-          # OpenGL : opengl32.dll of the driver
-          Expand-Asset "mesa-$env:DRIVER-x64-*.7z" "mesa"
-          $dll = Get-ChildItem -Path "mesa" -Recurse -Filter "opengl32.dll" | Select-Object -First 1
-          if (-not $dll) { Write-Error "opengl32.dll not found"; exit 1 }
-          Copy-Item -Path "$($dll.DirectoryName)\*.dll" -Destination "C:\mesa" -Force
-
-          if ($env:DRIVER -eq "zink") {
-            # Vulkan driver of Mesa : lavapipe (CPU) or dzn (Vulkan over Direct3D 12)
-            Expand-Asset "mesa-$env:VULKAN-x64-*.7z" "vulkan"
-            Get-ChildItem -Path "vulkan" -Recurse -Include "*.dll","*.json" | Copy-Item -Destination "C:\mesa" -Force
-            $icd = Get-ChildItem -Path "C:\mesa" -Filter "*_icd*.json" | Select-Object -First 1
-            if (-not $icd) { Write-Error "Vulkan ICD json not found"; exit 1 }
-            Get-Content $icd.FullName
-            # VK_ICD_FILENAMES : name read by Vulkan loaders older than 1.3.207, instead of VK_DRIVER_FILES
-            "VK_DRIVER_FILES=$($icd.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-            "VK_ICD_FILENAMES=$($icd.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-            "VK_LOADER_DEBUG=error,warn,driver" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-            # The Vulkan loader ignores these variables in elevated processes, as on GitHub runners :
-            # declare the driver in the registry too
-            New-Item -Path "HKLM:\SOFTWARE\Khronos\Vulkan\Drivers" -Force | Out-Null
-            New-ItemProperty -Path "HKLM:\SOFTWARE\Khronos\Vulkan\Drivers" -Name $icd.FullName -Value 0 -PropertyType DWord -Force | Out-Null
-            # Let Zink use a CPU Vulkan device
-            if ($env:SOFTWARE -eq "1") { "LIBGL_ALWAYS_SOFTWARE=1" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append }
-
-            # Vulkan loader : vulkan-1.dll is only installed with GPU drivers or the Vulkan runtime
-            if (Test-Path "C:\Windows\System32\vulkan-1.dll") { Write-Host "System Vulkan loader : $((Get-Item C:\Windows\System32\vulkan-1.dll).VersionInfo.FileVersion)" }
-            if (-not (Test-Path "C:\Windows\System32\vulkan-1.dll") -and -not (Test-Path "C:\mesa\vulkan-1.dll")) {
-              Invoke-WebRequest -Uri "https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-runtime-components.zip" -OutFile vkrt.zip
-              Expand-Archive -Path vkrt.zip -DestinationPath vkrt
-              Get-ChildItem -Path "vkrt" -Recurse -Filter "vulkan-1.dll" | Where-Object { $_.FullName -match "x64" } | Select-Object -First 1 | Copy-Item -Destination "C:\mesa" -Force
-            }
-          }
-          "GALLIUM_DRIVER=$env:DRIVER" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
-          Write-Host "C:\mesa : $((Get-ChildItem C:\mesa).Name -join ', ')"
-
-      - name: Render the scenes
+      # The Vulkan loader ignores VK_DRIVER_FILES, set by PanamaGL for lavapipe, in elevated
+      # processes as on GitHub runners : declare the ICD of the extracted bundle in the registry.
+      - name: Declare the Vulkan driver of the bundle (Zink)
+        if: matrix.opengl == 'mesa-zink-lavapipe'
         shell: pwsh
         run: |
-          $env:PATH = "C:\mesa;$env:PATH"
+          mvn --batch-mode -q -pl panama-gl-samples dependency:build-classpath "-Dmdep.outputFile=$PWD\cp.txt" "-Dmdep.includeScope=test"
+          $cp = "panama-gl-api\target\classes;" + (Get-Content cp.txt -Raw).Trim()
+          $icd = (java -cp $cp panamagl.platform.natives.NativeBundle extract mesa-lavapipe vulkan.icd | Select-Object -Last 1).Trim()
+          if (-not (Test-Path $icd)) { Write-Error "ICD not extracted : $icd"; exit 1 }
+          Get-Content $icd
+          New-Item -Path "HKLM:\SOFTWARE\Khronos\Vulkan\Drivers" -Force | Out-Null
+          New-ItemProperty -Path "HKLM:\SOFTWARE\Khronos\Vulkan\Drivers" -Name $icd -Value 0 -PropertyType DWord -Force | Out-Null
+          # Vulkan loader : vulkan-1.dll is only installed with GPU drivers or the Vulkan runtime
+          if (-not (Test-Path "C:\Windows\System32\vulkan-1.dll")) {
+            Invoke-WebRequest -Uri "https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-runtime-components.zip" -OutFile vkrt.zip
+            Expand-Archive -Path vkrt.zip -DestinationPath vkrt
+            New-Item -ItemType Directory -Force -Path "C:\vulkan" | Out-Null
+            Get-ChildItem -Path "vkrt" -Recurse -Filter "vulkan-1.dll" | Where-Object { $_.FullName -match "x64" } | Select-Object -First 1 | Copy-Item -Destination "C:\vulkan" -Force
+            "C:\vulkan" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          }
+          "VK_LOADER_DEBUG=error,warn,driver" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Test Mesa and render the scenes
+        shell: pwsh
+        run: |
           # PowerShell splits unquoted -Dname.with.dots=value arguments : quote them
           mvn --batch-mode package --file pom.xml -pl panama-gl-samples -am "-Djacoco.skip=true" `
-            "-Dtest=TestBackendRendering,TestRenderingBackend" "-Dsurefire.failIfNoSpecifiedTests=false" `
-            "-Dnative.lib.path.windows=C:\mesa;C:\Windows\system32"
+            "-Dtest=TestMesa_windows,TestBackendRendering,TestRenderingBackend" "-Dsurefire.failIfNoSpecifiedTests=false"
 
       - name: Upload renderings
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: renderings-windows-mesa-${{ matrix.driver }}${{ matrix.vulkan && format('-{0}', matrix.vulkan) || '' }}
+          name: renderings-windows-${{ matrix.opengl }}
           path: panama-gl-samples/target/renderings
           if-no-files-found: ignore
 

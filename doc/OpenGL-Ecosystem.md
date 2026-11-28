@@ -385,11 +385,15 @@ besoin ni de X ni de DRI3, et c'est pour cela qu'il fonctionne.
   embarque `llvmpipe`, `zink` ou `d3d12`. On le dépose à côté de l'application ou on le place en tête
   du chemin de recherche. Le driver **`d3d12`** (« GLOn12 ») traduit GL vers Direct3D 12. Microsoft le
   distribue sur Windows ARM dans l'« OpenCL and OpenGL Compatibility Pack ».
-* **Ce que fait déjà la CI de PanamaGL** : sur `windows-latest` et `windows-11-arm`, elle télécharge
-  le `opengl32.dll` **Mesa `d3d12`** de mmozeiko/build-mesa, le place dans `C:\mesa` et le met en
-  tête de `java.library.path` (`-Dnative.lib.path.windows=C:\mesa;C:\Windows\system32`). **Les tests
-  Windows de PanamaGL tournent donc déjà sur une couche de traduction GL → Direct3D 12 → WARP**, et
-  pas sur un OpenGL natif. C'est un précédent direct pour Zink.
+* **Ce que fait la CI de PanamaGL** : sur `windows-latest` et `windows-11-arm`, toute la suite de
+  tests tourne sur le `opengl32.dll` **Mesa `d3d12`** du jar optionnel
+  `panama-gl-bindings-windows-mesa` (`PANAMAGL_WINDOWS_OPENGL=mesa-d3d12`), et les scènes sont aussi
+  rendues sur `mesa-llvmpipe` et `mesa-zink-lavapipe`. **Les tests Windows de PanamaGL tournent donc
+  sur une couche de traduction GL → Direct3D 12 → WARP**, et pas sur un OpenGL natif.
+* **Le jar `panama-gl-bindings-windows-mesa`** : Mesa 26.3.1 (builds de mmozeiko/build-mesa) pour
+  x86_64 et ARM64, en « native bundles » (llvmpipe, d3d12, zink, lavapipe) vérifiés par SHA-256 et
+  extraits par `NativeBundle`. Mesa n'est **jamais utilisé sans être demandé** : par défaut, WGL
+  utilise le `opengl32.dll` de Windows et le pilote du GPU.
 * **ANGLE** sur Windows : `libEGL.dll` + `libGLESv2.dll`, GLES sur Direct3D 11. C'est le moteur WebGL
   de Chrome, Edge et Firefox.
 

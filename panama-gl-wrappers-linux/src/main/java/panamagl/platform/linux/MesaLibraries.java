@@ -15,6 +15,7 @@
  *******************************************************************************/
 package panamagl.platform.linux;
 
+import panamagl.platform.natives.OpenGLImplementation;
 import java.io.File;
 import java.util.Locale;
 import opengl.linux.NativeLibLoader;
@@ -66,6 +67,15 @@ public class MesaLibraries {
   static final String HOMEBREW_MESA = HOMEBREW + "/opt/mesa/lib/";
   static final String HOMEBREW_GLU = HOMEBREW + "/opt/mesa-glu/lib/";
 
+  /** Name under which Linux contexts (GLX, GLUT, EGL) claim the libGL of the system. */
+  public static final String SYSTEM_LIBGL = "libGL of the system";
+
+  /** Name under which EGL contexts on macOS claim the libGL of Mesa. */
+  public static final String MESA_MACOS = "Mesa (Homebrew)";
+
+  /** Command installing Mesa on macOS, suggested by the errors. */
+  public static final String INSTALL = "brew install mesa mesa-glu";
+
   private static volatile boolean loaded = false;
 
   /** @return true when running on macOS, where Mesa replaces the OpenGL framework of Apple. */
@@ -88,7 +98,9 @@ public class MesaLibraries {
       String gl = System.getProperty(GL_PROPERTY, HOMEBREW_MESA + "libGL.dylib");
       if (!new File(gl).exists())
         throw new IllegalStateException("Mesa OpenGL library not found : " + gl
-            + " (install it with 'brew install mesa' or set -D" + GL_PROPERTY + ")");
+            + " (install it with '" + INSTALL + "' or set -D" + GL_PROPERTY + ")");
+      // A JVM can only use one OpenGL implementation : not Mesa's and Apple's (CGL) together
+      OpenGLImplementation.claim(MESA_MACOS, gl);
       System.load(gl);
 
       // GLU is optional : only needed by the GLU functions of GL
@@ -102,6 +114,7 @@ public class MesaLibraries {
       if (new File(vulkan).exists())
         System.load(vulkan);
     } else {
+      OpenGLImplementation.claim(SYSTEM_LIBGL, "libGL of the system");
       NativeLibLoader.load();
     }
     loaded = true;

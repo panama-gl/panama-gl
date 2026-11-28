@@ -418,6 +418,14 @@
 					<version>${panamagl.bindings.version}</version>
 					<scope>test</scope>
 				</dependency>
+				<!-- Mesa is optional on Windows : the tests select it with PANAMAGL_WINDOWS_OPENGL, as the
+				     CI runners have no GPU and Windows only provides OpenGL 1.1 without GPU driver -->
+				<dependency>
+					<groupId>org.jzy3d</groupId>
+					<artifactId>panama-gl-bindings-windows-mesa</artifactId>
+					<version>${panamagl.bindings.version}</version>
+					<scope>test</scope>
+				</dependency>
 			</dependencies>
 
 			<build>

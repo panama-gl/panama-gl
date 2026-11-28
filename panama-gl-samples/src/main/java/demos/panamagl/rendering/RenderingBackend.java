@@ -72,6 +72,13 @@ public class RenderingBackend {
   public static RenderingBackend expected(String contextClass, String error) {
     String gallium = System.getenv("GALLIUM_DRIVER");
     String icd = System.getenv("VK_DRIVER_FILES");
+    // Mesa of panama-gl-bindings-windows-mesa, selected by PANAMAGL_WINDOWS_OPENGL=mesa-<driver>
+    String windows = System.getProperty("panamagl.windows.opengl", System.getenv("PANAMAGL_WINDOWS_OPENGL"));
+    if (windows != null && windows.startsWith("mesa-")) {
+      gallium = windows.startsWith("mesa-zink") ? "zink" : windows.substring("mesa-".length());
+      if (windows.endsWith("lavapipe"))
+        icd = "lvp_icd.json";
+    }
     String renderer = gallium == null ? "unknown" : gallium;
     if ("zink".equalsIgnoreCase(gallium)) {
       String vulkan = icd == null ? "" : new java.io.File(icd).getName().toLowerCase(Locale.ROOT);

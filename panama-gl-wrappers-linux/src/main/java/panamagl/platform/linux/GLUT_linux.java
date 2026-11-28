@@ -15,6 +15,7 @@
  *******************************************************************************/
 package panamagl.platform.linux;
 
+import panamagl.platform.natives.OpenGLImplementation;
 import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
@@ -54,6 +55,7 @@ public class GLUT_linux {
         throw new UnsupportedOperationException("GLUT functions require an X display : "
             + "DISPLAY is not set, e.g. with a headless EGL context");
 
+      OpenGLImplementation.claim(MesaLibraries.SYSTEM_LIBGL, "libGL of the system");
       NativeLibLoader.load();
 
       // glutInit(&argc, argv) with argc = 0 : no command line argument for GLUT

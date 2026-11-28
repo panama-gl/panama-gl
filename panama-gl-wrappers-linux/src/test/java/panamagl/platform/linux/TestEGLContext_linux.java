@@ -4,7 +4,6 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import org.junit.Assert;
-import java.io.File;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,15 +29,14 @@ public class TestEGLContext_linux extends LinuxTest {
   static final int H = 64;
 
   /**
-   * Run on Linux, and on macOS when Mesa's EGL is installed (e.g. <code>brew install mesa</code>).
-   * Elsewhere, the tests are reported as skipped rather than passed.
+   * EGL is required on Linux, and on macOS with Mesa : a missing or broken EGL fails these tests,
+   * with the package to install (e.g. <code>brew install mesa mesa-glu</code> on macOS). They are
+   * skipped on other OS.
    */
   @Before
   public void eglPlatform() {
     boolean linux = new panamagl.platform.Platform().isUnix() && !MesaLibraries.isMacOS();
-    boolean macMesa = MesaLibraries.isMacOS() && new File(MesaLibraries.egl()).exists();
-    Assume.assumeTrue("EGL runs on Linux, or on macOS with Mesa : " + MesaLibraries.egl(),
-        linux || macMesa);
+    Assume.assumeTrue("EGL runs on Linux and macOS", linux || MesaLibraries.isMacOS());
   }
 
   /** @return the Linux factory, which also creates EGL contexts of Mesa on macOS. */
@@ -47,32 +45,10 @@ public class TestEGLContext_linux extends LinuxTest {
         : (APanamaGLFactory_linux) PanamaGLFactory.select();
   }
 
-  /**
-   * @return true if the environment requires EGL (<code>PANAMAGL_TEST_EGL=required</code>,
-   *         <code>PANAMAGL_FACTORY=mesa-egl</code> or EGL requested for Linux) : the tests then fail
-   *         rather than skip when EGL does not work.
-   */
-  static boolean eglRequired() {
-    return "required".equalsIgnoreCase(System.getenv("PANAMAGL_TEST_EGL"))
-        || "mesa-egl".equalsIgnoreCase(System.getenv("PANAMAGL_FACTORY"))
-        || EGLContext_linux.isRequested();
-  }
-
-  /** Skip the test because EGL is not available, unless the environment requires EGL. */
-  static void noEGL(RuntimeException e) {
-    if (eglRequired())
-      throw e;
-    Assume.assumeNoException("No EGL available", e);
-  }
-
-  /** Create and init an EGL context, or skip the test if EGL is not available. */
+  /** Create and init an EGL context : fails if EGL is not available. */
   protected EGLContext_linux newContext() {
     EGLContext_linux context = new EGLContext_linux();
-    try {
-      context.init();
-    } catch (IllegalStateException | IllegalArgumentException e) {
-      noEGL(e);
-    }
+    context.init();
     return context;
   }
 
@@ -119,13 +95,7 @@ public class TestEGLContext_linux extends LinuxTest {
 
     // When selecting EGL by API rather than with the system property
     factory.setUseEGL(true);
-    GLContext context;
-    try {
-      context = factory.newGLContext();
-    } catch (IllegalStateException | IllegalArgumentException e) {
-      noEGL(e);
-      return;
-    }
+    GLContext context = factory.newGLContext();
 
     // Then
     Assert.assertTrue(context instanceof EGLContext_linux);
@@ -302,11 +272,7 @@ public class TestEGLContext_linux extends LinuxTest {
   public void renderImmediateModeInFBO() {
     APanamaGLFactory_linux factory = linuxFactory();
     factory.setUseEGL(true);
-    try {
-      factory.newGLContext();
-    } catch (IllegalStateException | IllegalArgumentException e) {
-      noEGL(e);
-    }
+    factory.newGLContext();
 
     GL gl = factory.newGL();
 
