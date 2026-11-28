@@ -40,6 +40,9 @@ final class Kernel32_windows {
   private static final MethodHandle GetModuleFileNameW = LINKER.downcallHandle(
       KERNEL32.find("GetModuleFileNameW").orElseThrow(),
       FunctionDescriptor.of(JAVA_INT, ADDRESS, ADDRESS, JAVA_INT));
+  private static final MethodHandle GetEnvironmentVariableW = LINKER.downcallHandle(
+      KERNEL32.find("GetEnvironmentVariableW").orElseThrow(),
+      FunctionDescriptor.of(JAVA_INT, ADDRESS, ADDRESS, JAVA_INT));
   private static final MethodHandle SetEnvironmentVariableW = LINKER.downcallHandle(
       KERNEL32.find("SetEnvironmentVariableW").orElseThrow(),
       FunctionDescriptor.of(JAVA_INT, ADDRESS, ADDRESS));
@@ -78,6 +81,34 @@ final class Kernel32_windows {
       ucrtPutenv(arena, name, value);
     } catch (RuntimeException e) {
       throw e;
+    } catch (Throwable t) {
+      throw new IllegalStateException(t);
+    }
+  }
+
+  /** @return the variable in the environment block of Windows, as read by the Vulkan loader. */
+  static Optional<String> getenv(String name) {
+    try (Arena arena = Arena.ofConfined()) {
+      int capacity = 32767;
+      MemorySegment buffer = arena.allocate(capacity * 2L);
+      int length = (int) GetEnvironmentVariableW.invokeExact(wide(arena, name), buffer, capacity);
+      if (length <= 0)
+        return Optional.empty();
+      return Optional.of(new String(buffer.asSlice(0, length * 2L).toArray(java.lang.foreign.ValueLayout.JAVA_BYTE),
+          StandardCharsets.UTF_16LE));
+    } catch (Throwable t) {
+      throw new IllegalStateException(t);
+    }
+  }
+
+  /** @return the variable as read by getenv of the Universal C Runtime, e.g. by Mesa. */
+  static Optional<String> crtGetenv(String name) {
+    try (Arena arena = Arena.ofConfined()) {
+      MemorySegment getenv = SymbolLookup.libraryLookup("ucrtbase", Arena.global()).find("getenv").orElseThrow();
+      MethodHandle h = LINKER.downcallHandle(getenv, FunctionDescriptor.of(ADDRESS, ADDRESS));
+      MemorySegment value = (MemorySegment) h.invokeExact(arena.allocateFrom(name));
+      return value.address() == 0 ? Optional.empty()
+          : Optional.of(value.reinterpret(32767).getString(0));
     } catch (Throwable t) {
       throw new IllegalStateException(t);
     }

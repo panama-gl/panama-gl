@@ -188,12 +188,15 @@ public class NativeLibLoader_windows {
     NativeBundle bundle = find(gl.bundle());
     Optional<String> loaded = Kernel32_windows.loadedModule("opengl32.dll");
     Path folder = bundle.extract();
-    if (loaded.isPresent() && !Path.of(loaded.get()).startsWith(folder))
+    if (loaded.isPresent() && !isIn(loaded.get(), folder))
       throw new IllegalStateException("Cannot use Mesa (" + OPENGL_PROPERTY + "=" + gl.value()
           + ") : the opengl32.dll of Windows is already loaded in this process (" + loaded.get()
           + "). Select Mesa before any use of OpenGL, e.g. on the command line.");
     OpenGLImplementation.claim("Mesa " + bundle.getName() + " " + bundle.getVersion(),
         folder.toString());
+
+    if (gl.bundle().equals(OpenGL.MESA_ZINK.bundle()))
+      loadVulkanLoader();
 
     if (gl.vulkanBundle() != null) {
       NativeBundle vulkan = find(gl.vulkanBundle());
@@ -209,6 +212,36 @@ public class NativeLibLoader_windows {
     // Bound to the class loader of this class, where the bindings look the functions up
     List<Path> libraries = bundle.load(library -> System.load(library.toString()));
     glOrigin = libraries.get(libraries.size() - 1).toString();
+  }
+
+  /** The Vulkan loader of Khronos, which Zink opens by name. */
+  public static final String VULKAN_LOADER = "vulkan-1";
+
+  /**
+   * Load the Vulkan loader before Zink, which opens <code>vulkan-1.dll</code> by name, with the
+   * search order of Windows : the folder of Windows where GPU drivers and the Vulkan Runtime
+   * install it, or the PATH.
+   */
+  protected static void loadVulkanLoader() {
+    if (Kernel32_windows.loadedModule(VULKAN_LOADER + ".dll").isPresent())
+      return;
+    try {
+      // LoadLibrary by name, with the search order of Windows (system folder, PATH...)
+      java.lang.foreign.SymbolLookup.libraryLookup(VULKAN_LOADER + ".dll", java.lang.foreign.Arena.global());
+    } catch (IllegalArgumentException e) {
+      throw new IllegalStateException("Mesa Zink needs the Vulkan loader " + VULKAN_LOADER + ".dll, "
+          + "not found : it is installed by GPU drivers, or by the Vulkan Runtime of LunarG, or can "
+          + "be put in a folder of the PATH", e);
+    }
+  }
+
+  /** @return true if the file is in the folder, comparing real paths (long names, any case). */
+  static boolean isIn(String file, Path folder) {
+    try {
+      return Path.of(file).toRealPath().startsWith(folder.toRealPath());
+    } catch (java.io.IOException | RuntimeException e) {
+      return file.toLowerCase(Locale.ROOT).startsWith(folder.toString().toLowerCase(Locale.ROOT));
+    }
   }
 
   static NativeBundle find(String name) {

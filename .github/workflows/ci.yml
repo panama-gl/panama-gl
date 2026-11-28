@@ -343,6 +343,7 @@ jobs:
           New-Item -Path "HKLM:\SOFTWARE\Khronos\Vulkan\Drivers" -Force | Out-Null
           New-ItemProperty -Path "HKLM:\SOFTWARE\Khronos\Vulkan\Drivers" -Name $icd -Value 0 -PropertyType DWord -Force | Out-Null
           # Vulkan loader : vulkan-1.dll is only installed with GPU drivers or the Vulkan runtime
+          Write-Host "Vulkan loader of Windows : $(Test-Path C:\Windows\System32\vulkan-1.dll)"
           if (-not (Test-Path "C:\Windows\System32\vulkan-1.dll")) {
             Invoke-WebRequest -Uri "https://sdk.lunarg.com/sdk/download/latest/windows/vulkan-runtime-components.zip" -OutFile vkrt.zip
             Expand-Archive -Path vkrt.zip -DestinationPath vkrt

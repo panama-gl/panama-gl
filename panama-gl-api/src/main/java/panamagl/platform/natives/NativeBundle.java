@@ -328,7 +328,9 @@ public class NativeBundle {
             failures.add(new IOException(base + " is not writable, or belongs to another user"));
             continue;
           }
-          Path folder = base.resolve(id);
+          // The real path : on Windows, java.io.tmpdir may be a short 8.3 name (RUNNER~1) while
+          // the loaded libraries are reported with long names
+          Path folder = base.toRealPath().resolve(id);
           extractInto(folder);
           EXTRACTED.put(id, folder);
           return folder;

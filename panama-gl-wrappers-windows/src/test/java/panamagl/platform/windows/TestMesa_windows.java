@@ -31,6 +31,25 @@ public class TestMesa_windows extends WindowsTest {
     }
   }
 
+  /** Print the DLLs involved, to understand a failure of the context. */
+  @org.junit.After
+  public void printModules() {
+    for (String dll : new String[] {"opengl32.dll", "vulkan-1.dll", "vulkan_lvp.dll"})
+      System.out.println("TestMesa_windows : " + dll + " : " + Kernel32_windows.loadedModule(dll).orElse("not loaded"));
+    for (String v : new String[] {"LIBGL_ALWAYS_SOFTWARE", "VK_DRIVER_FILES"})
+      System.out.println("TestMesa_windows : " + v + " = " + Kernel32_windows.getenv(v).orElse("") + " / CRT : "
+          + Kernel32_windows.crtGetenv(v).orElse(""));
+  }
+
+  @Test
+  public void environmentSetForMesaIsSeenByNativeCode() {
+    String name = "PANAMAGL_TEST_" + System.nanoTime();
+    Kernel32_windows.setenv(name, "value é");
+    // by the Vulkan loader (GetEnvironmentVariable) and by Mesa (getenv of the C runtime)
+    assertEquals("value é", Kernel32_windows.getenv(name).orElse(null));
+    assertTrue(Kernel32_windows.crtGetenv(name).isPresent());
+  }
+
   @Test
   public void wglContextRendersWithMesa() {
     WGLContext_windows wgl = new WGLContext_windows();
@@ -46,8 +65,8 @@ public class TestMesa_windows extends WindowsTest {
     Path origin = Path.of(NativeLibLoader_windows.getOpenGLOrigin());
     assertEquals("opengl32.dll", origin.getFileName().toString().toLowerCase());
     assertTrue(origin.toString(), origin.getParent().getFileName().toString().startsWith(selected.bundle() + "-"));
-    assertEquals(origin.toString().toLowerCase(),
-        Kernel32_windows.loadedModule("opengl32.dll").orElseThrow().toLowerCase());
+    String loaded = Kernel32_windows.loadedModule("opengl32.dll").orElseThrow();
+    assertTrue(loaded + " is not " + origin, NativeLibLoader_windows.isIn(loaded, origin.getParent()));
     assertTrue(OpenGLImplementation.current(), OpenGLImplementation.current().startsWith("Mesa " + selected.bundle()));
 
     // A recent OpenGL, and the driver of the bundle
