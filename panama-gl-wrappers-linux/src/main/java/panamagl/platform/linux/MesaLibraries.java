@@ -27,11 +27,14 @@ import opengl.linux.NativeLibLoader;
  *
  * <p>The EGL context and the OpenGL functions of {@link GL_linux} only use the C API of EGL and
  * OpenGL, which is the same on macOS. They hence also run on macOS with <b>Mesa</b>, e.g. as installed
- * by Homebrew (<code>brew install mesa mesa-glu</code>), which provides the OpenGL implementations
+ * by Homebrew (<code>brew install mesa mesa-glu</code>, under <code>/opt/homebrew</code> on Apple
+ * Silicon, <code>/usr/local</code> on Intel), which provides the OpenGL implementations
  * of Mesa on macOS : llvmpipe (CPU) and Zink, i.e. OpenGL over Vulkan, Vulkan being implemented over
  * Metal by KosmicKrisp or MoltenVK. On macOS, the libraries are loaded from absolute paths, which
  * the following system properties can change :
  *
+ * The default paths below are those of Apple Silicon; on Intel, <code>/usr/local</code> replaces
+ * <code>/opt/homebrew</code>.
  * <ul>
  * <li><code>panamagl.mesa.egl</code> : default <code>/opt/homebrew/opt/mesa/lib/libEGL.dylib</code></li>
  * <li><code>panamagl.mesa.gl</code> : default <code>/opt/homebrew/opt/mesa/lib/libGL.dylib</code></li>
@@ -57,8 +60,11 @@ public class MesaLibraries {
   public static final String GLU_PROPERTY = "panamagl.mesa.glu";
   public static final String VULKAN_PROPERTY = "panamagl.mesa.vulkan";
 
-  static final String HOMEBREW_MESA = "/opt/homebrew/opt/mesa/lib/";
-  static final String HOMEBREW_GLU = "/opt/homebrew/opt/mesa-glu/lib/";
+  /** The Homebrew prefix : /opt/homebrew on Apple Silicon, /usr/local on Intel. */
+  static final String HOMEBREW = new File("/opt/homebrew/opt/mesa").exists()
+      || !new File("/usr/local/opt/mesa").exists() ? "/opt/homebrew" : "/usr/local";
+  static final String HOMEBREW_MESA = HOMEBREW + "/opt/mesa/lib/";
+  static final String HOMEBREW_GLU = HOMEBREW + "/opt/mesa-glu/lib/";
 
   private static volatile boolean loaded = false;
 
@@ -92,7 +98,7 @@ public class MesaLibraries {
 
       // The Vulkan loader is optional : only needed by Zink
       String vulkan = System.getProperty(VULKAN_PROPERTY,
-          "/opt/homebrew/opt/vulkan-loader/lib/libvulkan.1.dylib");
+          HOMEBREW + "/opt/vulkan-loader/lib/libvulkan.1.dylib");
       if (new File(vulkan).exists())
         System.load(vulkan);
     } else {

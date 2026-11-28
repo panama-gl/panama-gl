@@ -149,6 +149,9 @@ jobs:
       # -------------------------------------------------------
       - name: Build and test with Maven (Linux)
         if: runner.os == 'Linux'
+        env:
+          # The EGL context tests fail rather than skip if Mesa's EGL does not work
+          PANAMAGL_TEST_EGL: required
         run: |
           xvfb-run --auto-servernum --server-args="-screen 0 1280x1024x24" \
             mvn --batch-mode package --file pom.xml
@@ -418,7 +421,7 @@ jobs:
           "GALLIUM_DRIVER=$env:DRIVER" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
           Write-Host "C:\mesa : $((Get-ChildItem C:\mesa).Name -join ', ')"
 
-      - name: Render the reference scene
+      - name: Render the scenes
         shell: pwsh
         run: |
           $env:PATH = "C:\mesa;$env:PATH"
@@ -483,14 +486,14 @@ jobs:
           sudo mkdir -p /usr/local/lib
           sudo ln -sf /opt/homebrew/opt/vulkan-loader/lib/libvulkan.1.dylib /usr/local/lib/libvulkan.1.dylib
 
-      - name: Render the reference scene
+      - name: Render the scenes
         env:
           PANAMAGL_FACTORY: mesa-egl
           GALLIUM_DRIVER: ${{ matrix.driver }}
           VK_DRIVER_FILES: ${{ matrix.icd }}
         run: |
           mvn --batch-mode package --file pom.xml -pl panama-gl-samples -am -Djacoco.skip=true \
-            -Dtest=TestBackendRendering,TestRenderingBackend -Dsurefire.failIfNoSpecifiedTests=false
+            -Dtest=TestEGLContext_linux,TestBackendRendering,TestRenderingBackend -Dsurefire.failIfNoSpecifiedTests=false
 
       - name: Upload renderings
         uses: actions/upload-artifact@v4

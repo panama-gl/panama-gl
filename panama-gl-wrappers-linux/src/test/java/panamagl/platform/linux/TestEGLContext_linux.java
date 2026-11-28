@@ -4,7 +4,9 @@ import java.lang.foreign.Arena;
 import java.lang.foreign.MemorySegment;
 import java.lang.foreign.ValueLayout;
 import org.junit.Assert;
+import java.io.File;
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.Test;
 import panamagl.GLProfile;
 import panamagl.factory.PanamaGLFactory;
@@ -27,22 +29,55 @@ public class TestEGLContext_linux extends LinuxTest {
   static final int W = 64;
   static final int H = 64;
 
+  /**
+   * Run on Linux, and on macOS when Mesa's EGL is installed (e.g. <code>brew install mesa</code>).
+   * Elsewhere, the tests are reported as skipped rather than passed.
+   */
+  @Before
+  public void eglPlatform() {
+    boolean linux = new panamagl.platform.Platform().isUnix() && !MesaLibraries.isMacOS();
+    boolean macMesa = MesaLibraries.isMacOS() && new File(MesaLibraries.egl()).exists();
+    Assume.assumeTrue("EGL runs on Linux, or on macOS with Mesa : " + MesaLibraries.egl(),
+        linux || macMesa);
+  }
+
+  /** @return the Linux factory, which also creates EGL contexts of Mesa on macOS. */
+  static APanamaGLFactory_linux linuxFactory() {
+    return MesaLibraries.isMacOS() ? new PanamaGLFactory_linux()
+        : (APanamaGLFactory_linux) PanamaGLFactory.select();
+  }
+
+  /**
+   * @return true if the environment requires EGL (<code>PANAMAGL_TEST_EGL=required</code>,
+   *         <code>PANAMAGL_FACTORY=mesa-egl</code> or EGL requested for Linux) : the tests then fail
+   *         rather than skip when EGL does not work.
+   */
+  static boolean eglRequired() {
+    return "required".equalsIgnoreCase(System.getenv("PANAMAGL_TEST_EGL"))
+        || "mesa-egl".equalsIgnoreCase(System.getenv("PANAMAGL_FACTORY"))
+        || EGLContext_linux.isRequested();
+  }
+
+  /** Skip the test because EGL is not available, unless the environment requires EGL. */
+  static void noEGL(RuntimeException e) {
+    if (eglRequired())
+      throw e;
+    Assume.assumeNoException("No EGL available", e);
+  }
+
   /** Create and init an EGL context, or skip the test if EGL is not available. */
   protected EGLContext_linux newContext() {
     EGLContext_linux context = new EGLContext_linux();
     try {
       context.init();
     } catch (IllegalStateException | IllegalArgumentException e) {
-      Assume.assumeNoException("No EGL available", e);
+      noEGL(e);
     }
     return context;
   }
 
   @Test
   public void lifecycle() {
-    if (!checkPlatform())
-      return;
-
     // When
     EGLContext_linux context = newContext();
 
@@ -79,10 +114,7 @@ public class TestEGLContext_linux extends LinuxTest {
 
   @Test
   public void factorySelectsEGL() {
-    if (!checkPlatform())
-      return;
-
-    APanamaGLFactory_linux factory = (APanamaGLFactory_linux) PanamaGLFactory.select();
+    APanamaGLFactory_linux factory = linuxFactory();
     Assert.assertEquals(EGLContext_linux.isRequested(), factory.isUseEGL());
 
     // When selecting EGL by API rather than with the system property
@@ -91,7 +123,7 @@ public class TestEGLContext_linux extends LinuxTest {
     try {
       context = factory.newGLContext();
     } catch (IllegalStateException | IllegalArgumentException e) {
-      Assume.assumeNoException("No EGL available", e);
+      noEGL(e);
       return;
     }
 
@@ -111,9 +143,6 @@ public class TestEGLContext_linux extends LinuxTest {
 
   @Test
   public void functionsAreResolvedByEGL() {
-    if (!checkPlatform())
-      return;
-
     EGLContext_linux context = newContext();
     try {
       GL_linux gl = new GL_linux();
@@ -131,9 +160,6 @@ public class TestEGLContext_linux extends LinuxTest {
 
   @Test
   public void vertexBufferObjects() {
-    if (!checkPlatform())
-      return;
-
     EGLContext_linux context = newContext();
 
     try (Arena arena = Arena.ofConfined()) {
@@ -170,9 +196,6 @@ public class TestEGLContext_linux extends LinuxTest {
 
   @Test
   public void shaders() {
-    if (!checkPlatform())
-      return;
-
     EGLContext_linux context = newContext();
 
     try (Arena arena = Arena.ofConfined()) {
@@ -209,9 +232,6 @@ public class TestEGLContext_linux extends LinuxTest {
 
   @Test
   public void compatibilityProfileByDefault_coreProfileOnRequest() {
-    if (!checkPlatform())
-      return;
-
     // Given the default context
     EGLContext_linux compat = newContext();
     GL gl = new GL_linux();
@@ -240,9 +260,6 @@ public class TestEGLContext_linux extends LinuxTest {
 
   @Test
   public void destroyingAContextKeepsTheOthersUsable() {
-    if (!checkPlatform())
-      return;
-
     // Given two contexts, e.g. of two canvases
     EGLContext_linux first = newContext();
     EGLContext_linux second = newContext();
@@ -264,9 +281,6 @@ public class TestEGLContext_linux extends LinuxTest {
 
   @Test
   public void surfacelessContextHasNoDefaultFramebuffer() {
-    if (!checkPlatform())
-      return;
-
     EGLContext_linux context = newContext();
     Assume.assumeTrue("Display without surfaceless platform",
         EGLContext_linux.Platform.SURFACELESS.equals(context.getPlatform()));
@@ -286,15 +300,12 @@ public class TestEGLContext_linux extends LinuxTest {
 
   @Test
   public void renderImmediateModeInFBO() {
-    if (!checkPlatform())
-      return;
-
-    APanamaGLFactory_linux factory = (APanamaGLFactory_linux) PanamaGLFactory.select();
+    APanamaGLFactory_linux factory = linuxFactory();
     factory.setUseEGL(true);
     try {
       factory.newGLContext();
     } catch (IllegalStateException | IllegalArgumentException e) {
-      Assume.assumeNoException("No EGL available", e);
+      noEGL(e);
     }
 
     GL gl = factory.newGL();
